@@ -2,20 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
     /// Model factory that enables mocking for the Document Translation Library.
     /// </summary>
-    [CodeGenType("TranslationDocumentModelFactory")]
-    [CodeGenSuppress("TranslationStatusResult", typeof(string), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(DocumentTranslationStatus), typeof(TranslationStatusSummary), typeof(JsonElement))]
-    [CodeGenSuppress("DocumentStatusResult", typeof(Uri), typeof(Uri), typeof(DateTimeOffset), typeof(DateTimeOffset), typeof(DocumentTranslationStatus), typeof(string), typeof(float), typeof(string), typeof(long), typeof(int?), typeof(int?), typeof(JsonElement))]
-    [CodeGenSuppress("TranslationSource", typeof(Uri), typeof(DocumentFilter), typeof(string), typeof(TranslationStorageSource?))]
-    [CodeGenSuppress("DocumentTranslateContent")]
+    [CodeGenModel("AITranslationDocumentModelFactory")]
     public static partial class DocumentTranslationModelFactory
     {
         #region Statuses
@@ -121,8 +117,7 @@ namespace Azure.AI.Translation.Document
         {
             glossary ??= new List<Stream>();
             var multipartGlossary = new List<MultipartFormFileData>();
-            foreach (var item in glossary)
-            {
+            foreach (var item in glossary) {
                 multipartGlossary.Add(new MultipartFormFileData(null, item, null));
             }
 

@@ -16,26 +16,31 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="LengthResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The length Unit of measurement. </param>
-        internal LengthResolution(double value, LengthUnit unit) : base(ResolutionKind.LengthResolution)
+        internal LengthResolution(double value, LengthUnit unit)
         {
+            ResolutionKind = ResolutionKind.LengthResolution;
             Value = value;
             Unit = unit;
         }
 
         /// <summary> Initializes a new instance of <see cref="LengthResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The length Unit of measurement. </param>
-        internal LengthResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, LengthUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
+        internal LengthResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value, LengthUnit unit) : base(resolutionKind, serializedAdditionalRawData)
         {
             Value = value;
             Unit = unit;
         }
 
+        /// <summary> Initializes a new instance of <see cref="LengthResolution"/> for deserialization. </summary>
+        internal LengthResolution()
+        {
+        }
+
         /// <summary> The numeric value that the extracted text denotes. </summary>
         public double Value { get; }
-
         /// <summary> The length Unit of measurement. </summary>
         public LengthUnit Unit { get; }
     }

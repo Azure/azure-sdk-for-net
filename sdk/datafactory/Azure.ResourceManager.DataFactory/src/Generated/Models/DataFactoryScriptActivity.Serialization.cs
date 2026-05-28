@@ -63,11 +63,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("returnMultistatementResult"u8);
                 JsonSerializer.Serialize(writer, ReturnMultistatementResult);
             }
-            if (Optional.IsDefined(TreatDecimalAsString))
-            {
-                writer.WritePropertyName("treatDecimalAsString"u8);
-                JsonSerializer.Serialize(writer, TreatDecimalAsString);
-            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -116,7 +111,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<ScriptActivityScriptBlock> scripts = default;
             ScriptActivityTypeLogSettings logSettings = default;
             DataFactoryElement<bool> returnMultistatementResult = default;
-            DataFactoryElement<bool> treatDecimalAsString = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,15 +244,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                             returnMultistatementResult = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("treatDecimalAsString"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            treatDecimalAsString = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -279,8 +264,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 scriptBlockExecutionTimeout,
                 scripts ?? new ChangeTrackingList<ScriptActivityScriptBlock>(),
                 logSettings,
-                returnMultistatementResult,
-                treatDecimalAsString);
+                returnMultistatementResult);
         }
 
         BinaryData IPersistableModel<DataFactoryScriptActivity>.Write(ModelReaderWriterOptions options)

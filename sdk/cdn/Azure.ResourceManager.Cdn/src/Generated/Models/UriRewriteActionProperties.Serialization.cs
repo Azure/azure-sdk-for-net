@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Cdn;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the url rewrite action. </summary>
-    public partial class UriRewriteActionProperties : DeliveryRuleActionProperties, IJsonModel<UriRewriteActionProperties>
+    public partial class UriRewriteActionProperties : IUtf8JsonSerializable, IJsonModel<UriRewriteActionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="UriRewriteActionProperties"/> for deserialization. </summary>
-        internal UriRewriteActionProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UriRewriteActionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DeliveryRuleActionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeUriRewriteActionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UriRewriteActionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UriRewriteActionProperties IPersistableModel<UriRewriteActionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (UriRewriteActionProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UriRewriteActionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UriRewriteActionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("sourcePattern"u8);
             writer.WriteStringValue(SourcePattern);
@@ -91,68 +46,96 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UriRewriteActionProperties IJsonModel<UriRewriteActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UriRewriteActionProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DeliveryRuleActionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UriRewriteActionProperties IJsonModel<UriRewriteActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUriRewriteActionProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UriRewriteActionProperties DeserializeUriRewriteActionProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static UriRewriteActionProperties DeserializeUriRewriteActionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DeliveryRuleActionParametersType typeName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string sourcePattern = default;
             string destination = default;
             bool? preserveUnmatchedPath = default;
-            foreach (var prop in element.EnumerateObject())
+            DeliveryRuleActionParametersType typeName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("typeName"u8))
+                if (property.NameEquals("sourcePattern"u8))
                 {
-                    typeName = new DeliveryRuleActionParametersType(prop.Value.GetString());
+                    sourcePattern = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourcePattern"u8))
+                if (property.NameEquals("destination"u8))
                 {
-                    sourcePattern = prop.Value.GetString();
+                    destination = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("destination"u8))
+                if (property.NameEquals("preserveUnmatchedPath"u8))
                 {
-                    destination = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("preserveUnmatchedPath"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    preserveUnmatchedPath = prop.Value.GetBoolean();
+                    preserveUnmatchedPath = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("typeName"u8))
+                {
+                    typeName = new DeliveryRuleActionParametersType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new UriRewriteActionProperties(typeName, additionalBinaryDataProperties, sourcePattern, destination, preserveUnmatchedPath);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UriRewriteActionProperties(typeName, serializedAdditionalRawData, sourcePattern, destination, preserveUnmatchedPath);
         }
+
+        BinaryData IPersistableModel<UriRewriteActionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UriRewriteActionProperties IPersistableModel<UriRewriteActionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeUriRewriteActionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UriRewriteActionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

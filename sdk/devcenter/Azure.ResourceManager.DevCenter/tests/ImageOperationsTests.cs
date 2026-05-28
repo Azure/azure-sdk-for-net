@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var devCenterResource = devCenterResponse.Value;
 
             List<DevCenterImageResource> images = await devCenterResource.GetImagesAsync().ToEnumerableAsync();
-            Assert.That(images.Count > 0, Is.True);
+            Assert.IsTrue(images.Count > 0);
         }
 
         [Test]
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.DevCenter.Tests
 
             List<DevCenterImageResource> images = await galleryResource.GetDevCenterImages().GetAllAsync().ToEnumerableAsync();
 
-            Assert.That(images.Count > 0, Is.True);
+            Assert.IsTrue(images.Count > 0);
 
             // Get one of the images
             var image = (await galleryResource.GetDevCenterImageAsync(images.First().Data.Name)).Value;
-            Assert.That(image, Is.Not.Null);
+            Assert.IsNotNull(image);
         }
     }
 }

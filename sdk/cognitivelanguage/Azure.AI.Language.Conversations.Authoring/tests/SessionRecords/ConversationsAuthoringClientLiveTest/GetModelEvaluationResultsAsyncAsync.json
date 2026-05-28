@@ -1,0 +1,1795 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Aurora-CLU-Prod/models/m1/evaluation/result?stringIndexType=Utf16CodeUnit&api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "1abafd74-7fbd-4b85-b941-550b09c33c64",
+        "Content-Length": "20554",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Jun 2025 02:08:34 GMT",
+        "request-id": "1abafd74-7fbd-4b85-b941-550b09c33c64",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "96",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "text": "I would like to re-write my out of office response please",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 16,
+                  "length": 8
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 0,
+                  "length": 1
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 25,
+                  "length": 2
+                },
+                {
+                  "category": "OfficeType",
+                  "offset": 35,
+                  "length": 6
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Can you guide me through the process of editing a meeting?",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 40,
+                  "length": 7
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 14,
+                  "length": 2
+                },
+                {
+                  "category": "Activity.Edit",
+                  "offset": 40,
+                  "length": 7
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Modify the date and time in the automatic replies I had set",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 0,
+                  "length": 6
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 0,
+                  "length": 6
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 50,
+                  "length": 1
+                },
+                {
+                  "category": "Activity.Raise",
+                  "offset": 56,
+                  "length": 3
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "I need to switch the meeting room.",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 10,
+                  "length": 6
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 0,
+                  "length": 1
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Please change the meeting room.",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 7,
+                  "length": 6
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 7,
+                  "length": 6
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "I want to edit a meeting",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 10,
+                  "length": 4
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 0,
+                  "length": 1
+                },
+                {
+                  "category": "Activity.Edit",
+                  "offset": 10,
+                  "length": 4
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "I want to modify my case details",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 10,
+                  "length": 6
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 0,
+                  "length": 1
+                },
+                {
+                  "category": "Activity.Edit",
+                  "offset": 10,
+                  "length": 6
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 17,
+                  "length": 2
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Can you help me make changes to a scheduled meeting?",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 21,
+                  "length": 7
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 13,
+                  "length": 2
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "I need your help in editing my out of office responses",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 20,
+                  "length": 7
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 0,
+                  "length": 1
+                },
+                {
+                  "category": "Activity.Edit",
+                  "offset": 20,
+                  "length": 7
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 28,
+                  "length": 2
+                },
+                {
+                  "category": "OfficeType",
+                  "offset": 38,
+                  "length": 6
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "update the time in my out of office replies",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 0,
+                  "length": 6
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 0,
+                  "length": 6
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 19,
+                  "length": 2
+                },
+                {
+                  "category": "OfficeType",
+                  "offset": 29,
+                  "length": 6
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "I want to edit my auto responses",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 10,
+                  "length": 4
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 0,
+                  "length": 1
+                },
+                {
+                  "category": "Activity.Edit",
+                  "offset": 10,
+                  "length": 4
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 15,
+                  "length": 2
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "I'm looking for assistance in making edits to a meeting on my calendar.",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 37,
+                  "length": 5
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 0,
+                  "length": 3
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 59,
+                  "length": 2
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "open a new ticket",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Start 29/8/2023, end 31/8/2023",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Date",
+                  "offset": 6,
+                  "length": 9
+                },
+                {
+                  "category": "Date",
+                  "offset": 21,
+                  "length": 9
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Date",
+                  "offset": 6,
+                  "length": 9
+                },
+                {
+                  "category": "Date",
+                  "offset": 21,
+                  "length": 9
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Hello, I want to set out of office from May 18 2023",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 17,
+                  "length": 3
+                },
+                {
+                  "category": "Date",
+                  "offset": 40,
+                  "length": 11
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 7,
+                  "length": 1
+                },
+                {
+                  "category": "Activity.Raise",
+                  "offset": 17,
+                  "length": 3
+                },
+                {
+                  "category": "OfficeType",
+                  "offset": 28,
+                  "length": 6
+                },
+                {
+                  "category": "Date",
+                  "offset": 40,
+                  "length": 11
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Keep ooo starting from today",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                },
+                {
+                  "category": "Date",
+                  "offset": 23,
+                  "length": 5
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Date",
+                  "offset": 9,
+                  "length": 19
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "I need to set my automatic replies as I will be on leave from tomorrow",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 10,
+                  "length": 3
+                },
+                {
+                  "category": "Date",
+                  "offset": 62,
+                  "length": 8
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 0,
+                  "length": 1
+                },
+                {
+                  "category": "Activity.Raise",
+                  "offset": 10,
+                  "length": 3
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 14,
+                  "length": 2
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 38,
+                  "length": 1
+                },
+                {
+                  "category": "Location.Country",
+                  "offset": 45,
+                  "length": 2
+                },
+                {
+                  "category": "SystemName",
+                  "offset": 51,
+                  "length": 5
+                },
+                {
+                  "category": "Date",
+                  "offset": 62,
+                  "length": 8
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "make changes to meeting scheduled for this friday",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Edit",
+                  "offset": 5,
+                  "length": 7
+                },
+                {
+                  "category": "Date",
+                  "offset": 43,
+                  "length": 6
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Date",
+                  "offset": 38,
+                  "length": 11
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Close the automatic responses I had assigned",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Cancel",
+                  "offset": 0,
+                  "length": 5
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Cancel",
+                  "offset": 0,
+                  "length": 5
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 30,
+                  "length": 1
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Turn off my ooo message",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Cancel",
+                  "offset": 0,
+                  "length": 8
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Cancel",
+                  "offset": 0,
+                  "length": 8
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 9,
+                  "length": 2
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Is it possible to cancel a meeting",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Cancel",
+                  "offset": 18,
+                  "length": 6
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Location.Country",
+                  "offset": 3,
+                  "length": 2
+                },
+                {
+                  "category": "Activity.Cancel",
+                  "offset": 18,
+                  "length": 6
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "What is the process of cancelling a meeting",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Cancel",
+                  "offset": 23,
+                  "length": 10
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Cancel",
+                  "offset": 23,
+                  "length": 10
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "can you please locate 'Mary Ma' for me?",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 23,
+                  "length": 7
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 23,
+                  "length": 7
+                },
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 36,
+                  "length": 2
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Look up for 'Ang Peng Siong'",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 13,
+                  "length": 14
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 13,
+                  "length": 14
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "who is chewling ong",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 7,
+                  "length": 12
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 7,
+                  "length": 12
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Who works with amy williams",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "WhoIs_Peers",
+                  "offset": 4,
+                  "length": 10
+                },
+                {
+                  "category": "PersonName",
+                  "offset": 15,
+                  "length": 12
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_Peers",
+                  "offset": 4,
+                  "length": 10
+                },
+                {
+                  "category": "PersonName",
+                  "offset": 15,
+                  "length": 12
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "who are the colleagues of Samara",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "WhoIs_Peers",
+                  "offset": 12,
+                  "length": 10
+                },
+                {
+                  "category": "PersonName",
+                  "offset": 26,
+                  "length": 6
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_Peers",
+                  "offset": 12,
+                  "length": 10
+                },
+                {
+                  "category": "PersonName",
+                  "offset": 26,
+                  "length": 6
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Who does Emma work with?",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 9,
+                  "length": 4
+                },
+                {
+                  "category": "WhoIs_Peers",
+                  "offset": 14,
+                  "length": 9
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 9,
+                  "length": 4
+                },
+                {
+                  "category": "WhoIs_Peers",
+                  "offset": 14,
+                  "length": 9
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "who is the peer of emily?",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "WhoIs_Peers",
+                  "offset": 11,
+                  "length": 4
+                },
+                {
+                  "category": "PersonName",
+                  "offset": 19,
+                  "length": 5
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_Peers",
+                  "offset": 11,
+                  "length": 4
+                },
+                {
+                  "category": "PersonName",
+                  "offset": 19,
+                  "length": 5
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "book a conference room for 35min ",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                },
+                {
+                  "category": "Duration",
+                  "offset": 27,
+                  "length": 5
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                },
+                {
+                  "category": "MeetingRoomsList",
+                  "offset": 7,
+                  "length": 15
+                },
+                {
+                  "category": "Duration",
+                  "offset": 27,
+                  "length": 5
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Schedule Out of office replies for 3 days starting from next Monday",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 8
+                },
+                {
+                  "category": "Duration",
+                  "offset": 35,
+                  "length": 6
+                },
+                {
+                  "category": "Date",
+                  "offset": 61,
+                  "length": 6
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "OfficeType",
+                  "offset": 16,
+                  "length": 6
+                },
+                {
+                  "category": "Duration",
+                  "offset": 35,
+                  "length": 6
+                },
+                {
+                  "category": "Date",
+                  "offset": 42,
+                  "length": 25
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Set ooo for 1 week, starting tomorrow",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 3
+                },
+                {
+                  "category": "Duration",
+                  "offset": 8,
+                  "length": 10
+                },
+                {
+                  "category": "Date",
+                  "offset": 29,
+                  "length": 8
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 3
+                },
+                {
+                  "category": "Duration",
+                  "offset": 8,
+                  "length": 10
+                },
+                {
+                  "category": "Date",
+                  "offset": 20,
+                  "length": 17
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Set meeting for an hour this friday",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 3
+                },
+                {
+                  "category": "Duration",
+                  "offset": 16,
+                  "length": 7
+                },
+                {
+                  "category": "Date",
+                  "offset": 29,
+                  "length": 6
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 3
+                },
+                {
+                  "category": "Duration",
+                  "offset": 12,
+                  "length": 11
+                },
+                {
+                  "category": "Date",
+                  "offset": 24,
+                  "length": 11
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "book a meeting room from 8 to 10am tomorrow",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                },
+                {
+                  "category": "Duration",
+                  "offset": 25,
+                  "length": 9
+                },
+                {
+                  "category": "Date",
+                  "offset": 35,
+                  "length": 8
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                },
+                {
+                  "category": "Date",
+                  "offset": 20,
+                  "length": 23
+                },
+                {
+                  "category": "Duration",
+                  "offset": 20,
+                  "length": 23
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Set out of office response for a day starting this Friday at 5 pm.",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 3
+                },
+                {
+                  "category": "Duration",
+                  "offset": 33,
+                  "length": 3
+                },
+                {
+                  "category": "Date",
+                  "offset": 51,
+                  "length": 6
+                },
+                {
+                  "category": "StartTime",
+                  "offset": 61,
+                  "length": 4
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 3
+                },
+                {
+                  "category": "OfficeType",
+                  "offset": 11,
+                  "length": 6
+                },
+                {
+                  "category": "Duration",
+                  "offset": 27,
+                  "length": 9
+                },
+                {
+                  "category": "Date",
+                  "offset": 37,
+                  "length": 20
+                },
+                {
+                  "category": "StartTime",
+                  "offset": 58,
+                  "length": 7
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "set ooo from 10th aug to 13th aug starting from 10 am",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 3
+                },
+                {
+                  "category": "Date",
+                  "offset": 13,
+                  "length": 8
+                },
+                {
+                  "category": "Date",
+                  "offset": 25,
+                  "length": 8
+                },
+                {
+                  "category": "StartTime",
+                  "offset": 48,
+                  "length": 5
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 3
+                },
+                {
+                  "category": "Date",
+                  "offset": 8,
+                  "length": 25
+                },
+                {
+                  "category": "StartTime",
+                  "offset": 48,
+                  "length": 5
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Find an available board room for 8 ppl from 6 pm to 7.30 pm",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                },
+                {
+                  "category": "Capacity",
+                  "offset": 33,
+                  "length": 5
+                },
+                {
+                  "category": "StartTime",
+                  "offset": 44,
+                  "length": 4
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                },
+                {
+                  "category": "Capacity",
+                  "offset": 33,
+                  "length": 5
+                },
+                {
+                  "category": "StartTime",
+                  "offset": 39,
+                  "length": 20
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Reserve the \"Opal\" meeting room for Tuesday at 13:00 for 8 pax",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 7
+                },
+                {
+                  "category": "Date",
+                  "offset": 36,
+                  "length": 7
+                },
+                {
+                  "category": "StartTime",
+                  "offset": 47,
+                  "length": 5
+                },
+                {
+                  "category": "Capacity",
+                  "offset": 57,
+                  "length": 5
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 7
+                },
+                {
+                  "category": "Date",
+                  "offset": 36,
+                  "length": 16
+                },
+                {
+                  "category": "StartTime",
+                  "offset": 36,
+                  "length": 16
+                },
+                {
+                  "category": "Capacity",
+                  "offset": 57,
+                  "length": 5
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Book a meeting room for 6pers",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                },
+                {
+                  "category": "Capacity",
+                  "offset": 24,
+                  "length": 5
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 4
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Help me with booking a meeting room at 9 floor",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 13,
+                  "length": 7
+                },
+                {
+                  "category": "FloorNumber",
+                  "offset": 39,
+                  "length": 7
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 5,
+                  "length": 2
+                },
+                {
+                  "category": "Activity.Raise",
+                  "offset": 13,
+                  "length": 7
+                },
+                {
+                  "category": "FloorNumber",
+                  "offset": 39,
+                  "length": 7
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Reserve a meeting room on the seventh floor",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 7
+                },
+                {
+                  "category": "FloorNumber",
+                  "offset": 30,
+                  "length": 13
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 0,
+                  "length": 7
+                },
+                {
+                  "category": "FloorNumber",
+                  "offset": 30,
+                  "length": 13
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "I want to book free meeting room for 7 pers from 18:00-19:00 on the 5th floor this Thursday ",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.Raise",
+                  "offset": 10,
+                  "length": 4
+                },
+                {
+                  "category": "Capacity",
+                  "offset": 37,
+                  "length": 6
+                },
+                {
+                  "category": "StartTime",
+                  "offset": 49,
+                  "length": 5
+                },
+                {
+                  "category": "FloorNumber",
+                  "offset": 68,
+                  "length": 9
+                },
+                {
+                  "category": "Date",
+                  "offset": 83,
+                  "length": 8
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_WhoAmI",
+                  "offset": 0,
+                  "length": 1
+                },
+                {
+                  "category": "Activity.Raise",
+                  "offset": 10,
+                  "length": 4
+                },
+                {
+                  "category": "Capacity",
+                  "offset": 37,
+                  "length": 6
+                },
+                {
+                  "category": "StartTime",
+                  "offset": 44,
+                  "length": 16
+                },
+                {
+                  "category": "FloorNumber",
+                  "offset": 68,
+                  "length": 9
+                },
+                {
+                  "category": "Date",
+                  "offset": 78,
+                  "length": 13
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "who is the boss of harish desi",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "WhoIs_Manager",
+                  "offset": 11,
+                  "length": 4
+                },
+                {
+                  "category": "PersonName",
+                  "offset": 19,
+                  "length": 11
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "MeetingRoomsList",
+                  "offset": 11,
+                  "length": 4
+                },
+                {
+                  "category": "WhoIs_Manager",
+                  "offset": 11,
+                  "length": 4
+                },
+                {
+                  "category": "PersonName",
+                  "offset": 19,
+                  "length": 11
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "who is \"Roger's\" direct boss?",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 8,
+                  "length": 5
+                },
+                {
+                  "category": "WhoIs_Manager",
+                  "offset": 17,
+                  "length": 11
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 8,
+                  "length": 5
+                },
+                {
+                  "category": "WhoIs_Manager",
+                  "offset": 17,
+                  "length": 11
+                },
+                {
+                  "category": "MeetingRoomsList",
+                  "offset": 24,
+                  "length": 4
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "details about the Manager of Ashley timberlake",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "WhoIs_Manager",
+                  "offset": 18,
+                  "length": 7
+                },
+                {
+                  "category": "PersonName",
+                  "offset": 29,
+                  "length": 17
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "WhoIs_Manager",
+                  "offset": 18,
+                  "length": 7
+                },
+                {
+                  "category": "PersonName",
+                  "offset": 29,
+                  "length": 17
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "status of INC2376012",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.View",
+                  "offset": 0,
+                  "length": 6
+                },
+                {
+                  "category": "TicketNumber",
+                  "offset": 10,
+                  "length": 10
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.View",
+                  "offset": 0,
+                  "length": 6
+                },
+                {
+                  "category": "TicketNumber",
+                  "offset": 10,
+                  "length": 10
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "view status of ticket 123",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "Activity.View",
+                  "offset": 0,
+                  "length": 4
+                },
+                {
+                  "category": "TicketNumber",
+                  "offset": 22,
+                  "length": 3
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "Activity.View",
+                  "offset": 0,
+                  "length": 4
+                },
+                {
+                  "category": "Activity.View",
+                  "offset": 5,
+                  "length": 6
+                },
+                {
+                  "category": "TicketNumber",
+                  "offset": 22,
+                  "length": 3
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "Who are Jasmine's direct reports",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 8,
+                  "length": 7
+                },
+                {
+                  "category": "WhoIs_DirectReports",
+                  "offset": 18,
+                  "length": 14
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "PersonName",
+                  "offset": 8,
+                  "length": 7
+                },
+                {
+                  "category": "WhoIs_DirectReports",
+                  "offset": 18,
+                  "length": 14
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          },
+          {
+            "text": "who are srianth.kalekar.acuvate@suntory.com direct reports",
+            "language": "en-us",
+            "entitiesResult": {
+              "expectedEntities": [
+                {
+                  "category": "PersonEmail",
+                  "offset": 8,
+                  "length": 35
+                },
+                {
+                  "category": "WhoIs_DirectReports",
+                  "offset": 44,
+                  "length": 14
+                }
+              ],
+              "predictedEntities": [
+                {
+                  "category": "PersonEmail",
+                  "offset": 8,
+                  "length": 35
+                },
+                {
+                  "category": "WhoIs_DirectReports",
+                  "offset": 44,
+                  "length": 14
+                }
+              ]
+            },
+            "intentsResult": {
+              "expectedIntent": "None",
+              "predictedIntent": "None"
+            }
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "71776855"
+  }
+}

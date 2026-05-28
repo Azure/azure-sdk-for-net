@@ -142,8 +142,7 @@ public class ProxyService : IDisposable
             {
                 // do NOT call Dispose here. This will terminate this process too.
             }
-        }
-        catch { /* we tried */ }
+        } catch { /* we tried */ }
     }
 
     /// <summary>

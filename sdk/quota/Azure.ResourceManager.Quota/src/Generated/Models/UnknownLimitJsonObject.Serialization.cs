@@ -8,60 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Quota;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    internal partial class UnknownLimitJsonObject : QuotaLimitJsonObject, IJsonModel<QuotaLimitJsonObject>
+    internal partial class UnknownLimitJsonObject : IUtf8JsonSerializable, IJsonModel<QuotaLimitJsonObject>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownLimitJsonObject"/> for deserialization. </summary>
-        internal UnknownLimitJsonObject()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaLimitJsonObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override QuotaLimitJsonObject PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaLimitJsonObject>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQuotaLimitJsonObject(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaLimitJsonObject>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuotaLimitJsonObject>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QuotaLimitJsonObject IPersistableModel<QuotaLimitJsonObject>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuotaLimitJsonObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuotaLimitJsonObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -73,54 +29,112 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaLimitJsonObject>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaLimitJsonObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QuotaLimitJsonObject IJsonModel<QuotaLimitJsonObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override QuotaLimitJsonObject JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuotaLimitJsonObject IJsonModel<QuotaLimitJsonObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaLimitJsonObject>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaLimitJsonObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeQuotaLimitJsonObject(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownLimitJsonObject DeserializeUnknownLimitJsonObject(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownLimitJsonObject DeserializeUnknownLimitJsonObject(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            LimitType limitObjectType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            LimitType limitObjectType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("limitObjectType"u8))
+                if (property.NameEquals("limitObjectType"u8))
                 {
-                    limitObjectType = new LimitType(prop.Value.GetString());
+                    limitObjectType = new LimitType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new UnknownLimitJsonObject(limitObjectType, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownLimitJsonObject(limitObjectType, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LimitObjectType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  limitObjectType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  limitObjectType: ");
+                builder.AppendLine($"'{LimitObjectType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<QuotaLimitJsonObject>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaLimitJsonObject>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        QuotaLimitJsonObject IPersistableModel<QuotaLimitJsonObject>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaLimitJsonObject>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeQuotaLimitJsonObject(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuotaLimitJsonObject)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QuotaLimitJsonObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

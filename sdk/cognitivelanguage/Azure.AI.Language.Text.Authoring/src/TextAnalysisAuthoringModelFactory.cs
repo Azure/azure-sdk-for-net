@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Text.Authoring
 {
-    /// <summary> Model factory for Text Authoring models. </summary>'
-    [CodeGenType("LanguageTextAuthoringModelFactory")]
+    /// <summary> Model factory for Text Authoring models. </summary>
+    [CodeGenModel("AILanguageTextAuthoringModelFactory")]
     public static partial class TextAnalysisAuthoringModelFactory
     {
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -22,9 +21,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of <see cref="DnsZoneResult"/>. </summary>
         /// <param name="subResource"> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone names. </param>
-        internal DnsZoneResult(VaultSubResourceType? subResource, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> requiredZoneNames) : base(subResource, additionalBinaryDataProperties)
+        internal DnsZoneResult(VaultSubResourceType? subResource, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> requiredZoneNames) : base(subResource, serializedAdditionalRawData)
         {
             RequiredZoneNames = requiredZoneNames;
         }

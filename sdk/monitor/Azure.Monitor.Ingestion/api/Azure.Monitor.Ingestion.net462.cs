@@ -14,7 +14,9 @@ namespace Azure.Monitor.Ingestion
         public static Azure.Monitor.Ingestion.LogsIngestionAudience AzureGovernment { get { throw null; } }
         public static Azure.Monitor.Ingestion.LogsIngestionAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.Monitor.Ingestion.LogsIngestionAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Monitor.Ingestion.LogsIngestionAudience left, Azure.Monitor.Ingestion.LogsIngestionAudience right) { throw null; }
         public static implicit operator Azure.Monitor.Ingestion.LogsIngestionAudience (string value) { throw null; }
@@ -24,7 +26,6 @@ namespace Azure.Monitor.Ingestion
     public partial class LogsIngestionClient
     {
         protected LogsIngestionClient() { }
-        public LogsIngestionClient(Azure.Monitor.Ingestion.LogsIngestionClientSettings settings) { }
         public LogsIngestionClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LogsIngestionClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Ingestion.LogsIngestionClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -35,13 +36,6 @@ namespace Azure.Monitor.Ingestion
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadAsync<T>(string ruleId, string streamName, System.Collections.Generic.IEnumerable<T> logs, Azure.Monitor.Ingestion.LogsUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Upload<T>(string ruleId, string streamName, System.Collections.Generic.IEnumerable<T> logs, Azure.Monitor.Ingestion.LogsUploadOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public static partial class LogsIngestionClientHostExtensions
-    {
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsIngestionClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsIngestionClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Monitor.Ingestion.LogsIngestionClientSettings> configureSettings) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddLogsIngestionClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddLogsIngestionClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Monitor.Ingestion.LogsIngestionClientSettings> configureSettings) { throw null; }
-    }
     public partial class LogsIngestionClientOptions : Azure.Core.ClientOptions
     {
         public LogsIngestionClientOptions(Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion version = Azure.Monitor.Ingestion.LogsIngestionClientOptions.ServiceVersion.V2023_01_01) { }
@@ -50,13 +44,6 @@ namespace Azure.Monitor.Ingestion
         {
             V2023_01_01 = 1,
         }
-    }
-    public partial class LogsIngestionClientSettings : System.ClientModel.Primitives.ClientSettings
-    {
-        public LogsIngestionClientSettings() { }
-        public System.Uri Endpoint { get { throw null; } set { } }
-        public Azure.Monitor.Ingestion.LogsIngestionClientOptions Options { get { throw null; } set { } }
-        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class LogsUploadFailedEventArgs : Azure.SyncAsyncEventArgs
     {

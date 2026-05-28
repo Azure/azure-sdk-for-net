@@ -71,11 +71,6 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(IPVersionType))
-            {
-                writer.WritePropertyName("ipVersionType"u8);
-                writer.WriteStringValue(IPVersionType.Value.ToString());
-            }
             if (Optional.IsCollectionDefined(PrivateLinkServiceConnections))
             {
                 writer.WritePropertyName("privateLinkServiceConnections"u8);
@@ -164,7 +159,6 @@ namespace Azure.ResourceManager.Network
             SubnetData subnet = default;
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
             NetworkProvisioningState? provisioningState = default;
-            PrivateEndpointIPVersionType? ipVersionType = default;
             IList<NetworkPrivateLinkServiceConnection> privateLinkServiceConnections = default;
             IList<NetworkPrivateLinkServiceConnection> manualPrivateLinkServiceConnections = default;
             IList<CustomDnsConfigProperties> customDnsConfigs = default;
@@ -280,15 +274,6 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("ipVersionType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ipVersionType = new PrivateEndpointIPVersionType(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("privateLinkServiceConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -385,7 +370,6 @@ namespace Azure.ResourceManager.Network
                 subnet,
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
                 provisioningState,
-                ipVersionType,
                 privateLinkServiceConnections ?? new ChangeTrackingList<NetworkPrivateLinkServiceConnection>(),
                 manualPrivateLinkServiceConnections ?? new ChangeTrackingList<NetworkPrivateLinkServiceConnection>(),
                 customDnsConfigs ?? new ChangeTrackingList<CustomDnsConfigProperties>(),
@@ -577,21 +561,6 @@ namespace Azure.ResourceManager.Network
                 {
                     builder.Append("    provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPVersionType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ipVersionType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IPVersionType))
-                {
-                    builder.Append("    ipVersionType: ");
-                    builder.AppendLine($"'{IPVersionType.Value.ToString()}'");
                 }
             }
 

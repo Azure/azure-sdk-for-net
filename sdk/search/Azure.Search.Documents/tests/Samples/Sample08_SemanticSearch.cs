@@ -1,19 +1,18 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
+using System.Linq;
+using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2025_08_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
     public partial class SemanticSearch : SearchTestBase
     {
         public SemanticSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -46,6 +45,7 @@ namespace Azure.Search.Documents.Tests.Samples
                             QueryCaption = new(QueryCaptionType.Extractive),
                             QueryAnswer = new(QueryAnswerType.Extractive)
                         },
+                        QueryLanguage = QueryLanguage.EnUs,
                         QueryType = SearchQueryType.Semantic
                     });
 
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Tests.Samples
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                await indexClient.DeleteIndexAsync(indexName);
             }
         }
 
@@ -114,6 +114,7 @@ namespace Azure.Search.Documents.Tests.Samples
                             QueryAnswer = new(QueryAnswerType.Extractive),
                             SemanticQuery = "Is there any hotel located on the main commercial artery of the city in the heart of New York?"
                         },
+                        QueryLanguage = QueryLanguage.EnUs,
                     });
 
                 int count = 0;
@@ -151,7 +152,7 @@ namespace Azure.Search.Documents.Tests.Samples
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                await indexClient.DeleteIndexAsync(indexName);
             }
         }
 

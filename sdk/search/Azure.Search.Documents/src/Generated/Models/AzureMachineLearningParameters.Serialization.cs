@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Specifies the properties for connecting to an AML vectorizer. </summary>
-    public partial class AzureMachineLearningParameters : IJsonModel<AzureMachineLearningParameters>
+    public partial class AzureMachineLearningParameters : IUtf8JsonSerializable, IJsonModel<AzureMachineLearningParameters>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningParameters"/> for deserialization. </summary>
-        internal AzureMachineLearningParameters()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMachineLearningParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureMachineLearningParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureMachineLearningParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningParameters>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningParameters)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureMachineLearningParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureMachineLearningParameters IPersistableModel<AzureMachineLearningParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureMachineLearningParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureMachineLearningParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,54 +28,83 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureMachineLearningParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ScoringUri))
+
+            if (ScoringUri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(ScoringUri.AbsoluteUri);
             }
             else
             {
-                writer.WriteNull("uri"u8);
+                writer.WriteNull("uri");
             }
             if (Optional.IsDefined(AuthenticationKey))
             {
-                writer.WritePropertyName("key"u8);
-                writer.WriteStringValue(AuthenticationKey);
+                if (AuthenticationKey != null)
+                {
+                    writer.WritePropertyName("key"u8);
+                    writer.WriteStringValue(AuthenticationKey);
+                }
+                else
+                {
+                    writer.WriteNull("key");
+                }
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
+                if (ResourceId != null)
+                {
+                    writer.WritePropertyName("resourceId"u8);
+                    writer.WriteStringValue(ResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("resourceId");
+                }
             }
             if (Optional.IsDefined(Timeout))
             {
-                writer.WritePropertyName("timeout"u8);
-                writer.WriteStringValue(Timeout.Value, "P");
+                if (Timeout != null)
+                {
+                    writer.WritePropertyName("timeout"u8);
+                    writer.WriteStringValue(Timeout.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("timeout");
+                }
             }
             if (Optional.IsDefined(Region))
             {
-                writer.WritePropertyName("region"u8);
-                writer.WriteStringValue(Region);
+                if (Region != null)
+                {
+                    writer.WritePropertyName("region"u8);
+                    writer.WriteStringValue(Region);
+                }
+                else
+                {
+                    writer.WriteNull("region");
+                }
             }
             if (Optional.IsDefined(ModelName))
             {
                 writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -130,112 +113,156 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureMachineLearningParameters IJsonModel<AzureMachineLearningParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureMachineLearningParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureMachineLearningParameters IJsonModel<AzureMachineLearningParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureMachineLearningParameters)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureMachineLearningParameters(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureMachineLearningParameters DeserializeAzureMachineLearningParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureMachineLearningParameters DeserializeAzureMachineLearningParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri scoringUri = default;
-            string authenticationKey = default;
+            Uri uri = default;
+            string key = default;
             string resourceId = default;
             TimeSpan? timeout = default;
             string region = default;
             AIFoundryModelCatalogName? modelName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("uri"u8))
+                if (property.NameEquals("uri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        scoringUri = null;
+                        uri = null;
                         continue;
                     }
-                    scoringUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("key"u8))
+                if (property.NameEquals("key"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        authenticationKey = null;
+                        key = null;
                         continue;
                     }
-                    authenticationKey = prop.Value.GetString();
+                    key = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceId"u8))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         resourceId = null;
                         continue;
                     }
-                    resourceId = prop.Value.GetString();
+                    resourceId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("timeout"u8))
+                if (property.NameEquals("timeout"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         timeout = null;
                         continue;
                     }
-                    timeout = prop.Value.GetTimeSpan("P");
+                    timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (prop.NameEquals("region"u8))
+                if (property.NameEquals("region"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         region = null;
                         continue;
                     }
-                    region = prop.Value.GetString();
+                    region = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("modelName"u8))
+                if (property.NameEquals("modelName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    modelName = new AIFoundryModelCatalogName(prop.Value.GetString());
+                    modelName = new AIFoundryModelCatalogName(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureMachineLearningParameters(
-                scoringUri,
-                authenticationKey,
+                uri,
+                key,
                 resourceId,
                 timeout,
                 region,
                 modelName,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AzureMachineLearningParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureMachineLearningParameters)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureMachineLearningParameters IPersistableModel<AzureMachineLearningParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAzureMachineLearningParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureMachineLearningParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureMachineLearningParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AzureMachineLearningParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAzureMachineLearningParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

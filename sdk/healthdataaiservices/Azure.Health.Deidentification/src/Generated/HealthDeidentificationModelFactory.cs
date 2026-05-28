@@ -26,7 +26,9 @@ namespace Azure.Health.Deidentification
         /// <param name="error"> Error when job fails in it's entirety. </param>
         /// <param name="lastUpdatedAt">
         /// Date and time when the job was completed.
+        /// 
         /// If the job is canceled, this is the time when the job was canceled.
+        /// 
         /// If the job failed, this is the time when the job failed.
         /// </param>
         /// <param name="createdAt"> Date and time when the job was created. </param>
@@ -66,10 +68,12 @@ namespace Azure.Health.Deidentification
         /// <param name="location"> URL to storage location. </param>
         /// <param name="prefix">
         /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.
+        /// 
         /// Example:
         /// File full path: documents/user/note.txt
         /// Input Prefix: "documents/user/"
         /// Output Prefix: "output_docs/"
+        /// 
         /// Output file: "output_docs/note.txt"
         /// </param>
         /// <param name="overwrite"> When set to true during a job, the service will overwrite the output location if it already exists. </param>
@@ -224,10 +228,12 @@ namespace Azure.Health.Deidentification
         /// <param name="utf8"> The offset or length of the substring in UTF-8 encoding. </param>
         /// <param name="utf16">
         /// The offset or length of the substring in UTF-16 encoding.
+        /// 
         /// Primary encoding used by .NET, Java, and JavaScript.
         /// </param>
         /// <param name="codePoint">
         /// The offset or length of the substring in CodePoint encoding.
+        /// 
         /// Primary encoding used by Python.
         /// </param>
         /// <returns> A new <see cref="Deidentification.StringIndex"/> instance for mocking. </returns>
@@ -244,7 +250,7 @@ namespace Azure.Health.Deidentification
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeidentificationContent DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations)
         {
-            return DeidentificationContent(inputText: inputText, operationType: operationType, taggedEntities: default, customizations: customizations);
+            return DeidentificationContent(inputText, operationType, taggedEntities: default, customizations);
         }
     }
 }

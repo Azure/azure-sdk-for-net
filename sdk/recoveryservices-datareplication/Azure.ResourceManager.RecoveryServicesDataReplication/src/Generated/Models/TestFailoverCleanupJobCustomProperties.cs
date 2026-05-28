@@ -14,18 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public partial class TestFailoverCleanupJobCustomProperties : DataReplicationJobCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="TestFailoverCleanupJobCustomProperties"/>. </summary>
-        internal TestFailoverCleanupJobCustomProperties() : base("TestFailoverCleanupJobDetails")
+        internal TestFailoverCleanupJobCustomProperties()
         {
+            InstanceType = "TestFailoverCleanupJobDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="TestFailoverCleanupJobCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationJobCustomProperties. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="comments"> Gets or sets the test failover cleanup comments. </param>
-        internal TestFailoverCleanupJobCustomProperties(string instanceType, AffectedObjectDetails affectedObjectDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties, string comments) : base(instanceType, affectedObjectDetails, additionalBinaryDataProperties)
+        internal TestFailoverCleanupJobCustomProperties(string instanceType, AffectedObjectDetails affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, string comments) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
         {
             Comments = comments;
+            InstanceType = instanceType ?? "TestFailoverCleanupJobDetails";
         }
 
         /// <summary> Gets or sets the test failover cleanup comments. </summary>

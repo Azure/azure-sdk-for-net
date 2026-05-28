@@ -866,10 +866,9 @@ namespace Azure.Storage.Blobs.Specialized
             operationName ??= $"{nameof(BlockBlobClient)}.{nameof(Upload)}";
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
+            // All BlobRequestConditions are valid.
             conditions.ValidateConditionsNotPresent(
-                invalidConditions:
-                    BlobRequestConditionProperty.AccessTierIfModifiedSince
-                    | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                invalidConditions: BlobRequestConditionProperty.None,
                 operationName: nameof(BlockBlobClient.Upload),
                 parameterName: nameof(conditions));
 
@@ -886,35 +885,14 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    ContentHasher.GetHashResult hashResult = null;
-                    long contentLength = (content?.Length - content?.Position) ?? 0;
-                    long? structuredContentLength = default;
-                    string structuredBodyType = null;
-                    if (content != null &&
-                        validationOptions != null &&
-                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
-                        ClientSideEncryption == null) // don't allow feature combination
-                    {
-                        // report progress in terms of caller bytes, not encoded bytes
-                        structuredContentLength = contentLength;
-                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                        content = new StructuredMessageEncodingStream(
-                            content,
-                            Constants.StructuredMessage.DefaultSegmentContentLength,
-                            StructuredMessage.Flags.StorageCrc64);
-                        contentLength = content.Length - content.Position;
-                    }
-                    else
-                    {
-                        // compute hash BEFORE attaching progress handler
-                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                            content,
-                            validationOptions,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                    }
+                    // compute hash BEFORE attaching progress handler
+                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                        content,
+                        validationOptions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
+                    content = content?.WithNoDispose().WithProgress(progressHandler);
 
                     ResponseWithHeaders<BlockBlobUploadHeaders> response;
 
@@ -953,8 +931,6 @@ namespace Azure.Storage.Blobs.Specialized
                             legalHold: legalHold,
                             transactionalContentMD5: hashResult?.MD5AsArray,
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
-                            structuredBodyType: structuredBodyType,
-                            structuredContentLength: structuredContentLength,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -987,8 +963,6 @@ namespace Azure.Storage.Blobs.Specialized
                             legalHold: legalHold,
                             transactionalContentMD5: hashResult?.MD5AsArray,
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
-                            structuredBodyType: structuredBodyType,
-                            structuredContentLength: structuredContentLength,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1346,9 +1320,7 @@ namespace Azure.Storage.Blobs.Specialized
                         | BlobRequestConditionProperty.IfUnmodifiedSince
                         | BlobRequestConditionProperty.TagConditions
                         | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch
-                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                        | BlobRequestConditionProperty.IfNoneMatch,
                     operationName: nameof(BlockBlobClient.StageBlock),
                     parameterName: nameof(conditions));
 
@@ -1358,39 +1330,14 @@ namespace Azure.Storage.Blobs.Specialized
 
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    ContentHasher.GetHashResult hashResult = null;
-                    long contentLength = (content?.Length - content?.Position) ?? 0;
-                    long? structuredContentLength = default;
-                    string structuredBodyType = null;
-                    if (validationOptions != null &&
-                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
-                        ClientSideEncryption == null) // don't allow feature combination
-                    {
-                        // report progress in terms of caller bytes, not encoded bytes
-                        structuredContentLength = contentLength;
-                        contentLength = (content?.Length - content?.Position) ?? 0;
-                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                        content = validationOptions.PrecalculatedChecksum.IsEmpty
-                            ? new StructuredMessageEncodingStream(
-                                content,
-                                Constants.StructuredMessage.DefaultSegmentContentLength,
-                                StructuredMessage.Flags.StorageCrc64)
-                            : new StructuredMessagePrecalculatedCrcWrapperStream(
-                                content,
-                                validationOptions.PrecalculatedChecksum.Span);
-                        contentLength = (content?.Length - content?.Position) ?? 0;
-                    }
-                    else
-                    {
-                        // compute hash BEFORE attaching progress handler
-                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                            content,
-                            validationOptions,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                    }
+                    // compute hash BEFORE attaching progress handler
+                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                        content,
+                        validationOptions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
+                    content = content.WithNoDispose().WithProgress(progressHandler);
 
                     ResponseWithHeaders<BlockBlobStageBlockHeaders> response;
 
@@ -1398,7 +1345,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = await BlockBlobRestClient.StageBlockAsync(
                             blockId: base64BlockId,
-                            contentLength: contentLength,
+                            contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
                             transactionalContentMD5: hashResult?.MD5AsArray,
@@ -1407,8 +1354,6 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            structuredBodyType: structuredBodyType,
-                            structuredContentLength: structuredContentLength,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1416,7 +1361,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = BlockBlobRestClient.StageBlock(
                             blockId: base64BlockId,
-                            contentLength: contentLength,
+                            contentLength: (content?.Length - content?.Position) ?? 0,
                             body: content,
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
                             transactionalContentMD5: hashResult?.MD5AsArray,
@@ -1425,8 +1370,6 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            structuredBodyType: structuredBodyType,
-                            structuredContentLength: structuredContentLength,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1505,7 +1448,6 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.DestinationConditions,
                 options?.SourceAuthentication,
                 options?.SourceShareTokenIntent,
-                options?.SourceCustomerProvidedKey,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1565,7 +1507,6 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.DestinationConditions,
                 options?.SourceAuthentication,
                 options?.SourceShareTokenIntent,
-                options?.SourceCustomerProvidedKey,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1652,7 +1593,6 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 sourceAuthentication: default,
                 sourceShareTokenIntent: default,
-                sourceCustomerProvidedKey: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1739,7 +1679,6 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 sourceAuthentication: default,
                 sourceShareTokenIntent: default,
-                sourceCustomerProvidedKey: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1799,9 +1738,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional, only applicable (but required) when the source is Azure Storage Files and using token authentication.
         /// Used to indicate the intent of the request.
         /// </param>
-        /// <param name="sourceCustomerProvidedKey">
-        /// Optional. Specifies the source customer provided key to use to encrypt the source blob.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1828,7 +1764,6 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             HttpAuthorization sourceAuthentication,
             FileShareTokenIntent? sourceShareTokenIntent,
-            CustomerProvidedKey? sourceCustomerProvidedKey,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1850,9 +1785,7 @@ namespace Azure.Storage.Blobs.Specialized
                         | BlobRequestConditionProperty.IfUnmodifiedSince
                         | BlobRequestConditionProperty.TagConditions
                         | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch
-                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                        | BlobRequestConditionProperty.IfNoneMatch,
                     operationName: nameof(BlockBlobClient.StageBlockFromUri),
                     parameterName: nameof(conditions));
 
@@ -1886,9 +1819,6 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             fileRequestIntent: sourceShareTokenIntent,
-                            sourceEncryptionKey: sourceCustomerProvidedKey?.EncryptionKey,
-                            sourceEncryptionKeySha256: sourceCustomerProvidedKey?.EncryptionKeyHash,
-                            sourceEncryptionAlgorithm: sourceCustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1911,9 +1841,6 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             fileRequestIntent: sourceShareTokenIntent,
-                            sourceEncryptionKey: sourceCustomerProvidedKey?.EncryptionKey,
-                            sourceEncryptionKeySha256: sourceCustomerProvidedKey?.EncryptionKeyHash,
-                            sourceEncryptionAlgorithm: sourceCustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken);
                     }
 
@@ -2314,10 +2241,9 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}");
 
+                // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(BlockBlobClient.CommitBlockList),
                     parameterName: nameof(conditions));
 
@@ -2585,9 +2511,7 @@ namespace Azure.Storage.Blobs.Specialized
                         BlobRequestConditionProperty.IfModifiedSince
                         | BlobRequestConditionProperty.IfUnmodifiedSince
                         | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch
-                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                        | BlobRequestConditionProperty.IfNoneMatch,
                     operationName: nameof(BlockBlobClient.GetBlockList),
                     parameterName: nameof(conditions));
 
@@ -2754,10 +2678,9 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(Query)}");
 
+                // All BlobRequestConditions are valid.
                 options?.Conditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(BlockBlobClient.Query),
                     parameterName: nameof(BlobQueryOptions.Conditions));
 
@@ -2963,7 +2886,7 @@ namespace Azure.Storage.Blobs.Specialized
                     immutabilityPolicy: default,
                     legalHold: default,
                     progressHandler: default,
-                    transferValidationOverride: new() { ChecksumAlgorithm = StorageChecksumAlgorithm.None },
+                    transferValidationOverride: default,
                     operationName: default,
                     async: async,
                     cancellationToken: cancellationToken)
@@ -3040,11 +2963,8 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
             => SyncUploadFromUriInternal(
                 copySource,
-                overwrite ? null : new BlobSyncUploadFromUriOptions
-                {
-                    DestinationConditions = new BlobRequestConditions
-                    { IfNoneMatch = new ETag(Constants.Wildcard) }
-                },
+                overwrite ? null : new BlobSyncUploadFromUriOptions{ DestinationConditions = new BlobRequestConditions
+                    { IfNoneMatch = new ETag(Constants.Wildcard) } },
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3089,11 +3009,8 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
             => await SyncUploadFromUriInternal(
                 copySource,
-                overwrite ? null : new BlobSyncUploadFromUriOptions
-                {
-                    DestinationConditions = new BlobRequestConditions
-                    { IfNoneMatch = new ETag(Constants.Wildcard) }
-                },
+                overwrite ? null : new BlobSyncUploadFromUriOptions { DestinationConditions = new BlobRequestConditions
+                    { IfNoneMatch = new ETag(Constants.Wildcard) } },
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3239,18 +3156,14 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(SyncUploadFromUri)}");
 
+                // All BlobRequestConditions are valid for options.DestinationConditions.
                 options?.DestinationConditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(BlockBlobClient.SyncUploadFromUri),
                     parameterName: nameof(BlobSyncUploadFromUriOptions.DestinationConditions));
 
                 options?.SourceConditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.LeaseId
-                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    invalidConditions: BlobRequestConditionProperty.LeaseId,
                     operationName: nameof(BlockBlobClient.SyncUploadFromUri),
                     parameterName: nameof(BlobSyncUploadFromUriOptions.SourceConditions));
 
@@ -3293,9 +3206,6 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceAuthorization: options?.SourceAuthentication?.ToString(),
                             copySourceTags: options?.CopySourceTagsMode,
                             fileRequestIntent: options?.SourceShareTokenIntent,
-                            sourceEncryptionKey: options?.SourceCustomerProvidedKey?.EncryptionKey,
-                            sourceEncryptionKeySha256: options?.SourceCustomerProvidedKey?.EncryptionKeyHash,
-                            sourceEncryptionAlgorithm: options?.SourceCustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -3333,9 +3243,6 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceAuthorization: options?.SourceAuthentication?.ToString(),
                             copySourceTags: options?.CopySourceTagsMode,
                             fileRequestIntent: options?.SourceShareTokenIntent,
-                            sourceEncryptionKey: options?.SourceCustomerProvidedKey?.EncryptionKey,
-                            sourceEncryptionKeySha256: options?.SourceCustomerProvidedKey?.EncryptionKeyHash,
-                            sourceEncryptionAlgorithm: options?.SourceCustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken);
                     }
 
@@ -3364,7 +3271,7 @@ namespace Azure.Storage.Blobs.Specialized
             UploadTransferValidationOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
-            => new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
+            =>  new PartitionedUploader<BlobUploadOptions, BlobContentInfo>(
                 GetPartitionedUploaderBehaviors(this),
                 transferOptions,
                 validationOptions,

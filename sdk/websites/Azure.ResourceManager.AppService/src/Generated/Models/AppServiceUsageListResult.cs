@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of usages.
-    /// Serialized Name: UsageCollection
-    /// </summary>
+    /// <summary> Collection of usages. </summary>
     internal partial class AppServiceUsageListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceUsageListResult"/>. </summary>
-        /// <param name="value">
-        /// The Usage items on this page
-        /// Serialized Name: UsageCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceUsageListResult(IEnumerable<AppServiceUsage> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceUsageListResult"/>. </summary>
-        /// <param name="value">
-        /// The Usage items on this page
-        /// Serialized Name: UsageCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: UsageCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceUsageListResult(IReadOnlyList<AppServiceUsage> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppServiceUsageListResult(IReadOnlyList<AppServiceUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The Usage items on this page
-        /// Serialized Name: UsageCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<AppServiceUsage> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: UsageCollection.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

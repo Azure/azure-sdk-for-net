@@ -7,7 +7,7 @@ using Azure.ResourceManager.Kubernetes;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class KubernetesSpecification() :
-    Specification("Kubernetes", typeof(KubernetesExtensions), serviceDirectory: "hybridkubernetes")
+    Specification("Kubernetes", typeof(KubernetesExtensions))
 {
     protected override void Customize()
     {

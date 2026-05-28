@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,8 +15,6 @@ namespace Routes
     public partial class InInterface
     {
         protected InInterface() => throw null;
-
-        internal InInterface(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

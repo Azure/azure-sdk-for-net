@@ -16,8 +16,6 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         BodyRegexSanitizer,
         /// <summary> BodyStringSanitizer. </summary>
         BodyStringSanitizer,
-        /// <summary> ContentDispositionFilePathSanitizer. </summary>
-        ContentDispositionFilePathSanitizer,
         /// <summary> GeneralRegexSanitizer. </summary>
         GeneralRegexSanitizer,
         /// <summary> GeneralStringSanitizer. </summary>

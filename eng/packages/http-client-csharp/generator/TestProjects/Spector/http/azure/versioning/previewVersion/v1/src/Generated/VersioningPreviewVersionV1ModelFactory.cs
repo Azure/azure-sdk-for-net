@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Specs.Azure.Versioning.PreviewVersion;
+using _Specs_.Azure.Versioning.PreviewVersion;
 
 namespace Versioning.PreviewVersion.V1
 {

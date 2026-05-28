@@ -303,7 +303,6 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
-                kind,
                 recommendationName,
                 displayName,
                 message,
@@ -317,6 +316,7 @@ namespace Azure.ResourceManager.AppService
                 extensionName,
                 bladeName,
                 forwardLink,
+                kind,
                 serializedAdditionalRawData);
         }
 

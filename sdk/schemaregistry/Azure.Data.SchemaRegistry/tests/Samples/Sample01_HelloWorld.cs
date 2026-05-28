@@ -84,7 +84,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             Response<SchemaProperties> schemaProperties = avroClient.RegisterSchema(groupName, name, definition, format);
             #endregion
 
-            Assert.That(schemaProperties, Is.Not.Null);
+            Assert.NotNull(schemaProperties);
             _avroSchemaProperties = schemaProperties.Value;
             _avroDefinition = definition;
         }
@@ -100,7 +100,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string definition = schema.Definition;
             #endregion
 
-            Assert.That(definition, Is.EqualTo(Regex.Replace(_avroDefinition, @"\s+", string.Empty)));
+            Assert.AreEqual(Regex.Replace(_avroDefinition, @"\s+", string.Empty), definition);
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             Response<SchemaProperties> schemaProperties = jsonClient.RegisterSchema(groupName, name, definition, format);
             #endregion
 
-            Assert.That(schemaProperties, Is.Not.Null);
+            Assert.NotNull(schemaProperties);
             _jsonSchemaProperties = schemaProperties.Value;
             _jsonDefinition = definition;
         }
@@ -151,7 +151,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string definition = schema.Definition;
             #endregion
 
-            Assert.That(definition, Is.EqualTo(_jsonDefinition));
+            Assert.AreEqual(_jsonDefinition, definition);
         }
 
         [Test]
@@ -174,7 +174,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             Response<SchemaProperties> schemaProperties = customClient.RegisterSchema(groupName, name, definition, format);
             #endregion
 
-            Assert.That(schemaProperties, Is.Not.Null);
+            Assert.NotNull(schemaProperties);
             _customSchemaProperties = schemaProperties.Value;
             _customDefinition = definition;
         }
@@ -190,7 +190,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string definition = schema.Definition;
             #endregion
 
-            Assert.That(definition, Is.EqualTo(_customDefinition));
+            Assert.AreEqual(_customDefinition, definition);
         }
     }
 }

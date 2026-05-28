@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal static partial class ServiceBusFilterTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ServiceBusFilterType value) => value switch
         {
             ServiceBusFilterType.SqlFilter => "SqlFilter",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusFilterType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static ServiceBusFilterType ToServiceBusFilterType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SqlFilter"))
-            {
-                return ServiceBusFilterType.SqlFilter;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CorrelationFilter"))
-            {
-                return ServiceBusFilterType.CorrelationFilter;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SqlFilter")) return ServiceBusFilterType.SqlFilter;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CorrelationFilter")) return ServiceBusFilterType.CorrelationFilter;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusFilterType value.");
         }
     }

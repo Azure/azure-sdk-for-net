@@ -8,86 +8,92 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HDInsight;
 using Azure.ResourceManager.HDInsight.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HDInsight.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableHDInsightSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _hdInsightClusterClientDiagnostics;
-        private HDInsightCluster _hdInsightClusterRestClient;
+        private ClientDiagnostics _hdInsightClusterClustersClientDiagnostics;
+        private ClustersRestOperations _hdInsightClusterClustersRestClient;
         private ClientDiagnostics _locationsClientDiagnostics;
-        private Locations _locationsRestClient;
+        private LocationsRestOperations _locationsRestClient;
 
-        /// <summary> Initializes a new instance of MockableHDInsightSubscriptionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableHDInsightSubscriptionResource"/> class for mocking. </summary>
         protected MockableHDInsightSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableHDInsightSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableHDInsightSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHDInsightSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics HDInsightClusterClientDiagnostics => _hdInsightClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics HDInsightClusterClustersClientDiagnostics => _hdInsightClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightClusterResource.ResourceType.Namespace, Diagnostics);
+        private ClustersRestOperations HDInsightClusterClustersRestClient => _hdInsightClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HDInsightClusterResource.ResourceType));
+        private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private LocationsRestOperations LocationsRestClient => _locationsRestClient ??= new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private HDInsightCluster HDInsightClusterRestClient => _hdInsightClusterRestClient ??= new HDInsightCluster(HDInsightClusterClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
-
-        private ClientDiagnostics LocationsClientDiagnostics => _locationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HDInsight.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Locations LocationsRestClient => _locationsRestClient ??= new Locations(LocationsClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
-
-        /// <summary>
-        /// Lists all the HDInsight clusters under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HDInsightClusterResource> GetHDInsightClustersAsync(CancellationToken cancellationToken = default)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterGetAllAsyncCollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
 
         /// <summary>
         /// Lists all the HDInsight clusters under the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="HDInsightClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HDInsightClusterResource> GetHDInsightClustersAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HDInsightClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterResource(Client, HDInsightClusterData.DeserializeHDInsightClusterData(e)), HDInsightClusterClustersClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightClusters", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the HDInsight clusters under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/clusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,49 +101,37 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <returns> A collection of <see cref="HDInsightClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightClusterResource> GetHDInsightClusters(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new HDInsightClusterGetAllCollectionResultOfT(HDInsightClusterRestClient, Id.SubscriptionId, context, "MockableHDInsightSubscriptionResource.GetHDInsightClusters"), data => new HDInsightClusterResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HDInsightClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HDInsightClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HDInsightClusterResource(Client, HDInsightClusterData.DeserializeHDInsightClusterData(e)), HDInsightClusterClustersClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the capabilities for the specified location.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationsOperationGroup_GetCapabilities. </description>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetCapabilities</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HDInsightCapabilitiesResult>> GetHDInsightCapabilitiesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightCapabilities");
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightCapabilities");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationsRestClient.CreateGetHDInsightCapabilitiesRequest(Id.SubscriptionId, location, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HDInsightCapabilitiesResult> response = Response.FromValue(HDInsightCapabilitiesResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await LocationsRestClient.GetCapabilitiesAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -151,38 +145,28 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// Gets the capabilities for the specified location.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/capabilities</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationsOperationGroup_GetCapabilities. </description>
+        /// <term>Operation Id</term>
+        /// <description>Locations_GetCapabilities</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HDInsightCapabilitiesResult> GetHDInsightCapabilities(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightCapabilities");
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightCapabilities");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationsRestClient.CreateGetHDInsightCapabilitiesRequest(Id.SubscriptionId, location, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HDInsightCapabilitiesResult> response = Response.FromValue(HDInsightCapabilitiesResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = LocationsRestClient.GetCapabilities(Id.SubscriptionId, location, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -196,96 +180,80 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// Lists the usages for the specified location.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationsOperationGroup_ListUsages. </description>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListUsages</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightUsage"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightUsage> GetHDInsightUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new LocationsGetHDInsightUsagesAsyncCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateListUsagesRequest(Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => HDInsightUsage.DeserializeHDInsightUsage(e), LocationsClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists the usages for the specified location.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/usages</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationsOperationGroup_ListUsages. </description>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListUsages</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HDInsightUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightUsage> GetHDInsightUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new LocationsGetHDInsightUsagesCollectionResultOfT(LocationsRestClient, Id.SubscriptionId, location, context, "MockableHDInsightSubscriptionResource.GetHDInsightUsages");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocationsRestClient.CreateListUsagesRequest(Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => HDInsightUsage.DeserializeHDInsightUsage(e), LocationsClientDiagnostics, Pipeline, "MockableHDInsightSubscriptionResource.GetHDInsightUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Lists the billingSpecs for the specified subscription and location.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationsOperationGroup_ListBillingSpecs. </description>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListBillingSpecs</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HDInsightBillingSpecsListResult>> GetHDInsightBillingSpecsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightBillingSpecs");
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightBillingSpecs");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationsRestClient.CreateGetHDInsightBillingSpecsRequest(Id.SubscriptionId, location, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HDInsightBillingSpecsListResult> response = Response.FromValue(HDInsightBillingSpecsListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await LocationsRestClient.ListBillingSpecsAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -299,38 +267,28 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// Lists the billingSpecs for the specified subscription and location.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/billingSpecs</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationsOperationGroup_ListBillingSpecs. </description>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ListBillingSpecs</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The Azure location (region) for which to make the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HDInsightBillingSpecsListResult> GetHDInsightBillingSpecs(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightBillingSpecs");
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightBillingSpecs");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationsRestClient.CreateGetHDInsightBillingSpecsRequest(Id.SubscriptionId, location, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HDInsightBillingSpecsListResult> response = Response.FromValue(HDInsightBillingSpecsListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = LocationsRestClient.ListBillingSpecs(Id.SubscriptionId, location, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -344,42 +302,32 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// Check the cluster name is available or not.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationsOperationGroup_CheckNameAvailability. </description>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="location"> The Azure location (region) for which to make the request. </param>
+        /// <param name="content"> The <see cref="HDInsightNameAvailabilityContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.CheckHDInsightNameAvailability");
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.CheckHDInsightNameAvailability");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationsRestClient.CreateCheckHDInsightNameAvailabilityRequest(Id.SubscriptionId, location, HDInsightNameAvailabilityContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HDInsightNameAvailabilityResult> response = Response.FromValue(HDInsightNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await LocationsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -393,42 +341,32 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// Check the cluster name is available or not.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/checkNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationsOperationGroup_CheckNameAvailability. </description>
+        /// <term>Operation Id</term>
+        /// <description>Locations_CheckNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="location"> The Azure location (region) for which to make the request. </param>
+        /// <param name="content"> The <see cref="HDInsightNameAvailabilityContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.CheckHDInsightNameAvailability");
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.CheckHDInsightNameAvailability");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationsRestClient.CreateCheckHDInsightNameAvailabilityRequest(Id.SubscriptionId, location, HDInsightNameAvailabilityContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HDInsightNameAvailabilityResult> response = Response.FromValue(HDInsightNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = LocationsRestClient.CheckNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -442,42 +380,32 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// Validate the cluster create request spec is valid or not.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationsOperationGroup_ValidateClusterCreateRequest. </description>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ValidateClusterCreateRequest</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="location"> The Azure location (region) for which to make the request. </param>
+        /// <param name="content"> The <see cref="HDInsightClusterCreationValidateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<HDInsightClusterCreationValidateResult>> ValidateHDInsightClusterCreationAsync(AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.ValidateHDInsightClusterCreation");
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.ValidateHDInsightClusterCreation");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationsRestClient.CreateValidateHDInsightClusterCreationRequest(Id.SubscriptionId, location, HDInsightClusterCreationValidateContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HDInsightClusterCreationValidateResult> response = Response.FromValue(HDInsightClusterCreationValidateResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await LocationsRestClient.ValidateClusterCreateRequestAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -491,42 +419,32 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// Validate the cluster create request spec is valid or not.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/validateCreateRequest</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LocationsOperationGroup_ValidateClusterCreateRequest. </description>
+        /// <term>Operation Id</term>
+        /// <description>Locations_ValidateClusterCreateRequest</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="location"> The Azure location (region) for which to make the request. </param>
+        /// <param name="content"> The <see cref="HDInsightClusterCreationValidateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<HDInsightClusterCreationValidateResult> ValidateHDInsightClusterCreation(AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.ValidateHDInsightClusterCreation");
+            using var scope = LocationsClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.ValidateHDInsightClusterCreation");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LocationsRestClient.CreateValidateHDInsightClusterCreationRequest(Id.SubscriptionId, location, HDInsightClusterCreationValidateContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HDInsightClusterCreationValidateResult> response = Response.FromValue(HDInsightClusterCreationValidateResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = LocationsRestClient.ValidateClusterCreateRequest(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

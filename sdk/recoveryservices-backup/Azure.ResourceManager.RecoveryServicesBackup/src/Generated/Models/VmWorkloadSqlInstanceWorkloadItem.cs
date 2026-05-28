@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -18,6 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public VmWorkloadSqlInstanceWorkloadItem()
         {
             DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
+            WorkloadItemType = "SQLInstance";
         }
 
         /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlInstanceWorkloadItem"/>. </summary>
@@ -26,16 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="workloadItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parentName"> Name for instance or AG. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="isAutoProtectable"> Indicates if workload item is auto-protectable. </param>
         /// <param name="subInquiredItemCount"> For instance or AG, indicates number of DB's present. </param>
         /// <param name="subWorkloadItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
         /// <param name="dataDirectoryPaths"> Data Directory Paths for default directories. </param>
-        internal VmWorkloadSqlInstanceWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string parentName, string serverName, bool? isAutoProtectable, int? subInquiredItemCount, int? subWorkloadItemCount, IList<SqlDataDirectory> dataDirectoryPaths) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, additionalBinaryDataProperties, parentName, serverName, isAutoProtectable, subInquiredItemCount, subWorkloadItemCount)
+        internal VmWorkloadSqlInstanceWorkloadItem(string backupManagementType, string workloadType, string workloadItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, string parentName, string serverName, bool? isAutoProtectable, int? subInquiredItemCount, int? subWorkloadItemCount, IList<SqlDataDirectory> dataDirectoryPaths) : base(backupManagementType, workloadType, workloadItemType, friendlyName, protectionState, serializedAdditionalRawData, parentName, serverName, isAutoProtectable, subInquiredItemCount, subWorkloadItemCount)
         {
             DataDirectoryPaths = dataDirectoryPaths;
+            WorkloadItemType = workloadItemType ?? "SQLInstance";
         }
 
         /// <summary> Data Directory Paths for default directories. </summary>

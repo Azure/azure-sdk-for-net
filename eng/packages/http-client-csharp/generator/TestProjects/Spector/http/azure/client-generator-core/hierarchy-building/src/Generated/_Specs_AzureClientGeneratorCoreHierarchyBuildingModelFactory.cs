@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
+namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     public static partial class _Specs_AzureClientGeneratorCoreHierarchyBuildingModelFactory
     {

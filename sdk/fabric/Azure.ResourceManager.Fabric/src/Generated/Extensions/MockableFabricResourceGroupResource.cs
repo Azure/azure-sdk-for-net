@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Fabric;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Fabric.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableFabricResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableFabricResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableFabricResourceGroupResource"/> class for mocking. </summary>
         protected MockableFabricResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableFabricResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableFabricResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableFabricResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of FabricCapacities in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of FabricCapacities and their operations over a FabricCapacityResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of FabricCapacityResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of FabricCapacityResources and their operations over a FabricCapacityResource. </returns>
         public virtual FabricCapacityCollection GetFabricCapacities()
         {
             return GetCachedClient(client => new FabricCapacityCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// Get a FabricCapacity
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.Fabric.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<FabricCapacityResource>> GetFabricCapacityAsync(string capacityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(capacityName, nameof(capacityName));
-
             return await GetFabricCapacities().GetAsync(capacityName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// Get a FabricCapacity
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.Fabric.Mocking
         [ForwardsClientCalls]
         public virtual Response<FabricCapacityResource> GetFabricCapacity(string capacityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(capacityName, nameof(capacityName));
-
             return GetFabricCapacities().Get(capacityName, cancellationToken);
         }
     }

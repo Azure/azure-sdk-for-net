@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Hci.Vm;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    /// <summary> Security rule resource. </summary>
-    public partial class HciVmSecurityRuleProperties : IJsonModel<HciVmSecurityRuleProperties>
+    public partial class HciVmSecurityRuleProperties : IUtf8JsonSerializable, IJsonModel<HciVmSecurityRuleProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="HciVmSecurityRuleProperties"/> for deserialization. </summary>
-        internal HciVmSecurityRuleProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciVmSecurityRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmSecurityRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmSecurityRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmSecurityRuleProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmSecurityRuleProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmSecurityRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HciVmSecurityRuleProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciVmSecurityRuleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmSecurityRuleProperties IPersistableModel<HciVmSecurityRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciVmSecurityRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmSecurityRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmSecurityRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmSecurityRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciVmSecurityRuleProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -90,13 +45,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 writer.WritePropertyName("sourceAddressPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (string item in SourceAddressPrefixes)
+                foreach (var item in SourceAddressPrefixes)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -105,13 +55,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 writer.WritePropertyName("destinationAddressPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (string item in DestinationAddressPrefixes)
+                foreach (var item in DestinationAddressPrefixes)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -120,13 +65,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
-                foreach (string item in SourcePortRanges)
+                foreach (var item in SourcePortRanges)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -135,13 +75,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
-                foreach (string item in DestinationPortRanges)
+                foreach (var item in DestinationPortRanges)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -157,15 +92,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -174,27 +109,22 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmSecurityRuleProperties IJsonModel<HciVmSecurityRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmSecurityRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciVmSecurityRuleProperties IJsonModel<HciVmSecurityRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmSecurityRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmSecurityRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciVmSecurityRuleProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciVmSecurityRuleProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciVmSecurityRuleProperties DeserializeHciVmSecurityRuleProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciVmSecurityRuleProperties DeserializeHciVmSecurityRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -209,132 +139,106 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             int priority = default;
             HciVmSecurityRuleDirection direction = default;
             HciVmProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("description"u8))
+                if (property.NameEquals("description"u8))
                 {
-                    description = prop.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("protocol"u8))
+                if (property.NameEquals("protocol"u8))
                 {
-                    protocol = new HciVmSecurityRuleProtocol(prop.Value.GetString());
+                    protocol = new HciVmSecurityRuleProtocol(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sourceAddressPrefixes"u8))
+                if (property.NameEquals("sourceAddressPrefixes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     sourceAddressPrefixes = array;
                     continue;
                 }
-                if (prop.NameEquals("destinationAddressPrefixes"u8))
+                if (property.NameEquals("destinationAddressPrefixes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     destinationAddressPrefixes = array;
                     continue;
                 }
-                if (prop.NameEquals("sourcePortRanges"u8))
+                if (property.NameEquals("sourcePortRanges"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     sourcePortRanges = array;
                     continue;
                 }
-                if (prop.NameEquals("destinationPortRanges"u8))
+                if (property.NameEquals("destinationPortRanges"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     destinationPortRanges = array;
                     continue;
                 }
-                if (prop.NameEquals("access"u8))
+                if (property.NameEquals("access"u8))
                 {
-                    access = new HciVmSecurityRuleAccess(prop.Value.GetString());
+                    access = new HciVmSecurityRuleAccess(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("priority"u8))
+                if (property.NameEquals("priority"u8))
                 {
-                    priority = prop.Value.GetInt32();
+                    priority = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("direction"u8))
+                if (property.NameEquals("direction"u8))
                 {
-                    direction = new HciVmSecurityRuleDirection(prop.Value.GetString());
+                    direction = new HciVmSecurityRuleDirection(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new HciVmProvisioningState(prop.Value.GetString());
+                    provisioningState = new HciVmProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new HciVmSecurityRuleProperties(
                 description,
                 protocol,
@@ -346,7 +250,38 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 priority,
                 direction,
                 provisioningState,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HciVmSecurityRuleProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmSecurityRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciVmSecurityRuleProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HciVmSecurityRuleProperties IPersistableModel<HciVmSecurityRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmSecurityRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHciVmSecurityRuleProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmSecurityRuleProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciVmSecurityRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

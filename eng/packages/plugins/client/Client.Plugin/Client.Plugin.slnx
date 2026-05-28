@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Client.Plugin.csproj" />
-  <Project Path="test/Client.Plugin.Tests.csproj" />
-</Solution>

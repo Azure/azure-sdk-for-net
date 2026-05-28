@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.Marketplace.Models
     public readonly partial struct PrivateStorePlanStatus : IEquatable<PrivateStorePlanStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStorePlanStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PrivateStorePlanStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string PendingValue = "Pending";
         private const string RejectedValue = "Rejected";
         private const string ApprovedValue = "Approved";
         private const string NoneValue = "None";
 
-        /// <summary> Initializes a new instance of <see cref="PrivateStorePlanStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PrivateStorePlanStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Pending. </summary>
+        /// <summary> Pending. </summary>
         public static PrivateStorePlanStatus Pending { get; } = new PrivateStorePlanStatus(PendingValue);
-
-        /// <summary> Gets the Rejected. </summary>
+        /// <summary> Rejected. </summary>
         public static PrivateStorePlanStatus Rejected { get; } = new PrivateStorePlanStatus(RejectedValue);
-
-        /// <summary> Gets the Approved. </summary>
+        /// <summary> Approved. </summary>
         public static PrivateStorePlanStatus Approved { get; } = new PrivateStorePlanStatus(ApprovedValue);
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static PrivateStorePlanStatus None { get; } = new PrivateStorePlanStatus(NoneValue);
-
         /// <summary> Determines if two <see cref="PrivateStorePlanStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrivateStorePlanStatus left, PrivateStorePlanStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PrivateStorePlanStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrivateStorePlanStatus left, PrivateStorePlanStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PrivateStorePlanStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateStorePlanStatus"/>. </summary>
         public static implicit operator PrivateStorePlanStatus(string value) => new PrivateStorePlanStatus(value);
 
-        /// <summary> Converts a string to a <see cref="PrivateStorePlanStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PrivateStorePlanStatus?(string value) => value == null ? null : new PrivateStorePlanStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrivateStorePlanStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PrivateStorePlanStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

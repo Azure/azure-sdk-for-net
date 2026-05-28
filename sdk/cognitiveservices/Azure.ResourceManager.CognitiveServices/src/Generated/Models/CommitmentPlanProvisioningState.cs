@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct CommitmentPlanProvisioningState : IEquatable<CommitmentPlanProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CommitmentPlanProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CommitmentPlanProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AcceptedValue = "Accepted";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string SucceededValue = "Succeeded";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="CommitmentPlanProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CommitmentPlanProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Accepted. </summary>
+        /// <summary> Accepted. </summary>
         public static CommitmentPlanProvisioningState Accepted { get; } = new CommitmentPlanProvisioningState(AcceptedValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static CommitmentPlanProvisioningState Creating { get; } = new CommitmentPlanProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static CommitmentPlanProvisioningState Deleting { get; } = new CommitmentPlanProvisioningState(DeletingValue);
-
-        /// <summary> Gets the Moving. </summary>
+        /// <summary> Moving. </summary>
         public static CommitmentPlanProvisioningState Moving { get; } = new CommitmentPlanProvisioningState(MovingValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static CommitmentPlanProvisioningState Failed { get; } = new CommitmentPlanProvisioningState(FailedValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static CommitmentPlanProvisioningState Succeeded { get; } = new CommitmentPlanProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static CommitmentPlanProvisioningState Canceled { get; } = new CommitmentPlanProvisioningState(CanceledValue);
-
         /// <summary> Determines if two <see cref="CommitmentPlanProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CommitmentPlanProvisioningState left, CommitmentPlanProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CommitmentPlanProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CommitmentPlanProvisioningState left, CommitmentPlanProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CommitmentPlanProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommitmentPlanProvisioningState"/>. </summary>
         public static implicit operator CommitmentPlanProvisioningState(string value) => new CommitmentPlanProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="CommitmentPlanProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CommitmentPlanProvisioningState?(string value) => value == null ? null : new CommitmentPlanProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CommitmentPlanProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CommitmentPlanProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

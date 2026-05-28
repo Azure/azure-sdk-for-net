@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 
         public UpdateLedgerTest(string testFixtureName) : base(true, RecordedTestMode.Playback, testFixtureName)
         {
+            SaveDebugRecordingsOnFailure = true;
         }
 
         [Test, Order(1)]
@@ -25,8 +26,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestAddUserToLedger()
         {
-            AssumeValidTestUserObjectId();
-
             try
             {
                 // Create Ledger
@@ -54,8 +53,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestRemoveUserFromLedger()
         {
-            AssumeValidTestUserObjectId();
-
             // Create Ledger
             await CreateLedger(LedgerName);
             _ledgerResource = await GetLedgerByName(LedgerName);
@@ -89,13 +86,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
                 properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.RunningState, properties.LedgerType,
                 properties.ProvisioningState, ConfidentialLedgerSku.Standard, securityPrincipals, properties.CertBasedSecurityPrincipals, properties.HostLevel,
                 properties.MaxBodySizeInMb, properties.SubjectName, properties.NodeCount, properties.WriteLBAddressPrefix,
-                properties.WorkerThreads, properties.EnclavePlatform, properties.ApplicationType, null, null);
-        }
-
-        private void AssumeValidTestUserObjectId()
-        {
-            Assume.That(Guid.TryParse(TestEnvironment.TestUserObjectId, out _),
-                "Skipping: CONFIDENTIALLEDGER_CLIENT_OBJECTID environment variable is not set to a valid GUID.");
+                properties.WorkerThreads, properties.EnclavePlatform, properties.ApplicationType, null);
         }
 
         /// <summary>

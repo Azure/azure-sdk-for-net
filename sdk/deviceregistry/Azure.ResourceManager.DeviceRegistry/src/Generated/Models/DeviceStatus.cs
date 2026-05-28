@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
             get
             {
-                return Endpoints is null ? default : Endpoints.Inbound;
+                return Endpoints.Inbound;
             }
         }
     }

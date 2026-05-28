@@ -30,8 +30,7 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "HEAD",
@@ -41,8 +40,7 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.valid",
-            "decorators": [],
-            "namespace": "Server.Endpoint.NotDefined"
+            "decorators": []
           },
           "parameters": [],
           "response": {},
@@ -75,11 +73,9 @@
           "crossLanguageDefinitionId": "Server.Endpoint.NotDefined.endpoint"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Endpoint.NotDefined",
-      "apiVersions": [],
-      "isMultiServiceClient": false
+      "apiVersions": []
     }
   ]
 }

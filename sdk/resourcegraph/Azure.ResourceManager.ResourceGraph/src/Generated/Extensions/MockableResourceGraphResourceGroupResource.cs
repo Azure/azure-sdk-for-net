@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ResourceGraph;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceGraph.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableResourceGraphResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableResourceGraphResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableResourceGraphResourceGroupResource"/> class for mocking. </summary>
         protected MockableResourceGraphResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableResourceGraphResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableResourceGraphResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableResourceGraphResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of ResourceGraphQueries in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ResourceGraphQueries and their operations over a ResourceGraphQueryResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of ResourceGraphQueryResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ResourceGraphQueryResources and their operations over a ResourceGraphQueryResource. </returns>
         public virtual ResourceGraphQueryCollection GetResourceGraphQueries()
         {
             return GetCachedClient(client => new ResourceGraphQueryCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// Get a single graph query by its resourceName.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceGraph/queries/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceGraph/queries/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GraphQueryResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>GraphQuery_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGraphQueryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceGraphQueryResource>> GetResourceGraphQueryAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return await GetResourceGraphQueries().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// Get a single graph query by its resourceName.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceGraph/queries/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceGraph/queries/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GraphQueryResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>GraphQuery_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGraphQueryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         [ForwardsClientCalls]
         public virtual Response<ResourceGraphQueryResource> GetResourceGraphQuery(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return GetResourceGraphQueries().Get(resourceName, cancellationToken);
         }
     }

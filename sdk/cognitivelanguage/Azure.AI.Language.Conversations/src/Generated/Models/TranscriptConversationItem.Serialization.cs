@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Language.Conversations;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> Additional properties for supporting transcript conversation. </summary>
-    public partial class TranscriptConversationItem : IJsonModel<TranscriptConversationItem>
+    public partial class TranscriptConversationItem : IUtf8JsonSerializable, IJsonModel<TranscriptConversationItem>
     {
-        /// <summary> Initializes a new instance of <see cref="TranscriptConversationItem"/> for deserialization. </summary>
-        internal TranscriptConversationItem()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranscriptConversationItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TranscriptConversationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptConversationItem>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTranscriptConversationItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TranscriptConversationItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptConversationItem>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TranscriptConversationItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TranscriptConversationItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TranscriptConversationItem IPersistableModel<TranscriptConversationItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TranscriptConversationItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TranscriptConversationItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptConversationItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TranscriptConversationItem)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("participantId"u8);
@@ -110,7 +65,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 writer.WritePropertyName("wordLevelTimings"u8);
                 writer.WriteStartArray();
-                foreach (WordLevelTiming item in WordLevelTimings)
+                foreach (var item in WordLevelTimings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -121,15 +76,15 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WritePropertyName("conversationItemLevelTiming"u8);
                 writer.WriteObjectValue(ConversationItemLevelTiming, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -138,27 +93,22 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TranscriptConversationItem IJsonModel<TranscriptConversationItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TranscriptConversationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TranscriptConversationItem IJsonModel<TranscriptConversationItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptConversationItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TranscriptConversationItem)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTranscriptConversationItem(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TranscriptConversationItem DeserializeTranscriptConversationItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static TranscriptConversationItem DeserializeTranscriptConversationItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -168,109 +118,158 @@ namespace Azure.AI.Language.Conversations.Models
             string language = default;
             InputModality? modality = default;
             ParticipantRole? role = default;
-            string inverseTextNormalized = default;
-            string maskedInverseTextNormalized = default;
+            string itn = default;
+            string maskedItn = default;
             string text = default;
             string lexical = default;
             IList<WordLevelTiming> wordLevelTimings = default;
             ConversationItemLevelTiming conversationItemLevelTiming = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("participantId"u8))
+                if (property.NameEquals("participantId"u8))
                 {
-                    participantId = prop.Value.GetString();
+                    participantId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("language"u8))
+                if (property.NameEquals("language"u8))
                 {
-                    language = prop.Value.GetString();
+                    language = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("modality"u8))
+                if (property.NameEquals("modality"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    modality = new InputModality(prop.Value.GetString());
+                    modality = new InputModality(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("role"u8))
+                if (property.NameEquals("role"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    role = new ParticipantRole(prop.Value.GetString());
+                    role = new ParticipantRole(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("itn"u8))
+                if (property.NameEquals("itn"u8))
                 {
-                    inverseTextNormalized = prop.Value.GetString();
+                    itn = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("maskedItn"u8))
+                if (property.NameEquals("maskedItn"u8))
                 {
-                    maskedInverseTextNormalized = prop.Value.GetString();
+                    maskedItn = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("text"u8))
+                if (property.NameEquals("text"u8))
                 {
-                    text = prop.Value.GetString();
+                    text = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lexical"u8))
+                if (property.NameEquals("lexical"u8))
                 {
-                    lexical = prop.Value.GetString();
+                    lexical = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("wordLevelTimings"u8))
+                if (property.NameEquals("wordLevelTimings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<WordLevelTiming> array = new List<WordLevelTiming>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(WordLevelTiming.DeserializeWordLevelTiming(item, options));
                     }
                     wordLevelTimings = array;
                     continue;
                 }
-                if (prop.NameEquals("conversationItemLevelTiming"u8))
+                if (property.NameEquals("conversationItemLevelTiming"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    conversationItemLevelTiming = ConversationItemLevelTiming.DeserializeConversationItemLevelTiming(prop.Value, options);
+                    conversationItemLevelTiming = ConversationItemLevelTiming.DeserializeConversationItemLevelTiming(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new TranscriptConversationItem(
                 id,
                 participantId,
                 language,
                 modality,
                 role,
-                inverseTextNormalized,
-                maskedInverseTextNormalized,
+                itn,
+                maskedItn,
                 text,
                 lexical,
                 wordLevelTimings ?? new ChangeTrackingList<WordLevelTiming>(),
                 conversationItemLevelTiming,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<TranscriptConversationItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TranscriptConversationItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TranscriptConversationItem IPersistableModel<TranscriptConversationItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TranscriptConversationItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeTranscriptConversationItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TranscriptConversationItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TranscriptConversationItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TranscriptConversationItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTranscriptConversationItem(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

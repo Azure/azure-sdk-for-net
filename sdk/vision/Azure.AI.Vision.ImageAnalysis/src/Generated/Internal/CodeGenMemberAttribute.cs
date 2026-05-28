@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Microsoft.TypeSpec.Generator.Customizations
+namespace Azure.AI.Vision.ImageAnalysis
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute

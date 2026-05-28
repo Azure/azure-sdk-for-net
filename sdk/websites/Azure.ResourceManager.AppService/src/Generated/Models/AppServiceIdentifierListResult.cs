@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of identifiers.
-    /// Serialized Name: IdentifierCollection
-    /// </summary>
+    /// <summary> Collection of identifiers. </summary>
     internal partial class AppServiceIdentifierListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceIdentifierListResult"/>. </summary>
-        /// <param name="value">
-        /// The Identifier items on this page
-        /// Serialized Name: IdentifierCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceIdentifierListResult(IEnumerable<AppServiceIdentifierData> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceIdentifierListResult"/>. </summary>
-        /// <param name="value">
-        /// The Identifier items on this page
-        /// Serialized Name: IdentifierCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: IdentifierCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceIdentifierListResult(IReadOnlyList<AppServiceIdentifierData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppServiceIdentifierListResult(IReadOnlyList<AppServiceIdentifierData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The Identifier items on this page
-        /// Serialized Name: IdentifierCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<AppServiceIdentifierData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: IdentifierCollection.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

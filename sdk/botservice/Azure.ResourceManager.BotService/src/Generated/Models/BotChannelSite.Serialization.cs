@@ -9,61 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.BotService;
+using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary> A site for the channel. </summary>
-    public partial class BotChannelSite : IJsonModel<BotChannelSite>
+    public partial class BotChannelSite : IUtf8JsonSerializable, IJsonModel<BotChannelSite>
     {
-        /// <summary> Initializes a new instance of <see cref="BotChannelSite"/> for deserialization. </summary>
-        internal BotChannelSite()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelSite>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BotChannelSite PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BotChannelSite>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBotChannelSite(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BotChannelSite)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BotChannelSite>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BotChannelSite)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BotChannelSite>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BotChannelSite IPersistableModel<BotChannelSite>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BotChannelSite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BotChannelSite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BotChannelSite>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BotChannelSite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BotChannelSite)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
@@ -121,8 +75,15 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(IsBlockUserUploadEnabled))
             {
-                writer.WritePropertyName("isBlockUserUploadEnabled"u8);
-                writer.WriteBooleanValue(IsBlockUserUploadEnabled.Value);
+                if (IsBlockUserUploadEnabled != null)
+                {
+                    writer.WritePropertyName("isBlockUserUploadEnabled"u8);
+                    writer.WriteBooleanValue(IsBlockUserUploadEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isBlockUserUploadEnabled");
+                }
             }
             if (Optional.IsDefined(IsNoStorageEnabled))
             {
@@ -158,13 +119,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WritePropertyName("trustedOrigins"u8);
                 writer.WriteStartArray();
-                foreach (string item in TrustedOrigins)
+                foreach (var item in TrustedOrigins)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -179,15 +135,15 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("isWebchatPreviewEnabled"u8);
                 writer.WriteBooleanValue(IsWebchatPreviewEnabled.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -196,27 +152,22 @@ namespace Azure.ResourceManager.BotService.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BotChannelSite IJsonModel<BotChannelSite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BotChannelSite JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BotChannelSite IJsonModel<BotChannelSite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BotChannelSite>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BotChannelSite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BotChannelSite)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBotChannelSite(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BotChannelSite DeserializeBotChannelSite(JsonElement element, ModelReaderWriterOptions options)
+        internal static BotChannelSite DeserializeBotChannelSite(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -232,7 +183,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool? isDetailedLoggingEnabled = default;
             bool? isBlockUserUploadEnabled = default;
             bool? isNoStorageEnabled = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             string appId = default;
             bool? isV1Enabled = default;
             bool? isV3Enabled = default;
@@ -240,174 +191,169 @@ namespace Azure.ResourceManager.BotService.Models
             IList<string> trustedOrigins = default;
             bool? isWebChatSpeechEnabled = default;
             bool? isWebchatPreviewEnabled = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("tenantId"u8))
+                if (property.NameEquals("tenantId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tenantId = new Guid(prop.Value.GetString());
+                    tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (prop.NameEquals("siteId"u8))
+                if (property.NameEquals("siteId"u8))
                 {
-                    siteId = prop.Value.GetString();
+                    siteId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("siteName"u8))
+                if (property.NameEquals("siteName"u8))
                 {
-                    siteName = prop.Value.GetString();
+                    siteName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("key"u8))
+                if (property.NameEquals("key"u8))
                 {
-                    key = prop.Value.GetString();
+                    key = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("key2"u8))
+                if (property.NameEquals("key2"u8))
                 {
-                    key2 = prop.Value.GetString();
+                    key2 = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isEnabled"u8))
+                if (property.NameEquals("isEnabled"u8))
                 {
-                    isEnabled = prop.Value.GetBoolean();
+                    isEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isTokenEnabled"u8))
+                if (property.NameEquals("isTokenEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isTokenEnabled = prop.Value.GetBoolean();
+                    isTokenEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isEndpointParametersEnabled"u8))
+                if (property.NameEquals("isEndpointParametersEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isEndpointParametersEnabled = prop.Value.GetBoolean();
+                    isEndpointParametersEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isDetailedLoggingEnabled"u8))
+                if (property.NameEquals("isDetailedLoggingEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDetailedLoggingEnabled = prop.Value.GetBoolean();
+                    isDetailedLoggingEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isBlockUserUploadEnabled"u8))
+                if (property.NameEquals("isBlockUserUploadEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         isBlockUserUploadEnabled = null;
                         continue;
                     }
-                    isBlockUserUploadEnabled = prop.Value.GetBoolean();
+                    isBlockUserUploadEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isNoStorageEnabled"u8))
+                if (property.NameEquals("isNoStorageEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isNoStorageEnabled = prop.Value.GetBoolean();
+                    isNoStorageEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("eTag"u8))
+                if (property.NameEquals("eTag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eTag = new ETag(prop.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("appId"u8))
+                if (property.NameEquals("appId"u8))
                 {
-                    appId = prop.Value.GetString();
+                    appId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isV1Enabled"u8))
+                if (property.NameEquals("isV1Enabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isV1Enabled = prop.Value.GetBoolean();
+                    isV1Enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isV3Enabled"u8))
+                if (property.NameEquals("isV3Enabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isV3Enabled = prop.Value.GetBoolean();
+                    isV3Enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isSecureSiteEnabled"u8))
+                if (property.NameEquals("isSecureSiteEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSecureSiteEnabled = prop.Value.GetBoolean();
+                    isSecureSiteEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("trustedOrigins"u8))
+                if (property.NameEquals("trustedOrigins"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     trustedOrigins = array;
                     continue;
                 }
-                if (prop.NameEquals("isWebChatSpeechEnabled"u8))
+                if (property.NameEquals("isWebChatSpeechEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isWebChatSpeechEnabled = prop.Value.GetBoolean();
+                    isWebChatSpeechEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isWebchatPreviewEnabled"u8))
+                if (property.NameEquals("isWebchatPreviewEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isWebchatPreviewEnabled = prop.Value.GetBoolean();
+                    isWebchatPreviewEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new BotChannelSite(
                 tenantId,
                 siteId,
@@ -420,7 +366,7 @@ namespace Azure.ResourceManager.BotService.Models
                 isDetailedLoggingEnabled,
                 isBlockUserUploadEnabled,
                 isNoStorageEnabled,
-                eTag,
+                etag,
                 appId,
                 isV1Enabled,
                 isV3Enabled,
@@ -428,7 +374,38 @@ namespace Azure.ResourceManager.BotService.Models
                 trustedOrigins ?? new ChangeTrackingList<string>(),
                 isWebChatSpeechEnabled,
                 isWebchatPreviewEnabled,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BotChannelSite>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotChannelSite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BotChannelSite)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BotChannelSite IPersistableModel<BotChannelSite>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotChannelSite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBotChannelSite(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BotChannelSite)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BotChannelSite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,8 +16,6 @@ namespace _Type.Union
     public partial class MixedLiterals
     {
         protected MixedLiterals() => throw null;
-
-        internal MixedLiterals(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

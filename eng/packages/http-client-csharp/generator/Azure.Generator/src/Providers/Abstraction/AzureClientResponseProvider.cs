@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
@@ -29,7 +30,6 @@ namespace Azure.Generator.Providers
         public override CSharpType ClientCollectionAsyncResponseType => new CSharpType(typeof(AsyncPageable<>), typeof(BinaryData));
         public override CSharpType ClientCollectionResponseOfTType => new CSharpType(typeof(Pageable<>), typeof(BinaryData));
         public override CSharpType ClientCollectionAsyncResponseOfTType => new CSharpType(typeof(AsyncPageable<>), typeof(BinaryData));
-        public override string ResponseParameterName => "response";
 
         public override TypeProvider CreateClientCollectionResultDefinition(ClientProvider client,
             InputPagingServiceMethod serviceMethod,
@@ -56,8 +56,10 @@ namespace Azure.Generator.Providers
             => Static(ClientResponseType).Invoke(nameof(FromValue), [valueExpression, response], [typeof(ValueType)], false);
 
         public override HttpResponseApi GetRawResponse()
-            => new AzureResponseProvider(Original);
+            => new AzureResponseProvider(GetRawResponseExpression());
 
         public override ClientResponseApi ToExpression() => this;
+
+        private ScopedApi<Response> GetRawResponseExpression() => Original.As<Response>();
     }
 }

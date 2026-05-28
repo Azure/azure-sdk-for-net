@@ -8,30 +8,32 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Qumulo;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Qumulo.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableQumuloResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableQumuloResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableQumuloResourceGroupResource"/> class for mocking. </summary>
         protected MockableQumuloResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableQumuloResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableQumuloResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableQumuloResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of QumuloFileSystemResources in the <see cref="ResourceGroupResource"/>. </summary>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of QumuloFileSystemResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of QumuloFileSystemResources and their operations over a QumuloFileSystemResource. </returns>
         public virtual QumuloFileSystemResourceCollection GetQumuloFileSystemResources()
         {
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// Get a FileSystemResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<QumuloFileSystemResource>> GetQumuloFileSystemResourceAsync(string fileSystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
-
             return await GetQumuloFileSystemResources().GetAsync(fileSystemName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         /// Get a FileSystemResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.Qumulo.Mocking
         [ForwardsClientCalls]
         public virtual Response<QumuloFileSystemResource> GetQumuloFileSystemResource(string fileSystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
-
             return GetQumuloFileSystemResources().Get(fileSystemName, cancellationToken);
         }
     }

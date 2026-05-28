@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         {
             get
             {
-                return Revocation is null ? default : Revocation.RequestedOn;
+                return Revocation.RequestedOn;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         {
             get
             {
-                return Revocation is null ? default : Revocation.EffectiveOn;
+                return Revocation.EffectiveOn;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         {
             get
             {
-                return Revocation is null ? default : Revocation.Reason;
+                return Revocation.Reason;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         {
             get
             {
-                return Revocation is null ? default : Revocation.Remarks;
+                return Revocation.Remarks;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         {
             get
             {
-                return Revocation is null ? default : Revocation.RevocationStatus;
+                return Revocation.RevocationStatus;
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         {
             get
             {
-                return Revocation is null ? default : Revocation.FailureReason;
+                return Revocation.FailureReason;
             }
         }
     }

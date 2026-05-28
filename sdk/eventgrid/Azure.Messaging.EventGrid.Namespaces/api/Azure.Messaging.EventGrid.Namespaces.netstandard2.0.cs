@@ -7,7 +7,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
         protected virtual Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult (Azure.Response result) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult acknowledgeResult) { throw null; }
         protected virtual Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -54,39 +54,41 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class EventGridReceiverClient
     {
         protected EventGridReceiverClient() { }
-        public EventGridReceiverClient(Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientSettings settings) { }
         public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.AzureKeyCredential credential) { }
         public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions options) { }
         public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.Core.TokenCredential credential) { }
         public EventGridReceiverClient(System.Uri endpoint, string topicName, string subscriptionName, Azure.Core.TokenCredential credential, Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response Acknowledge(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult> Acknowledge(System.Collections.Generic.IEnumerable<string> lockTokens, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> AcknowledgeAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>> AcknowledgeAsync(System.Collections.Generic.IEnumerable<string> lockTokens, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response Receive(int? maxEvents, System.TimeSpan? maxWaitTime, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Messaging.EventGrid.Namespaces.ReceiveResult> Receive(int? maxEvents = default(int?), System.TimeSpan? maxWaitTime = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReceiveAsync(int? maxEvents, System.TimeSpan? maxWaitTime, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.EventGrid.Namespaces.ReceiveResult>> ReceiveAsync(int? maxEvents = default(int?), System.TimeSpan? maxWaitTime = default(System.TimeSpan?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response Reject(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Messaging.EventGrid.Namespaces.RejectResult> Reject(System.Collections.Generic.IEnumerable<string> lockTokens, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> RejectAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.EventGrid.Namespaces.RejectResult>> RejectAsync(System.Collections.Generic.IEnumerable<string> lockTokens, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response Release(Azure.Core.RequestContent content, string releaseDelayInSeconds = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Messaging.EventGrid.Namespaces.ReleaseResult> Release(System.Collections.Generic.IEnumerable<string> lockTokens, Azure.Messaging.EventGrid.Namespaces.ReleaseDelay? delay = default(Azure.Messaging.EventGrid.Namespaces.ReleaseDelay?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> ReleaseAsync(Azure.Core.RequestContent content, string releaseDelayInSeconds = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.EventGrid.Namespaces.ReleaseResult>> ReleaseAsync(System.Collections.Generic.IEnumerable<string> lockTokens, Azure.Messaging.EventGrid.Namespaces.ReleaseDelay? delay = default(Azure.Messaging.EventGrid.Namespaces.ReleaseDelay?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response RenewLocks(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Messaging.EventGrid.Namespaces.RenewLocksResult> RenewLocks(System.Collections.Generic.IEnumerable<string> lockTokens, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> RenewLocksAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.EventGrid.Namespaces.RenewLocksResult>> RenewLocksAsync(System.Collections.Generic.IEnumerable<string> lockTokens, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public static partial class EventGridReceiverClientHostExtensions
-    {
-        public static System.ClientModel.Primitives.IClientBuilder AddEventGridReceiverClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddEventGridReceiverClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientSettings> configureSettings) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEventGridReceiverClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEventGridReceiverClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientSettings> configureSettings) { throw null; }
     }
     public partial class EventGridReceiverClientOptions : Azure.Core.ClientOptions
     {
@@ -97,19 +99,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
             V2024_06_01 = 2,
         }
     }
-    public partial class EventGridReceiverClientSettings : System.ClientModel.Primitives.ClientSettings
-    {
-        public EventGridReceiverClientSettings() { }
-        public System.Uri Endpoint { get { throw null; } set { } }
-        public Azure.Messaging.EventGrid.Namespaces.EventGridReceiverClientOptions Options { get { throw null; } set { } }
-        public string SubscriptionName { get { throw null; } set { } }
-        public string TopicName { get { throw null; } set { } }
-        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
-    }
     public partial class EventGridSenderClient
     {
         protected EventGridSenderClient() { }
-        public EventGridSenderClient(Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientSettings settings) { }
         public EventGridSenderClient(System.Uri endpoint, string topicName, Azure.AzureKeyCredential credential) { }
         public EventGridSenderClient(System.Uri endpoint, string topicName, Azure.AzureKeyCredential credential, Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions options) { }
         public EventGridSenderClient(System.Uri endpoint, string topicName, Azure.Core.TokenCredential credential) { }
@@ -119,17 +111,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public virtual Azure.Response Send(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendAsync(Azure.Messaging.CloudEvent cloudEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> cloudEvents, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response SendEvent(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> SendEventAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response SendEvents(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response> SendEventsAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-    }
-    public static partial class EventGridSenderClientHostExtensions
-    {
-        public static System.ClientModel.Primitives.IClientBuilder AddEventGridSenderClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddEventGridSenderClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientSettings> configureSettings) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEventGridSenderClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedEventGridSenderClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientSettings> configureSettings) { throw null; }
     }
     public partial class EventGridSenderClientOptions : Azure.Core.ClientOptions
     {
@@ -139,14 +128,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
             V2023_11_01 = 1,
             V2024_06_01 = 2,
         }
-    }
-    public partial class EventGridSenderClientSettings : System.ClientModel.Primitives.ClientSettings
-    {
-        public EventGridSenderClientSettings() { }
-        public System.Uri Endpoint { get { throw null; } set { } }
-        public Azure.Messaging.EventGrid.Namespaces.EventGridSenderClientOptions Options { get { throw null; } set { } }
-        public string TopicName { get { throw null; } set { } }
-        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class FailedLockToken : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.FailedLockToken>
     {
@@ -188,7 +169,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.Namespaces.ReceiveDetails> Details { get { throw null; } }
         protected virtual Azure.Messaging.EventGrid.Namespaces.ReceiveResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Messaging.EventGrid.Namespaces.ReceiveResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Messaging.EventGrid.Namespaces.ReceiveResult (Azure.Response result) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Messaging.EventGrid.Namespaces.ReceiveResult receiveResult) { throw null; }
         protected virtual Azure.Messaging.EventGrid.Namespaces.ReceiveResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -205,7 +186,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
         protected virtual Azure.Messaging.EventGrid.Namespaces.RejectResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Messaging.EventGrid.Namespaces.RejectResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Messaging.EventGrid.Namespaces.RejectResult (Azure.Response result) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Messaging.EventGrid.Namespaces.RejectResult rejectResult) { throw null; }
         protected virtual Azure.Messaging.EventGrid.Namespaces.RejectResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -227,7 +208,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public static Azure.Messaging.EventGrid.Namespaces.ReleaseDelay TenMinutes { get { throw null; } }
         public static Azure.Messaging.EventGrid.Namespaces.ReleaseDelay TenSeconds { get { throw null; } }
         public bool Equals(Azure.Messaging.EventGrid.Namespaces.ReleaseDelay other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Messaging.EventGrid.Namespaces.ReleaseDelay left, Azure.Messaging.EventGrid.Namespaces.ReleaseDelay right) { throw null; }
         public static implicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseDelay (string value) { throw null; }
@@ -242,7 +225,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
         protected virtual Azure.Messaging.EventGrid.Namespaces.ReleaseResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Messaging.EventGrid.Namespaces.ReleaseResult (Azure.Response result) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Messaging.EventGrid.Namespaces.ReleaseResult releaseResult) { throw null; }
         protected virtual Azure.Messaging.EventGrid.Namespaces.ReleaseResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -259,7 +242,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public System.Collections.Generic.IReadOnlyList<string> SucceededLockTokens { get { throw null; } }
         protected virtual Azure.Messaging.EventGrid.Namespaces.RenewLocksResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Messaging.EventGrid.Namespaces.RenewLocksResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Messaging.EventGrid.Namespaces.RenewLocksResult (Azure.Response result) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Messaging.EventGrid.Namespaces.RenewLocksResult renewLocksResult) { throw null; }
         protected virtual Azure.Messaging.EventGrid.Namespaces.RenewLocksResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

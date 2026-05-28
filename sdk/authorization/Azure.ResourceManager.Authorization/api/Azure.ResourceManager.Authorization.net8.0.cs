@@ -949,7 +949,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.AuthorizationRoleType BuiltInRole { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.AuthorizationRoleType CustomRole { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.AuthorizationRoleType left, Azure.ResourceManager.Authorization.Models.AuthorizationRoleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.AuthorizationRoleType (string value) { throw null; }
@@ -993,7 +995,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public NotificationDeliveryType(string value) { throw null; }
         public static Azure.ResourceManager.Authorization.Models.NotificationDeliveryType Email { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.NotificationDeliveryType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.NotificationDeliveryType left, Azure.ResourceManager.Authorization.Models.NotificationDeliveryType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.NotificationDeliveryType (string value) { throw null; }
@@ -1051,7 +1055,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleAssignmentEnablementRuleType MultiFactorAuthentication { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleAssignmentEnablementRuleType Ticketing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleAssignmentEnablementRuleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleAssignmentEnablementRuleType left, Azure.ResourceManager.Authorization.Models.RoleAssignmentEnablementRuleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleAssignmentEnablementRuleType (string value) { throw null; }
@@ -1067,7 +1073,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType Activated { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType Assigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType left, Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleAssignmentScheduleAssignmentType (string value) { throw null; }
@@ -1123,7 +1131,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementApprovalMode Serial { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementApprovalMode SingleStage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementApprovalMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementApprovalMode left, Azure.ResourceManager.Authorization.Models.RoleManagementApprovalMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementApprovalMode (string value) { throw null; }
@@ -1170,7 +1180,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementAssignmentLevel Assignment { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementAssignmentLevel Eligibility { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementAssignmentLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementAssignmentLevel left, Azure.ResourceManager.Authorization.Models.RoleManagementAssignmentLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementAssignmentLevel (string value) { throw null; }
@@ -1253,7 +1265,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationLevel Critical { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationLevel None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationLevel left, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementPolicyNotificationLevel (string value) { throw null; }
@@ -1298,7 +1312,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRecipientType Approver { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRecipientType Requestor { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRecipientType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRecipientType left, Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRecipientType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementPolicyRecipientType (string value) { throw null; }
@@ -1359,7 +1375,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType ServicePrincipal { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType left, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType (string value) { throw null; }
@@ -1376,7 +1394,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType AfterDuration { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType NoExpiration { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType left, Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementScheduleExpirationType (string value) { throw null; }
@@ -1393,7 +1413,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType Group { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType Inherited { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType left, Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementScheduleMemberType (string value) { throw null; }
@@ -1416,7 +1438,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementScheduleRequestType SelfExtend { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementScheduleRequestType SelfRenew { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleRequestType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleRequestType left, Azure.ResourceManager.Authorization.Models.RoleManagementScheduleRequestType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementScheduleRequestType (string value) { throw null; }
@@ -1452,7 +1476,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus ScheduleCreated { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus TimedOut { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus left, Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementScheduleStatus (string value) { throw null; }
@@ -1469,7 +1495,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementScopeType ResourceGroup { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementScopeType Subscription { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementScopeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementScopeType left, Azure.ResourceManager.Authorization.Models.RoleManagementScopeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementScopeType (string value) { throw null; }
@@ -1499,7 +1527,9 @@ namespace Azure.ResourceManager.Authorization.Models
         public static Azure.ResourceManager.Authorization.Models.RoleManagementUserType Group { get { throw null; } }
         public static Azure.ResourceManager.Authorization.Models.RoleManagementUserType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Authorization.Models.RoleManagementUserType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Authorization.Models.RoleManagementUserType left, Azure.ResourceManager.Authorization.Models.RoleManagementUserType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Authorization.Models.RoleManagementUserType (string value) { throw null; }

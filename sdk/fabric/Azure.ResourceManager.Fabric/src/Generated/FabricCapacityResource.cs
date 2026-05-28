@@ -7,37 +7,48 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Fabric.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Fabric
 {
     /// <summary>
-    /// A class representing a FabricCapacity along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FabricCapacityResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFabricCapacities method.
+    /// A Class representing a FabricCapacity along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FabricCapacityResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFabricCapacityResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFabricCapacity method.
     /// </summary>
     public partial class FabricCapacityResource : ArmResource
     {
-        private readonly ClientDiagnostics _fabricCapacitiesClientDiagnostics;
-        private readonly FabricCapacities _fabricCapacitiesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="FabricCapacityResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="capacityName"> The capacityName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string capacityName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _fabricCapacityClientDiagnostics;
+        private readonly FabricCapacitiesRestOperations _fabricCapacityRestClient;
         private readonly FabricCapacityData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Fabric/capacities";
 
-        /// <summary> Initializes a new instance of FabricCapacityResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FabricCapacityResource"/> class for mocking. </summary>
         protected FabricCapacityResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricCapacityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FabricCapacityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FabricCapacityResource(ArmClient client, FabricCapacityData data) : this(client, data.Id)
@@ -46,92 +57,71 @@ namespace Azure.ResourceManager.Fabric
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricCapacityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FabricCapacityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FabricCapacityResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _fabricCapacityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Fabric", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string fabricCapacityApiVersion);
-            _fabricCapacitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Fabric", ResourceType.Namespace, Diagnostics);
-            _fabricCapacitiesRestClient = new FabricCapacities(_fabricCapacitiesClientDiagnostics, Pipeline, Endpoint, fabricCapacityApiVersion ?? "2025-01-15-preview");
-            ValidateResourceId(id);
+            _fabricCapacityRestClient = new FabricCapacitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, fabricCapacityApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual FabricCapacityData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="capacityName"> The capacityName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string capacityName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a FabricCapacity
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FabricCapacityResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.Get");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FabricCapacityData> response = Response.FromValue(FabricCapacityData.FromResponse(result), result);
+                var response = await _fabricCapacityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FabricCapacityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,42 +135,118 @@ namespace Azure.ResourceManager.Fabric
         /// Get a FabricCapacity
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FabricCapacityResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.Get");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FabricCapacityData> response = Response.FromValue(FabricCapacityData.FromResponse(result), result);
+                var response = _fabricCapacityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FabricCapacityResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a FabricCapacity
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _fabricCapacityRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FabricArmOperation(_fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a FabricCapacity
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _fabricCapacityRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new FabricArmOperation(_fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -193,20 +259,20 @@ namespace Azure.ResourceManager.Fabric
         /// Update a FabricCapacity
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,27 +284,14 @@ namespace Azure.ResourceManager.Fabric
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.Update");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FabricCapacityPatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FabricArmOperation<FabricCapacityResource> operation = new FabricArmOperation<FabricCapacityResource>(
-                    new FabricCapacityOperationSource(Client),
-                    _fabricCapacitiesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _fabricCapacityRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new FabricArmOperation<FabricCapacityResource>(new FabricCapacityOperationSource(Client), _fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -252,20 +305,20 @@ namespace Azure.ResourceManager.Fabric
         /// Update a FabricCapacity
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,27 +330,14 @@ namespace Azure.ResourceManager.Fabric
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.Update");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FabricCapacityPatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                FabricArmOperation<FabricCapacityResource> operation = new FabricArmOperation<FabricCapacityResource>(
-                    new FabricCapacityOperationSource(Client),
-                    _fabricCapacitiesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _fabricCapacityRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new FabricArmOperation<FabricCapacityResource>(new FabricCapacityOperationSource(Client), _fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -305,200 +345,26 @@ namespace Azure.ResourceManager.Fabric
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Delete a FabricCapacity
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FabricArmOperation operation = new FabricArmOperation(_fabricCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a FabricCapacity
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                FabricArmOperation operation = new FabricArmOperation(_fabricCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List eligible SKUs for a Microsoft Fabric resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_ListSkusForCapacity. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FabricSkuDetailsForExistingCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FabricSkuDetailsForExistingCapacity> GetSkusForCapacityAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new FabricCapacitiesGetSkusForCapacityAsyncCollectionResultOfT(
-                _fabricCapacitiesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "FabricCapacityResource.GetSkusForCapacity");
-        }
-
-        /// <summary>
-        /// List eligible SKUs for a Microsoft Fabric resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_ListSkusForCapacity. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FabricSkuDetailsForExistingCapacity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FabricSkuDetailsForExistingCapacity> GetSkusForCapacity(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new FabricCapacitiesGetSkusForCapacityCollectionResultOfT(
-                _fabricCapacitiesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "FabricCapacityResource.GetSkusForCapacity");
         }
 
         /// <summary>
         /// Resume operation of the specified Fabric capacity instance.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/resume. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/resume</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Resume. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_Resume</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,21 +372,14 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> ResumeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.Resume");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.Resume");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FabricArmOperation operation = new FabricArmOperation(_fabricCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _fabricCapacityRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FabricArmOperation(_fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -534,20 +393,20 @@ namespace Azure.ResourceManager.Fabric
         /// Resume operation of the specified Fabric capacity instance.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/resume. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/resume</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Resume. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_Resume</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -555,21 +414,14 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Resume(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.Resume");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.Resume");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateResumeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                FabricArmOperation operation = new FabricArmOperation(_fabricCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _fabricCapacityRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new FabricArmOperation(_fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -583,20 +435,20 @@ namespace Azure.ResourceManager.Fabric
         /// Suspend operation of the specified Fabric capacity instance.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/suspend. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/suspend</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Suspend. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_Suspend</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -604,21 +456,14 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> SuspendAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.Suspend");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.Suspend");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FabricArmOperation operation = new FabricArmOperation(_fabricCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _fabricCapacityRestClient.SuspendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FabricArmOperation(_fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -632,20 +477,20 @@ namespace Azure.ResourceManager.Fabric
         /// Suspend operation of the specified Fabric capacity instance.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/suspend. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/suspend</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_Suspend. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_Suspend</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FabricCapacityResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -653,21 +498,14 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Suspend(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.Suspend");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.Suspend");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fabricCapacitiesRestClient.CreateSuspendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                FabricArmOperation operation = new FabricArmOperation(_fabricCapacitiesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _fabricCapacityRestClient.Suspend(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new FabricArmOperation(_fabricCapacityClientDiagnostics, Pipeline, _fabricCapacityRestClient.CreateSuspendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -677,7 +515,87 @@ namespace Azure.ResourceManager.Fabric
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// List eligible SKUs for a Microsoft Fabric resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_ListSkusForCapacity</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="FabricSkuDetailsForExistingCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FabricSkuDetailsForExistingCapacity> GetSkusForCapacityAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricCapacityRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricCapacityRestClient.CreateListSkusForCapacityNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FabricSkuDetailsForExistingCapacity.DeserializeFabricSkuDetailsForExistingCapacity(e), _fabricCapacityClientDiagnostics, Pipeline, "FabricCapacityResource.GetSkusForCapacity", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List eligible SKUs for a Microsoft Fabric resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_ListSkusForCapacity</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FabricSkuDetailsForExistingCapacity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FabricSkuDetailsForExistingCapacity> GetSkusForCapacity(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _fabricCapacityRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fabricCapacityRestClient.CreateListSkusForCapacityNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FabricSkuDetailsForExistingCapacity.DeserializeFabricSkuDetailsForExistingCapacity(e), _fabricCapacityClientDiagnostics, Pipeline, "FabricCapacityResource.GetSkusForCapacity", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -687,34 +605,28 @@ namespace Azure.ResourceManager.Fabric
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.AddTag");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<FabricCapacityData> response = Response.FromValue(FabricCapacityData.FromResponse(result), result);
-                    return Response.FromValue(new FabricCapacityResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _fabricCapacityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FabricCapacityResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FabricCapacityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    FabricCapacityPatch patch = new FabricCapacityPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new FabricCapacityPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<FabricCapacityResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -725,7 +637,27 @@ namespace Azure.ResourceManager.Fabric
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -735,34 +667,28 @@ namespace Azure.ResourceManager.Fabric
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.AddTag");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<FabricCapacityData> response = Response.FromValue(FabricCapacityData.FromResponse(result), result);
-                    return Response.FromValue(new FabricCapacityResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _fabricCapacityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new FabricCapacityResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FabricCapacityData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    FabricCapacityPatch patch = new FabricCapacityPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new FabricCapacityPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<FabricCapacityResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -773,39 +699,53 @@ namespace Azure.ResourceManager.Fabric
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<FabricCapacityResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.SetTags");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<FabricCapacityData> response = Response.FromValue(FabricCapacityData.FromResponse(result), result);
-                    return Response.FromValue(new FabricCapacityResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _fabricCapacityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FabricCapacityResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FabricCapacityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    FabricCapacityPatch patch = new FabricCapacityPatch();
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new FabricCapacityPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<FabricCapacityResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -816,39 +756,53 @@ namespace Azure.ResourceManager.Fabric
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<FabricCapacityResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.SetTags");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<FabricCapacityData> response = Response.FromValue(FabricCapacityData.FromResponse(result), result);
-                    return Response.FromValue(new FabricCapacityResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _fabricCapacityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new FabricCapacityResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FabricCapacityData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    FabricCapacityPatch patch = new FabricCapacityPatch();
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new FabricCapacityPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<FabricCapacityResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -859,7 +813,27 @@ namespace Azure.ResourceManager.Fabric
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -867,34 +841,28 @@ namespace Azure.ResourceManager.Fabric
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.RemoveTag");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<FabricCapacityData> response = Response.FromValue(FabricCapacityData.FromResponse(result), result);
-                    return Response.FromValue(new FabricCapacityResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _fabricCapacityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FabricCapacityResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FabricCapacityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    FabricCapacityPatch patch = new FabricCapacityPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new FabricCapacityPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<FabricCapacityResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -905,7 +873,27 @@ namespace Azure.ResourceManager.Fabric
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric/capacities/{capacityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -913,34 +901,28 @@ namespace Azure.ResourceManager.Fabric
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _fabricCapacitiesClientDiagnostics.CreateScope("FabricCapacityResource.RemoveTag");
+            using var scope = _fabricCapacityClientDiagnostics.CreateScope("FabricCapacityResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _fabricCapacitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<FabricCapacityData> response = Response.FromValue(FabricCapacityData.FromResponse(result), result);
-                    return Response.FromValue(new FabricCapacityResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _fabricCapacityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new FabricCapacityResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FabricCapacityData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    FabricCapacityPatch patch = new FabricCapacityPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new FabricCapacityPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<FabricCapacityResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

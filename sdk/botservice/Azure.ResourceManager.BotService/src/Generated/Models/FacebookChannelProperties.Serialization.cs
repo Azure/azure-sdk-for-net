@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.BotService;
+using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary> The parameters to provide for the Facebook channel. </summary>
-    public partial class FacebookChannelProperties : IJsonModel<FacebookChannelProperties>
+    public partial class FacebookChannelProperties : IUtf8JsonSerializable, IJsonModel<FacebookChannelProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="FacebookChannelProperties"/> for deserialization. </summary>
-        internal FacebookChannelProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FacebookChannelProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FacebookChannelProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFacebookChannelProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FacebookChannelProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FacebookChannelProperties IPersistableModel<FacebookChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FacebookChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FacebookChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(VerifyToken))
             {
                 writer.WritePropertyName("verifyToken"u8);
@@ -88,7 +43,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WritePropertyName("pages"u8);
                 writer.WriteStartArray();
-                foreach (FacebookPage item in Pages)
+                foreach (var item in Pages)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,15 +63,15 @@ namespace Azure.ResourceManager.BotService.Models
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -125,27 +80,22 @@ namespace Azure.ResourceManager.BotService.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FacebookChannelProperties IJsonModel<FacebookChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FacebookChannelProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FacebookChannelProperties IJsonModel<FacebookChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFacebookChannelProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FacebookChannelProperties DeserializeFacebookChannelProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static FacebookChannelProperties DeserializeFacebookChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,67 +104,100 @@ namespace Azure.ResourceManager.BotService.Models
             IList<FacebookPage> pages = default;
             string appId = default;
             string appSecret = default;
-            Uri callbackUri = default;
+            Uri callbackUrl = default;
             bool isEnabled = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("verifyToken"u8))
+                if (property.NameEquals("verifyToken"u8))
                 {
-                    verifyToken = prop.Value.GetString();
+                    verifyToken = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("pages"u8))
+                if (property.NameEquals("pages"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<FacebookPage> array = new List<FacebookPage>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(FacebookPage.DeserializeFacebookPage(item, options));
                     }
                     pages = array;
                     continue;
                 }
-                if (prop.NameEquals("appId"u8))
+                if (property.NameEquals("appId"u8))
                 {
-                    appId = prop.Value.GetString();
+                    appId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("appSecret"u8))
+                if (property.NameEquals("appSecret"u8))
                 {
-                    appSecret = prop.Value.GetString();
+                    appSecret = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("callbackUrl"u8))
+                if (property.NameEquals("callbackUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    callbackUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    callbackUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("isEnabled"u8))
+                if (property.NameEquals("isEnabled"u8))
                 {
-                    isEnabled = prop.Value.GetBoolean();
+                    isEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new FacebookChannelProperties(
                 verifyToken,
                 pages ?? new ChangeTrackingList<FacebookPage>(),
                 appId,
                 appSecret,
-                callbackUri,
+                callbackUrl,
                 isEnabled,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FacebookChannelProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FacebookChannelProperties IPersistableModel<FacebookChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FacebookChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeFacebookChannelProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FacebookChannelProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FacebookChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

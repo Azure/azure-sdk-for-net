@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Mime;
 using System.Text;
-using System.Threading;
 using Azure.Core;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
@@ -291,7 +290,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -308,7 +307,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="QueueServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -346,7 +345,6 @@ namespace Azure.Storage.Sas
                 keyService: userDelegationKey.SignedService,
                 keyVersion: userDelegationKey.SignedVersion,
                 delegatedUserObjectId: DelegatedUserObjectId,
-                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId,
                 signature: signature);
             return p;
         }
@@ -370,7 +368,7 @@ namespace Azure.Storage.Sas
                     signedExpiry,
                     userDelegationKey.SignedService,
                     userDelegationKey.SignedVersion,
-                    userDelegationKey.SignedDelegatedUserTenantId,
+                    null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
                     DelegatedUserObjectId,
                     IPRange.ToString(),
                     SasExtensions.ToProtocolString(Protocol),

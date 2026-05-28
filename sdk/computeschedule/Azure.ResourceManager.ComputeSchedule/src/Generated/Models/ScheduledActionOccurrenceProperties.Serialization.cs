@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ComputeSchedule;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> Properties for an occurrence. </summary>
-    public partial class ScheduledActionOccurrenceProperties : IJsonModel<ScheduledActionOccurrenceProperties>
+    public partial class ScheduledActionOccurrenceProperties : IUtf8JsonSerializable, IJsonModel<ScheduledActionOccurrenceProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScheduledActionOccurrenceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeScheduledActionOccurrenceProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ScheduledActionOccurrenceProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionOccurrenceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ScheduledActionOccurrenceProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScheduledActionOccurrenceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduledActionOccurrenceProperties IPersistableModel<ScheduledActionOccurrenceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScheduledActionOccurrenceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScheduledActionOccurrenceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduledActionOccurrenceProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W")
             {
                 writer.WritePropertyName("scheduledTime"u8);
@@ -89,15 +49,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,62 +66,90 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduledActionOccurrenceProperties IJsonModel<ScheduledActionOccurrenceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScheduledActionOccurrenceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScheduledActionOccurrenceProperties IJsonModel<ScheduledActionOccurrenceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduledActionOccurrenceProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScheduledActionOccurrenceProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScheduledActionOccurrenceProperties DeserializeScheduledActionOccurrenceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScheduledActionOccurrenceProperties DeserializeScheduledActionOccurrenceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset scheduledOn = default;
+            DateTimeOffset scheduledTime = default;
             OccurrenceResultSummary resultSummary = default;
             ScheduledActionOccurrenceState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("scheduledTime"u8))
+                if (property.NameEquals("scheduledTime"u8))
                 {
-                    scheduledOn = prop.Value.GetDateTimeOffset("O");
+                    scheduledTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("resultSummary"u8))
+                if (property.NameEquals("resultSummary"u8))
                 {
-                    resultSummary = OccurrenceResultSummary.DeserializeOccurrenceResultSummary(prop.Value, options);
+                    resultSummary = OccurrenceResultSummary.DeserializeOccurrenceResultSummary(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new ScheduledActionOccurrenceState(prop.Value.GetString());
+                    provisioningState = new ScheduledActionOccurrenceState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ScheduledActionOccurrenceProperties(scheduledOn, resultSummary, provisioningState, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ScheduledActionOccurrenceProperties(scheduledTime, resultSummary, provisioningState, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScheduledActionOccurrenceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ScheduledActionOccurrenceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ScheduledActionOccurrenceProperties IPersistableModel<ScheduledActionOccurrenceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionOccurrenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeScheduledActionOccurrenceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScheduledActionOccurrenceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScheduledActionOccurrenceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

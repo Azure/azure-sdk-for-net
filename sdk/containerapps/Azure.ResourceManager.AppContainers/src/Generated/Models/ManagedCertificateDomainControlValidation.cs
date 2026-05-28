@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ManagedCertificateDomainControlValidation : IEquatable<ManagedCertificateDomainControlValidation>
     {
         private readonly string _value;
-        /// <summary> CNAME. </summary>
-        private const string CnameValue = "CNAME";
-        /// <summary> HTTP. </summary>
-        private const string HttpValue = "HTTP";
-        /// <summary> TXT. </summary>
-        private const string TXTValue = "TXT";
 
         /// <summary> Initializes a new instance of <see cref="ManagedCertificateDomainControlValidation"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedCertificateDomainControlValidation(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string CnameValue = "CNAME";
+        private const string HttpValue = "HTTP";
+        private const string TXTValue = "TXT";
 
         /// <summary> CNAME. </summary>
         public static ManagedCertificateDomainControlValidation Cname { get; } = new ManagedCertificateDomainControlValidation(CnameValue);
-
         /// <summary> HTTP. </summary>
         public static ManagedCertificateDomainControlValidation Http { get; } = new ManagedCertificateDomainControlValidation(HttpValue);
-
         /// <summary> TXT. </summary>
         public static ManagedCertificateDomainControlValidation TXT { get; } = new ManagedCertificateDomainControlValidation(TXTValue);
-
         /// <summary> Determines if two <see cref="ManagedCertificateDomainControlValidation"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedCertificateDomainControlValidation left, ManagedCertificateDomainControlValidation right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ManagedCertificateDomainControlValidation"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedCertificateDomainControlValidation left, ManagedCertificateDomainControlValidation right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ManagedCertificateDomainControlValidation"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedCertificateDomainControlValidation"/>. </summary>
         public static implicit operator ManagedCertificateDomainControlValidation(string value) => new ManagedCertificateDomainControlValidation(value);
 
-        /// <summary> Converts a string to a <see cref="ManagedCertificateDomainControlValidation"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ManagedCertificateDomainControlValidation?(string value) => value == null ? null : new ManagedCertificateDomainControlValidation(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedCertificateDomainControlValidation other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ManagedCertificateDomainControlValidation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

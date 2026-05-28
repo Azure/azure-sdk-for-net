@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.EventHubs;
-using Azure.ResourceManager.EventHubs.Models;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using Azure.ResourceManager.Resources;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Invalid Resource ID")]
         public async Task CreateGetUpdateDeleteDisasterRecovery()
         {
             _resourceGroup = await CreateResourceGroupAsync();
@@ -83,16 +82,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
             EventHubsNameAvailabilityResult nameAvailability = await eHNamespace1.CheckEventHubsDisasterRecoveryNameAvailabilityAsync(new EventHubsNameAvailabilityContent(disasterRecoveryName));
             Assert.IsFalse(nameAvailability.NameAvailable);
 
-            string drRuleName = ruleName;
-            EventHubsDisasterRecoveryAuthorizationRuleResource drRule =
-                await armDisasterRecovery.GetEventHubsDisasterRecoveryAuthorizationRules()
-                                         .GetAsync(drRuleName);
+            List<EventHubsDisasterRecoveryAuthorizationRuleResource> rules = await armDisasterRecovery.GetEventHubsDisasterRecoveryAuthorizationRules().GetAllAsync().ToEnumerableAsync();
+            Assert.IsTrue(rules.Count > 0);
 
-            Assert.NotNull(drRule);
-
-            // get access keys for DR authorization rule
-            EventHubsAccessKeys key = await drRule.GetKeysAsync();
-            Assert.NotNull(key);
+            //get access keys of the authorization rule
+            EventHubsDisasterRecoveryAuthorizationRuleResource rule = rules.First();
+            EventHubsAccessKeys keys = await rule.GetKeysAsync();
+            Assert.NotNull(keys);
 
             //break pairing and wait for completion
             await armDisasterRecovery.BreakPairingAsync();

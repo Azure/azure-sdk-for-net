@@ -33,7 +33,6 @@ namespace Azure.Generator.Tests.TestHelpers
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
             Func<IReadOnlyList<InputClient>>? clients = null,
             Func<InputClient, ClientProvider?>? createClientCore = null,
-            Func<IReadOnlyList<ScmLibraryVisitor>>? visitors = null,
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
@@ -92,33 +91,20 @@ namespace Azure.Generator.Tests.TestHelpers
 
             var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, null)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
-
-            if (visitors != null)
-            {
-                var visitorsList = visitors.Invoke();
-                foreach (var visitor in visitorsList)
-                {
-                    mockPluginInstance.Object.AddVisitor(visitor);
-                }
-            }
-            else
-            {
-                var configureMethod = typeof(CodeModelGenerator).GetMethod(
-                    "Configure",
-                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod
-                );
-                configureMethod!.Invoke(mockPluginInstance.Object, null);
-            }
-
+            var configureMethod = typeof(CodeModelGenerator).GetMethod(
+                "Configure",
+                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod
+            );
+            configureMethod!.Invoke(mockPluginInstance.Object, null);
             return mockPluginInstance;
         }
 
-        public static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
+        public static void SetCustomCodeView(ModelProvider modelProvider, TypeProvider customCodeTypeProvider)
         {
-            typeProvider.GetType().BaseType!.GetField(
+            modelProvider.GetType().BaseType!.GetField(
                     "_customCodeView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)?
-                .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?
+                .SetValue(modelProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
         }
     }
 }

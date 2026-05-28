@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -15,51 +14,35 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public readonly partial struct SqlVmClusterManagerType : IEquatable<SqlVmClusterManagerType>
     {
         private readonly string _value;
-        private const string WindowsServerFailoverClusterValue = "WSFC";
 
         /// <summary> Initializes a new instance of <see cref="SqlVmClusterManagerType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlVmClusterManagerType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the WindowsServerFailoverCluster. </summary>
+        private const string WindowsServerFailoverClusterValue = "WSFC";
+
+        /// <summary> WSFC. </summary>
         public static SqlVmClusterManagerType WindowsServerFailoverCluster { get; } = new SqlVmClusterManagerType(WindowsServerFailoverClusterValue);
-
         /// <summary> Determines if two <see cref="SqlVmClusterManagerType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlVmClusterManagerType left, SqlVmClusterManagerType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SqlVmClusterManagerType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlVmClusterManagerType left, SqlVmClusterManagerType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SqlVmClusterManagerType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlVmClusterManagerType"/>. </summary>
         public static implicit operator SqlVmClusterManagerType(string value) => new SqlVmClusterManagerType(value);
 
-        /// <summary> Converts a string to a <see cref="SqlVmClusterManagerType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmClusterManagerType?(string value) => value == null ? null : new SqlVmClusterManagerType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlVmClusterManagerType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SqlVmClusterManagerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

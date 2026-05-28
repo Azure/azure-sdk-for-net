@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -26,53 +25,51 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class BlobContainerCollection : ArmCollection, IEnumerable<BlobContainerResource>, IAsyncEnumerable<BlobContainerResource>
     {
-        private readonly ClientDiagnostics _blobContainersClientDiagnostics;
-        private readonly BlobContainers _blobContainersRestClient;
-        private readonly ClientDiagnostics _blobServicesClientDiagnostics;
-        private readonly BlobServices _blobServicesRestClient;
+        private readonly ClientDiagnostics _blobContainerClientDiagnostics;
+        private readonly BlobContainersRestOperations _blobContainerRestClient;
 
-        /// <summary> Initializes a new instance of BlobContainerCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BlobContainerCollection"/> class for mocking. </summary>
         protected BlobContainerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BlobContainerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BlobContainerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BlobContainerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _blobContainerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", BlobContainerResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(BlobContainerResource.ResourceType, out string blobContainerApiVersion);
-            _blobContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", BlobContainerResource.ResourceType.Namespace, Diagnostics);
-            _blobContainersRestClient = new BlobContainers(_blobContainersClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-08-01");
-            _blobServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", BlobContainerResource.ResourceType.Namespace, Diagnostics);
-            _blobServicesRestClient = new BlobServices(_blobServicesClientDiagnostics, Pipeline, Endpoint, blobContainerApiVersion ?? "2025-08-01");
-            ValidateResourceId(id);
+            _blobContainerRestClient = new BlobContainersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, blobContainerApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BlobServiceResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BlobServiceResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BlobServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BlobContainers_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>BlobContainers_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,31 +77,23 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="data"> Properties of the blob container to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BlobContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerName, BlobContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _blobContainersClientDiagnostics.CreateScope("BlobContainerCollection.CreateOrUpdate");
+            using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _blobContainersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, containerName, BlobContainerData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BlobContainerData> response = Response.FromValue(BlobContainerData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageArmOperation<BlobContainerResource> operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _blobContainerRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _blobContainerRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -118,16 +107,20 @@ namespace Azure.ResourceManager.Storage
         /// Creates a new container under the specified account as described by request body. The container resource includes metadata and properties for that container. It does not include a list of the blobs contained by the container.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BlobContainers_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>BlobContainers_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,31 +128,23 @@ namespace Azure.ResourceManager.Storage
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="data"> Properties of the blob container to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BlobContainerResource> CreateOrUpdate(WaitUntil waitUntil, string containerName, BlobContainerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _blobContainersClientDiagnostics.CreateScope("BlobContainerCollection.CreateOrUpdate");
+            using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _blobContainersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, containerName, BlobContainerData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BlobContainerData> response = Response.FromValue(BlobContainerData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageArmOperation<BlobContainerResource> operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _blobContainerRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, data, cancellationToken);
+                var uri = _blobContainerRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<BlobContainerResource>(Response.FromValue(new BlobContainerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -173,42 +158,38 @@ namespace Azure.ResourceManager.Storage
         /// Gets properties of a specified container.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BlobContainers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BlobContainers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<BlobContainerResource>> GetAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _blobContainersClientDiagnostics.CreateScope("BlobContainerCollection.Get");
+            using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _blobContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, containerName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BlobContainerData> response = Response.FromValue(BlobContainerData.FromResponse(result), result);
+                var response = await _blobContainerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -222,42 +203,38 @@ namespace Azure.ResourceManager.Storage
         /// Gets properties of a specified container.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BlobContainers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BlobContainers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<BlobContainerResource> Get(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _blobContainersClientDiagnostics.CreateScope("BlobContainerCollection.Get");
+            using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _blobContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, containerName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BlobContainerData> response = Response.FromValue(BlobContainerData.FromResponse(result), result);
+                var response = _blobContainerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,16 +248,20 @@ namespace Azure.ResourceManager.Storage
         /// Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BlobServices_BlobContainersList. </description>
+        /// <term>Operation Id</term>
+        /// <description>BlobContainers_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,39 +269,32 @@ namespace Azure.ResourceManager.Storage
         /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(string maxpagesize = default, string filter = default, BlobContainerState? include = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(int? maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<BlobContainerData, BlobContainerResource>(new BlobServicesListAsyncCollectionResultOfT(
-                _blobServicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                maxpagesize,
-                filter,
-                include?.ToString(),
-                context,
-                "BlobContainerCollection.GetAll"), data => new BlobContainerResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, include);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blobContainerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, include);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlobContainerResource(Client, BlobContainerData.DeserializeBlobContainerData(e)), _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>
         /// Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BlobServices_BlobContainersList. </description>
+        /// <term>Operation Id</term>
+        /// <description>BlobContainers_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,72 +303,47 @@ namespace Azure.ResourceManager.Storage
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BlobContainerResource> GetAll(string maxpagesize = default, string filter = default, BlobContainerState? include = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BlobContainerResource> GetAll(int? maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<BlobContainerData, BlobContainerResource>(new BlobServicesListCollectionResultOfT(
-                _blobServicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                maxpagesize,
-                filter,
-                include?.ToString(),
-                context,
-                "BlobContainerCollection.GetAll"), data => new BlobContainerResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _blobContainerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, include);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blobContainerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, include);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlobContainerResource(Client, BlobContainerData.DeserializeBlobContainerData(e)), _blobContainerClientDiagnostics, Pipeline, "BlobContainerCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BlobContainers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BlobContainers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _blobContainersClientDiagnostics.CreateScope("BlobContainerCollection.Exists");
+            using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _blobContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, containerName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<BlobContainerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BlobContainerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BlobContainerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _blobContainerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -408,50 +357,36 @@ namespace Azure.ResourceManager.Storage
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BlobContainers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BlobContainers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<bool> Exists(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _blobContainersClientDiagnostics.CreateScope("BlobContainerCollection.Exists");
+            using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _blobContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, containerName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<BlobContainerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BlobContainerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BlobContainerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _blobContainerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -465,54 +400,38 @@ namespace Azure.ResourceManager.Storage
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BlobContainers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BlobContainers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<NullableResponse<BlobContainerResource>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _blobContainersClientDiagnostics.CreateScope("BlobContainerCollection.GetIfExists");
+            using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _blobContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, containerName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<BlobContainerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BlobContainerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BlobContainerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _blobContainerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<BlobContainerResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -526,54 +445,38 @@ namespace Azure.ResourceManager.Storage
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BlobContainers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BlobContainers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlobContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerName"> The name of the blob container within the specified storage account. Blob container names must be between 3 and 63 characters in length and use numbers, lower-case letters and dash (-) only. Every dash (-) character must be immediately preceded and followed by a letter or number. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual NullableResponse<BlobContainerResource> GetIfExists(string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
-            using DiagnosticScope scope = _blobContainersClientDiagnostics.CreateScope("BlobContainerCollection.GetIfExists");
+            using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _blobContainersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, containerName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<BlobContainerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BlobContainerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BlobContainerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _blobContainerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, containerName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<BlobContainerResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new BlobContainerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -593,7 +496,6 @@ namespace Azure.ResourceManager.Storage
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BlobContainerResource> IAsyncEnumerable<BlobContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

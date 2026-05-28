@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.BotService.Models
 {
     internal static partial class BotServiceKeyExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BotServiceKey value) => value switch
         {
             BotServiceKey.Key1 => "key1",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.BotService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BotServiceKey value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static BotServiceKey ToBotServiceKey(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key1"))
-            {
-                return BotServiceKey.Key1;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key2"))
-            {
-                return BotServiceKey.Key2;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key1")) return BotServiceKey.Key1;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "key2")) return BotServiceKey.Key2;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BotServiceKey value.");
         }
     }

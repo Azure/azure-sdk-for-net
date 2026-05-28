@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppComplianceAutomation;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> Evidence's properties. </summary>
-    public partial class AppComplianceReportEvidenceProperties : IJsonModel<AppComplianceReportEvidenceProperties>
+    public partial class AppComplianceReportEvidenceProperties : IUtf8JsonSerializable, IJsonModel<AppComplianceReportEvidenceProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="AppComplianceReportEvidenceProperties"/> for deserialization. </summary>
-        internal AppComplianceReportEvidenceProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppComplianceReportEvidenceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppComplianceReportEvidenceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportEvidenceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAppComplianceReportEvidenceProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AppComplianceReportEvidenceProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportEvidenceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AppComplianceReportEvidenceProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppComplianceReportEvidenceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AppComplianceReportEvidenceProperties IPersistableModel<AppComplianceReportEvidenceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppComplianceReportEvidenceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppComplianceReportEvidenceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportEvidenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportEvidenceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceReportEvidenceProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(EvidenceType))
             {
                 writer.WritePropertyName("evidenceType"u8);
@@ -106,15 +61,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -123,27 +78,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AppComplianceReportEvidenceProperties IJsonModel<AppComplianceReportEvidenceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppComplianceReportEvidenceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AppComplianceReportEvidenceProperties IJsonModel<AppComplianceReportEvidenceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportEvidenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportEvidenceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppComplianceReportEvidenceProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppComplianceReportEvidenceProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppComplianceReportEvidenceProperties DeserializeAppComplianceReportEvidenceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppComplianceReportEvidenceProperties DeserializeAppComplianceReportEvidenceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,52 +104,54 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             string controlId = default;
             string responsibilityId = default;
             AppComplianceProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("evidenceType"u8))
+                if (property.NameEquals("evidenceType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    evidenceType = new AppComplianceReportEvidenceType(prop.Value.GetString());
+                    evidenceType = new AppComplianceReportEvidenceType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("filePath"u8))
+                if (property.NameEquals("filePath"u8))
                 {
-                    filePath = prop.Value.GetString();
+                    filePath = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("extraData"u8))
+                if (property.NameEquals("extraData"u8))
                 {
-                    extraData = prop.Value.GetString();
+                    extraData = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("controlId"u8))
+                if (property.NameEquals("controlId"u8))
                 {
-                    controlId = prop.Value.GetString();
+                    controlId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("responsibilityId"u8))
+                if (property.NameEquals("responsibilityId"u8))
                 {
-                    responsibilityId = prop.Value.GetString();
+                    responsibilityId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new AppComplianceProvisioningState(prop.Value.GetString());
+                    provisioningState = new AppComplianceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppComplianceReportEvidenceProperties(
                 evidenceType,
                 filePath,
@@ -207,7 +159,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 controlId,
                 responsibilityId,
                 provisioningState,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppComplianceReportEvidenceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportEvidenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AppComplianceReportEvidenceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppComplianceReportEvidenceProperties IPersistableModel<AppComplianceReportEvidenceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppComplianceReportEvidenceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAppComplianceReportEvidenceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppComplianceReportEvidenceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppComplianceReportEvidenceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,6 +26,16 @@ trigger:
     - eng/common/
 #endif
 
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/template/
 #if (false)
     # The following paths should only be included in template/ci.yml, and removed from any other SDKs which copy this file.
     # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.
@@ -45,7 +55,6 @@ extends:
     Artifacts:
     - name: Azure.Template
       safeName: AzureTemplate
-      skipCodeownersVerification: true
       triggeringPaths:
       - /.config
       - /.devcontainer

@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.EventGrid.csproj" />
-  <Project Path="tests/Azure.Provisioning.EventGrid.Tests.csproj" />
-</Solution>

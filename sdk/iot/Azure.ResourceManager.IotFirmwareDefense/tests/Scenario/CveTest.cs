@@ -37,8 +37,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
             var results = testFirmware.GetCvesAsync();
-            await foreach (CveResult result in results)
-            {
+            await foreach ( CveResult result in results ) {
                 Console.WriteLine($"Fetched: {result}");
             }
             Assert.NotNull(results);

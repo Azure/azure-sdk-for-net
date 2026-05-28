@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Log Collection properties of the cluster. </summary>
-    public partial class LogCollectionProperties : IJsonModel<LogCollectionProperties>
+    public partial class LogCollectionProperties : IUtf8JsonSerializable, IJsonModel<LogCollectionProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LogCollectionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LogCollectionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLogCollectionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LogCollectionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogCollectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LogCollectionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LogCollectionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LogCollectionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LogCollectionProperties IPersistableModel<LogCollectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogCollectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogCollectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +30,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogCollectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LogCollectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LogCollectionProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(FromDate))
             {
                 writer.WritePropertyName("fromDate"u8);
@@ -93,21 +55,21 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("logCollectionSessionDetails"u8);
                 writer.WriteStartArray();
-                foreach (LogCollectionSession item in LogCollectionSessionDetails)
+                foreach (var item in LogCollectionSessionDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,27 +78,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LogCollectionProperties IJsonModel<LogCollectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LogCollectionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LogCollectionProperties IJsonModel<LogCollectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogCollectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LogCollectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LogCollectionProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLogCollectionProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LogCollectionProperties DeserializeLogCollectionProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static LogCollectionProperties DeserializeLogCollectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -145,44 +102,45 @@ namespace Azure.ResourceManager.Hci.Models
             DateTimeOffset? toDate = default;
             DateTimeOffset? lastLogGenerated = default;
             IReadOnlyList<LogCollectionSession> logCollectionSessionDetails = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("fromDate"u8))
+                if (property.NameEquals("fromDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fromDate = prop.Value.GetDateTimeOffset("O");
+                    fromDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("toDate"u8))
+                if (property.NameEquals("toDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    toDate = prop.Value.GetDateTimeOffset("O");
+                    toDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("lastLogGenerated"u8))
+                if (property.NameEquals("lastLogGenerated"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastLogGenerated = prop.Value.GetDateTimeOffset("O");
+                    lastLogGenerated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("logCollectionSessionDetails"u8))
+                if (property.NameEquals("logCollectionSessionDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<LogCollectionSession> array = new List<LogCollectionSession>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(LogCollectionSession.DeserializeLogCollectionSession(item, options));
                     }
@@ -191,10 +149,130 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new LogCollectionProperties(fromDate, toDate, lastLogGenerated, logCollectionSessionDetails ?? new ChangeTrackingList<LogCollectionSession>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LogCollectionProperties(fromDate, toDate, lastLogGenerated, logCollectionSessionDetails ?? new ChangeTrackingList<LogCollectionSession>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FromDate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fromDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FromDate))
+                {
+                    builder.Append("  fromDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(FromDate.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ToDate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  toDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ToDate))
+                {
+                    builder.Append("  toDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ToDate.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastLogGenerated), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastLogGenerated: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastLogGenerated))
+                {
+                    builder.Append("  lastLogGenerated: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastLogGenerated.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogCollectionSessionDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  logCollectionSessionDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LogCollectionSessionDetails))
+                {
+                    if (LogCollectionSessionDetails.Any())
+                    {
+                        builder.Append("  logCollectionSessionDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LogCollectionSessionDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  logCollectionSessionDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<LogCollectionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogCollectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(LogCollectionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LogCollectionProperties IPersistableModel<LogCollectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogCollectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeLogCollectionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogCollectionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogCollectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

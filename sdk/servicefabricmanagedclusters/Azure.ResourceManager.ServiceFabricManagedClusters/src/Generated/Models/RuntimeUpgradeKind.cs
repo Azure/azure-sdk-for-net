@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -15,52 +14,35 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct RuntimeUpgradeKind : IEquatable<RuntimeUpgradeKind>
     {
         private readonly string _value;
-        /// <summary> The upgrade progresses one upgrade domain at a time. </summary>
-        private const string RollingValue = "Rolling";
 
         /// <summary> Initializes a new instance of <see cref="RuntimeUpgradeKind"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RuntimeUpgradeKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string RollingValue = "Rolling";
 
         /// <summary> The upgrade progresses one upgrade domain at a time. </summary>
         public static RuntimeUpgradeKind Rolling { get; } = new RuntimeUpgradeKind(RollingValue);
-
         /// <summary> Determines if two <see cref="RuntimeUpgradeKind"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RuntimeUpgradeKind left, RuntimeUpgradeKind right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RuntimeUpgradeKind"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RuntimeUpgradeKind left, RuntimeUpgradeKind right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RuntimeUpgradeKind"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RuntimeUpgradeKind"/>. </summary>
         public static implicit operator RuntimeUpgradeKind(string value) => new RuntimeUpgradeKind(value);
 
-        /// <summary> Converts a string to a <see cref="RuntimeUpgradeKind"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RuntimeUpgradeKind?(string value) => value == null ? null : new RuntimeUpgradeKind(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RuntimeUpgradeKind other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RuntimeUpgradeKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -3,13 +3,13 @@
 
 namespace Azure.ResourceManager.SelfHelp.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Azure.Core;
     using Azure.Core.TestFramework;
-    using Azure.ResourceManager.SelfHelp.Models;
+    using Azure.Core;
+    using System.Threading.Tasks;
     using NUnit.Framework;
+    using System;
+    using Azure.ResourceManager.SelfHelp.Models;
+    using System.Collections.Generic;
 
     public class SolutionsTests : SelfHelpManagementTestBase
     {
@@ -51,8 +51,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
             List<SelfHelpSection> sections = new List<SelfHelpSection>();
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            SolutionResourceProperties solutionResourceProperties = new SolutionResourceProperties(triggerCriterionList, parameters, null, null, null, null, null, sections, null);
-            var data = new SelfHelpSolutionData(scope, null, resourceType, null, null, solutionResourceProperties);
+            var data = new SelfHelpSolutionData(scope, null, resourceType, null, triggerCriterionList, parameters, null, null, null, null, null, null, null);
 
             return data;
         }

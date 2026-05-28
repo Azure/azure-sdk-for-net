@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Azure.Storage.Sas;
 
 namespace Azure.Storage.DataMovement
 {
@@ -187,30 +186,9 @@ namespace Azure.Storage.DataMovement
         {
             UriBuilder builder = new(uri);
 
-            if (string.IsNullOrEmpty(uri.Query))
-            {
-                return builder.Uri.AbsoluteUri;
-            }
-
-            // Remove only SAS token query parameters, preserving resource
-            // identifiers such as snapshot, versionid, and sharesnapshot.
-            UriQueryParamsCollection queryParams = new(uri.Query);
-
-            if (queryParams.ContainsKey(Constants.Sas.Parameters.Version))
-            {
-                SasQueryParametersInternals.Create(queryParams);
-            }
-
-            builder.Query = queryParams.Count > 0 ? queryParams.ToString() : string.Empty;
+            // Remove any query parameters (including SAS)
+            builder.Query = string.Empty;
             return builder.Uri.AbsoluteUri;
-        }
-
-        internal static void ValidateOffsetsAndLength(int offset, int length, long streamLength)
-        {
-            if ((long)offset + length > streamLength)
-            {
-                throw Errors.InvalidCheckpointOffsetLength(offset, length, streamLength);
-            }
         }
     }
 }

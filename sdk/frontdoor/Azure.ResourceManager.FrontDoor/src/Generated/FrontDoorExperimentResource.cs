@@ -7,39 +7,49 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.FrontDoor
 {
     /// <summary>
-    /// A class representing a FrontDoorExperiment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorExperimentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FrontDoorNetworkExperimentProfileResource"/> using the GetFrontDoorExperiments method.
+    /// A Class representing a FrontDoorExperiment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FrontDoorExperimentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFrontDoorExperimentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FrontDoorNetworkExperimentProfileResource"/> using the GetFrontDoorExperiment method.
     /// </summary>
     public partial class FrontDoorExperimentResource : ArmResource
     {
-        private readonly ClientDiagnostics _experimentsClientDiagnostics;
-        private readonly Experiments _experimentsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="FrontDoorExperimentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="experimentName"> The experimentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string experimentName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _frontDoorExperimentExperimentsClientDiagnostics;
+        private readonly ExperimentsRestOperations _frontDoorExperimentExperimentsRestClient;
         private readonly ClientDiagnostics _reportsClientDiagnostics;
-        private readonly Reports _reportsRestClient;
+        private readonly ReportsRestOperations _reportsRestClient;
         private readonly FrontDoorExperimentData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/NetworkExperimentProfiles/Experiments";
 
-        /// <summary> Initializes a new instance of FrontDoorExperimentResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorExperimentResource"/> class for mocking. </summary>
         protected FrontDoorExperimentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorExperimentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FrontDoorExperimentResource(ArmClient client, FrontDoorExperimentData data) : this(client, data.Id)
@@ -48,95 +58,73 @@ namespace Azure.ResourceManager.FrontDoor
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorExperimentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FrontDoorExperimentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string frontDoorExperimentApiVersion);
-            _experimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _experimentsRestClient = new Experiments(_experimentsClientDiagnostics, Pipeline, Endpoint, frontDoorExperimentApiVersion ?? "2025-11-01");
-            _reportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _reportsRestClient = new Reports(_reportsClientDiagnostics, Pipeline, Endpoint, frontDoorExperimentApiVersion ?? "2025-11-01");
-            ValidateResourceId(id);
+            _frontDoorExperimentExperimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string frontDoorExperimentExperimentsApiVersion);
+            _frontDoorExperimentExperimentsRestClient = new ExperimentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorExperimentExperimentsApiVersion);
+            _reportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _reportsRestClient = new ReportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual FrontDoorExperimentData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="profileName"> The profileName. </param>
-        /// <param name="experimentName"> The experimentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string experimentName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets an Experiment by ExperimentName
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FrontDoorExperimentResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FrontDoorExperimentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Get");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
+                var response = await _frontDoorExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -150,42 +138,118 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets an Experiment by ExperimentName
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FrontDoorExperimentResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FrontDoorExperimentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Get");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
+                var response = _frontDoorExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an Experiment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _frontDoorExperimentExperimentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation(_frontDoorExperimentExperimentsClientDiagnostics, Pipeline, _frontDoorExperimentExperimentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an Experiment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _frontDoorExperimentExperimentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new FrontDoorArmOperation(_frontDoorExperimentExperimentsClientDiagnostics, Pipeline, _frontDoorExperimentExperimentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -198,20 +262,20 @@ namespace Azure.ResourceManager.FrontDoor
         /// Updates an Experiment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FrontDoorExperimentResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,27 +287,14 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Update");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorExperimentPatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FrontDoorArmOperation<FrontDoorExperimentResource> operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(
-                    new FrontDoorExperimentOperationSource(Client),
-                    _experimentsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _frontDoorExperimentExperimentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(new FrontDoorExperimentOperationSource(Client), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, _frontDoorExperimentExperimentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -257,20 +308,20 @@ namespace Azure.ResourceManager.FrontDoor
         /// Updates an Experiment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FrontDoorExperimentResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,125 +333,14 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Update");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorExperimentPatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                FrontDoorArmOperation<FrontDoorExperimentResource> operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(
-                    new FrontDoorExperimentOperationSource(Client),
-                    _experimentsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _frontDoorExperimentExperimentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(new FrontDoorExperimentOperationSource(Client), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, _frontDoorExperimentExperimentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes an Experiment
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FrontDoorExperimentResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FrontDoorArmOperation operation = new FrontDoorArmOperation(_experimentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes an Experiment
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FrontDoorExperimentResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                FrontDoorArmOperation operation = new FrontDoorArmOperation(_experimentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -414,20 +354,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets a Latency Scorecard for a given Experiment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/latencyScorecard. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_GetLatencyScorecards. </description>
+        /// <term>Operation Id</term>
+        /// <description>Reports_GetLatencyScorecards</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FrontDoorExperimentResource"/>. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -435,23 +371,13 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="endOn"> The end DateTime of the Latency Scorecard in UTC. </param>
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LatencyScorecard>> GetLatencyScorecardsReportAsync(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = default, string country = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LatencyScorecard>> GetLatencyScorecardsReportAsync(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecardsReport");
+            using var scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecardsReport");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _reportsRestClient.CreateGetLatencyScorecardsReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval.ToString(), endOn, country, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LatencyScorecard> response = Response.FromValue(LatencyScorecard.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _reportsRestClient.GetLatencyScorecardsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval, endOn, country, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -465,20 +391,16 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets a Latency Scorecard for a given Experiment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/latencyScorecard. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_GetLatencyScorecards. </description>
+        /// <term>Operation Id</term>
+        /// <description>Reports_GetLatencyScorecards</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FrontDoorExperimentResource"/>. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -486,23 +408,13 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="endOn"> The end DateTime of the Latency Scorecard in UTC. </param>
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LatencyScorecard> GetLatencyScorecardsReport(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = default, string country = default, CancellationToken cancellationToken = default)
+        public virtual Response<LatencyScorecard> GetLatencyScorecardsReport(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecardsReport");
+            using var scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecardsReport");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _reportsRestClient.CreateGetLatencyScorecardsReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval.ToString(), endOn, country, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LatencyScorecard> response = Response.FromValue(LatencyScorecard.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _reportsRestClient.GetLatencyScorecards(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval, endOn, country, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -516,47 +428,31 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets a Timeseries for a given Experiment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/timeseries. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/Timeseries</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_GetTimeseries. </description>
+        /// <term>Operation Id</term>
+        /// <description>Reports_GetTimeSeries</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FrontDoorExperimentResource"/>. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
-        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
-        /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
-        /// <param name="timeSeriesType"> The type of Timeseries. </param>
-        /// <param name="endpoint"> The specific endpoint. </param>
-        /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FrontDoorTimeSeriesInfo>> GetTimeSeriesReportAsync(DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint = default, string country = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<FrontDoorTimeSeriesInfo>> GetTimeSeriesReportAsync(FrontDoorExperimentResourceGetTimeSeriesReportOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetTimeSeriesReport");
+            Argument.AssertNotNull(options, nameof(options));
+
+            using var scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetTimeSeriesReport");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _reportsRestClient.CreateGetTimeSeriesReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startOn, endOn, aggregationInterval.ToString(), timeSeriesType.ToString(), endpoint, country, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FrontDoorTimeSeriesInfo> response = Response.FromValue(FrontDoorTimeSeriesInfo.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _reportsRestClient.GetTimeSeriesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.StartOn, options.EndOn, options.AggregationInterval, options.TimeSeriesType, options.Endpoint, options.Country, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -570,47 +466,31 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets a Timeseries for a given Experiment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/timeseries. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/Timeseries</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_GetTimeseries. </description>
+        /// <term>Operation Id</term>
+        /// <description>Reports_GetTimeSeries</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="FrontDoorExperimentResource"/>. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
-        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
-        /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
-        /// <param name="timeSeriesType"> The type of Timeseries. </param>
-        /// <param name="endpoint"> The specific endpoint. </param>
-        /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FrontDoorTimeSeriesInfo> GetTimeSeriesReport(DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint = default, string country = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<FrontDoorTimeSeriesInfo> GetTimeSeriesReport(FrontDoorExperimentResourceGetTimeSeriesReportOptions options, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetTimeSeriesReport");
+            Argument.AssertNotNull(options, nameof(options));
+
+            using var scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetTimeSeriesReport");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _reportsRestClient.CreateGetTimeSeriesReportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, startOn, endOn, aggregationInterval.ToString(), timeSeriesType.ToString(), endpoint, country, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FrontDoorTimeSeriesInfo> response = Response.FromValue(FrontDoorTimeSeriesInfo.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _reportsRestClient.GetTimeSeries(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.StartOn, options.EndOn, options.AggregationInterval, options.TimeSeriesType, options.Endpoint, options.Country, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -620,7 +500,27 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -630,34 +530,28 @@ namespace Azure.ResourceManager.FrontDoor
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.AddTag");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
-                    return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _frontDoorExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FrontDoorExperimentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FrontDoorExperimentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    FrontDoorExperimentPatch patch = new FrontDoorExperimentPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new FrontDoorExperimentPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<FrontDoorExperimentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -668,7 +562,27 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -678,34 +592,28 @@ namespace Azure.ResourceManager.FrontDoor
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.AddTag");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
-                    return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _frontDoorExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new FrontDoorExperimentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FrontDoorExperimentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    FrontDoorExperimentPatch patch = new FrontDoorExperimentPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new FrontDoorExperimentPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<FrontDoorExperimentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -716,39 +624,53 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<FrontDoorExperimentResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.SetTags");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
-                    return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _frontDoorExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FrontDoorExperimentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FrontDoorExperimentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    FrontDoorExperimentPatch patch = new FrontDoorExperimentPatch();
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new FrontDoorExperimentPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<FrontDoorExperimentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -759,39 +681,53 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<FrontDoorExperimentResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.SetTags");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
-                    return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _frontDoorExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new FrontDoorExperimentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FrontDoorExperimentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    FrontDoorExperimentPatch patch = new FrontDoorExperimentPatch();
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new FrontDoorExperimentPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<FrontDoorExperimentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -802,7 +738,27 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -810,34 +766,28 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.RemoveTag");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
-                    return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _frontDoorExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FrontDoorExperimentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FrontDoorExperimentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    FrontDoorExperimentPatch patch = new FrontDoorExperimentPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new FrontDoorExperimentPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<FrontDoorExperimentResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -848,7 +798,27 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -856,34 +826,28 @@ namespace Azure.ResourceManager.FrontDoor
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.RemoveTag");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
-                    return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _frontDoorExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new FrontDoorExperimentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    FrontDoorExperimentData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    FrontDoorExperimentPatch patch = new FrontDoorExperimentPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new FrontDoorExperimentPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<FrontDoorExperimentResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

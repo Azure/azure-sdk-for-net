@@ -9,63 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.StorageSync;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    /// <summary> Cloud endpoint AFS file share metadata signing certificate public keys. </summary>
-    public partial class CloudEndpointAfsShareMetadataCertificatePublicKeys : IJsonModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>
+    public partial class CloudEndpointAfsShareMetadataCertificatePublicKeys : IUtf8JsonSerializable, IJsonModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudEndpointAfsShareMetadataCertificatePublicKeys PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CloudEndpointAfsShareMetadataCertificatePublicKeys)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CloudEndpointAfsShareMetadataCertificatePublicKeys)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudEndpointAfsShareMetadataCertificatePublicKeys IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CloudEndpointAfsShareMetadataCertificatePublicKeys"/> from. </param>
-        internal static CloudEndpointAfsShareMetadataCertificatePublicKeys FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -77,11 +28,12 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudEndpointAfsShareMetadataCertificatePublicKeys)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(FirstKey))
             {
                 writer.WritePropertyName("firstKey"u8);
@@ -92,15 +44,15 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("secondKey"u8);
                 writer.WriteStringValue(SecondKey);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -109,52 +61,80 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudEndpointAfsShareMetadataCertificatePublicKeys IJsonModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudEndpointAfsShareMetadataCertificatePublicKeys JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CloudEndpointAfsShareMetadataCertificatePublicKeys IJsonModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudEndpointAfsShareMetadataCertificatePublicKeys)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CloudEndpointAfsShareMetadataCertificatePublicKeys DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(JsonElement element, ModelReaderWriterOptions options)
+        internal static CloudEndpointAfsShareMetadataCertificatePublicKeys DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string firstKey = default;
             string secondKey = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("firstKey"u8))
+                if (property.NameEquals("firstKey"u8))
                 {
-                    firstKey = prop.Value.GetString();
+                    firstKey = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("secondKey"u8))
+                if (property.NameEquals("secondKey"u8))
                 {
-                    secondKey = prop.Value.GetString();
+                    secondKey = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new CloudEndpointAfsShareMetadataCertificatePublicKeys(firstKey, secondKey, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CloudEndpointAfsShareMetadataCertificatePublicKeys(firstKey, secondKey, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CloudEndpointAfsShareMetadataCertificatePublicKeys)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudEndpointAfsShareMetadataCertificatePublicKeys IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudEndpointAfsShareMetadataCertificatePublicKeys)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudEndpointAfsShareMetadataCertificatePublicKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

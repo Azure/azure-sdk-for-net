@@ -7,70 +7,48 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Indicates how the update content is made available for download. This determines whether the update is sourced locally, from an online repository, or requires user notification. </summary>
+    /// <summary> Indicates the way the update content can be downloaded. </summary>
     public readonly partial struct HciAvailabilityType : IEquatable<HciAvailabilityType>
     {
         private readonly string _value;
-        /// <summary> The update content is available locally within the environment. </summary>
-        private const string LocalValue = "Local";
-        /// <summary> The update content is available from an online source. </summary>
-        private const string OnlineValue = "Online";
-        /// <summary> The system will notify the user when update content becomes available. </summary>
-        private const string NotifyValue = "Notify";
 
         /// <summary> Initializes a new instance of <see cref="HciAvailabilityType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciAvailabilityType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The update content is available locally within the environment. </summary>
+        private const string LocalValue = "Local";
+        private const string OnlineValue = "Online";
+        private const string NotifyValue = "Notify";
+
+        /// <summary> Local. </summary>
         public static HciAvailabilityType Local { get; } = new HciAvailabilityType(LocalValue);
-
-        /// <summary> The update content is available from an online source. </summary>
+        /// <summary> Online. </summary>
         public static HciAvailabilityType Online { get; } = new HciAvailabilityType(OnlineValue);
-
-        /// <summary> The system will notify the user when update content becomes available. </summary>
+        /// <summary> Notify. </summary>
         public static HciAvailabilityType Notify { get; } = new HciAvailabilityType(NotifyValue);
-
         /// <summary> Determines if two <see cref="HciAvailabilityType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciAvailabilityType left, HciAvailabilityType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="HciAvailabilityType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciAvailabilityType left, HciAvailabilityType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="HciAvailabilityType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciAvailabilityType"/>. </summary>
         public static implicit operator HciAvailabilityType(string value) => new HciAvailabilityType(value);
 
-        /// <summary> Converts a string to a <see cref="HciAvailabilityType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HciAvailabilityType?(string value) => value == null ? null : new HciAvailabilityType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciAvailabilityType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(HciAvailabilityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

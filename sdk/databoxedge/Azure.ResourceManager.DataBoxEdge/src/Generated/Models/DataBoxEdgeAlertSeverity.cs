@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeAlertSeverity : IEquatable<DataBoxEdgeAlertSeverity>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAlertSeverity"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeAlertSeverity(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InformationalValue = "Informational";
         private const string WarningValue = "Warning";
         private const string CriticalValue = "Critical";
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeAlertSeverity"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeAlertSeverity(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Informational. </summary>
+        /// <summary> Informational. </summary>
         public static DataBoxEdgeAlertSeverity Informational { get; } = new DataBoxEdgeAlertSeverity(InformationalValue);
-
-        /// <summary> Gets the Warning. </summary>
+        /// <summary> Warning. </summary>
         public static DataBoxEdgeAlertSeverity Warning { get; } = new DataBoxEdgeAlertSeverity(WarningValue);
-
-        /// <summary> Gets the Critical. </summary>
+        /// <summary> Critical. </summary>
         public static DataBoxEdgeAlertSeverity Critical { get; } = new DataBoxEdgeAlertSeverity(CriticalValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeAlertSeverity"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeAlertSeverity left, DataBoxEdgeAlertSeverity right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeAlertSeverity"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeAlertSeverity left, DataBoxEdgeAlertSeverity right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeAlertSeverity"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeAlertSeverity"/>. </summary>
         public static implicit operator DataBoxEdgeAlertSeverity(string value) => new DataBoxEdgeAlertSeverity(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeAlertSeverity"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeAlertSeverity?(string value) => value == null ? null : new DataBoxEdgeAlertSeverity(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeAlertSeverity other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeAlertSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

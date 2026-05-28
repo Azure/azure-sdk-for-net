@@ -6,35 +6,48 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
+using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a ScriptExecution along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptExecutionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetScriptExecutions method.
+    /// A Class representing a ScriptExecution along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptExecutionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScriptExecutionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetScriptExecution method.
     /// </summary>
     public partial class ScriptExecutionResource : ArmResource
     {
-        private readonly ClientDiagnostics _scriptExecutionsClientDiagnostics;
-        private readonly ScriptExecutions _scriptExecutionsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="ScriptExecutionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="scriptExecutionName"> The scriptExecutionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptExecutionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _scriptExecutionClientDiagnostics;
+        private readonly ScriptExecutionsRestOperations _scriptExecutionRestClient;
         private readonly ScriptExecutionData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptExecutions";
 
-        /// <summary> Initializes a new instance of ScriptExecutionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptExecutionResource"/> class for mocking. </summary>
         protected ScriptExecutionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScriptExecutionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptExecutionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScriptExecutionResource(ArmClient client, ScriptExecutionData data) : this(client, data.Id)
@@ -43,93 +56,71 @@ namespace Azure.ResourceManager.Avs
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScriptExecutionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptExecutionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScriptExecutionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _scriptExecutionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string scriptExecutionApiVersion);
-            _scriptExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _scriptExecutionsRestClient = new ScriptExecutions(_scriptExecutionsClientDiagnostics, Pipeline, Endpoint, scriptExecutionApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _scriptExecutionRestClient = new ScriptExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scriptExecutionApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ScriptExecutionData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="privateCloudName"> The privateCloudName. </param>
-        /// <param name="scriptExecutionName"> The scriptExecutionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptExecutionName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a ScriptExecution
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScriptExecutions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecution_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScriptExecutionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ScriptExecutionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("ScriptExecutionResource.Get");
+            using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scriptExecutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScriptExecutionData> response = Response.FromValue(ScriptExecutionData.FromResponse(result), result);
+                var response = await _scriptExecutionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +134,33 @@ namespace Azure.ResourceManager.Avs
         /// Get a ScriptExecution
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScriptExecutions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecution_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScriptExecutionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScriptExecutionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("ScriptExecutionResource.Get");
+            using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scriptExecutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScriptExecutionData> response = Response.FromValue(ScriptExecutionData.FromResponse(result), result);
+                var response = _scriptExecutionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +174,20 @@ namespace Azure.ResourceManager.Avs
         /// Delete a ScriptExecution
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScriptExecutions_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecution_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScriptExecutionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,21 +195,14 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("ScriptExecutionResource.Delete");
+            using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scriptExecutionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AvsArmOperation operation = new AvsArmOperation(_scriptExecutionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _scriptExecutionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation(_scriptExecutionClientDiagnostics, Pipeline, _scriptExecutionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +216,20 @@ namespace Azure.ResourceManager.Avs
         /// Delete a ScriptExecution
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScriptExecutions_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecution_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScriptExecutionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,21 +237,14 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("ScriptExecutionResource.Delete");
+            using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scriptExecutionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AvsArmOperation operation = new AvsArmOperation(_scriptExecutionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _scriptExecutionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AvsArmOperation(_scriptExecutionClientDiagnostics, Pipeline, _scriptExecutionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -286,23 +255,23 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Update a ScriptExecution.
+        /// Create a ScriptExecution
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScriptExecutions_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecution_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScriptExecutionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,27 +283,14 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("ScriptExecutionResource.Update");
+            using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scriptExecutionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScriptExecutionData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AvsArmOperation<ScriptExecutionResource> operation = new AvsArmOperation<ScriptExecutionResource>(
-                    new ScriptExecutionOperationSource(Client),
-                    _scriptExecutionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _scriptExecutionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation<ScriptExecutionResource>(new ScriptExecutionOperationSource(Client), _scriptExecutionClientDiagnostics, Pipeline, _scriptExecutionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -345,23 +301,23 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Update a ScriptExecution.
+        /// Create a ScriptExecution
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScriptExecutions_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecution_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScriptExecutionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,28 +329,93 @@ namespace Azure.ResourceManager.Avs
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _scriptExecutionsClientDiagnostics.CreateScope("ScriptExecutionResource.Update");
+            using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scriptExecutionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ScriptExecutionData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AvsArmOperation<ScriptExecutionResource> operation = new AvsArmOperation<ScriptExecutionResource>(
-                    new ScriptExecutionOperationSource(Client),
-                    _scriptExecutionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _scriptExecutionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new AvsArmOperation<ScriptExecutionResource>(new ScriptExecutionOperationSource(Client), _scriptExecutionClientDiagnostics, Pipeline, _scriptExecutionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Return the logs for a script execution resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}/getExecutionLogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecutions_GetExecutionLogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ScriptExecutionResource>> GetExecutionLogsAsync(IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionResource.GetExecutionLogs");
+            scope.Start();
+            try
+            {
+                var response = await _scriptExecutionRestClient.GetExecutionLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptOutputStreamType, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Return the logs for a script execution resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}/getExecutionLogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptExecutions_GetExecutionLogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ScriptExecutionResource> GetExecutionLogs(IEnumerable<ScriptOutputStreamType> scriptOutputStreamType = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionResource.GetExecutionLogs");
+            scope.Start();
+            try
+            {
+                var response = _scriptExecutionRestClient.GetExecutionLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, scriptOutputStreamType, cancellationToken);
+                return Response.FromValue(new ScriptExecutionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

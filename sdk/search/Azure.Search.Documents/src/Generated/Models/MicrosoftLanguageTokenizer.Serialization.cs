@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Divides text using language-specific rules. </summary>
-    public partial class MicrosoftLanguageTokenizer : LexicalTokenizer, IJsonModel<MicrosoftLanguageTokenizer>
+    public partial class MicrosoftLanguageTokenizer : IUtf8JsonSerializable, IJsonModel<MicrosoftLanguageTokenizer>
     {
-        /// <summary> Initializes a new instance of <see cref="MicrosoftLanguageTokenizer"/> for deserialization. </summary>
-        internal MicrosoftLanguageTokenizer()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MicrosoftLanguageTokenizer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LexicalTokenizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMicrosoftLanguageTokenizer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MicrosoftLanguageTokenizer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MicrosoftLanguageTokenizer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MicrosoftLanguageTokenizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MicrosoftLanguageTokenizer IPersistableModel<MicrosoftLanguageTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (MicrosoftLanguageTokenizer)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MicrosoftLanguageTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MicrosoftLanguageTokenizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MicrosoftLanguageTokenizer)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(MaxTokenLength))
             {
@@ -97,88 +52,132 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MicrosoftLanguageTokenizer IJsonModel<MicrosoftLanguageTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MicrosoftLanguageTokenizer)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override LexicalTokenizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MicrosoftLanguageTokenizer IJsonModel<MicrosoftLanguageTokenizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MicrosoftLanguageTokenizer)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMicrosoftLanguageTokenizer(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MicrosoftLanguageTokenizer DeserializeMicrosoftLanguageTokenizer(JsonElement element, ModelReaderWriterOptions options)
+        internal static MicrosoftLanguageTokenizer DeserializeMicrosoftLanguageTokenizer(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string odataType = "#Microsoft.Azure.Search.MicrosoftLanguageTokenizer";
-            string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? maxTokenLength = default;
             bool? isSearchTokenizer = default;
             MicrosoftTokenizerLanguage? language = default;
-            foreach (var prop in element.EnumerateObject())
+            string odataType = default;
+            string name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (property.NameEquals("maxTokenLength"u8))
                 {
-                    odataType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("maxTokenLength"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxTokenLength = prop.Value.GetInt32();
+                    maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("isSearchTokenizer"u8))
+                if (property.NameEquals("isSearchTokenizer"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSearchTokenizer = prop.Value.GetBoolean();
+                    isSearchTokenizer = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("language"u8))
+                if (property.NameEquals("language"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    language = prop.Value.GetString().ToMicrosoftTokenizerLanguage();
+                    language = property.Value.GetString().ToMicrosoftTokenizerLanguage();
+                    continue;
+                }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new MicrosoftLanguageTokenizer(
                 odataType,
                 name,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 maxTokenLength,
                 isSearchTokenizer,
                 language);
+        }
+
+        BinaryData IPersistableModel<MicrosoftLanguageTokenizer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MicrosoftLanguageTokenizer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MicrosoftLanguageTokenizer IPersistableModel<MicrosoftLanguageTokenizer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftLanguageTokenizer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMicrosoftLanguageTokenizer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MicrosoftLanguageTokenizer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MicrosoftLanguageTokenizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MicrosoftLanguageTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMicrosoftLanguageTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

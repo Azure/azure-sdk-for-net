@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The expression traces.
-    /// Serialized Name: ExpressionTraces
-    /// </summary>
+    /// <summary> The expression traces. </summary>
     internal partial class ExpressionTraces
     {
         /// <summary>
@@ -55,15 +52,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressionTraces"/>. </summary>
-        /// <param name="value">
-        /// Anything
-        /// Serialized Name: ExpressionTraces.value
-        /// </param>
-        /// <param name="inputs"> Serialized Name: ExpressionTraces.inputs. </param>
-        /// <param name="nextLink">
-        /// The link used to get the next page of recommendations.
-        /// Serialized Name: ExpressionTraces.nextLink
-        /// </param>
+        /// <param name="value"> Anything. </param>
+        /// <param name="inputs"></param>
+        /// <param name="nextLink"> The link used to get the next page of recommendations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExpressionTraces(BinaryData value, IReadOnlyList<WorkflowExpressionRoot> inputs, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary>
         /// Anything
-        /// Serialized Name: ExpressionTraces.value
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -105,12 +95,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// </para>
         /// </summary>
         public BinaryData Value { get; }
-        /// <summary> Serialized Name: ExpressionTraces.inputs. </summary>
+        /// <summary> Gets the inputs. </summary>
         public IReadOnlyList<WorkflowExpressionRoot> Inputs { get; }
-        /// <summary>
-        /// The link used to get the next page of recommendations.
-        /// Serialized Name: ExpressionTraces.nextLink
-        /// </summary>
+        /// <summary> The link used to get the next page of recommendations. </summary>
         public string NextLink { get; }
     }
 }

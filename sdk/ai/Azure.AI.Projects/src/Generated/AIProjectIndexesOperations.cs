@@ -87,7 +87,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectIndexesOperationsGetIndexVersionsCollectionResultOfT(this, name, cancellationToken.ToRequestOptions());
+            return new AIProjectIndexesOperationsGetIndexVersionsCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List all versions of the given Index. </summary>
@@ -100,7 +100,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return new AIProjectIndexesOperationsGetIndexVersionsAsyncCollectionResultOfT(this, name, cancellationToken.ToRequestOptions());
+            return new AIProjectIndexesOperationsGetIndexVersionsAsyncCollectionResultOfT(this, name, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual CollectionResult<AIProjectIndex> GetIndexes(CancellationToken cancellationToken = default)
         {
-            return new AIProjectIndexesOperationsGetIndexesCollectionResultOfT(this, cancellationToken.ToRequestOptions());
+            return new AIProjectIndexesOperationsGetIndexesCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List the latest version of each Index. </summary>
@@ -148,7 +148,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual AsyncCollectionResult<AIProjectIndex> GetIndexesAsync(CancellationToken cancellationToken = default)
         {
-            return new AIProjectIndexesOperationsGetIndexesAsyncCollectionResultOfT(this, cancellationToken.ToRequestOptions());
+            return new AIProjectIndexesOperationsGetIndexesAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = GetIndex(name, version, cancellationToken.ToRequestOptions());
+            ClientResult result = GetIndex(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((AIProjectIndex)result, result.GetRawResponse());
         }
 
@@ -227,7 +227,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            ClientResult result = await GetIndexAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetIndexAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((AIProjectIndex)result, result.GetRawResponse());
         }
 
@@ -291,7 +291,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return Delete(name, version, cancellationToken.ToRequestOptions());
+            return Delete(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> Delete the specific version of the Index. The service returns 204 No Content if the Index was deleted successfully or if the Index does not exist. </summary>
@@ -306,7 +306,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return await DeleteAsync(name, version, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return await DeleteAsync(name, version, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary>

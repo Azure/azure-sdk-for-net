@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class ServiceBusQueueAuthorizationRuleCollection : ArmCollection, IEnumerable<ServiceBusQueueAuthorizationRuleResource>, IAsyncEnumerable<ServiceBusQueueAuthorizationRuleResource>
     {
-        private readonly ClientDiagnostics _queuesClientDiagnostics;
-        private readonly Queues _queuesRestClient;
+        private readonly ClientDiagnostics _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics;
+        private readonly QueueAuthorizationRulesRestOperations _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient;
 
-        /// <summary> Initializes a new instance of ServiceBusQueueAuthorizationRuleCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusQueueAuthorizationRuleCollection"/> class for mocking. </summary>
         protected ServiceBusQueueAuthorizationRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBusQueueAuthorizationRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceBusQueueAuthorizationRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ServiceBusQueueAuthorizationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceBusQueueAuthorizationRuleResource.ResourceType, out string serviceBusQueueAuthorizationRuleApiVersion);
-            _queuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusQueueAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _queuesRestClient = new Queues(_queuesClientDiagnostics, Pipeline, Endpoint, serviceBusQueueAuthorizationRuleApiVersion ?? "2025-05-01-preview");
-            ValidateResourceId(id);
+            _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ServiceBusQueueAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServiceBusQueueAuthorizationRuleResource.ResourceType, out string serviceBusQueueAuthorizationRuleQueueAuthorizationRulesApiVersion);
+            _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient = new QueueAuthorizationRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusQueueAuthorizationRuleQueueAuthorizationRulesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ServiceBusQueueResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusQueueResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusQueueResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates an authorization rule for a queue.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Queues_CreateOrUpdateAuthorizationRule. </description>
+        /// <term>Operation Id</term>
+        /// <description>QueueAuthorizationRules_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="data"> The shared access authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceBusQueueAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, ServiceBusAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _queuesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.CreateOrUpdate");
+            using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queuesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, ServiceBusAuthorizationRuleData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServiceBusAuthorizationRuleData> response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ServiceBusArmOperation<ServiceBusQueueAuthorizationRuleResource> operation = new ServiceBusArmOperation<ServiceBusQueueAuthorizationRuleResource>(Response.FromValue(new ServiceBusQueueAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceBusArmOperation<ServiceBusQueueAuthorizationRuleResource>(Response.FromValue(new ServiceBusQueueAuthorizationRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.ServiceBus
         /// Creates an authorization rule for a queue.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Queues_CreateOrUpdateAuthorizationRule. </description>
+        /// <term>Operation Id</term>
+        /// <description>QueueAuthorizationRules_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="data"> The shared access authorization rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceBusQueueAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, ServiceBusAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _queuesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.CreateOrUpdate");
+            using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queuesRestClient.CreateCreateOrUpdateAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, ServiceBusAuthorizationRuleData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServiceBusAuthorizationRuleData> response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ServiceBusArmOperation<ServiceBusQueueAuthorizationRuleResource> operation = new ServiceBusArmOperation<ServiceBusQueueAuthorizationRuleResource>(Response.FromValue(new ServiceBusQueueAuthorizationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, data, cancellationToken);
+                var uri = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ServiceBusArmOperation<ServiceBusQueueAuthorizationRuleResource>(Response.FromValue(new ServiceBusQueueAuthorizationRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.ServiceBus
         /// Gets an authorization rule for a queue by rule name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Queues_GetAuthorizationRule. </description>
+        /// <term>Operation Id</term>
+        /// <description>QueueAuthorizationRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<Response<ServiceBusQueueAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _queuesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Get");
+            using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queuesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServiceBusAuthorizationRuleData> response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
+                var response = await _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ServiceBusQueueAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.ServiceBus
         /// Gets an authorization rule for a queue by rule name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Queues_GetAuthorizationRule. </description>
+        /// <term>Operation Id</term>
+        /// <description>QueueAuthorizationRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<ServiceBusQueueAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _queuesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Get");
+            using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queuesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServiceBusAuthorizationRuleData> response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
+                var response = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ServiceBusQueueAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,51 +247,50 @@ namespace Azure.ResourceManager.ServiceBus
         /// Gets all authorization rules for a queue.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Queues_ListAuthorizationRules. </description>
+        /// <term>Operation Id</term>
+        /// <description>QueueAuthorizationRules_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusQueueAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceBusQueueAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusQueueAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusQueueAuthorizationRuleResource>(new QueuesGetAuthorizationRulesAsyncCollectionResultOfT(
-                _queuesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "ServiceBusQueueAuthorizationRuleCollection.GetAll"), data => new ServiceBusQueueAuthorizationRuleResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceBusQueueAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusQueueAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all authorization rules for a queue.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Queues_ListAuthorizationRules. </description>
+        /// <term>Operation Id</term>
+        /// <description>QueueAuthorizationRules_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,68 +298,45 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> A collection of <see cref="ServiceBusQueueAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusQueueAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ServiceBusAuthorizationRuleData, ServiceBusQueueAuthorizationRuleResource>(new QueuesGetAuthorizationRulesCollectionResultOfT(
-                _queuesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "ServiceBusQueueAuthorizationRuleCollection.GetAll"), data => new ServiceBusQueueAuthorizationRuleResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceBusQueueAuthorizationRuleResource(Client, ServiceBusAuthorizationRuleData.DeserializeServiceBusAuthorizationRuleData(e)), _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics, Pipeline, "ServiceBusQueueAuthorizationRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Queues_GetAuthorizationRule. </description>
+        /// <term>Operation Id</term>
+        /// <description>QueueAuthorizationRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _queuesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Exists");
+            using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queuesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ServiceBusAuthorizationRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ServiceBusAuthorizationRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,50 +350,36 @@ namespace Azure.ResourceManager.ServiceBus
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Queues_GetAuthorizationRule. </description>
+        /// <term>Operation Id</term>
+        /// <description>QueueAuthorizationRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _queuesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Exists");
+            using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queuesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ServiceBusAuthorizationRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ServiceBusAuthorizationRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -450,54 +393,38 @@ namespace Azure.ResourceManager.ServiceBus
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Queues_GetAuthorizationRule. </description>
+        /// <term>Operation Id</term>
+        /// <description>QueueAuthorizationRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceBusQueueAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _queuesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.GetIfExists");
+            using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queuesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ServiceBusAuthorizationRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ServiceBusAuthorizationRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ServiceBusQueueAuthorizationRuleResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ServiceBusQueueAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -511,54 +438,38 @@ namespace Azure.ResourceManager.ServiceBus
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Queues_GetAuthorizationRule. </description>
+        /// <term>Operation Id</term>
+        /// <description>QueueAuthorizationRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusQueueAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual NullableResponse<ServiceBusQueueAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
-            using DiagnosticScope scope = _queuesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.GetIfExists");
+            using var scope = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusQueueAuthorizationRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queuesRestClient.CreateGetAuthorizationRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ServiceBusAuthorizationRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ServiceBusAuthorizationRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ServiceBusAuthorizationRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _serviceBusQueueAuthorizationRuleQueueAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ServiceBusQueueAuthorizationRuleResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ServiceBusQueueAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -578,7 +489,6 @@ namespace Azure.ResourceManager.ServiceBus
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ServiceBusQueueAuthorizationRuleResource> IAsyncEnumerable<ServiceBusQueueAuthorizationRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

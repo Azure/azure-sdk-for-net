@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -13,7 +12,7 @@ namespace Azure.Data.AppConfiguration
     /// <summary>
     /// Configuration Setting model factory that enables mocking for the AppConfiguration client library.
     /// </summary>
-    [CodeGenType("AppConfigurationModelFactory")]
+    [CodeGenType("AzureDataAppConfigurationModelFactory")]
     [CodeGenSuppress("ConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(IDictionary<string, string>), typeof(bool?), typeof(ETag))]
     public static partial class ConfigurationModelFactory
     {

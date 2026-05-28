@@ -8,59 +8,15 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary>
-    /// Model for RegistryEndpointAuthentication
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>, <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/>, <see cref="RegistryEndpointAnonymousAuthentication"/>, and <see cref="RegistryEndpointArtifactPullSecretAuthentication"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownRegistryEndpointAuthentication))]
-    public abstract partial class RegistryEndpointAuthentication : IJsonModel<RegistryEndpointAuthentication>
+    public partial class RegistryEndpointAuthentication : IUtf8JsonSerializable, IJsonModel<RegistryEndpointAuthentication>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegistryEndpointAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRegistryEndpointAuthentication(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RegistryEndpointAuthentication)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistryEndpointAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RegistryEndpointAuthentication)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RegistryEndpointAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RegistryEndpointAuthentication IPersistableModel<RegistryEndpointAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RegistryEndpointAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RegistryEndpointAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -72,22 +28,23 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RegistryEndpointAuthentication)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,46 +53,68 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RegistryEndpointAuthentication IJsonModel<RegistryEndpointAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegistryEndpointAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RegistryEndpointAuthentication IJsonModel<RegistryEndpointAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RegistryEndpointAuthentication)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRegistryEndpointAuthentication(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RegistryEndpointAuthentication DeserializeRegistryEndpointAuthentication(JsonElement element, ModelReaderWriterOptions options)
+        internal static RegistryEndpointAuthentication DeserializeRegistryEndpointAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("method"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("method", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "SystemAssignedManagedIdentity":
-                        return RegistryEndpointSystemAssignedIdentityAuthentication.DeserializeRegistryEndpointSystemAssignedIdentityAuthentication(element, options);
-                    case "UserAssignedManagedIdentity":
-                        return RegistryEndpointUserAssignedIdentityAuthentication.DeserializeRegistryEndpointUserAssignedIdentityAuthentication(element, options);
-                    case "Anonymous":
-                        return RegistryEndpointAnonymousAuthentication.DeserializeRegistryEndpointAnonymousAuthentication(element, options);
-                    case "ArtifactPullSecret":
-                        return RegistryEndpointArtifactPullSecretAuthentication.DeserializeRegistryEndpointArtifactPullSecretAuthentication(element, options);
+                    case "Anonymous": return RegistryEndpointAnonymousAuthentication.DeserializeRegistryEndpointAnonymousAuthentication(element, options);
+                    case "ArtifactPullSecret": return RegistryEndpointArtifactPullSecretAuthentication.DeserializeRegistryEndpointArtifactPullSecretAuthentication(element, options);
+                    case "SystemAssignedManagedIdentity": return RegistryEndpointSystemAssignedIdentityAuthentication.DeserializeRegistryEndpointSystemAssignedIdentityAuthentication(element, options);
+                    case "UserAssignedManagedIdentity": return RegistryEndpointUserAssignedIdentityAuthentication.DeserializeRegistryEndpointUserAssignedIdentityAuthentication(element, options);
                 }
             }
             return UnknownRegistryEndpointAuthentication.DeserializeUnknownRegistryEndpointAuthentication(element, options);
         }
+
+        BinaryData IPersistableModel<RegistryEndpointAuthentication>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RegistryEndpointAuthentication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RegistryEndpointAuthentication IPersistableModel<RegistryEndpointAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeRegistryEndpointAuthentication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RegistryEndpointAuthentication)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RegistryEndpointAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

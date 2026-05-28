@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Dell.Storage.Models;
 using Azure.ResourceManager.Models;
 
@@ -30,7 +29,6 @@ namespace Azure.ResourceManager.Dell.Storage
     [ModelReaderWriterBuildable(typeof(DellFileSystemUserDetails))]
     [ModelReaderWriterBuildable(typeof(FileSystemResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerDellStorageContext : ModelReaderWriterContext

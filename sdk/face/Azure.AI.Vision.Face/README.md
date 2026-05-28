@@ -251,8 +251,7 @@ integrate the UI and the code into your native frontend application, please foll
 Here is an example to create the session for liveness detection.
 
 ```C# Snippet:CreateLivenessSession
-var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive)
-{
+var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
     SendResultsToClient = true,
     DeviceCorrelationId = Guid.NewGuid().ToString(),
 };
@@ -276,8 +275,7 @@ Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
 Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
 Console.WriteLine($"Status: {sessionResult.Status}");
 Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
-if (sessionResult.Result != null)
-{
+if (sessionResult.Result != null) {
     WriteLivenessSessionAuditEntry(sessionResult.Result);
 }
 ```
@@ -295,8 +293,7 @@ For example, if you submit a image with an invalid `Uri`, a `400` error is retur
 
 ```C# Snippet:DetectFacesInvalidUrl
 var invalidUri = new Uri("http://invalid.uri");
-try
-{
+try {
     var detectResponse = client.Detect(
         invalidUri,
         FaceDetectionModel.Detection01,

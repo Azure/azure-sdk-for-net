@@ -1,0 +1,147 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/vision/v3.2/read/analyze?model-version=2021-04-12&readingOrder=basic",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4yL3JlYWQvYW5hbHl6ZT9tb2RlbC12ZXJzaW9uPTIwMjEtMDQtMTImcmVhZGluZ09yZGVyPWJhc2lj",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/cognitiveservices/Vision.ComputerVision/tests/TestImages/signage.jpg\"\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4420.0",
+          "OSName/Windows",
+          "OSVersion/10.0.22000.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "152"
+        ]
+      },
+      "ResponseHeaders": {
+        "Operation-Location": [
+          "https://westus.api.cognitive.microsoft.com/vision/v3.2/read/analyzeResults/52d7bfdf-6418-4ab9-b762-0887e54cd473"
+        ],
+        "x-envoy-upstream-service-time": [
+          "151"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "apim-request-id": [
+          "52d7bfdf-6418-4ab9-b762-0887e54cd473"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 04 Nov 2021 05:53:54 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/vision/v3.2/read/analyzeResults/52d7bfdf-6418-4ab9-b762-0887e54cd473",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4yL3JlYWQvYW5hbHl6ZVJlc3VsdHMvNTJkN2JmZGYtNjQxOC00YWI5LWI3NjItMDg4N2U1NGNkNDcz",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4420.0",
+          "OSName/Windows",
+          "OSVersion/10.0.22000.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "12"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "apim-request-id": [
+          "244ba758-0c17-467b-b270-e2928671b27e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 04 Nov 2021 05:53:54 GMT"
+        ],
+        "Content-Length": [
+          "106"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdDateTime\": \"2021-11-04T05:53:54Z\",\r\n  \"lastUpdatedDateTime\": \"2021-11-04T05:53:54Z\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/vision/v3.2/read/analyzeResults/52d7bfdf-6418-4ab9-b762-0887e54cd473",
+      "EncodedRequestUri": "L3Zpc2lvbi92My4yL3JlYWQvYW5hbHl6ZVJlc3VsdHMvNTJkN2JmZGYtNjQxOC00YWI5LWI3NjItMDg4N2U1NGNkNDcz",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.8.4420.0",
+          "OSName/Windows",
+          "OSVersion/10.0.22000.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/7.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "x-envoy-upstream-service-time": [
+          "14"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.ComputerVision.Transaction=1"
+        ],
+        "apim-request-id": [
+          "be16437d-a149-4b79-9a81-21a9b63a77cc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 04 Nov 2021 05:53:55 GMT"
+        ],
+        "Content-Length": [
+          "892"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdDateTime\": \"2021-11-04T05:53:54Z\",\r\n  \"lastUpdatedDateTime\": \"2021-11-04T05:53:54Z\",\r\n  \"analyzeResult\": {\r\n    \"version\": \"3.2.0\",\r\n    \"modelVersion\": \"2021-04-12\",\r\n    \"readResults\": [\r\n      {\r\n        \"page\": 1,\r\n        \"angle\": 2.2026,\r\n        \"width\": 250,\r\n        \"height\": 258,\r\n        \"unit\": \"pixel\",\r\n        \"lines\": [\r\n          {\r\n            \"boundingBox\": [\r\n              63,\r\n              41,\r\n              104,\r\n              41,\r\n              104,\r\n              59,\r\n              63,\r\n              60\r\n            ],\r\n            \"text\": \"520\",\r\n            \"appearance\": {\r\n              \"style\": {\r\n                \"name\": \"other\",\r\n                \"confidence\": 0.878\r\n              }\r\n            },\r\n            \"words\": [\r\n              {\r\n                \"boundingBox\": [\r\n                  66,\r\n                  41,\r\n                  100,\r\n                  41,\r\n                  100,\r\n                  60,\r\n                  66,\r\n                  60\r\n                ],\r\n                \"text\": \"520\",\r\n                \"confidence\": 0.997\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              121,\r\n              32,\r\n              201,\r\n              36,\r\n              200,\r\n              57,\r\n              120,\r\n              53\r\n            ],\r\n            \"text\": \"WEST\",\r\n            \"appearance\": {\r\n              \"style\": {\r\n                \"name\": \"other\",\r\n                \"confidence\": 0.878\r\n              }\r\n            },\r\n            \"words\": [\r\n              {\r\n                \"boundingBox\": [\r\n                  122,\r\n                  32,\r\n                  199,\r\n                  36,\r\n                  197,\r\n                  58,\r\n                  120,\r\n                  53\r\n                ],\r\n                \"text\": \"WEST\",\r\n                \"confidence\": 0.994\r\n              }\r\n            ]\r\n          },\r\n          {\r\n            \"boundingBox\": [\r\n              58,\r\n              103,\r\n              201,\r\n              108,\r\n              200,\r\n              139,\r\n              57,\r\n              133\r\n            ],\r\n            \"text\": \"Seattle\",\r\n            \"appearance\": {\r\n              \"style\": {\r\n                \"name\": \"other\",\r\n                \"confidence\": 0.878\r\n              }\r\n            },\r\n            \"words\": [\r\n              {\r\n                \"boundingBox\": [\r\n                  61,\r\n                  103,\r\n                  199,\r\n                  109,\r\n                  199,\r\n                  140,\r\n                  59,\r\n                  134\r\n                ],\r\n                \"text\": \"Seattle\",\r\n                \"confidence\": 0.936\r\n              }\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

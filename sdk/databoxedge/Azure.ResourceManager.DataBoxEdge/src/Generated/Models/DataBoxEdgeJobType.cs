@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeJobType : IEquatable<DataBoxEdgeJobType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeJobType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string ScanForUpdatesValue = "ScanForUpdates";
         private const string DownloadUpdatesValue = "DownloadUpdates";
@@ -25,73 +32,41 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string RestoreValue = "Restore";
         private const string TriggerSupportPackageValue = "TriggerSupportPackage";
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeJobType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static DataBoxEdgeJobType Invalid { get; } = new DataBoxEdgeJobType(InvalidValue);
-
-        /// <summary> Gets the ScanForUpdates. </summary>
+        /// <summary> ScanForUpdates. </summary>
         public static DataBoxEdgeJobType ScanForUpdates { get; } = new DataBoxEdgeJobType(ScanForUpdatesValue);
-
-        /// <summary> Gets the DownloadUpdates. </summary>
+        /// <summary> DownloadUpdates. </summary>
         public static DataBoxEdgeJobType DownloadUpdates { get; } = new DataBoxEdgeJobType(DownloadUpdatesValue);
-
-        /// <summary> Gets the InstallUpdates. </summary>
+        /// <summary> InstallUpdates. </summary>
         public static DataBoxEdgeJobType InstallUpdates { get; } = new DataBoxEdgeJobType(InstallUpdatesValue);
-
-        /// <summary> Gets the RefreshShare. </summary>
+        /// <summary> RefreshShare. </summary>
         public static DataBoxEdgeJobType RefreshShare { get; } = new DataBoxEdgeJobType(RefreshShareValue);
-
-        /// <summary> Gets the RefreshContainer. </summary>
+        /// <summary> RefreshContainer. </summary>
         public static DataBoxEdgeJobType RefreshContainer { get; } = new DataBoxEdgeJobType(RefreshContainerValue);
-
-        /// <summary> Gets the Backup. </summary>
+        /// <summary> Backup. </summary>
         public static DataBoxEdgeJobType Backup { get; } = new DataBoxEdgeJobType(BackupValue);
-
-        /// <summary> Gets the Restore. </summary>
+        /// <summary> Restore. </summary>
         public static DataBoxEdgeJobType Restore { get; } = new DataBoxEdgeJobType(RestoreValue);
-
-        /// <summary> Gets the TriggerSupportPackage. </summary>
+        /// <summary> TriggerSupportPackage. </summary>
         public static DataBoxEdgeJobType TriggerSupportPackage { get; } = new DataBoxEdgeJobType(TriggerSupportPackageValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeJobType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeJobType left, DataBoxEdgeJobType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeJobType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeJobType left, DataBoxEdgeJobType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeJobType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeJobType"/>. </summary>
         public static implicit operator DataBoxEdgeJobType(string value) => new DataBoxEdgeJobType(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeJobType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeJobType?(string value) => value == null ? null : new DataBoxEdgeJobType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeJobType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeJobType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

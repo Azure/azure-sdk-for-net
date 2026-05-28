@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +19,11 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class ImageAnalysisClient
     {
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
@@ -46,24 +49,20 @@ namespace Azure.AI.Vision.ImageAnalysis
         }
 
         /// <summary> Initializes a new instance of ImageAnalysisClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal ImageAnalysisClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ImageAnalysisClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ImageAnalysisClient(Uri endpoint, AzureKeyCredential credential, ImageAnalysisClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new ImageAnalysisClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            }
+            _keyCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -73,24 +72,18 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ImageAnalysisClient(Uri endpoint, AzureKeyCredential credential, ImageAnalysisClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        public ImageAnalysisClient(Uri endpoint, TokenCredential credential, ImageAnalysisClientOptions options)
         {
-        }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
 
-        /// <summary> Initializes a new instance of ImageAnalysisClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ImageAnalysisClient(Uri endpoint, TokenCredential credential, ImageAnalysisClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
-        {
-        }
+            options ??= new ImageAnalysisClientOptions();
 
-        /// <summary> Initializes a new instance of ImageAnalysisClient from a <see cref="ImageAnalysisClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for ImageAnalysisClient. </param>
-        [Experimental("SCME0002")]
-        public ImageAnalysisClient(ImageAnalysisClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
-        {
+            _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -245,7 +238,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<ImageAnalysisResult> AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = AnalyzeFromImageData(visualFeatures, RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext());
+            Response result = AnalyzeFromImageData(visualFeatures, RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((ImageAnalysisResult)result, result);
         }
 
@@ -283,7 +276,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageData, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = await AnalyzeFromImageDataAsync(visualFeatures, RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await AnalyzeFromImageDataAsync(visualFeatures, RequestContent.Create(imageData), language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((ImageAnalysisResult)result, result);
         }
 
@@ -433,7 +426,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = AnalyzeFromUrl(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext());
+            Response result = AnalyzeFromUrl(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((ImageAnalysisResult)result, result);
         }
 
@@ -471,7 +464,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageUrl, string language = default, bool? genderNeutralCaption = default, IEnumerable<float> smartCropsAspectRatios = default, string modelVersion = default, CancellationToken cancellationToken = default)
         {
-            Response result = await AnalyzeFromUrlAsync(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await AnalyzeFromUrlAsync(visualFeatures, imageUrl, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((ImageAnalysisResult)result, result);
         }
     }

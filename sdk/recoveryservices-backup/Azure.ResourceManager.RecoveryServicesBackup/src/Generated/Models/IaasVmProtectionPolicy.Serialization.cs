@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> IaaS VM workload-specific backup policy. </summary>
-    public partial class IaasVmProtectionPolicy : BackupGenericProtectionPolicy, IJsonModel<IaasVmProtectionPolicy>
+    public partial class IaasVmProtectionPolicy : IUtf8JsonSerializable, IJsonModel<IaasVmProtectionPolicy>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupGenericProtectionPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIaasVmProtectionPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmProtectionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IaasVmProtectionPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IaasVmProtectionPolicy IPersistableModel<IaasVmProtectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (IaasVmProtectionPolicy)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IaasVmProtectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IaasVmProtectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(InstantRPDetails))
             {
@@ -123,171 +83,192 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IaasVmProtectionPolicy IJsonModel<IaasVmProtectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IaasVmProtectionPolicy)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupGenericProtectionPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IaasVmProtectionPolicy IJsonModel<IaasVmProtectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIaasVmProtectionPolicy(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IaasVmProtectionPolicy DeserializeIaasVmProtectionPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static IaasVmProtectionPolicy DeserializeIaasVmProtectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? protectedItemsCount = default;
-            string backupManagementType = "AzureIaasVM";
-            IList<string> resourceGuardOperationRequests = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             InstantRPAdditionalDetails instantRPDetails = default;
             BackupSchedulePolicy schedulePolicy = default;
             BackupRetentionPolicy retentionPolicy = default;
             IDictionary<string, BackupTieringPolicy> tieringPolicy = default;
-            int? instantRPRetentionRangeInDays = default;
+            int? instantRpRetentionRangeInDays = default;
             string timeZone = default;
             IaasVmPolicyType? policyType = default;
             IaasVmSnapshotConsistencyType? snapshotConsistencyType = default;
-            foreach (var prop in element.EnumerateObject())
+            int? protectedItemsCount = default;
+            string backupManagementType = default;
+            IList<string> resourceGuardOperationRequests = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("protectedItemsCount"u8))
+                if (property.NameEquals("instantRPDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectedItemsCount = prop.Value.GetInt32();
+                    instantRPDetails = InstantRPAdditionalDetails.DeserializeInstantRPAdditionalDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("backupManagementType"u8))
+                if (property.NameEquals("schedulePolicy"u8))
                 {
-                    backupManagementType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("resourceGuardOperationRequests"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    resourceGuardOperationRequests = array;
+                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("instantRPDetails"u8))
+                if (property.NameEquals("retentionPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    instantRPDetails = InstantRPAdditionalDetails.DeserializeInstantRPAdditionalDetails(prop.Value, options);
+                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("schedulePolicy"u8))
+                if (property.NameEquals("tieringPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("retentionPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("tieringPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BackupTieringPolicy> dictionary = new Dictionary<string, BackupTieringPolicy>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, BackupTieringPolicy.DeserializeBackupTieringPolicy(prop0.Value, options));
+                        dictionary.Add(property0.Name, BackupTieringPolicy.DeserializeBackupTieringPolicy(property0.Value, options));
                     }
                     tieringPolicy = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("instantRpRetentionRangeInDays"u8))
+                if (property.NameEquals("instantRpRetentionRangeInDays"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    instantRPRetentionRangeInDays = prop.Value.GetInt32();
+                    instantRpRetentionRangeInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("timeZone"u8))
+                if (property.NameEquals("timeZone"u8))
                 {
-                    timeZone = prop.Value.GetString();
+                    timeZone = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("policyType"u8))
+                if (property.NameEquals("policyType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyType = new IaasVmPolicyType(prop.Value.GetString());
+                    policyType = new IaasVmPolicyType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("snapshotConsistencyType"u8))
+                if (property.NameEquals("snapshotConsistencyType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    snapshotConsistencyType = new IaasVmSnapshotConsistencyType(prop.Value.GetString());
+                    snapshotConsistencyType = new IaasVmSnapshotConsistencyType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("protectedItemsCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectedItemsCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("backupManagementType"u8))
+                {
+                    backupManagementType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new IaasVmProtectionPolicy(
                 protectedItemsCount,
                 backupManagementType,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 instantRPDetails,
                 schedulePolicy,
                 retentionPolicy,
                 tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(),
-                instantRPRetentionRangeInDays,
+                instantRpRetentionRangeInDays,
                 timeZone,
                 policyType,
                 snapshotConsistencyType);
         }
+
+        BinaryData IPersistableModel<IaasVmProtectionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IaasVmProtectionPolicy IPersistableModel<IaasVmProtectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeIaasVmProtectionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IaasVmProtectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

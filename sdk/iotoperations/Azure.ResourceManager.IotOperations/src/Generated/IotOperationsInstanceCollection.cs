@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotOperations
@@ -22,53 +21,55 @@ namespace Azure.ResourceManager.IotOperations
     /// <summary>
     /// A class representing a collection of <see cref="IotOperationsInstanceResource"/> and their operations.
     /// Each <see cref="IotOperationsInstanceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="IotOperationsInstanceCollection"/> instance call the GetIotOperationsInstances method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="IotOperationsInstanceCollection"/> instance call the GetIotOperationsInstances method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class IotOperationsInstanceCollection : ArmCollection, IEnumerable<IotOperationsInstanceResource>, IAsyncEnumerable<IotOperationsInstanceResource>
     {
-        private readonly ClientDiagnostics _instanceClientDiagnostics;
-        private readonly Instance _instanceRestClient;
+        private readonly ClientDiagnostics _iotOperationsInstanceInstanceClientDiagnostics;
+        private readonly InstanceRestOperations _iotOperationsInstanceInstanceRestClient;
 
-        /// <summary> Initializes a new instance of IotOperationsInstanceCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotOperationsInstanceCollection"/> class for mocking. </summary>
         protected IotOperationsInstanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotOperationsInstanceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotOperationsInstanceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal IotOperationsInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(IotOperationsInstanceResource.ResourceType, out string iotOperationsInstanceApiVersion);
-            _instanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsInstanceResource.ResourceType.Namespace, Diagnostics);
-            _instanceRestClient = new Instance(_instanceClientDiagnostics, Pipeline, Endpoint, iotOperationsInstanceApiVersion ?? "2025-10-01");
-            ValidateResourceId(id);
+            _iotOperationsInstanceInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsInstanceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(IotOperationsInstanceResource.ResourceType, out string iotOperationsInstanceInstanceApiVersion);
+            _iotOperationsInstanceInstanceRestClient = new InstanceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsInstanceInstanceApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instance_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>InstanceResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="instanceName"> Name of instance. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IotOperationsInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string instanceName, IotOperationsInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _instanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.CreateOrUpdate");
+            using var scope = _iotOperationsInstanceInstanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _instanceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instanceName, IotOperationsInstanceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                IotOperationsArmOperation<IotOperationsInstanceResource> operation = new IotOperationsArmOperation<IotOperationsInstanceResource>(
-                    new IotOperationsInstanceOperationSource(Client),
-                    _instanceClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _iotOperationsInstanceInstanceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, instanceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new IotOperationsArmOperation<IotOperationsInstanceResource>(new IotOperationsInstanceOperationSource(Client), _iotOperationsInstanceInstanceClientDiagnostics, Pipeline, _iotOperationsInstanceInstanceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.IotOperations
         /// Create a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instance_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>InstanceResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="instanceName"> Name of instance. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IotOperationsInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string instanceName, IotOperationsInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _instanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.CreateOrUpdate");
+            using var scope = _iotOperationsInstanceInstanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _instanceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instanceName, IotOperationsInstanceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                IotOperationsArmOperation<IotOperationsInstanceResource> operation = new IotOperationsArmOperation<IotOperationsInstanceResource>(
-                    new IotOperationsInstanceOperationSource(Client),
-                    _instanceClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _iotOperationsInstanceInstanceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, instanceName, data, cancellationToken);
+                var operation = new IotOperationsArmOperation<IotOperationsInstanceResource>(new IotOperationsInstanceOperationSource(Client), _iotOperationsInstanceInstanceClientDiagnostics, Pipeline, _iotOperationsInstanceInstanceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, instanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.IotOperations
         /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instance_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>InstanceResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceName"> Name of instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual async Task<Response<IotOperationsInstanceResource>> GetAsync(string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using DiagnosticScope scope = _instanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.Get");
+            using var scope = _iotOperationsInstanceInstanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _instanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instanceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<IotOperationsInstanceData> response = Response.FromValue(IotOperationsInstanceData.FromResponse(result), result);
+                var response = await _iotOperationsInstanceInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, instanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new IotOperationsInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.IotOperations
         /// Get a InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instance_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>InstanceResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceName"> Name of instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual Response<IotOperationsInstanceResource> Get(string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using DiagnosticScope scope = _instanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.Get");
+            using var scope = _iotOperationsInstanceInstanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _instanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instanceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<IotOperationsInstanceData> response = Response.FromValue(IotOperationsInstanceData.FromResponse(result), result);
+                var response = _iotOperationsInstanceInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, instanceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new IotOperationsInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.IotOperations
         /// List InstanceResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instance_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>InstanceResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotOperationsInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotOperationsInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotOperationsInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetByResourceGroupAsyncCollectionResultOfT(_instanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotOperationsInstanceCollection.GetAll"), data => new IotOperationsInstanceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotOperationsInstanceInstanceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotOperationsInstanceInstanceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotOperationsInstanceResource(Client, IotOperationsInstanceData.DeserializeIotOperationsInstanceData(e)), _iotOperationsInstanceInstanceClientDiagnostics, Pipeline, "IotOperationsInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List InstanceResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instance_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>InstanceResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.IotOperations
         /// <returns> A collection of <see cref="IotOperationsInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotOperationsInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetByResourceGroupCollectionResultOfT(_instanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotOperationsInstanceCollection.GetAll"), data => new IotOperationsInstanceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotOperationsInstanceInstanceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotOperationsInstanceInstanceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotOperationsInstanceResource(Client, IotOperationsInstanceData.DeserializeIotOperationsInstanceData(e)), _iotOperationsInstanceInstanceClientDiagnostics, Pipeline, "IotOperationsInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instance_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>InstanceResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceName"> Name of instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using DiagnosticScope scope = _instanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.Exists");
+            using var scope = _iotOperationsInstanceInstanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _instanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instanceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<IotOperationsInstanceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(IotOperationsInstanceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((IotOperationsInstanceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _iotOperationsInstanceInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, instanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.IotOperations
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instance_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>InstanceResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceName"> Name of instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using DiagnosticScope scope = _instanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.Exists");
+            using var scope = _iotOperationsInstanceInstanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _instanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instanceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<IotOperationsInstanceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(IotOperationsInstanceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((IotOperationsInstanceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _iotOperationsInstanceInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, instanceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.IotOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instance_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>InstanceResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceName"> Name of instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<IotOperationsInstanceResource>> GetIfExistsAsync(string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using DiagnosticScope scope = _instanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.GetIfExists");
+            using var scope = _iotOperationsInstanceInstanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _instanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instanceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<IotOperationsInstanceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(IotOperationsInstanceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((IotOperationsInstanceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _iotOperationsInstanceInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, instanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<IotOperationsInstanceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new IotOperationsInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.IotOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instance_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>InstanceResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceName"> Name of instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         public virtual NullableResponse<IotOperationsInstanceResource> GetIfExists(string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
 
-            using DiagnosticScope scope = _instanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.GetIfExists");
+            using var scope = _iotOperationsInstanceInstanceClientDiagnostics.CreateScope("IotOperationsInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _instanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instanceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<IotOperationsInstanceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(IotOperationsInstanceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((IotOperationsInstanceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _iotOperationsInstanceInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, instanceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<IotOperationsInstanceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new IotOperationsInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.IotOperations
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<IotOperationsInstanceResource> IAsyncEnumerable<IotOperationsInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

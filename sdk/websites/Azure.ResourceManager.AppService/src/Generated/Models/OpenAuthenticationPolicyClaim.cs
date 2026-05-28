@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Open authentication policy claim.
-    /// Serialized Name: OpenAuthenticationPolicyClaim
-    /// </summary>
+    /// <summary> Open authentication policy claim. </summary>
     public partial class OpenAuthenticationPolicyClaim
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAuthenticationPolicyClaim"/>. </summary>
-        /// <param name="name">
-        /// The name of the claim.
-        /// Serialized Name: OpenAuthenticationPolicyClaim.name
-        /// </param>
-        /// <param name="value">
-        /// The value of the claim.
-        /// Serialized Name: OpenAuthenticationPolicyClaim.value
-        /// </param>
+        /// <param name="name"> The name of the claim. </param>
+        /// <param name="value"> The value of the claim. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OpenAuthenticationPolicyClaim(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the claim.
-        /// Serialized Name: OpenAuthenticationPolicyClaim.name
-        /// </summary>
+        /// <summary> The name of the claim. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// The value of the claim.
-        /// Serialized Name: OpenAuthenticationPolicyClaim.value
-        /// </summary>
+        /// <summary> The value of the claim. </summary>
         [WirePath("value")]
         public string Value { get; set; }
     }

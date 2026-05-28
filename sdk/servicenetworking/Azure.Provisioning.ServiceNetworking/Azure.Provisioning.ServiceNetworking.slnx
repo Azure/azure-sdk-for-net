@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.ServiceNetworking.csproj" />
-  <Project Path="tests/Azure.Provisioning.ServiceNetworking.Tests.csproj" />
-</Solution>

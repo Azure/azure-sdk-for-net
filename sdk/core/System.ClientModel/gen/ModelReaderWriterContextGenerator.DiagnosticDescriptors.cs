@@ -16,8 +16,7 @@ internal sealed partial class ModelReaderWriterContextGenerator
             category: "ModelReaderWriterContextGenerator",
             helpLinkUri: "https://aka.ms/system-clientmodel/diagnostics#scm0001",
             defaultSeverity: DiagnosticSeverity.Error,
-            isEnabledByDefault: true,
-            customTags: [WellKnownDiagnosticTags.CompilationEnd]);
+            isEnabledByDefault: true);
 
         public static readonly DiagnosticDescriptor ContextMustBePartial = new(
             id: "SCM0002",
@@ -46,21 +45,12 @@ internal sealed partial class ModelReaderWriterContextGenerator
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true);
 
-        public static readonly DiagnosticDescriptor ParameterlessConstructor = new(
+        public static readonly DiagnosticDescriptor TypeMustHaveParameterlessConstructor = new(
             id: "SCM0005",
             title: "Type must have a parameterless constructor",
             messageFormat: "Type '{0}' must have a parameterless constructor",
             category: "ModelReaderWriterContextGenerator",
             helpLinkUri: "https://aka.ms/system-clientmodel/diagnostics#scm0005",
-            defaultSeverity: DiagnosticSeverity.Warning,
-            isEnabledByDefault: true);
-
-        public static readonly DiagnosticDescriptor MustImplementIPersistableModel = new(
-            id: "SCM0006",
-            title: "Type must implement IPersistableModel<T>",
-            messageFormat: "Type '{0}' must implement IPersistableModel<T>",
-            category: "ModelReaderWriterContextGenerator",
-            helpLinkUri: "https://aka.ms/system-clientmodel/diagnostics#scm0006",
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true);
     }

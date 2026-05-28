@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Solution replacement maps. </summary>
     public partial class ReplacementMapsResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ReplacementMapsResult"/>. </summary>
         internal ReplacementMapsResult()
@@ -29,22 +57,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="webResults"> Solution AzureKB results. </param>
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReplacementMapsResult(IList<KBWebResult> webResults, IList<SelfHelpVideo> videos, IList<VideoGroupDetail> videoGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplacementMapsResult(IReadOnlyList<KBWebResult> webResults, IReadOnlyList<SelfHelpVideo> videos, IReadOnlyList<VideoGroupDetail> videoGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebResults = webResults;
             Videos = videos;
             VideoGroups = videoGroups;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Solution AzureKB results. </summary>
-        public IList<KBWebResult> WebResults { get; }
-
+        public IReadOnlyList<KBWebResult> WebResults { get; }
         /// <summary> Video solutions, which have the power to engage the customer by stimulating their senses. </summary>
-        public IList<SelfHelpVideo> Videos { get; }
-
+        public IReadOnlyList<SelfHelpVideo> Videos { get; }
         /// <summary> Group of Videos. </summary>
-        public IList<VideoGroupDetail> VideoGroups { get; }
+        public IReadOnlyList<VideoGroupDetail> VideoGroups { get; }
     }
 }

@@ -289,7 +289,9 @@ namespace Azure.AI.OpenAI.Assistants
         public static Azure.AI.OpenAI.Assistants.ListSortOrder Ascending { get { throw null; } }
         public static Azure.AI.OpenAI.Assistants.ListSortOrder Descending { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.Assistants.ListSortOrder other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Assistants.ListSortOrder left, Azure.AI.OpenAI.Assistants.ListSortOrder right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Assistants.ListSortOrder (string value) { throw null; }
@@ -339,7 +341,9 @@ namespace Azure.AI.OpenAI.Assistants
         public static Azure.AI.OpenAI.Assistants.MessageRole Assistant { get { throw null; } }
         public static Azure.AI.OpenAI.Assistants.MessageRole User { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.Assistants.MessageRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Assistants.MessageRole left, Azure.AI.OpenAI.Assistants.MessageRole right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Assistants.MessageRole (string value) { throw null; }
@@ -420,7 +424,9 @@ namespace Azure.AI.OpenAI.Assistants
         public static Azure.AI.OpenAI.Assistants.OpenAIFilePurpose FineTune { get { throw null; } }
         public static Azure.AI.OpenAI.Assistants.OpenAIFilePurpose FineTuneResults { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.Assistants.OpenAIFilePurpose other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Assistants.OpenAIFilePurpose left, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Assistants.OpenAIFilePurpose (string value) { throw null; }
@@ -508,7 +514,9 @@ namespace Azure.AI.OpenAI.Assistants
         public static Azure.AI.OpenAI.Assistants.RunStatus Queued { get { throw null; } }
         public static Azure.AI.OpenAI.Assistants.RunStatus RequiresAction { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.Assistants.RunStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Assistants.RunStatus left, Azure.AI.OpenAI.Assistants.RunStatus right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Assistants.RunStatus (string value) { throw null; }
@@ -625,7 +633,9 @@ namespace Azure.AI.OpenAI.Assistants
         public static Azure.AI.OpenAI.Assistants.RunStepErrorCode RateLimitExceeded { get { throw null; } }
         public static Azure.AI.OpenAI.Assistants.RunStepErrorCode ServerError { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.Assistants.RunStepErrorCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Assistants.RunStepErrorCode left, Azure.AI.OpenAI.Assistants.RunStepErrorCode right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Assistants.RunStepErrorCode (string value) { throw null; }
@@ -690,7 +700,9 @@ namespace Azure.AI.OpenAI.Assistants
         public static Azure.AI.OpenAI.Assistants.RunStepStatus Failed { get { throw null; } }
         public static Azure.AI.OpenAI.Assistants.RunStepStatus InProgress { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.Assistants.RunStepStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Assistants.RunStepStatus left, Azure.AI.OpenAI.Assistants.RunStepStatus right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Assistants.RunStepStatus (string value) { throw null; }
@@ -728,7 +740,9 @@ namespace Azure.AI.OpenAI.Assistants
         public static Azure.AI.OpenAI.Assistants.RunStepType MessageCreation { get { throw null; } }
         public static Azure.AI.OpenAI.Assistants.RunStepType ToolCalls { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.Assistants.RunStepType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Assistants.RunStepType left, Azure.AI.OpenAI.Assistants.RunStepType right) { throw null; }
         public static implicit operator Azure.AI.OpenAI.Assistants.RunStepType (string value) { throw null; }

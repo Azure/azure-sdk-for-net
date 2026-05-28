@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    /// <summary> AVS disk/volume information. </summary>
-    public partial class PureStorageAvsDiskDetails : IJsonModel<PureStorageAvsDiskDetails>
+    public partial class PureStorageAvsDiskDetails : IUtf8JsonSerializable, IJsonModel<PureStorageAvsDiskDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="PureStorageAvsDiskDetails"/> for deserialization. </summary>
-        internal PureStorageAvsDiskDetails()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PureStorageAvsDiskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PureStorageAvsDiskDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePureStorageAvsDiskDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PureStorageAvsDiskDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PureStorageAvsDiskDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PureStorageAvsDiskDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PureStorageAvsDiskDetails IPersistableModel<PureStorageAvsDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PureStorageAvsDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PureStorageAvsDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageAvsDiskDetails)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
             writer.WritePropertyName("diskName"u8);
@@ -94,15 +48,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             writer.WriteStringValue(AvsVmName);
             writer.WritePropertyName("avsStorageContainerResourceId"u8);
             writer.WriteStringValue(AvsStorageContainerResourceId);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,27 +65,22 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PureStorageAvsDiskDetails IJsonModel<PureStorageAvsDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PureStorageAvsDiskDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PureStorageAvsDiskDetails IJsonModel<PureStorageAvsDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageAvsDiskDetails)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePureStorageAvsDiskDetails(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PureStorageAvsDiskDetails DeserializePureStorageAvsDiskDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static PureStorageAvsDiskDetails DeserializePureStorageAvsDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -143,49 +92,51 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             ResourceIdentifier avsVmResourceId = default;
             string avsVmName = default;
             ResourceIdentifier avsStorageContainerResourceId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("diskId"u8))
+                if (property.NameEquals("diskId"u8))
                 {
-                    diskId = prop.Value.GetString();
+                    diskId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("diskName"u8))
+                if (property.NameEquals("diskName"u8))
                 {
-                    diskName = prop.Value.GetString();
+                    diskName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("folder"u8))
+                if (property.NameEquals("folder"u8))
                 {
-                    folder = prop.Value.GetString();
+                    folder = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("avsVmInternalId"u8))
+                if (property.NameEquals("avsVmInternalId"u8))
                 {
-                    avsVmInternalId = prop.Value.GetString();
+                    avsVmInternalId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("avsVmResourceId"u8))
+                if (property.NameEquals("avsVmResourceId"u8))
                 {
-                    avsVmResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    avsVmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("avsVmName"u8))
+                if (property.NameEquals("avsVmName"u8))
                 {
-                    avsVmName = prop.Value.GetString();
+                    avsVmName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("avsStorageContainerResourceId"u8))
+                if (property.NameEquals("avsStorageContainerResourceId"u8))
                 {
-                    avsStorageContainerResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    avsStorageContainerResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new PureStorageAvsDiskDetails(
                 diskId,
                 diskName,
@@ -194,7 +145,38 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 avsVmResourceId,
                 avsVmName,
                 avsStorageContainerResourceId,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PureStorageAvsDiskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PureStorageAvsDiskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PureStorageAvsDiskDetails IPersistableModel<PureStorageAvsDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageAvsDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePureStorageAvsDiskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PureStorageAvsDiskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PureStorageAvsDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -1,12 +1,12 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
-using Azure.ResourceManager.Cdn.Models;
+using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Cdn.Models;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Tests.Helper
 {
@@ -89,7 +89,10 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 MinimumTlsVersion = FrontDoorMinimumTlsVersion.Tls1_2
             },
-            DnsZoneId = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/azure_cli_test/providers/Microsoft.Network/dnsZones/azuretest.net")
+            DnsZone = new WritableSubResource
+            {
+                Id = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/azure_cli_test/providers/Microsoft.Network/dnsZones/azuretest.net")
+            }
         };
 
         public static FrontDoorRuleData CreateAfdRuleData() => new FrontDoorRuleData
@@ -112,7 +115,10 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
 
         public static FrontDoorRouteData CreateAfdRouteData(FrontDoorOriginGroupResource originGroup) => new FrontDoorRouteData
         {
-            OriginGroupId = originGroup.Id,
+            OriginGroup = new WritableSubResource
+            {
+                Id = originGroup.Id
+            },
             LinkToDefaultDomain = LinkToDefaultDomain.Enabled,
             EnabledState = EnabledState.Enabled
         };
@@ -121,15 +127,20 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
         {
             Properties = new SecurityPolicyWebApplicationFirewall
             {
-                WafPolicyId = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/azure_cli_test/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/azureCliTest")
+                WafPolicy = new WritableSubResource
+                {
+                    Id = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/azure_cli_test/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/azureCliTest")
+                }
             }
         };
 
         public static FrontDoorSecretData CreateAfdSecretData() => new FrontDoorSecretData
         {
-            Properties = new CustomerCertificateProperties()
+            Properties = new CustomerCertificateProperties(new WritableSubResource
             {
-                SecretSourceId = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/CliDevReservedGroup/providers/Microsoft.KeyVault/vaults/clibyoc-int/secrets/localdev-multi"),
+                Id = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/CliDevReservedGroup/providers/Microsoft.KeyVault/vaults/clibyoc-int/secrets/localdev-multi")
+            })
+            {
                 UseLatestVersion = true
             }
         };
@@ -250,11 +261,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             Assert.AreEqual(model.Data.Name, getResult.Data.Name);
             Assert.AreEqual(model.Data.Id, getResult.Data.Id);
             Assert.AreEqual(model.Data.ResourceType, getResult.Data.ResourceType);
-            if (model.Data.OriginId != null || getResult.Data.OriginId != null)
+            if (model.Data.Origin != null || getResult.Data.Origin != null)
             {
-                Assert.NotNull(model.Data.OriginId);
-                Assert.NotNull(getResult.Data.OriginId);
-                Assert.AreEqual(model.Data.OriginId, getResult.Data.OriginId);
+                Assert.NotNull(model.Data.Origin);
+                Assert.NotNull(getResult.Data.Origin);
+                Assert.AreEqual(model.Data.Origin.Id, getResult.Data.Origin.Id);
             }
             Assert.AreEqual(model.Data.HostName, getResult.Data.HostName);
             Assert.AreEqual(model.Data.HttpPort, getResult.Data.HttpPort);
@@ -369,11 +380,11 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
                 Assert.NotNull(getResult.Data.TlsSettings.Secret);
                 Assert.AreEqual(model.Data.TlsSettings.Secret.Id, getResult.Data.TlsSettings.Secret.Id);
             }
-            if (model.Data.DnsZoneId != null || getResult.Data.DnsZoneId != null)
+            if (model.Data.DnsZone != null || getResult.Data.DnsZone != null)
             {
-                Assert.NotNull(model.Data.DnsZoneId);
-                Assert.NotNull(getResult.Data.DnsZoneId);
-                Assert.AreEqual(model.Data.DnsZoneId, getResult.Data.DnsZoneId);
+                Assert.NotNull(model.Data.DnsZone);
+                Assert.NotNull(getResult.Data.DnsZone);
+                Assert.AreEqual(model.Data.DnsZone.Id, getResult.Data.DnsZone.Id);
             }
             Assert.AreEqual(model.Data.ProvisioningState, getResult.Data.ProvisioningState);
             Assert.AreEqual(model.Data.DeploymentStatus, getResult.Data.DeploymentStatus);
@@ -439,7 +450,7 @@ namespace Azure.ResourceManager.Cdn.Tests.Helper
             {
                 Assert.AreEqual(model.Data.CustomDomains[i].Id, getResult.Data.CustomDomains[i].Id);
             }
-            Assert.AreEqual(model.Data.OriginGroupId, getResult.Data.OriginGroupId);
+            Assert.AreEqual(model.Data.OriginGroup.Id, getResult.Data.OriginGroup.Id);
             Assert.AreEqual(model.Data.OriginPath, getResult.Data.OriginPath);
             Assert.AreEqual(model.Data.RuleSets.Count, getResult.Data.RuleSets.Count);
             for (int i = 0; i < model.Data.RuleSets.Count; ++i)

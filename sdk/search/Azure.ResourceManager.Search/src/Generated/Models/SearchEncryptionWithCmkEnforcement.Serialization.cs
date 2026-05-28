@@ -11,30 +11,19 @@ namespace Azure.ResourceManager.Search.Models
 {
     internal static partial class SearchEncryptionWithCmkEnforcementExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchEncryptionWithCmkEnforcement value) => value switch
         {
+            SearchEncryptionWithCmkEnforcement.Unspecified => "Unspecified",
             SearchEncryptionWithCmkEnforcement.Disabled => "Disabled",
             SearchEncryptionWithCmkEnforcement.Enabled => "Enabled",
-            SearchEncryptionWithCmkEnforcement.Unspecified => "Unspecified",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchEncryptionWithCmkEnforcement value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static SearchEncryptionWithCmkEnforcement ToSearchEncryptionWithCmkEnforcement(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
-            {
-                return SearchEncryptionWithCmkEnforcement.Disabled;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
-            {
-                return SearchEncryptionWithCmkEnforcement.Enabled;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unspecified"))
-            {
-                return SearchEncryptionWithCmkEnforcement.Unspecified;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unspecified")) return SearchEncryptionWithCmkEnforcement.Unspecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return SearchEncryptionWithCmkEnforcement.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return SearchEncryptionWithCmkEnforcement.Enabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchEncryptionWithCmkEnforcement value.");
         }
     }

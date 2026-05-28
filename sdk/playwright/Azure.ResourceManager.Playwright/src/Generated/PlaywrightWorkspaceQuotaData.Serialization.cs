@@ -20,53 +20,6 @@ namespace Azure.ResourceManager.Playwright
     /// <summary> Playwright workspace quota resource. </summary>
     public partial class PlaywrightWorkspaceQuotaData : ResourceData, IJsonModel<PlaywrightWorkspaceQuotaData>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceQuotaData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePlaywrightWorkspaceQuotaData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PlaywrightWorkspaceQuotaData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceQuotaData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPlaywrightContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PlaywrightWorkspaceQuotaData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PlaywrightWorkspaceQuotaData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PlaywrightWorkspaceQuotaData IPersistableModel<PlaywrightWorkspaceQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PlaywrightWorkspaceQuotaData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PlaywrightWorkspaceQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlaywrightWorkspaceQuotaData"/> from. </param>
-        internal static PlaywrightWorkspaceQuotaData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePlaywrightWorkspaceQuotaData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlaywrightWorkspaceQuotaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -179,6 +132,54 @@ namespace Azure.ResourceManager.Playwright
                 systemData,
                 additionalBinaryDataProperties,
                 properties);
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PlaywrightWorkspaceQuotaData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceQuotaData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPlaywrightContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PlaywrightWorkspaceQuotaData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PlaywrightWorkspaceQuotaData IPersistableModel<PlaywrightWorkspaceQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PlaywrightWorkspaceQuotaData)PersistableModelCreateCore(data, options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceQuotaData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializePlaywrightWorkspaceQuotaData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PlaywrightWorkspaceQuotaData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PlaywrightWorkspaceQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PlaywrightWorkspaceQuotaData"/> from. </param>
+        internal static PlaywrightWorkspaceQuotaData FromResponse(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializePlaywrightWorkspaceQuotaData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

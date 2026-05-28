@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationPrivateEndpointConnectionProxyCollection : ArmCollection, IEnumerable<DataReplicationPrivateEndpointConnectionProxyResource>, IAsyncEnumerable<DataReplicationPrivateEndpointConnectionProxyResource>
     {
-        private readonly ClientDiagnostics _privateEndpointConnectionProxiesClientDiagnostics;
-        private readonly PrivateEndpointConnectionProxies _privateEndpointConnectionProxiesRestClient;
+        private readonly ClientDiagnostics _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics;
+        private readonly PrivateEndpointConnectionProxiesRestOperations _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient;
 
-        /// <summary> Initializes a new instance of DataReplicationPrivateEndpointConnectionProxyCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationPrivateEndpointConnectionProxyCollection"/> class for mocking. </summary>
         protected DataReplicationPrivateEndpointConnectionProxyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationPrivateEndpointConnectionProxyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationPrivateEndpointConnectionProxyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataReplicationPrivateEndpointConnectionProxyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DataReplicationPrivateEndpointConnectionProxyResource.ResourceType, out string dataReplicationPrivateEndpointConnectionProxyApiVersion);
-            _privateEndpointConnectionProxiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationPrivateEndpointConnectionProxyResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionProxiesRestClient = new PrivateEndpointConnectionProxies(_privateEndpointConnectionProxiesClientDiagnostics, Pipeline, Endpoint, dataReplicationPrivateEndpointConnectionProxyApiVersion ?? "2024-09-01");
-            ValidateResourceId(id);
+            _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationPrivateEndpointConnectionProxyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataReplicationPrivateEndpointConnectionProxyResource.ResourceType, out string dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesApiVersion);
+            _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient = new PrivateEndpointConnectionProxiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataReplicationVaultResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a new private endpoint connection proxy which includes both auto and manual approval types. Creating the proxy resource will also create a private endpoint connection resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionProxies_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxy_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
         /// <param name="data"> Private endpoint connection creation input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataReplicationPrivateEndpointConnectionProxyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionProxyName, DataReplicationPrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyName, nameof(privateEndpointConnectionProxyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.CreateOrUpdate");
+            using var scope = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionProxiesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, DataReplicationPrivateEndpointConnectionProxyData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataReplicationPrivateEndpointConnectionProxyData> response = Response.FromValue(DataReplicationPrivateEndpointConnectionProxyData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionProxyResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionProxyResource>(Response.FromValue(new DataReplicationPrivateEndpointConnectionProxyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionProxyResource>(Response.FromValue(new DataReplicationPrivateEndpointConnectionProxyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Create a new private endpoint connection proxy which includes both auto and manual approval types. Creating the proxy resource will also create a private endpoint connection resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionProxies_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxy_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
         /// <param name="data"> Private endpoint connection creation input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataReplicationPrivateEndpointConnectionProxyResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionProxyName, DataReplicationPrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyName, nameof(privateEndpointConnectionProxyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.CreateOrUpdate");
+            using var scope = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionProxiesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, DataReplicationPrivateEndpointConnectionProxyData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataReplicationPrivateEndpointConnectionProxyData> response = Response.FromValue(DataReplicationPrivateEndpointConnectionProxyData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionProxyResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionProxyResource>(Response.FromValue(new DataReplicationPrivateEndpointConnectionProxyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, data, cancellationToken);
+                var uri = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionProxyResource>(Response.FromValue(new DataReplicationPrivateEndpointConnectionProxyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the private endpoint connection proxy details.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionProxies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         public virtual async Task<Response<DataReplicationPrivateEndpointConnectionProxyResource>> GetAsync(string privateEndpointConnectionProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyName, nameof(privateEndpointConnectionProxyName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.Get");
+            using var scope = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionProxiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataReplicationPrivateEndpointConnectionProxyData> response = Response.FromValue(DataReplicationPrivateEndpointConnectionProxyData.FromResponse(result), result);
+                var response = await _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationPrivateEndpointConnectionProxyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the private endpoint connection proxy details.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionProxies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         public virtual Response<DataReplicationPrivateEndpointConnectionProxyResource> Get(string privateEndpointConnectionProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyName, nameof(privateEndpointConnectionProxyName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.Get");
+            using var scope = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionProxiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataReplicationPrivateEndpointConnectionProxyData> response = Response.FromValue(DataReplicationPrivateEndpointConnectionProxyData.FromResponse(result), result);
+                var response = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationPrivateEndpointConnectionProxyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,50 +247,50 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the all private endpoint connections proxies.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionProxies_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxy_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataReplicationPrivateEndpointConnectionProxyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataReplicationPrivateEndpointConnectionProxyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationPrivateEndpointConnectionProxyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllAsyncCollectionResultOfT(
-                _privateEndpointConnectionProxiesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DataReplicationPrivateEndpointConnectionProxyCollection.GetAll"), data => new DataReplicationPrivateEndpointConnectionProxyResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationPrivateEndpointConnectionProxyResource(Client, DataReplicationPrivateEndpointConnectionProxyData.DeserializeDataReplicationPrivateEndpointConnectionProxyData(e)), _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics, Pipeline, "DataReplicationPrivateEndpointConnectionProxyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the all private endpoint connections proxies.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionProxies_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxy_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,67 +298,45 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> A collection of <see cref="DataReplicationPrivateEndpointConnectionProxyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationPrivateEndpointConnectionProxyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DataReplicationPrivateEndpointConnectionProxyData, DataReplicationPrivateEndpointConnectionProxyResource>(new PrivateEndpointConnectionProxiesGetAllCollectionResultOfT(
-                _privateEndpointConnectionProxiesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DataReplicationPrivateEndpointConnectionProxyCollection.GetAll"), data => new DataReplicationPrivateEndpointConnectionProxyResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationPrivateEndpointConnectionProxyResource(Client, DataReplicationPrivateEndpointConnectionProxyData.DeserializeDataReplicationPrivateEndpointConnectionProxyData(e)), _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics, Pipeline, "DataReplicationPrivateEndpointConnectionProxyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionProxies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyName, nameof(privateEndpointConnectionProxyName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.Exists");
+            using var scope = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionProxiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DataReplicationPrivateEndpointConnectionProxyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataReplicationPrivateEndpointConnectionProxyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataReplicationPrivateEndpointConnectionProxyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,50 +350,36 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionProxies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyName, nameof(privateEndpointConnectionProxyName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.Exists");
+            using var scope = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionProxiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DataReplicationPrivateEndpointConnectionProxyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataReplicationPrivateEndpointConnectionProxyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataReplicationPrivateEndpointConnectionProxyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -448,54 +393,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionProxies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataReplicationPrivateEndpointConnectionProxyResource>> GetIfExistsAsync(string privateEndpointConnectionProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyName, nameof(privateEndpointConnectionProxyName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.GetIfExists");
+            using var scope = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionProxiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DataReplicationPrivateEndpointConnectionProxyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataReplicationPrivateEndpointConnectionProxyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataReplicationPrivateEndpointConnectionProxyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DataReplicationPrivateEndpointConnectionProxyResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationPrivateEndpointConnectionProxyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -509,54 +438,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionProxies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnectionProxy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
         public virtual NullableResponse<DataReplicationPrivateEndpointConnectionProxyResource> GetIfExists(string privateEndpointConnectionProxyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionProxyName, nameof(privateEndpointConnectionProxyName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.GetIfExists");
+            using var scope = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionProxyCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionProxiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DataReplicationPrivateEndpointConnectionProxyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataReplicationPrivateEndpointConnectionProxyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataReplicationPrivateEndpointConnectionProxyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dataReplicationPrivateEndpointConnectionProxyPrivateEndpointConnectionProxiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionProxyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DataReplicationPrivateEndpointConnectionProxyResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationPrivateEndpointConnectionProxyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -576,7 +489,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataReplicationPrivateEndpointConnectionProxyResource> IAsyncEnumerable<DataReplicationPrivateEndpointConnectionProxyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ResourceProviderType : IEquatable<ResourceProviderType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceProviderType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NotSpecifiedValue = "NotSpecified";
         private const string InternalValue = "Internal";
         private const string ExternalValue = "External";
@@ -24,70 +31,39 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string TenantOnlyValue = "TenantOnly";
         private const string AuthorizationFreeValue = "AuthorizationFree";
 
-        /// <summary> Initializes a new instance of <see cref="ResourceProviderType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceProviderType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NotSpecified. </summary>
+        /// <summary> NotSpecified. </summary>
         public static ResourceProviderType NotSpecified { get; } = new ResourceProviderType(NotSpecifiedValue);
-
-        /// <summary> Gets the Internal. </summary>
+        /// <summary> Internal. </summary>
         public static ResourceProviderType Internal { get; } = new ResourceProviderType(InternalValue);
-
-        /// <summary> Gets the External. </summary>
+        /// <summary> External. </summary>
         public static ResourceProviderType External { get; } = new ResourceProviderType(ExternalValue);
-
-        /// <summary> Gets the Hidden. </summary>
+        /// <summary> Hidden. </summary>
         public static ResourceProviderType Hidden { get; } = new ResourceProviderType(HiddenValue);
-
-        /// <summary> Gets the RegistrationFree. </summary>
+        /// <summary> RegistrationFree. </summary>
         public static ResourceProviderType RegistrationFree { get; } = new ResourceProviderType(RegistrationFreeValue);
-
-        /// <summary> Gets the LegacyRegistrationRequired. </summary>
+        /// <summary> LegacyRegistrationRequired. </summary>
         public static ResourceProviderType LegacyRegistrationRequired { get; } = new ResourceProviderType(LegacyRegistrationRequiredValue);
-
-        /// <summary> Gets the TenantOnly. </summary>
+        /// <summary> TenantOnly. </summary>
         public static ResourceProviderType TenantOnly { get; } = new ResourceProviderType(TenantOnlyValue);
-
-        /// <summary> Gets the AuthorizationFree. </summary>
+        /// <summary> AuthorizationFree. </summary>
         public static ResourceProviderType AuthorizationFree { get; } = new ResourceProviderType(AuthorizationFreeValue);
-
         /// <summary> Determines if two <see cref="ResourceProviderType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceProviderType left, ResourceProviderType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ResourceProviderType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceProviderType left, ResourceProviderType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ResourceProviderType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceProviderType"/>. </summary>
         public static implicit operator ResourceProviderType(string value) => new ResourceProviderType(value);
 
-        /// <summary> Converts a string to a <see cref="ResourceProviderType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ResourceProviderType?(string value) => value == null ? null : new ResourceProviderType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceProviderType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ResourceProviderType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

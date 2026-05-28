@@ -29,7 +29,6 @@ internal static class StreamingUpdateReasonExtensions
         StreamingUpdateReason.MessageUpdated => "thread.message.delta",
         StreamingUpdateReason.MessageCompleted => "thread.message.completed",
         StreamingUpdateReason.MessageFailed => "thread.message.incomplete",
-        StreamingUpdateReason.KeepAlive => "keepalive",
         StreamingUpdateReason.Error => "error",
         StreamingUpdateReason.Done => "done",
         _ => string.Empty
@@ -60,7 +59,6 @@ internal static class StreamingUpdateReasonExtensions
         "thread.message.delta" => StreamingUpdateReason.MessageUpdated,
         "thread.message.completed" => StreamingUpdateReason.MessageCompleted,
         "thread.message.incomplete" => StreamingUpdateReason.MessageFailed,
-        "keepalive" => StreamingUpdateReason.KeepAlive,
         "error" => StreamingUpdateReason.Error,
         "done" => StreamingUpdateReason.Done,
         _ => StreamingUpdateReason.Unknown,

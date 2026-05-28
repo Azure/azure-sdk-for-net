@@ -51,7 +51,7 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(QueryFilterTestCases))]
         public void QueryFilterTest(string actualFilter, string expected)
         {
-            Assert.That(actualFilter, Is.EqualTo(expected));
+            Assert.AreEqual(expected, actualFilter);
         }
     }
 }

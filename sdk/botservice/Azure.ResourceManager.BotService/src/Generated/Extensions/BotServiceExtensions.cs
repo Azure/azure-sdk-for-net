@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.BotService.Mocking;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.Resources;
@@ -20,38 +18,35 @@ namespace Azure.ResourceManager.BotService
     /// <summary> A class to add extension methods to Azure.ResourceManager.BotService. </summary>
     public static partial class BotServiceExtensions
     {
-        /// <param name="client"></param>
         private static MockableBotServiceArmClient GetMockableBotServiceArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableBotServiceArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableBotServiceArmClient(client0));
         }
 
-        /// <param name="resourceGroupResource"></param>
-        private static MockableBotServiceResourceGroupResource GetMockableBotServiceResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableBotServiceResourceGroupResource GetMockableBotServiceResourceGroupResource(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockableBotServiceResourceGroupResource(client, resourceGroupResource.Id));
+            return resource.GetCachedClient(client => new MockableBotServiceResourceGroupResource(client, resource.Id));
         }
 
-        /// <param name="subscriptionResource"></param>
-        private static MockableBotServiceSubscriptionResource GetMockableBotServiceSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockableBotServiceSubscriptionResource GetMockableBotServiceSubscriptionResource(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockableBotServiceSubscriptionResource(client, subscriptionResource.Id));
+            return resource.GetCachedClient(client => new MockableBotServiceSubscriptionResource(client, resource.Id));
         }
 
-        /// <param name="tenantResource"></param>
-        private static MockableBotServiceTenantResource GetMockableBotServiceTenantResource(TenantResource tenantResource)
+        private static MockableBotServiceTenantResource GetMockableBotServiceTenantResource(ArmResource resource)
         {
-            return tenantResource.GetCachedClient(client => new MockableBotServiceTenantResource(client, tenantResource.Id));
+            return resource.GetCachedClient(client => new MockableBotServiceTenantResource(client, resource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BotResource.CreateResourceIdentifier" /> to create a <see cref="BotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceArmClient.GetBotResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceArmClient.GetBotResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="BotResource"/> object. </returns>
@@ -63,13 +58,14 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BotChannelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BotChannelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BotChannelResource.CreateResourceIdentifier" /> to create a <see cref="BotChannelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceArmClient.GetBotChannelResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceArmClient.GetBotChannelResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="BotChannelResource"/> object. </returns>
@@ -81,13 +77,14 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BotConnectionSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BotConnectionSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BotConnectionSettingResource.CreateResourceIdentifier" /> to create a <see cref="BotConnectionSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceArmClient.GetBotConnectionSettingResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceArmClient.GetBotConnectionSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="BotConnectionSettingResource"/> object. </returns>
@@ -99,13 +96,14 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BotServicePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BotServicePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BotServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="BotServicePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceArmClient.GetBotServicePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceArmClient.GetBotServicePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="BotServicePrivateEndpointConnectionResource"/> object. </returns>
@@ -117,33 +115,15 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets a collection of BotResources in the ResourceGroupResource.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceArmClient.GetBotServiceNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceResourceGroupResource.GetBots()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BotServiceNetworkSecurityPerimeterConfigurationResource"/> object. </returns>
-        public static BotServiceNetworkSecurityPerimeterConfigurationResource GetBotServiceNetworkSecurityPerimeterConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableBotServiceArmClient(client).GetBotServiceNetworkSecurityPerimeterConfigurationResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of Bots in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceResourceGroupResource.GetBots()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Bots and their operations over a BotResource. </returns>
+        /// <returns> An object representing collection of BotResources and their operations over a BotResource. </returns>
         public static BotCollection GetBots(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -153,15 +133,34 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Returns a BotService specified by the parameters.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceResourceGroupResource.GetBotAsync(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceResourceGroupResource.GetBotAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<BotResource>> GetBotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -172,15 +171,34 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Returns a BotService specified by the parameters.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceResourceGroupResource.GetBot(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceResourceGroupResource.GetBot(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<BotResource> GetBot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
@@ -191,15 +209,33 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a subscription.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotsAsync(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/botServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBots(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BotResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BotResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BotResource> GetBotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -209,12 +245,30 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a subscription.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBots(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/botServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBots(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="BotResource"/> that may take multiple service requests to iterate over. </returns>
@@ -227,15 +281,33 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Lists the available Service Providers for creating Connection Settings
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotConnectionServiceProvidersAsync(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/listAuthServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BotConnection_ListServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="BotServiceProvider"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BotServiceProvider"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BotServiceProvider> GetBotConnectionServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -245,12 +317,30 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Lists the available Service Providers for creating Connection Settings
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/listAuthServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BotConnection_ListServiceProviders</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="BotServiceProvider"/> that may take multiple service requests to iterate over. </returns>
@@ -263,15 +353,29 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Lists the QnA Maker endpoint keys
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotServiceQnAMakerEndpointKeyAsync(GetBotServiceQnAMakerEndpointKeyContent, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/listQnAMakerEndpointKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QnAMakerEndpointKeys_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotServiceQnAMakerEndpointKey(GetBotServiceQnAMakerEndpointKeyContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<GetBotServiceQnAMakerEndpointKeyResult>> GetBotServiceQnAMakerEndpointKeyAsync(this SubscriptionResource subscriptionResource, GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -281,15 +385,29 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Lists the QnA Maker endpoint keys
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotServiceQnAMakerEndpointKey(GetBotServiceQnAMakerEndpointKeyContent, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/listQnAMakerEndpointKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QnAMakerEndpointKeys_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotServiceQnAMakerEndpointKey(GetBotServiceQnAMakerEndpointKeyContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<GetBotServiceQnAMakerEndpointKeyResult> GetBotServiceQnAMakerEndpointKey(this SubscriptionResource subscriptionResource, GetBotServiceQnAMakerEndpointKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -299,12 +417,26 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Get per subscription settings needed to host bot in compute resource such as Azure App Service
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotServiceHostSettingsAsync(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/hostSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HostSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotServiceHostSettings(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<BotServiceHostSettingsResult>> GetBotServiceHostSettingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
@@ -316,12 +448,26 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Get per subscription settings needed to host bot in compute resource such as Azure App Service
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotServiceHostSettings(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/hostSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HostSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceSubscriptionResource.GetBotServiceHostSettings(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<BotServiceHostSettingsResult> GetBotServiceHostSettings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
@@ -333,15 +479,33 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Check whether a bot name is available.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceTenantResource.CheckBotServiceNameAvailabilityAsync(BotServiceNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BotService/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_GetCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceTenantResource.CheckBotServiceNameAvailability(BotServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<BotServiceNameAvailabilityResult>> CheckBotServiceNameAvailabilityAsync(this TenantResource tenantResource, BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -351,15 +515,33 @@ namespace Azure.ResourceManager.BotService
 
         /// <summary>
         /// Check whether a bot name is available.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBotServiceTenantResource.CheckBotServiceNameAvailability(BotServiceNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BotService/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_GetCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableBotServiceTenantResource.CheckBotServiceNameAvailability(BotServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<BotServiceNameAvailabilityResult> CheckBotServiceNameAvailability(this TenantResource tenantResource, BotServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));

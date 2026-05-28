@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The request payload to update an alert. </summary>
     public partial class CostManagementAlertPatch
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CostManagementAlertPatch"/>. </summary>
         public CostManagementAlertPatch()
@@ -22,202 +51,55 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CostManagementAlertPatch"/>. </summary>
-        /// <param name="properties"> Alert properties. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CostManagementAlertPatch(AlertProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="definition"> defines the type of alert. </param>
+        /// <param name="description"> Alert description. </param>
+        /// <param name="source"> Source of alert. </param>
+        /// <param name="details"> Alert details. </param>
+        /// <param name="costEntityId"> related budget. </param>
+        /// <param name="status"> alert status. </param>
+        /// <param name="createdOn"> dateTime in which alert was created. </param>
+        /// <param name="closeOn"> dateTime in which alert was closed. </param>
+        /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
+        /// <param name="statusModificationUserName"> User who last modified the alert. </param>
+        /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementAlertPatch(AlertPropertiesDefinition definition, string description, CostManagementAlertSource? source, AlertPropertiesDetails details, string costEntityId, CostManagementAlertStatus? status, DateTimeOffset? createdOn, DateTimeOffset? closeOn, DateTimeOffset? modifiedOn, string statusModificationUserName, DateTimeOffset? statusModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Definition = definition;
+            Description = description;
+            Source = source;
+            Details = details;
+            CostEntityId = costEntityId;
+            Status = status;
+            CreatedOn = createdOn;
+            CloseOn = closeOn;
+            ModifiedOn = modifiedOn;
+            StatusModificationUserName = statusModificationUserName;
+            StatusModifiedOn = statusModifiedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Alert properties. </summary>
-        internal AlertProperties Properties { get; set; }
 
         /// <summary> defines the type of alert. </summary>
-        public AlertPropertiesDefinition Definition
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Definition;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.Definition = value;
-            }
-        }
-
+        public AlertPropertiesDefinition Definition { get; set; }
         /// <summary> Alert description. </summary>
-        public string Description
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.Description = value;
-            }
-        }
-
+        public string Description { get; set; }
         /// <summary> Source of alert. </summary>
-        public CostManagementAlertSource? Source
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Source;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.Source = value;
-            }
-        }
-
+        public CostManagementAlertSource? Source { get; set; }
         /// <summary> Alert details. </summary>
-        public AlertPropertiesDetails Details
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Details;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.Details = value;
-            }
-        }
-
+        public AlertPropertiesDetails Details { get; set; }
         /// <summary> related budget. </summary>
-        public string CostEntityId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CostEntityId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.CostEntityId = value;
-            }
-        }
-
+        public string CostEntityId { get; set; }
         /// <summary> alert status. </summary>
-        public CostManagementAlertStatus? Status
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.Status = value;
-            }
-        }
-
+        public CostManagementAlertStatus? Status { get; set; }
         /// <summary> dateTime in which alert was created. </summary>
-        public DateTimeOffset? CreatedOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CreatedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.CreatedOn = value;
-            }
-        }
-
+        public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> dateTime in which alert was closed. </summary>
-        public DateTimeOffset? CloseOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CloseOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.CloseOn = value;
-            }
-        }
-
+        public DateTimeOffset? CloseOn { get; set; }
         /// <summary> dateTime in which alert was last modified. </summary>
-        public DateTimeOffset? ModifiedOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ModifiedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.ModifiedOn = value;
-            }
-        }
-
+        public DateTimeOffset? ModifiedOn { get; set; }
         /// <summary> User who last modified the alert. </summary>
-        public string StatusModificationUserName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StatusModificationUserName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.StatusModificationUserName = value;
-            }
-        }
-
+        public string StatusModificationUserName { get; set; }
         /// <summary> dateTime in which the alert status was last modified. </summary>
-        public DateTimeOffset? StatusModifiedOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StatusModifiedOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.StatusModifiedOn = value;
-            }
-        }
+        public DateTimeOffset? StatusModifiedOn { get; set; }
     }
 }

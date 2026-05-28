@@ -162,7 +162,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(GetCredString(tcs.Credentials), Is.EqualTo(SasToken), "The Credentials should have matched.");
             Assert.That(tcs.TableStorageUri.PrimaryUri, Is.EqualTo(new Uri($"https://{AccountName}.table.cosmos.azure.com/?{SasToken}")), "The PrimaryUri should have matched.");
             Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com/?{SasToken}")), "The SecondaryUri should have matched.");
-            Assert.That(tcs._accountName, Is.EqualTo(AccountName));
+            Assert.AreEqual(AccountName,tcs._accountName);
         }
         public static IEnumerable<object[]> InvalidConnStrings()
         {
@@ -201,14 +201,6 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
-        public void GetSecondaryUriFromPrimaryLoopbackWithoutAccountName()
-        {
-            Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri("http://localhost:8902/"));
-
-            Assert.That(secondaryEndpoint, Is.Null, "Secondary endpoint should be null for loopback URI without account name segment");
-        }
-
-        [Test]
         public void GetSecondaryUriFromPrimaryAzurite()
         {
             Uri secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(new Uri($"https://127.0.0.1:10002/{AccountName}/"), AccountName);
@@ -223,7 +215,7 @@ namespace Azure.Data.Tables.Tests
             var uri = "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;";
 
             var result = TableConnectionString.Parse(uri);
-            Assert.That(result._accountName, Is.EqualTo("devstoreaccount1"));
+            Assert.AreEqual("devstoreaccount1", result._accountName);
         }
 
         [Test]
@@ -232,7 +224,7 @@ namespace Azure.Data.Tables.Tests
             var uri = "DefaultEndpointsProtocol=http;AccountName=localhost;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==;TableEndpoint=http://localhost:8902/;";
 
             var result = TableConnectionString.Parse(uri);
-            Assert.That(result._accountName, Is.EqualTo("localhost"));
+            Assert.AreEqual("localhost", result._accountName);
         }
 
         public static IEnumerable<object[]> UriInputs()

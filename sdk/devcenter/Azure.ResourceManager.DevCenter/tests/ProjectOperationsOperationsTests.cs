@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.DevCenter.Tests
             DevCenterProjectResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectData)).Value;
 
-            Assert.That(createdResource, Is.Not.Null);
-            Assert.That(createdResource.Data, Is.Not.Null);
+            Assert.NotNull(createdResource);
+            Assert.NotNull(createdResource.Data);
 
             // List Projects
             List<DevCenterProjectResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
             Response<DevCenterProjectResource> retrievedProject = await resourceCollection.GetAsync(projectName);
-            Assert.That(retrievedProject.Value, Is.Not.Null);
-            Assert.That(retrievedProject.Value.Data, Is.Not.Null);
+            Assert.NotNull(retrievedProject.Value);
+            Assert.NotNull(retrievedProject.Value.Data);
 
             // Delete
             ArmOperation deleteOp = await retrievedProject.Value.DeleteAsync(WaitUntil.Completed);

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Subscription.Models;
 
@@ -14,7 +13,7 @@ namespace Azure.ResourceManager.Subscription
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AcceptOwnershipContent))]
     [ModelReaderWriterBuildable(typeof(AcceptOwnershipRequestProperties))]
@@ -24,9 +23,7 @@ namespace Azure.ResourceManager.Subscription
     [ModelReaderWriterBuildable(typeof(BillingAccountPolicyResource))]
     [ModelReaderWriterBuildable(typeof(CanceledSubscriptionId))]
     [ModelReaderWriterBuildable(typeof(EnabledSubscriptionId))]
-    [ModelReaderWriterBuildable(typeof(PutAliasRequestProperties))]
     [ModelReaderWriterBuildable(typeof(RenamedSubscriptionId))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceTenant))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasAdditionalProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasCreateOrUpdateContent))]
@@ -36,11 +33,7 @@ namespace Azure.ResourceManager.Subscription
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionName))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(TargetDirectoryContent))]
-    [ModelReaderWriterBuildable(typeof(TargetDirectoryProperties))]
-    [ModelReaderWriterBuildable(typeof(TargetDirectoryResultData))]
-    [ModelReaderWriterBuildable(typeof(TargetDirectoryResultProperties))]
-    [ModelReaderWriterBuildable(typeof(TargetDirectoryResultResource))]
+    [ModelReaderWriterBuildable(typeof(TenantPoliciesResult))]
     [ModelReaderWriterBuildable(typeof(TenantPolicyCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(TenantPolicyData))]
     [ModelReaderWriterBuildable(typeof(TenantPolicyProperties))]

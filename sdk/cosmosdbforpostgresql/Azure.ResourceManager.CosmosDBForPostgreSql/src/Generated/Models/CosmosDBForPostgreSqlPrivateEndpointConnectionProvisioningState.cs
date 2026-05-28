@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
@@ -15,67 +14,44 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     public readonly partial struct CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState : IEquatable<CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Connection has been provisioned. </summary>
-        private const string SucceededValue = "Succeeded";
-        /// <summary> Connection is being created. </summary>
-        private const string CreatingValue = "Creating";
-        /// <summary> Connection is being deleted. </summary>
-        private const string DeletingValue = "Deleting";
-        /// <summary> Connection provisioning has failed. </summary>
-        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Connection has been provisioned. </summary>
+        private const string SucceededValue = "Succeeded";
+        private const string CreatingValue = "Creating";
+        private const string DeletingValue = "Deleting";
+        private const string FailedValue = "Failed";
+
+        /// <summary> Succeeded. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState Succeeded { get; } = new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(SucceededValue);
-
-        /// <summary> Connection is being created. </summary>
+        /// <summary> Creating. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState Creating { get; } = new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(CreatingValue);
-
-        /// <summary> Connection is being deleted. </summary>
+        /// <summary> Deleting. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState Deleting { get; } = new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(DeletingValue);
-
-        /// <summary> Connection provisioning has failed. </summary>
+        /// <summary> Failed. </summary>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState Failed { get; } = new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(FailedValue);
-
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState left, CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState left, CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(string value) => new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CosmosDBForPostgreSqlPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

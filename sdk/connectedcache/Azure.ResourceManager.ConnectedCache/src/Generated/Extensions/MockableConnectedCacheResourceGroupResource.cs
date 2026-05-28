@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ConnectedCache;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedCache.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableConnectedCacheResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableConnectedCacheResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableConnectedCacheResourceGroupResource"/> class for mocking. </summary>
         protected MockableConnectedCacheResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableConnectedCacheResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableConnectedCacheResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableConnectedCacheResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of IspCustomers in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of IspCustomers and their operations over a IspCustomerResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of IspCustomerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of IspCustomerResources and their operations over a IspCustomerResource. </returns>
         public virtual IspCustomerCollection GetIspCustomers()
         {
             return GetCachedClient(client => new IspCustomerCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// Gets the ispCustomer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IspCustomers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>IspCustomerResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IspCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<IspCustomerResource>> GetIspCustomerAsync(string customerResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
-
             return await GetIspCustomers().GetAsync(customerResourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// Gets the ispCustomer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/ispCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IspCustomers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>IspCustomerResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IspCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,13 +99,11 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         [ForwardsClientCalls]
         public virtual Response<IspCustomerResource> GetIspCustomer(string customerResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
-
             return GetIspCustomers().Get(customerResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EnterpriseMccCustomers in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EnterpriseMccCustomers and their operations over a EnterpriseMccCustomerResource. </returns>
+        /// <summary> Gets a collection of EnterpriseMccCustomerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EnterpriseMccCustomerResources and their operations over a EnterpriseMccCustomerResource. </returns>
         public virtual EnterpriseMccCustomerCollection GetEnterpriseMccCustomers()
         {
             return GetCachedClient(client => new EnterpriseMccCustomerCollection(client, Id));
@@ -107,16 +113,20 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// Gets the enterprise mcc customer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,8 +137,6 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EnterpriseMccCustomerResource>> GetEnterpriseMccCustomerAsync(string customerResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
-
             return await GetEnterpriseMccCustomers().GetAsync(customerResourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,16 +144,20 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         /// Gets the enterprise mcc customer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,8 +168,6 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
         [ForwardsClientCalls]
         public virtual Response<EnterpriseMccCustomerResource> GetEnterpriseMccCustomer(string customerResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
-
             return GetEnterpriseMccCustomers().Get(customerResourceName, cancellationToken);
         }
     }

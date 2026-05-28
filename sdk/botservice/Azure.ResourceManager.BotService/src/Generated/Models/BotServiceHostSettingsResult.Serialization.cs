@@ -9,63 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.BotService;
+using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary> The response body returned for a request to Bot Service Management to check per subscription hostSettings. </summary>
-    public partial class BotServiceHostSettingsResult : IJsonModel<BotServiceHostSettingsResult>
+    public partial class BotServiceHostSettingsResult : IUtf8JsonSerializable, IJsonModel<BotServiceHostSettingsResult>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BotServiceHostSettingsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BotServiceHostSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBotServiceHostSettingsResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BotServiceHostSettingsResult)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotServiceHostSettingsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BotServiceHostSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BotServiceHostSettingsResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BotServiceHostSettingsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BotServiceHostSettingsResult IPersistableModel<BotServiceHostSettingsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BotServiceHostSettingsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BotServiceHostSettingsResult"/> from. </param>
-        internal static BotServiceHostSettingsResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBotServiceHostSettingsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BotServiceHostSettingsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -77,11 +28,12 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BotServiceHostSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BotServiceHostSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BotServiceHostSettingsResult)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(OAuthUri))
             {
                 writer.WritePropertyName("OAuthUrl"u8);
@@ -122,15 +74,15 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("BotOpenIdMetadata"u8);
                 writer.WriteStringValue(BotOpenIdMetadata);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -139,117 +91,145 @@ namespace Azure.ResourceManager.BotService.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BotServiceHostSettingsResult IJsonModel<BotServiceHostSettingsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BotServiceHostSettingsResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BotServiceHostSettingsResult IJsonModel<BotServiceHostSettingsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BotServiceHostSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BotServiceHostSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BotServiceHostSettingsResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBotServiceHostSettingsResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BotServiceHostSettingsResult DeserializeBotServiceHostSettingsResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static BotServiceHostSettingsResult DeserializeBotServiceHostSettingsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri oAuthUri = default;
-            Uri toBotFromChannelOpenIdMetadataUri = default;
+            Uri oAuthUrl = default;
+            Uri toBotFromChannelOpenIdMetadataUrl = default;
             string toBotFromChannelTokenIssuer = default;
-            Uri toBotFromEmulatorOpenIdMetadataUri = default;
-            Uri toChannelFromBotLoginUri = default;
+            Uri toBotFromEmulatorOpenIdMetadataUrl = default;
+            Uri toChannelFromBotLoginUrl = default;
             string toChannelFromBotOAuthScope = default;
             bool? validateAuthority = default;
             string botOpenIdMetadata = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("OAuthUrl"u8))
+                if (property.NameEquals("OAuthUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    oAuthUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    oAuthUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("ToBotFromChannelOpenIdMetadataUrl"u8))
+                if (property.NameEquals("ToBotFromChannelOpenIdMetadataUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    toBotFromChannelOpenIdMetadataUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    toBotFromChannelOpenIdMetadataUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("ToBotFromChannelTokenIssuer"u8))
+                if (property.NameEquals("ToBotFromChannelTokenIssuer"u8))
                 {
-                    toBotFromChannelTokenIssuer = prop.Value.GetString();
+                    toBotFromChannelTokenIssuer = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ToBotFromEmulatorOpenIdMetadataUrl"u8))
+                if (property.NameEquals("ToBotFromEmulatorOpenIdMetadataUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    toBotFromEmulatorOpenIdMetadataUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    toBotFromEmulatorOpenIdMetadataUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("ToChannelFromBotLoginUrl"u8))
+                if (property.NameEquals("ToChannelFromBotLoginUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    toChannelFromBotLoginUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    toChannelFromBotLoginUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("ToChannelFromBotOAuthScope"u8))
+                if (property.NameEquals("ToChannelFromBotOAuthScope"u8))
                 {
-                    toChannelFromBotOAuthScope = prop.Value.GetString();
+                    toChannelFromBotOAuthScope = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ValidateAuthority"u8))
+                if (property.NameEquals("ValidateAuthority"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    validateAuthority = prop.Value.GetBoolean();
+                    validateAuthority = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("BotOpenIdMetadata"u8))
+                if (property.NameEquals("BotOpenIdMetadata"u8))
                 {
-                    botOpenIdMetadata = prop.Value.GetString();
+                    botOpenIdMetadata = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new BotServiceHostSettingsResult(
-                oAuthUri,
-                toBotFromChannelOpenIdMetadataUri,
+                oAuthUrl,
+                toBotFromChannelOpenIdMetadataUrl,
                 toBotFromChannelTokenIssuer,
-                toBotFromEmulatorOpenIdMetadataUri,
-                toChannelFromBotLoginUri,
+                toBotFromEmulatorOpenIdMetadataUrl,
+                toChannelFromBotLoginUrl,
                 toChannelFromBotOAuthScope,
                 validateAuthority,
                 botOpenIdMetadata,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BotServiceHostSettingsResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotServiceHostSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BotServiceHostSettingsResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BotServiceHostSettingsResult IPersistableModel<BotServiceHostSettingsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotServiceHostSettingsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBotServiceHostSettingsResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BotServiceHostSettingsResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BotServiceHostSettingsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

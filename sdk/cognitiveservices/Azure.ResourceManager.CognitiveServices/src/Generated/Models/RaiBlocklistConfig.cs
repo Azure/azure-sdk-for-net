@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Azure OpenAI blocklist config. </summary>
     public partial class RaiBlocklistConfig
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RaiBlocklistConfig"/>. </summary>
         public RaiBlocklistConfig()
@@ -24,21 +52,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="RaiBlocklistConfig"/>. </summary>
         /// <param name="blocklistName"> Name of ContentFilter. </param>
-        /// <param name="isBlocking"> If blocking would occur. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RaiBlocklistConfig(string blocklistName, bool? isBlocking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="blocking"> If blocking would occur. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RaiBlocklistConfig(string blocklistName, bool? blocking, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlocklistName = blocklistName;
-            IsBlocking = isBlocking;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Blocking = blocking;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of ContentFilter. </summary>
         [WirePath("blocklistName")]
         public string BlocklistName { get; set; }
-
         /// <summary> If blocking would occur. </summary>
         [WirePath("blocking")]
-        public bool? IsBlocking { get; set; }
+        public bool? Blocking { get; set; }
     }
 }

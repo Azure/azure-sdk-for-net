@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> The Redis access key to regenerate. </summary>
     public enum RedisRegenerateKeyType
     {
-        /// <summary> The primary access key. </summary>
+        /// <summary> Primary. </summary>
         Primary,
-        /// <summary> The secondary access key. </summary>
+        /// <summary> Secondary. </summary>
         Secondary
     }
 }

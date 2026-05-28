@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct VaultUpgradeTriggerType : IEquatable<VaultUpgradeTriggerType>
     {
         private readonly string _value;
-        private const string UserTriggeredValue = "UserTriggered";
-        private const string ForcedUpgradeValue = "ForcedUpgrade";
 
         /// <summary> Initializes a new instance of <see cref="VaultUpgradeTriggerType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VaultUpgradeTriggerType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the UserTriggered. </summary>
+        private const string UserTriggeredValue = "UserTriggered";
+        private const string ForcedUpgradeValue = "ForcedUpgrade";
+
+        /// <summary> UserTriggered. </summary>
         public static VaultUpgradeTriggerType UserTriggered { get; } = new VaultUpgradeTriggerType(UserTriggeredValue);
-
-        /// <summary> Gets the ForcedUpgrade. </summary>
+        /// <summary> ForcedUpgrade. </summary>
         public static VaultUpgradeTriggerType ForcedUpgrade { get; } = new VaultUpgradeTriggerType(ForcedUpgradeValue);
-
         /// <summary> Determines if two <see cref="VaultUpgradeTriggerType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VaultUpgradeTriggerType left, VaultUpgradeTriggerType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="VaultUpgradeTriggerType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VaultUpgradeTriggerType left, VaultUpgradeTriggerType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="VaultUpgradeTriggerType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VaultUpgradeTriggerType"/>. </summary>
         public static implicit operator VaultUpgradeTriggerType(string value) => new VaultUpgradeTriggerType(value);
 
-        /// <summary> Converts a string to a <see cref="VaultUpgradeTriggerType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator VaultUpgradeTriggerType?(string value) => value == null ? null : new VaultUpgradeTriggerType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VaultUpgradeTriggerType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(VaultUpgradeTriggerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -9,63 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.Elastic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> The properties of deployment in Elastic cloud corresponding to the Elastic monitor resource. </summary>
-    public partial class ElasticDeploymentInfoResult : IJsonModel<ElasticDeploymentInfoResult>
+    public partial class ElasticDeploymentInfoResult : IUtf8JsonSerializable, IJsonModel<ElasticDeploymentInfoResult>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticDeploymentInfoResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticDeploymentInfoResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticDeploymentInfoResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticDeploymentInfoResult)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticDeploymentInfoResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticDeploymentInfoResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ElasticDeploymentInfoResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ElasticDeploymentInfoResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticDeploymentInfoResult IPersistableModel<ElasticDeploymentInfoResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ElasticDeploymentInfoResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ElasticDeploymentInfoResult"/> from. </param>
-        internal static ElasticDeploymentInfoResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeElasticDeploymentInfoResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticDeploymentInfoResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -77,11 +28,12 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticDeploymentInfoResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticDeploymentInfoResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticDeploymentInfoResult)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -117,25 +69,15 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WritePropertyName("marketplaceSaasInfo"u8);
                 writer.WriteObjectValue(MarketplaceSaasInfo, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProjectType))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("projectType"u8);
-                writer.WriteStringValue(ProjectType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationType))
-            {
-                writer.WritePropertyName("configurationType"u8);
-                writer.WriteStringValue(ConfigurationType);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -144,27 +86,22 @@ namespace Azure.ResourceManager.Elastic.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticDeploymentInfoResult IJsonModel<ElasticDeploymentInfoResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticDeploymentInfoResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ElasticDeploymentInfoResult IJsonModel<ElasticDeploymentInfoResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticDeploymentInfoResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticDeploymentInfoResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticDeploymentInfoResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeElasticDeploymentInfoResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ElasticDeploymentInfoResult DeserializeElasticDeploymentInfoResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ElasticDeploymentInfoResult DeserializeElasticDeploymentInfoResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -174,86 +111,105 @@ namespace Azure.ResourceManager.Elastic.Models
             string memoryCapacity = default;
             string diskCapacity = default;
             string elasticsearchEndPoint = default;
-            Uri deploymentUri = default;
+            Uri deploymentUrl = default;
             MarketplaceSaaSInfo marketplaceSaasInfo = default;
-            string projectType = default;
-            string configurationType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new ElasticDeploymentStatus(prop.Value.GetString());
+                    status = new ElasticDeploymentStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("version"u8))
+                if (property.NameEquals("version"u8))
                 {
-                    version = prop.Value.GetString();
+                    version = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("memoryCapacity"u8))
+                if (property.NameEquals("memoryCapacity"u8))
                 {
-                    memoryCapacity = prop.Value.GetString();
+                    memoryCapacity = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("diskCapacity"u8))
+                if (property.NameEquals("diskCapacity"u8))
                 {
-                    diskCapacity = prop.Value.GetString();
+                    diskCapacity = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("elasticsearchEndPoint"u8))
+                if (property.NameEquals("elasticsearchEndPoint"u8))
                 {
-                    elasticsearchEndPoint = prop.Value.GetString();
+                    elasticsearchEndPoint = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deploymentUrl"u8))
+                if (property.NameEquals("deploymentUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deploymentUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    deploymentUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("marketplaceSaasInfo"u8))
+                if (property.NameEquals("marketplaceSaasInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceSaasInfo = MarketplaceSaaSInfo.DeserializeMarketplaceSaaSInfo(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("projectType"u8))
-                {
-                    projectType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("configurationType"u8))
-                {
-                    configurationType = prop.Value.GetString();
+                    marketplaceSaasInfo = MarketplaceSaaSInfo.DeserializeMarketplaceSaaSInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticDeploymentInfoResult(
                 status,
                 version,
                 memoryCapacity,
                 diskCapacity,
                 elasticsearchEndPoint,
-                deploymentUri,
+                deploymentUrl,
                 marketplaceSaasInfo,
-                projectType,
-                configurationType,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticDeploymentInfoResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticDeploymentInfoResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticDeploymentInfoResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ElasticDeploymentInfoResult IPersistableModel<ElasticDeploymentInfoResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticDeploymentInfoResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeElasticDeploymentInfoResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticDeploymentInfoResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticDeploymentInfoResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,70 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Config Template Version With Update Type. </summary>
-    public partial class ConfigTemplateVersionWithUpdateType : IJsonModel<ConfigTemplateVersionWithUpdateType>
+    public partial class ConfigTemplateVersionWithUpdateType : IUtf8JsonSerializable, IJsonModel<ConfigTemplateVersionWithUpdateType>
     {
-        /// <summary> Initializes a new instance of <see cref="ConfigTemplateVersionWithUpdateType"/> for deserialization. </summary>
-        internal ConfigTemplateVersionWithUpdateType()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigTemplateVersionWithUpdateType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigTemplateVersionWithUpdateType PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeConfigTemplateVersionWithUpdateType(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConfigTemplateVersionWithUpdateType)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConfigTemplateVersionWithUpdateType)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfigTemplateVersionWithUpdateType>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigTemplateVersionWithUpdateType IPersistableModel<ConfigTemplateVersionWithUpdateType>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfigTemplateVersionWithUpdateType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="configTemplateVersionWithUpdateType"> The <see cref="ConfigTemplateVersionWithUpdateType"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ConfigTemplateVersionWithUpdateType configTemplateVersionWithUpdateType)
-        {
-            if (configTemplateVersionWithUpdateType == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(configTemplateVersionWithUpdateType, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConfigTemplateVersionWithUpdateType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -85,11 +28,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfigTemplateVersionWithUpdateType)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
@@ -102,15 +46,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             writer.WritePropertyName("configTemplateVersion"u8);
             writer.WriteObjectValue(ConfigTemplateVersion, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -119,27 +63,22 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigTemplateVersionWithUpdateType IJsonModel<ConfigTemplateVersionWithUpdateType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigTemplateVersionWithUpdateType JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConfigTemplateVersionWithUpdateType IJsonModel<ConfigTemplateVersionWithUpdateType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfigTemplateVersionWithUpdateType)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConfigTemplateVersionWithUpdateType(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConfigTemplateVersionWithUpdateType DeserializeConfigTemplateVersionWithUpdateType(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConfigTemplateVersionWithUpdateType DeserializeConfigTemplateVersionWithUpdateType(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -147,34 +86,67 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             EdgeUpdateType? updateType = default;
             string version = default;
             EdgeConfigTemplateVersionData configTemplateVersion = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("updateType"u8))
+                if (property.NameEquals("updateType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    updateType = new EdgeUpdateType(prop.Value.GetString());
+                    updateType = new EdgeUpdateType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("version"u8))
+                if (property.NameEquals("version"u8))
                 {
-                    version = prop.Value.GetString();
+                    version = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("configTemplateVersion"u8))
+                if (property.NameEquals("configTemplateVersion"u8))
                 {
-                    configTemplateVersion = EdgeConfigTemplateVersionData.DeserializeEdgeConfigTemplateVersionData(prop.Value, options);
+                    configTemplateVersion = EdgeConfigTemplateVersionData.DeserializeEdgeConfigTemplateVersionData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ConfigTemplateVersionWithUpdateType(updateType, version, configTemplateVersion, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConfigTemplateVersionWithUpdateType(updateType, version, configTemplateVersion, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfigTemplateVersionWithUpdateType>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConfigTemplateVersionWithUpdateType)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConfigTemplateVersionWithUpdateType IPersistableModel<ConfigTemplateVersionWithUpdateType>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigTemplateVersionWithUpdateType>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeConfigTemplateVersionWithUpdateType(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfigTemplateVersionWithUpdateType)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConfigTemplateVersionWithUpdateType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

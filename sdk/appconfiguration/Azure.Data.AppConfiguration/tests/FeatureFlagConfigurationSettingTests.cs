@@ -102,10 +102,10 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             var feature = new FeatureFlagConfigurationSetting("my feature", false);
 
-            Assert.That(feature.ContentType, Is.EqualTo("application/vnd.microsoft.appconfig.ff+json;charset=utf-8"));
-            Assert.That(feature.Key, Is.EqualTo(".appconfig.featureflag/my feature"));
-            Assert.That(feature.FeatureId, Is.EqualTo("my feature"));
-            Assert.That(feature.IsEnabled, Is.EqualTo(false));
+            Assert.AreEqual("application/vnd.microsoft.appconfig.ff+json;charset=utf-8", feature.ContentType);
+            Assert.AreEqual(".appconfig.featureflag/my feature" , feature.Key);
+            Assert.AreEqual("my feature", feature.FeatureId);
+            Assert.AreEqual(false, feature.IsEnabled);
         }
 
         [TestCase("INVALID")]
@@ -122,13 +122,13 @@ namespace Azure.Data.AppConfiguration.Tests
                 using var expected = JsonDocument.Parse(value);
                 using var actual = JsonDocument.Parse(featureFlag.Value);
 
-                Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+                Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
             }
             catch (JsonException)
             {
                 // For the cases that are not legal JSON, this exception will occur
                 // and we just want to make sure that the string value is set correctly.
-                Assert.That(featureFlag.Value, Is.EqualTo(value));
+                Assert.AreEqual(value, featureFlag.Value);
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(FullFeatureValue);
             using var actual = JsonDocument.Parse(feature.Value);
 
-            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
@@ -175,17 +175,17 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             var feature = new FeatureFlagConfigurationSetting("random feature", false);
             feature.Value = FullFeatureValue;
-            Assert.That(feature.FeatureId, Is.EqualTo("Feature Id"));
-            Assert.That(feature.Description, Is.EqualTo("Description"));
-            Assert.That(feature.DisplayName, Is.EqualTo("Display name"));
-            Assert.That(feature.IsEnabled, Is.EqualTo(true));
-            Assert.That(feature.ClientFilters.Count, Is.EqualTo(2));
+            Assert.AreEqual("Feature Id", feature.FeatureId);
+            Assert.AreEqual("Description", feature.Description);
+            Assert.AreEqual("Display name", feature.DisplayName);
+            Assert.AreEqual(true, feature.IsEnabled);
+            Assert.AreEqual(2, feature.ClientFilters.Count);
 
-            Assert.That(feature.ClientFilters[0].Name, Is.EqualTo("Flag1"));
-            Assert.That(feature.ClientFilters[0].Parameters.Count, Is.EqualTo(0));
+            Assert.AreEqual("Flag1", feature.ClientFilters[0].Name);
+            Assert.AreEqual(0, feature.ClientFilters[0].Parameters.Count);
 
-            Assert.That(feature.ClientFilters[1].Name, Is.EqualTo("Flag2"));
-            Assert.That(feature.ClientFilters[1].Parameters, Is.EqualTo(new Dictionary<string, object>()
+            Assert.AreEqual("Flag2", feature.ClientFilters[1].Name);
+            Assert.AreEqual(new Dictionary<string, object>()
                 {
                     {"p1", "s"},
                     {"p2", 1},
@@ -205,7 +205,7 @@ namespace Azure.Data.AppConfiguration.Tests
                             {"p8", true},
                             {"p9", null},
                         }
-                    }}}));
+                    }}}, feature.ClientFilters[1].Parameters);
         }
 
         [Test]
@@ -218,7 +218,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"description\":\"new description\",\"enabled\":false,\"conditions\":{}}");
             using var actual = JsonDocument.Parse(feature.Value);
 
-            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
@@ -231,7 +231,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"enabled\":true,\"conditions\":{}}");
             using var actual = JsonDocument.Parse(feature.Value);
 
-            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
@@ -244,7 +244,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse("{\"id\":\"my old feature\",\"enabled\":false,\"conditions\":{}}");
             using var actual = JsonDocument.Parse(feature.Value);
 
-            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
@@ -257,7 +257,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"display_name\":\"Very nice feature indeed\",\"enabled\":false,\"conditions\":{}}");
             using var actual = JsonDocument.Parse(feature.Value);
 
-            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
@@ -273,7 +273,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":1}}]}}");
             using var actual = JsonDocument.Parse(feature.Value);
 
-            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
@@ -289,7 +289,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using (var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":1}}]}}"))
             using (var actual = JsonDocument.Parse(feature.Value))
             {
-                Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+                Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
             }
 
             feature.ClientFilters[0].Parameters["p1"] = 2;
@@ -297,7 +297,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using (var expected = JsonDocument.Parse("{\"id\":\"my feature\",\"enabled\":false,\"conditions\":{\"client_filters\":[{\"name\":\"file\",\"parameters\":{\"p1\":2}}]}}"))
             using (var actual = JsonDocument.Parse(feature.Value))
             {
-                Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+                Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.Data.AppConfiguration.Tests
             for (var index = 0; index < 3; ++index)
             {
                 using var actual = JsonDocument.Parse(feature.Value);
-                Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+                Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
             }
         }
 
@@ -339,7 +339,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(expectedJson);
             using var actual = JsonDocument.Parse(feature.Value);
 
-            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
@@ -361,7 +361,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(expectedJson);
             using var actual = JsonDocument.Parse(feature.Value);
 
-            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
@@ -378,7 +378,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(UnknownAttributeMinimalFeatureValue);
             using var actual = JsonDocument.Parse(feature.Value);
 
-            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
 
         [Test]
@@ -398,93 +398,7 @@ namespace Azure.Data.AppConfiguration.Tests
             using var expected = JsonDocument.Parse(MinimalFeatureValueWithInvalidConditions);
             using var actual = JsonDocument.Parse(featureFlag.Value);
 
-            Assert.That(_jsonComparer.Equals(expected.RootElement, actual.RootElement), Is.True);
-        }
-
-        [Test]
-        public void FeatureFlagWithoutConditionsIsValid()
-        {
-            var featureFlagValue = "{\"id\":\"my feature\",\"enabled\":true}";
-            var featureFlag = new FeatureFlagConfigurationSetting();
-            featureFlag.Value = featureFlagValue;
-
-            Assert.That(featureFlag.FeatureId, Is.EqualTo("my feature"));
-            Assert.That(featureFlag.IsEnabled, Is.EqualTo(true));
-            Assert.That(featureFlag.ClientFilters.Count, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void FeatureFlagWithoutConditionsCanBeModified()
-        {
-            var featureFlagValue = "{\"id\":\"my feature\",\"enabled\":false}";
-            var featureFlag = new FeatureFlagConfigurationSetting();
-            featureFlag.Value = featureFlagValue;
-
-            featureFlag.IsEnabled = true;
-            featureFlag.Description = "New description";
-            featureFlag.DisplayName = "New display name";
-
-            Assert.That(featureFlag.FeatureId, Is.EqualTo("my feature"));
-            Assert.That(featureFlag.IsEnabled, Is.EqualTo(true));
-            Assert.That(featureFlag.Description, Is.EqualTo("New description"));
-            Assert.That(featureFlag.DisplayName, Is.EqualTo("New display name"));
-            Assert.That(featureFlag.ClientFilters.Count, Is.EqualTo(0));
-
-            using var actual = JsonDocument.Parse(featureFlag.Value);
-            Assert.That(actual.RootElement.TryGetProperty("id", out _), Is.True);
-            Assert.That(actual.RootElement.TryGetProperty("enabled", out _), Is.True);
-            Assert.That(actual.RootElement.TryGetProperty("description", out _), Is.True);
-            Assert.That(actual.RootElement.TryGetProperty("display_name", out _), Is.True);
-            Assert.That(actual.RootElement.TryGetProperty("conditions", out _), Is.True);
-        }
-
-        [Test]
-        public void FeatureFlagWithOnlyIdIsValid()
-        {
-            var featureFlagValue = "{\"id\":\"my feature\"}";
-            var featureFlag = new FeatureFlagConfigurationSetting();
-            featureFlag.Value = featureFlagValue;
-
-            Assert.That(featureFlag.FeatureId, Is.EqualTo("my feature"));
-            Assert.That(featureFlag.IsEnabled, Is.EqualTo(false));
-            Assert.That(featureFlag.ClientFilters.Count, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void FeatureFlagWithoutEnabledIsValid()
-        {
-            var featureFlagValue = "{\"id\":\"my feature\",\"conditions\":{}}";
-            var featureFlag = new FeatureFlagConfigurationSetting();
-            featureFlag.Value = featureFlagValue;
-
-            Assert.That(featureFlag.FeatureId, Is.EqualTo("my feature"));
-            Assert.That(featureFlag.IsEnabled, Is.EqualTo(false));
-            Assert.That(featureFlag.ClientFilters.Count, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void FeatureFlagWithoutEnabledCanBeModified()
-        {
-            var featureFlagValue = "{\"id\":\"my feature\",\"conditions\":{}}";
-            var featureFlag = new FeatureFlagConfigurationSetting();
-            featureFlag.Value = featureFlagValue;
-
-            featureFlag.IsEnabled = true;
-            featureFlag.Description = "New description";
-            featureFlag.DisplayName = "New display name";
-
-            Assert.That(featureFlag.FeatureId, Is.EqualTo("my feature"));
-            Assert.That(featureFlag.IsEnabled, Is.EqualTo(true));
-            Assert.That(featureFlag.Description, Is.EqualTo("New description"));
-            Assert.That(featureFlag.DisplayName, Is.EqualTo("New display name"));
-            Assert.That(featureFlag.ClientFilters.Count, Is.EqualTo(0));
-
-            using var actual = JsonDocument.Parse(featureFlag.Value);
-            Assert.That(actual.RootElement.TryGetProperty("id", out _), Is.True);
-            Assert.That(actual.RootElement.TryGetProperty("enabled", out _), Is.True);
-            Assert.That(actual.RootElement.TryGetProperty("description", out _), Is.True);
-            Assert.That(actual.RootElement.TryGetProperty("display_name", out _), Is.True);
-            Assert.That(actual.RootElement.TryGetProperty("conditions", out _), Is.True);
+            Assert.IsTrue(_jsonComparer.Equals(expected.RootElement, actual.RootElement));
         }
     }
 }

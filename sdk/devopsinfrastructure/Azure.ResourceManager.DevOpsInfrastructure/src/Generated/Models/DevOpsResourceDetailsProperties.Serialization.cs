@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.DevOpsInfrastructure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> Details of the ResourceDetailsObject. </summary>
-    public partial class DevOpsResourceDetailsProperties : IJsonModel<DevOpsResourceDetailsProperties>
+    public partial class DevOpsResourceDetailsProperties : IUtf8JsonSerializable, IJsonModel<DevOpsResourceDetailsProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DevOpsResourceDetailsProperties"/> for deserialization. </summary>
-        internal DevOpsResourceDetailsProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsResourceDetailsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevOpsResourceDetailsProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDevOpsResourceDetailsProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevOpsResourceDetailsProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevOpsResourceDetailsProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevOpsResourceDetailsProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevOpsResourceDetailsProperties IPersistableModel<DevOpsResourceDetailsProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevOpsResourceDetailsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevOpsResourceDetailsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,26 +28,27 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsResourceDetailsProperties)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("image"u8);
             writer.WriteStringValue(Image);
             writer.WritePropertyName("imageVersion"u8);
             writer.WriteStringValue(ImageVersion);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -102,27 +57,22 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevOpsResourceDetailsProperties IJsonModel<DevOpsResourceDetailsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevOpsResourceDetailsProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DevOpsResourceDetailsProperties IJsonModel<DevOpsResourceDetailsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsResourceDetailsProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDevOpsResourceDetailsProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DevOpsResourceDetailsProperties DeserializeDevOpsResourceDetailsProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DevOpsResourceDetailsProperties DeserializeDevOpsResourceDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -130,30 +80,63 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             DevOpsResourceStatus status = default;
             string image = default;
             string imageVersion = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    status = new DevOpsResourceStatus(prop.Value.GetString());
+                    status = new DevOpsResourceStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("image"u8))
+                if (property.NameEquals("image"u8))
                 {
-                    image = prop.Value.GetString();
+                    image = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("imageVersion"u8))
+                if (property.NameEquals("imageVersion"u8))
                 {
-                    imageVersion = prop.Value.GetString();
+                    imageVersion = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DevOpsResourceDetailsProperties(status, image, imageVersion, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevOpsResourceDetailsProperties(status, image, imageVersion, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevOpsResourceDetailsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevOpsResourceDetailsProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevOpsResourceDetailsProperties IPersistableModel<DevOpsResourceDetailsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsResourceDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDevOpsResourceDetailsProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevOpsResourceDetailsProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevOpsResourceDetailsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

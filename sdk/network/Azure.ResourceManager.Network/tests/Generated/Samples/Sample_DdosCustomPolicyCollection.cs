@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateDDoSCustomPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/DdosCustomPolicyCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/DdosCustomPolicyCreate.json
             // this example is just showing the usage of "DdosCustomPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,16 +42,6 @@ namespace Azure.ResourceManager.Network.Samples
             string ddosCustomPolicyName = "test-ddos-custom-policy";
             DdosCustomPolicyData data = new DdosCustomPolicyData
             {
-                DetectionRules = {new DdosDetectionRule
-{
-DetectionMode = DdosDetectionMode.TrafficThreshold,
-TrafficDetectionRule = new TrafficDetectionRule
-{
-TrafficType = DdosTrafficType.Tcp,
-PacketsPerSecond = 1000000,
-},
-Name = "detectionRuleTcp",
-}},
                 Location = new AzureLocation("centraluseuap"),
             };
             ArmOperation<DdosCustomPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ddosCustomPolicyName, data);
@@ -69,7 +58,7 @@ Name = "detectionRuleTcp",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDDoSCustomPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/DdosCustomPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/DdosCustomPolicyGet.json
             // this example is just showing the usage of "DdosCustomPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,7 +91,7 @@ Name = "detectionRuleTcp",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetDDoSCustomPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/DdosCustomPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/DdosCustomPolicyGet.json
             // this example is just showing the usage of "DdosCustomPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +120,7 @@ Name = "detectionRuleTcp",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetDDoSCustomPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/DdosCustomPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/DdosCustomPolicyGet.json
             // this example is just showing the usage of "DdosCustomPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

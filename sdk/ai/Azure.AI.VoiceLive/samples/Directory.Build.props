@@ -1,0 +1,20 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
+    <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
+    <!-- Signal that samples are building in the repo as opposed to a standalone download from Samples Browser -->
+    <IsPackable>false</IsPackable>
+    <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+    <NoWarn>
+      $(NoWarn);
+      NU5104;
+    </NoWarn>
+    <IsSamplesProject>true</IsSamplesProject>
+  </PropertyGroup>
+  <Import Project="..\Directory.Build.props" />
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);STRONGNAME_SIGNED</DefineConstants>
+    <InheritDocEnabled>false</InheritDocEnabled>
+    <IsShippingLibrary>false</IsShippingLibrary>
+  </PropertyGroup>
+</Project>

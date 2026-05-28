@@ -40,14 +40,9 @@ public abstract class ModelBase(
     public Specification? Spec { get; set; } = null;
 
     /// <summary>
-    /// Gets or sets whether this model type is external and doesn't need to be generated.
+    /// Gets whether this model type is external and doesn't need to be generated.
     /// </summary>
     public bool IsExternal { get; protected set; } = false;
-
-    /// <summary>
-    /// Gets or sets whether this type is marked as experimental (e.g., based on preview API versions).
-    /// </summary>
-    public bool IsExperimental { get; set; } = false;
 
     /// <summary>
     /// Generate code for this model type.

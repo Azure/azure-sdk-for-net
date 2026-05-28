@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.Peering.Models
     public readonly partial struct PeeringConnectionState : IEquatable<PeeringConnectionState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringConnectionState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PeeringConnectionState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NoneValue = "None";
         private const string PendingApprovalValue = "PendingApproval";
         private const string ApprovedValue = "Approved";
@@ -25,81 +32,44 @@ namespace Azure.ResourceManager.Peering.Models
         private const string ActiveValue = "Active";
         private const string TypeChangeRequestedValue = "TypeChangeRequested";
         private const string TypeChangeInProgressValue = "TypeChangeInProgress";
-        private const string ExternalBlockerValue = "ExternalBlocker";
 
-        /// <summary> Initializes a new instance of <see cref="PeeringConnectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PeeringConnectionState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static PeeringConnectionState None { get; } = new PeeringConnectionState(NoneValue);
-
-        /// <summary> Gets the PendingApproval. </summary>
+        /// <summary> PendingApproval. </summary>
         public static PeeringConnectionState PendingApproval { get; } = new PeeringConnectionState(PendingApprovalValue);
-
-        /// <summary> Gets the Approved. </summary>
+        /// <summary> Approved. </summary>
         public static PeeringConnectionState Approved { get; } = new PeeringConnectionState(ApprovedValue);
-
-        /// <summary> Gets the ProvisioningStarted. </summary>
+        /// <summary> ProvisioningStarted. </summary>
         public static PeeringConnectionState ProvisioningStarted { get; } = new PeeringConnectionState(ProvisioningStartedValue);
-
-        /// <summary> Gets the ProvisioningFailed. </summary>
+        /// <summary> ProvisioningFailed. </summary>
         public static PeeringConnectionState ProvisioningFailed { get; } = new PeeringConnectionState(ProvisioningFailedValue);
-
-        /// <summary> Gets the ProvisioningCompleted. </summary>
+        /// <summary> ProvisioningCompleted. </summary>
         public static PeeringConnectionState ProvisioningCompleted { get; } = new PeeringConnectionState(ProvisioningCompletedValue);
-
-        /// <summary> Gets the Validating. </summary>
+        /// <summary> Validating. </summary>
         public static PeeringConnectionState Validating { get; } = new PeeringConnectionState(ValidatingValue);
-
-        /// <summary> Gets the Active. </summary>
+        /// <summary> Active. </summary>
         public static PeeringConnectionState Active { get; } = new PeeringConnectionState(ActiveValue);
-
-        /// <summary> Gets the TypeChangeRequested. </summary>
+        /// <summary> TypeChangeRequested. </summary>
         public static PeeringConnectionState TypeChangeRequested { get; } = new PeeringConnectionState(TypeChangeRequestedValue);
-
-        /// <summary> Gets the TypeChangeInProgress. </summary>
+        /// <summary> TypeChangeInProgress. </summary>
         public static PeeringConnectionState TypeChangeInProgress { get; } = new PeeringConnectionState(TypeChangeInProgressValue);
-
-        /// <summary> Gets the ExternalBlocker. </summary>
-        public static PeeringConnectionState ExternalBlocker { get; } = new PeeringConnectionState(ExternalBlockerValue);
-
         /// <summary> Determines if two <see cref="PeeringConnectionState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PeeringConnectionState left, PeeringConnectionState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PeeringConnectionState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PeeringConnectionState left, PeeringConnectionState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PeeringConnectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringConnectionState"/>. </summary>
         public static implicit operator PeeringConnectionState(string value) => new PeeringConnectionState(value);
 
-        /// <summary> Converts a string to a <see cref="PeeringConnectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PeeringConnectionState?(string value) => value == null ? null : new PeeringConnectionState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PeeringConnectionState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PeeringConnectionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

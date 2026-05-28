@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary></summary>
     public partial class DeletedKeyVaultResource : IJsonModel<DeletedKeyVaultData>
     {
-        private static IJsonModel<DeletedKeyVaultData> s_dataDeserializationInstance;
+        private static DeletedKeyVaultData s_dataDeserializationInstance;
+        private static DeletedKeyVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<DeletedKeyVaultData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeletedKeyVaultData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeletedKeyVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedKeyVaultData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedKeyVaultData IJsonModel<DeletedKeyVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DeletedKeyVaultData IJsonModel<DeletedKeyVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedKeyVaultData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeletedKeyVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedKeyVaultData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         DeletedKeyVaultData IPersistableModel<DeletedKeyVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedKeyVaultData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeletedKeyVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DeletedKeyVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedKeyVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

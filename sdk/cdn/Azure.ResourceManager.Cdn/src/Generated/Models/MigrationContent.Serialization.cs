@@ -8,72 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Request body for Migrate operation. </summary>
-    public partial class MigrationContent : IJsonModel<MigrationContent>
+    public partial class MigrationContent : IUtf8JsonSerializable, IJsonModel<MigrationContent>
     {
-        /// <summary> Initializes a new instance of <see cref="MigrationContent"/> for deserialization. </summary>
-        internal MigrationContent()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMigrationContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MigrationContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MigrationContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MigrationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MigrationContent IPersistableModel<MigrationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MigrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="migrationContent"> The <see cref="MigrationContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MigrationContent migrationContent)
-        {
-            if (migrationContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(migrationContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -85,36 +30,37 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrationContent)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("classicResourceReference"u8);
-            writer.WriteObjectValue(ClassicResourceReference, options);
+            ((IJsonModel<WritableSubResource>)ClassicResourceReference).Write(writer, options);
             writer.WritePropertyName("profileName"u8);
             writer.WriteStringValue(ProfileName);
             if (Optional.IsCollectionDefined(MigrationWebApplicationFirewallMappings))
             {
                 writer.WritePropertyName("migrationWebApplicationFirewallMappings"u8);
                 writer.WriteStartArray();
-                foreach (MigrationWebApplicationFirewallMapping item in MigrationWebApplicationFirewallMappings)
+                foreach (var item in MigrationWebApplicationFirewallMappings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -123,61 +69,57 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MigrationContent IJsonModel<MigrationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MigrationContent IJsonModel<MigrationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrationContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMigrationContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MigrationContent DeserializeMigrationContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static MigrationContent DeserializeMigrationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             CdnSku sku = default;
-            CdnResourceReference classicResourceReference = default;
+            WritableSubResource classicResourceReference = default;
             string profileName = default;
             IList<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("sku"u8))
+                if (property.NameEquals("sku"u8))
                 {
-                    sku = CdnSku.DeserializeCdnSku(prop.Value, options);
+                    sku = CdnSku.DeserializeCdnSku(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("classicResourceReference"u8))
+                if (property.NameEquals("classicResourceReference"u8))
                 {
-                    classicResourceReference = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
+                    classicResourceReference = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("profileName"u8))
+                if (property.NameEquals("profileName"u8))
                 {
-                    profileName = prop.Value.GetString();
+                    profileName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("migrationWebApplicationFirewallMappings"u8))
+                if (property.NameEquals("migrationWebApplicationFirewallMappings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MigrationWebApplicationFirewallMapping> array = new List<MigrationWebApplicationFirewallMapping>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(MigrationWebApplicationFirewallMapping.DeserializeMigrationWebApplicationFirewallMapping(item, options));
                     }
@@ -186,10 +128,42 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new MigrationContent(sku, classicResourceReference, profileName, migrationWebApplicationFirewallMappings ?? new ChangeTrackingList<MigrationWebApplicationFirewallMapping>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrationContent(sku, classicResourceReference, profileName, migrationWebApplicationFirewallMappings ?? new ChangeTrackingList<MigrationWebApplicationFirewallMapping>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MigrationContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrationContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MigrationContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MigrationContent IPersistableModel<MigrationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrationContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMigrationContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrationContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

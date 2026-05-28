@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure;
 
-namespace Specs.Azure.Core.Traits
+namespace _Specs_.Azure.Core.Traits
 {
     public static partial class _Specs_AzureCoreTraitsModelFactory
     {

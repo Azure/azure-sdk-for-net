@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ImpactReporting;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
-    /// <summary> Details about impacted performance metrics. Applicable for performance related impact. </summary>
-    public partial class ImpactPerformance : IJsonModel<ImpactPerformance>
+    public partial class ImpactPerformance : IUtf8JsonSerializable, IJsonModel<ImpactPerformance>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ImpactPerformance PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ImpactPerformance>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeImpactPerformance(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ImpactPerformance)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImpactPerformance>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ImpactPerformance>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerImpactReportingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ImpactPerformance)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImpactPerformance>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ImpactPerformance IPersistableModel<ImpactPerformance>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImpactPerformance>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImpactPerformance>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImpactPerformance>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactPerformance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImpactPerformance)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
@@ -99,15 +59,15 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,27 +76,22 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ImpactPerformance IJsonModel<ImpactPerformance>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ImpactPerformance JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ImpactPerformance IJsonModel<ImpactPerformance>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImpactPerformance>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactPerformance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImpactPerformance)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeImpactPerformance(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ImpactPerformance DeserializeImpactPerformance(JsonElement element, ModelReaderWriterOptions options)
+        internal static ImpactPerformance DeserializeImpactPerformance(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,62 +101,95 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             double? actual = default;
             ImpactMetricExpectedValueRange expectedValueRange = default;
             ImpactMetricUnit? unit = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("metricName"u8))
+                if (property.NameEquals("metricName"u8))
                 {
-                    metricName = prop.Value.GetString();
+                    metricName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("expected"u8))
+                if (property.NameEquals("expected"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expected = prop.Value.GetDouble();
+                    expected = property.Value.GetDouble();
                     continue;
                 }
-                if (prop.NameEquals("actual"u8))
+                if (property.NameEquals("actual"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    actual = prop.Value.GetDouble();
+                    actual = property.Value.GetDouble();
                     continue;
                 }
-                if (prop.NameEquals("expectedValueRange"u8))
+                if (property.NameEquals("expectedValueRange"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expectedValueRange = ImpactMetricExpectedValueRange.DeserializeImpactMetricExpectedValueRange(prop.Value, options);
+                    expectedValueRange = ImpactMetricExpectedValueRange.DeserializeImpactMetricExpectedValueRange(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("unit"u8))
+                if (property.NameEquals("unit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unit = new ImpactMetricUnit(prop.Value.GetString());
+                    unit = new ImpactMetricUnit(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ImpactPerformance(
                 metricName,
                 expected,
                 actual,
                 expectedValueRange,
                 unit,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ImpactPerformance>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactPerformance>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerImpactReportingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ImpactPerformance)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ImpactPerformance IPersistableModel<ImpactPerformance>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImpactPerformance>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeImpactPerformance(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ImpactPerformance)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ImpactPerformance>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

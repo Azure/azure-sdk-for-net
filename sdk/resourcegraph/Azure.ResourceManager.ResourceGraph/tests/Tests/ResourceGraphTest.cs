@@ -39,8 +39,7 @@ namespace Azure.Management.ResourceGraph.Tests
         [Test]
         public async Task ResourcesAsyncTest()
         {
-            var queryContent = new ResourceQueryContent("project id, tags, properties | limit 2")
-            {
+            var queryContent = new ResourceQueryContent("project id, tags, properties | limit 2") {
                 Subscriptions = { DefaultSubscription.Data.SubscriptionId }
             };
 

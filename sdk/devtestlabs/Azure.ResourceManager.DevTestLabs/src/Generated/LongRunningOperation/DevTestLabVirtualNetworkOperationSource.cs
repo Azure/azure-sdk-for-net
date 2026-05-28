@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary></summary>
-    internal partial class DevTestLabVirtualNetworkOperationSource : IOperationSource<DevTestLabVirtualNetworkResource>
+    internal class DevTestLabVirtualNetworkOperationSource : IOperationSource<DevTestLabVirtualNetworkResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DevTestLabVirtualNetworkOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DevTestLabVirtualNetworkResource IOperationSource<DevTestLabVirtualNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DevTestLabVirtualNetworkData data = DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DevTestLabVirtualNetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
             return new DevTestLabVirtualNetworkResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DevTestLabVirtualNetworkResource> IOperationSource<DevTestLabVirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DevTestLabVirtualNetworkData data = DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DevTestLabVirtualNetworkResource(_client, data);
+            var data = ModelReaderWriter.Read<DevTestLabVirtualNetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
+            return await Task.FromResult(new DevTestLabVirtualNetworkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -14,24 +14,25 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public partial class CreateAndMountFileShareConfiguration : FileShareConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="CreateAndMountFileShareConfiguration"/>. </summary>
-        public CreateAndMountFileShareConfiguration() : base(FileShareConfigurationType.CreateAndMount)
+        public CreateAndMountFileShareConfiguration()
         {
+            ConfigurationType = FileShareConfigurationType.CreateAndMount;
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateAndMountFileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config, eg: Mount/CreateAndMount/Skip. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceGroup"> The name of transport file share resource group. This should be pre created by the customer. The app rg is used in case of missing input. </param>
         /// <param name="storageAccountName"> The name of file share storage account name . A custom name is used in case of missing input. </param>
-        internal CreateAndMountFileShareConfiguration(FileShareConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string resourceGroup, string storageAccountName) : base(configurationType, additionalBinaryDataProperties)
+        internal CreateAndMountFileShareConfiguration(FileShareConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceGroup, string storageAccountName) : base(configurationType, serializedAdditionalRawData)
         {
             ResourceGroup = resourceGroup;
             StorageAccountName = storageAccountName;
+            ConfigurationType = configurationType;
         }
 
         /// <summary> The name of transport file share resource group. This should be pre created by the customer. The app rg is used in case of missing input. </summary>
         public string ResourceGroup { get; set; }
-
         /// <summary> The name of file share storage account name . A custom name is used in case of missing input. </summary>
         public string StorageAccountName { get; set; }
     }

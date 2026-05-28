@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
     /// Storage URI kind of the input documents source.
     /// </summary>
-    [CodeGenType("StorageInputType")]
+    [CodeGenModel("StorageInputType")]
     public enum StorageInputUriKind
     {
         /// <summary>

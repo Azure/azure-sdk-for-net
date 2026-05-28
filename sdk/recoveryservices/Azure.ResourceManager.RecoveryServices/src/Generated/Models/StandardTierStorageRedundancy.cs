@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct StandardTierStorageRedundancy : IEquatable<StandardTierStorageRedundancy>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="StandardTierStorageRedundancy"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StandardTierStorageRedundancy(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string LocallyRedundantValue = "LocallyRedundant";
         private const string GeoRedundantValue = "GeoRedundant";
         private const string ZoneRedundantValue = "ZoneRedundant";
 
-        /// <summary> Initializes a new instance of <see cref="StandardTierStorageRedundancy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StandardTierStorageRedundancy(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static StandardTierStorageRedundancy Invalid { get; } = new StandardTierStorageRedundancy(InvalidValue);
-
-        /// <summary> Gets the LocallyRedundant. </summary>
+        /// <summary> LocallyRedundant. </summary>
         public static StandardTierStorageRedundancy LocallyRedundant { get; } = new StandardTierStorageRedundancy(LocallyRedundantValue);
-
-        /// <summary> Gets the GeoRedundant. </summary>
+        /// <summary> GeoRedundant. </summary>
         public static StandardTierStorageRedundancy GeoRedundant { get; } = new StandardTierStorageRedundancy(GeoRedundantValue);
-
-        /// <summary> Gets the ZoneRedundant. </summary>
+        /// <summary> ZoneRedundant. </summary>
         public static StandardTierStorageRedundancy ZoneRedundant { get; } = new StandardTierStorageRedundancy(ZoneRedundantValue);
-
         /// <summary> Determines if two <see cref="StandardTierStorageRedundancy"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StandardTierStorageRedundancy left, StandardTierStorageRedundancy right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StandardTierStorageRedundancy"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StandardTierStorageRedundancy left, StandardTierStorageRedundancy right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StandardTierStorageRedundancy"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StandardTierStorageRedundancy"/>. </summary>
         public static implicit operator StandardTierStorageRedundancy(string value) => new StandardTierStorageRedundancy(value);
 
-        /// <summary> Converts a string to a <see cref="StandardTierStorageRedundancy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StandardTierStorageRedundancy?(string value) => value == null ? null : new StandardTierStorageRedundancy(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StandardTierStorageRedundancy other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StandardTierStorageRedundancy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,37 +7,47 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PureStorageBlock.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PureStorageBlock
 {
     /// <summary>
-    /// A class representing a PureStoragePool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PureStoragePoolResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPureStoragePools method.
+    /// A Class representing a PureStoragePool along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PureStoragePoolResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPureStoragePoolResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPureStoragePool method.
     /// </summary>
     public partial class PureStoragePoolResource : ArmResource
     {
-        private readonly ClientDiagnostics _storagePoolsClientDiagnostics;
-        private readonly StoragePools _storagePoolsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="PureStoragePoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storagePoolName"> The storagePoolName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storagePoolName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _pureStoragePoolStoragePoolsClientDiagnostics;
+        private readonly StoragePoolsRestOperations _pureStoragePoolStoragePoolsRestClient;
         private readonly PureStoragePoolData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "PureStorage.Block/storagePools";
 
-        /// <summary> Initializes a new instance of PureStoragePoolResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PureStoragePoolResource"/> class for mocking. </summary>
         protected PureStoragePoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PureStoragePoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PureStoragePoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PureStoragePoolResource(ArmClient client, PureStoragePoolData data) : this(client, data.Id)
@@ -46,92 +56,209 @@ namespace Azure.ResourceManager.PureStorageBlock
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PureStoragePoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PureStoragePoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PureStoragePoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string pureStoragePoolApiVersion);
-            _storagePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Endpoint, pureStoragePoolApiVersion ?? "2024-11-01");
-            ValidateResourceId(id);
+            _pureStoragePoolStoragePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string pureStoragePoolStoragePoolsApiVersion);
+            _pureStoragePoolStoragePoolsRestClient = new StoragePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, pureStoragePoolStoragePoolsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PureStoragePoolData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="storagePoolName"> The storagePoolName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storagePoolName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of PureStorageAvsStorageContainerResources in the PureStoragePool. </summary>
+        /// <returns> An object representing collection of PureStorageAvsStorageContainerResources and their operations over a PureStorageAvsStorageContainerResource. </returns>
+        public virtual PureStorageAvsStorageContainerCollection GetPureStorageAvsStorageContainers()
+        {
+            return GetCachedClient(client => new PureStorageAvsStorageContainerCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get an AVS storage container
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvsStorageContainer_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStorageAvsStorageContainerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageContainerName"> Name of the storage container. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PureStorageAvsStorageContainerResource>> GetPureStorageAvsStorageContainerAsync(string storageContainerName, CancellationToken cancellationToken = default)
+        {
+            return await GetPureStorageAvsStorageContainers().GetAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an AVS storage container
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsStorageContainers/{storageContainerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvsStorageContainer_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStorageAvsStorageContainerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageContainerName"> Name of the storage container. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PureStorageAvsStorageContainerResource> GetPureStorageAvsStorageContainer(string storageContainerName, CancellationToken cancellationToken = default)
+        {
+            return GetPureStorageAvsStorageContainers().Get(storageContainerName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PureStorageAvsVmResources in the PureStoragePool. </summary>
+        /// <returns> An object representing collection of PureStorageAvsVmResources and their operations over a PureStorageAvsVmResource. </returns>
+        public virtual PureStorageAvsVmCollection GetPureStorageAvsVms()
+        {
+            return GetCachedClient(client => new PureStorageAvsVmCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get an AVS VM
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvsVm_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStorageAvsVmResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="avsVmId"> ID of the AVS VM. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="avsVmId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="avsVmId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PureStorageAvsVmResource>> GetPureStorageAvsVmAsync(string avsVmId, CancellationToken cancellationToken = default)
+        {
+            return await GetPureStorageAvsVms().GetAsync(avsVmId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an AVS VM
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/avsVms/{avsVmId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvsVm_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStorageAvsVmResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="avsVmId"> ID of the AVS VM. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="avsVmId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="avsVmId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PureStorageAvsVmResource> GetPureStorageAvsVm(string avsVmId, CancellationToken cancellationToken = default)
+        {
+            return GetPureStorageAvsVms().Get(avsVmId, cancellationToken);
         }
 
         /// <summary>
         /// Get a storage pool
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PureStoragePoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Get");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PureStoragePoolData> response = Response.FromValue(PureStoragePoolData.FromResponse(result), result);
+                var response = await _pureStoragePoolStoragePoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new PureStoragePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,42 +272,118 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Get a storage pool
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PureStoragePoolResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Get");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PureStoragePoolData> response = Response.FromValue(PureStoragePoolData.FromResponse(result), result);
+                var response = _pureStoragePoolStoragePoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new PureStoragePoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a storage pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _pureStoragePoolStoragePoolsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new PureStorageBlockArmOperation(_pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a storage pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _pureStoragePoolStoragePoolsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new PureStorageBlockArmOperation(_pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -193,20 +396,20 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Update a storage pool
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,27 +421,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Update");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PureStoragePoolPatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation<PureStoragePoolResource> operation = new PureStorageBlockArmOperation<PureStoragePoolResource>(
-                    new PureStoragePoolOperationSource(Client),
-                    _storagePoolsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _pureStoragePoolStoragePoolsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new PureStorageBlockArmOperation<PureStoragePoolResource>(new PureStoragePoolOperationSource(Client), _pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -252,20 +442,20 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Update a storage pool
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,27 +467,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Update");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PureStoragePoolPatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation<PureStoragePoolResource> operation = new PureStorageBlockArmOperation<PureStoragePoolResource>(
-                    new PureStoragePoolOperationSource(Client),
-                    _storagePoolsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _pureStoragePoolStoragePoolsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new PureStorageBlockArmOperation<PureStoragePoolResource>(new PureStoragePoolOperationSource(Client), _pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -308,46 +485,35 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Delete a storage pool
+        /// Retrieve health metrics of a storage pool
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getHealthStatus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_GetHealthStatus</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StoragePoolHealthInfo>> GetHealthStatusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Delete");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetHealthStatus");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
+                var response = await _pureStoragePoolStoragePoolsRestClient.GetHealthStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -357,46 +523,35 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Delete a storage pool
+        /// Retrieve health metrics of a storage pool
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getHealthStatus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_GetHealthStatus</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual Response<StoragePoolHealthInfo> GetHealthStatus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.Delete");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetHealthStatus");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
+                var response = _pureStoragePoolStoragePoolsRestClient.GetHealthStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -406,46 +561,35 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Disable the existing AVS connection
+        /// Returns current information about an on-going connection to an AVS instance
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/disableAvsConnection. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_DisableAvsConnection. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_GetAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DisableAvsConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PureStorageAvsConnection>> GetAvsConnectionAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.DisableAvsConnection");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetAvsConnection");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateDisableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
+                var response = await _pureStoragePoolStoragePoolsRestClient.GetAvsConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
             }
             catch (Exception e)
             {
@@ -455,46 +599,111 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
-        /// Disable the existing AVS connection
+        /// Returns current information about an on-going connection to an AVS instance
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/disableAvsConnection. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_DisableAvsConnection. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_GetAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation DisableAvsConnection(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual Response<PureStorageAvsConnection> GetAvsConnection(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.DisableAvsConnection");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetAvsConnection");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateDisableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
+                var response = _pureStoragePoolStoragePoolsRestClient.GetAvsConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the status of the storage pool connection to AVS
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_GetAvsStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PureStorageAvsStatus>> GetAvsStatusAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetAvsStatus");
+            scope.Start();
+            try
+            {
+                var response = await _pureStoragePoolStoragePoolsRestClient.GetAvsStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the status of the storage pool connection to AVS
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_GetAvsStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PureStorageAvsStatus> GetAvsStatus(CancellationToken cancellationToken = default)
+        {
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetAvsStatus");
+            scope.Start();
+            try
+            {
+                var response = _pureStoragePoolStoragePoolsRestClient.GetAvsStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -507,20 +716,20 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Initiate a connection between the storage pool and a specified AVS SDDC resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/enableAvsConnection. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/enableAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_EnableAvsConnection. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_EnableAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -532,21 +741,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.EnableAvsConnection");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.EnableAvsConnection");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateEnableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolEnableAvsConnectionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _pureStoragePoolStoragePoolsRestClient.EnableAvsConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new PureStorageBlockArmOperation(_pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateEnableAvsConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -560,20 +762,20 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Initiate a connection between the storage pool and a specified AVS SDDC resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/enableAvsConnection. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/enableAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_EnableAvsConnection. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_EnableAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -585,21 +787,98 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.EnableAvsConnection");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.EnableAvsConnection");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateEnableAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolEnableAvsConnectionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _pureStoragePoolStoragePoolsRestClient.EnableAvsConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new PureStorageBlockArmOperation(_pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateEnableAvsConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disable the existing AVS connection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/disableAvsConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_DisableAvsConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DisableAvsConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.DisableAvsConnection");
+            scope.Start();
+            try
+            {
+                var response = await _pureStoragePoolStoragePoolsRestClient.DisableAvsConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new PureStorageBlockArmOperation(_pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateDisableAvsConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disable the existing AVS connection
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/disableAvsConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_DisableAvsConnection</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation DisableAvsConnection(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.DisableAvsConnection");
+            scope.Start();
+            try
+            {
+                var response = _pureStoragePoolStoragePoolsRestClient.DisableAvsConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new PureStorageBlockArmOperation(_pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateDisableAvsConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -613,20 +892,20 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Finalize an already started AVS connection to a specific AVS SDDC
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/finalizeAvsConnection. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/finalizeAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_FinalizeAvsConnection. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_FinalizeAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -638,21 +917,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.FinalizeAvsConnection");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.FinalizeAvsConnection");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateFinalizeAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolFinalizeAvsConnectionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _pureStoragePoolStoragePoolsRestClient.FinalizeAvsConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new PureStorageBlockArmOperation(_pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateFinalizeAvsConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -666,20 +938,20 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Finalize an already started AVS connection to a specific AVS SDDC
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/finalizeAvsConnection. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/finalizeAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_FinalizeAvsConnection. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_FinalizeAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -691,310 +963,15 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.FinalizeAvsConnection");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.FinalizeAvsConnection");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateFinalizeAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, StoragePoolFinalizeAvsConnectionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _pureStoragePoolStoragePoolsRestClient.FinalizeAvsConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new PureStorageBlockArmOperation(_pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateFinalizeAvsConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns current information about an on-going connection to an AVS instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_GetAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PureStorageAvsConnection>> GetAvsConnectionAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetAvsConnection");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateGetAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PureStorageAvsConnection> response = Response.FromValue(PureStorageAvsConnection.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns current information about an on-going connection to an AVS instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_GetAvsConnection. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PureStorageAvsConnection> GetAvsConnection(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetAvsConnection");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateGetAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PureStorageAvsConnection> response = Response.FromValue(PureStorageAvsConnection.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns the status of the storage pool connection to AVS
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_GetAvsStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PureStorageAvsStatus>> GetAvsStatusAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetAvsStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateGetAvsStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PureStorageAvsStatus> response = Response.FromValue(PureStorageAvsStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns the status of the storage pool connection to AVS
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getAvsStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_GetAvsStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PureStorageAvsStatus> GetAvsStatus(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetAvsStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateGetAvsStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PureStorageAvsStatus> response = Response.FromValue(PureStorageAvsStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve health metrics of a storage pool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getHealthStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_GetHealthStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StoragePoolHealthInfo>> GetHealthStatusAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetHealthStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateGetHealthStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StoragePoolHealthInfo> response = Response.FromValue(StoragePoolHealthInfo.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve health metrics of a storage pool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/getHealthStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_GetHealthStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StoragePoolHealthInfo> GetHealthStatus(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetHealthStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateGetHealthStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StoragePoolHealthInfo> response = Response.FromValue(StoragePoolHealthInfo.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
             }
             catch (Exception e)
             {
@@ -1007,20 +984,20 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Test and repair, if needed, all configuration elements of the storage pool connection to the AVS instance
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/repairAvsConnection. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/repairAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_RepairAvsConnection. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_RepairAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1028,21 +1005,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RepairAvsConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.RepairAvsConnection");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.RepairAvsConnection");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateRepairAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _pureStoragePoolStoragePoolsRestClient.RepairAvsConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new PureStorageBlockArmOperation(_pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateRepairAvsConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -1056,20 +1026,20 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Test and repair, if needed, all configuration elements of the storage pool connection to the AVS instance
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/repairAvsConnection. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/repairAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_RepairAvsConnection. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePools_RepairAvsConnection</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1077,21 +1047,14 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation RepairAvsConnection(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.RepairAvsConnection");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.RepairAvsConnection");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storagePoolsRestClient.CreateRepairAvsConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_storagePoolsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _pureStoragePoolStoragePoolsRestClient.RepairAvsConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new PureStorageBlockArmOperation(_pureStoragePoolStoragePoolsClientDiagnostics, Pipeline, _pureStoragePoolStoragePoolsRestClient.CreateRepairAvsConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -1101,7 +1064,27 @@ namespace Azure.ResourceManager.PureStorageBlock
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1111,34 +1094,28 @@ namespace Azure.ResourceManager.PureStorageBlock
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.AddTag");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _storagePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<PureStoragePoolData> response = Response.FromValue(PureStoragePoolData.FromResponse(result), result);
-                    return Response.FromValue(new PureStoragePoolResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _pureStoragePoolStoragePoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new PureStoragePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    PureStoragePoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    PureStoragePoolPatch patch = new PureStoragePoolPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new PureStoragePoolPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<PureStoragePoolResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1149,7 +1126,27 @@ namespace Azure.ResourceManager.PureStorageBlock
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1159,34 +1156,28 @@ namespace Azure.ResourceManager.PureStorageBlock
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.AddTag");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _storagePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<PureStoragePoolData> response = Response.FromValue(PureStoragePoolData.FromResponse(result), result);
-                    return Response.FromValue(new PureStoragePoolResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _pureStoragePoolStoragePoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new PureStoragePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    PureStoragePoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    PureStoragePoolPatch patch = new PureStoragePoolPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new PureStoragePoolPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<PureStoragePoolResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1197,39 +1188,53 @@ namespace Azure.ResourceManager.PureStorageBlock
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<PureStoragePoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.SetTags");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _storagePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<PureStoragePoolData> response = Response.FromValue(PureStoragePoolData.FromResponse(result), result);
-                    return Response.FromValue(new PureStoragePoolResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _pureStoragePoolStoragePoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new PureStoragePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    PureStoragePoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    PureStoragePoolPatch patch = new PureStoragePoolPatch();
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new PureStoragePoolPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<PureStoragePoolResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1240,39 +1245,53 @@ namespace Azure.ResourceManager.PureStorageBlock
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<PureStoragePoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.SetTags");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _storagePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<PureStoragePoolData> response = Response.FromValue(PureStoragePoolData.FromResponse(result), result);
-                    return Response.FromValue(new PureStoragePoolResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _pureStoragePoolStoragePoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new PureStoragePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    PureStoragePoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    PureStoragePoolPatch patch = new PureStoragePoolPatch();
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new PureStoragePoolPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<PureStoragePoolResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1283,7 +1302,27 @@ namespace Azure.ResourceManager.PureStorageBlock
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1291,34 +1330,28 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.RemoveTag");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _storagePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<PureStoragePoolData> response = Response.FromValue(PureStoragePoolData.FromResponse(result), result);
-                    return Response.FromValue(new PureStoragePoolResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _pureStoragePoolStoragePoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new PureStoragePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    PureStoragePoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    PureStoragePoolPatch patch = new PureStoragePoolPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new PureStoragePoolPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<PureStoragePoolResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1329,7 +1362,27 @@ namespace Azure.ResourceManager.PureStorageBlock
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1337,34 +1390,28 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.RemoveTag");
+            using var scope = _pureStoragePoolStoragePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _storagePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<PureStoragePoolData> response = Response.FromValue(PureStoragePoolData.FromResponse(result), result);
-                    return Response.FromValue(new PureStoragePoolResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _pureStoragePoolStoragePoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new PureStoragePoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    PureStoragePoolData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    PureStoragePoolPatch patch = new PureStoragePoolPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new PureStoragePoolPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<PureStoragePoolResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1373,72 +1420,6 @@ namespace Azure.ResourceManager.PureStorageBlock
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of PureStorageAvsStorageContainers in the <see cref="PureStoragePoolResource"/>. </summary>
-        /// <returns> An object representing collection of PureStorageAvsStorageContainers and their operations over a PureStorageAvsStorageContainerResource. </returns>
-        public virtual PureStorageAvsStorageContainerCollection GetPureStorageAvsStorageContainers()
-        {
-            return GetCachedClient(client => new PureStorageAvsStorageContainerCollection(client, Id));
-        }
-
-        /// <summary> Get an AVS storage container. </summary>
-        /// <param name="storageContainerName"> Name of the storage container. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PureStorageAvsStorageContainerResource>> GetPureStorageAvsStorageContainerAsync(string storageContainerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
-
-            return await GetPureStorageAvsStorageContainers().GetAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get an AVS storage container. </summary>
-        /// <param name="storageContainerName"> Name of the storage container. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="storageContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PureStorageAvsStorageContainerResource> GetPureStorageAvsStorageContainer(string storageContainerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
-
-            return GetPureStorageAvsStorageContainers().Get(storageContainerName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PureStorageAvsVms in the <see cref="PureStoragePoolResource"/>. </summary>
-        /// <returns> An object representing collection of PureStorageAvsVms and their operations over a PureStorageAvsVmResource. </returns>
-        public virtual PureStorageAvsVmCollection GetPureStorageAvsVms()
-        {
-            return GetCachedClient(client => new PureStorageAvsVmCollection(client, Id));
-        }
-
-        /// <summary> Get an AVS VM. </summary>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="avsVmId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="avsVmId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PureStorageAvsVmResource>> GetPureStorageAvsVmAsync(string avsVmId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-
-            return await GetPureStorageAvsVms().GetAsync(avsVmId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get an AVS VM. </summary>
-        /// <param name="avsVmId"> ID of the AVS VM. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="avsVmId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="avsVmId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PureStorageAvsVmResource> GetPureStorageAvsVm(string avsVmId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
-
-            return GetPureStorageAvsVms().Get(avsVmId, cancellationToken);
         }
     }
 }

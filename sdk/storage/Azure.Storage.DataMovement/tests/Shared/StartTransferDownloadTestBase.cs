@@ -388,8 +388,7 @@ namespace Azure.Storage.DataMovement.Tests
                 using Stream stream = await OpenReadAsync(downloadedObjectInfo[i].SourceObjectClient);
                 using FileStream fileStream = File.OpenRead(downloadedObjectInfo[i].DestinationLocalPath);
                 Assert.AreEqual(stream, fileStream);
-            }
-            ;
+            };
         }
 
         [RecordedTest]

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct CustomRuleEnabledState : IEquatable<CustomRuleEnabledState>
     {
         private readonly string _value;
-        /// <summary> Disabled. </summary>
-        private const string DisabledValue = "Disabled";
-        /// <summary> Enabled. </summary>
-        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="CustomRuleEnabledState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CustomRuleEnabledState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string DisabledValue = "Disabled";
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Disabled. </summary>
         public static CustomRuleEnabledState Disabled { get; } = new CustomRuleEnabledState(DisabledValue);
-
         /// <summary> Enabled. </summary>
         public static CustomRuleEnabledState Enabled { get; } = new CustomRuleEnabledState(EnabledValue);
-
         /// <summary> Determines if two <see cref="CustomRuleEnabledState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomRuleEnabledState left, CustomRuleEnabledState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CustomRuleEnabledState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomRuleEnabledState left, CustomRuleEnabledState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CustomRuleEnabledState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomRuleEnabledState"/>. </summary>
         public static implicit operator CustomRuleEnabledState(string value) => new CustomRuleEnabledState(value);
 
-        /// <summary> Converts a string to a <see cref="CustomRuleEnabledState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CustomRuleEnabledState?(string value) => value == null ? null : new CustomRuleEnabledState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomRuleEnabledState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CustomRuleEnabledState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

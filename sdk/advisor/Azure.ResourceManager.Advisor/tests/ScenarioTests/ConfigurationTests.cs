@@ -17,46 +17,46 @@ namespace Azure.ResourceManager.Advisor.Tests
         {
         }
 
-        private AdvisorCpuThreshold TestThreshold = AdvisorCpuThreshold.Twenty;
-        private AdvisorCpuThreshold DefaultThreshold = AdvisorCpuThreshold.Five;
+        private CpuThreshold TestThreshold = CpuThreshold.Twenty;
+        private CpuThreshold DefaultThreshold = CpuThreshold.Five;
 
         [Test]
         public async Task ConfigureSubscriptionTest()
         {
             string configName = "default";
-            var configData = new AdvisorConfigurationData
+            var configData = new ConfigData
             {
-                IsExcluded = false,
+                Exclude = false,
                 LowCpuThreshold = TestThreshold
             };
 
-            await DefaultSubscription.CreateAdvisorConfigurationInSubscriptionAsync(configName, configData);
-            var data = await DefaultSubscription.GetAdvisorConfigurationsBySubscriptionAsync().ToEnumerableAsync();
+            await DefaultSubscription.CreateConfigurationAsync(configName, configData);
+            var data = await DefaultSubscription.GetConfigurationsAsync().ToEnumerableAsync();
             Assert.AreEqual(TestThreshold, data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold);
-            Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).IsExcluded);
+            Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
 
             configData.LowCpuThreshold = DefaultThreshold;
-            await DefaultSubscription.CreateAdvisorConfigurationInSubscriptionAsync(configName, configData);
-            data = await DefaultSubscription.GetAdvisorConfigurationsBySubscriptionAsync().ToEnumerableAsync();
+            await DefaultSubscription.CreateConfigurationAsync(configName, configData);
+            data = await DefaultSubscription.GetConfigurationsAsync().ToEnumerableAsync();
             Assert.AreEqual(DefaultThreshold, data.FirstOrDefault(x => x.Name.Equals(configName)).LowCpuThreshold);
-            Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).IsExcluded);
+            Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
         }
 
         [Test]
         public async Task ConfigureResourceGroupTest()
         {
             string configName = "default";
-            var configData = new AdvisorConfigurationData { IsExcluded = true };
+            var configData = new ConfigData { Exclude = true };
 
             var resourceGroup = await CreateResourceGroupAsync();
-            await resourceGroup.CreateAdvisorConfigurationInResourceGroupAsync(configName, configData);
-            var data = await resourceGroup.GetAdvisorConfigurationsByResourceGroupAsync().ToEnumerableAsync();
-            Assert.IsTrue(data.FirstOrDefault(x => x.Name.Equals(configName)).IsExcluded);
+            await resourceGroup.CreateConfigurationAsync(configName, configData);
+            var data = await resourceGroup.GetConfigurationsAsync().ToEnumerableAsync();
+            Assert.IsTrue(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
 
-            configData.IsExcluded = false;
-            await resourceGroup.CreateAdvisorConfigurationInResourceGroupAsync(configName, configData);
-            data = await resourceGroup.GetAdvisorConfigurationsByResourceGroupAsync().ToEnumerableAsync();
-            Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).IsExcluded);
+            configData.Exclude = false;
+            await resourceGroup.CreateConfigurationAsync(configName, configData);
+            data = await resourceGroup.GetConfigurationsAsync().ToEnumerableAsync();
+            Assert.IsFalse(data.FirstOrDefault(x => x.Name.Equals(configName)).Exclude);
         }
     }
 }

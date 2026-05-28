@@ -22,7 +22,6 @@ namespace Microsoft.ClientModel.TestFramework
     [ModelReaderWriterBuildable(typeof(BodyRegexSanitizerBody))]
     [ModelReaderWriterBuildable(typeof(BodyStringSanitizer))]
     [ModelReaderWriterBuildable(typeof(BodyStringSanitizerBody))]
-    [ModelReaderWriterBuildable(typeof(ContentDispositionFilePathSanitizer))]
     [ModelReaderWriterBuildable(typeof(CustomDefaultMatcher))]
     [ModelReaderWriterBuildable(typeof(GeneralRegexSanitizer))]
     [ModelReaderWriterBuildable(typeof(GeneralRegexSanitizerBody))]

@@ -22,8 +22,8 @@ namespace Azure.Communication
             UnknownIdentifier identifier1 = new(_id);
             UnknownIdentifier identifier2 = new(_id);
 
-            Assert.That(identifier1.Equals(identifier1), Is.True);
-            Assert.That(identifier1.Equals(identifier2), Is.True);
+            Assert.True(identifier1.Equals(identifier1));
+            Assert.True(identifier1.Equals(identifier2));
         }
 
         [Test]
@@ -31,15 +31,15 @@ namespace Azure.Communication
         {
             UnknownIdentifier identifier1 = new(_id);
             object identifier2 = new();
-            Assert.That(identifier1, Is.Not.EqualTo(identifier2));
+            Assert.False(identifier1.Equals(identifier2));
         }
 
         [Test]
         public void constructWithValidId()
         {
             UnknownIdentifier result = new(_id);
-            Assert.That(result.Id, Is.Not.Null);
-            Assert.That(result.GetHashCode(), Is.Not.Null);
+            Assert.NotNull(result.Id);
+            Assert.NotNull(result.GetHashCode());
         }
     }
 }

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,75 +157,6 @@ namespace Azure.ResourceManager.AppService
         public virtual Response<StaticSiteBuildDatabaseConnectionResource> GetStaticSiteBuildDatabaseConnection(string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteBuildDatabaseConnections().Get(databaseConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StaticSiteBuildLinkedBackendResources in the StaticSiteBuild. </summary>
-        /// <returns> An object representing collection of StaticSiteBuildLinkedBackendResources and their operations over a StaticSiteBuildLinkedBackendResource. </returns>
-        public virtual StaticSiteBuildLinkedBackendCollection GetStaticSiteBuildLinkedBackends()
-        {
-            return GetCachedClient(client => new StaticSiteBuildLinkedBackendCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns the details of a linked backend linked to a static site build by name
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackendForBuild</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StaticSiteBuildLinkedBackendResource>> GetStaticSiteBuildLinkedBackendAsync(string linkedBackendName, CancellationToken cancellationToken = default)
-        {
-            return await GetStaticSiteBuildLinkedBackends().GetAsync(linkedBackendName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the details of a linked backend linked to a static site build by name
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackendForBuild</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StaticSiteBuildLinkedBackendResource> GetStaticSiteBuildLinkedBackend(string linkedBackendName, CancellationToken cancellationToken = default)
-        {
-            return GetStaticSiteBuildLinkedBackends().Get(linkedBackendName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StaticSiteBuildUserProvidedFunctionAppResources in the StaticSiteBuild. </summary>
@@ -248,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,7 +210,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,6 +228,75 @@ namespace Azure.ResourceManager.AppService
             return GetStaticSiteBuildUserProvidedFunctionApps().Get(functionAppName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of StaticSiteBuildLinkedBackendResources in the StaticSiteBuild. </summary>
+        /// <returns> An object representing collection of StaticSiteBuildLinkedBackendResources and their operations over a StaticSiteBuildLinkedBackendResource. </returns>
+        public virtual StaticSiteBuildLinkedBackendCollection GetStaticSiteBuildLinkedBackends()
+        {
+            return GetCachedClient(client => new StaticSiteBuildLinkedBackendCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns the details of a linked backend linked to a static site build by name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetLinkedBackendForBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StaticSiteBuildLinkedBackendResource>> GetStaticSiteBuildLinkedBackendAsync(string linkedBackendName, CancellationToken cancellationToken = default)
+        {
+            return await GetStaticSiteBuildLinkedBackends().GetAsync(linkedBackendName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the details of a linked backend linked to a static site build by name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}/linkedBackends/{linkedBackendName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetLinkedBackendForBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBuildLinkedBackendResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StaticSiteBuildLinkedBackendResource> GetStaticSiteBuildLinkedBackend(string linkedBackendName, CancellationToken cancellationToken = default)
+        {
+            return GetStaticSiteBuildLinkedBackends().Get(linkedBackendName, cancellationToken);
+        }
+
         /// <summary>
         /// Description for Gets the details of a static site build.
         /// <list type="bullet">
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerServiceFleet.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -19,32 +17,30 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerServiceFleet. </summary>
     public static partial class ContainerServiceFleetExtensions
     {
-        /// <param name="client"></param>
         private static MockableContainerServiceFleetArmClient GetMockableContainerServiceFleetArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableContainerServiceFleetArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableContainerServiceFleetArmClient(client0));
         }
 
-        /// <param name="resourceGroupResource"></param>
-        private static MockableContainerServiceFleetResourceGroupResource GetMockableContainerServiceFleetResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableContainerServiceFleetResourceGroupResource GetMockableContainerServiceFleetResourceGroupResource(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockableContainerServiceFleetResourceGroupResource(client, resourceGroupResource.Id));
+            return resource.GetCachedClient(client => new MockableContainerServiceFleetResourceGroupResource(client, resource.Id));
         }
 
-        /// <param name="subscriptionResource"></param>
-        private static MockableContainerServiceFleetSubscriptionResource GetMockableContainerServiceFleetSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockableContainerServiceFleetSubscriptionResource GetMockableContainerServiceFleetSubscriptionResource(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockableContainerServiceFleetSubscriptionResource(client, subscriptionResource.Id));
+            return resource.GetCachedClient(client => new MockableContainerServiceFleetSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerServiceFleetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceFleetResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetContainerServiceFleetResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetContainerServiceFleetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ContainerServiceFleetResource"/> object. </returns>
@@ -56,103 +52,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetMemberResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing an <see cref="AutoUpgradeProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutoUpgradeProfileResource.CreateResourceIdentifier" /> to create an <see cref="AutoUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetContainerServiceFleetMemberResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetAutoUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerServiceFleetMemberResource"/> object. </returns>
-        public static ContainerServiceFleetMemberResource GetContainerServiceFleetMemberResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetMemberResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetManagedNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetContainerServiceFleetManagedNamespaceResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerServiceFleetManagedNamespaceResource"/> object. </returns>
-        public static ContainerServiceFleetManagedNamespaceResource GetContainerServiceFleetManagedNamespaceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetManagedNamespaceResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetGateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetContainerServiceFleetGateResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerServiceFleetGateResource"/> object. </returns>
-        public static ContainerServiceFleetGateResource GetContainerServiceFleetGateResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetGateResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerServiceFleetUpdateRunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetContainerServiceFleetUpdateRunResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerServiceFleetUpdateRunResource"/> object. </returns>
-        public static ContainerServiceFleetUpdateRunResource GetContainerServiceFleetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetUpdateRunResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="FleetUpdateStrategyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetFleetUpdateStrategyResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="FleetUpdateStrategyResource"/> object. </returns>
-        public static FleetUpdateStrategyResource GetFleetUpdateStrategyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerServiceFleetArmClient(client).GetFleetUpdateStrategyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="AutoUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetAutoUpgradeProfileResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="AutoUpgradeProfileResource"/> object. </returns>
@@ -164,15 +71,91 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary>
-        /// Gets a collection of ContainerServiceFleets in the <see cref="ResourceGroupResource"/>
+        /// Gets an object representing a <see cref="ContainerServiceFleetGateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceFleetGateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetGateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetResourceGroupResource.GetContainerServiceFleets()"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetContainerServiceFleetGateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceFleetGateResource"/> object. </returns>
+        public static ContainerServiceFleetGateResource GetContainerServiceFleetGateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetGateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceFleetMemberResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceFleetMemberResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetContainerServiceFleetMemberResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceFleetMemberResource"/> object. </returns>
+        public static ContainerServiceFleetMemberResource GetContainerServiceFleetMemberResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetMemberResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerServiceFleetUpdateRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerServiceFleetUpdateRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetUpdateRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetContainerServiceFleetUpdateRunResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerServiceFleetUpdateRunResource"/> object. </returns>
+        public static ContainerServiceFleetUpdateRunResource GetContainerServiceFleetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceFleetArmClient(client).GetContainerServiceFleetUpdateRunResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FleetUpdateStrategyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FleetUpdateStrategyResource.CreateResourceIdentifier" /> to create a <see cref="FleetUpdateStrategyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetArmClient.GetFleetUpdateStrategyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FleetUpdateStrategyResource"/> object. </returns>
+        public static FleetUpdateStrategyResource GetFleetUpdateStrategyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerServiceFleetArmClient(client).GetFleetUpdateStrategyResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of ContainerServiceFleetResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetResourceGroupResource.GetContainerServiceFleets()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ContainerServiceFleets and their operations over a ContainerServiceFleetResource. </returns>
+        /// <returns> An object representing collection of ContainerServiceFleetResources and their operations over a ContainerServiceFleetResource. </returns>
         public static ContainerServiceFleetCollection GetContainerServiceFleets(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -182,15 +165,34 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary>
         /// Gets a Fleet.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetResourceGroupResource.GetContainerServiceFleetAsync(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetResourceGroupResource.GetContainerServiceFleetAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ContainerServiceFleetResource>> GetContainerServiceFleetAsync(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
@@ -201,15 +203,34 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary>
         /// Gets a Fleet.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetResourceGroupResource.GetContainerServiceFleet(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetResourceGroupResource.GetContainerServiceFleet(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fleetName"> The name of the Fleet resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ContainerServiceFleetResource> GetContainerServiceFleet(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
@@ -220,42 +241,74 @@ namespace Azure.ResourceManager.ContainerServiceFleet
 
         /// <summary>
         /// Lists fleets in the specified subscription.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleetsAsync(int?, string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/fleets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fleets_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(this SubscriptionResource subscriptionResource, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceFleetSubscriptionResource(subscriptionResource).GetContainerServiceFleetsAsync(maxCount, skipToken, cancellationToken);
+            return GetMockableContainerServiceFleetSubscriptionResource(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists fleets in the specified subscription.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleets(int?, string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/fleets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fleets_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainerServiceFleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(this SubscriptionResource subscriptionResource, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public static Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceFleetSubscriptionResource(subscriptionResource).GetContainerServiceFleets(maxCount, skipToken, cancellationToken);
+            return GetMockableContainerServiceFleetSubscriptionResource(subscriptionResource).GetContainerServiceFleets(cancellationToken);
         }
     }
 }

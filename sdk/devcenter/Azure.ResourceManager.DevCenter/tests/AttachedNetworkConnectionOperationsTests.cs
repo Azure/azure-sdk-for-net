@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.DevCenter.Tests
             AttachedNetworkConnectionResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, attachedNetworkName, devCenterData)).Value;
 
-            Assert.That(createdResource, Is.Not.Null);
-            Assert.That(createdResource.Data, Is.Not.Null);
+            Assert.NotNull(createdResource);
+            Assert.NotNull(createdResource.Data);
 
             // List AttachedNetworkConnections
             List<AttachedNetworkConnectionResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
             Response<AttachedNetworkConnectionResource> retrievedAttachedNetworkConnection = await resourceCollection.GetAsync(attachedNetworkName);
-            Assert.That(retrievedAttachedNetworkConnection.Value, Is.Not.Null);
-            Assert.That(retrievedAttachedNetworkConnection.Value.Data, Is.Not.Null);
+            Assert.NotNull(retrievedAttachedNetworkConnection.Value);
+            Assert.NotNull(retrievedAttachedNetworkConnection.Value.Data);
 
             // Delete
             ArmOperation deleteOp = await retrievedAttachedNetworkConnection.Value.DeleteAsync(WaitUntil.Completed);

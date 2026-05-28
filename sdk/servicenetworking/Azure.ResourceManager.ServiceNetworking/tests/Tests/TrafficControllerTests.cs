@@ -4,14 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.ServiceNetworking.Models;
-using Azure.ResourceManager.ServiceNetworking.Tests;
+using Azure.ResourceManager.Network;
+using Azure.Core;
 using NUnit.Framework;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.ServiceNetworking.Tests;
 
 namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
 {
@@ -49,8 +48,6 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             //Obtaining the Collection object of TrafficController to perform the Create/PUT operation.
             TrafficControllerCollection trafficControllerCollection = GetTrafficControllers(resourceGroup);
             TrafficControllerData tcgw = new TrafficControllerData(location);
-            // Access a property to ensure Properties object is initialized for serialization
-            _ = tcgw.ConfigurationEndpoints;
             var tcTask = await trafficControllerCollection.CreateOrUpdateAsync(WaitUntil.Completed, tcName, tcgw);
             return tcTask;
         }
@@ -62,7 +59,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             return await trafficControllerCollection.GetAsync(tcName);
         }
 
-        private async Task DeleteTrafficControllerAsync(TrafficControllerResource tc)
+        private async void DeleteTrafficControllerAsync(TrafficControllerResource tc)
         {
             await tc.DeleteAsync(WaitUntil.Started);
         }
@@ -77,8 +74,6 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             {
                 Location = location
             };
-            // Access a property to ensure Properties object is initialized for serialization
-            _ = fnd.ProvisioningState;
             //Performing the Create/PUT operation and returning the result.
             return await frontends.CreateOrUpdateAsync(WaitUntil.Completed, frontendName, fnd);
         }
@@ -105,7 +100,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             }
             TrafficControllerFrontendCollection frontends = GetFrontends(tc);
             PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
-            PublicIPAddressResource pip = await publicIPAddresses.GetAsync(pipName);
+            PublicIPAddressResource pip = publicIPAddresses.GetAsync(pipName).Result;
             await pip.DeleteAsync(WaitUntil.Started);
         }
 
@@ -133,8 +128,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
                     AddressPrefixes = { "10.225.0.0/16" },
                 };
                 _resourceNames["tc-vnet"] = vnetName;
-                var vnetOperation = await vnets.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData);
-                VirtualNetworkResource vnet = vnetOperation.Value;
+                VirtualNetworkResource vnet = vnets.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData).Result.Value;
                 SubnetCollection subnets = vnet.GetSubnets();
                 SubnetData subnetData = new SubnetData()
                 {
@@ -147,23 +141,21 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
                 };
                 subnetData.Delegations.Add(trafficControllerServiceDelegation);
                 _resourceNames["tc-subnet"] = subnetName;
-                var subnetOperation = await subnets.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, subnetData);
-                subnet = subnetOperation.Value;
+                subnet = subnets.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, subnetData).Result.Value;
             }
 
             //Association Data object that is used to create the new frontend object.
             TrafficControllerAssociationData associationData = new TrafficControllerAssociationData(location)
             {
+                AssociationType = null,
                 SubnetId = subnet.Id,
                 Location = location,
             };
-            // Ensure Properties object is initialized with default AssociationType
-            associationData.AssociationType = TrafficControllerAssociationType.Subnets;
             //Performing the Create/PUT operation
             return await associations.CreateOrUpdateAsync(WaitUntil.Completed, associationName, associationData);
         }
 
-        private async Task DeleteAssociationResourcesAsync(string associationName, TrafficControllerResource tc, string resourceGroup)
+        private async void DeleteAssociationResourcesAsync(string associationName, TrafficControllerResource tc, string resourceGroup)
         {
             string vnetName;
             string subnetName;
@@ -180,9 +172,9 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             TrafficControllerAssociationCollection associations = GetAssociations(tc);
 
             VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
-            VirtualNetworkResource vnet = await vnets.GetAsync(vnetName);
+            VirtualNetworkResource vnet = vnets.GetAsync(vnetName).Result;
 
-            SubnetResource subnet = await vnet.GetSubnetAsync(subnetName);
+            SubnetResource subnet = vnet.GetSubnetAsync(subnetName).Result;
             await subnet.DeleteAsync(WaitUntil.Started);
             await vnet.DeleteAsync(WaitUntil.Started);
         }
@@ -200,7 +192,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             return await associations.GetAsync(associationName);
         }
 
-        private async Task DeleteResourceGroupAsync(ResourceGroupResource rgResource)
+        private async void DeleteResourceGroupAsync(ResourceGroupResource rgResource)
         {
             await rgResource.DeleteAsync(WaitUntil.Started);
         }
@@ -217,22 +209,22 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             ResourceGroupResource rgResource = CreateResourceGroup(Subscription, resourceGroupName, location);
             resourceGroupName = rgResource.Data.Name;
             //Testing PUT Operation
-            TrafficControllerResource tcCreate = (await CreateTrafficControllerAsync(location, resourceGroupName, tcName)).Value;
+            TrafficControllerResource tcCreate = CreateTrafficControllerAsync(location, resourceGroupName, tcName).Result.Value;
             Assert.NotNull(tcCreate, "Traffic Controller is Null");
             Assert.AreEqual(tcCreate.Data.Name, tcName);
-            Assert.AreEqual(tcCreate.Data.TrafficControllerProvisioningState?.ToString(), "Succeeded");
+            Assert.AreEqual(tcCreate.Data.TrafficControllerProvisioningState.ToString(), "Succeeded");
 
             //Testing GET Operation
-            TrafficControllerResource tcGet = await GetTrafficControllerAsync(resourceGroupName, tcName);
+            TrafficControllerResource tcGet = GetTrafficControllerAsync(resourceGroupName, tcName).Result;
             Assert.NotNull(tcGet, "Traffic Controller is Null");
             Assert.AreEqual(tcGet.Data.Name, tcName);
-            Assert.AreEqual(tcGet.Data.TrafficControllerProvisioningState?.ToString(), "Succeeded");
+            Assert.AreEqual(tcGet.Data.TrafficControllerProvisioningState.ToString(), "Succeeded");
 
             //Testing DELETE Operation
             var tcDelete = await tcGet.DeleteAsync(WaitUntil.Completed);
             var deleteResponse = tcDelete.WaitForCompletionResponse();
             Assert.AreEqual(deleteResponse.IsError, false);
-            await DeleteResourceGroupAsync(rgResource);
+            DeleteResourceGroupAsync(rgResource);
         }
 
         [Test]
@@ -248,20 +240,20 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             resourceGroupName = rgResource.Data.Name;
 
             //Creating Traffic Controller and obtaining Frontends object for performing tests of CRUD functions
-            TrafficControllerResource tc = (await CreateTrafficControllerAsync(location, resourceGroupName, tcName)).Value;
+            TrafficControllerResource tc = CreateTrafficControllerAsync(location, resourceGroupName, tcName).Result.Value;
 
             //Testing PUT Operation
             string frontendName = Recording.GenerateAssetName("tc-frontend");
-            var frontendCreation = (await CreateFrontendAsync(rgResource, frontendName, tc, location)).Value;
+            var frontendCreation = CreateFrontendAsync(rgResource, frontendName, tc, location).Result.Value;
             Assert.IsNotNull(frontendCreation);
             Assert.AreEqual(frontendCreation.Data.Name, frontendName);
-            Assert.AreEqual(frontendCreation.Data.ProvisioningState?.ToString(), "Succeeded");
+            Assert.AreEqual(frontendCreation.Data.ProvisioningState.ToString(), "Succeeded");
 
             //Testing GET Operation
-            var frontendGet = await GetFrontendAsync(frontendName, tc);
+            var frontendGet = GetFrontendAsync(frontendName, tc).Result;
             Assert.IsNotNull(frontendGet);
             Assert.AreEqual(frontendGet.Data.Name, frontendName);
-            Assert.AreEqual(frontendGet.Data.ProvisioningState?.ToString(), "Succeeded");
+            Assert.AreEqual(frontendGet.Data.ProvisioningState.ToString(), "Succeeded");
 
             //Testing DELETE Operation
             var frontendDelete = await frontendGet.DeleteAsync(WaitUntil.Completed);
@@ -269,8 +261,8 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             Assert.AreEqual(deleteResponse.IsError, false);
             //Deleting Traffic Controller
             await DeleteFrontendResource(rgResource, tc);
-            await DeleteTrafficControllerAsync(tc);
-            await DeleteResourceGroupAsync(rgResource);
+            DeleteTrafficControllerAsync(tc);
+            DeleteResourceGroupAsync(rgResource);
         }
 
         [Test]
@@ -286,26 +278,26 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             resourceGroupName = rgResource.Data.Name;
 
             //Creating Traffic Controller and obtaining Associations object for performing tests of CRUD functions
-            TrafficControllerResource tc = (await CreateTrafficControllerAsync(location, resourceGroupName, tcName)).Value;
+            TrafficControllerResource tc = CreateTrafficControllerAsync(location, resourceGroupName, tcName).Result.Value;
 
             string associationName = Recording.GenerateAssetName("tc-association");
-            TrafficControllerAssociationResource associationCreate = (await CreateAssociationAsync(resourceGroupName, associationName, tc, location)).Value;
+            TrafficControllerAssociationResource associationCreate = CreateAssociationAsync(resourceGroupName, associationName, tc, location).Result.Value;
             Assert.IsNotNull(associationCreate);
             Assert.AreEqual(associationCreate.Data.Name, associationName);
-            Assert.AreEqual(associationCreate.Data.ProvisioningState?.ToString(), "Succeeded");
+            Assert.AreEqual(associationCreate.Data.ProvisioningState.ToString(), "Succeeded");
 
             //Testing the GET Operation
-            TrafficControllerAssociationResource associationGet = await GetAssociationAsync(associationName, tc);
+            TrafficControllerAssociationResource associationGet = GetAssociationAsync(associationName, tc).Result;
             Assert.IsNotNull(associationGet);
             Assert.AreEqual(associationGet.Data.Name, associationName);
-            Assert.AreEqual(associationGet.Data.ProvisioningState?.ToString(), "Succeeded");
+            Assert.AreEqual(associationGet.Data.ProvisioningState.ToString(), "Succeeded");
 
             //Testing DELETE Operation
             await DeleteAssociation(associationGet);
             //Deleting Traffic Controller
-            await DeleteAssociationResourcesAsync(associationName, tc, resourceGroupName);
-            await DeleteTrafficControllerAsync(tc);
-            await DeleteResourceGroupAsync(rgResource);
+            DeleteAssociationResourcesAsync(associationName, tc, resourceGroupName);
+            DeleteTrafficControllerAsync(tc);
+            DeleteResourceGroupAsync(rgResource);
         }
     }
 }

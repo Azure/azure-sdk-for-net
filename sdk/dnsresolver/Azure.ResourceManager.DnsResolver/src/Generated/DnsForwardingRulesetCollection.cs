@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DnsResolver
@@ -26,85 +25,75 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsForwardingRulesetCollection : ArmCollection, IEnumerable<DnsForwardingRulesetResource>, IAsyncEnumerable<DnsForwardingRulesetResource>
     {
-        private readonly ClientDiagnostics _dnsForwardingRulesetsClientDiagnostics;
-        private readonly DnsForwardingRulesets _dnsForwardingRulesetsRestClient;
+        private readonly ClientDiagnostics _dnsForwardingRulesetClientDiagnostics;
+        private readonly DnsForwardingRulesetsRestOperations _dnsForwardingRulesetRestClient;
 
-        /// <summary> Initializes a new instance of DnsForwardingRulesetCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsForwardingRulesetCollection"/> class for mocking. </summary>
         protected DnsForwardingRulesetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsForwardingRulesetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DnsForwardingRulesetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _dnsForwardingRulesetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRulesetResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DnsForwardingRulesetResource.ResourceType, out string dnsForwardingRulesetApiVersion);
-            _dnsForwardingRulesetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRulesetResource.ResourceType.Namespace, Diagnostics);
-            _dnsForwardingRulesetsRestClient = new DnsForwardingRulesets(_dnsForwardingRulesetsClientDiagnostics, Pipeline, Endpoint, dnsForwardingRulesetApiVersion ?? "2025-10-01-preview");
-            ValidateResourceId(id);
+            _dnsForwardingRulesetRestClient = new DnsForwardingRulesetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsForwardingRulesetApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates a DNS forwarding ruleset.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsForwardingRulesets_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DnsForwardingRulesetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string rulesetName, DnsForwardingRulesetData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DnsForwardingRulesetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string rulesetName, DnsForwardingRulesetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _dnsForwardingRulesetsClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.CreateOrUpdate");
+            using var scope = _dnsForwardingRulesetClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rulesetName, DnsForwardingRulesetData.ToRequestContent(data), matchConditions, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DnsResolverArmOperation<DnsForwardingRulesetResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(
-                    new DnsForwardingRulesetOperationSource(Client),
-                    _dnsForwardingRulesetsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _dnsForwardingRulesetRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -118,52 +107,44 @@ namespace Azure.ResourceManager.DnsResolver
         /// Creates or updates a DNS forwarding ruleset.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsForwardingRulesets_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DnsForwardingRulesetResource> CreateOrUpdate(WaitUntil waitUntil, string rulesetName, DnsForwardingRulesetData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DnsForwardingRulesetResource> CreateOrUpdate(WaitUntil waitUntil, string rulesetName, DnsForwardingRulesetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _dnsForwardingRulesetsClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.CreateOrUpdate");
+            using var scope = _dnsForwardingRulesetClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rulesetName, DnsForwardingRulesetData.ToRequestContent(data), matchConditions, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DnsResolverArmOperation<DnsForwardingRulesetResource> operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(
-                    new DnsForwardingRulesetOperationSource(Client),
-                    _dnsForwardingRulesetsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _dnsForwardingRulesetRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<DnsForwardingRulesetResource>(new DnsForwardingRulesetOperationSource(Client), _dnsForwardingRulesetClientDiagnostics, Pipeline, _dnsForwardingRulesetRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -177,42 +158,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// Gets a DNS forwarding ruleset properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsForwardingRulesets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         public virtual async Task<Response<DnsForwardingRulesetResource>> GetAsync(string rulesetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
 
-            using DiagnosticScope scope = _dnsForwardingRulesetsClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.Get");
+            using var scope = _dnsForwardingRulesetClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rulesetName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DnsForwardingRulesetData> response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
+                var response = await _dnsForwardingRulesetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -226,42 +203,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// Gets a DNS forwarding ruleset properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsForwardingRulesets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         public virtual Response<DnsForwardingRulesetResource> Get(string rulesetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
 
-            using DiagnosticScope scope = _dnsForwardingRulesetsClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.Get");
+            using var scope = _dnsForwardingRulesetClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rulesetName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DnsForwardingRulesetData> response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
+                var response = _dnsForwardingRulesetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -275,120 +248,98 @@ namespace Azure.ResourceManager.DnsResolver
         /// Lists DNS forwarding rulesets within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsForwardingRulesets_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsForwardingRulesetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DnsForwardingRulesetResource> GetAllAsync(int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DnsForwardingRulesetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsForwardingRulesetResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DnsForwardingRulesetData, DnsForwardingRulesetResource>(new DnsForwardingRulesetsGetByResourceGroupAsyncCollectionResultOfT(
-                _dnsForwardingRulesetsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                top,
-                context,
-                "DnsForwardingRulesetCollection.GetAll"), data => new DnsForwardingRulesetResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), _dnsForwardingRulesetClientDiagnostics, Pipeline, "DnsForwardingRulesetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists DNS forwarding rulesets within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsForwardingRulesets_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DnsForwardingRulesetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DnsForwardingRulesetResource> GetAll(int? top = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DnsForwardingRulesetResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DnsForwardingRulesetData, DnsForwardingRulesetResource>(new DnsForwardingRulesetsGetByResourceGroupCollectionResultOfT(
-                _dnsForwardingRulesetsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                top,
-                context,
-                "DnsForwardingRulesetCollection.GetAll"), data => new DnsForwardingRulesetResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsForwardingRulesetResource(Client, DnsForwardingRulesetData.DeserializeDnsForwardingRulesetData(e)), _dnsForwardingRulesetClientDiagnostics, Pipeline, "DnsForwardingRulesetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsForwardingRulesets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string rulesetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
 
-            using DiagnosticScope scope = _dnsForwardingRulesetsClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.Exists");
+            using var scope = _dnsForwardingRulesetClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rulesetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DnsForwardingRulesetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DnsForwardingRulesetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dnsForwardingRulesetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,50 +353,36 @@ namespace Azure.ResourceManager.DnsResolver
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsForwardingRulesets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         public virtual Response<bool> Exists(string rulesetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
 
-            using DiagnosticScope scope = _dnsForwardingRulesetsClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.Exists");
+            using var scope = _dnsForwardingRulesetClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rulesetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DnsForwardingRulesetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DnsForwardingRulesetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dnsForwardingRulesetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -459,54 +396,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsForwardingRulesets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         public virtual async Task<NullableResponse<DnsForwardingRulesetResource>> GetIfExistsAsync(string rulesetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
 
-            using DiagnosticScope scope = _dnsForwardingRulesetsClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.GetIfExists");
+            using var scope = _dnsForwardingRulesetClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rulesetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DnsForwardingRulesetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DnsForwardingRulesetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dnsForwardingRulesetRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DnsForwardingRulesetResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -520,54 +441,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsForwardingRulesets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsForwardingRulesets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
         public virtual NullableResponse<DnsForwardingRulesetResource> GetIfExists(string rulesetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
 
-            using DiagnosticScope scope = _dnsForwardingRulesetsClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.GetIfExists");
+            using var scope = _dnsForwardingRulesetClientDiagnostics.CreateScope("DnsForwardingRulesetCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsForwardingRulesetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, rulesetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DnsForwardingRulesetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DnsForwardingRulesetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DnsForwardingRulesetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dnsForwardingRulesetRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, rulesetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DnsForwardingRulesetResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DnsForwardingRulesetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -587,7 +492,6 @@ namespace Azure.ResourceManager.DnsResolver
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DnsForwardingRulesetResource> IAsyncEnumerable<DnsForwardingRulesetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

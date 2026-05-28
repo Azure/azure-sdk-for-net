@@ -52,11 +52,6 @@ namespace Azure.Storage.Sas
         public string KeyVersion => KeyProperties?.Version;
 
         /// <summary>
-        /// Gets the delegated user tenant id.
-        /// </summary>
-        public string KeyDelegatedUserTenantId => KeyProperties?.DelegatedUserTenantId;
-
-        /// <summary>
         /// Gets empty shared access signature query parameters.
         /// </summary>
         public static new QueueSasQueryParameters Empty => new QueueSasQueryParameters();
@@ -87,8 +82,7 @@ namespace Azure.Storage.Sas
             DateTimeOffset keyExpiry = default,
             string keyService = default,
             string keyVersion = default,
-            string delegatedUserObjectId = default,
-            string keyDelegatedUserTenantId = default)
+            string delegatedUserObjectId = default)
             : base(
                 version,
                 services,
@@ -120,8 +114,7 @@ namespace Azure.Storage.Sas
                 StartsOn = keyStart,
                 ExpiresOn = keyExpiry,
                 Service = keyService,
-                Version = keyVersion,
-                DelegatedUserTenantId = keyDelegatedUserTenantId
+                Version = keyVersion
             };
         }
 

@@ -5,20 +5,18 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Parameters.Basic.Models;
 
-namespace Parameters.Basic._ExplicitBody
+namespace Parameters.Basic
 {
     public partial class ExplicitBody
     {
         protected ExplicitBody() => throw null;
-
-        internal ExplicitBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

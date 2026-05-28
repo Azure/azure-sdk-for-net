@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Microsoft.TypeSpec.Generator.Customizations
+namespace Azure.Messaging.EventGrid.Namespaces
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct))]
     internal partial class CodeGenTypeAttribute : Attribute

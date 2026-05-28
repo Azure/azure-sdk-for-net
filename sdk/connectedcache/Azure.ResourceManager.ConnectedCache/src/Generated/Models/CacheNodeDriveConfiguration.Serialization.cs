@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ConnectedCache;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
-    /// <summary> Drive configuration for cache node. </summary>
-    public partial class CacheNodeDriveConfiguration : IJsonModel<CacheNodeDriveConfiguration>
+    public partial class CacheNodeDriveConfiguration : IUtf8JsonSerializable, IJsonModel<CacheNodeDriveConfiguration>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CacheNodeDriveConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CacheNodeDriveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCacheNodeDriveConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CacheNodeDriveConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CacheNodeDriveConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CacheNodeDriveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CacheNodeDriveConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CacheNodeDriveConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CacheNodeDriveConfiguration IPersistableModel<CacheNodeDriveConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CacheNodeDriveConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CacheNodeDriveConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CacheNodeDriveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CacheNodeDriveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CacheNodeDriveConfiguration)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(PhysicalPath))
             {
                 writer.WritePropertyName("physicalPath"u8);
@@ -94,15 +54,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("nginxMapping"u8);
                 writer.WriteStringValue(NginxMapping);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,27 +71,22 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CacheNodeDriveConfiguration IJsonModel<CacheNodeDriveConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CacheNodeDriveConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CacheNodeDriveConfiguration IJsonModel<CacheNodeDriveConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CacheNodeDriveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CacheNodeDriveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CacheNodeDriveConfiguration)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCacheNodeDriveConfiguration(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CacheNodeDriveConfiguration DeserializeCacheNodeDriveConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static CacheNodeDriveConfiguration DeserializeCacheNodeDriveConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,43 +95,76 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             int? sizeInGb = default;
             int? cacheNumber = default;
             string nginxMapping = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("physicalPath"u8))
+                if (property.NameEquals("physicalPath"u8))
                 {
-                    physicalPath = prop.Value.GetString();
+                    physicalPath = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sizeInGb"u8))
+                if (property.NameEquals("sizeInGb"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sizeInGb = prop.Value.GetInt32();
+                    sizeInGb = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("cacheNumber"u8))
+                if (property.NameEquals("cacheNumber"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cacheNumber = prop.Value.GetInt32();
+                    cacheNumber = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("nginxMapping"u8))
+                if (property.NameEquals("nginxMapping"u8))
                 {
-                    nginxMapping = prop.Value.GetString();
+                    nginxMapping = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new CacheNodeDriveConfiguration(physicalPath, sizeInGb, cacheNumber, nginxMapping, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CacheNodeDriveConfiguration(physicalPath, sizeInGb, cacheNumber, nginxMapping, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CacheNodeDriveConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CacheNodeDriveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CacheNodeDriveConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CacheNodeDriveConfiguration IPersistableModel<CacheNodeDriveConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CacheNodeDriveConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCacheNodeDriveConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CacheNodeDriveConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CacheNodeDriveConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

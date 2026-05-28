@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             Response<GuestConfigurationHcrpAssignmentResource> getGuestAssignmentResponse = await guestConfigurationHcrpAssignmentCollection.GetAsync(GuestConfigurationManagementUtilities.DefaultAssignmentName);
             GuestConfigurationHcrpAssignmentResource guestAssignmentResourceRetrieved = getGuestAssignmentResponse.Value;
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
+            Assert.AreEqual(gcAssignmentData.Location, guestAssignmentResourceRetrieved.Data.Location);
 
             // Update guest configuration assignment
             string updatedContext = "Azure Policy Updated";
@@ -73,7 +74,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
 
             // Get reports
-            await foreach (GuestConfigurationAssignmentReport gcReport in guestAssignmentResourceRetrieved.GetReportsAsync())
+            AsyncPageable<GuestConfigurationAssignmentReport> gcAssignmentReportsRetrieved = guestAssignmentResourceRetrieved.GetReportsAsync();
+            await foreach (GuestConfigurationAssignmentReport gcReport in gcAssignmentReportsRetrieved)
             {
                 Assert.NotNull(gcReport);
             }
@@ -87,9 +89,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             GuestConfigurationHcrpAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentHcrpCollectionAsync(resourceGroupName, vmName);
 
             // get guest configuration assignments
-            // Note: GetAllAsync is no longer available on GuestConfigurationHcrpAssignmentCollection after migration.
-            // Use GetAsync with machineName and assignmentName to get individual assignments.
-            Assert.Pass("GetAllAsync is no longer available on this collection");
+            var gcAssignments = guestConfigurationAssignmentCollection.GetAllAsync();
+            await foreach (GuestConfigurationHcrpAssignmentResource gcAssignment in gcAssignments)
+            {
+                Assert.NotNull(gcAssignment);
+            }
         }
     }
 }

@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -20,13 +20,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample4_ConversationsAuthoring_GetProject
-            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
-
             string projectName = "{projectName}";
-            Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject(projectName);
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+            Response<ConversationAuthoringProjectMetadata> response = projectClient.GetProject();
             ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
             Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
@@ -47,13 +47,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
-            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
-
             string projectName = "{projectName}";
-            Response<ConversationAuthoringProjectMetadata> response = await projectClient.GetProjectAsync(projectName);
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
+            Response<ConversationAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();
             ConversationAuthoringProjectMetadata projectMetadata = response.Value;
 
             Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");

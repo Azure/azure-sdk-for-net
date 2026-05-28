@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Marketplace
 {
@@ -25,80 +24,75 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class MarketplaceAdminApprovalRequestCollection : ArmCollection, IEnumerable<MarketplaceAdminApprovalRequestResource>, IAsyncEnumerable<MarketplaceAdminApprovalRequestResource>
     {
-        private readonly ClientDiagnostics _privateStoreClientDiagnostics;
-        private readonly PrivateStore _privateStoreRestClient;
+        private readonly ClientDiagnostics _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics;
+        private readonly PrivateStoreRestOperations _marketplaceAdminApprovalRequestPrivateStoreRestClient;
 
-        /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MarketplaceAdminApprovalRequestCollection"/> class for mocking. </summary>
         protected MarketplaceAdminApprovalRequestCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MarketplaceAdminApprovalRequestCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MarketplaceAdminApprovalRequestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MarketplaceAdminApprovalRequestResource.ResourceType, out string marketplaceAdminApprovalRequestApiVersion);
-            _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", MarketplaceAdminApprovalRequestResource.ResourceType.Namespace, Diagnostics);
-            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Endpoint, marketplaceAdminApprovalRequestApiVersion ?? "2025-01-01");
-            ValidateResourceId(id);
+            _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", MarketplaceAdminApprovalRequestResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MarketplaceAdminApprovalRequestResource.ResourceType, out string marketplaceAdminApprovalRequestPrivateStoreApiVersion);
+            _marketplaceAdminApprovalRequestPrivateStoreRestClient = new PrivateStoreRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, marketplaceAdminApprovalRequestPrivateStoreApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PrivateStoreResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PrivateStoreResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateStoreResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Update the admin action, weather the request is approved or rejected and the approved plans
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdminRequestApprovalsResources_UpdateAdminRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_UpdateAdminRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> The <see cref="MarketplaceAdminApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MarketplaceAdminApprovalRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string adminRequestApprovalId, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.CreateOrUpdate");
+            using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Guid.Parse(Id.Name), adminRequestApprovalId, MarketplaceAdminApprovalRequestData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource> operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _marketplaceAdminApprovalRequestPrivateStoreRestClient.UpdateAdminRequestApprovalAsync(Guid.Parse(Id.Name), adminRequestApprovalId, data, cancellationToken).ConfigureAwait(false);
+                var uri = _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateUpdateAdminRequestApprovalRequestUri(Guid.Parse(Id.Name), adminRequestApprovalId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -112,47 +106,44 @@ namespace Azure.ResourceManager.Marketplace
         /// Update the admin action, weather the request is approved or rejected and the approved plans
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdminRequestApprovalsResources_UpdateAdminRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_UpdateAdminRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> The <see cref="MarketplaceAdminApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MarketplaceAdminApprovalRequestResource> CreateOrUpdate(WaitUntil waitUntil, string adminRequestApprovalId, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.CreateOrUpdate");
+            using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateUpdateAdminRequestApprovalRequest(Guid.Parse(Id.Name), adminRequestApprovalId, MarketplaceAdminApprovalRequestData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource> operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _marketplaceAdminApprovalRequestPrivateStoreRestClient.UpdateAdminRequestApproval(Guid.Parse(Id.Name), adminRequestApprovalId, data, cancellationToken);
+                var uri = _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateUpdateAdminRequestApprovalRequestUri(Guid.Parse(Id.Name), adminRequestApprovalId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceAdminApprovalRequestResource>(Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -166,44 +157,40 @@ namespace Azure.ResourceManager.Marketplace
         /// Get open approval requests
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdminRequestApprovalsResources_GetAdminRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MarketplaceAdminApprovalRequestResource>> GetAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
-            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Get");
+            using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
+                var response = await _marketplaceAdminApprovalRequestPrivateStoreRestClient.GetAdminRequestApprovalAsync(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,44 +204,40 @@ namespace Azure.ResourceManager.Marketplace
         /// Get open approval requests
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdminRequestApprovalsResources_GetAdminRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MarketplaceAdminApprovalRequestResource> Get(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
-            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Get");
+            using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MarketplaceAdminApprovalRequestData> response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
+                var response = _marketplaceAdminApprovalRequestPrivateStoreRestClient.GetAdminRequestApproval(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,44 +251,49 @@ namespace Azure.ResourceManager.Marketplace
         /// Get list of admin request approvals
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdminRequestApprovalsResources_AdminRequestApprovalsList. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_AdminRequestApprovalsList</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MarketplaceAdminApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MarketplaceAdminApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MarketplaceAdminApprovalRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MarketplaceAdminApprovalRequestData, MarketplaceAdminApprovalRequestResource>(new PrivateStoreAdminRequestApprovalsListAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceAdminApprovalRequestCollection.GetAll"), data => new MarketplaceAdminApprovalRequestResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateAdminRequestApprovalsListRequest(Guid.Parse(Id.Name));
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MarketplaceAdminApprovalRequestResource(Client, MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(e)), _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceAdminApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get list of admin request approvals
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdminRequestApprovalsResources_AdminRequestApprovalsList. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_AdminRequestApprovalsList</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,63 +301,46 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> A collection of <see cref="MarketplaceAdminApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MarketplaceAdminApprovalRequestResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MarketplaceAdminApprovalRequestData, MarketplaceAdminApprovalRequestResource>(new PrivateStoreAdminRequestApprovalsListCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceAdminApprovalRequestCollection.GetAll"), data => new MarketplaceAdminApprovalRequestResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateAdminRequestApprovalsListRequest(Guid.Parse(Id.Name));
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MarketplaceAdminApprovalRequestResource(Client, MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(e)), _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceAdminApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdminRequestApprovalsResources_GetAdminRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
-            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Exists");
+            using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MarketplaceAdminApprovalRequestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MarketplaceAdminApprovalRequestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _marketplaceAdminApprovalRequestPrivateStoreRestClient.GetAdminRequestApprovalAsync(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -383,52 +354,38 @@ namespace Azure.ResourceManager.Marketplace
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdminRequestApprovalsResources_GetAdminRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
-            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Exists");
+            using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MarketplaceAdminApprovalRequestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MarketplaceAdminApprovalRequestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _marketplaceAdminApprovalRequestPrivateStoreRestClient.GetAdminRequestApproval(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,56 +399,40 @@ namespace Azure.ResourceManager.Marketplace
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdminRequestApprovalsResources_GetAdminRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MarketplaceAdminApprovalRequestResource>> GetIfExistsAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
-            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.GetIfExists");
+            using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MarketplaceAdminApprovalRequestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MarketplaceAdminApprovalRequestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _marketplaceAdminApprovalRequestPrivateStoreRestClient.GetAdminRequestApprovalAsync(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MarketplaceAdminApprovalRequestResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -505,56 +446,40 @@ namespace Azure.ResourceManager.Marketplace
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/adminRequestApprovals/{adminRequestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AdminRequestApprovalsResources_GetAdminRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MarketplaceAdminApprovalRequestResource> GetIfExists(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
-            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.GetIfExists");
+            using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetAdminRequestApprovalRequest(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MarketplaceAdminApprovalRequestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MarketplaceAdminApprovalRequestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MarketplaceAdminApprovalRequestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _marketplaceAdminApprovalRequestPrivateStoreRestClient.GetAdminRequestApproval(Guid.Parse(Id.Name), adminRequestApprovalId, publisherId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MarketplaceAdminApprovalRequestResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MarketplaceAdminApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -574,7 +499,6 @@ namespace Azure.ResourceManager.Marketplace
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MarketplaceAdminApprovalRequestResource> IAsyncEnumerable<MarketplaceAdminApprovalRequestResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

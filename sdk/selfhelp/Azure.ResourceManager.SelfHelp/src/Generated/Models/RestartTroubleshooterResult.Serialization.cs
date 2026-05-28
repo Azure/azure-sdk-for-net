@@ -9,63 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.SelfHelp;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Troubleshooter restart response. </summary>
-    public partial class RestartTroubleshooterResult : IJsonModel<RestartTroubleshooterResult>
+    public partial class RestartTroubleshooterResult : IUtf8JsonSerializable, IJsonModel<RestartTroubleshooterResult>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestartTroubleshooterResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RestartTroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRestartTroubleshooterResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RestartTroubleshooterResult)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestartTroubleshooterResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RestartTroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RestartTroubleshooterResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RestartTroubleshooterResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RestartTroubleshooterResult IPersistableModel<RestartTroubleshooterResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RestartTroubleshooterResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RestartTroubleshooterResult"/> from. </param>
-        internal static RestartTroubleshooterResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRestartTroubleshooterResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestartTroubleshooterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -77,25 +28,26 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestartTroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RestartTroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestartTroubleshooterResult)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(TroubleshooterResourceName))
             {
                 writer.WritePropertyName("troubleshooterResourceName"u8);
                 writer.WriteStringValue(TroubleshooterResourceName);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -104,46 +56,74 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RestartTroubleshooterResult IJsonModel<RestartTroubleshooterResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RestartTroubleshooterResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RestartTroubleshooterResult IJsonModel<RestartTroubleshooterResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RestartTroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RestartTroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestartTroubleshooterResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRestartTroubleshooterResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RestartTroubleshooterResult DeserializeRestartTroubleshooterResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static RestartTroubleshooterResult DeserializeRestartTroubleshooterResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string troubleshooterResourceName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("troubleshooterResourceName"u8))
+                if (property.NameEquals("troubleshooterResourceName"u8))
                 {
-                    troubleshooterResourceName = prop.Value.GetString();
+                    troubleshooterResourceName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new RestartTroubleshooterResult(troubleshooterResourceName, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RestartTroubleshooterResult(troubleshooterResourceName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RestartTroubleshooterResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestartTroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RestartTroubleshooterResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RestartTroubleshooterResult IPersistableModel<RestartTroubleshooterResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestartTroubleshooterResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeRestartTroubleshooterResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RestartTroubleshooterResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RestartTroubleshooterResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

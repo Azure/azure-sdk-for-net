@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ApplicationServerConfiguration))]
     [ModelReaderWriterBuildable(typeof(ApplicationServerFullResourceNames))]
@@ -41,21 +40,19 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [ModelReaderWriterBuildable(typeof(HighAvailabilityConfiguration))]
     [ModelReaderWriterBuildable(typeof(HighAvailabilitySoftwareConfiguration))]
     [ModelReaderWriterBuildable(typeof(InfrastructureConfiguration))]
-    [ModelReaderWriterBuildable(typeof(LoadBalancerDetails))]
     [ModelReaderWriterBuildable(typeof(LoadBalancerResourceNames))]
     [ModelReaderWriterBuildable(typeof(ManagedRGConfiguration))]
     [ModelReaderWriterBuildable(typeof(MessageServerProperties))]
     [ModelReaderWriterBuildable(typeof(MountFileShareConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkConfiguration))]
     [ModelReaderWriterBuildable(typeof(NetworkInterfaceResourceNames))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
+    [ModelReaderWriterBuildable(typeof(Models.OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(OSSapConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstanceData))]
     [ModelReaderWriterBuildable(typeof(SAPApplicationServerInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstancePatch))]
     [ModelReaderWriterBuildable(typeof(SapApplicationServerInstanceResource))]
-    [ModelReaderWriterBuildable(typeof(SapApplicationServerProperties))]
     [ModelReaderWriterBuildable(typeof(SapAvailabilityZoneDetailsContent))]
     [ModelReaderWriterBuildable(typeof(SapAvailabilityZoneDetailsResult))]
     [ModelReaderWriterBuildable(typeof(SapAvailabilityZonePair))]
@@ -63,13 +60,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [ModelReaderWriterBuildable(typeof(SAPCentralServerInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(SapCentralServerInstancePatch))]
     [ModelReaderWriterBuildable(typeof(SapCentralServerInstanceResource))]
-    [ModelReaderWriterBuildable(typeof(SapCentralServerProperties))]
     [ModelReaderWriterBuildable(typeof(SapConfiguration))]
     [ModelReaderWriterBuildable(typeof(SapDatabaseInstanceData))]
     [ModelReaderWriterBuildable(typeof(SAPDatabaseInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(SapDatabaseInstancePatch))]
     [ModelReaderWriterBuildable(typeof(SapDatabaseInstanceResource))]
-    [ModelReaderWriterBuildable(typeof(SapDatabaseProperties))]
     [ModelReaderWriterBuildable(typeof(SapDiskConfiguration))]
     [ModelReaderWriterBuildable(typeof(SapDiskConfigurationsContent))]
     [ModelReaderWriterBuildable(typeof(SapDiskConfigurationsResult))]
@@ -95,7 +90,6 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
     [ModelReaderWriterBuildable(typeof(SapVirtualInstanceIdentity))]
     [ModelReaderWriterBuildable(typeof(SAPVirtualInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(SapVirtualInstancePatch))]
-    [ModelReaderWriterBuildable(typeof(SapVirtualInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(SapVirtualInstanceResource))]
     [ModelReaderWriterBuildable(typeof(SapVirtualMachineConfiguration))]
     [ModelReaderWriterBuildable(typeof(SapWindowsConfiguration))]

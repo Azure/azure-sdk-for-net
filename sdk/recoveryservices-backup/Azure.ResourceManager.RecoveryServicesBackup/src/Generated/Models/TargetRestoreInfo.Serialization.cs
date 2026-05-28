@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Details about target workload during restore operation. </summary>
-    public partial class TargetRestoreInfo : IJsonModel<TargetRestoreInfo>
+    public partial class TargetRestoreInfo : IUtf8JsonSerializable, IJsonModel<TargetRestoreInfo>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TargetRestoreInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTargetRestoreInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetRestoreInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TargetRestoreInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TargetRestoreInfo IPersistableModel<TargetRestoreInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TargetRestoreInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TargetRestoreInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(OverwriteOption))
             {
                 writer.WritePropertyName("overwriteOption"u8);
@@ -94,15 +54,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("targetDirectoryForFileRestore"u8);
                 writer.WriteStringValue(TargetDirectoryForFileRestore);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,27 +71,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TargetRestoreInfo IJsonModel<TargetRestoreInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TargetRestoreInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TargetRestoreInfo IJsonModel<TargetRestoreInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTargetRestoreInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TargetRestoreInfo DeserializeTargetRestoreInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static TargetRestoreInfo DeserializeTargetRestoreInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,39 +95,72 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string containerId = default;
             string databaseName = default;
             string targetDirectoryForFileRestore = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("overwriteOption"u8))
+                if (property.NameEquals("overwriteOption"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    overwriteOption = new RestoreOverwriteOption(prop.Value.GetString());
+                    overwriteOption = new RestoreOverwriteOption(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("containerId"u8))
+                if (property.NameEquals("containerId"u8))
                 {
-                    containerId = prop.Value.GetString();
+                    containerId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("databaseName"u8))
+                if (property.NameEquals("databaseName"u8))
                 {
-                    databaseName = prop.Value.GetString();
+                    databaseName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetDirectoryForFileRestore"u8))
+                if (property.NameEquals("targetDirectoryForFileRestore"u8))
                 {
-                    targetDirectoryForFileRestore = prop.Value.GetString();
+                    targetDirectoryForFileRestore = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new TargetRestoreInfo(overwriteOption, containerId, databaseName, targetDirectoryForFileRestore, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TargetRestoreInfo(overwriteOption, containerId, databaseName, targetDirectoryForFileRestore, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TargetRestoreInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TargetRestoreInfo IPersistableModel<TargetRestoreInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeTargetRestoreInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TargetRestoreInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

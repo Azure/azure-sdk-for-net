@@ -3,10 +3,12 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {

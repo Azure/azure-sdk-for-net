@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace Azure.ResourceManager.WeightsAndBiases
@@ -22,10 +21,6 @@ namespace Azure.ResourceManager.WeightsAndBiases
         {
             MaxDepth = 256
         };
-        /// <summary> The wire v3 options for model serialization. </summary>
-        internal static readonly ModelReaderWriterOptions WireV3Options = new ModelReaderWriterOptions("W|v3");
-        /// <summary> The JSON v3 options for model serialization. </summary>
-        internal static readonly ModelReaderWriterOptions JsonV3Options = new ModelReaderWriterOptions("J|v3");
 
         public static object GetObject(this JsonElement element)
         {
@@ -258,15 +253,6 @@ namespace Azure.ResourceManager.WeightsAndBiases
         public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
         {
             writer.WriteObjectValue<object>(value, options);
-        }
-
-        public static BinaryData GetUtf8Bytes(this JsonElement element)
-        {
-#if NET9_0_OR_GREATER
-            return new global::System.BinaryData(global::System.Runtime.InteropServices.JsonMarshal.GetRawUtf8Value(element).ToArray());
-#else
-            return BinaryData.FromString(element.GetRawText());
-#endif
         }
     }
 }

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Purview
 {
-    /// <summary></summary>
-    internal partial class PurviewAccountOperationSource : IOperationSource<PurviewAccountResource>
+    internal class PurviewAccountOperationSource : IOperationSource<PurviewAccountResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal PurviewAccountOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         PurviewAccountResource IOperationSource<PurviewAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            PurviewAccountData data = PurviewAccountData.DeserializePurviewAccountData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<PurviewAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
             return new PurviewAccountResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<PurviewAccountResource> IOperationSource<PurviewAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            PurviewAccountData data = PurviewAccountData.DeserializePurviewAccountData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PurviewAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<PurviewAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
+            return await Task.FromResult(new PurviewAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

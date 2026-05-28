@@ -6,53 +6,47 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
+    /// <summary> Stack frame information. </summary>
     internal partial class StackFrame
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="StackFrame"/>. </summary>
-        /// <param name="level"> Level in the stack. </param>
+        /// <param name="level"></param>
         /// <param name="method"> Method name. </param>
-        public StackFrame(int level, string @method)
+        /// <exception cref="ArgumentNullException"> <paramref name="method"/> is null. </exception>
+        public StackFrame(int level, string method)
         {
+            Argument.AssertNotNull(method, nameof(method));
+
             Level = level;
-            Method = @method;
+            Method = method;
         }
 
         /// <summary> Initializes a new instance of <see cref="StackFrame"/>. </summary>
-        /// <param name="level"> Level in the stack. </param>
+        /// <param name="level"></param>
         /// <param name="method"> Method name. </param>
         /// <param name="assembly"> Name of the assembly (dll, jar, etc.) containing this function. </param>
         /// <param name="fileName"> File name or URL of the method implementation. </param>
         /// <param name="line"> Line number of the code implementation. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StackFrame(int level, string @method, string @assembly, string fileName, int? line, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StackFrame(int level, string method, string assembly, string fileName, int? line)
         {
             Level = level;
-            Method = @method;
-            Assembly = @assembly;
+            Method = method;
+            Assembly = assembly;
             FileName = fileName;
             Line = line;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Level in the stack. </summary>
-        public int Level { get; set; }
-
+        /// <summary> Gets the level. </summary>
+        public int Level { get; }
         /// <summary> Method name. </summary>
-        public string Method { get; set; }
-
+        public string Method { get; }
         /// <summary> Name of the assembly (dll, jar, etc.) containing this function. </summary>
         public string Assembly { get; set; }
-
         /// <summary> File name or URL of the method implementation. </summary>
         public string FileName { get; set; }
-
         /// <summary> Line number of the code implementation. </summary>
         public int? Line { get; set; }
     }

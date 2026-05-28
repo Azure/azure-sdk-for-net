@@ -15,8 +15,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class ResourceProtectionIntent : BackupGenericProtectionIntent
     {
         /// <summary> Initializes a new instance of <see cref="ResourceProtectionIntent"/>. </summary>
-        public ResourceProtectionIntent() : base(ProtectionIntentItemType.AzureResourceItem)
+        public ResourceProtectionIntent()
         {
+            ProtectionIntentItemType = ProtectionIntentItemType.AzureResourceItem;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProtectionIntent"/>. </summary>
@@ -26,11 +27,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="friendlyName"> Friendly name of the VM represented by this backup item. </param>
-        internal ResourceProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState, additionalBinaryDataProperties)
+        internal ResourceProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, string friendlyName) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState, serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
+            ProtectionIntentItemType = protectionIntentItemType;
         }
 
         /// <summary> Friendly name of the VM represented by this backup item. </summary>

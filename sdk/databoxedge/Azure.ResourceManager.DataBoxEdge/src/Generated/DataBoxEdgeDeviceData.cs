@@ -7,243 +7,174 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> The Data Box Edge/Gateway device. </summary>
+    /// <summary>
+    /// A class representing the DataBoxEdgeDevice data model.
+    /// The Data Box Edge/Gateway device.
+    /// </summary>
     public partial class DataBoxEdgeDeviceData : TrackedResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="location"> The location. </param>
         public DataBoxEdgeDeviceData(AzureLocation location) : base(location)
         {
+            ConfiguredRoleTypes = new ChangeTrackingList<DataBoxEdgeRoleType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The properties of the Data Box Edge/Gateway device. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU type. </param>
-        /// <param name="eTag"> The etag for the devices. </param>
-        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <param name="etag"> The etag for the devices. </param>
+        /// <param name="identity"> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="kind"> The kind of the device. </param>
-        internal DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeDeviceProperties properties, DataBoxEdgeSku sku, ETag? eTag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="dataBoxEdgeDeviceStatus"> The status of the Data Box Edge/Gateway device. </param>
+        /// <param name="serialNumber"> The Serial Number of Data Box Edge/Gateway device. </param>
+        /// <param name="description"> The Description of the Data Box Edge/Gateway device. </param>
+        /// <param name="modelDescription"> The description of the Data Box Edge/Gateway device model. </param>
+        /// <param name="deviceType"> The type of the Data Box Edge/Gateway device. </param>
+        /// <param name="friendlyName"> The Data Box Edge/Gateway device name. </param>
+        /// <param name="culture"> The Data Box Edge/Gateway device culture. </param>
+        /// <param name="deviceModel"> The Data Box Edge/Gateway device model. </param>
+        /// <param name="deviceSoftwareVersion"> The Data Box Edge/Gateway device software version. </param>
+        /// <param name="deviceLocalCapacity"> The Data Box Edge/Gateway device local capacity in MB. </param>
+        /// <param name="timeZone"> The Data Box Edge/Gateway device timezone. </param>
+        /// <param name="deviceHcsVersion"> The device software version number of the device (eg: 1.2.18105.6). </param>
+        /// <param name="configuredRoleTypes"> Type of compute roles configured. </param>
+        /// <param name="nodeCount"> The number of nodes in the cluster. </param>
+        /// <param name="resourceMoveDetails"> The details of the move operation on this resource. </param>
+        /// <param name="edgeProfile"> The details of Edge Profile for this resource. </param>
+        /// <param name="dataResidency"> The details of data-residency related properties for this resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IReadOnlyList<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfile edgeProfile, DataResidency dataResidency, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
             Sku = sku;
-            ETag = eTag;
+            ETag = etag;
             Identity = identity;
             Kind = kind;
+            DataBoxEdgeDeviceStatus = dataBoxEdgeDeviceStatus;
+            SerialNumber = serialNumber;
+            Description = description;
+            ModelDescription = modelDescription;
+            DeviceType = deviceType;
+            FriendlyName = friendlyName;
+            Culture = culture;
+            DeviceModel = deviceModel;
+            DeviceSoftwareVersion = deviceSoftwareVersion;
+            DeviceLocalCapacity = deviceLocalCapacity;
+            TimeZone = timeZone;
+            DeviceHcsVersion = deviceHcsVersion;
+            ConfiguredRoleTypes = configuredRoleTypes;
+            NodeCount = nodeCount;
+            ResourceMoveDetails = resourceMoveDetails;
+            EdgeProfile = edgeProfile;
+            DataResidency = dataResidency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The properties of the Data Box Edge/Gateway device. </summary>
-        internal DataBoxEdgeDeviceProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceData"/> for deserialization. </summary>
+        internal DataBoxEdgeDeviceData()
+        {
+        }
 
         /// <summary> The SKU type. </summary>
         public DataBoxEdgeSku Sku { get; set; }
-
         /// <summary> The etag for the devices. </summary>
         public ETag? ETag { get; set; }
-
-        /// <summary> Msi identity of the resource. </summary>
+        /// <summary> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-
         /// <summary> The kind of the device. </summary>
         public DataBoxEdgeDeviceKind? Kind { get; }
-
-        /// <summary> DataBoxEdge Device Properties. </summary>
-        public SystemData DataBoxEdgeSystemData
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DataBoxEdgeSystemData;
-            }
-        }
-
         /// <summary> The status of the Data Box Edge/Gateway device. </summary>
-        public DataBoxEdgeDeviceStatus? DataBoxEdgeDeviceStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DataBoxEdgeDeviceStatus;
-            }
-        }
-
+        public DataBoxEdgeDeviceStatus? DataBoxEdgeDeviceStatus { get; }
         /// <summary> The Serial Number of Data Box Edge/Gateway device. </summary>
-        public string SerialNumber
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SerialNumber;
-            }
-        }
-
+        public string SerialNumber { get; }
         /// <summary> The Description of the Data Box Edge/Gateway device. </summary>
-        public string Description
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Description;
-            }
-        }
-
+        public string Description { get; }
         /// <summary> The description of the Data Box Edge/Gateway device model. </summary>
-        public string ModelDescription
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ModelDescription;
-            }
-        }
-
+        public string ModelDescription { get; }
         /// <summary> The type of the Data Box Edge/Gateway device. </summary>
-        public DataBoxEdgeDeviceType? DeviceType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeviceType;
-            }
-        }
-
+        public DataBoxEdgeDeviceType? DeviceType { get; }
         /// <summary> The Data Box Edge/Gateway device name. </summary>
-        public string FriendlyName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.FriendlyName;
-            }
-        }
-
+        public string FriendlyName { get; }
         /// <summary> The Data Box Edge/Gateway device culture. </summary>
-        public string Culture
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Culture;
-            }
-        }
-
+        public string Culture { get; }
         /// <summary> The Data Box Edge/Gateway device model. </summary>
-        public string DeviceModel
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeviceModel;
-            }
-        }
-
+        public string DeviceModel { get; }
         /// <summary> The Data Box Edge/Gateway device software version. </summary>
-        public string DeviceSoftwareVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeviceSoftwareVersion;
-            }
-        }
-
+        public string DeviceSoftwareVersion { get; }
         /// <summary> The Data Box Edge/Gateway device local capacity in MB. </summary>
-        public long? DeviceLocalCapacity
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeviceLocalCapacity;
-            }
-        }
-
+        public long? DeviceLocalCapacity { get; }
         /// <summary> The Data Box Edge/Gateway device timezone. </summary>
-        public string TimeZone
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TimeZone;
-            }
-        }
-
+        public string TimeZone { get; }
         /// <summary> The device software version number of the device (eg: 1.2.18105.6). </summary>
-        public string DeviceHcsVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeviceHcsVersion;
-            }
-        }
-
+        public string DeviceHcsVersion { get; }
         /// <summary> Type of compute roles configured. </summary>
-        public IReadOnlyList<DataBoxEdgeRoleType> ConfiguredRoleTypes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DataBoxEdgeDeviceProperties();
-                }
-                return Properties.ConfiguredRoleTypes;
-            }
-        }
-
+        public IReadOnlyList<DataBoxEdgeRoleType> ConfiguredRoleTypes { get; }
         /// <summary> The number of nodes in the cluster. </summary>
-        public int? NodeCount
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NodeCount;
-            }
-        }
-
+        public int? NodeCount { get; }
         /// <summary> The details of the move operation on this resource. </summary>
-        public DataBoxEdgeResourceMoveDetails ResourceMoveDetails
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ResourceMoveDetails;
-            }
-        }
-
-        /// <summary> Kubernetes Workload Profile. </summary>
-        public string KubernetesWorkloadProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.KubernetesWorkloadProfile;
-            }
-        }
-
+        public DataBoxEdgeResourceMoveDetails ResourceMoveDetails { get; }
+        /// <summary> The details of Edge Profile for this resource. </summary>
+        internal EdgeProfile EdgeProfile { get; }
         /// <summary> Edge Profile Subscription. </summary>
         public EdgeProfileSubscription EdgeSubscription
         {
-            get
-            {
-                return Properties is null ? default : Properties.EdgeSubscription;
-            }
+            get => EdgeProfile?.Subscription;
         }
 
+        /// <summary> The details of data-residency related properties for this resource. </summary>
+        internal DataResidency DataResidency { get; set; }
         /// <summary> DataResidencyType enum. </summary>
         public DataBoxEdgeDataResidencyType? ResidencyType
         {
-            get
-            {
-                return Properties is null ? default : Properties.ResidencyType;
-            }
+            get => DataResidency is null ? default : DataResidency.ResidencyType;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new DataBoxEdgeDeviceProperties();
-                }
-                Properties.ResidencyType = value;
+                if (DataResidency is null)
+                    DataResidency = new DataResidency();
+                DataResidency.ResidencyType = value;
             }
         }
     }

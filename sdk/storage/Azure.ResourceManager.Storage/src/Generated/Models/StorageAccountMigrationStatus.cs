@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,67 +14,47 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageAccountMigrationStatus : IEquatable<StorageAccountMigrationStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountMigrationStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageAccountMigrationStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string SubmittedForConversionValue = "SubmittedForConversion";
         private const string InProgressValue = "InProgress";
         private const string CompleteValue = "Complete";
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="StorageAccountMigrationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageAccountMigrationStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static StorageAccountMigrationStatus Invalid { get; } = new StorageAccountMigrationStatus(InvalidValue);
-
-        /// <summary> Gets the SubmittedForConversion. </summary>
+        /// <summary> SubmittedForConversion. </summary>
         public static StorageAccountMigrationStatus SubmittedForConversion { get; } = new StorageAccountMigrationStatus(SubmittedForConversionValue);
-
-        /// <summary> Gets the InProgress. </summary>
+        /// <summary> InProgress. </summary>
         public static StorageAccountMigrationStatus InProgress { get; } = new StorageAccountMigrationStatus(InProgressValue);
-
-        /// <summary> Gets the Complete. </summary>
+        /// <summary> Complete. </summary>
         public static StorageAccountMigrationStatus Complete { get; } = new StorageAccountMigrationStatus(CompleteValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static StorageAccountMigrationStatus Failed { get; } = new StorageAccountMigrationStatus(FailedValue);
-
         /// <summary> Determines if two <see cref="StorageAccountMigrationStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAccountMigrationStatus left, StorageAccountMigrationStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageAccountMigrationStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAccountMigrationStatus left, StorageAccountMigrationStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageAccountMigrationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountMigrationStatus"/>. </summary>
         public static implicit operator StorageAccountMigrationStatus(string value) => new StorageAccountMigrationStatus(value);
 
-        /// <summary> Converts a string to a <see cref="StorageAccountMigrationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountMigrationStatus?(string value) => value == null ? null : new StorageAccountMigrationStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountMigrationStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StorageAccountMigrationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct CostManagementAlertOperator : IEquatable<CostManagementAlertOperator>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertOperator"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CostManagementAlertOperator(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NoneValue = "None";
         private const string EqualToValue = "EqualTo";
         private const string GreaterThanValue = "GreaterThan";
@@ -22,64 +29,35 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string LessThanValue = "LessThan";
         private const string LessThanOrEqualToValue = "LessThanOrEqualTo";
 
-        /// <summary> Initializes a new instance of <see cref="CostManagementAlertOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CostManagementAlertOperator(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static CostManagementAlertOperator None { get; } = new CostManagementAlertOperator(NoneValue);
-
-        /// <summary> Gets the EqualTo. </summary>
+        /// <summary> EqualTo. </summary>
         public static CostManagementAlertOperator EqualTo { get; } = new CostManagementAlertOperator(EqualToValue);
-
-        /// <summary> Gets the GreaterThan. </summary>
+        /// <summary> GreaterThan. </summary>
         public static CostManagementAlertOperator GreaterThan { get; } = new CostManagementAlertOperator(GreaterThanValue);
-
-        /// <summary> Gets the GreaterThanOrEqualTo. </summary>
+        /// <summary> GreaterThanOrEqualTo. </summary>
         public static CostManagementAlertOperator GreaterThanOrEqualTo { get; } = new CostManagementAlertOperator(GreaterThanOrEqualToValue);
-
-        /// <summary> Gets the LessThan. </summary>
+        /// <summary> LessThan. </summary>
         public static CostManagementAlertOperator LessThan { get; } = new CostManagementAlertOperator(LessThanValue);
-
-        /// <summary> Gets the LessThanOrEqualTo. </summary>
+        /// <summary> LessThanOrEqualTo. </summary>
         public static CostManagementAlertOperator LessThanOrEqualTo { get; } = new CostManagementAlertOperator(LessThanOrEqualToValue);
-
         /// <summary> Determines if two <see cref="CostManagementAlertOperator"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CostManagementAlertOperator left, CostManagementAlertOperator right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CostManagementAlertOperator"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CostManagementAlertOperator left, CostManagementAlertOperator right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CostManagementAlertOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CostManagementAlertOperator"/>. </summary>
         public static implicit operator CostManagementAlertOperator(string value) => new CostManagementAlertOperator(value);
 
-        /// <summary> Converts a string to a <see cref="CostManagementAlertOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CostManagementAlertOperator?(string value) => value == null ? null : new CostManagementAlertOperator(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CostManagementAlertOperator other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CostManagementAlertOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OnlineExperimentation
@@ -22,53 +21,55 @@ namespace Azure.ResourceManager.OnlineExperimentation
     /// <summary>
     /// A class representing a collection of <see cref="OnlineExperimentationWorkspaceResource"/> and their operations.
     /// Each <see cref="OnlineExperimentationWorkspaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="OnlineExperimentationWorkspaceCollection"/> instance call the GetOnlineExperimentationWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="OnlineExperimentationWorkspaceCollection"/> instance call the GetOnlineExperimentationWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class OnlineExperimentationWorkspaceCollection : ArmCollection, IEnumerable<OnlineExperimentationWorkspaceResource>, IAsyncEnumerable<OnlineExperimentationWorkspaceResource>
     {
-        private readonly ClientDiagnostics _onlineExperimentationWorkspacesClientDiagnostics;
-        private readonly OnlineExperimentationWorkspaces _onlineExperimentationWorkspacesRestClient;
+        private readonly ClientDiagnostics _onlineExperimentationWorkspaceClientDiagnostics;
+        private readonly OnlineExperimentationWorkspacesRestOperations _onlineExperimentationWorkspaceRestClient;
 
-        /// <summary> Initializes a new instance of OnlineExperimentationWorkspaceCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OnlineExperimentationWorkspaceCollection"/> class for mocking. </summary>
         protected OnlineExperimentationWorkspaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OnlineExperimentationWorkspaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OnlineExperimentationWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _onlineExperimentationWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", OnlineExperimentationWorkspaceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(OnlineExperimentationWorkspaceResource.ResourceType, out string onlineExperimentationWorkspaceApiVersion);
-            _onlineExperimentationWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", OnlineExperimentationWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _onlineExperimentationWorkspacesRestClient = new OnlineExperimentationWorkspaces(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, Endpoint, onlineExperimentationWorkspaceApiVersion ?? "2025-08-01-preview");
-            ValidateResourceId(id);
+            _onlineExperimentationWorkspaceRestClient = new OnlineExperimentationWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, onlineExperimentationWorkspaceApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create an online experimentation workspace, or update an existing workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OnlineExperimentationWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, OnlineExperimentationWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.CreateOrUpdate");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, OnlineExperimentationWorkspaceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
-                    new OnlineExperimentationWorkspaceOperationSource(Client),
-                    _onlineExperimentationWorkspacesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _onlineExperimentationWorkspaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspaceOperationSource(Client), _onlineExperimentationWorkspaceClientDiagnostics, Pipeline, _onlineExperimentationWorkspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// Create an online experimentation workspace, or update an existing workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OnlineExperimentationWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, OnlineExperimentationWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.CreateOrUpdate");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, OnlineExperimentationWorkspaceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
-                    new OnlineExperimentationWorkspaceOperationSource(Client),
-                    _onlineExperimentationWorkspacesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _onlineExperimentationWorkspaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
+                var operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspaceOperationSource(Client), _onlineExperimentationWorkspaceClientDiagnostics, Pipeline, _onlineExperimentationWorkspaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// Gets an online experimentation workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<OnlineExperimentationWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.Get");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
+                var response = await _onlineExperimentationWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// Gets an online experimentation workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<OnlineExperimentationWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.Get");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
+                var response = _onlineExperimentationWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// Gets all online experimentation workspaces in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OnlineExperimentationWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OnlineExperimentationWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OnlineExperimentationWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_onlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OnlineExperimentationWorkspaceCollection.GetAll"), data => new OnlineExperimentationWorkspaceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _onlineExperimentationWorkspaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _onlineExperimentationWorkspaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OnlineExperimentationWorkspaceResource(Client, OnlineExperimentationWorkspaceData.DeserializeOnlineExperimentationWorkspaceData(e)), _onlineExperimentationWorkspaceClientDiagnostics, Pipeline, "OnlineExperimentationWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all online experimentation workspaces in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// <returns> A collection of <see cref="OnlineExperimentationWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OnlineExperimentationWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspacesGetByResourceGroupCollectionResultOfT(_onlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OnlineExperimentationWorkspaceCollection.GetAll"), data => new OnlineExperimentationWorkspaceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _onlineExperimentationWorkspaceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _onlineExperimentationWorkspaceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OnlineExperimentationWorkspaceResource(Client, OnlineExperimentationWorkspaceData.DeserializeOnlineExperimentationWorkspaceData(e)), _onlineExperimentationWorkspaceClientDiagnostics, Pipeline, "OnlineExperimentationWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.Exists");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<OnlineExperimentationWorkspaceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OnlineExperimentationWorkspaceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _onlineExperimentationWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.Exists");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<OnlineExperimentationWorkspaceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OnlineExperimentationWorkspaceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _onlineExperimentationWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<OnlineExperimentationWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.GetIfExists");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<OnlineExperimentationWorkspaceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OnlineExperimentationWorkspaceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _onlineExperimentationWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<OnlineExperimentationWorkspaceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual NullableResponse<OnlineExperimentationWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.GetIfExists");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<OnlineExperimentationWorkspaceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OnlineExperimentationWorkspaceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _onlineExperimentationWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<OnlineExperimentationWorkspaceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.OnlineExperimentation
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OnlineExperimentationWorkspaceResource> IAsyncEnumerable<OnlineExperimentationWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

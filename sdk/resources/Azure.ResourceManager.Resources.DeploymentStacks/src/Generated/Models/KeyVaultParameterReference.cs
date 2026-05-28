@@ -8,26 +8,54 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.DeploymentStacks;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
+namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Azure Key Vault parameter reference. </summary>
     public partial class KeyVaultParameterReference
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultParameterReference"/>. </summary>
-        /// <param name="keyVaultId"> Azure Key Vault resourceId. </param>
+        /// <param name="keyVault"> Azure Key Vault reference. </param>
         /// <param name="secretName"> Azure Key Vault secret name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultId"/> or <paramref name="secretName"/> is null. </exception>
-        public KeyVaultParameterReference(ResourceIdentifier keyVaultId, string secretName)
+        /// <exception cref="ArgumentNullException"> <paramref name="keyVault"/> or <paramref name="secretName"/> is null. </exception>
+        public KeyVaultParameterReference(WritableSubResource keyVault, string secretName)
         {
-            Argument.AssertNotNull(keyVaultId, nameof(keyVaultId));
+            Argument.AssertNotNull(keyVault, nameof(keyVault));
             Argument.AssertNotNull(secretName, nameof(secretName));
 
-            KeyVault = new KeyVaultReference(keyVaultId);
+            KeyVault = keyVault;
             SecretName = secretName;
         }
 
@@ -35,35 +63,40 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         /// <param name="keyVault"> Azure Key Vault reference. </param>
         /// <param name="secretName"> Azure Key Vault secret name. </param>
         /// <param name="secretVersion"> Azure Key Vault secret version. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultParameterReference(KeyVaultReference keyVault, string secretName, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultParameterReference(WritableSubResource keyVault, string secretName, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVault = keyVault;
             SecretName = secretName;
             SecretVersion = secretVersion;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultParameterReference"/> for deserialization. </summary>
+        internal KeyVaultParameterReference()
+        {
         }
 
         /// <summary> Azure Key Vault reference. </summary>
-        internal KeyVaultReference KeyVault { get; set; }
-
-        /// <summary> Azure Key Vault secret name. </summary>
-        public string SecretName { get; set; }
-
-        /// <summary> Azure Key Vault secret version. </summary>
-        public string SecretVersion { get; set; }
-
-        /// <summary> Azure Key Vault resourceId. </summary>
+        internal WritableSubResource KeyVault { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        [WirePath("keyVault.id")]
         public ResourceIdentifier KeyVaultId
         {
-            get
-            {
-                return KeyVault is null ? default : KeyVault.Id;
-            }
+            get => KeyVault is null ? default : KeyVault.Id;
             set
             {
-                KeyVault = new KeyVaultReference(value);
+                if (KeyVault is null)
+                    KeyVault = new WritableSubResource();
+                KeyVault.Id = value;
             }
         }
+
+        /// <summary> Azure Key Vault secret name. </summary>
+        [WirePath("secretName")]
+        public string SecretName { get; set; }
+        /// <summary> Azure Key Vault secret version. </summary>
+        [WirePath("secretVersion")]
+        public string SecretVersion { get; set; }
     }
 }

@@ -7,67 +7,48 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary></summary>
+    /// <summary> The PrincipalType. </summary>
     public readonly partial struct VirtualEnclavePrincipalType : IEquatable<VirtualEnclavePrincipalType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclavePrincipalType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VirtualEnclavePrincipalType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UserValue = "User";
         private const string GroupValue = "Group";
         private const string ServicePrincipalValue = "ServicePrincipal";
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclavePrincipalType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VirtualEnclavePrincipalType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the User. </summary>
+        /// <summary> User. </summary>
         public static VirtualEnclavePrincipalType User { get; } = new VirtualEnclavePrincipalType(UserValue);
-
-        /// <summary> Gets the Group. </summary>
+        /// <summary> Group. </summary>
         public static VirtualEnclavePrincipalType Group { get; } = new VirtualEnclavePrincipalType(GroupValue);
-
-        /// <summary> Gets the ServicePrincipal. </summary>
+        /// <summary> ServicePrincipal. </summary>
         public static VirtualEnclavePrincipalType ServicePrincipal { get; } = new VirtualEnclavePrincipalType(ServicePrincipalValue);
-
         /// <summary> Determines if two <see cref="VirtualEnclavePrincipalType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualEnclavePrincipalType left, VirtualEnclavePrincipalType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="VirtualEnclavePrincipalType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualEnclavePrincipalType left, VirtualEnclavePrincipalType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="VirtualEnclavePrincipalType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualEnclavePrincipalType"/>. </summary>
         public static implicit operator VirtualEnclavePrincipalType(string value) => new VirtualEnclavePrincipalType(value);
 
-        /// <summary> Converts a string to a <see cref="VirtualEnclavePrincipalType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclavePrincipalType?(string value) => value == null ? null : new VirtualEnclavePrincipalType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualEnclavePrincipalType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(VirtualEnclavePrincipalType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a ContainerServiceTrustedAccessRoleBinding along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource"/> using the GetContainerServiceTrustedAccessRoleBindings method.
+    /// A Class representing a ContainerServiceTrustedAccessRoleBinding along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerServiceTrustedAccessRoleBindingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerServiceManagedClusterResource"/> using the GetContainerServiceTrustedAccessRoleBinding method.
     /// </summary>
     public partial class ContainerServiceTrustedAccessRoleBindingResource : ArmResource
     {
-        private readonly ClientDiagnostics _trustedAccessRoleBindingsClientDiagnostics;
-        private readonly TrustedAccessRoleBindings _trustedAccessRoleBindingsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="trustedAccessRoleBindingName"> The trustedAccessRoleBindingName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string trustedAccessRoleBindingName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics;
+        private readonly TrustedAccessRoleBindingsRestOperations _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient;
         private readonly ContainerServiceTrustedAccessRoleBindingData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/trustedAccessRoleBindings";
 
-        /// <summary> Initializes a new instance of ContainerServiceTrustedAccessRoleBindingResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> class for mocking. </summary>
         protected ContainerServiceTrustedAccessRoleBindingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerServiceTrustedAccessRoleBindingResource(ArmClient client, ContainerServiceTrustedAccessRoleBindingData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.ContainerService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerServiceTrustedAccessRoleBindingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string containerServiceTrustedAccessRoleBindingApiVersion);
-            _trustedAccessRoleBindingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _trustedAccessRoleBindingsRestClient = new TrustedAccessRoleBindings(_trustedAccessRoleBindingsClientDiagnostics, Pipeline, Endpoint, containerServiceTrustedAccessRoleBindingApiVersion ?? "2026-01-02-preview");
-            ValidateResourceId(id);
+            _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsApiVersion);
+            _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient = new TrustedAccessRoleBindingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ContainerServiceTrustedAccessRoleBindingData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        /// <param name="trustedAccessRoleBindingName"> The trustedAccessRoleBindingName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string trustedAccessRoleBindingName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a trusted access role binding.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TrustedAccessRoleBindings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TrustedAccessRoleBindings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerServiceTrustedAccessRoleBindingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerServiceTrustedAccessRoleBindingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _trustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Get");
+            using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerServiceTrustedAccessRoleBindingData> response = Response.FromValue(ContainerServiceTrustedAccessRoleBindingData.FromResponse(result), result);
+                var response = await _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +132,33 @@ namespace Azure.ResourceManager.ContainerService
         /// Get a trusted access role binding.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TrustedAccessRoleBindings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TrustedAccessRoleBindings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerServiceTrustedAccessRoleBindingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerServiceTrustedAccessRoleBindingResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _trustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Get");
+            using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerServiceTrustedAccessRoleBindingData> response = Response.FromValue(ContainerServiceTrustedAccessRoleBindingData.FromResponse(result), result);
+                var response = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceTrustedAccessRoleBindingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +172,20 @@ namespace Azure.ResourceManager.ContainerService
         /// Delete a trusted access role binding.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TrustedAccessRoleBindings_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>TrustedAccessRoleBindings_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerServiceTrustedAccessRoleBindingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,21 +193,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _trustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Delete");
+            using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_trustedAccessRoleBindingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceArmOperation(_containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics, Pipeline, _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +214,20 @@ namespace Azure.ResourceManager.ContainerService
         /// Delete a trusted access role binding.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TrustedAccessRoleBindings_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>TrustedAccessRoleBindings_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerServiceTrustedAccessRoleBindingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,21 +235,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _trustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Delete");
+            using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceArmOperation operation = new ContainerServiceArmOperation(_trustedAccessRoleBindingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ContainerServiceArmOperation(_containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics, Pipeline, _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -286,23 +253,23 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Update a ContainerServiceTrustedAccessRoleBinding.
+        /// Create or update a trusted access role binding
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TrustedAccessRoleBindings_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>TrustedAccessRoleBindings_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerServiceTrustedAccessRoleBindingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,27 +281,14 @@ namespace Azure.ResourceManager.ContainerService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _trustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Update");
+            using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceTrustedAccessRoleBindingData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource> operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(
-                    new ContainerServiceTrustedAccessRoleBindingOperationSource(Client),
-                    _trustedAccessRoleBindingsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(new ContainerServiceTrustedAccessRoleBindingOperationSource(Client), _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics, Pipeline, _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -345,23 +299,23 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Update a ContainerServiceTrustedAccessRoleBinding.
+        /// Create or update a trusted access role binding
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TrustedAccessRoleBindings_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>TrustedAccessRoleBindings_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerServiceTrustedAccessRoleBindingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceTrustedAccessRoleBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,27 +327,14 @@ namespace Azure.ResourceManager.ContainerService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _trustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Update");
+            using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceTrustedAccessRoleBindingData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource> operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(
-                    new ContainerServiceTrustedAccessRoleBindingOperationSource(Client),
-                    _trustedAccessRoleBindingsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(new ContainerServiceTrustedAccessRoleBindingOperationSource(Client), _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics, Pipeline, _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

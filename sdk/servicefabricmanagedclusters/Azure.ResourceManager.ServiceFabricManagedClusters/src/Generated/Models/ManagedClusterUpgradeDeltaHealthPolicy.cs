@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes the delta health policies for the cluster upgrade. </summary>
     public partial class ManagedClusterUpgradeDeltaHealthPolicy
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeDeltaHealthPolicy"/>. </summary>
         /// <param name="maxPercentDeltaUnhealthyNodes">
@@ -44,13 +73,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits. System services are not included in this.
         /// NOTE: This value will overwrite the value specified in properties.UpgradeDescription.HealthPolicy.MaxPercentUnhealthyApplications
         /// </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes, int? maxPercentUpgradeDomainDeltaUnhealthyNodes, int? maxPercentDeltaUnhealthyApplications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes, int? maxPercentUpgradeDomainDeltaUnhealthyNodes, int? maxPercentDeltaUnhealthyApplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxPercentDeltaUnhealthyNodes = maxPercentDeltaUnhealthyNodes;
             MaxPercentUpgradeDomainDeltaUnhealthyNodes = maxPercentUpgradeDomainDeltaUnhealthyNodes;
             MaxPercentDeltaUnhealthyApplications = maxPercentDeltaUnhealthyApplications;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeDeltaHealthPolicy"/> for deserialization. </summary>
+        internal ManagedClusterUpgradeDeltaHealthPolicy()
+        {
         }
 
         /// <summary>
@@ -59,14 +93,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits.
         /// </summary>
         public int MaxPercentDeltaUnhealthyNodes { get; set; }
-
         /// <summary>
         /// The maximum allowed percentage of upgrade domain nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the upgrade domain nodes at the beginning of upgrade and the state of the upgrade domain nodes at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion for all completed upgrade domains to make sure the state of the upgrade domains is within tolerated limits.
         /// </summary>
         public int? MaxPercentUpgradeDomainDeltaUnhealthyNodes { get; set; }
-
         /// <summary>
         /// The maximum allowed percentage of applications health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the applications at the beginning of upgrade and the state of the applications at the time of the health evaluation.

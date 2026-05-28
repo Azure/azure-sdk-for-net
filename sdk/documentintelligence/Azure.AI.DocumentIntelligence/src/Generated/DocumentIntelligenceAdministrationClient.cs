@@ -6,22 +6,32 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    /// <summary> The DocumentIntelligenceAdministrationClient. </summary>
+    // Data plane generated client.
+    /// <summary> The DocumentIntelligenceAdministration service client. </summary>
     public partial class DocumentIntelligenceAdministrationClient
     {
-        private readonly Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+        private readonly AzureKeyCredential _keyCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient for mocking. </summary>
         protected DocumentIntelligenceAdministrationClient()
@@ -29,105 +39,55 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentIntelligenceClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal DocumentIntelligenceAdministrationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentIntelligenceClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new DocumentIntelligenceClientOptions();
 
-            _endpoint = endpoint;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            }
-            _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="endpoint"> The Document Intelligence service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options)
         {
-        }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new DocumentIntelligenceClientOptions();
 
-        /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceAdministrationClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of DocumentIntelligenceAdministrationClient from a <see cref="DocumentIntelligenceAdministrationClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for DocumentIntelligenceAdministrationClient. </param>
-        [Experimental("SCME0002")]
-        public DocumentIntelligenceAdministrationClient(DocumentIntelligenceAdministrationClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
-        {
-        }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary>
-        /// [Protocol Method] Generates authorization to copy a document model to this location with
-        /// specified modelId and optional description.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response AuthorizeModelCopy(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeModelCopy");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAuthorizeModelCopyRequest(content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
         /// <summary>
@@ -135,25 +95,33 @@ namespace Azure.AI.DocumentIntelligence
         /// specified modelId and optional description.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AuthorizeModelCopyAsync(AuthorizeModelCopyOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeModelCopyAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AuthorizeModelCopyAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeModelCopy");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeModelCopy");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateAuthorizeModelCopyRequest(content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -163,61 +131,37 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary>
-        /// [Protocol Method] Gets detailed document model information.
+        /// [Protocol Method] Generates authorization to copy a document model to this location with
+        /// specified modelId and optional description.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AuthorizeModelCopy(AuthorizeModelCopyOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetModel(string modelId, RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeModelCopy(RequestContent,RequestContext)']/*" />
+        public virtual Response AuthorizeModelCopy(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetModel");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeModelCopy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
-                using HttpMessage message = CreateGetModelRequest(modelId, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets detailed document model information.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetModelAsync(string modelId, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetModel");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
-                using HttpMessage message = CreateGetModelRequest(modelId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateAuthorizeModelCopyRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -228,104 +172,142 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Gets detailed document model information. </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DocumentModelDetails> GetModel(string modelId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
-            Response result = GetModel(modelId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DocumentModelDetails)result, result);
-        }
-
-        /// <summary> Gets detailed document model information. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModelAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DocumentModelDetails>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            Response result = await GetModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DocumentModelDetails)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetModelAsync(modelId, context).ConfigureAwait(false);
+            return Response.FromValue(DocumentModelDetails.FromResponse(response), response);
+        }
+
+        /// <summary> Gets detailed document model information. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModel(string,CancellationToken)']/*" />
+        public virtual Response<DocumentModelDetails> GetModel(string modelId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetModel(modelId, context);
+            return Response.FromValue(DocumentModelDetails.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] List all document models
+        /// [Protocol Method] Gets detailed document model information.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModelAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetModels(RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModelAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetModelAsync(string modelId, RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetModels");
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetModelRequest(modelId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] List all document models
+        /// [Protocol Method] Gets detailed document model information.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModel(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetModelsAsync(RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModel(string,RequestContext)']/*" />
+        public virtual Response GetModel(string modelId, RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetModels");
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetModel");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetModelRequest(modelId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> List all document models. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DocumentModelDetails> GetModels(CancellationToken cancellationToken = default)
-        {
-            return new DocumentIntelligenceAdministrationClientGetModelsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetModels");
-        }
-
-        /// <summary> List all document models. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DocumentModelDetails> GetModelsAsync(CancellationToken cancellationToken = default)
-        {
-            return new DocumentIntelligenceAdministrationClientGetModelsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetModels");
-        }
-
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes document model.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteModel(string modelId, RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='DeleteModelAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteModelAsync(string modelId, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteModel");
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
                 using HttpMessage message = CreateDeleteModelRequest(modelId, context);
-                return Pipeline.ProcessMessage(message, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -334,110 +316,34 @@ namespace Azure.AI.DocumentIntelligence
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes document model.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteModelAsync(string modelId, RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='DeleteModel(string,RequestContext)']/*" />
+        public virtual Response DeleteModel(string modelId, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteModel");
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
                 using HttpMessage message = CreateDeleteModelRequest(modelId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Deletes document model. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
-            return DeleteModel(modelId, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Deletes document model. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
-            return await DeleteModelAsync(modelId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return information about the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetResourceDetails(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetResourceDetails");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetResourceDetailsRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return information about the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetResourceDetailsAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetResourceDetails");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetResourceDetailsRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -447,47 +353,52 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Return information about the current resource. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DocumentIntelligenceResourceDetails> GetResourceDetails(CancellationToken cancellationToken = default)
-        {
-            Response result = GetResourceDetails(cancellationToken.ToRequestContext());
-            return Response.FromValue((DocumentIntelligenceResourceDetails)result, result);
-        }
-
-        /// <summary> Return information about the current resource. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetResourceDetailsAsync(CancellationToken)']/*" />
         public virtual async Task<Response<DocumentIntelligenceResourceDetails>> GetResourceDetailsAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetResourceDetailsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DocumentIntelligenceResourceDetails)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetResourceDetailsAsync(context).ConfigureAwait(false);
+            return Response.FromValue(DocumentIntelligenceResourceDetails.FromResponse(response), response);
+        }
+
+        /// <summary> Return information about the current resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetResourceDetails(CancellationToken)']/*" />
+        public virtual Response<DocumentIntelligenceResourceDetails> GetResourceDetails(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetResourceDetails(context);
+            return Response.FromValue(DocumentIntelligenceResourceDetails.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Gets operation info.
+        /// [Protocol Method] Return information about the current resource.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetResourceDetailsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetOperation(string operationId, RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetResourceDetailsAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetResourceDetailsAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetResourceDetails");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateGetResourceDetailsRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -497,29 +408,32 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary>
-        /// [Protocol Method] Gets operation info.
+        /// [Protocol Method] Return information about the current resource.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetResourceDetails(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetResourceDetails(RequestContext)']/*" />
+        public virtual Response GetResourceDetails(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetResourceDetails");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetResourceDetailsRequest(context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -530,104 +444,106 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Gets operation info. </summary>
         /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DocumentIntelligenceOperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            Response result = GetOperation(operationId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DocumentIntelligenceOperationDetails)result, result);
-        }
-
-        /// <summary> Gets operation info. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DocumentIntelligenceOperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            Response result = await GetOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DocumentIntelligenceOperationDetails)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetOperationAsync(operationId, context).ConfigureAwait(false);
+            return Response.FromValue(DocumentIntelligenceOperationDetails.FromResponse(response), response);
+        }
+
+        /// <summary> Gets operation info. </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperation(string,CancellationToken)']/*" />
+        public virtual Response<DocumentIntelligenceOperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetOperation(operationId, context);
+            return Response.FromValue(DocumentIntelligenceOperationDetails.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Lists all operations.
+        /// [Protocol Method] Gets operation info.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetOperationAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetOperations(RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetOperations");
-        }
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-        /// <summary>
-        /// [Protocol Method] Lists all operations.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetOperationsAsync(RequestContext context)
-        {
-            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetOperations");
-        }
-
-        /// <summary> Lists all operations. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DocumentIntelligenceOperationDetails> GetOperations(CancellationToken cancellationToken = default)
-        {
-            return new DocumentIntelligenceAdministrationClientGetOperationsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetOperations");
-        }
-
-        /// <summary> Lists all operations. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<DocumentIntelligenceOperationDetails> GetOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            return new DocumentIntelligenceAdministrationClientGetOperationsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetOperations");
-        }
-
-        /// <summary>
-        /// [Protocol Method] Generates authorization to copy a document classifier to this location with
-        /// specified classifierId and optional description.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response AuthorizeClassifierCopy(RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeClassifierCopy");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                using HttpMessage message = CreateGetOperationRequest(operationId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-                using HttpMessage message = CreateAuthorizeClassifierCopyRequest(content, context);
-                return Pipeline.ProcessMessage(message, context);
+        /// <summary>
+        /// [Protocol Method] Gets operation info.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetOperation(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> Operation ID. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperation(string,RequestContext)']/*" />
+        public virtual Response GetOperation(string operationId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOperationRequest(operationId, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -641,25 +557,33 @@ namespace Azure.AI.DocumentIntelligence
         /// specified classifierId and optional description.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeClassifierCopyAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AuthorizeClassifierCopyAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeClassifierCopy");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeClassifierCopy");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateAuthorizeClassifierCopyRequest(content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -669,61 +593,37 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary>
-        /// [Protocol Method] Gets detailed document classifier information.
+        /// [Protocol Method] Generates authorization to copy a document classifier to this location with
+        /// specified classifierId and optional description.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AuthorizeClassifierCopy(AuthorizeClassifierCopyOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetClassifier(string classifierId, RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeClassifierCopy(RequestContent,RequestContext)']/*" />
+        public virtual Response AuthorizeClassifierCopy(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetClassifier");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.AuthorizeClassifierCopy");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
-
-                using HttpMessage message = CreateGetClassifierRequest(classifierId, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets detailed document classifier information.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetClassifierAsync(string classifierId, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetClassifier");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
-
-                using HttpMessage message = CreateGetClassifierRequest(classifierId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateAuthorizeClassifierCopyRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -734,168 +634,752 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Gets detailed document classifier information. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DocumentClassifierDetails> GetClassifier(string classifierId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
-
-            Response result = GetClassifier(classifierId, cancellationToken.ToRequestContext());
-            return Response.FromValue((DocumentClassifierDetails)result, result);
-        }
-
-        /// <summary> Gets detailed document classifier information. </summary>
-        /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifierAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DocumentClassifierDetails>> GetClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
 
-            Response result = await GetClassifierAsync(classifierId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DocumentClassifierDetails)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetClassifierAsync(classifierId, context).ConfigureAwait(false);
+            return Response.FromValue(DocumentClassifierDetails.FromResponse(response), response);
+        }
+
+        /// <summary> Gets detailed document classifier information. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifier(string,CancellationToken)']/*" />
+        public virtual Response<DocumentClassifierDetails> GetClassifier(string classifierId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetClassifier(classifierId, context);
+            return Response.FromValue(DocumentClassifierDetails.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] List all document classifiers.
+        /// [Protocol Method] Gets detailed document classifier information.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetClassifierAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetClassifiers(RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifierAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetClassifierAsync(string classifierId, RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetClassifiers");
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetClassifier");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetClassifierRequest(classifierId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// [Protocol Method] List all document classifiers.
+        /// [Protocol Method] Gets detailed document classifier information.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetClassifier(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetClassifiersAsync(RequestContext context)
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifier(string,RequestContext)']/*" />
+        public virtual Response GetClassifier(string classifierId, RequestContext context)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResult(this, context, "DocumentIntelligenceAdministrationClient.GetClassifiers");
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetClassifier");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetClassifierRequest(classifierId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes document classifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='DeleteClassifierAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteClassifierAsync(string classifierId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteClassifier");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteClassifierRequest(classifierId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Deletes document classifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='DeleteClassifier(string,RequestContext)']/*" />
+        public virtual Response DeleteClassifier(string classifierId, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteClassifier");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteClassifierRequest(classifierId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List all document models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModelsAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<DocumentModelDetails> GetModelsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentModelDetails.DeserializeDocumentModelDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
+        }
+
+        /// <summary> List all document models. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModels(CancellationToken)']/*" />
+        public virtual Pageable<DocumentModelDetails> GetModels(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentModelDetails.DeserializeDocumentModelDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List all document models
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModelsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModelsAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetModelsAsync(RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List all document models
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetModels(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModels(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetModels(RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists all operations. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationsAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<DocumentIntelligenceOperationDetails> GetOperationsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentIntelligenceOperationDetails.DeserializeDocumentIntelligenceOperationDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists all operations. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperations(CancellationToken)']/*" />
+        public virtual Pageable<DocumentIntelligenceOperationDetails> GetOperations(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentIntelligenceOperationDetails.DeserializeDocumentIntelligenceOperationDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists all operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetOperationsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationsAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetOperationsAsync(RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists all operations.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetOperations(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperations(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetOperations(RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
         }
 
         /// <summary> List all document classifiers. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<DocumentClassifierDetails> GetClassifiers(CancellationToken cancellationToken = default)
-        {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetClassifiers");
-        }
-
-        /// <summary> List all document classifiers. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifiersAsync(CancellationToken)']/*" />
         public virtual AsyncPageable<DocumentClassifierDetails> GetClassifiersAsync(CancellationToken cancellationToken = default)
         {
-            return new DocumentIntelligenceAdministrationClientGetClassifiersAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DocumentIntelligenceAdministrationClient.GetClassifiers");
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassifiersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassifiersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentClassifierDetails.DeserializeDocumentClassifierDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
+        }
+
+        /// <summary> List all document classifiers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifiers(CancellationToken)']/*" />
+        public virtual Pageable<DocumentClassifierDetails> GetClassifiers(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassifiersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassifiersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentClassifierDetails.DeserializeDocumentClassifierDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes document classifier.
+        /// [Protocol Method] List all document classifiers.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetClassifiersAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteClassifier(string classifierId, RequestContext context)
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifiersAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetClassifiersAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteClassifier");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
-
-                using HttpMessage message = CreateDeleteClassifierRequest(classifierId, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassifiersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassifiersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes document classifier.
+        /// [Protocol Method] List all document classifiers.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetClassifiers(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteClassifierAsync(string classifierId, RequestContext context)
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifiers(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetClassifiers(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.DeleteClassifier");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
-
-                using HttpMessage message = CreateDeleteClassifierRequest(classifierId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassifiersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassifiersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
         }
 
-        /// <summary> Deletes document classifier. </summary>
-        /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteClassifier(string classifierId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateBuildDocumentModelRequest(RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
-
-            return DeleteClassifier(classifierId, cancellationToken.ToRequestContext());
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels:build", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
         }
 
-        /// <summary> Deletes document classifier. </summary>
-        /// <param name="classifierId"> Unique document classifier name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateComposeModelRequest(RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels:compose", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
 
-            return await DeleteClassifierAsync(classifierId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        internal HttpMessage CreateAuthorizeModelCopyRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels:authorizeCopy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCopyModelToRequest(string modelId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":copyTo", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetModelRequest(string modelId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetModelsRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteModelRequest(string modelId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateGetResourceDetailsRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/info", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/operations/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetOperationsRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/operations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateBuildClassifierRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers:build", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAuthorizeClassifierCopyRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers:authorizeCopy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCopyClassifierToRequest(string classifierId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath(":copyTo", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetClassifierRequest(string classifierId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetClassifiersRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteClassifierRequest(string classifierId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateGetModelsNextPageRequest(string nextLink, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetOperationsNextPageRequest(string nextLink, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetClassifiersNextPageRequest(string nextLink, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
+        }
+
+        private static ResponseClassifier _responseClassifier202;
+        private static ResponseClassifier ResponseClassifier202 => _responseClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+
+        private DocumentModelDetails FetchDocumentModelDetailsFromDocumentModelBuildOperationDetails(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return DocumentModelDetails.DeserializeDocumentModelDetails(resultJsonElement);
+        }
+
+        private DocumentModelDetails FetchDocumentModelDetailsFromDocumentModelComposeOperationDetails(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return DocumentModelDetails.DeserializeDocumentModelDetails(resultJsonElement);
+        }
+
+        private DocumentModelDetails FetchDocumentModelDetailsFromDocumentModelCopyToOperationDetails(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return DocumentModelDetails.DeserializeDocumentModelDetails(resultJsonElement);
+        }
+
+        private DocumentClassifierDetails FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return DocumentClassifierDetails.DeserializeDocumentClassifierDetails(resultJsonElement);
+        }
+
+        private DocumentClassifierDetails FetchDocumentClassifierDetailsFromDocumentClassifierCopyToOperationDetails(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("result");
+            return DocumentClassifierDetails.DeserializeDocumentClassifierDetails(resultJsonElement);
         }
     }
 }

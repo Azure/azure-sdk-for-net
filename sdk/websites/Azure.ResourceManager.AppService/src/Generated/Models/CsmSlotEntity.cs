@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Deployment slot parameters.
-    /// Serialized Name: CsmSlotEntity
-    /// </summary>
+    /// <summary> Deployment slot parameters. </summary>
     public partial class CsmSlotEntity
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CsmSlotEntity"/>. </summary>
-        /// <param name="targetSlot">
-        /// Destination deployment slot during swap operation.
-        /// Serialized Name: CsmSlotEntity.targetSlot
-        /// </param>
-        /// <param name="preserveVnet">
-        /// &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: CsmSlotEntity.preserveVnet
-        /// </param>
+        /// <param name="targetSlot"> Destination deployment slot during swap operation. </param>
+        /// <param name="preserveVnet"> &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetSlot"/> is null. </exception>
         public CsmSlotEntity(string targetSlot, bool preserveVnet)
         {
@@ -67,14 +58,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CsmSlotEntity"/>. </summary>
-        /// <param name="targetSlot">
-        /// Destination deployment slot during swap operation.
-        /// Serialized Name: CsmSlotEntity.targetSlot
-        /// </param>
-        /// <param name="preserveVnet">
-        /// &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: CsmSlotEntity.preserveVnet
-        /// </param>
+        /// <param name="targetSlot"> Destination deployment slot during swap operation. </param>
+        /// <param name="preserveVnet"> &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CsmSlotEntity(string targetSlot, bool preserveVnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -88,16 +73,10 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// Destination deployment slot during swap operation.
-        /// Serialized Name: CsmSlotEntity.targetSlot
-        /// </summary>
+        /// <summary> Destination deployment slot during swap operation. </summary>
         [WirePath("targetSlot")]
         public string TargetSlot { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: CsmSlotEntity.preserveVnet
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("preserveVnet")]
         public bool PreserveVnet { get; }
     }

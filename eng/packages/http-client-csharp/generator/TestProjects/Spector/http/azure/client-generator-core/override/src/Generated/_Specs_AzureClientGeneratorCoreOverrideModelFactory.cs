@@ -7,7 +7,7 @@
 
 using Customization;
 
-namespace Specs.Azure.ClientGenerator.Core.Override
+namespace _Specs_.Azure.ClientGenerator.Core.Override
 {
     public static partial class _Specs_AzureClientGeneratorCoreOverrideModelFactory
     {

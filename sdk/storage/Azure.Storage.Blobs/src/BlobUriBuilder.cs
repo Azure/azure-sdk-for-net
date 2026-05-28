@@ -227,7 +227,7 @@ namespace Azure.Storage.Blobs
                 }
                 else
                 {
-                    AccountName = uri.GetAccountNameFromHost(Constants.Blob.UriSubDomain) ?? string.Empty;
+                    AccountName = uri.GetAccountNameFromDomain(Constants.Blob.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)

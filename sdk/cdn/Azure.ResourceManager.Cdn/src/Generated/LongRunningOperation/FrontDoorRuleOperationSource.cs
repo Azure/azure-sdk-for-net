@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary></summary>
-    internal partial class FrontDoorRuleOperationSource : IOperationSource<FrontDoorRuleResource>
+    internal class FrontDoorRuleOperationSource : IOperationSource<FrontDoorRuleResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal FrontDoorRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         FrontDoorRuleResource IOperationSource<FrontDoorRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            FrontDoorRuleData data = FrontDoorRuleData.DeserializeFrontDoorRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<FrontDoorRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
             return new FrontDoorRuleResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<FrontDoorRuleResource> IOperationSource<FrontDoorRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            FrontDoorRuleData data = FrontDoorRuleData.DeserializeFrontDoorRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new FrontDoorRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<FrontDoorRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            return await Task.FromResult(new FrontDoorRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

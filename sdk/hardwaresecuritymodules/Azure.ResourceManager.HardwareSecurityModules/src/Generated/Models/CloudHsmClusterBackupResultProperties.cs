@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -26,10 +25,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="startOn"> The start time of the backup/restore operation in UTC. </param>
         /// <param name="endOn"> The end time of the backup/restore operation in UTC. </param>
         /// <param name="jobId"> Identifier for the backup/restore operation. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the backup. </param>
         /// <param name="backupId"> The ID of the backup. </param>
-        internal CloudHsmClusterBackupResultProperties(BackupRestoreOperationStatus? status, string statusDetails, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, string jobId, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri azureStorageBlobContainerUri, string backupId) : base(status, statusDetails, error, startOn, endOn, jobId, additionalBinaryDataProperties)
+        internal CloudHsmClusterBackupResultProperties(BackupRestoreOperationStatus? status, string statusDetails, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, string jobId, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri azureStorageBlobContainerUri, string backupId) : base(status, statusDetails, error, startOn, endOn, jobId, serializedAdditionalRawData)
         {
             AzureStorageBlobContainerUri = azureStorageBlobContainerUri;
             BackupId = backupId;
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         /// <summary> The Azure blob storage container Uri which contains the backup. </summary>
         public Uri AzureStorageBlobContainerUri { get; }
-
         /// <summary> The ID of the backup. </summary>
         public string BackupId { get; }
     }

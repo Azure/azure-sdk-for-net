@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ProviderHub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderQuotaRule. </summary>
-    public partial class ProviderQuotaRule : IJsonModel<ProviderQuotaRule>
+    public partial class ProviderQuotaRule : IUtf8JsonSerializable, IJsonModel<ProviderQuotaRule>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderQuotaRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderQuotaRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeProviderQuotaRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProviderQuotaRule)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderQuotaRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderQuotaRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ProviderQuotaRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProviderQuotaRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderQuotaRule IPersistableModel<ProviderQuotaRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProviderQuotaRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProviderQuotaRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderQuotaRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderQuotaRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProviderQuotaRule)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(QuotaPolicy))
             {
                 writer.WritePropertyName("quotaPolicy"u8);
@@ -83,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("locationRules"u8);
                 writer.WriteStartArray();
-                foreach (ProviderLocationQuotaRule item in LocationRules)
+                foreach (var item in LocationRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -93,26 +53,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
-                foreach (string item in RequiredFeatures)
+                foreach (var item in RequiredFeatures)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +76,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderQuotaRule IJsonModel<ProviderQuotaRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderQuotaRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderQuotaRule IJsonModel<ProviderQuotaRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderQuotaRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderQuotaRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProviderQuotaRule)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeProviderQuotaRule(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProviderQuotaRule DeserializeProviderQuotaRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProviderQuotaRule DeserializeProviderQuotaRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -149,59 +99,85 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProviderQuotaPolicy? quotaPolicy = default;
             IList<ProviderLocationQuotaRule> locationRules = default;
             IList<string> requiredFeatures = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("quotaPolicy"u8))
+                if (property.NameEquals("quotaPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    quotaPolicy = new ProviderQuotaPolicy(prop.Value.GetString());
+                    quotaPolicy = new ProviderQuotaPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("locationRules"u8))
+                if (property.NameEquals("locationRules"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ProviderLocationQuotaRule> array = new List<ProviderLocationQuotaRule>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ProviderLocationQuotaRule.DeserializeProviderLocationQuotaRule(item, options));
                     }
                     locationRules = array;
                     continue;
                 }
-                if (prop.NameEquals("requiredFeatures"u8))
+                if (property.NameEquals("requiredFeatures"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     requiredFeatures = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ProviderQuotaRule(quotaPolicy, locationRules ?? new ChangeTrackingList<ProviderLocationQuotaRule>(), requiredFeatures ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProviderQuotaRule(quotaPolicy, locationRules ?? new ChangeTrackingList<ProviderLocationQuotaRule>(), requiredFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProviderQuotaRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderQuotaRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ProviderQuotaRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProviderQuotaRule IPersistableModel<ProviderQuotaRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderQuotaRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeProviderQuotaRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProviderQuotaRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProviderQuotaRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

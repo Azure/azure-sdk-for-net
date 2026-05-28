@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    [CodeGenType("SourceInput")]
+    [CodeGenModel("SourceInput")]
     public partial class TranslationSource
     {
         [CodeGenMember("TranslationStorageSource")]

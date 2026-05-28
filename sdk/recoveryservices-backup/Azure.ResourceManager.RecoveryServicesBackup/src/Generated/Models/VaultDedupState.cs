@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct VaultDedupState : IEquatable<VaultDedupState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="VaultDedupState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VaultDedupState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="VaultDedupState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VaultDedupState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static VaultDedupState Invalid { get; } = new VaultDedupState(InvalidValue);
-
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Enabled. </summary>
         public static VaultDedupState Enabled { get; } = new VaultDedupState(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static VaultDedupState Disabled { get; } = new VaultDedupState(DisabledValue);
-
         /// <summary> Determines if two <see cref="VaultDedupState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VaultDedupState left, VaultDedupState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="VaultDedupState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VaultDedupState left, VaultDedupState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="VaultDedupState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VaultDedupState"/>. </summary>
         public static implicit operator VaultDedupState(string value) => new VaultDedupState(value);
 
-        /// <summary> Converts a string to a <see cref="VaultDedupState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator VaultDedupState?(string value) => value == null ? null : new VaultDedupState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VaultDedupState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(VaultDedupState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

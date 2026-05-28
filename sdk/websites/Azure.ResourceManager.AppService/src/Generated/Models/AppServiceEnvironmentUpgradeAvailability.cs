@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Whether an upgrade is available for this App Service Environment.
-    /// Serialized Name: UpgradeAvailability
-    /// </summary>
+    /// <summary> Whether an upgrade is available for this App Service Environment. </summary>
     public readonly partial struct AppServiceEnvironmentUpgradeAvailability : IEquatable<AppServiceEnvironmentUpgradeAvailability>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.AppService.Models
         private const string NoneValue = "None";
         private const string ReadyValue = "Ready";
 
-        /// <summary>
-        /// No upgrade is currently available for this App Service Environment
-        /// Serialized Name: UpgradeAvailability.None
-        /// </summary>
+        /// <summary> No upgrade is currently available for this App Service Environment. </summary>
         public static AppServiceEnvironmentUpgradeAvailability None { get; } = new AppServiceEnvironmentUpgradeAvailability(NoneValue);
-        /// <summary>
-        /// An upgrade is ready to be manually initiated on this App Service Environment
-        /// Serialized Name: UpgradeAvailability.Ready
-        /// </summary>
+        /// <summary> An upgrade is ready to be manually initiated on this App Service Environment. </summary>
         public static AppServiceEnvironmentUpgradeAvailability Ready { get; } = new AppServiceEnvironmentUpgradeAvailability(ReadyValue);
         /// <summary> Determines if two <see cref="AppServiceEnvironmentUpgradeAvailability"/> values are the same. </summary>
         public static bool operator ==(AppServiceEnvironmentUpgradeAvailability left, AppServiceEnvironmentUpgradeAvailability right) => left.Equals(right);

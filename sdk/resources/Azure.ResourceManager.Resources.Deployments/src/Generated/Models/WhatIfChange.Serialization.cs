@@ -8,61 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Information about a single resource change predicted by What-If operation. </summary>
-    public partial class WhatIfChange : IJsonModel<WhatIfChange>
+    public partial class WhatIfChange : IUtf8JsonSerializable, IJsonModel<WhatIfChange>
     {
-        /// <summary> Initializes a new instance of <see cref="WhatIfChange"/> for deserialization. </summary>
-        internal WhatIfChange()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WhatIfChange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WhatIfChange PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWhatIfChange(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WhatIfChange)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WhatIfChange)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WhatIfChange>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WhatIfChange IPersistableModel<WhatIfChange>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WhatIfChange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WhatIfChange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +30,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WhatIfChange)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
@@ -98,9 +55,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("identifiers"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(Identifiers);
+				writer.WriteRawValue(Identifiers);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Identifiers))
+                using (JsonDocument document = JsonDocument.Parse(Identifiers, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -122,9 +79,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("before"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(Before);
+				writer.WriteRawValue(Before);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Before))
+                using (JsonDocument document = JsonDocument.Parse(Before, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -134,9 +91,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("after"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(After);
+				writer.WriteRawValue(After);
 #else
-                using (JsonDocument document = JsonDocument.Parse(After))
+                using (JsonDocument document = JsonDocument.Parse(After, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -146,21 +103,21 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteStartArray();
-                foreach (WhatIfPropertyChange item in Delta)
+                foreach (var item in Delta)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -169,27 +126,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WhatIfChange IJsonModel<WhatIfChange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WhatIfChange JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WhatIfChange IJsonModel<WhatIfChange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WhatIfChange)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWhatIfChange(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WhatIfChange DeserializeWhatIfChange(JsonElement element, ModelReaderWriterOptions options)
+        internal static WhatIfChange DeserializeWhatIfChange(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -203,79 +155,80 @@ namespace Azure.ResourceManager.Resources.Models
             string unsupportedReason = default;
             BinaryData before = default;
             BinaryData after = default;
-            IList<WhatIfPropertyChange> delta = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IReadOnlyList<WhatIfPropertyChange> delta = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("resourceId"u8))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    resourceId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deploymentId"u8))
+                if (property.NameEquals("deploymentId"u8))
                 {
-                    deploymentId = prop.Value.GetString();
+                    deploymentId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("symbolicName"u8))
+                if (property.NameEquals("symbolicName"u8))
                 {
-                    symbolicName = prop.Value.GetString();
+                    symbolicName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("identifiers"u8))
+                if (property.NameEquals("identifiers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identifiers = BinaryData.FromString(prop.Value.GetRawText());
+                    identifiers = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (prop.NameEquals("extension"u8))
+                if (property.NameEquals("extension"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extension = ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(prop.Value, options);
+                    extension = ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("changeType"u8))
+                if (property.NameEquals("changeType"u8))
                 {
-                    changeType = prop.Value.GetString().ToWhatIfChangeType();
+                    changeType = property.Value.GetString().ToWhatIfChangeType();
                     continue;
                 }
-                if (prop.NameEquals("unsupportedReason"u8))
+                if (property.NameEquals("unsupportedReason"u8))
                 {
-                    unsupportedReason = prop.Value.GetString();
+                    unsupportedReason = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("before"u8))
+                if (property.NameEquals("before"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    before = BinaryData.FromString(prop.Value.GetRawText());
+                    before = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (prop.NameEquals("after"u8))
+                if (property.NameEquals("after"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    after = BinaryData.FromString(prop.Value.GetRawText());
+                    after = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (prop.NameEquals("delta"u8))
+                if (property.NameEquals("delta"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item, options));
                     }
@@ -284,9 +237,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new WhatIfChange(
                 resourceId,
                 deploymentId,
@@ -298,7 +252,242 @@ namespace Azure.ResourceManager.Resources.Models
                 before,
                 after,
                 delta ?? new ChangeTrackingList<WhatIfPropertyChange>(),
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceId))
+                {
+                    builder.Append("  resourceId: ");
+                    if (ResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentId))
+                {
+                    builder.Append("  deploymentId: ");
+                    if (DeploymentId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SymbolicName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  symbolicName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SymbolicName))
+                {
+                    builder.Append("  symbolicName: ");
+                    if (SymbolicName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SymbolicName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SymbolicName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identifiers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identifiers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identifiers))
+                {
+                    builder.Append("  identifiers: ");
+                    builder.AppendLine($"'{Identifiers.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Extension), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  extension: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Extension))
+                {
+                    builder.Append("  extension: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Extension, options, 2, false, "  extension: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  changeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  changeType: ");
+                builder.AppendLine($"'{ChangeType.ToSerialString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnsupportedReason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  unsupportedReason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UnsupportedReason))
+                {
+                    builder.Append("  unsupportedReason: ");
+                    if (UnsupportedReason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UnsupportedReason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UnsupportedReason}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Before), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  before: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Before))
+                {
+                    builder.Append("  before: ");
+                    builder.AppendLine($"'{Before.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(After), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  after: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(After))
+                {
+                    builder.Append("  after: ");
+                    builder.AppendLine($"'{After.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Delta), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  delta: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Delta))
+                {
+                    if (Delta.Any())
+                    {
+                        builder.Append("  delta: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Delta)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  delta: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<WhatIfChange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(WhatIfChange)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WhatIfChange IPersistableModel<WhatIfChange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWhatIfChange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WhatIfChange)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WhatIfChange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -17,9 +17,9 @@ namespace BasicTypeSpec
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
         internal HttpMessage CreateSayHiRequest(string headParameter, string queryParameter, string optionalQuery, RequestContext context)
         {
@@ -231,7 +231,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetUnknownValueRequest(RequestContext context)
+        internal HttpMessage CreateGetUnknownValueRequest(string accept, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -240,7 +240,7 @@ namespace BasicTypeSpec
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "text/plain");
+            request.Headers.SetValue("Accept", accept);
             return message;
         }
 
@@ -300,14 +300,7 @@ namespace BasicTypeSpec
         internal HttpMessage CreateNextGetWithNextLinkRequest(Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -332,14 +325,7 @@ namespace BasicTypeSpec
         internal HttpMessage CreateNextGetWithStringNextLinkRequest(Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -364,48 +350,7 @@ namespace BasicTypeSpec
         internal HttpMessage CreateNextGetWithHeaderNextLinkRequest(Uri nextPage, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetWithHeaderNextLinkWithMaxPageRequest(int numElements, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/linkHeaderWithMaxPage", false);
-            uri.AppendQuery("numElements", TypeFormatters.ConvertToString(numElements), true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetWithHeaderNextLinkWithMaxPageRequest(Uri nextPage, int numElements, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            uri.UpdateQuery("numElements", TypeFormatters.ConvertToString(numElements));
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -423,24 +368,6 @@ namespace BasicTypeSpec
             {
                 uri.AppendQuery("token", token, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetWithContinuationTokenWithMaxPageRequest(int numElements, string token, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/continuationWithMaxPage", false);
-            if (token != null)
-            {
-                uri.AppendQuery("token", token, true);
-            }
-            uri.AppendQuery("numElements", TypeFormatters.ConvertToString(numElements), true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -521,63 +448,6 @@ namespace BasicTypeSpec
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", contentType);
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateCreateDataFactoryModelRequest(RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/datafactory", false);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetDataFactoryModelRequest(string id, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/datafactory/", false);
-            uri.AppendPath(id, true);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetXmlAdvancedModelRequest(RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/xmlAdvanced", false);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/xml");
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateXmlAdvancedModelRequest(RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/xmlAdvanced", false);
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Content-Type", "application/xml");
-            request.Headers.SetValue("Accept", "application/xml");
             request.Content = content;
             return message;
         }

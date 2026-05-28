@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.DesktopVirtualization;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Schema for Import Package Information properties. </summary>
-    public partial class AppAttachPackageInfoProperties : IJsonModel<AppAttachPackageInfoProperties>
+    public partial class AppAttachPackageInfoProperties : IUtf8JsonSerializable, IJsonModel<AppAttachPackageInfoProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppAttachPackageInfoProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppAttachPackageInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAppAttachPackageInfoProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AppAttachPackageInfoProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppAttachPackageInfoProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AppAttachPackageInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AppAttachPackageInfoProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppAttachPackageInfoProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AppAttachPackageInfoProperties IPersistableModel<AppAttachPackageInfoProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppAttachPackageInfoProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppAttachPackageInfoProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +30,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppAttachPackageInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppAttachPackageInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppAttachPackageInfoProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(PackageAlias))
             {
                 writer.WritePropertyName("packageAlias"u8);
@@ -101,8 +63,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                if (DisplayName != null)
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+                else
+                {
+                    writer.WriteNull("displayName");
+                }
             }
             if (Optional.IsDefined(PackageRelativePath))
             {
@@ -121,13 +90,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsCollectionDefined(PackageDependencies))
             {
-                writer.WritePropertyName("packageDependencies"u8);
-                writer.WriteStartArray();
-                foreach (MsixPackageDependencies item in PackageDependencies)
+                if (PackageDependencies != null)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WritePropertyName("packageDependencies"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PackageDependencies)
+                    {
+                        writer.WriteObjectValue(item, options);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("packageDependencies");
+                }
             }
             if (Optional.IsDefined(Version))
             {
@@ -143,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 writer.WritePropertyName("packageApplications"u8);
                 writer.WriteStartArray();
-                foreach (MsixPackageApplications item in PackageApplications)
+                foreach (var item in PackageApplications)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -151,28 +127,49 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             if (Optional.IsDefined(CertificateName))
             {
-                writer.WritePropertyName("certificateName"u8);
-                writer.WriteStringValue(CertificateName);
+                if (CertificateName != null)
+                {
+                    writer.WritePropertyName("certificateName"u8);
+                    writer.WriteStringValue(CertificateName);
+                }
+                else
+                {
+                    writer.WriteNull("certificateName");
+                }
             }
             if (Optional.IsDefined(CertificateExpireOn))
             {
-                writer.WritePropertyName("certificateExpiry"u8);
-                writer.WriteStringValue(CertificateExpireOn.Value, "O");
+                if (CertificateExpireOn != null)
+                {
+                    writer.WritePropertyName("certificateExpiry"u8);
+                    writer.WriteStringValue(CertificateExpireOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("certificateExpiry");
+                }
             }
             if (Optional.IsDefined(IsPackageTimestamped))
             {
-                writer.WritePropertyName("isPackageTimestamped"u8);
-                writer.WriteStringValue(IsPackageTimestamped.Value.ToString());
+                if (IsPackageTimestamped != null)
+                {
+                    writer.WritePropertyName("isPackageTimestamped"u8);
+                    writer.WriteStringValue(IsPackageTimestamped.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("isPackageTimestamped");
+                }
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -181,27 +178,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AppAttachPackageInfoProperties IJsonModel<AppAttachPackageInfoProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppAttachPackageInfoProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AppAttachPackageInfoProperties IJsonModel<AppAttachPackageInfoProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppAttachPackageInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppAttachPackageInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppAttachPackageInfoProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppAttachPackageInfoProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppAttachPackageInfoProperties DeserializeAppAttachPackageInfoProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppAttachPackageInfoProperties DeserializeAppAttachPackageInfoProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -217,137 +209,152 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             bool? isActive = default;
             IList<MsixPackageDependencies> packageDependencies = default;
             string version = default;
-            DateTimeOffset? lastUpdatedOn = default;
+            DateTimeOffset? lastUpdated = default;
             IList<MsixPackageApplications> packageApplications = default;
             string certificateName = default;
-            DateTimeOffset? certificateExpireOn = default;
+            DateTimeOffset? certificateExpiry = default;
             PackageTimestamped? isPackageTimestamped = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("packageAlias"u8))
+                if (property.NameEquals("packageAlias"u8))
                 {
-                    packageAlias = prop.Value.GetString();
+                    packageAlias = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("imagePath"u8))
+                if (property.NameEquals("imagePath"u8))
                 {
-                    imagePath = prop.Value.GetString();
+                    imagePath = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("packageName"u8))
+                if (property.NameEquals("packageName"u8))
                 {
-                    packageName = prop.Value.GetString();
+                    packageName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("packageFamilyName"u8))
+                if (property.NameEquals("packageFamilyName"u8))
                 {
-                    packageFamilyName = prop.Value.GetString();
+                    packageFamilyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("packageFullName"u8))
+                if (property.NameEquals("packageFullName"u8))
                 {
-                    packageFullName = prop.Value.GetString();
+                    packageFullName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("displayName"u8))
+                if (property.NameEquals("displayName"u8))
                 {
-                    displayName = prop.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        displayName = null;
+                        continue;
+                    }
+                    displayName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("packageRelativePath"u8))
+                if (property.NameEquals("packageRelativePath"u8))
                 {
-                    packageRelativePath = prop.Value.GetString();
+                    packageRelativePath = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isRegularRegistration"u8))
+                if (property.NameEquals("isRegularRegistration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isRegularRegistration = prop.Value.GetBoolean();
+                    isRegularRegistration = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isActive"u8))
+                if (property.NameEquals("isActive"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isActive = prop.Value.GetBoolean();
+                    isActive = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("packageDependencies"u8))
+                if (property.NameEquals("packageDependencies"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        packageDependencies = null;
                         continue;
                     }
                     List<MsixPackageDependencies> array = new List<MsixPackageDependencies>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(MsixPackageDependencies.DeserializeMsixPackageDependencies(item, options));
                     }
                     packageDependencies = array;
                     continue;
                 }
-                if (prop.NameEquals("version"u8))
+                if (property.NameEquals("version"u8))
                 {
-                    version = prop.Value.GetString();
+                    version = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lastUpdated"u8))
+                if (property.NameEquals("lastUpdated"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
+                    lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("packageApplications"u8))
+                if (property.NameEquals("packageApplications"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MsixPackageApplications> array = new List<MsixPackageApplications>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(MsixPackageApplications.DeserializeMsixPackageApplications(item, options));
                     }
                     packageApplications = array;
                     continue;
                 }
-                if (prop.NameEquals("certificateName"u8))
+                if (property.NameEquals("certificateName"u8))
                 {
-                    certificateName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("certificateExpiry"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        certificateName = null;
                         continue;
                     }
-                    certificateExpireOn = prop.Value.GetDateTimeOffset("O");
+                    certificateName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isPackageTimestamped"u8))
+                if (property.NameEquals("certificateExpiry"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        certificateExpiry = null;
                         continue;
                     }
-                    isPackageTimestamped = new PackageTimestamped(prop.Value.GetString());
+                    certificateExpiry = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("isPackageTimestamped"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        isPackageTimestamped = null;
+                        continue;
+                    }
+                    isPackageTimestamped = new PackageTimestamped(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppAttachPackageInfoProperties(
                 packageAlias,
                 imagePath,
@@ -360,12 +367,392 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 isActive,
                 packageDependencies ?? new ChangeTrackingList<MsixPackageDependencies>(),
                 version,
-                lastUpdatedOn,
+                lastUpdated,
                 packageApplications ?? new ChangeTrackingList<MsixPackageApplications>(),
                 certificateName,
-                certificateExpireOn,
+                certificateExpiry,
                 isPackageTimestamped,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageAlias), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  packageAlias: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PackageAlias))
+                {
+                    builder.Append("  packageAlias: ");
+                    if (PackageAlias.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PackageAlias}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PackageAlias}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImagePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imagePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImagePath))
+                {
+                    builder.Append("  imagePath: ");
+                    if (ImagePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ImagePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ImagePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  packageName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PackageName))
+                {
+                    builder.Append("  packageName: ");
+                    if (PackageName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PackageName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PackageName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageFamilyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  packageFamilyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PackageFamilyName))
+                {
+                    builder.Append("  packageFamilyName: ");
+                    if (PackageFamilyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PackageFamilyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PackageFamilyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageFullName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  packageFullName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PackageFullName))
+                {
+                    builder.Append("  packageFullName: ");
+                    if (PackageFullName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PackageFullName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PackageFullName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("  displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageRelativePath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  packageRelativePath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PackageRelativePath))
+                {
+                    builder.Append("  packageRelativePath: ");
+                    if (PackageRelativePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PackageRelativePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PackageRelativePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRegularRegistration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isRegularRegistration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRegularRegistration))
+                {
+                    builder.Append("  isRegularRegistration: ");
+                    var boolValue = IsRegularRegistration.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsActive), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isActive: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsActive))
+                {
+                    builder.Append("  isActive: ");
+                    var boolValue = IsActive.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageDependencies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  packageDependencies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PackageDependencies))
+                {
+                    if (PackageDependencies.Any())
+                    {
+                        builder.Append("  packageDependencies: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PackageDependencies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  packageDependencies: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("  version: ");
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastUpdated: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUpdatedOn))
+                {
+                    builder.Append("  lastUpdated: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageApplications), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  packageApplications: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PackageApplications))
+                {
+                    if (PackageApplications.Any())
+                    {
+                        builder.Append("  packageApplications: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PackageApplications)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  packageApplications: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificateName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertificateName))
+                {
+                    builder.Append("  certificateName: ");
+                    if (CertificateName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CertificateName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CertificateName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateExpireOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificateExpiry: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertificateExpireOn))
+                {
+                    builder.Append("  certificateExpiry: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(CertificateExpireOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPackageTimestamped), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isPackageTimestamped: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsPackageTimestamped))
+                {
+                    builder.Append("  isPackageTimestamped: ");
+                    builder.AppendLine($"'{IsPackageTimestamped.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AppAttachPackageInfoProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppAttachPackageInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppAttachPackageInfoProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppAttachPackageInfoProperties IPersistableModel<AppAttachPackageInfoProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppAttachPackageInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAppAttachPackageInfoProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppAttachPackageInfoProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppAttachPackageInfoProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

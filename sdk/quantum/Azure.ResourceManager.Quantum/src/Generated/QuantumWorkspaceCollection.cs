@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Quantum
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.Quantum
     /// </summary>
     public partial class QuantumWorkspaceCollection : ArmCollection, IEnumerable<QuantumWorkspaceResource>, IAsyncEnumerable<QuantumWorkspaceResource>
     {
-        private readonly ClientDiagnostics _workspacesClientDiagnostics;
-        private readonly Workspaces _workspacesRestClient;
+        private readonly ClientDiagnostics _quantumWorkspaceWorkspacesClientDiagnostics;
+        private readonly WorkspacesRestOperations _quantumWorkspaceWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of QuantumWorkspaceCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="QuantumWorkspaceCollection"/> class for mocking. </summary>
         protected QuantumWorkspaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuantumWorkspaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="QuantumWorkspaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal QuantumWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(QuantumWorkspaceResource.ResourceType, out string quantumWorkspaceApiVersion);
-            _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quantum", QuantumWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, quantumWorkspaceApiVersion ?? "2025-12-15-preview");
-            ValidateResourceId(id);
+            _quantumWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quantum", QuantumWorkspaceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(QuantumWorkspaceResource.ResourceType, out string quantumWorkspaceWorkspacesApiVersion);
+            _quantumWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, quantumWorkspaceWorkspacesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
-        /// Creates or updates a Workspace resource.
+        /// Creates or updates a workspace resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="data"> Workspace details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<QuantumWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, QuantumWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.CreateOrUpdate");
+            using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, QuantumWorkspaceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                QuantumArmOperation<QuantumWorkspaceResource> operation = new QuantumArmOperation<QuantumWorkspaceResource>(
-                    new QuantumWorkspaceOperationSource(Client),
-                    _workspacesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _quantumWorkspaceWorkspacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new QuantumArmOperation<QuantumWorkspaceResource>(new QuantumWorkspaceOperationSource(Client), _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, _quantumWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -114,19 +102,23 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary>
-        /// Creates or updates a Workspace resource.
+        /// Creates or updates a workspace resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="data"> Workspace details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<QuantumWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, QuantumWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.CreateOrUpdate");
+            using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, QuantumWorkspaceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                QuantumArmOperation<QuantumWorkspaceResource> operation = new QuantumArmOperation<QuantumWorkspaceResource>(
-                    new QuantumWorkspaceOperationSource(Client),
-                    _workspacesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _quantumWorkspaceWorkspacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
+                var operation = new QuantumArmOperation<QuantumWorkspaceResource>(new QuantumWorkspaceOperationSource(Client), _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, _quantumWorkspaceWorkspacesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.Quantum
         /// Returns the Workspace resource associated with the given name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<QuantumWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Get");
+            using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
+                var response = await _quantumWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.Quantum
         /// Returns the Workspace resource associated with the given name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<QuantumWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Get");
+            using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<QuantumWorkspaceData> response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
+                var response = _quantumWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.Quantum
         /// Gets the list of Workspaces within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuantumWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="QuantumWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuantumWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetByResourceGroupAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "QuantumWorkspaceCollection.GetAll"), data => new QuantumWorkspaceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _quantumWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quantumWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "QuantumWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of Workspaces within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> A collection of <see cref="QuantumWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuantumWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<QuantumWorkspaceData, QuantumWorkspaceResource>(new WorkspacesGetByResourceGroupCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "QuantumWorkspaceCollection.GetAll"), data => new QuantumWorkspaceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _quantumWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _quantumWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QuantumWorkspaceResource(Client, QuantumWorkspaceData.DeserializeQuantumWorkspaceData(e)), _quantumWorkspaceWorkspacesClientDiagnostics, Pipeline, "QuantumWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Exists");
+            using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<QuantumWorkspaceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((QuantumWorkspaceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _quantumWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.Quantum
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Exists");
+            using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<QuantumWorkspaceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((QuantumWorkspaceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _quantumWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.Quantum
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<QuantumWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.GetIfExists");
+            using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<QuantumWorkspaceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((QuantumWorkspaceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _quantumWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<QuantumWorkspaceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.Quantum
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         public virtual NullableResponse<QuantumWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.GetIfExists");
+            using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<QuantumWorkspaceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(QuantumWorkspaceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((QuantumWorkspaceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _quantumWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<QuantumWorkspaceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.Quantum
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<QuantumWorkspaceResource> IAsyncEnumerable<QuantumWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

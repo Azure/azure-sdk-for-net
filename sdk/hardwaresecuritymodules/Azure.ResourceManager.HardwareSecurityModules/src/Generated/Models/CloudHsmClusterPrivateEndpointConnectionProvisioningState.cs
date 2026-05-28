@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     public readonly partial struct CloudHsmClusterPrivateEndpointConnectionProvisioningState : IEquatable<CloudHsmClusterPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CloudHsmClusterPrivateEndpointConnectionProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string SucceededValue = "Succeeded";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private const string InternalErrorValue = "InternalError";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CloudHsmClusterPrivateEndpointConnectionProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Succeeded { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Creating { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Deleting { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(DeletingValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Failed { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(FailedValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Updating { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(UpdatingValue);
-
-        /// <summary> Gets the InternalError. </summary>
+        /// <summary> InternalError. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState InternalError { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(InternalErrorValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static CloudHsmClusterPrivateEndpointConnectionProvisioningState Canceled { get; } = new CloudHsmClusterPrivateEndpointConnectionProvisioningState(CanceledValue);
-
         /// <summary> Determines if two <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CloudHsmClusterPrivateEndpointConnectionProvisioningState left, CloudHsmClusterPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CloudHsmClusterPrivateEndpointConnectionProvisioningState left, CloudHsmClusterPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator CloudHsmClusterPrivateEndpointConnectionProvisioningState(string value) => new CloudHsmClusterPrivateEndpointConnectionProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="CloudHsmClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CloudHsmClusterPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new CloudHsmClusterPrivateEndpointConnectionProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CloudHsmClusterPrivateEndpointConnectionProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CloudHsmClusterPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

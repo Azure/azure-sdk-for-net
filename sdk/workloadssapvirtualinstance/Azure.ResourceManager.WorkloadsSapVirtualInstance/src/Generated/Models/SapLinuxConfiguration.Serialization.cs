@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.WorkloadsSapVirtualInstance;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    /// <summary> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://learn.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
-    public partial class SapLinuxConfiguration : SapOSConfiguration, IJsonModel<SapLinuxConfiguration>
+    public partial class SapLinuxConfiguration : IUtf8JsonSerializable, IJsonModel<SapLinuxConfiguration>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SapOSConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SapLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSapLinuxConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapLinuxConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapLinuxConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SapLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SapLinuxConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SapLinuxConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SapLinuxConfiguration IPersistableModel<SapLinuxConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (SapLinuxConfiguration)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SapLinuxConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapLinuxConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SapLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SapLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapLinuxConfiguration)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DisablePasswordAuthentication))
             {
@@ -92,76 +52,104 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SapLinuxConfiguration IJsonModel<SapLinuxConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SapLinuxConfiguration)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SapOSConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SapLinuxConfiguration IJsonModel<SapLinuxConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SapLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SapLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapLinuxConfiguration)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapLinuxConfiguration(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SapLinuxConfiguration DeserializeSapLinuxConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static SapLinuxConfiguration DeserializeSapLinuxConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SapOSType osType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? disablePasswordAuthentication = default;
             SapSshConfiguration ssh = default;
             SapSshKeyPair sshKeyPair = default;
-            foreach (var prop in element.EnumerateObject())
+            SapOSType osType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("osType"u8))
+                if (property.NameEquals("disablePasswordAuthentication"u8))
                 {
-                    osType = new SapOSType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("disablePasswordAuthentication"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disablePasswordAuthentication = prop.Value.GetBoolean();
+                    disablePasswordAuthentication = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("ssh"u8))
+                if (property.NameEquals("ssh"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ssh = SapSshConfiguration.DeserializeSapSshConfiguration(prop.Value, options);
+                    ssh = SapSshConfiguration.DeserializeSapSshConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("sshKeyPair"u8))
+                if (property.NameEquals("sshKeyPair"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sshKeyPair = SapSshKeyPair.DeserializeSapSshKeyPair(prop.Value, options);
+                    sshKeyPair = SapSshKeyPair.DeserializeSapSshKeyPair(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("osType"u8))
+                {
+                    osType = new SapOSType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SapLinuxConfiguration(osType, additionalBinaryDataProperties, disablePasswordAuthentication, ssh, sshKeyPair);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SapLinuxConfiguration(osType, serializedAdditionalRawData, disablePasswordAuthentication, ssh, sshKeyPair);
         }
+
+        BinaryData IPersistableModel<SapLinuxConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SapLinuxConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SapLinuxConfiguration IPersistableModel<SapLinuxConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSapLinuxConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapLinuxConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapLinuxConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

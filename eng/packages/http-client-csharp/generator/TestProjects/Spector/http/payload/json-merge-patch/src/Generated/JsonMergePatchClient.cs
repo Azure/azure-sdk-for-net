@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,12 +18,7 @@ namespace Payload.JsonMergePatch
     {
         public JsonMergePatchClient() : this(new Uri("http://localhost:3000"), new JsonMergePatchClientOptions()) => throw null;
 
-        internal JsonMergePatchClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, JsonMergePatchClientOptions options) => throw null;
-
-        public JsonMergePatchClient(Uri endpoint, JsonMergePatchClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public JsonMergePatchClient(JsonMergePatchClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public JsonMergePatchClient(Uri endpoint, JsonMergePatchClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

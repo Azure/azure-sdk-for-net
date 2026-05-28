@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Peering
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class ConnectionMonitorTestCollection : ArmCollection, IEnumerable<ConnectionMonitorTestResource>, IAsyncEnumerable<ConnectionMonitorTestResource>
     {
-        private readonly ClientDiagnostics _connectionMonitorTestsClientDiagnostics;
-        private readonly ConnectionMonitorTests _connectionMonitorTestsRestClient;
+        private readonly ClientDiagnostics _connectionMonitorTestClientDiagnostics;
+        private readonly ConnectionMonitorTestsRestOperations _connectionMonitorTestRestClient;
 
-        /// <summary> Initializes a new instance of ConnectionMonitorTestCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorTestCollection"/> class for mocking. </summary>
         protected ConnectionMonitorTestCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConnectionMonitorTestCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ConnectionMonitorTestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _connectionMonitorTestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ConnectionMonitorTestResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ConnectionMonitorTestResource.ResourceType, out string connectionMonitorTestApiVersion);
-            _connectionMonitorTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ConnectionMonitorTestResource.ResourceType.Namespace, Diagnostics);
-            _connectionMonitorTestsRestClient = new ConnectionMonitorTests(_connectionMonitorTestsClientDiagnostics, Pipeline, Endpoint, connectionMonitorTestApiVersion ?? "2025-05-01");
-            ValidateResourceId(id);
+            _connectionMonitorTestRestClient = new ConnectionMonitorTestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, connectionMonitorTestApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PeeringServiceResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PeeringServiceResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PeeringServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates a connection monitor test with the specified name under the given subscription, resource group and peering service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectionMonitorTests_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.Peering
         /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
         /// <param name="data"> The properties needed to create a connection monitor test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConnectionMonitorTestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionMonitorTestName, ConnectionMonitorTestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectionMonitorTestsClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.CreateOrUpdate");
+            using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, ConnectionMonitorTestData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectionMonitorTestData> response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                PeeringArmOperation<ConnectionMonitorTestResource> operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _connectionMonitorTestRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _connectionMonitorTestRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.Peering
         /// Creates or updates a connection monitor test with the specified name under the given subscription, resource group and peering service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectionMonitorTests_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.Peering
         /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
         /// <param name="data"> The properties needed to create a connection monitor test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConnectionMonitorTestResource> CreateOrUpdate(WaitUntil waitUntil, string connectionMonitorTestName, ConnectionMonitorTestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectionMonitorTestsClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.CreateOrUpdate");
+            using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, ConnectionMonitorTestData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectionMonitorTestData> response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                PeeringArmOperation<ConnectionMonitorTestResource> operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _connectionMonitorTestRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data, cancellationToken);
+                var uri = _connectionMonitorTestRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<ConnectionMonitorTestResource>(Response.FromValue(new ConnectionMonitorTestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.Peering
         /// Gets an existing connection monitor test with the specified name under the given subscription, resource group and peering service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectionMonitorTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual async Task<Response<ConnectionMonitorTestResource>> GetAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
-            using DiagnosticScope scope = _connectionMonitorTestsClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Get");
+            using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectionMonitorTestData> response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
+                var response = await _connectionMonitorTestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConnectionMonitorTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.Peering
         /// Gets an existing connection monitor test with the specified name under the given subscription, resource group and peering service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectionMonitorTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual Response<ConnectionMonitorTestResource> Get(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
-            using DiagnosticScope scope = _connectionMonitorTestsClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Get");
+            using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectionMonitorTestData> response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
+                var response = _connectionMonitorTestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConnectionMonitorTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,50 +247,50 @@ namespace Azure.ResourceManager.Peering
         /// Lists all connection monitor tests under the given subscription, resource group and peering service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectionMonitorTests_ListByPeeringService. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_ListByPeeringService</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectionMonitorTestResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConnectionMonitorTestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectionMonitorTestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestsGetByPeeringServiceAsyncCollectionResultOfT(
-                _connectionMonitorTestsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ConnectionMonitorTestCollection.GetAll"), data => new ConnectionMonitorTestResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorTestRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectionMonitorTestRestClient.CreateListByPeeringServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectionMonitorTestResource(Client, ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(e)), _connectionMonitorTestClientDiagnostics, Pipeline, "ConnectionMonitorTestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all connection monitor tests under the given subscription, resource group and peering service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectionMonitorTests_ListByPeeringService. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_ListByPeeringService</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,67 +298,45 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="ConnectionMonitorTestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectionMonitorTestResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ConnectionMonitorTestData, ConnectionMonitorTestResource>(new ConnectionMonitorTestsGetByPeeringServiceCollectionResultOfT(
-                _connectionMonitorTestsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ConnectionMonitorTestCollection.GetAll"), data => new ConnectionMonitorTestResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorTestRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectionMonitorTestRestClient.CreateListByPeeringServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectionMonitorTestResource(Client, ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(e)), _connectionMonitorTestClientDiagnostics, Pipeline, "ConnectionMonitorTestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectionMonitorTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
-            using DiagnosticScope scope = _connectionMonitorTestsClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Exists");
+            using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ConnectionMonitorTestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConnectionMonitorTestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _connectionMonitorTestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,50 +350,36 @@ namespace Azure.ResourceManager.Peering
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectionMonitorTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual Response<bool> Exists(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
-            using DiagnosticScope scope = _connectionMonitorTestsClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Exists");
+            using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ConnectionMonitorTestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConnectionMonitorTestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _connectionMonitorTestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -448,54 +393,38 @@ namespace Azure.ResourceManager.Peering
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectionMonitorTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConnectionMonitorTestResource>> GetIfExistsAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
-            using DiagnosticScope scope = _connectionMonitorTestsClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetIfExists");
+            using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ConnectionMonitorTestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConnectionMonitorTestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _connectionMonitorTestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ConnectionMonitorTestResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConnectionMonitorTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -509,54 +438,38 @@ namespace Azure.ResourceManager.Peering
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectionMonitorTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
         public virtual NullableResponse<ConnectionMonitorTestResource> GetIfExists(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
 
-            using DiagnosticScope scope = _connectionMonitorTestsClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetIfExists");
+            using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _connectionMonitorTestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ConnectionMonitorTestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConnectionMonitorTestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConnectionMonitorTestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _connectionMonitorTestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ConnectionMonitorTestResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConnectionMonitorTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -576,7 +489,6 @@ namespace Azure.ResourceManager.Peering
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ConnectionMonitorTestResource> IAsyncEnumerable<ConnectionMonitorTestResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

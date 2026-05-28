@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of Kudu continuous web job information elements.
-    /// Serialized Name: TriggeredJobHistoryCollection
-    /// </summary>
+    /// <summary> Collection of Kudu continuous web job information elements. </summary>
     internal partial class TriggeredJobHistoryListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TriggeredJobHistoryListResult"/>. </summary>
-        /// <param name="value">
-        /// The TriggeredJobHistory items on this page
-        /// Serialized Name: TriggeredJobHistoryCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TriggeredJobHistoryListResult(IEnumerable<TriggeredJobHistoryData> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TriggeredJobHistoryListResult"/>. </summary>
-        /// <param name="value">
-        /// The TriggeredJobHistory items on this page
-        /// Serialized Name: TriggeredJobHistoryCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: TriggeredJobHistoryCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredJobHistoryListResult(IReadOnlyList<TriggeredJobHistoryData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TriggeredJobHistoryListResult(IReadOnlyList<TriggeredJobHistoryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The TriggeredJobHistory items on this page
-        /// Serialized Name: TriggeredJobHistoryCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<TriggeredJobHistoryData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: TriggeredJobHistoryCollection.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

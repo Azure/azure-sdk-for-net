@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
@@ -25,84 +24,73 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabCustomImageCollection : ArmCollection, IEnumerable<DevTestLabCustomImageResource>, IAsyncEnumerable<DevTestLabCustomImageResource>
     {
-        private readonly ClientDiagnostics _customImagesClientDiagnostics;
-        private readonly CustomImages _customImagesRestClient;
+        private readonly ClientDiagnostics _devTestLabCustomImageCustomImagesClientDiagnostics;
+        private readonly CustomImagesRestOperations _devTestLabCustomImageCustomImagesRestClient;
 
-        /// <summary> Initializes a new instance of DevTestLabCustomImageCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabCustomImageCollection"/> class for mocking. </summary>
         protected DevTestLabCustomImageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabCustomImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DevTestLabCustomImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DevTestLabCustomImageResource.ResourceType, out string devTestLabCustomImageApiVersion);
-            _customImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabCustomImageResource.ResourceType.Namespace, Diagnostics);
-            _customImagesRestClient = new CustomImages(_customImagesClientDiagnostics, Pipeline, Endpoint, devTestLabCustomImageApiVersion ?? "2018-09-15");
-            ValidateResourceId(id);
+            _devTestLabCustomImageCustomImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabCustomImageResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DevTestLabCustomImageResource.ResourceType, out string devTestLabCustomImageCustomImagesApiVersion);
+            _devTestLabCustomImageCustomImagesRestClient = new CustomImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabCustomImageCustomImagesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DevTestLabResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or replace an existing custom image. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomImages_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomImages_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the CustomImage. </param>
+        /// <param name="name"> The name of the custom image. </param>
         /// <param name="data"> A custom image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevTestLabCustomImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DevTestLabCustomImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _customImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.CreateOrUpdate");
+            using var scope = _devTestLabCustomImageCustomImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabCustomImageData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DevTestLabsArmOperation<DevTestLabCustomImageResource> operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(
-                    new DevTestLabCustomImageOperationSource(Client),
-                    _customImagesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _devTestLabCustomImageCustomImagesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(new DevTestLabCustomImageOperationSource(Client), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, _devTestLabCustomImageCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,51 +104,42 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Create or replace an existing custom image. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomImages_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomImages_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the CustomImage. </param>
+        /// <param name="name"> The name of the custom image. </param>
         /// <param name="data"> A custom image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevTestLabCustomImageResource> CreateOrUpdate(WaitUntil waitUntil, string name, DevTestLabCustomImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _customImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.CreateOrUpdate");
+            using var scope = _devTestLabCustomImageCustomImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabCustomImageData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DevTestLabsArmOperation<DevTestLabCustomImageResource> operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(
-                    new DevTestLabCustomImageOperationSource(Client),
-                    _customImagesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _devTestLabCustomImageCustomImagesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
+                var operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(new DevTestLabCustomImageOperationSource(Client), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, _devTestLabCustomImageCustomImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,43 +153,39 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Get custom image.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomImages_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomImages_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the CustomImage. </param>
+        /// <param name="name"> The name of the custom image. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DevTestLabCustomImageResource>> GetAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<DevTestLabCustomImageResource>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _customImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.Get");
+            using var scope = _devTestLabCustomImageCustomImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DevTestLabCustomImageData> response = Response.FromValue(DevTestLabCustomImageData.FromResponse(result), result);
+                var response = await _devTestLabCustomImageCustomImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DevTestLabCustomImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,43 +199,39 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Get custom image.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomImages_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomImages_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the CustomImage. </param>
+        /// <param name="name"> The name of the custom image. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DevTestLabCustomImageResource> Get(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<DevTestLabCustomImageResource> Get(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _customImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.Get");
+            using var scope = _devTestLabCustomImageCustomImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DevTestLabCustomImageData> response = Response.FromValue(DevTestLabCustomImageData.FromResponse(result), result);
+                var response = _devTestLabCustomImageCustomImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DevTestLabCustomImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -274,16 +245,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// List custom images in a given lab.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomImages_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomImages_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,40 +267,32 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabCustomImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabCustomImageResource> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevTestLabCustomImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabCustomImageResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DevTestLabCustomImageData, DevTestLabCustomImageResource>(new CustomImagesGetAllAsyncCollectionResultOfT(
-                _customImagesRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                expand,
-                filter,
-                top,
-                @orderby,
-                context,
-                "DevTestLabCustomImageCollection.GetAll"), data => new DevTestLabCustomImageResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabCustomImageCustomImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabCustomImageCustomImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabCustomImageResource(Client, DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(e)), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, "DevTestLabCustomImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List custom images in a given lab.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomImages_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomImages_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,74 +302,48 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabCustomImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabCustomImageResource> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabCustomImageResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DevTestLabCustomImageData, DevTestLabCustomImageResource>(new CustomImagesGetAllCollectionResultOfT(
-                _customImagesRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                expand,
-                filter,
-                top,
-                @orderby,
-                context,
-                "DevTestLabCustomImageCollection.GetAll"), data => new DevTestLabCustomImageResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabCustomImageCustomImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabCustomImageCustomImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabCustomImageResource(Client, DevTestLabCustomImageData.DeserializeDevTestLabCustomImageData(e)), _devTestLabCustomImageCustomImagesClientDiagnostics, Pipeline, "DevTestLabCustomImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomImages_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomImages_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the CustomImage. </param>
+        /// <param name="name"> The name of the custom image. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _customImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.Exists");
+            using var scope = _devTestLabCustomImageCustomImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DevTestLabCustomImageData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DevTestLabCustomImageData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DevTestLabCustomImageData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _devTestLabCustomImageCustomImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -416,51 +357,37 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomImages_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomImages_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the CustomImage. </param>
+        /// <param name="name"> The name of the custom image. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<bool> Exists(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _customImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.Exists");
+            using var scope = _devTestLabCustomImageCustomImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DevTestLabCustomImageData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DevTestLabCustomImageData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DevTestLabCustomImageData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _devTestLabCustomImageCustomImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -474,55 +401,39 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomImages_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomImages_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the CustomImage. </param>
+        /// <param name="name"> The name of the custom image. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DevTestLabCustomImageResource>> GetIfExistsAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevTestLabCustomImageResource>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _customImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.GetIfExists");
+            using var scope = _devTestLabCustomImageCustomImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DevTestLabCustomImageData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DevTestLabCustomImageData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DevTestLabCustomImageData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _devTestLabCustomImageCustomImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DevTestLabCustomImageResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DevTestLabCustomImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -536,55 +447,39 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomImages_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomImages_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabCustomImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the CustomImage. </param>
+        /// <param name="name"> The name of the custom image. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DevTestLabCustomImageResource> GetIfExists(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DevTestLabCustomImageResource> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _customImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.GetIfExists");
+            using var scope = _devTestLabCustomImageCustomImagesClientDiagnostics.CreateScope("DevTestLabCustomImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DevTestLabCustomImageData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DevTestLabCustomImageData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DevTestLabCustomImageData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _devTestLabCustomImageCustomImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DevTestLabCustomImageResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DevTestLabCustomImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -604,7 +499,6 @@ namespace Azure.ResourceManager.DevTestLabs
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DevTestLabCustomImageResource> IAsyncEnumerable<DevTestLabCustomImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -17,12 +17,12 @@ namespace Azure.Provisioning.Tests
 
         public static void AssertExpression(string expected, IBicepValue bicepValue)
         {
-            Assert.That(bicepValue.ToString()?.NormalizeLineEndings(), Is.EqualTo(expected.NormalizeLineEndings()));
+            Assert.AreEqual(expected.NormalizeLineEndings(), bicepValue.ToString()?.NormalizeLineEndings());
         }
 
         public static void AssertExpression(string expected, BicepExpression expression)
         {
-            Assert.That(expression.ToString().NormalizeLineEndings(), Is.EqualTo(expected.NormalizeLineEndings()));
+            Assert.AreEqual(expected.NormalizeLineEndings(), expression.ToString().NormalizeLineEndings());
         }
     }
 }

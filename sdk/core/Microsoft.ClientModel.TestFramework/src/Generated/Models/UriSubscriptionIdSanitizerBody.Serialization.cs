@@ -141,7 +141,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
                         return DeserializeUriSubscriptionIdSanitizerBody(document.RootElement, options);
                     }

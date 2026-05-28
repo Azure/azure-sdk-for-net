@@ -114,8 +114,7 @@ foreach ($file in $changedFiles) {
 $spellingErrors = &"$PSScriptRoot/../spelling/Invoke-Cspell.ps1" `
   -CspellConfigPath $CspellConfigPath `
   -SpellCheckRoot $SpellCheckRoot `
-  -FileList $changedFilePaths
-$cspellExitCode = $LASTEXITCODE
+  -ScanGlobs $changedFilePaths
 
 if ($spellingErrors) {
     $errorLoggingFunction = Get-Item 'Function:LogWarning'
@@ -131,9 +130,6 @@ if ($spellingErrors) {
     if ($ExitWithError) {
         exit 1
     }
-} elseif ($cspellExitCode -ne 0 -and $ExitWithError) {
-    LogError "CSpell exited with code $cspellExitCode. This may indicate a configuration error or other failure in the spell checking tool."
-    exit 1
 } else {
   Write-Host "No spelling errors detected"
 }

@@ -16,26 +16,31 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="NumberResolution"/>. </summary>
         /// <param name="numberKind"> The type of the extracted number entity. </param>
         /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
-        internal NumberResolution(NumberKind numberKind, double value) : base(ResolutionKind.NumberResolution)
+        internal NumberResolution(NumberKind numberKind, double value)
         {
+            ResolutionKind = ResolutionKind.NumberResolution;
             NumberKind = numberKind;
             Value = value;
         }
 
         /// <summary> Initializes a new instance of <see cref="NumberResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="numberKind"> The type of the extracted number entity. </param>
         /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
-        internal NumberResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, NumberKind numberKind, double value) : base(resolutionKind, additionalBinaryDataProperties)
+        internal NumberResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData, NumberKind numberKind, double value) : base(resolutionKind, serializedAdditionalRawData)
         {
             NumberKind = numberKind;
             Value = value;
         }
 
+        /// <summary> Initializes a new instance of <see cref="NumberResolution"/> for deserialization. </summary>
+        internal NumberResolution()
+        {
+        }
+
         /// <summary> The type of the extracted number entity. </summary>
         public NumberKind NumberKind { get; }
-
         /// <summary> A numeric representation of what the extracted text denotes. </summary>
         public double Value { get; }
     }

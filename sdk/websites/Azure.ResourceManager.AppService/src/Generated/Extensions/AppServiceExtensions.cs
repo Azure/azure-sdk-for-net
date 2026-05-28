@@ -39,117 +39,174 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PublishingUserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublishingUserResource.CreateResourceIdentifier" /> to create a <see cref="PublishingUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServiceCertificateOrderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceCertificateOrderResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetPublishingUserResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceCertificateOrderResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PublishingUserResource"/> object. </returns>
-        public static PublishingUserResource GetPublishingUserResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServiceCertificateOrderResource"/> object. </returns>
+        public static AppServiceCertificateOrderResource GetAppServiceCertificateOrderResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetPublishingUserResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServiceCertificateOrderResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AppServiceSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppServiceSourceControlResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppServiceCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceSourceControlResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AppServiceSourceControlResource"/> object. </returns>
-        public static AppServiceSourceControlResource GetAppServiceSourceControlResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppServiceCertificateResource"/> object. </returns>
+        public static AppServiceCertificateResource GetAppServiceCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetAppServiceSourceControlResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServiceCertificateResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AppCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AppCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CertificateOrderDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CertificateOrderDetectorResource.CreateResourceIdentifier" /> to create a <see cref="CertificateOrderDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetCertificateOrderDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AppCertificateResource"/> object. </returns>
-        public static AppCertificateResource GetAppCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CertificateOrderDetectorResource"/> object. </returns>
+        public static CertificateOrderDetectorResource GetCertificateOrderDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetAppCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetCertificateOrderDetectorResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HostingEnvironmentDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostingEnvironmentDetectorResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteCertificateResource"/> object. </returns>
-        public static SiteCertificateResource GetSiteCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HostingEnvironmentDetectorResource"/> object. </returns>
+        public static HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetSiteCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentDetectorResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteSlotCertificateResource"/> object. </returns>
-        public static SiteSlotCertificateResource GetSiteSlotCertificateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteDetectorResource"/> object. </returns>
+        public static SiteDetectorResource GetSiteDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetSiteSlotCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDetectorResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeletedSiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeletedSiteResource.CreateResourceIdentifier" /> to create a <see cref="DeletedSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteSlotDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDeletedSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeletedSiteResource"/> object. </returns>
-        public static DeletedSiteResource GetDeletedSiteResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteSlotDetectorResource"/> object. </returns>
+        public static SiteSlotDetectorResource GetSiteSlotDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppServiceArmClient(client).GetDeletedSiteResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDetectorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppServiceDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceDomainResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppServiceDomainResource"/> object. </returns>
+        public static AppServiceDomainResource GetAppServiceDomainResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetAppServiceDomainResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DomainOwnershipIdentifierResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DomainOwnershipIdentifierResource.CreateResourceIdentifier" /> to create a <see cref="DomainOwnershipIdentifierResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDomainOwnershipIdentifierResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DomainOwnershipIdentifierResource"/> object. </returns>
+        public static DomainOwnershipIdentifierResource GetDomainOwnershipIdentifierResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetDomainOwnershipIdentifierResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TopLevelDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TopLevelDomainResource.CreateResourceIdentifier" /> to create a <see cref="TopLevelDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetTopLevelDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TopLevelDomainResource"/> object. </returns>
+        public static TopLevelDomainResource GetTopLevelDomainResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetTopLevelDomainResource(id);
         }
 
         /// <summary>
@@ -321,291 +378,6 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppServiceArmClient(client).GetSiteSlotPrivateEndpointConnectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="KubeEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KubeEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="KubeEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetKubeEnvironmentResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="KubeEnvironmentResource"/> object. </returns>
-        public static KubeEnvironmentResource GetKubeEnvironmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetKubeEnvironmentResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteResource"/> object. </returns>
-        public static StaticSiteResource GetStaticSiteResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetStaticSiteResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBasicAuthPropertyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBasicAuthPropertyResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBasicAuthPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBasicAuthPropertyResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteBasicAuthPropertyResource"/> object. </returns>
-        public static StaticSiteBasicAuthPropertyResource GetStaticSiteBasicAuthPropertyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetStaticSiteBasicAuthPropertyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBuildResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteBuildResource"/> object. </returns>
-        public static StaticSiteBuildResource GetStaticSiteBuildResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetStaticSiteBuildResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildDatabaseConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildDatabaseConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBuildDatabaseConnectionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteBuildDatabaseConnectionResource"/> object. </returns>
-        public static StaticSiteBuildDatabaseConnectionResource GetStaticSiteBuildDatabaseConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetStaticSiteBuildDatabaseConnectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteDatabaseConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteDatabaseConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteDatabaseConnectionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteDatabaseConnectionResource"/> object. </returns>
-        public static StaticSiteDatabaseConnectionResource GetStaticSiteDatabaseConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetStaticSiteDatabaseConnectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildLinkedBackendResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildLinkedBackendResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildLinkedBackendResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBuildLinkedBackendResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteBuildLinkedBackendResource"/> object. </returns>
-        public static StaticSiteBuildLinkedBackendResource GetStaticSiteBuildLinkedBackendResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetStaticSiteBuildLinkedBackendResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteLinkedBackendResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteLinkedBackendResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteLinkedBackendResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteLinkedBackendResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteLinkedBackendResource"/> object. </returns>
-        public static StaticSiteLinkedBackendResource GetStaticSiteLinkedBackendResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetStaticSiteLinkedBackendResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteBuildUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBuildUserProvidedFunctionAppResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> object. </returns>
-        public static StaticSiteBuildUserProvidedFunctionAppResource GetStaticSiteBuildUserProvidedFunctionAppResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetStaticSiteBuildUserProvidedFunctionAppResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteUserProvidedFunctionAppResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteUserProvidedFunctionAppResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteUserProvidedFunctionAppResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteUserProvidedFunctionAppResource"/> object. </returns>
-        public static StaticSiteUserProvidedFunctionAppResource GetStaticSiteUserProvidedFunctionAppResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetStaticSiteUserProvidedFunctionAppResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StaticSiteCustomDomainOverviewResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StaticSiteCustomDomainOverviewResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteCustomDomainOverviewResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteCustomDomainOverviewResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewResource"/> object. </returns>
-        public static StaticSiteCustomDomainOverviewResource GetStaticSiteCustomDomainOverviewResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetStaticSiteCustomDomainOverviewResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HostingEnvironmentRecommendationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HostingEnvironmentRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentRecommendationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HostingEnvironmentRecommendationResource"/> object. </returns>
-        public static HostingEnvironmentRecommendationResource GetHostingEnvironmentRecommendationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentRecommendationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecommendationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteRecommendationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecommendationResource"/> object. </returns>
-        public static SiteRecommendationResource GetSiteRecommendationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteRecommendationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WebSiteResourceHealthMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteResourceHealthMetadataResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource"/> object. </returns>
-        public static WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetWebSiteResourceHealthMetadataResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WebSiteSlotResourceHealthMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteSlotResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource"/> object. </returns>
-        public static WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetWebSiteSlotResourceHealthMetadataResource(id);
         }
 
         /// <summary>
@@ -815,6 +587,519 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppServiceArmClient(client).GetSiteVirtualNetworkConnectionGatewayResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppCertificateResource"/> object. </returns>
+        public static AppCertificateResource GetAppCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetAppCertificateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteCertificateResource"/> object. </returns>
+        public static SiteCertificateResource GetSiteCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteCertificateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotCertificateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteSlotCertificateResource"/> object. </returns>
+        public static SiteSlotCertificateResource GetSiteSlotCertificateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteSlotCertificateResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteDiagnosticResource"/> object. </returns>
+        public static SiteDiagnosticResource GetSiteDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticResource"/> object. </returns>
+        public static SiteSlotDiagnosticResource GetSiteSlotDiagnosticResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDiagnosticAnalysisResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticAnalysisResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticAnalysisResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteDiagnosticAnalysisResource"/> object. </returns>
+        public static SiteDiagnosticAnalysisResource GetSiteDiagnosticAnalysisResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticAnalysisResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticAnalysisResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticAnalysisResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticAnalysisResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysisResource"/> object. </returns>
+        public static SiteSlotDiagnosticAnalysisResource GetSiteSlotDiagnosticAnalysisResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticAnalysisResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteDiagnosticDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteDiagnosticDetectorResource"/> object. </returns>
+        public static SiteDiagnosticDetectorResource GetSiteDiagnosticDetectorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticDetectorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteSlotDiagnosticDetectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteSlotDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteSlotDiagnosticDetectorResource"/> object. </returns>
+        public static SiteSlotDiagnosticDetectorResource GetSiteSlotDiagnosticDetectorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticDetectorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeletedSiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeletedSiteResource.CreateResourceIdentifier" /> to create a <see cref="DeletedSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDeletedSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DeletedSiteResource"/> object. </returns>
+        public static DeletedSiteResource GetDeletedSiteResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetDeletedSiteResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="KubeEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubeEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="KubeEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetKubeEnvironmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KubeEnvironmentResource"/> object. </returns>
+        public static KubeEnvironmentResource GetKubeEnvironmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetKubeEnvironmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HostingEnvironmentRecommendationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostingEnvironmentRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentRecommendationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HostingEnvironmentRecommendationResource"/> object. </returns>
+        public static HostingEnvironmentRecommendationResource GetHostingEnvironmentRecommendationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentRecommendationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteRecommendationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteRecommendationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteRecommendationResource"/> object. </returns>
+        public static SiteRecommendationResource GetSiteRecommendationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetSiteRecommendationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WebSiteResourceHealthMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteResourceHealthMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource"/> object. </returns>
+        public static WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetWebSiteResourceHealthMetadataResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WebSiteSlotResourceHealthMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebSiteSlotResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource"/> object. </returns>
+        public static WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotResourceHealthMetadataResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PublishingUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublishingUserResource.CreateResourceIdentifier" /> to create a <see cref="PublishingUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetPublishingUserResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PublishingUserResource"/> object. </returns>
+        public static PublishingUserResource GetPublishingUserResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetPublishingUserResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AppServiceSourceControlResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppServiceSourceControlResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceSourceControlResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AppServiceSourceControlResource"/> object. </returns>
+        public static AppServiceSourceControlResource GetAppServiceSourceControlResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetAppServiceSourceControlResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticSiteResource"/> object. </returns>
+        public static StaticSiteResource GetStaticSiteResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetStaticSiteResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBuildResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBuildResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticSiteBuildResource"/> object. </returns>
+        public static StaticSiteBuildResource GetStaticSiteBuildResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetStaticSiteBuildResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBuildDatabaseConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildDatabaseConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBuildDatabaseConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticSiteBuildDatabaseConnectionResource"/> object. </returns>
+        public static StaticSiteBuildDatabaseConnectionResource GetStaticSiteBuildDatabaseConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetStaticSiteBuildDatabaseConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteDatabaseConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteDatabaseConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteDatabaseConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticSiteDatabaseConnectionResource"/> object. </returns>
+        public static StaticSiteDatabaseConnectionResource GetStaticSiteDatabaseConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetStaticSiteDatabaseConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBuildUserProvidedFunctionAppResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticSiteBuildUserProvidedFunctionAppResource"/> object. </returns>
+        public static StaticSiteBuildUserProvidedFunctionAppResource GetStaticSiteBuildUserProvidedFunctionAppResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetStaticSiteBuildUserProvidedFunctionAppResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteUserProvidedFunctionAppResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteUserProvidedFunctionAppResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteUserProvidedFunctionAppResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticSiteUserProvidedFunctionAppResource"/> object. </returns>
+        public static StaticSiteUserProvidedFunctionAppResource GetStaticSiteUserProvidedFunctionAppResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetStaticSiteUserProvidedFunctionAppResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBasicAuthPropertyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBasicAuthPropertyResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBasicAuthPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBasicAuthPropertyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticSiteBasicAuthPropertyResource"/> object. </returns>
+        public static StaticSiteBasicAuthPropertyResource GetStaticSiteBasicAuthPropertyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetStaticSiteBasicAuthPropertyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteCustomDomainOverviewResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteCustomDomainOverviewResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteCustomDomainOverviewResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteCustomDomainOverviewResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewResource"/> object. </returns>
+        public static StaticSiteCustomDomainOverviewResource GetStaticSiteCustomDomainOverviewResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetStaticSiteCustomDomainOverviewResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteLinkedBackendResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteLinkedBackendResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteLinkedBackendResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteLinkedBackendResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticSiteLinkedBackendResource"/> object. </returns>
+        public static StaticSiteLinkedBackendResource GetStaticSiteLinkedBackendResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetStaticSiteLinkedBackendResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticSiteBuildLinkedBackendResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticSiteBuildLinkedBackendResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildLinkedBackendResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBuildLinkedBackendResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticSiteBuildLinkedBackendResource"/> object. </returns>
+        public static StaticSiteBuildLinkedBackendResource GetStaticSiteBuildLinkedBackendResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAppServiceArmClient(client).GetStaticSiteBuildLinkedBackendResource(id);
         }
 
         /// <summary>
@@ -2053,177 +2338,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HostingEnvironmentDetectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HostingEnvironmentDetectorResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentDetectorResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="HostingEnvironmentDetectorResource"/> object. </returns>
-        public static HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentDetectorResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteDetectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDetectorResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteDetectorResource"/> object. </returns>
-        public static SiteDetectorResource GetSiteDetectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteDetectorResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDetectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDetectorResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteSlotDetectorResource"/> object. </returns>
-        public static SiteSlotDetectorResource GetSiteSlotDetectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteSlotDetectorResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteDiagnosticResource"/> object. </returns>
-        public static SiteDiagnosticResource GetSiteDiagnosticResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDiagnosticResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteSlotDiagnosticResource"/> object. </returns>
-        public static SiteSlotDiagnosticResource GetSiteSlotDiagnosticResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteDiagnosticAnalysisResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticAnalysisResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticAnalysisResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteDiagnosticAnalysisResource"/> object. </returns>
-        public static SiteDiagnosticAnalysisResource GetSiteDiagnosticAnalysisResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticAnalysisResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDiagnosticAnalysisResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticAnalysisResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticAnalysisResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysisResource"/> object. </returns>
-        public static SiteSlotDiagnosticAnalysisResource GetSiteSlotDiagnosticAnalysisResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticAnalysisResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteDiagnosticDetectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticDetectorResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteDiagnosticDetectorResource"/> object. </returns>
-        public static SiteDiagnosticDetectorResource GetSiteDiagnosticDetectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticDetectorResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDiagnosticDetectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticDetectorResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteSlotDiagnosticDetectorResource"/> object. </returns>
-        public static SiteSlotDiagnosticDetectorResource GetSiteSlotDiagnosticDetectorResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticDetectorResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="WorkflowRunResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkflowRunResource.CreateResourceIdentifier" /> to create a <see cref="WorkflowRunResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -2376,96 +2490,189 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets a collection of AppCertificateResources in the ResourceGroupResource.
+        /// Gets a collection of AppServiceCertificateOrderResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificates()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceCertificateOrders()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of AppCertificateResources and their operations over a AppCertificateResource. </returns>
-        public static AppCertificateCollection GetAppCertificates(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AppServiceCertificateOrderResources and their operations over a AppServiceCertificateOrderResource. </returns>
+        public static AppServiceCertificateOrderCollection GetAppServiceCertificateOrders(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificates();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceCertificateOrders();
         }
 
         /// <summary>
-        /// Description for Get a certificate.
+        /// Description for Get a certificate order.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <description>AppServiceCertificateOrders_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AppCertificateResource"/></description>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificateAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceCertificateOrderAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Name of the certificate. </param>
+        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="certificateOrderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AppCertificateResource>> GetAppCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<AppServiceCertificateOrderResource>> GetAppServiceCertificateOrderAsync(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificateAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceCertificateOrderAsync(certificateOrderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Description for Get a certificate.
+        /// Description for Get a certificate order.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <description>AppServiceCertificateOrders_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AppCertificateResource"/></description>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificate(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceCertificateOrder(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Name of the certificate. </param>
+        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="certificateOrderName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<AppCertificateResource> GetAppCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        public static Response<AppServiceCertificateOrderResource> GetAppServiceCertificateOrder(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificate(name, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceCertificateOrder(certificateOrderName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AppServiceDomainResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceDomains()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of AppServiceDomainResources and their operations over a AppServiceDomainResource. </returns>
+        public static AppServiceDomainCollection GetAppServiceDomains(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceDomains();
+        }
+
+        /// <summary>
+        /// Description for Get a domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceDomainResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceDomainAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="domainName"> Name of the domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AppServiceDomainResource>> GetAppServiceDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceDomainAsync(domainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get a domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceDomainResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceDomain(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="domainName"> Name of the domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<AppServiceDomainResource> GetAppServiceDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceDomain(domainName, cancellationToken);
         }
 
         /// <summary>
@@ -2498,7 +2705,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2536,7 +2743,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2559,6 +2766,192 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceEnvironment(name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AppServicePlanResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServicePlans()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of AppServicePlanResources and their operations over a AppServicePlanResource. </returns>
+        public static AppServicePlanCollection GetAppServicePlans(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServicePlans();
+        }
+
+        /// <summary>
+        /// Description for Get an App Service plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServicePlanAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the App Service plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AppServicePlanResource>> GetAppServicePlanAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServicePlanAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get an App Service plan.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServicePlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServicePlan(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the App Service plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<AppServicePlanResource> GetAppServicePlan(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServicePlan(name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of AppCertificateResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificates()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of AppCertificateResources and their operations over a AppCertificateResource. </returns>
+        public static AppCertificateCollection GetAppCertificates(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificates();
+        }
+
+        /// <summary>
+        /// Description for Get a certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppCertificateResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificateAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AppCertificateResource>> GetAppCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificateAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get a certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppCertificateResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificate(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<AppCertificateResource> GetAppCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificate(name, cancellationToken);
         }
 
         /// <summary>
@@ -2591,7 +2984,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2629,7 +3022,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2684,7 +3077,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2722,7 +3115,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2745,99 +3138,6 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetStaticSite(name, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of AppServicePlanResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServicePlans()"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of AppServicePlanResources and their operations over a AppServicePlanResource. </returns>
-        public static AppServicePlanCollection GetAppServicePlans(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServicePlans();
-        }
-
-        /// <summary>
-        /// Description for Get an App Service plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServicePlans_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServicePlanResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServicePlanAsync(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Name of the App Service plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<AppServicePlanResource>> GetAppServicePlanAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServicePlanAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Get an App Service plan.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServicePlans_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServicePlanResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServicePlan(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Name of the App Service plan. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<AppServicePlanResource> GetAppServicePlan(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServicePlan(name, cancellationToken);
         }
 
         /// <summary>
@@ -2870,7 +3170,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2908,7 +3208,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2946,7 +3246,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2978,7 +3278,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2995,6 +3295,99 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAppServiceResourceGroupResource(resourceGroupResource).Validate(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of TopLevelDomainResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetTopLevelDomains()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of TopLevelDomainResources and their operations over a TopLevelDomainResource. </returns>
+        public static TopLevelDomainCollection GetTopLevelDomains(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetTopLevelDomains();
+        }
+
+        /// <summary>
+        /// Description for Get details of a top-level domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetTopLevelDomainAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the top-level domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TopLevelDomainResource>> GetTopLevelDomainAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetTopLevelDomainAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Get details of a top-level domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetTopLevelDomain(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Name of the top-level domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<TopLevelDomainResource> GetTopLevelDomain(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetTopLevelDomain(name, cancellationToken);
         }
 
         /// <summary>
@@ -3027,7 +3420,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3065,7 +3458,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3091,723 +3484,555 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Get available application frameworks and their versions
+        /// Description for List all certificate orders in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Provider_GetAvailableStacksOnPrem</description>
+        /// <description>AppServiceCertificateOrders_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAvailableStacksOnPremProvidersAsync(osTypeSelected, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Get available application frameworks and their versions
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetAvailableStacksOnPrem</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAvailableStacksOnPremProviders(osTypeSelected, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for get a list of available ASE regions and its supported Skus.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/aseRegions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListAseRegions</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAseRegions(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceCertificateOrders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppServiceAseRegion> GetAseRegionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceCertificateOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceCertificateOrderResource> GetAppServiceCertificateOrdersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAseRegionsAsync(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceCertificateOrdersAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for get a list of available ASE regions and its supported Skus.
+        /// Description for List all certificate orders in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/aseRegions</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/certificateOrders</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListAseRegions</description>
+        /// <description>AppServiceCertificateOrders_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAseRegions(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceCertificateOrders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppServiceAseRegion> GetAseRegions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceCertificateOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceCertificateOrderResource> GetAppServiceCertificateOrders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAseRegions(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceCertificateOrders(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Gets a list of meters for a given location.
+        /// Description for Validate information for a certificate order.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListBillingMeters</description>
+        /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetBillingMeters(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ValidateAppServiceCertificateOrderPurchaseInformation(AppServiceCertificateOrderData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="billingLocation"> Azure Location of billable resource. </param>
-        /// <param name="osType"> App Service OS type meters used for. </param>
+        /// <param name="data"> Information for a certificate order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<Response> ValidateAppServiceCertificateOrderPurchaseInformationAsync(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformationAsync(data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Validate information for a certificate order.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.CertificateRegistration/validateCertificateRegistrationInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ValidateAppServiceCertificateOrderPurchaseInformation(AppServiceCertificateOrderData,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="data"> Information for a certificate order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="data"/> is null. </exception>
+        public static Response ValidateAppServiceCertificateOrderPurchaseInformation(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformation(data, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Check if a domain is available for registration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CheckAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="identifier"> Name of the domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="identifier"/> is null. </exception>
+        public static async Task<Response<DomainAvailabilityCheckResult>> CheckAppServiceDomainRegistrationAvailabilityAsync(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckAppServiceDomainRegistrationAvailabilityAsync(identifier, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Check if a domain is available for registration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/checkDomainAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_CheckAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="identifier"> Name of the domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="identifier"/> is null. </exception>
+        public static Response<DomainAvailabilityCheckResult> CheckAppServiceDomainRegistrationAvailability(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckAppServiceDomainRegistrationAvailability(identifier, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Get all domains in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceDomainResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDomains(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AppServiceBillingMeter"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppServiceBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceDomainResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceDomainResource> GetAppServiceDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetBillingMetersAsync(billingLocation, osType, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDomainsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Gets a list of meters for a given location.
+        /// Description for Get all domains in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/domains</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListBillingMeters</description>
+        /// <description>Domains_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceDomainResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetBillingMeters(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDomains(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="billingLocation"> Azure Location of billable resource. </param>
-        /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AppServiceBillingMeter"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppServiceBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceDomainResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceDomainResource> GetAppServiceDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetBillingMeters(billingLocation, osType, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDomains(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Check if a resource name is available.
+        /// Description for Generate a single sign-on request for the domain management portal.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability</description>
+        /// <description>Domains_GetControlCenterSsoRequest</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(AppServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetControlCenterSsoRequestDomain(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestDomainAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetControlCenterSsoRequestDomainAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Generate a single sign-on request for the domain management portal.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/generateSsoRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_GetControlCenterSsoRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetControlCenterSsoRequestDomain(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequestDomain(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetControlCenterSsoRequestDomain(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Get domain name recommendations based on keywords.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Domains_ListRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations(DomainRecommendationSearchContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<AppServiceNameAvailabilityResult>> CheckAppServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceDomainNameIdentifier"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendationsAsync(this SubscriptionResource subscriptionResource, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckAppServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDomainRecommendationsAsync(content, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Check if a resource name is available.
+        /// Description for Get domain name recommendations based on keywords.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/listDomainRecommendations</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailability</description>
+        /// <description>Domains_ListRecommendations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(AppServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations(DomainRecommendationSearchContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> Search parameters for domain name recommendations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<AppServiceNameAvailabilityResult> CheckAppServiceNameAvailability(this SubscriptionResource subscriptionResource, AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceDomainNameIdentifier"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendations(this SubscriptionResource subscriptionResource, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckAppServiceNameAvailability(content, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDomainRecommendations(content, cancellationToken);
         }
 
         /// <summary>
-        /// Get custom hostnames under this subscription
+        /// Description for Get all App Service Environments for a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/customhostnameSites</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListCustomHostNameSites</description>
+        /// <description>AppServiceEnvironments_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetCustomHostNameSites(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="hostname"> Specific hostname. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CustomHostnameSites"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CustomHostnameSites> GetCustomHostNameSitesAsync(this SubscriptionResource subscriptionResource, string hostname = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetCustomHostNameSitesAsync(hostname, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get custom hostnames under this subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/customhostnameSites</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListCustomHostNameSites</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetCustomHostNameSites(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="hostname"> Specific hostname. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CustomHostnameSites"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CustomHostnameSites> GetCustomHostNameSites(this SubscriptionResource subscriptionResource, string hostname = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetCustomHostNameSites(hostname, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Gets list of available geo regions plus ministamps
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetSubscriptionDeploymentLocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDeploymentLocations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceEnvironments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AppServiceDeploymentLocations>> GetAppServiceDeploymentLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceEnvironmentResource> GetAppServiceEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Gets list of available geo regions plus ministamps
+        /// Description for Get all App Service Environments for a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GetSubscriptionDeploymentLocations</description>
+        /// <description>AppServiceEnvironments_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDeploymentLocations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceEnvironments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AppServiceDeploymentLocations> GetAppServiceDeploymentLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceEnvironmentResource> GetAppServiceEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDeploymentLocations(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceEnvironments(cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get a list of available geographical regions.
+        /// Description for Get all App Service plans for a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListGeoRegions</description>
+        /// <description>AppServicePlans_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGeoRegions(AppServiceSkuName?,bool?,bool?,bool?,bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServicePlans(bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="sku"> Name of SKU used to filter the regions. </param>
-        /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
-        /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
-        /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
-        /// <param name="customModeWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support App Service Plans with &lt;code&gt;IsCustomMode&lt;/code&gt; set to &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="detailed">
+        /// Specify &lt;code&gt;true&lt;/code&gt; to return all App Service plan properties. The default is &lt;code&gt;false&lt;/code&gt;, which returns a subset of the properties.
+        ///  Retrieval of all properties may increase the API latency.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AppServiceGeoRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, bool? customModeWorkersEnabled = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServicePlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServicePlanResource> GetAppServicePlansAsync(this SubscriptionResource subscriptionResource, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGeoRegionsAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, customModeWorkersEnabled, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServicePlansAsync(detailed, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get a list of available geographical regions.
+        /// Description for Get all App Service plans for a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListGeoRegions</description>
+        /// <description>AppServicePlans_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGeoRegions(AppServiceSkuName?,bool?,bool?,bool?,bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServicePlans(bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="sku"> Name of SKU used to filter the regions. </param>
-        /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
-        /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
-        /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
-        /// <param name="customModeWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support App Service Plans with &lt;code&gt;IsCustomMode&lt;/code&gt; set to &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="detailed">
+        /// Specify &lt;code&gt;true&lt;/code&gt; to return all App Service plan properties. The default is &lt;code&gt;false&lt;/code&gt;, which returns a subset of the properties.
+        ///  Retrieval of all properties may increase the API latency.
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AppServiceGeoRegion"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppServiceGeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, bool? customModeWorkersEnabled = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServicePlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServicePlanResource> GetAppServicePlans(this SubscriptionResource subscriptionResource, bool? detailed = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, customModeWorkersEnabled, cancellationToken);
-        }
-
-        /// <summary>
-        /// Check if a resource name is available for DNL sites.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/checknameavailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegionalCheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability(AzureLocation,DnlResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckDnlResourceNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check if a resource name is available for DNL sites.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/checknameavailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegionalCheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability(AzureLocation,DnlResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckDnlResourceNameAvailability(location, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all premier add-on offers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListPremierAddOnOffers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetPremierAddOnOffers(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PremierAddOnOffer"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PremierAddOnOffer> GetPremierAddOnOffersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetPremierAddOnOffersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all premier add-on offers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListPremierAddOnOffers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetPremierAddOnOffers(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PremierAddOnOffer"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PremierAddOnOffer> GetPremierAddOnOffers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetPremierAddOnOffers(cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all SKUs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetSkus(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<AppServiceSkuResult>> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetSkusAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for List all SKUs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/skus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ListSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetSkus(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<AppServiceSkuResult> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetSkus(cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VerifyHostingEnvironmentVnet</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this SubscriptionResource subscriptionResource, AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).VerifyHostingEnvironmentVnetAsync(content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VerifyHostingEnvironmentVnet</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(this SubscriptionResource subscriptionResource, AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).VerifyHostingEnvironmentVnet(content, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServicePlans(detailed, cancellationToken);
         }
 
         /// <summary>
@@ -3823,7 +4048,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3860,7 +4085,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3897,7 +4122,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3910,7 +4135,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="DeletedSiteResource"/> that may take multiple service requests to iterate over. </returns>
@@ -3934,7 +4159,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3947,7 +4172,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DeletedSiteResource"/> that may take multiple service requests to iterate over. </returns>
@@ -3971,7 +4196,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3984,7 +4209,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4009,7 +4234,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4022,7 +4247,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deletedSiteId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4032,78 +4257,6 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetDeletedWebAppByLocationDeletedWebApp(location, deletedSiteId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Get all App Service Environments for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceEnvironments(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AppServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppServiceEnvironmentResource> GetAppServiceEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceEnvironmentsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Get all App Service Environments for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/hostingEnvironments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServiceEnvironments_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceEnvironmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceEnvironments(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AppServiceEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppServiceEnvironmentResource> GetAppServiceEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceEnvironments(cancellationToken);
         }
 
         /// <summary>
@@ -4119,7 +4272,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4155,7 +4308,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4179,6 +4332,1050 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Get available application frameworks and their versions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetAvailableStacksOnPrem</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAvailableStacksOnPremProvidersAsync(osTypeSelected, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Get available application frameworks and their versions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/availableStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Provider_GetAvailableStacksOnPrem</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAvailableStacksOnPremProviders(osTypeSelected, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for List all recommendations for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetRecommendations(bool?,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AppServiceRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceRecommendation> GetRecommendationsAsync(this SubscriptionResource subscriptionResource, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetRecommendationsAsync(featured, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for List all recommendations for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetRecommendations(bool?,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppServiceRecommendation"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceRecommendation> GetRecommendations(this SubscriptionResource subscriptionResource, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetRecommendations(featured, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Reset all recommendation opt-out settings for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_ResetAllFilters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response> ResetAllRecommendationFiltersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).ResetAllRecommendationFiltersAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Reset all recommendation opt-out settings for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_ResetAllFilters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response ResetAllRecommendationFilters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).ResetAllRecommendationFilters(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Disables the specified rule so it will not apply to a subscription in the future.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_DisableRecommendationForSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="name"/> is null. </exception>
+        public static async Task<Response> DisableAppServiceRecommendationAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).DisableAppServiceRecommendationAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Disables the specified rule so it will not apply to a subscription in the future.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Recommendations_DisableRecommendationForSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="name"> Rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="name"/> is null. </exception>
+        public static Response DisableAppServiceRecommendation(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).DisableAppServiceRecommendation(name, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for List all ResourceHealthMetadata for all sites in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceHealthMetadata_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ResourceHealthMetadataData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAllResourceHealthMetadataAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for List all ResourceHealthMetadata for all sites in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceHealthMetadata_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceHealthMetadataData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAllResourceHealthMetadata(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Gets a list of meters for a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListBillingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetBillingMeters(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="billingLocation"> Azure Location of billable resource. </param>
+        /// <param name="osType"> App Service OS type meters used for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AppServiceBillingMeter"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetBillingMetersAsync(billingLocation, osType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Gets a list of meters for a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/billingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListBillingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetBillingMeters(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="billingLocation"> Azure Location of billable resource. </param>
+        /// <param name="osType"> App Service OS type meters used for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppServiceBillingMeter"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetBillingMeters(billingLocation, osType, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Check if a resource name is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(AppServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<AppServiceNameAvailabilityResult>> CheckAppServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckAppServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Check if a resource name is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(AppServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<AppServiceNameAvailabilityResult> CheckAppServiceNameAvailability(this SubscriptionResource subscriptionResource, AppServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckAppServiceNameAvailability(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get custom hostnames under this subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/customhostnameSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListCustomHostNameSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetCustomHostNameSites(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="hostname"> Specific hostname. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CustomHostnameSites"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CustomHostnameSites> GetCustomHostNameSitesAsync(this SubscriptionResource subscriptionResource, string hostname = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetCustomHostNameSitesAsync(hostname, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get custom hostnames under this subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/customhostnameSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListCustomHostNameSites</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetCustomHostNameSites(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="hostname"> Specific hostname. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CustomHostnameSites"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CustomHostnameSites> GetCustomHostNameSites(this SubscriptionResource subscriptionResource, string hostname = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetCustomHostNameSites(hostname, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Gets list of available geo regions plus ministamps
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSubscriptionDeploymentLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDeploymentLocations(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<AppServiceDeploymentLocations>> GetAppServiceDeploymentLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets list of available geo regions plus ministamps
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetSubscriptionDeploymentLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDeploymentLocations(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<AppServiceDeploymentLocations> GetAppServiceDeploymentLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDeploymentLocations(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for get a list of available ASE regions and its supported Skus.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/aseRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListAseRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAseRegions(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceAseRegion> GetAseRegionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAseRegionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for get a list of available ASE regions and its supported Skus.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/aseRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListAseRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAseRegions(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppServiceAseRegion"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceAseRegion> GetAseRegions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAseRegions(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Get a list of available geographical regions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListGeoRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGeoRegions(AppServiceSkuName?,bool?,bool?,bool?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="sku"> Name of SKU used to filter the regions. </param>
+        /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
+        /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
+        /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="AppServiceGeoRegion"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGeoRegionsAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Get a list of available geographical regions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListGeoRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGeoRegions(AppServiceSkuName?,bool?,bool?,bool?,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="sku"> Name of SKU used to filter the regions. </param>
+        /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
+        /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
+        /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppServiceGeoRegion"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceGeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
+        }
+
+        /// <summary>
+        /// Check if a resource name is available for DNL sites.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegionalCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability(AzureLocation,DnlResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
+        /// <param name="content"> Name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<DnlResourceNameAvailabilityResult>> CheckDnlResourceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckDnlResourceNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check if a resource name is available for DNL sites.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegionalCheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckDnlResourceNameAvailability(AzureLocation,DnlResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
+        /// <param name="content"> Name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<DnlResourceNameAvailabilityResult> CheckDnlResourceNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DnlResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckDnlResourceNameAvailability(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for List all premier add-on offers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListPremierAddOnOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetPremierAddOnOffers(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PremierAddOnOffer"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PremierAddOnOffer> GetPremierAddOnOffersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetPremierAddOnOffersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for List all premier add-on offers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListPremierAddOnOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetPremierAddOnOffers(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PremierAddOnOffer"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PremierAddOnOffer> GetPremierAddOnOffers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetPremierAddOnOffers(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for List all SKUs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetSkus(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<AppServiceSkuResult>> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetSkusAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for List all SKUs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/skus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetSkus(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<AppServiceSkuResult> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetSkus(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VerifyHostingEnvironmentVnet</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> VNET information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this SubscriptionResource subscriptionResource, AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).VerifyHostingEnvironmentVnetAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Verifies if this VNET is compatible with an App Service Environment by analyzing the Network Security Group rules.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VerifyHostingEnvironmentVnet</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> VNET information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(this SubscriptionResource subscriptionResource, AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).VerifyHostingEnvironmentVnet(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// List usages in cores for all skus used by a subscription in a given location, for a specific quota type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetUsagesInLocation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGetUsagesInLocations(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CsmUsageQuota> GetGetUsagesInLocationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGetUsagesInLocationsAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List usages in cores for all skus used by a subscription in a given location, for a specific quota type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetUsagesInLocation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGetUsagesInLocations(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CsmUsageQuota> GetGetUsagesInLocations(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGetUsagesInLocations(location, cancellationToken);
+        }
+
+        /// <summary>
         /// Description for Generates a preview workflow file for the static site
         /// <list type="bullet">
         /// <item>
@@ -4191,7 +5388,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4200,8 +5397,8 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="location"> Location where you plan to create the static site. </param>
+        /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
@@ -4224,7 +5421,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4233,8 +5430,8 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="location"> Location where you plan to create the static site. </param>
+        /// <param name="content"> A JSON representation of the StaticSitesWorkflowPreviewRequest properties. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(this SubscriptionResource subscriptionResource, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
@@ -4257,7 +5454,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4293,7 +5490,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4317,412 +5514,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// List usages in cores for all skus used by a subscription in a given location, for a specific quota type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetUsagesInLocation_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGetUsagesInLocations(AzureLocation,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CsmUsageQuota> GetGetUsagesInLocationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGetUsagesInLocationsAsync(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// List usages in cores for all skus used by a subscription in a given location, for a specific quota type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetUsagesInLocation_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGetUsagesInLocations(AzureLocation,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CsmUsageQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CsmUsageQuota> GetGetUsagesInLocations(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGetUsagesInLocations(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all recommendations for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetRecommendations(bool?,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AppServiceRecommendation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppServiceRecommendation> GetRecommendationsAsync(this SubscriptionResource subscriptionResource, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetRecommendationsAsync(featured, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all recommendations for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetRecommendations(bool?,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AppServiceRecommendation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppServiceRecommendation> GetRecommendations(this SubscriptionResource subscriptionResource, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetRecommendations(featured, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Disables the specified rule so it will not apply to a subscription in the future.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_DisableRecommendationForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="name"/> is null. </exception>
-        public static async Task<Response> DisableAppServiceRecommendationAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).DisableAppServiceRecommendationAsync(name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Disables the specified rule so it will not apply to a subscription in the future.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/{name}/disable</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_DisableRecommendationForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="name"> Rule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="name"/> is null. </exception>
-        public static Response DisableAppServiceRecommendation(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).DisableAppServiceRecommendation(name, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Reset all recommendation opt-out settings for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_ResetAllFilters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response> ResetAllRecommendationFiltersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).ResetAllRecommendationFiltersAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Reset all recommendation opt-out settings for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/recommendations/reset</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_ResetAllFilters</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response ResetAllRecommendationFilters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).ResetAllRecommendationFilters(cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceHealthMetadata_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ResourceHealthMetadataData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAllResourceHealthMetadataAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/resourceHealthMetadata</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceHealthMetadata_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceHealthMetadataData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAllResourceHealthMetadata(cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Get all App Service plans for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServicePlans_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServicePlanResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServicePlans(bool?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="detailed">
-        /// Specify &lt;code&gt;true&lt;/code&gt; to return all App Service plan properties. The default is &lt;code&gt;false&lt;/code&gt;, which returns a subset of the properties.
-        /// Retrieval of all properties may increase the API latency.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AppServicePlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppServicePlanResource> GetAppServicePlansAsync(this SubscriptionResource subscriptionResource, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServicePlansAsync(detailed, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Get all App Service plans for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/serverfarms</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppServicePlans_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServicePlanResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServicePlans(bool?,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="detailed">
-        /// Specify &lt;code&gt;true&lt;/code&gt; to return all App Service plan properties. The default is &lt;code&gt;false&lt;/code&gt;, which returns a subset of the properties.
-        /// Retrieval of all properties may increase the API latency.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AppServicePlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppServicePlanResource> GetAppServicePlans(this SubscriptionResource subscriptionResource, bool? detailed = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServicePlans(detailed, cancellationToken);
-        }
-
-        /// <summary>
         /// Description for Get all apps for a subscription.
         /// <list type="bullet">
         /// <item>
@@ -4735,7 +5526,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4771,7 +5562,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4841,7 +5632,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4879,7 +5670,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4905,6 +5696,134 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CertificateRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CertificateRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetOperationsCertificateRegistrationProviders(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CsmOperationDescription"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CsmOperationDescription> GetOperationsCertificateRegistrationProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppServiceTenantResource(tenantResource).GetOperationsCertificateRegistrationProvidersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.CertificateRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CertificateRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetOperationsCertificateRegistrationProviders(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CsmOperationDescription"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CsmOperationDescription> GetOperationsCertificateRegistrationProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppServiceTenantResource(tenantResource).GetOperationsCertificateRegistrationProviders(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DomainRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetOperationsDomainRegistrationProviders(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CsmOperationDescription"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CsmOperationDescription> GetOperationsDomainRegistrationProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppServiceTenantResource(tenantResource).GetOperationsDomainRegistrationProvidersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DomainRegistration/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetOperationsDomainRegistrationProviders(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CsmOperationDescription"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CsmOperationDescription> GetOperationsDomainRegistrationProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAppServiceTenantResource(tenantResource).GetOperationsDomainRegistrationProviders(cancellationToken);
+        }
+
+        /// <summary>
         /// Description for Get available application frameworks and their versions
         /// <list type="bullet">
         /// <item>
@@ -4917,7 +5836,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4950,7 +5869,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -4983,7 +5902,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -5016,7 +5935,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -5049,7 +5968,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -5058,7 +5977,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
@@ -5083,7 +6002,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -5092,7 +6011,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> Function App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
@@ -5117,7 +6036,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -5126,7 +6045,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
@@ -5151,7 +6070,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -5160,7 +6079,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> Web App stack location. </param>
         /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
@@ -5185,7 +6104,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -5217,7 +6136,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -5249,7 +6168,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -5282,7 +6201,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// <item>

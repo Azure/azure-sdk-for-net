@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CostManagement.Tests
             {
                 Format = ExportFormatType.Csv,
                 Definition = new ExportDefinition(ExportType.Usage, TimeframeType.TheLastMonth),
-                DeliveryInfoDestination = exportDeliveryDestination,
+                DeliveryInfo = new ExportDeliveryInfo(exportDeliveryDestination),
             };
             var export = await _exportCollection.CreateOrUpdateAsync(WaitUntil.Completed, exportName, data);
             return export.Value;

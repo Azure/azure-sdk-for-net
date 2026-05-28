@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.ResourceManager.RedHatOpenShift.csproj" />
-  <Project Path="tests/Azure.ResourceManager.RedHatOpenShift.Tests.csproj" />
-</Solution>

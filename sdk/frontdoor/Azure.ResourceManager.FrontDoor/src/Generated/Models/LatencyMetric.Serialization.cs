@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.FrontDoor;
+using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Defines the properties of a latency metric used in the latency scorecard. </summary>
-    public partial class LatencyMetric : IJsonModel<LatencyMetric>
+    public partial class LatencyMetric : IUtf8JsonSerializable, IJsonModel<LatencyMetric>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LatencyMetric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLatencyMetric(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LatencyMetric>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LatencyMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LatencyMetric IPersistableModel<LatencyMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LatencyMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LatencyMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LatencyMetric)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -124,15 +85,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("bUpper95CI"u8);
                 writer.WriteNumberValue(BUpper95CI.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -141,33 +102,28 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LatencyMetric IJsonModel<LatencyMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LatencyMetric JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LatencyMetric IJsonModel<LatencyMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LatencyMetric)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLatencyMetric(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LatencyMetric DeserializeLatencyMetric(JsonElement element, ModelReaderWriterOptions options)
+        internal static LatencyMetric DeserializeLatencyMetric(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endDateTimeUtc = default;
             float? aValue = default;
             float? bValue = default;
             float? delta = default;
@@ -176,103 +132,105 @@ namespace Azure.ResourceManager.FrontDoor.Models
             float? ahUpper95CI = default;
             float? bcLower95CI = default;
             float? bUpper95CI = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("endDateTimeUTC"u8))
+                if (property.NameEquals("endDateTimeUTC"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endDateTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("aValue"u8))
+                if (property.NameEquals("aValue"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    aValue = prop.Value.GetSingle();
+                    aValue = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("bValue"u8))
+                if (property.NameEquals("bValue"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bValue = prop.Value.GetSingle();
+                    bValue = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("delta"u8))
+                if (property.NameEquals("delta"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    delta = prop.Value.GetSingle();
+                    delta = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("deltaPercent"u8))
+                if (property.NameEquals("deltaPercent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deltaPercent = prop.Value.GetSingle();
+                    deltaPercent = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("aCLower95CI"u8))
+                if (property.NameEquals("aCLower95CI"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    acLower95CI = prop.Value.GetSingle();
+                    acLower95CI = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("aHUpper95CI"u8))
+                if (property.NameEquals("aHUpper95CI"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ahUpper95CI = prop.Value.GetSingle();
+                    ahUpper95CI = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("bCLower95CI"u8))
+                if (property.NameEquals("bCLower95CI"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bcLower95CI = prop.Value.GetSingle();
+                    bcLower95CI = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("bUpper95CI"u8))
+                if (property.NameEquals("bUpper95CI"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bUpper95CI = prop.Value.GetSingle();
+                    bUpper95CI = property.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new LatencyMetric(
                 name,
-                endOn,
+                endDateTimeUtc,
                 aValue,
                 bValue,
                 delta,
@@ -281,7 +239,214 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 ahUpper95CI,
                 bcLower95CI,
                 bUpper95CI,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endDateTimeUTC: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    builder.Append("  endDateTimeUTC: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AValue))
+                {
+                    builder.Append("  aValue: ");
+                    builder.AppendLine($"'{AValue.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BValue))
+                {
+                    builder.Append("  bValue: ");
+                    builder.AppendLine($"'{BValue.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Delta), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  delta: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Delta))
+                {
+                    builder.Append("  delta: ");
+                    builder.AppendLine($"'{Delta.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeltaPercent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deltaPercent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeltaPercent))
+                {
+                    builder.Append("  deltaPercent: ");
+                    builder.AppendLine($"'{DeltaPercent.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ACLower95CI), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aCLower95CI: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ACLower95CI))
+                {
+                    builder.Append("  aCLower95CI: ");
+                    builder.AppendLine($"'{ACLower95CI.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AHUpper95CI), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aHUpper95CI: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AHUpper95CI))
+                {
+                    builder.Append("  aHUpper95CI: ");
+                    builder.AppendLine($"'{AHUpper95CI.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BCLower95CI), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bCLower95CI: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BCLower95CI))
+                {
+                    builder.Append("  bCLower95CI: ");
+                    builder.AppendLine($"'{BCLower95CI.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BUpper95CI), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bUpper95CI: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BUpper95CI))
+                {
+                    builder.Append("  bUpper95CI: ");
+                    builder.AppendLine($"'{BUpper95CI.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<LatencyMetric>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LatencyMetric IPersistableModel<LatencyMetric>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeLatencyMetric(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LatencyMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

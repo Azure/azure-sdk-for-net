@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ClusterUpdateStrategyType : IEquatable<ClusterUpdateStrategyType>
     {
         private readonly string _value;
-        /// <summary> Update the cluster in rack-by-rack increments. </summary>
-        private const string RackValue = "Rack";
-        /// <summary> Pause after each rack is updated. </summary>
-        private const string PauseAfterRackValue = "PauseAfterRack";
 
         /// <summary> Initializes a new instance of <see cref="ClusterUpdateStrategyType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterUpdateStrategyType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Update the cluster in rack-by-rack increments. </summary>
+        private const string RackValue = "Rack";
+        private const string PauseAfterRackValue = "PauseAfterRack";
+
+        /// <summary> Rack. </summary>
         public static ClusterUpdateStrategyType Rack { get; } = new ClusterUpdateStrategyType(RackValue);
-
-        /// <summary> Pause after each rack is updated. </summary>
+        /// <summary> PauseAfterRack. </summary>
         public static ClusterUpdateStrategyType PauseAfterRack { get; } = new ClusterUpdateStrategyType(PauseAfterRackValue);
-
         /// <summary> Determines if two <see cref="ClusterUpdateStrategyType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterUpdateStrategyType left, ClusterUpdateStrategyType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ClusterUpdateStrategyType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterUpdateStrategyType left, ClusterUpdateStrategyType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ClusterUpdateStrategyType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterUpdateStrategyType"/>. </summary>
         public static implicit operator ClusterUpdateStrategyType(string value) => new ClusterUpdateStrategyType(value);
 
-        /// <summary> Converts a string to a <see cref="ClusterUpdateStrategyType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ClusterUpdateStrategyType?(string value) => value == null ? null : new ClusterUpdateStrategyType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterUpdateStrategyType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ClusterUpdateStrategyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

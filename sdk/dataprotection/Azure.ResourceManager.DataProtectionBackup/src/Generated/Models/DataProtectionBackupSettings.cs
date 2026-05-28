@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -17,20 +16,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSettings"/>. </summary>
         /// <param name="backupType"> BackupType ; Full/Incremental etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupType"/> is null. </exception>
-        public DataProtectionBackupSettings(string backupType) : base("AzureBackupParams")
+        public DataProtectionBackupSettings(string backupType)
         {
             Argument.AssertNotNull(backupType, nameof(backupType));
 
             BackupType = backupType;
+            ObjectType = "AzureBackupParams";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="backupType"> BackupType ; Full/Incremental etc. </param>
-        internal DataProtectionBackupSettings(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string backupType) : base(objectType, additionalBinaryDataProperties)
+        internal DataProtectionBackupSettings(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string backupType) : base(objectType, serializedAdditionalRawData)
         {
             BackupType = backupType;
+            ObjectType = objectType ?? "AzureBackupParams";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSettings"/> for deserialization. </summary>
+        internal DataProtectionBackupSettings()
+        {
         }
 
         /// <summary> BackupType ; Full/Incremental etc. </summary>

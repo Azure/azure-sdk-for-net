@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    /// <summary></summary>
-    internal partial class NotificationHubPrivateEndpointConnectionOperationSource : IOperationSource<NotificationHubPrivateEndpointConnectionResource>
+    internal class NotificationHubPrivateEndpointConnectionOperationSource : IOperationSource<NotificationHubPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal NotificationHubPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         NotificationHubPrivateEndpointConnectionResource IOperationSource<NotificationHubPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NotificationHubPrivateEndpointConnectionData data = NotificationHubPrivateEndpointConnectionData.DeserializeNotificationHubPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<NotificationHubPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNotificationHubsContext.Default);
             return new NotificationHubPrivateEndpointConnectionResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<NotificationHubPrivateEndpointConnectionResource> IOperationSource<NotificationHubPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NotificationHubPrivateEndpointConnectionData data = NotificationHubPrivateEndpointConnectionData.DeserializeNotificationHubPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NotificationHubPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<NotificationHubPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNotificationHubsContext.Default);
+            return await Task.FromResult(new NotificationHubPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

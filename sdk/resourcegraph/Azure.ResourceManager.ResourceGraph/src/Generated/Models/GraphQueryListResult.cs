@@ -7,39 +7,64 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary> Graph query list result. </summary>
     internal partial class GraphQueryListResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GraphQueryListResult"/>. </summary>
-        /// <param name="value"> The GraphQueryResource items on this page. </param>
-        internal GraphQueryListResult(IEnumerable<ResourceGraphQueryData> value)
+        internal GraphQueryListResult()
         {
-            Value = value.ToList();
+            Value = new ChangeTrackingList<ResourceGraphQueryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GraphQueryListResult"/>. </summary>
-        /// <param name="value"> The GraphQueryResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GraphQueryListResult(IList<ResourceGraphQueryData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="nextLink"> URL to fetch the next set of queries. </param>
+        /// <param name="value"> An array of graph queries. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GraphQueryListResult(string nextLink, IReadOnlyList<ResourceGraphQueryData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
             NextLink = nextLink;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The GraphQueryResource items on this page. </summary>
-        public IList<ResourceGraphQueryData> Value { get; }
-
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> URL to fetch the next set of queries. </summary>
+        public string NextLink { get; }
+        /// <summary> An array of graph queries. </summary>
+        public IReadOnlyList<ResourceGraphQueryData> Value { get; }
     }
 }

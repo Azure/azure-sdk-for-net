@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,6 +19,8 @@ namespace Azure.Monitor.Query.Logs
     public partial class LogsQueryClient
     {
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://api.loganalytics.io/.default" };
         private readonly string _apiVersion;
 
@@ -32,36 +33,6 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
         public LogsQueryClient(TokenCredential credential) : this(new Uri("https://api.loganalytics.io"), credential, new LogsQueryClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of LogsQueryClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal LogsQueryClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, LogsQueryClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            options ??= new LogsQueryClientOptions();
-
-            _endpoint = endpoint;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
-            }
-            else
-            {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
-            }
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of LogsQueryClient from a <see cref="LogsQueryClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for LogsQueryClient. </param>
-        [Experimental("SCME0002")]
-        public LogsQueryClient(LogsQueryClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -159,7 +130,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<LogsQueryResult> QueryWorkspace(string workspaceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = QueryWorkspace(workspaceId, body, prefer, cancellationToken.ToRequestContext());
+            Response result = QueryWorkspace(workspaceId, body, prefer, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((LogsQueryResult)result, result);
         }
 
@@ -181,7 +152,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<LogsQueryResult>> QueryWorkspaceAsync(string workspaceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryWorkspaceAsync(workspaceId, body, prefer, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await QueryWorkspaceAsync(workspaceId, body, prefer, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((LogsQueryResult)result, result);
         }
 
@@ -273,7 +244,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<LogsQueryResult> QueryResource(string resourceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = QueryResource(resourceId, body, prefer, cancellationToken.ToRequestContext());
+            Response result = QueryResource(resourceId, body, prefer, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((LogsQueryResult)result, result);
         }
 
@@ -295,7 +266,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(string resourceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryResourceAsync(resourceId, body, prefer, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await QueryResourceAsync(resourceId, body, prefer, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((LogsQueryResult)result, result);
         }
 
@@ -369,7 +340,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<BatchResponse> QueryBatch(BatchRequest body, CancellationToken cancellationToken = default)
         {
-            Response result = QueryBatch(body, cancellationToken.ToRequestContext());
+            Response result = QueryBatch(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((BatchResponse)result, result);
         }
 
@@ -383,7 +354,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<BatchResponse>> QueryBatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryBatchAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await QueryBatchAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return Response.FromValue((BatchResponse)result, result);
         }
     }

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ImpactReporting
 {
-    /// <summary></summary>
-    internal partial class WorkloadImpactOperationSource : IOperationSource<WorkloadImpactResource>
+    internal class WorkloadImpactOperationSource : IOperationSource<WorkloadImpactResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal WorkloadImpactOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         WorkloadImpactResource IOperationSource<WorkloadImpactResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            WorkloadImpactData data = WorkloadImpactData.DeserializeWorkloadImpactData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<WorkloadImpactData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerImpactReportingContext.Default);
             return new WorkloadImpactResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<WorkloadImpactResource> IOperationSource<WorkloadImpactResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            WorkloadImpactData data = WorkloadImpactData.DeserializeWorkloadImpactData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WorkloadImpactResource(_client, data);
+            var data = ModelReaderWriter.Read<WorkloadImpactData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerImpactReportingContext.Default);
+            return await Task.FromResult(new WorkloadImpactResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

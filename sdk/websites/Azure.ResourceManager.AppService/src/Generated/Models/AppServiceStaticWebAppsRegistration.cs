@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the registration for the Azure Static Web Apps provider
-    /// Serialized Name: AzureStaticWebAppsRegistration
-    /// </summary>
+    /// <summary> The configuration settings of the registration for the Azure Static Web Apps provider. </summary>
     internal partial class AppServiceStaticWebAppsRegistration
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceStaticWebAppsRegistration"/>. </summary>
-        /// <param name="clientId">
-        /// The Client ID of the app used for login.
-        /// Serialized Name: AzureStaticWebAppsRegistration.clientId
-        /// </param>
+        /// <param name="clientId"> The Client ID of the app used for login. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceStaticWebAppsRegistration(string clientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The Client ID of the app used for login.
-        /// Serialized Name: AzureStaticWebAppsRegistration.clientId
-        /// </summary>
+        /// <summary> The Client ID of the app used for login. </summary>
         [WirePath("clientId")]
         public string ClientId { get; set; }
     }

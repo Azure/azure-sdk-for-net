@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -263,13 +263,12 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="CapacityReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CapacityReservationResource> GetAllAsync(CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CapacityReservationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityReservationRestClient.CreateListByCapacityReservationGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityReservationRestClient.CreateListByCapacityReservationGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -286,7 +285,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,13 +293,12 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CapacityReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CapacityReservationResource> GetAll(CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<CapacityReservationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityReservationRestClient.CreateListByCapacityReservationGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationRestClient.CreateListByCapacityReservationGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capacityReservationRestClient.CreateListByCapacityReservationGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapacityReservationResource(Client, CapacityReservationData.DeserializeCapacityReservationData(e)), _capacityReservationClientDiagnostics, Pipeline, "CapacityReservationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -317,7 +315,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,7 +359,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -405,7 +403,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -451,7 +449,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
+        /// <description>2025-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

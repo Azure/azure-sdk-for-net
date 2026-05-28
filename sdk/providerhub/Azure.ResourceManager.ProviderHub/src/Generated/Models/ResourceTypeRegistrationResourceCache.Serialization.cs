@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ProviderHub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> Resource cache options. </summary>
-    public partial class ResourceTypeRegistrationResourceCache : IJsonModel<ResourceTypeRegistrationResourceCache>
+    public partial class ResourceTypeRegistrationResourceCache : IUtf8JsonSerializable, IJsonModel<ResourceTypeRegistrationResourceCache>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceTypeRegistrationResourceCache PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceCache>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceTypeRegistrationResourceCache(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceCache)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeRegistrationResourceCache>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceCache>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceCache)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceTypeRegistrationResourceCache>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceTypeRegistrationResourceCache IPersistableModel<ResourceTypeRegistrationResourceCache>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceTypeRegistrationResourceCache>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceTypeRegistrationResourceCache>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceCache>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceCache>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceCache)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(IsResourceCacheEnabled))
             {
                 writer.WritePropertyName("enableResourceCache"u8);
@@ -84,15 +44,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceCacheExpirationTimespan"u8);
                 writer.WriteStringValue(ResourceCacheExpirationTimespan);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,56 +61,84 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceTypeRegistrationResourceCache IJsonModel<ResourceTypeRegistrationResourceCache>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceTypeRegistrationResourceCache JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceTypeRegistrationResourceCache IJsonModel<ResourceTypeRegistrationResourceCache>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceCache>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceCache>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceCache)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceTypeRegistrationResourceCache(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceTypeRegistrationResourceCache DeserializeResourceTypeRegistrationResourceCache(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceTypeRegistrationResourceCache DeserializeResourceTypeRegistrationResourceCache(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? isResourceCacheEnabled = default;
+            bool? enableResourceCache = default;
             string resourceCacheExpirationTimespan = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("enableResourceCache"u8))
+                if (property.NameEquals("enableResourceCache"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isResourceCacheEnabled = prop.Value.GetBoolean();
+                    enableResourceCache = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("resourceCacheExpirationTimespan"u8))
+                if (property.NameEquals("resourceCacheExpirationTimespan"u8))
                 {
-                    resourceCacheExpirationTimespan = prop.Value.GetString();
+                    resourceCacheExpirationTimespan = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ResourceTypeRegistrationResourceCache(isResourceCacheEnabled, resourceCacheExpirationTimespan, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceTypeRegistrationResourceCache(enableResourceCache, resourceCacheExpirationTimespan, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceTypeRegistrationResourceCache>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceCache>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceCache)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceTypeRegistrationResourceCache IPersistableModel<ResourceTypeRegistrationResourceCache>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceCache>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeResourceTypeRegistrationResourceCache(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceCache)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceTypeRegistrationResourceCache>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

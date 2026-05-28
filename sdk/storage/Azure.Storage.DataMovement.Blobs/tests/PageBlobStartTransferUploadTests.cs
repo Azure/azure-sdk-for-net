@@ -1,18 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-extern alias BaseBlobs;
 extern alias DMBlobs;
+extern alias BaseBlobs;
+
 using System;
-using System.IO;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Shared;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.DataMovement.Tests;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
+using System.IO;
+using Azure.Core.TestFramework;
+using Azure.Core;
+using Azure.Storage.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests

@@ -6,36 +6,47 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a MySqlFlexibleServerAadAdministrator along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServerAadAdministratorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetMySqlFlexibleServerAadAdministrators method.
+    /// A Class representing a MySqlFlexibleServerAadAdministrator along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MySqlFlexibleServerAadAdministratorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMySqlFlexibleServerAadAdministratorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetMySqlFlexibleServerAadAdministrator method.
     /// </summary>
     public partial class MySqlFlexibleServerAadAdministratorResource : ArmResource
     {
-        private readonly ClientDiagnostics _azureADAdministratorsClientDiagnostics;
-        private readonly AzureADAdministrators _azureADAdministratorsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="MySqlFlexibleServerAadAdministratorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="administratorName"> The administratorName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, MySqlFlexibleServerAdministratorName administratorName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics;
+        private readonly AzureADAdministratorsRestOperations _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient;
         private readonly MySqlFlexibleServerAadAdministratorData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/administrators";
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerAadAdministratorResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerAadAdministratorResource"/> class for mocking. </summary>
         protected MySqlFlexibleServerAadAdministratorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerAadAdministratorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MySqlFlexibleServerAadAdministratorResource(ArmClient client, MySqlFlexibleServerAadAdministratorData data) : this(client, data.Id)
@@ -44,93 +55,71 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerAadAdministratorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerAadAdministratorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MySqlFlexibleServerAadAdministratorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string mySqlFlexibleServerAadAdministratorApiVersion);
-            _azureADAdministratorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _azureADAdministratorsRestClient = new AzureADAdministrators(_azureADAdministratorsClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerAadAdministratorApiVersion ?? "2024-12-30");
-            ValidateResourceId(id);
+            _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string mySqlFlexibleServerAadAdministratorAzureADAdministratorsApiVersion);
+            _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient = new AzureADAdministratorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerAadAdministratorAzureADAdministratorsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual MySqlFlexibleServerAadAdministratorData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serverName"> The serverName. </param>
-        /// <param name="administratorName"> The administratorName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, MySqlFlexibleServerAdministratorName administratorName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets information about an azure ad administrator.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureADAdministrators_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureADAdministrators_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-30. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MySqlFlexibleServerAadAdministratorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MySqlFlexibleServerAadAdministratorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _azureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Get");
+            using var scope = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureADAdministratorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MySqlFlexibleServerAadAdministratorData> response = Response.FromValue(MySqlFlexibleServerAadAdministratorData.FromResponse(result), result);
+                var response = await _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MySqlFlexibleServerAadAdministratorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,41 +133,33 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Gets information about an azure ad administrator.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureADAdministrators_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureADAdministrators_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-30. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MySqlFlexibleServerAadAdministratorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MySqlFlexibleServerAadAdministratorResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _azureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Get");
+            using var scope = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureADAdministratorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MySqlFlexibleServerAadAdministratorData> response = Response.FromValue(MySqlFlexibleServerAadAdministratorData.FromResponse(result), result);
+                var response = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MySqlFlexibleServerAadAdministratorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,20 +173,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Deletes an Azure AD Administrator.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureADAdministrators_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureADAdministrators_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-30. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MySqlFlexibleServerAadAdministratorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,21 +194,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _azureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Delete");
+            using var scope = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureADAdministratorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_azureADAdministratorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics, Pipeline, _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -241,20 +215,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// Deletes an Azure AD Administrator.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureADAdministrators_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureADAdministrators_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-30. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MySqlFlexibleServerAadAdministratorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,21 +236,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _azureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Delete");
+            using var scope = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureADAdministratorsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                FlexibleServersArmOperation operation = new FlexibleServersArmOperation(_azureADAdministratorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics, Pipeline, _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -287,23 +254,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary>
-        /// Update a MySqlFlexibleServerAadAdministrator.
+        /// Creates or updates an existing Azure Active Directory administrator.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureADAdministrators_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureADAdministrators_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-30. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MySqlFlexibleServerAadAdministratorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,27 +282,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _azureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Update");
+            using var scope = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerAadAdministratorData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FlexibleServersArmOperation<MySqlFlexibleServerAadAdministratorResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerAadAdministratorResource>(
-                    new MySqlFlexibleServerAadAdministratorOperationSource(Client),
-                    _azureADAdministratorsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.OriginalUri);
+                var response = await _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerAadAdministratorResource>(new MySqlFlexibleServerAadAdministratorOperationSource(Client), _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics, Pipeline, _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -346,23 +300,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary>
-        /// Update a MySqlFlexibleServerAadAdministrator.
+        /// Creates or updates an existing Azure Active Directory administrator.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/administrators/{administratorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureADAdministrators_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureADAdministrators_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-30. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="MySqlFlexibleServerAadAdministratorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerAadAdministratorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,27 +328,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _azureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Update");
+            using var scope = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics.CreateScope("MySqlFlexibleServerAadAdministratorResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerAadAdministratorData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                FlexibleServersArmOperation<MySqlFlexibleServerAadAdministratorResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerAadAdministratorResource>(
-                    new MySqlFlexibleServerAadAdministratorOperationSource(Client),
-                    _azureADAdministratorsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.OriginalUri);
+                var response = _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerAadAdministratorResource>(new MySqlFlexibleServerAadAdministratorOperationSource(Client), _mySqlFlexibleServerAadAdministratorAzureADAdministratorsClientDiagnostics, Pipeline, _mySqlFlexibleServerAadAdministratorAzureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    /// <summary></summary>
-    internal partial class ApplicationGatewayForContainersSecurityPolicyOperationSource : IOperationSource<ApplicationGatewayForContainersSecurityPolicyResource>
+    internal class ApplicationGatewayForContainersSecurityPolicyOperationSource : IOperationSource<ApplicationGatewayForContainersSecurityPolicyResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ApplicationGatewayForContainersSecurityPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ApplicationGatewayForContainersSecurityPolicyResource IOperationSource<ApplicationGatewayForContainersSecurityPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ApplicationGatewayForContainersSecurityPolicyData data = ApplicationGatewayForContainersSecurityPolicyData.DeserializeApplicationGatewayForContainersSecurityPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
             return new ApplicationGatewayForContainersSecurityPolicyResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ApplicationGatewayForContainersSecurityPolicyResource> IOperationSource<ApplicationGatewayForContainersSecurityPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ApplicationGatewayForContainersSecurityPolicyData data = ApplicationGatewayForContainersSecurityPolicyData.DeserializeApplicationGatewayForContainersSecurityPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ApplicationGatewayForContainersSecurityPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<ApplicationGatewayForContainersSecurityPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceNetworkingContext.Default);
+            return await Task.FromResult(new ApplicationGatewayForContainersSecurityPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

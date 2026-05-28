@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -20,20 +19,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal class WebPubSubTriggerDispatcher : IWebPubSubTriggerDispatcher
     {
-        private readonly ConcurrentDictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
+        private readonly Dictionary<string, WebPubSubListener> _listeners = new(StringComparer.InvariantCultureIgnoreCase);
         private readonly ILogger _logger;
+        private readonly WebPubSubFunctionsOptions _options;
 
-        public WebPubSubTriggerDispatcher(ILogger logger)
+        public WebPubSubTriggerDispatcher(ILogger logger, WebPubSubFunctionsOptions options)
         {
             _logger = logger;
+            _options = options;
         }
 
         public void AddListener(string key, WebPubSubListener listener)
         {
-            if (!_listeners.TryAdd(key, listener))
+            if (_listeners.ContainsKey(key))
             {
                 throw new ArgumentException($"Duplicated binding attribute find: {string.Join(",", key.Split('.'))}");
             }
+            _listeners.Add(key, listener);
         }
 
         public async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage req,
@@ -41,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         {
             if (req.IsValidationRequest(out var requestHosts))
             {
-                return RespondToServiceAbuseCheck(requestHosts);
+                return RespondToServiceAbuseCheck(requestHosts, new WebPubSubValidationOptions(_options.ConnectionString));
             }
 
             if (!TryParseCloudEvents(req, out var context))
@@ -53,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             if (TryResolveListener(context, out var executor))
             {
-                if (!executor.Validator.IsValidSignature(context.Origin, context.Signature, context.ConnectionId))
+                if (!context.IsValidSignature(executor.ValidationOptions))
                 {
                     return new HttpResponseMessage(HttpStatusCode.Unauthorized);
                 }
@@ -259,38 +261,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        private HttpResponseMessage RespondToServiceAbuseCheck(IList<string> requestHosts)
+        private static HttpResponseMessage RespondToServiceAbuseCheck(IList<string> requestHosts, WebPubSubValidationOptions options)
         {
             var response = new HttpResponseMessage();
-            if (IsValidAbuseProtectionOrigin(requestHosts))
+            // skip validation and allow all.
+            if (options == null || !options.ContainsHost())
             {
                 response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, Constants.AllowedAllOrigins);
                 return response;
             }
-
-            response.StatusCode = HttpStatusCode.BadRequest;
-            return response;
-        }
-
-        /// <summary>
-        /// Checks whether the abuse-protection origin matches any registered listener's
-        /// allowed hosts. Each listener's validator is built from either its trigger
-        /// attribute's <c>Connections</c>, or the extension-level default access
-        /// (<see cref="WebPubSubServiceAccessOptions.WebPubSubAccess"/>) when the trigger
-        /// has none. A validator with no restrictions accepts any origin, matching the
-        /// per-listener signature-validation semantics.
-        /// </summary>
-        private bool IsValidAbuseProtectionOrigin(IList<string> requestHosts)
-        {
-            foreach (var listener in _listeners.Values)
+            else
             {
-                if (listener.Validator.IsValidHost(requestHosts))
+                foreach (var item in requestHosts)
                 {
-                    return true;
+                    if (options.ContainsHost(item))
+                    {
+                        response.Headers.Add(Constants.Headers.WebHookAllowedOrigin, item);
+                        return response;
+                    }
                 }
             }
-
-            return false;
+            response.StatusCode = HttpStatusCode.BadRequest;
+            return response;
         }
     }
 }

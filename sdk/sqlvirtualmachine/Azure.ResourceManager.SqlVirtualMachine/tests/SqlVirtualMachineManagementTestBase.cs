@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute;
@@ -16,6 +15,7 @@ using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Tests
 {

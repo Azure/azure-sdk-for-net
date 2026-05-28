@@ -11,66 +11,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridConnectivity;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
-    /// <summary> Solution Configuration. </summary>
-    public partial class PublicCloudConnectorSolutionConfigurationPatch : ResourceData, IJsonModel<PublicCloudConnectorSolutionConfigurationPatch>
+    public partial class PublicCloudConnectorSolutionConfigurationPatch : IUtf8JsonSerializable, IJsonModel<PublicCloudConnectorSolutionConfigurationPatch>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePublicCloudConnectorSolutionConfigurationPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PublicCloudConnectorSolutionConfigurationPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicCloudConnectorSolutionConfigurationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PublicCloudConnectorSolutionConfigurationPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PublicCloudConnectorSolutionConfigurationPatch IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (PublicCloudConnectorSolutionConfigurationPatch)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="publicCloudConnectorSolutionConfigurationPatch"> The <see cref="PublicCloudConnectorSolutionConfigurationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PublicCloudConnectorSolutionConfigurationPatch publicCloudConnectorSolutionConfigurationPatch)
-        {
-            if (publicCloudConnectorSolutionConfigurationPatch == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(publicCloudConnectorSolutionConfigurationPatch, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PublicCloudConnectorSolutionConfigurationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -82,11 +30,12 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PublicCloudConnectorSolutionConfigurationPatch)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
             {
@@ -95,92 +44,112 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PublicCloudConnectorSolutionConfigurationPatch IJsonModel<PublicCloudConnectorSolutionConfigurationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PublicCloudConnectorSolutionConfigurationPatch)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PublicCloudConnectorSolutionConfigurationPatch IJsonModel<PublicCloudConnectorSolutionConfigurationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PublicCloudConnectorSolutionConfigurationPatch)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePublicCloudConnectorSolutionConfigurationPatch(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PublicCloudConnectorSolutionConfigurationPatch DeserializePublicCloudConnectorSolutionConfigurationPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static PublicCloudConnectorSolutionConfigurationPatch DeserializePublicCloudConnectorSolutionConfigurationPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            SolutionConfigurationPropertiesUpdate properties = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType resourceType = default;
+            ResourceType type = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SolutionConfigurationPropertiesUpdate properties = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    properties = SolutionConfigurationPropertiesUpdate.DeserializeSolutionConfigurationPropertiesUpdate(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    name = prop.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHybridConnectivityContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = SolutionConfigurationPropertiesUpdate.DeserializeSolutionConfigurationPropertiesUpdate(prop.Value, options);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHybridConnectivityContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new PublicCloudConnectorSolutionConfigurationPatch(
                 id,
                 name,
-                resourceType,
+                type,
                 systemData,
-                additionalBinaryDataProperties,
-                properties);
+                properties,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PublicCloudConnectorSolutionConfigurationPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PublicCloudConnectorSolutionConfigurationPatch IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePublicCloudConnectorSolutionConfigurationPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PublicCloudConnectorSolutionConfigurationPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PublicCloudConnectorSolutionConfigurationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

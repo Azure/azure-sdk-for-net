@@ -6,25 +6,19 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Specs.Azure.Versioning.PreviewVersion
+namespace _Specs_.Azure.Versioning.PreviewVersion
 {
     public partial class PreviewVersionClient
     {
         public PreviewVersionClient() : this(new Uri("http://localhost:3000"), new PreviewVersionClientOptions()) => throw null;
 
-        internal PreviewVersionClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PreviewVersionClientOptions options) => throw null;
-
-        public PreviewVersionClient(Uri endpoint, PreviewVersionClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public PreviewVersionClient(PreviewVersionClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public PreviewVersionClient(Uri endpoint, PreviewVersionClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

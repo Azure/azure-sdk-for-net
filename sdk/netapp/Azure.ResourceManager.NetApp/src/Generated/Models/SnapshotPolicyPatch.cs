@@ -15,125 +15,85 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Snapshot policy Details for create and update. </summary>
     public partial class SnapshotPolicyPatch : TrackedResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPolicyPatch"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="location"> The location. </param>
         public SnapshotPolicyPatch(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPolicyPatch"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Snapshot Policy properties. </param>
-        internal SnapshotPolicyPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SnapshotPolicyProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="hourlySchedule"> Schedule for hourly snapshots. </param>
+        /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
+        /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
+        /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotPolicyPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? isEnabled, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            HourlySchedule = hourlySchedule;
+            DailySchedule = dailySchedule;
+            WeeklySchedule = weeklySchedule;
+            MonthlySchedule = monthlySchedule;
+            IsEnabled = isEnabled;
+            ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Snapshot Policy properties. </summary>
-        internal SnapshotPolicyProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyPatch"/> for deserialization. </summary>
+        internal SnapshotPolicyPatch()
+        {
+        }
 
         /// <summary> Schedule for hourly snapshots. </summary>
-        public SnapshotPolicyHourlySchedule HourlySchedule
-        {
-            get
-            {
-                return Properties is null ? default : Properties.HourlySchedule;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SnapshotPolicyProperties();
-                }
-                Properties.HourlySchedule = value;
-            }
-        }
-
+        public SnapshotPolicyHourlySchedule HourlySchedule { get; set; }
         /// <summary> Schedule for daily snapshots. </summary>
-        public SnapshotPolicyDailySchedule DailySchedule
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DailySchedule;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SnapshotPolicyProperties();
-                }
-                Properties.DailySchedule = value;
-            }
-        }
-
+        public SnapshotPolicyDailySchedule DailySchedule { get; set; }
         /// <summary> Schedule for weekly snapshots. </summary>
-        public SnapshotPolicyWeeklySchedule WeeklySchedule
-        {
-            get
-            {
-                return Properties is null ? default : Properties.WeeklySchedule;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SnapshotPolicyProperties();
-                }
-                Properties.WeeklySchedule = value;
-            }
-        }
-
+        public SnapshotPolicyWeeklySchedule WeeklySchedule { get; set; }
         /// <summary> Schedule for monthly snapshots. </summary>
-        public SnapshotPolicyMonthlySchedule MonthlySchedule
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MonthlySchedule;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SnapshotPolicyProperties();
-                }
-                Properties.MonthlySchedule = value;
-            }
-        }
-
+        public SnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
         /// <summary> The property to decide policy is enabled or not. </summary>
-        public bool? IsEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SnapshotPolicyProperties();
-                }
-                Properties.IsEnabled = value;
-            }
-        }
-
+        public bool? IsEnabled { get; set; }
         /// <summary> Azure lifecycle management. </summary>
-        public string ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
+        public string ProvisioningState { get; }
     }
 }

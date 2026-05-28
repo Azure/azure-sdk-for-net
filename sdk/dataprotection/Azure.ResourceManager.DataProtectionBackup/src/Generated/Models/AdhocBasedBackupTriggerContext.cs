@@ -14,36 +14,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class AdhocBasedBackupTriggerContext : DataProtectionBackupTriggerContext
     {
         /// <summary> Initializes a new instance of <see cref="AdhocBasedBackupTriggerContext"/>. </summary>
-        public AdhocBasedBackupTriggerContext() : base("AdhocBasedTriggerContext")
-        {
-
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AdhocBasedBackupTriggerContext"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="adhocBackupRetention"> Tagging Criteria containing retention tag for adhoc backup. </param>
-        internal AdhocBasedBackupTriggerContext(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AdhocBasedBackupTaggingCriteria adhocBackupRetention) : base(objectType, additionalBinaryDataProperties)
+        internal AdhocBasedBackupTriggerContext(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, AdhocBasedBackupTaggingCriteria adhocBackupRetention) : base(objectType, serializedAdditionalRawData)
         {
             AdhocBackupRetention = adhocBackupRetention;
+            ObjectType = objectType ?? "AdhocBasedTriggerContext";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdhocBasedBackupTriggerContext"/> for deserialization. </summary>
+        internal AdhocBasedBackupTriggerContext()
+        {
         }
 
         /// <summary> Tagging Criteria containing retention tag for adhoc backup. </summary>
         internal AdhocBasedBackupTaggingCriteria AdhocBackupRetention { get; set; }
-
         /// <summary> Retention tag information. </summary>
         public DataProtectionBackupRetentionTag AdhocBackupRetentionTagInfo
         {
-            get
-            {
-                return AdhocBackupRetention is null ? default : AdhocBackupRetention.TagInfo;
-            }
+            get => AdhocBackupRetention is null ? default : AdhocBackupRetention.TagInfo;
             set
             {
                 if (AdhocBackupRetention is null)
-                {
                     AdhocBackupRetention = new AdhocBasedBackupTaggingCriteria();
-                }
                 AdhocBackupRetention.TagInfo = value;
             }
         }

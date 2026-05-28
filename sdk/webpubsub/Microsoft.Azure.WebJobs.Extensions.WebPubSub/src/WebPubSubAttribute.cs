@@ -15,9 +15,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     public class WebPubSubAttribute : Attribute
     {
         /// <summary>
-        /// The configuration section name that resolves to the identity-based connection or a connection string of the service.
+        /// The connection of target Web PubSub service.
         /// </summary>
-        public string Connection { get; set; }
+        [ConnectionString]
+        public string Connection { get; set; } = Constants.WebPubSubConnectionStringName;
 
         /// <summary>
         /// Target hub.

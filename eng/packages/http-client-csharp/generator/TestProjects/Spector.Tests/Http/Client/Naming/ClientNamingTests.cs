@@ -3,10 +3,9 @@
 
 using System.Threading.Tasks;
 using Client.Naming;
-using Client.Naming._Header;
-using Client.Naming._Property;
 using Client.Naming._UnionEnum;
 using Client.Naming.Model;
+using Client.Naming.Property;
 using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Client.Naming
@@ -16,7 +15,7 @@ namespace TestProjects.Spector.Tests.Http.Client.Naming
         [SpectorTest]
         public Task Client_Naming_Property_client() => Test(async (host) =>
         {
-            var response = await new NamingClient(host, null).GetPropertyClient().ClientAsync(new ClientNameModel(true));
+            var response = await new NamingClient(host, null).ClientAsync(new ClientNameModel(true));
             Assert.AreEqual(204, response.Status);
 
             Assert.NotNull(typeof(ClientNameModel).GetProperty("ClientName"));
@@ -26,7 +25,7 @@ namespace TestProjects.Spector.Tests.Http.Client.Naming
         [SpectorTest]
         public Task Client_Naming_Property_language() => Test(async (host) =>
         {
-            var response = await new NamingClient(host, null).GetPropertyClient().LanguageAsync(new LanguageClientNameModel(true));
+            var response = await new NamingClient(host, null).LanguageAsync(new LanguageClientNameModel(true));
             Assert.AreEqual(204, response.Status);
 
             Assert.NotNull(typeof(LanguageClientNameModel).GetProperty("CSName"));
@@ -36,7 +35,7 @@ namespace TestProjects.Spector.Tests.Http.Client.Naming
         [SpectorTest]
         public Task Client_Naming_Property_compatibleWithEncodedName() => Test(async (host) =>
         {
-            var response = await new NamingClient(host, null).GetPropertyClient().CompatibleWithEncodedNameAsync(new ClientNameAndJsonEncodedNameModel(true));
+            var response = await new NamingClient(host, null).CompatibleWithEncodedNameAsync(new ClientNameAndJsonEncodedNameModel(true));
             Assert.AreEqual(204, response.Status);
 
             Assert.NotNull(typeof(ClientNameModel).GetProperty("ClientName"));
@@ -60,14 +59,14 @@ namespace TestProjects.Spector.Tests.Http.Client.Naming
         [SpectorTest]
         public Task Client_Naming_Header_request() => Test(async (host) =>
         {
-            var response = await new NamingClient(host, null).GetHeaderClient().RequestAsync(clientName: "true");
+            var response = await new NamingClient(host, null).RequestAsync(clientName: "true");
             Assert.AreEqual(204, response.Status);
         });
 
         [SpectorTest]
         public Task Client_Naming_Header_response() => Test(async (host) =>
         {
-            var response = await new NamingClient(host, null).GetHeaderClient().ResponseAsync();
+            var response = await new NamingClient(host, null).ResponseAsync();
             Assert.IsTrue(response.Headers.Contains("default-name"));
             foreach (var header in response.Headers)
             {

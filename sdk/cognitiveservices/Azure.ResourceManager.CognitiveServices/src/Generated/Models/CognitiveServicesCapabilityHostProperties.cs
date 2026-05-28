@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesCapabilityHostProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="aiServicesConnections"> List of AI services connections. </param>
         /// <param name="capabilityHostKind"> Kind of this capability host. </param>
         /// <param name="customerSubnet"> Customer subnet info to help set up this capability host. </param>
@@ -34,8 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="storageConnections"> List of connection names from those available in the account or project to be used as a storage resource. </param>
         /// <param name="threadStorageConnections"> List of connection names from those available in the account or project to be used for Thread storage. </param>
         /// <param name="vectorStoreConnections"> List of connection names from those available in the account or project to be used for vector database (e.g. CosmosDB). </param>
-        /// <param name="enablePublicHostingEnvironment"> Whether public hosting environment is enabled for the capability host. </param>
-        internal CognitiveServicesCapabilityHostProperties(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> aiServicesConnections, CapabilityHostKind? capabilityHostKind, string customerSubnet, CapabilityHostProvisioningState? provisioningState, IList<string> storageConnections, IList<string> threadStorageConnections, IList<string> vectorStoreConnections, bool? enablePublicHostingEnvironment) : base(description, tags, additionalBinaryDataProperties)
+        internal CognitiveServicesCapabilityHostProperties(string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> aiServicesConnections, CapabilityHostKind? capabilityHostKind, string customerSubnet, CapabilityHostProvisioningState? provisioningState, IList<string> storageConnections, IList<string> threadStorageConnections, IList<string> vectorStoreConnections) : base(description, tags, serializedAdditionalRawData)
         {
             AiServicesConnections = aiServicesConnections;
             CapabilityHostKind = capabilityHostKind;
@@ -44,39 +42,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             StorageConnections = storageConnections;
             ThreadStorageConnections = threadStorageConnections;
             VectorStoreConnections = vectorStoreConnections;
-            EnablePublicHostingEnvironment = enablePublicHostingEnvironment;
         }
 
         /// <summary> List of AI services connections. </summary>
         [WirePath("aiServicesConnections")]
         public IList<string> AiServicesConnections { get; set; }
-
         /// <summary> Kind of this capability host. </summary>
         [WirePath("capabilityHostKind")]
         public CapabilityHostKind? CapabilityHostKind { get; set; }
-
         /// <summary> Customer subnet info to help set up this capability host. </summary>
         [WirePath("customerSubnet")]
         public string CustomerSubnet { get; set; }
-
         /// <summary> Provisioning state for the CapabilityHost. </summary>
         [WirePath("provisioningState")]
         public CapabilityHostProvisioningState? ProvisioningState { get; }
-
         /// <summary> List of connection names from those available in the account or project to be used as a storage resource. </summary>
         [WirePath("storageConnections")]
         public IList<string> StorageConnections { get; set; }
-
         /// <summary> List of connection names from those available in the account or project to be used for Thread storage. </summary>
         [WirePath("threadStorageConnections")]
         public IList<string> ThreadStorageConnections { get; set; }
-
         /// <summary> List of connection names from those available in the account or project to be used for vector database (e.g. CosmosDB). </summary>
         [WirePath("vectorStoreConnections")]
         public IList<string> VectorStoreConnections { get; set; }
-
-        /// <summary> Whether public hosting environment is enabled for the capability host. </summary>
-        [WirePath("enablePublicHostingEnvironment")]
-        public bool? EnablePublicHostingEnvironment { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct ImmutableStorageWithVersioningMigrationState : IEquatable<ImmutableStorageWithVersioningMigrationState>
     {
         private readonly string _value;
-        private const string InProgressValue = "InProgress";
-        private const string CompletedValue = "Completed";
 
         /// <summary> Initializes a new instance of <see cref="ImmutableStorageWithVersioningMigrationState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImmutableStorageWithVersioningMigrationState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        private const string CompletedValue = "Completed";
+
+        /// <summary> InProgress. </summary>
         public static ImmutableStorageWithVersioningMigrationState InProgress { get; } = new ImmutableStorageWithVersioningMigrationState(InProgressValue);
-
-        /// <summary> Gets the Completed. </summary>
+        /// <summary> Completed. </summary>
         public static ImmutableStorageWithVersioningMigrationState Completed { get; } = new ImmutableStorageWithVersioningMigrationState(CompletedValue);
-
         /// <summary> Determines if two <see cref="ImmutableStorageWithVersioningMigrationState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImmutableStorageWithVersioningMigrationState left, ImmutableStorageWithVersioningMigrationState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ImmutableStorageWithVersioningMigrationState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImmutableStorageWithVersioningMigrationState left, ImmutableStorageWithVersioningMigrationState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ImmutableStorageWithVersioningMigrationState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImmutableStorageWithVersioningMigrationState"/>. </summary>
         public static implicit operator ImmutableStorageWithVersioningMigrationState(string value) => new ImmutableStorageWithVersioningMigrationState(value);
 
-        /// <summary> Converts a string to a <see cref="ImmutableStorageWithVersioningMigrationState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ImmutableStorageWithVersioningMigrationState?(string value) => value == null ? null : new ImmutableStorageWithVersioningMigrationState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImmutableStorageWithVersioningMigrationState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ImmutableStorageWithVersioningMigrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

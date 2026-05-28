@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.WorkloadOrchestration;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Stage Properties. </summary>
-    public partial class EdgeWorkflowStageSpec : IJsonModel<EdgeWorkflowStageSpec>
+    public partial class EdgeWorkflowStageSpec : IUtf8JsonSerializable, IJsonModel<EdgeWorkflowStageSpec>
     {
-        /// <summary> Initializes a new instance of <see cref="EdgeWorkflowStageSpec"/> for deserialization. </summary>
-        internal EdgeWorkflowStageSpec()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeWorkflowStageSpec>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeWorkflowStageSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeWorkflowStageSpec>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeWorkflowStageSpec(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeWorkflowStageSpec)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeWorkflowStageSpec>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EdgeWorkflowStageSpec)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeWorkflowStageSpec>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeWorkflowStageSpec IPersistableModel<EdgeWorkflowStageSpec>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeWorkflowStageSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeWorkflowStageSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeWorkflowStageSpec>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeWorkflowStageSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeWorkflowStageSpec)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(Specification))
@@ -94,9 +49,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,7 +63,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 writer.WritePropertyName("tasks"u8);
                 writer.WriteStartArray();
-                foreach (EdgeWorkflowTaskSpec item in Tasks)
+                foreach (var item in Tasks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -119,15 +74,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 writer.WritePropertyName("taskOption"u8);
                 writer.WriteObjectValue(TaskOption, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -136,27 +91,22 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeWorkflowStageSpec IJsonModel<EdgeWorkflowStageSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeWorkflowStageSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EdgeWorkflowStageSpec IJsonModel<EdgeWorkflowStageSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeWorkflowStageSpec>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeWorkflowStageSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeWorkflowStageSpec)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEdgeWorkflowStageSpec(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EdgeWorkflowStageSpec DeserializeEdgeWorkflowStageSpec(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeWorkflowStageSpec DeserializeEdgeWorkflowStageSpec(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -165,64 +115,97 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             IDictionary<string, BinaryData> specification = default;
             IList<EdgeWorkflowTaskSpec> tasks = default;
             EdgeWorkflowTaskConfig taskOption = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("specification"u8))
+                if (property.NameEquals("specification"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(prop0.Name, null);
+                            dictionary.Add(property0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                         }
                     }
                     specification = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("tasks"u8))
+                if (property.NameEquals("tasks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EdgeWorkflowTaskSpec> array = new List<EdgeWorkflowTaskSpec>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(EdgeWorkflowTaskSpec.DeserializeEdgeWorkflowTaskSpec(item, options));
                     }
                     tasks = array;
                     continue;
                 }
-                if (prop.NameEquals("taskOption"u8))
+                if (property.NameEquals("taskOption"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    taskOption = EdgeWorkflowTaskConfig.DeserializeEdgeWorkflowTaskConfig(prop.Value, options);
+                    taskOption = EdgeWorkflowTaskConfig.DeserializeEdgeWorkflowTaskConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new EdgeWorkflowStageSpec(name, specification ?? new ChangeTrackingDictionary<string, BinaryData>(), tasks ?? new ChangeTrackingList<EdgeWorkflowTaskSpec>(), taskOption, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeWorkflowStageSpec(name, specification ?? new ChangeTrackingDictionary<string, BinaryData>(), tasks ?? new ChangeTrackingList<EdgeWorkflowTaskSpec>(), taskOption, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeWorkflowStageSpec>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeWorkflowStageSpec>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeWorkflowStageSpec)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeWorkflowStageSpec IPersistableModel<EdgeWorkflowStageSpec>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeWorkflowStageSpec>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEdgeWorkflowStageSpec(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeWorkflowStageSpec)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeWorkflowStageSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -3,8 +3,8 @@
 
 using System;
 using Azure.Core.TestFramework;
-using Azure.Data.Tables.Tests;
 using NUnit.Framework;
+using Azure.Data.Tables.Tests;
 
 namespace Azure.Data.Tables.Samples
 {

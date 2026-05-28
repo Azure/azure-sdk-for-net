@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Broker Diagnostic Trace properties. </summary>
-    public partial class BrokerDiagnosticTraces : IJsonModel<BrokerDiagnosticTraces>
+    public partial class BrokerDiagnosticTraces : IUtf8JsonSerializable, IJsonModel<BrokerDiagnosticTraces>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerDiagnosticTraces PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerDiagnosticTraces>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerDiagnosticTraces(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerDiagnosticTraces)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BrokerDiagnosticTraces>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerDiagnosticTraces>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BrokerDiagnosticTraces)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrokerDiagnosticTraces>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerDiagnosticTraces IPersistableModel<BrokerDiagnosticTraces>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BrokerDiagnosticTraces>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerDiagnosticTraces>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerDiagnosticTraces>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerDiagnosticTraces>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerDiagnosticTraces)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -94,15 +54,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("spanChannelCapacity"u8);
                 writer.WriteNumberValue(SpanChannelCapacity.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,27 +71,22 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerDiagnosticTraces IJsonModel<BrokerDiagnosticTraces>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerDiagnosticTraces JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BrokerDiagnosticTraces IJsonModel<BrokerDiagnosticTraces>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerDiagnosticTraces>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerDiagnosticTraces>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerDiagnosticTraces)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBrokerDiagnosticTraces(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BrokerDiagnosticTraces DeserializeBrokerDiagnosticTraces(JsonElement element, ModelReaderWriterOptions options)
+        internal static BrokerDiagnosticTraces DeserializeBrokerDiagnosticTraces(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,51 +95,84 @@ namespace Azure.ResourceManager.IotOperations.Models
             int? cacheSizeMegabytes = default;
             DiagnosticSelfTracing selfTracing = default;
             int? spanChannelCapacity = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("mode"u8))
+                if (property.NameEquals("mode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mode = new IotOperationsOperationalMode(prop.Value.GetString());
+                    mode = new IotOperationsOperationalMode(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("cacheSizeMegabytes"u8))
+                if (property.NameEquals("cacheSizeMegabytes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cacheSizeMegabytes = prop.Value.GetInt32();
+                    cacheSizeMegabytes = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("selfTracing"u8))
+                if (property.NameEquals("selfTracing"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    selfTracing = DiagnosticSelfTracing.DeserializeDiagnosticSelfTracing(prop.Value, options);
+                    selfTracing = DiagnosticSelfTracing.DeserializeDiagnosticSelfTracing(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("spanChannelCapacity"u8))
+                if (property.NameEquals("spanChannelCapacity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    spanChannelCapacity = prop.Value.GetInt32();
+                    spanChannelCapacity = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new BrokerDiagnosticTraces(mode, cacheSizeMegabytes, selfTracing, spanChannelCapacity, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BrokerDiagnosticTraces(mode, cacheSizeMegabytes, selfTracing, spanChannelCapacity, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BrokerDiagnosticTraces>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerDiagnosticTraces>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BrokerDiagnosticTraces)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BrokerDiagnosticTraces IPersistableModel<BrokerDiagnosticTraces>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerDiagnosticTraces>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBrokerDiagnosticTraces(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerDiagnosticTraces)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BrokerDiagnosticTraces>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

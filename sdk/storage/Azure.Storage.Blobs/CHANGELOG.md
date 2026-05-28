@@ -1,54 +1,6 @@
 # Release History
 
-## 12.29.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-- Improved performance of `DownloadToAsync` by buffering each range into memory concurrently instead of streaming one range at a time. This increases throughput but also increases memory consumption, as up to `MaximumConcurrency` ranges (each up to `MaximumTransferLength` in size) may be buffered simultaneously. Use `StorageTransferOptions.MaximumConcurrency` and `StorageTransferOptions.MaximumTransferLength` to control memory usage.
-
-## 12.28.0 (2026-05-12)
-
-### Features Added
-- Includes all features from 12.28.0-beta.1
-
-### Bugs Fixed
-- Fixed issue where the `TokenRequestContext.Scopes` contained a double slash (e.g. `https://storage.azure.com//.default`) when using `TokenCredential` authentication. (#58295)
-
-## 12.29.0-beta.1 (2026-03-24)
-
-### Features Added
-- Added support for service version 2026-06-06.
-- Added support for Blob Smart Tier.
-- Added support for Directory-level SAS and User Delegation SAS.
-
-## 12.28.0-beta.1 (2026-01-20)
-
-### Features Added
-- Added support for service version 2026-04-06.
-- Added support for Content Validation via Structured Message.
-- Added support for Delete Blob Conditional Tier.
-- Added support for Server-side Encryption Rekeying.
-- Added cross-tenant support for Principal-Bound User Delegation SAS.
-- Added support for Dynamic User Delegation SAS.
-
-### Other Changes
-- Changed the default concurrency transfer count from 5 to Math.Clamp(Environment.ProcessorCount * 2, 8, 32). This controls the maximum number of concurrent tasks that will be used during large downloads or uploads, and this change should result in higher throughput for these operations by default in most environments. This can be reverted by enabling "Azure.Storage.UseLegacyDefaultConcurrency" in the AppContext switch or "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY" in the environment variable.
-
-### Bugs Fixed
-- Added BlobErrorCode.IncrementalCopyOfEarlierSnapshotNotAllowed, deprecated BlobErrorCode.IncrementalCopyOfEarlierVersionSnapshotNotAllowed.
-- Added support for missing SkuName values.
-
-## 12.27.0 (2026-01-08)
-
-### Features Added
-- Includes all features from 12.27.0-beta.1
-
-## 12.27.0-beta.1 (2025-11-17)
+## 12.27.0-beta.1 (Unreleased)
 
 ### Features Added
 - Added support for service version 2026-02-06.
@@ -57,7 +9,10 @@
 - Added support for conditional headers on BlobBaseClient.GetTags(), .GetTagsAsync(), .SetTags(), and .SetTagsAsync().
 
 ### Breaking Changes
-- All parameters for the BlobContainerClient.GetBlobs(), .GetBlobsAsync(), .GetBlobsByHierarchy(), and .GetBlobsByHierarchyAsync() overloads are now required, as these overloads are being phased out and hidden from IntelliSense.  We recommend switching to the new overloads taking optional GetBlobsOptions or GetBlobsByHierarchyOptions.
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 12.26.0 (2025-10-13)
 
@@ -75,11 +30,6 @@
 - Includes all features from 12.25.0-beta.1
 - Includes all features from 12.24.1
 
-## 12.24.1 (2025-06-10)
-
-### Features Added
-- Added `PageBlobCreateOptions.PremiumPageBlobAccessTier` for `PageBlobClient.Create(..)`
-
 ## 12.26.0-beta.1 (2025-06-09)
 
 ### Features Added
@@ -89,6 +39,11 @@
 
 ### Other Changes
 - Changed BlobServiceClient.AccountName to be virtual so that it can be overridden and mocked.
+
+## 12.24.1 (2025-06-10)
+
+### Features Added
+- Added `PageBlobCreateOptions.PremiumPageBlobAccessTier` for `PageBlobClient.Create(..)`
 
 ## 12.25.0-beta.1 (2025-05-06)
 

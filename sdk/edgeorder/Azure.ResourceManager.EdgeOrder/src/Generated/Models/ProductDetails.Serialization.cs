@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.EdgeOrder;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Represents product details. </summary>
-    public partial class ProductDetails : IJsonModel<ProductDetails>
+    public partial class ProductDetails : IUtf8JsonSerializable, IJsonModel<ProductDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="ProductDetails"/> for deserialization. </summary>
-        internal ProductDetails()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProductDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProductDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeProductDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProductDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProductDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ProductDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProductDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProductDetails IPersistableModel<ProductDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProductDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProductDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProductDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProductDetails)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(DisplayInfo))
             {
                 writer.WritePropertyName("displayInfo"u8);
@@ -86,65 +41,35 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             writer.WritePropertyName("hierarchyInformation"u8);
             writer.WriteObjectValue(HierarchyInformation, options);
-            if (options.Format != "W" && Optional.IsDefined(ProductDoubleEncryptionStatus))
-            {
-                writer.WritePropertyName("productDoubleEncryptionStatus"u8);
-                writer.WriteStringValue(ProductDoubleEncryptionStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(IdentificationType))
-            {
-                writer.WritePropertyName("identificationType"u8);
-                writer.WriteStringValue(IdentificationType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ParentDeviceDetails))
-            {
-                writer.WritePropertyName("parentDeviceDetails"u8);
-                writer.WriteObjectValue(ParentDeviceDetails, options);
-            }
-            if (Optional.IsDefined(ParentProvisioningDetails))
-            {
-                writer.WritePropertyName("parentProvisioningDetails"u8);
-                writer.WriteObjectValue(ParentProvisioningDetails, options);
-            }
-            if (Optional.IsCollectionDefined(OptInAdditionalConfigurations))
-            {
-                writer.WritePropertyName("optInAdditionalConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (EdgeOrderAdditionalConfiguration item in OptInAdditionalConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ChildConfigurationDeviceDetails))
-            {
-                writer.WritePropertyName("childConfigurationDeviceDetails"u8);
-                writer.WriteStartArray();
-                foreach (EdgeOrderConfigurationDeviceDetails item in ChildConfigurationDeviceDetails)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(TermCommitmentInformation))
-            {
-                writer.WritePropertyName("termCommitmentInformation"u8);
-                writer.WriteObjectValue(TermCommitmentInformation, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductDoubleEncryptionStatus))
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                writer.WritePropertyName("productDoubleEncryptionStatus"u8);
+                writer.WriteStringValue(ProductDoubleEncryptionStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceDetails))
+            {
+                writer.WritePropertyName("deviceDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in DeviceDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -153,158 +78,125 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProductDetails IJsonModel<ProductDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProductDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProductDetails IJsonModel<ProductDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProductDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProductDetails)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeProductDetails(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProductDetails DeserializeProductDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProductDetails DeserializeProductDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ProductDisplayInfo displayInfo = default;
             HierarchyInformation hierarchyInformation = default;
-            DoubleEncryptionStatus? productDoubleEncryptionStatus = default;
-            EdgeOrderIdentificationType? identificationType = default;
-            EdgeOrderProductDeviceDetails parentDeviceDetails = default;
-            EdgeOrderProvisioningDetails parentProvisioningDetails = default;
-            IList<EdgeOrderAdditionalConfiguration> optInAdditionalConfigurations = default;
-            IReadOnlyList<EdgeOrderConfigurationDeviceDetails> childConfigurationDeviceDetails = default;
-            EdgeOrderTermCommitmentInformation termCommitmentInformation = default;
             int? count = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            DoubleEncryptionStatus? productDoubleEncryptionStatus = default;
+            IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("displayInfo"u8))
+                if (property.NameEquals("displayInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    displayInfo = ProductDisplayInfo.DeserializeProductDisplayInfo(prop.Value, options);
+                    displayInfo = ProductDisplayInfo.DeserializeProductDisplayInfo(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("hierarchyInformation"u8))
+                if (property.NameEquals("hierarchyInformation"u8))
                 {
-                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(prop.Value, options);
+                    hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("productDoubleEncryptionStatus"u8))
+                if (property.NameEquals("count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    productDoubleEncryptionStatus = new DoubleEncryptionStatus(prop.Value.GetString());
+                    count = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("identificationType"u8))
+                if (property.NameEquals("productDoubleEncryptionStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identificationType = new EdgeOrderIdentificationType(prop.Value.GetString());
+                    productDoubleEncryptionStatus = new DoubleEncryptionStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("parentDeviceDetails"u8))
+                if (property.NameEquals("deviceDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    parentDeviceDetails = EdgeOrderProductDeviceDetails.DeserializeEdgeOrderProductDeviceDetails(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("parentProvisioningDetails"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    List<EdgeOrderProductDeviceDetails> array = new List<EdgeOrderProductDeviceDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(EdgeOrderProductDeviceDetails.DeserializeEdgeOrderProductDeviceDetails(item, options));
                     }
-                    parentProvisioningDetails = EdgeOrderProvisioningDetails.DeserializeEdgeOrderProvisioningDetails(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("optInAdditionalConfigurations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<EdgeOrderAdditionalConfiguration> array = new List<EdgeOrderAdditionalConfiguration>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(EdgeOrderAdditionalConfiguration.DeserializeEdgeOrderAdditionalConfiguration(item, options));
-                    }
-                    optInAdditionalConfigurations = array;
-                    continue;
-                }
-                if (prop.NameEquals("childConfigurationDeviceDetails"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<EdgeOrderConfigurationDeviceDetails> array = new List<EdgeOrderConfigurationDeviceDetails>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(EdgeOrderConfigurationDeviceDetails.DeserializeEdgeOrderConfigurationDeviceDetails(item, options));
-                    }
-                    childConfigurationDeviceDetails = array;
-                    continue;
-                }
-                if (prop.NameEquals("termCommitmentInformation"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    termCommitmentInformation = EdgeOrderTermCommitmentInformation.DeserializeEdgeOrderTermCommitmentInformation(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("count"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        count = null;
-                        continue;
-                    }
-                    count = prop.Value.GetInt32();
+                    deviceDetails = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProductDetails(
                 displayInfo,
                 hierarchyInformation,
-                productDoubleEncryptionStatus,
-                identificationType,
-                parentDeviceDetails,
-                parentProvisioningDetails,
-                optInAdditionalConfigurations ?? new ChangeTrackingList<EdgeOrderAdditionalConfiguration>(),
-                childConfigurationDeviceDetails ?? new ChangeTrackingList<EdgeOrderConfigurationDeviceDetails>(),
-                termCommitmentInformation,
                 count,
-                additionalBinaryDataProperties);
+                productDoubleEncryptionStatus,
+                deviceDetails ?? new ChangeTrackingList<EdgeOrderProductDeviceDetails>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProductDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ProductDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProductDetails IPersistableModel<ProductDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeProductDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProductDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProductDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

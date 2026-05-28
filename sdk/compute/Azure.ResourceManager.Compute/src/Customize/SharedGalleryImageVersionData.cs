@@ -4,12 +4,9 @@
 #nullable disable
 
 using System.ComponentModel;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute
 {
-    // we have this customization here to change its namespace to avoid breaking changes
-    [CodeGenType("SharedGalleryImageVersionData")]
     public partial class SharedGalleryImageVersionData
     {
         /// <summary>
@@ -17,15 +14,5 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? ExcludeFromLatest { get => IsExcludedFromLatest; }
-
-        // we also must add back this property to avoid breaking changes, but its payload never have this property.
-        /// <summary>
-        /// The resource identifier.
-        ///
-        /// This property is depracated and will be removed in a future release.
-        /// There is possibility that this property will be null.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier Id { get; internal set; }
     }
 }

@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Redis.Models
         Saturday,
         /// <summary> Sunday. </summary>
         Sunday,
-        /// <summary> As a convenience, 'Everyday' is also accepted and means the same as specifying all days of the week. </summary>
+        /// <summary> Everyday. </summary>
         Everyday,
-        /// <summary> As a convenience, 'Weekend' is also accepted and means the same as specifying Saturday and Sunday. </summary>
+        /// <summary> Weekend. </summary>
         Weekend
     }
 }

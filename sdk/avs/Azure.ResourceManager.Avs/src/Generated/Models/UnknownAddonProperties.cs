@@ -10,13 +10,20 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
+    /// <summary> Unknown version of AvsPrivateCloudAddonProperties. </summary>
     internal partial class UnknownAddonProperties : AvsPrivateCloudAddonProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAddonProperties"/>. </summary>
         /// <param name="addonType"> Addon type. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(addonType != default ? addonType : "unknown", provisioningState, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(addonType, provisioningState, serializedAdditionalRawData)
+        {
+            AddonType = addonType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAddonProperties"/> for deserialization. </summary>
+        internal UnknownAddonProperties()
         {
         }
     }

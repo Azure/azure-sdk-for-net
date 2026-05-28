@@ -10,75 +10,16 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> The properties of a storage account’s Blob service. </summary>
-    public partial class BlobServiceData : ResourceData, IJsonModel<BlobServiceData>
+    public partial class BlobServiceData : IUtf8JsonSerializable, IJsonModel<BlobServiceData>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBlobServiceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BlobServiceData)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BlobServiceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BlobServiceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BlobServiceData IPersistableModel<BlobServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BlobServiceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BlobServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="blobServiceData"> The <see cref="BlobServiceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BlobServiceData blobServiceData)
-        {
-            if (blobServiceData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(blobServiceData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BlobServiceData"/> from. </param>
-        internal static BlobServiceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBlobServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BlobServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -90,121 +31,519 @@ namespace Azure.ResourceManager.Storage
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BlobServiceData)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(BlobServiceProperties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(BlobServiceProperties, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Cors))
+            {
+                writer.WritePropertyName("cors"u8);
+                writer.WriteObjectValue(Cors, options);
+            }
+            if (Optional.IsDefined(DefaultServiceVersion))
+            {
+                writer.WritePropertyName("defaultServiceVersion"u8);
+                writer.WriteStringValue(DefaultServiceVersion);
+            }
+            if (Optional.IsDefined(DeleteRetentionPolicy))
+            {
+                writer.WritePropertyName("deleteRetentionPolicy"u8);
+                writer.WriteObjectValue(DeleteRetentionPolicy, options);
+            }
+            if (Optional.IsDefined(IsVersioningEnabled))
+            {
+                writer.WritePropertyName("isVersioningEnabled"u8);
+                writer.WriteBooleanValue(IsVersioningEnabled.Value);
+            }
+            if (Optional.IsDefined(IsAutomaticSnapshotPolicyEnabled))
+            {
+                writer.WritePropertyName("automaticSnapshotPolicyEnabled"u8);
+                writer.WriteBooleanValue(IsAutomaticSnapshotPolicyEnabled.Value);
+            }
+            if (Optional.IsDefined(ChangeFeed))
+            {
+                writer.WritePropertyName("changeFeed"u8);
+                writer.WriteObjectValue(ChangeFeed, options);
+            }
+            if (Optional.IsDefined(RestorePolicy))
+            {
+                writer.WritePropertyName("restorePolicy"u8);
+                writer.WriteObjectValue(RestorePolicy, options);
+            }
+            if (Optional.IsDefined(ContainerDeleteRetentionPolicy))
+            {
+                writer.WritePropertyName("containerDeleteRetentionPolicy"u8);
+                writer.WriteObjectValue(ContainerDeleteRetentionPolicy, options);
+            }
+            if (Optional.IsDefined(LastAccessTimeTrackingPolicy))
+            {
+                writer.WritePropertyName("lastAccessTimeTrackingPolicy"u8);
+                writer.WriteObjectValue(LastAccessTimeTrackingPolicy, options);
+            }
+            writer.WriteEndObject();
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BlobServiceData IJsonModel<BlobServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BlobServiceData)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BlobServiceData IJsonModel<BlobServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BlobServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BlobServiceData)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBlobServiceData(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BlobServiceData DeserializeBlobServiceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static BlobServiceData DeserializeBlobServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            StorageSku sku = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType resourceType = default;
+            ResourceType type = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            BlobServicePropertiesProperties blobServiceProperties = default;
-            StorageSku sku = default;
-            foreach (var prop in element.EnumerateObject())
+            StorageCorsRules cors = default;
+            string defaultServiceVersion = default;
+            DeleteRetentionPolicy deleteRetentionPolicy = default;
+            bool? isVersioningEnabled = default;
+            bool? automaticSnapshotPolicyEnabled = default;
+            BlobServiceChangeFeed changeFeed = default;
+            RestorePolicy restorePolicy = default;
+            DeleteRetentionPolicy containerDeleteRetentionPolicy = default;
+            LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("sku"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    sku = StorageSku.DeserializeStorageSku(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    name = prop.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        continue;
+                        if (property0.NameEquals("cors"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cors = StorageCorsRules.DeserializeStorageCorsRules(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("defaultServiceVersion"u8))
+                        {
+                            defaultServiceVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("deleteRetentionPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("isVersioningEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isVersioningEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("automaticSnapshotPolicyEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            automaticSnapshotPolicyEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("changeFeed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            changeFeed = BlobServiceChangeFeed.DeserializeBlobServiceChangeFeed(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("restorePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            restorePolicy = RestorePolicy.DeserializeRestorePolicy(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("containerDeleteRetentionPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            containerDeleteRetentionPolicy = DeleteRetentionPolicy.DeserializeDeleteRetentionPolicy(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("lastAccessTimeTrackingPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastAccessTimeTrackingPolicy = LastAccessTimeTrackingPolicy.DeserializeLastAccessTimeTrackingPolicy(property0.Value, options);
+                            continue;
+                        }
                     }
-                    blobServiceProperties = BlobServicePropertiesProperties.DeserializeBlobServicePropertiesProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("sku"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = StorageSku.DeserializeStorageSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new BlobServiceData(
                 id,
                 name,
-                resourceType,
+                type,
                 systemData,
-                additionalBinaryDataProperties,
-                blobServiceProperties,
-                sku);
+                sku,
+                cors,
+                defaultServiceVersion,
+                deleteRetentionPolicy,
+                isVersioningEnabled,
+                automaticSnapshotPolicyEnabled,
+                changeFeed,
+                restorePolicy,
+                containerDeleteRetentionPolicy,
+                lastAccessTimeTrackingPolicy,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sku: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sku))
+                {
+                    builder.Append("  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CorsRules", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    cors: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      cors: {");
+                builder.Append("        corsRules: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Cors))
+                {
+                    builder.Append("    cors: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Cors, options, 4, false, "    cors: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultServiceVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    defaultServiceVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultServiceVersion))
+                {
+                    builder.Append("    defaultServiceVersion: ");
+                    if (DefaultServiceVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefaultServiceVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefaultServiceVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeleteRetentionPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    deleteRetentionPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeleteRetentionPolicy))
+                {
+                    builder.Append("    deleteRetentionPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DeleteRetentionPolicy, options, 4, false, "    deleteRetentionPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVersioningEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isVersioningEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVersioningEnabled))
+                {
+                    builder.Append("    isVersioningEnabled: ");
+                    var boolValue = IsVersioningEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAutomaticSnapshotPolicyEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    automaticSnapshotPolicyEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAutomaticSnapshotPolicyEnabled))
+                {
+                    builder.Append("    automaticSnapshotPolicyEnabled: ");
+                    var boolValue = IsAutomaticSnapshotPolicyEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeFeed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    changeFeed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ChangeFeed))
+                {
+                    builder.Append("    changeFeed: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ChangeFeed, options, 4, false, "    changeFeed: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestorePolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    restorePolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestorePolicy))
+                {
+                    builder.Append("    restorePolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RestorePolicy, options, 4, false, "    restorePolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerDeleteRetentionPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    containerDeleteRetentionPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerDeleteRetentionPolicy))
+                {
+                    builder.Append("    containerDeleteRetentionPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContainerDeleteRetentionPolicy, options, 4, false, "    containerDeleteRetentionPolicy: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastAccessTimeTrackingPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastAccessTimeTrackingPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastAccessTimeTrackingPolicy))
+                {
+                    builder.Append("    lastAccessTimeTrackingPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LastAccessTimeTrackingPolicy, options, 4, false, "    lastAccessTimeTrackingPolicy: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<BlobServiceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobServiceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(BlobServiceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BlobServiceData IPersistableModel<BlobServiceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobServiceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBlobServiceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobServiceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

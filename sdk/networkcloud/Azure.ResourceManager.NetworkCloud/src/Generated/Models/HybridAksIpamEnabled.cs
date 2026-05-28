@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct HybridAksIpamEnabled : IEquatable<HybridAksIpamEnabled>
     {
         private readonly string _value;
-        /// <summary> Hybrid AKS IPAM allocation is enabled. </summary>
-        private const string TrueValue = "True";
-        /// <summary> Hybrid AKS IPAM allocation is disabled. </summary>
-        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="HybridAksIpamEnabled"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridAksIpamEnabled(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Hybrid AKS IPAM allocation is enabled. </summary>
+        private const string TrueValue = "True";
+        private const string FalseValue = "False";
+
+        /// <summary> True. </summary>
         public static HybridAksIpamEnabled True { get; } = new HybridAksIpamEnabled(TrueValue);
-
-        /// <summary> Hybrid AKS IPAM allocation is disabled. </summary>
+        /// <summary> False. </summary>
         public static HybridAksIpamEnabled False { get; } = new HybridAksIpamEnabled(FalseValue);
-
         /// <summary> Determines if two <see cref="HybridAksIpamEnabled"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridAksIpamEnabled left, HybridAksIpamEnabled right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="HybridAksIpamEnabled"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridAksIpamEnabled left, HybridAksIpamEnabled right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="HybridAksIpamEnabled"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridAksIpamEnabled"/>. </summary>
         public static implicit operator HybridAksIpamEnabled(string value) => new HybridAksIpamEnabled(value);
 
-        /// <summary> Converts a string to a <see cref="HybridAksIpamEnabled"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HybridAksIpamEnabled?(string value) => value == null ? null : new HybridAksIpamEnabled(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridAksIpamEnabled other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(HybridAksIpamEnabled other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

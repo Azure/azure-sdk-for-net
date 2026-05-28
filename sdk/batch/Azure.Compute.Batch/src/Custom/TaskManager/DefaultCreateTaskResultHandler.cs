@@ -20,33 +20,33 @@ namespace Azure.Compute.Batch
         /// This handler treats success and 'TaskExists' errors as successful, retries server errors (HTTP 5xx), and throws
         /// <see cref="AddTaskCollectionTerminatedException"/> on client error (HTTP 4xx).
         /// </summary>
-        /// <param name="taskResult">The result of a single Add Task operation.</param>
+        /// <param name="addTaskResult">The result of a single Add Task operation.</param>
         /// <param name="cancellationToken">The cancellation token associated with the AddTaskCollection operation.</param>
-        /// <returns>An <see cref="CreateTaskResultStatus"/> which indicates whether the <paramref name="taskResult"/>
+        /// <returns>An <see cref="CreateTaskResultStatus"/> which indicates whether the <paramref name="addTaskResult"/>
         /// is classified as a success or as requiring a retry.</returns>
-        public override CreateTaskResultStatus HandleTaskResult(CreateTaskResult taskResult, CancellationToken cancellationToken)
+        public override CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken)
         {
-            if (taskResult == null)
+            if (addTaskResult == null)
             {
-                throw new ArgumentNullException("taskResult");
+                throw new ArgumentNullException("addTaskResult");
             }
 
             CreateTaskResultStatus status = CreateTaskResultStatus.Success;
-            if (taskResult.BatchTaskResult.Error != null)
+            if (addTaskResult.BatchTaskResult.Error != null)
             {
                 //Check status code
-                if (taskResult.BatchTaskResult.Status == BatchTaskAddStatus.ServerError)
+                if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ServerError)
                 {
                     status = CreateTaskResultStatus.Retry;
                 }
-                else if (taskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && taskResult.BatchTaskResult.Error.Code == BatchErrorCode.TaskExists)
+                else if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && addTaskResult.BatchTaskResult.Error.Code == BatchErrorCode.TaskExists)
                 {
                     status = CreateTaskResultStatus.Success; //Count TaskExists as a success always
                 }
                 else
                 {
                     //Anything else is a failure -- abort the work flow
-                    throw new AddTaskCollectionTerminatedException(taskResult);
+                    throw new AddTaskCollectionTerminatedException(addTaskResult);
                 }
             }
             return status;

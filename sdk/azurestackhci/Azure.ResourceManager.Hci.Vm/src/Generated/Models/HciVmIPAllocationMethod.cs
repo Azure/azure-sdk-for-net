@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmIPAllocationMethod : IEquatable<HciVmIPAllocationMethod>
     {
         private readonly string _value;
-        /// <summary> Dynamic IP allocation method. </summary>
-        private const string DynamicValue = "Dynamic";
-        /// <summary> Static IP allocation method. </summary>
-        private const string StaticValue = "Static";
 
         /// <summary> Initializes a new instance of <see cref="HciVmIPAllocationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmIPAllocationMethod(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string DynamicValue = "Dynamic";
+        private const string StaticValue = "Static";
 
         /// <summary> Dynamic IP allocation method. </summary>
         public static HciVmIPAllocationMethod Dynamic { get; } = new HciVmIPAllocationMethod(DynamicValue);
-
         /// <summary> Static IP allocation method. </summary>
         public static HciVmIPAllocationMethod Static { get; } = new HciVmIPAllocationMethod(StaticValue);
-
         /// <summary> Determines if two <see cref="HciVmIPAllocationMethod"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmIPAllocationMethod left, HciVmIPAllocationMethod right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="HciVmIPAllocationMethod"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmIPAllocationMethod left, HciVmIPAllocationMethod right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="HciVmIPAllocationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmIPAllocationMethod"/>. </summary>
         public static implicit operator HciVmIPAllocationMethod(string value) => new HciVmIPAllocationMethod(value);
 
-        /// <summary> Converts a string to a <see cref="HciVmIPAllocationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HciVmIPAllocationMethod?(string value) => value == null ? null : new HciVmIPAllocationMethod(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmIPAllocationMethod other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(HciVmIPAllocationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

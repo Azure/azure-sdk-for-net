@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    /// <summary></summary>
-    internal partial class CloudExadataInfrastructureOperationSource : IOperationSource<CloudExadataInfrastructureResource>
+    internal class CloudExadataInfrastructureOperationSource : IOperationSource<CloudExadataInfrastructureResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal CloudExadataInfrastructureOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         CloudExadataInfrastructureResource IOperationSource<CloudExadataInfrastructureResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CloudExadataInfrastructureData data = CloudExadataInfrastructureData.DeserializeCloudExadataInfrastructureData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<CloudExadataInfrastructureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new CloudExadataInfrastructureResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<CloudExadataInfrastructureResource> IOperationSource<CloudExadataInfrastructureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CloudExadataInfrastructureData data = CloudExadataInfrastructureData.DeserializeCloudExadataInfrastructureData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CloudExadataInfrastructureResource(_client, data);
+            var data = ModelReaderWriter.Read<CloudExadataInfrastructureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
+            return await Task.FromResult(new CloudExadataInfrastructureResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

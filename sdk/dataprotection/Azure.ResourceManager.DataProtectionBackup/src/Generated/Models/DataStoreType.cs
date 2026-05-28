@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct DataStoreType : IEquatable<DataStoreType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataStoreType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataStoreType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string OperationalStoreValue = "OperationalStore";
         private const string VaultStoreValue = "VaultStore";
         private const string ArchiveStoreValue = "ArchiveStore";
 
-        /// <summary> Initializes a new instance of <see cref="DataStoreType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataStoreType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the OperationalStore. </summary>
+        /// <summary> OperationalStore. </summary>
         public static DataStoreType OperationalStore { get; } = new DataStoreType(OperationalStoreValue);
-
-        /// <summary> Gets the VaultStore. </summary>
+        /// <summary> VaultStore. </summary>
         public static DataStoreType VaultStore { get; } = new DataStoreType(VaultStoreValue);
-
-        /// <summary> Gets the ArchiveStore. </summary>
+        /// <summary> ArchiveStore. </summary>
         public static DataStoreType ArchiveStore { get; } = new DataStoreType(ArchiveStoreValue);
-
         /// <summary> Determines if two <see cref="DataStoreType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataStoreType left, DataStoreType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataStoreType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataStoreType left, DataStoreType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataStoreType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataStoreType"/>. </summary>
         public static implicit operator DataStoreType(string value) => new DataStoreType(value);
 
-        /// <summary> Converts a string to a <see cref="DataStoreType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataStoreType?(string value) => value == null ? null : new DataStoreType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataStoreType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataStoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

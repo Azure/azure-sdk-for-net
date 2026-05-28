@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary></summary>
+    /// <summary> The JobSupportedAction. </summary>
     public enum JobSupportedAction
     {
         /// <summary> Invalid. </summary>

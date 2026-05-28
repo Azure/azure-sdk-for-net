@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct RecoveryServicesPrivateEndpointConnectionStatus : IEquatable<RecoveryServicesPrivateEndpointConnectionStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnectionStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecoveryServicesPrivateEndpointConnectionStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string PendingValue = "Pending";
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnectionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RecoveryServicesPrivateEndpointConnectionStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Pending. </summary>
+        /// <summary> Pending. </summary>
         public static RecoveryServicesPrivateEndpointConnectionStatus Pending { get; } = new RecoveryServicesPrivateEndpointConnectionStatus(PendingValue);
-
-        /// <summary> Gets the Approved. </summary>
+        /// <summary> Approved. </summary>
         public static RecoveryServicesPrivateEndpointConnectionStatus Approved { get; } = new RecoveryServicesPrivateEndpointConnectionStatus(ApprovedValue);
-
-        /// <summary> Gets the Rejected. </summary>
+        /// <summary> Rejected. </summary>
         public static RecoveryServicesPrivateEndpointConnectionStatus Rejected { get; } = new RecoveryServicesPrivateEndpointConnectionStatus(RejectedValue);
-
-        /// <summary> Gets the Disconnected. </summary>
+        /// <summary> Disconnected. </summary>
         public static RecoveryServicesPrivateEndpointConnectionStatus Disconnected { get; } = new RecoveryServicesPrivateEndpointConnectionStatus(DisconnectedValue);
-
         /// <summary> Determines if two <see cref="RecoveryServicesPrivateEndpointConnectionStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryServicesPrivateEndpointConnectionStatus left, RecoveryServicesPrivateEndpointConnectionStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RecoveryServicesPrivateEndpointConnectionStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryServicesPrivateEndpointConnectionStatus left, RecoveryServicesPrivateEndpointConnectionStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RecoveryServicesPrivateEndpointConnectionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesPrivateEndpointConnectionStatus"/>. </summary>
         public static implicit operator RecoveryServicesPrivateEndpointConnectionStatus(string value) => new RecoveryServicesPrivateEndpointConnectionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="RecoveryServicesPrivateEndpointConnectionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryServicesPrivateEndpointConnectionStatus?(string value) => value == null ? null : new RecoveryServicesPrivateEndpointConnectionStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryServicesPrivateEndpointConnectionStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RecoveryServicesPrivateEndpointConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

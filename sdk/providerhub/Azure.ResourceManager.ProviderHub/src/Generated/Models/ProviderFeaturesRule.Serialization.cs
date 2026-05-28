@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ProviderHub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderFeaturesRule. </summary>
-    public partial class ProviderFeaturesRule : IJsonModel<ProviderFeaturesRule>
+    public partial class ProviderFeaturesRule : IUtf8JsonSerializable, IJsonModel<ProviderFeaturesRule>
     {
-        /// <summary> Initializes a new instance of <see cref="ProviderFeaturesRule"/> for deserialization. </summary>
-        internal ProviderFeaturesRule()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderFeaturesRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderFeaturesRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderFeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeProviderFeaturesRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProviderFeaturesRule)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderFeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ProviderFeaturesRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProviderFeaturesRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderFeaturesRule IPersistableModel<ProviderFeaturesRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProviderFeaturesRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProviderFeaturesRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,22 +28,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderFeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderFeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProviderFeaturesRule)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("requiredFeaturesPolicy"u8);
             writer.WriteStringValue(RequiredFeaturesPolicy.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -98,46 +53,74 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderFeaturesRule IJsonModel<ProviderFeaturesRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderFeaturesRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderFeaturesRule IJsonModel<ProviderFeaturesRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderFeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderFeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProviderFeaturesRule)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeProviderFeaturesRule(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProviderFeaturesRule DeserializeProviderFeaturesRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProviderFeaturesRule DeserializeProviderFeaturesRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             FeaturesPolicy requiredFeaturesPolicy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("requiredFeaturesPolicy"u8))
+                if (property.NameEquals("requiredFeaturesPolicy"u8))
                 {
-                    requiredFeaturesPolicy = new FeaturesPolicy(prop.Value.GetString());
+                    requiredFeaturesPolicy = new FeaturesPolicy(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ProviderFeaturesRule(requiredFeaturesPolicy, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProviderFeaturesRule(requiredFeaturesPolicy, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProviderFeaturesRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderFeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ProviderFeaturesRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProviderFeaturesRule IPersistableModel<ProviderFeaturesRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderFeaturesRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeProviderFeaturesRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProviderFeaturesRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProviderFeaturesRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,21 +5,13 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>$(BatchToolsTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net46</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == '$(BatchToolsRunnableFramework)'">
+  <ItemGroup>
     <PackageReference Include="Microsoft.Build" Version="15.5.180" />
     <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.5.180" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.6.1" />
   </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' != '$(BatchToolsRunnableFramework)'">
-    <Compile Remove="**\*.cs" />
-  </ItemGroup>
-
-  <Target Name="WarnNonNetFrameworkBuild" BeforeTargets="CoreCompile" Condition="'$(TargetFramework)' != '$(BatchToolsRunnableFramework)'">
-    <Message Text="ProxyLayerParser only works on .NET Framework. This $(TargetFramework) build produces an empty assembly." />
-  </Target>
 
 </Project>

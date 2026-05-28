@@ -8,15 +8,43 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Approvals patch properties. </summary>
     public partial class VirtualEnclaveApprovalPatchProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalPatchProperties"/>. </summary>
         /// <param name="requestMetadata"> Request metadata for the approval request. </param>
@@ -37,8 +65,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="createdOn"> Approval request creation time. </param>
         /// <param name="stateChangedOn"> Approval request state change time, time at which approval request state changed from pending to approved or rejected. </param>
         /// <param name="requestMetadata"> Request metadata for the approval request. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveApprovalPatchProperties(ResourceIdentifier parentResourceId, ResourceIdentifier grandparentResourceId, IList<VirtualEnclaveApprover> approvers, string ticketId, DateTimeOffset? createdOn, DateTimeOffset? stateChangedOn, ApprovalRequestMetadataPatch requestMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclaveApprovalPatchProperties(ResourceIdentifier parentResourceId, ResourceIdentifier grandparentResourceId, IList<VirtualEnclaveApprover> approvers, string ticketId, DateTimeOffset? createdOn, DateTimeOffset? stateChangedOn, ApprovalRequestMetadataPatch requestMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ParentResourceId = parentResourceId;
             GrandparentResourceId = grandparentResourceId;
@@ -47,27 +75,26 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             CreatedOn = createdOn;
             StateChangedOn = stateChangedOn;
             RequestMetadata = requestMetadata;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalPatchProperties"/> for deserialization. </summary>
+        internal VirtualEnclaveApprovalPatchProperties()
+        {
         }
 
         /// <summary> Parameter for optimizing query results. </summary>
         public ResourceIdentifier ParentResourceId { get; set; }
-
         /// <summary> Parameter for optimizing query results. </summary>
         public ResourceIdentifier GrandparentResourceId { get; set; }
-
         /// <summary> List of approvers for the approval request. </summary>
         public IList<VirtualEnclaveApprover> Approvers { get; }
-
         /// <summary> Ticket ID for the approval request. </summary>
         public string TicketId { get; set; }
-
         /// <summary> Approval request creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-
         /// <summary> Approval request state change time, time at which approval request state changed from pending to approved or rejected. </summary>
         public DateTimeOffset? StateChangedOn { get; set; }
-
         /// <summary> Request metadata for the approval request. </summary>
         public ApprovalRequestMetadataPatch RequestMetadata { get; }
     }

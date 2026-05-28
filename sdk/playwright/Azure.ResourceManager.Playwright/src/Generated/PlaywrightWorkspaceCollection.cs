@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Playwright
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlaywrightWorkspaceResource"/> and their operations.
-    /// Each <see cref="PlaywrightWorkspaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="PlaywrightWorkspaceCollection"/> instance call the GetPlaywrightWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="PlaywrightWorkspaceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="PlaywrightWorkspaceCollection"/> instance call the GetPlaywrightWorkspaces method from an instance of the parent resource.
     /// </summary>
     public partial class PlaywrightWorkspaceCollection : ArmCollection, IEnumerable<PlaywrightWorkspaceResource>, IAsyncEnumerable<PlaywrightWorkspaceResource>
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Playwright
         {
             TryGetApiVersion(PlaywrightWorkspaceResource.ResourceType, out string playwrightWorkspaceApiVersion);
             _playwrightWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", PlaywrightWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2026-02-01-preview");
+            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -51,27 +51,11 @@ namespace Azure.ResourceManager.Playwright
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Create a PlaywrightWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a PlaywrightWorkspace. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -113,23 +97,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Create a PlaywrightWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a PlaywrightWorkspace. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -171,23 +139,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Get a PlaywrightWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a PlaywrightWorkspace. </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
@@ -220,23 +172,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Get a PlaywrightWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a PlaywrightWorkspace. </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
@@ -269,23 +205,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// List PlaywrightWorkspace resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List PlaywrightWorkspace resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlaywrightWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -294,26 +214,10 @@ namespace Azure.ResourceManager.Playwright
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PlaywrightWorkspaceCollection.GetAll"), data => new PlaywrightWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
-        /// <summary>
-        /// List PlaywrightWorkspace resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List PlaywrightWorkspace resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlaywrightWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
@@ -322,26 +226,10 @@ namespace Azure.ResourceManager.Playwright
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PlaywrightWorkspaceCollection.GetAll"), data => new PlaywrightWorkspaceResource(Client, data));
+            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
@@ -382,23 +270,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
@@ -439,23 +311,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
@@ -500,23 +356,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>

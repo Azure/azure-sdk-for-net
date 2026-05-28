@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [CodeGenModel("EncryptionKey")]
     [CodeGenSuppress(nameof(SearchResourceEncryptionKey), typeof(string), typeof(string))]
     public partial class SearchResourceEncryptionKey
     {
@@ -88,7 +89,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (ApplicationId != null || ApplicationSecret != null)
                 {
-                    return new AzureActiveDirectoryApplicationCredentials(ApplicationId, ApplicationSecret, additionalBinaryDataProperties: null);
+                    return new AzureActiveDirectoryApplicationCredentials(ApplicationId, ApplicationSecret, serializedAdditionalRawData: null);
                 }
 
                 return null;

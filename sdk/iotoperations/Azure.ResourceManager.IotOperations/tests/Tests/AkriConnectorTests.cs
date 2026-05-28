@@ -45,9 +45,16 @@ namespace Azure.ResourceManager.IotOperations.Tests
                     Allocation = new AkriConnectorTemplateBucketizedAllocation(5),
                 };
                 var runtimeConfiguration = new AkriConnectorTemplateManagedConfiguration(managedImageConfig);
+                var mediaSchemaRefs = new AkriConnectorTemplateDeviceInboundEndpointConfigurationSchemaRefs
+                {
+                    DefaultStreamsConfigSchemaRef = "aio-sr://${schemaRegistry.properties.namespace}/media-stream-config-schema:1",
+                };
                 var inboundEndpoints = new[]
                 {
                     new AkriConnectorTemplateDeviceInboundEndpointType("Microsoft.Media")
+                    {
+                        ConfigurationSchemaRefs = mediaSchemaRefs
+                    }
                 };
                 var templateData = new IotOperationsAkriConnectorTemplateData
                 {
@@ -78,7 +85,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 connectorResource = await connectorCollection.GetAsync(connectorName);
             }
             catch (RequestFailedException)
-            { }
+            {}
 
             // Create AkriConnectorResource
             IotOperationsAkriConnectorData connectorData = CreateAkriConnectorResourceData(connectorResource);
@@ -117,7 +124,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
             else
             {
                 return new IotOperationsAkriConnectorData
-                { };
+                {};
             }
         }
     }

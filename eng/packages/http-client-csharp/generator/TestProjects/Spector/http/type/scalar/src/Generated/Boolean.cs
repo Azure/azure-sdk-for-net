@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,8 +16,6 @@ namespace _Type.Scalar
     public partial class Boolean
     {
         protected Boolean() => throw null;
-
-        internal Boolean(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

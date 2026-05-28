@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ResourceConnector
 {
-    /// <summary></summary>
-    internal partial class ResourceConnectorApplianceOperationSource : IOperationSource<ResourceConnectorApplianceResource>
+    internal class ResourceConnectorApplianceOperationSource : IOperationSource<ResourceConnectorApplianceResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ResourceConnectorApplianceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ResourceConnectorApplianceResource IOperationSource<ResourceConnectorApplianceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ResourceConnectorApplianceData data = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ResourceConnectorApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourceConnectorContext.Default);
             return new ResourceConnectorApplianceResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ResourceConnectorApplianceResource> IOperationSource<ResourceConnectorApplianceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ResourceConnectorApplianceData data = ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ResourceConnectorApplianceResource(_client, data);
+            var data = ModelReaderWriter.Read<ResourceConnectorApplianceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourceConnectorContext.Default);
+            return await Task.FromResult(new ResourceConnectorApplianceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

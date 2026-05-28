@@ -6,91 +6,37 @@
 #nullable disable
 
 using System.Threading;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.GuestConfiguration;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableGuestConfigurationSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _guestConfigurationAssignmentsClientDiagnostics;
-        private GuestConfigurationAssignments _guestConfigurationAssignmentsRestClient;
+        private ClientDiagnostics _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics;
+        private GuestConfigurationAssignmentsRestOperations _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient;
 
-        /// <summary> Initializes a new instance of MockableGuestConfigurationSubscriptionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableGuestConfigurationSubscriptionResource"/> class for mocking. </summary>
         protected MockableGuestConfigurationSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableGuestConfigurationSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableGuestConfigurationSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableGuestConfigurationSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics GuestConfigurationAssignmentsClientDiagnostics => _guestConfigurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmAssignmentResource.ResourceType.Namespace, Diagnostics);
+        private GuestConfigurationAssignmentsRestOperations GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient ??= new GuestConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(GuestConfigurationVmAssignmentResource.ResourceType));
 
-        private GuestConfigurationAssignments GuestConfigurationAssignmentsRestClient => _guestConfigurationAssignmentsRestClient ??= new GuestConfigurationAssignments(GuestConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-04-05");
-
-        /// <summary>
-        /// List all guest configuration assignments for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GuestConfigurationAssignments_SubscriptionList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-05. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationAssignmentData> SubscriptionListAsync(CancellationToken cancellationToken = default)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new GuestConfigurationAssignmentsSubscriptionListAsyncCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.SubscriptionList");
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GuestConfigurationAssignments_SubscriptionList. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-05. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationAssignmentData> SubscriptionList(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new GuestConfigurationAssignmentsSubscriptionListCollectionResultOfT(GuestConfigurationAssignmentsRestClient, Id.SubscriptionId, context, "MockableGuestConfigurationSubscriptionResource.SubscriptionList");
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
     }
 }

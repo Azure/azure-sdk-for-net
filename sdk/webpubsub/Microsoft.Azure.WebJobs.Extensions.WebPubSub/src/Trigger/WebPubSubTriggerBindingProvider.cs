@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Triggers;
-using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -14,19 +13,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
         private readonly INameResolver _nameResolver;
-        private readonly WebPubSubServiceAccessOptions _options;
+        private readonly WebPubSubFunctionsOptions _options;
         private readonly Exception _webhookException;
-        private readonly WebPubSubServiceAccessFactory _accessFactory;
-        private readonly ILogger _logger;
 
-        public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, INameResolver nameResolver, WebPubSubServiceAccessOptions options, Exception webhookException, WebPubSubServiceAccessFactory accessFactory, ILogger logger)
+        public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, INameResolver nameResolver, WebPubSubFunctionsOptions options, Exception webhookException)
         {
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
             _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
             _options = options ?? throw new ArgumentNullException(nameof(options));
             _webhookException = webhookException;
-            _accessFactory = accessFactory ?? throw new ArgumentNullException(nameof(accessFactory));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
@@ -47,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 throw new NotSupportedException($"WebPubSubTrigger is disabled due to 'AzureWebJobsStorage' connection string is not set or invalid. {_webhookException}");
             }
 
-            return Task.FromResult<ITriggerBinding>(new WebPubSubTriggerBinding(parameterInfo, GetResolvedAttribute(attribute), _options, _dispatcher, _accessFactory, _logger));
+            return Task.FromResult<ITriggerBinding>(new WebPubSubTriggerBinding(parameterInfo, GetResolvedAttribute(attribute), _options, _dispatcher));
         }
 
         internal WebPubSubTriggerAttribute GetResolvedAttribute(WebPubSubTriggerAttribute attribute)

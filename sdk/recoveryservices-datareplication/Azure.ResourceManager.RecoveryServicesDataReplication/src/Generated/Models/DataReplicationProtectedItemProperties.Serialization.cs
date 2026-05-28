@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> Protected item model properties. </summary>
-    public partial class DataReplicationProtectedItemProperties : IJsonModel<DataReplicationProtectedItemProperties>
+    public partial class DataReplicationProtectedItemProperties : IUtf8JsonSerializable, IJsonModel<DataReplicationProtectedItemProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemProperties"/> for deserialization. </summary>
-        internal DataReplicationProtectedItemProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationProtectedItemProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataReplicationProtectedItemProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataReplicationProtectedItemProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataReplicationProtectedItemProperties IPersistableModel<DataReplicationProtectedItemProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataReplicationProtectedItemProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationProtectedItemProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("policyName"u8);
             writer.WriteStringValue(PolicyName);
             writer.WritePropertyName("replicationExtensionName"u8);
@@ -187,13 +142,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 writer.WritePropertyName("allowedJobs"u8);
                 writer.WriteStartArray();
-                foreach (string item in AllowedJobs)
+                foreach (var item in AllowedJobs)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -222,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
-                foreach (DataReplicationHealthErrorInfo item in HealthErrors)
+                foreach (var item in HealthErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -230,15 +180,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             writer.WritePropertyName("customProperties"u8);
             writer.WriteObjectValue(CustomProperties, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -247,27 +197,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataReplicationProtectedItemProperties IJsonModel<DataReplicationProtectedItemProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataReplicationProtectedItemProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataReplicationProtectedItemProperties IJsonModel<DataReplicationProtectedItemProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataReplicationProtectedItemProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataReplicationProtectedItemProperties DeserializeDataReplicationProtectedItemProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataReplicationProtectedItemProperties DeserializeDataReplicationProtectedItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -289,10 +234,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string targetFabricId = default;
             string fabricAgentId = default;
             string targetFabricAgentId = default;
-            bool? isResyncRequired = default;
-            DateTimeOffset? lastSuccessfulPlannedFailoverOn = default;
-            DateTimeOffset? lastSuccessfulUnplannedFailoverOn = default;
-            DateTimeOffset? lastSuccessfulTestFailoverOn = default;
+            bool? resyncRequired = default;
+            DateTimeOffset? lastSuccessfulPlannedFailoverTime = default;
+            DateTimeOffset? lastSuccessfulUnplannedFailoverTime = default;
+            DateTimeOffset? lastSuccessfulTestFailoverTime = default;
             ProtectedItemJobProperties currentJob = default;
             IReadOnlyList<string> allowedJobs = default;
             ProtectedItemJobProperties lastFailedEnableProtectionJob = default;
@@ -301,236 +246,231 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DataReplicationHealthStatus? replicationHealth = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             DataReplicationProtectedItemCustomProperties customProperties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("policyName"u8))
+                if (property.NameEquals("policyName"u8))
                 {
-                    policyName = prop.Value.GetString();
+                    policyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("replicationExtensionName"u8))
+                if (property.NameEquals("replicationExtensionName"u8))
                 {
-                    replicationExtensionName = prop.Value.GetString();
+                    replicationExtensionName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("correlationId"u8))
+                if (property.NameEquals("correlationId"u8))
                 {
-                    correlationId = prop.Value.GetString();
+                    correlationId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new DataReplicationProvisioningState(prop.Value.GetString());
+                    provisioningState = new DataReplicationProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("protectionState"u8))
+                if (property.NameEquals("protectionState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectionState = new DataReplicationProtectionState(prop.Value.GetString());
+                    protectionState = new DataReplicationProtectionState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("protectionStateDescription"u8))
+                if (property.NameEquals("protectionStateDescription"u8))
                 {
-                    protectionStateDescription = prop.Value.GetString();
+                    protectionStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("testFailoverState"u8))
+                if (property.NameEquals("testFailoverState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    testFailoverState = new DataReplicationTestFailoverState(prop.Value.GetString());
+                    testFailoverState = new DataReplicationTestFailoverState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("testFailoverStateDescription"u8))
+                if (property.NameEquals("testFailoverStateDescription"u8))
                 {
-                    testFailoverStateDescription = prop.Value.GetString();
+                    testFailoverStateDescription = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resynchronizationState"u8))
+                if (property.NameEquals("resynchronizationState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resynchronizationState = new DataReplicationResynchronizationState(prop.Value.GetString());
+                    resynchronizationState = new DataReplicationResynchronizationState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("fabricObjectId"u8))
+                if (property.NameEquals("fabricObjectId"u8))
                 {
-                    fabricObjectId = prop.Value.GetString();
+                    fabricObjectId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("fabricObjectName"u8))
+                if (property.NameEquals("fabricObjectName"u8))
                 {
-                    fabricObjectName = prop.Value.GetString();
+                    fabricObjectName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceFabricProviderId"u8))
+                if (property.NameEquals("sourceFabricProviderId"u8))
                 {
-                    sourceFabricProviderId = prop.Value.GetString();
+                    sourceFabricProviderId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetFabricProviderId"u8))
+                if (property.NameEquals("targetFabricProviderId"u8))
                 {
-                    targetFabricProviderId = prop.Value.GetString();
+                    targetFabricProviderId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("fabricId"u8))
+                if (property.NameEquals("fabricId"u8))
                 {
-                    fabricId = prop.Value.GetString();
+                    fabricId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetFabricId"u8))
+                if (property.NameEquals("targetFabricId"u8))
                 {
-                    targetFabricId = prop.Value.GetString();
+                    targetFabricId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("fabricAgentId"u8))
+                if (property.NameEquals("fabricAgentId"u8))
                 {
-                    fabricAgentId = prop.Value.GetString();
+                    fabricAgentId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetFabricAgentId"u8))
+                if (property.NameEquals("targetFabricAgentId"u8))
                 {
-                    targetFabricAgentId = prop.Value.GetString();
+                    targetFabricAgentId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resyncRequired"u8))
+                if (property.NameEquals("resyncRequired"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isResyncRequired = prop.Value.GetBoolean();
+                    resyncRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("lastSuccessfulPlannedFailoverTime"u8))
+                if (property.NameEquals("lastSuccessfulPlannedFailoverTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSuccessfulPlannedFailoverOn = prop.Value.GetDateTimeOffset("O");
+                    lastSuccessfulPlannedFailoverTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("lastSuccessfulUnplannedFailoverTime"u8))
+                if (property.NameEquals("lastSuccessfulUnplannedFailoverTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSuccessfulUnplannedFailoverOn = prop.Value.GetDateTimeOffset("O");
+                    lastSuccessfulUnplannedFailoverTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("lastSuccessfulTestFailoverTime"u8))
+                if (property.NameEquals("lastSuccessfulTestFailoverTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSuccessfulTestFailoverOn = prop.Value.GetDateTimeOffset("O");
+                    lastSuccessfulTestFailoverTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("currentJob"u8))
+                if (property.NameEquals("currentJob"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    currentJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(prop.Value, options);
+                    currentJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("allowedJobs"u8))
+                if (property.NameEquals("allowedJobs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     allowedJobs = array;
                     continue;
                 }
-                if (prop.NameEquals("lastFailedEnableProtectionJob"u8))
+                if (property.NameEquals("lastFailedEnableProtectionJob"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastFailedEnableProtectionJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(prop.Value, options);
+                    lastFailedEnableProtectionJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("lastFailedPlannedFailoverJob"u8))
+                if (property.NameEquals("lastFailedPlannedFailoverJob"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastFailedPlannedFailoverJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(prop.Value, options);
+                    lastFailedPlannedFailoverJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("lastTestFailoverJob"u8))
+                if (property.NameEquals("lastTestFailoverJob"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastTestFailoverJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(prop.Value, options);
+                    lastTestFailoverJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("replicationHealth"u8))
+                if (property.NameEquals("replicationHealth"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    replicationHealth = new DataReplicationHealthStatus(prop.Value.GetString());
+                    replicationHealth = new DataReplicationHealthStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("healthErrors"u8))
+                if (property.NameEquals("healthErrors"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
-                if (prop.NameEquals("customProperties"u8))
+                if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DataReplicationProtectedItemCustomProperties.DeserializeDataReplicationProtectedItemCustomProperties(prop.Value, options);
+                    customProperties = DataReplicationProtectedItemCustomProperties.DeserializeDataReplicationProtectedItemCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataReplicationProtectedItemProperties(
                 policyName,
                 replicationExtensionName,
@@ -549,10 +489,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 targetFabricId,
                 fabricAgentId,
                 targetFabricAgentId,
-                isResyncRequired,
-                lastSuccessfulPlannedFailoverOn,
-                lastSuccessfulUnplannedFailoverOn,
-                lastSuccessfulTestFailoverOn,
+                resyncRequired,
+                lastSuccessfulPlannedFailoverTime,
+                lastSuccessfulUnplannedFailoverTime,
+                lastSuccessfulTestFailoverTime,
                 currentJob,
                 allowedJobs ?? new ChangeTrackingList<string>(),
                 lastFailedEnableProtectionJob,
@@ -561,7 +501,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 replicationHealth,
                 healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
                 customProperties,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataReplicationProtectedItemProperties IPersistableModel<DataReplicationProtectedItemProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataReplicationProtectedItemProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataReplicationProtectedItemProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

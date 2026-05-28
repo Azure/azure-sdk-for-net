@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -15,36 +14,27 @@ namespace Azure.ResourceManager.Redis
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ExportRdbContent))]
     [ModelReaderWriterBuildable(typeof(ImportRdbContent))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(RedisAccessKeys))]
     [ModelReaderWriterBuildable(typeof(RedisCacheAccessPolicyAssignmentData))]
     [ModelReaderWriterBuildable(typeof(RedisCacheAccessPolicyAssignmentList))]
-    [ModelReaderWriterBuildable(typeof(RedisCacheAccessPolicyAssignmentProperties))]
     [ModelReaderWriterBuildable(typeof(RedisCacheAccessPolicyAssignmentResource))]
     [ModelReaderWriterBuildable(typeof(RedisCacheAccessPolicyData))]
     [ModelReaderWriterBuildable(typeof(RedisCacheAccessPolicyList))]
-    [ModelReaderWriterBuildable(typeof(RedisCacheAccessPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(RedisCacheAccessPolicyResource))]
     [ModelReaderWriterBuildable(typeof(RedisCommonConfiguration))]
-    [ModelReaderWriterBuildable(typeof(RedisCommonProperties))]
     [ModelReaderWriterBuildable(typeof(RedisCreateOrUpdateContent))]
-    [ModelReaderWriterBuildable(typeof(RedisCreateProperties))]
     [ModelReaderWriterBuildable(typeof(RedisData))]
     [ModelReaderWriterBuildable(typeof(RedisFirewallRuleData))]
     [ModelReaderWriterBuildable(typeof(RedisFirewallRuleListResult))]
-    [ModelReaderWriterBuildable(typeof(RedisFirewallRuleProperties))]
     [ModelReaderWriterBuildable(typeof(RedisFirewallRuleResource))]
     [ModelReaderWriterBuildable(typeof(RedisForceRebootResult))]
     [ModelReaderWriterBuildable(typeof(RedisInstanceDetails))]
-    [ModelReaderWriterBuildable(typeof(RedisLinkedServerCreateProperties))]
-    [ModelReaderWriterBuildable(typeof(RedisLinkedServerProperties))]
     [ModelReaderWriterBuildable(typeof(RedisLinkedServerWithPropertiesList))]
     [ModelReaderWriterBuildable(typeof(RedisLinkedServerWithPropertyCreateOrUpdateContent))]
     [ModelReaderWriterBuildable(typeof(RedisLinkedServerWithPropertyData))]
@@ -57,20 +47,16 @@ namespace Azure.ResourceManager.Redis
     [ModelReaderWriterBuildable(typeof(RedisPatchScheduleListResult))]
     [ModelReaderWriterBuildable(typeof(RedisPatchScheduleResource))]
     [ModelReaderWriterBuildable(typeof(RedisPatchScheduleSetting))]
-    [ModelReaderWriterBuildable(typeof(RedisPatchScheduleSettings))]
     [ModelReaderWriterBuildable(typeof(RedisPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(RedisPrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(RedisPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(RedisPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(RedisPrivateLinkResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(RedisPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(RedisPrivateLinkServiceConnectionState))]
-    [ModelReaderWriterBuildable(typeof(RedisProperties))]
     [ModelReaderWriterBuildable(typeof(RedisRebootContent))]
     [ModelReaderWriterBuildable(typeof(RedisRegenerateKeyContent))]
     [ModelReaderWriterBuildable(typeof(RedisResource))]
     [ModelReaderWriterBuildable(typeof(RedisSku))]
-    [ModelReaderWriterBuildable(typeof(RedisUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(RedisUpgradeNotification))]
     [ModelReaderWriterBuildable(typeof(RedisUpgradeNotificationListResponse))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Datadog;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> Terms properties. </summary>
-    public partial class DatadogAgreementProperties : IJsonModel<DatadogAgreementProperties>
+    public partial class DatadogAgreementProperties : IUtf8JsonSerializable, IJsonModel<DatadogAgreementProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatadogAgreementProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDatadogAgreementProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogAgreementProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatadogAgreementProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DatadogAgreementProperties IPersistableModel<DatadogAgreementProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatadogAgreementProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatadogAgreementProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
@@ -109,20 +69,20 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
-            if (Optional.IsDefined(IsAccepted))
+            if (Optional.IsDefined(Accepted))
             {
                 writer.WritePropertyName("accepted"u8);
-                writer.WriteBooleanValue(IsAccepted.Value);
+                writer.WriteBooleanValue(Accepted.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -131,27 +91,22 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DatadogAgreementProperties IJsonModel<DatadogAgreementProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatadogAgreementProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DatadogAgreementProperties IJsonModel<DatadogAgreementProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDatadogAgreementProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatadogAgreementProperties DeserializeDatadogAgreementProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DatadogAgreementProperties DeserializeDatadogAgreementProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -163,63 +118,65 @@ namespace Azure.ResourceManager.Datadog.Models
             string privacyPolicyLink = default;
             DateTimeOffset? retrieveDatetime = default;
             string signature = default;
-            bool? isAccepted = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            bool? accepted = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("publisher"u8))
+                if (property.NameEquals("publisher"u8))
                 {
-                    publisher = prop.Value.GetString();
+                    publisher = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("product"u8))
+                if (property.NameEquals("product"u8))
                 {
-                    product = prop.Value.GetString();
+                    product = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("plan"u8))
+                if (property.NameEquals("plan"u8))
                 {
-                    plan = prop.Value.GetString();
+                    plan = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("licenseTextLink"u8))
+                if (property.NameEquals("licenseTextLink"u8))
                 {
-                    licenseTextLink = prop.Value.GetString();
+                    licenseTextLink = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("privacyPolicyLink"u8))
+                if (property.NameEquals("privacyPolicyLink"u8))
                 {
-                    privacyPolicyLink = prop.Value.GetString();
+                    privacyPolicyLink = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("retrieveDatetime"u8))
+                if (property.NameEquals("retrieveDatetime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retrieveDatetime = prop.Value.GetDateTimeOffset("O");
+                    retrieveDatetime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("signature"u8))
+                if (property.NameEquals("signature"u8))
                 {
-                    signature = prop.Value.GetString();
+                    signature = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("accepted"u8))
+                if (property.NameEquals("accepted"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAccepted = prop.Value.GetBoolean();
+                    accepted = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DatadogAgreementProperties(
                 publisher,
                 product,
@@ -228,8 +185,39 @@ namespace Azure.ResourceManager.Datadog.Models
                 privacyPolicyLink,
                 retrieveDatetime,
                 signature,
-                isAccepted,
-                additionalBinaryDataProperties);
+                accepted,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DatadogAgreementProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DatadogAgreementProperties IPersistableModel<DatadogAgreementProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDatadogAgreementProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatadogAgreementProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

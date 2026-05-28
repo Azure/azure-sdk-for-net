@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
                 TargetKubernetesVersion = "",
                 LongTermSupport = false,
             };
-            ArmOperation<AutoUpgradeProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, data, matchConditions: null);
+            ArmOperation<AutoUpgradeProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, data);
             AutoUpgradeProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -89,12 +89,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
                 SelectionType = AutoUpgradeNodeImageSelectionType.Latest,
                 Disabled = true,
             };
-            MatchConditions matchConditions = new MatchConditions
-            {
-                IfMatch = new ETag("uktvayathbu"),
-                IfNoneMatch = new ETag("vdjolwxnefqamimybcvxxva")
-            };
-            ArmOperation<AutoUpgradeProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, data, matchConditions: matchConditions);
+            string ifMatch = "uktvayathbu";
+            string ifNoneMatch = "vdjolwxnefqamimybcvxxva";
+            ArmOperation<AutoUpgradeProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, data, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch);
             AutoUpgradeProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

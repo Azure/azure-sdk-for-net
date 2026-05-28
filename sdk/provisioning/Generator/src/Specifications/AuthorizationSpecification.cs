@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Generator.Specifications;
 public class AuthorizationSpecification : Specification
 {
     public AuthorizationSpecification() :
-        base("Authorization", typeof(AuthorizationExtensions), serviceDirectory: "provisioning")
+        base("Authorization", typeof(AuthorizationExtensions))
     {
         SkipCleaning = true;
     }

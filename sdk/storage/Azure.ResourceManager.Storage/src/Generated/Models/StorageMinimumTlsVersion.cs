@@ -7,71 +7,42 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. Minimum TLS version 1.3 version is not supported. </summary>
+    /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
     public readonly partial struct StorageMinimumTlsVersion : IEquatable<StorageMinimumTlsVersion>
     {
         private readonly string _value;
-        private const string Tls10Value = "TLS1_0";
-        private const string Tls11Value = "TLS1_1";
-        private const string Tls12Value = "TLS1_2";
-        private const string Tls13Value = "TLS1_3";
 
         /// <summary> Initializes a new instance of <see cref="StorageMinimumTlsVersion"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageMinimumTlsVersion(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Tls10. </summary>
-        public static StorageMinimumTlsVersion Tls10 { get; } = new StorageMinimumTlsVersion(Tls10Value);
-
-        /// <summary> Gets the Tls11. </summary>
-        public static StorageMinimumTlsVersion Tls11 { get; } = new StorageMinimumTlsVersion(Tls11Value);
-
-        /// <summary> Gets the Tls12. </summary>
-        public static StorageMinimumTlsVersion Tls12 { get; } = new StorageMinimumTlsVersion(Tls12Value);
-
-        /// <summary> Gets the Tls13. </summary>
-        public static StorageMinimumTlsVersion Tls13 { get; } = new StorageMinimumTlsVersion(Tls13Value);
-
+        private const string Tls1_0Value = "TLS1_0";
+        private const string Tls1_1Value = "TLS1_1";
+        private const string Tls1_2Value = "TLS1_2";
+        private const string Tls1_3Value = "TLS1_3";
         /// <summary> Determines if two <see cref="StorageMinimumTlsVersion"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageMinimumTlsVersion left, StorageMinimumTlsVersion right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageMinimumTlsVersion"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageMinimumTlsVersion left, StorageMinimumTlsVersion right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageMinimumTlsVersion"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageMinimumTlsVersion"/>. </summary>
         public static implicit operator StorageMinimumTlsVersion(string value) => new StorageMinimumTlsVersion(value);
 
-        /// <summary> Converts a string to a <see cref="StorageMinimumTlsVersion"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageMinimumTlsVersion?(string value) => value == null ? null : new StorageMinimumTlsVersion(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageMinimumTlsVersion other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StorageMinimumTlsVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

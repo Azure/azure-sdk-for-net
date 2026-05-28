@@ -11,10 +11,7 @@ using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    /// <summary>
-    /// An exporter that sends trace data to Application Insights.
-    /// </summary>
-    public sealed class AzureMonitorTraceExporter : BaseExporter<Activity>
+    internal sealed class AzureMonitorTraceExporter : BaseExporter<Activity>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
@@ -22,10 +19,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private AzureMonitorResource? _resource;
         private bool _disposed;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AzureMonitorTraceExporter"/> class.
-        /// </summary>
-        /// <param name="options">Configuration options for the trace exporter.</param>
         public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, TransmitterFactory.Instance.Get(options))
         {
         }
@@ -63,7 +56,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return exportResult;
         }
 
-        /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
             if (!_disposed)

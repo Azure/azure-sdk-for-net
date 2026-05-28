@@ -7,381 +7,200 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    /// <summary> A container group. </summary>
+    /// <summary>
+    /// A class representing the ContainerGroup data model.
+    /// A container group.
+    /// </summary>
     public partial class ContainerGroupData : TrackedResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="containers"> The containers within the container group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
-        public ContainerGroupData(AzureLocation location, IEnumerable<ContainerInstanceContainer> containers) : base(location)
-        {
-            Argument.AssertNotNull(containers, nameof(containers));
-
-            Zones = new ChangeTrackingList<string>();
-            Properties = new ContainerGroupPropertiesProperties(containers);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="zones"> The availability zones. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
-        /// <param name="properties"> The container group properties. </param>
-        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, ContainerGroupPropertiesProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="containerGroupProvisioningState"> The provisioning state of the container group. This only appears in the response. </param>
+        /// <param name="secretReferences"> The secret references that will be referenced within the container group. </param>
+        /// <param name="containers"> The containers within the container group. </param>
+        /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
+        /// <param name="restartPolicy">
+        /// Restart policy for all containers within the container group.
+        /// - `Always` Always restart
+        /// - `OnFailure` Restart on failure
+        /// - `Never` Never restart
+        ///
+        /// </param>
+        /// <param name="ipAddress"> The IP address type of the container group. </param>
+        /// <param name="containerGroupOSType"> The operating system type required by the containers in the container group. </param>
+        /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
+        /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
+        /// <param name="diagnostics"> The diagnostic information for a container group. </param>
+        /// <param name="subnetIds"> The subnet resource IDs for a container group. </param>
+        /// <param name="dnsConfig"> The DNS config information for a container group. </param>
+        /// <param name="sku"> The SKU for a container group. </param>
+        /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
+        /// <param name="initContainers"> The init containers for a container group. </param>
+        /// <param name="extensions"> extensions used by virtual kubelet. </param>
+        /// <param name="confidentialComputeProperties"> The properties for confidential container group. </param>
+        /// <param name="priority"> The priority of the container group. </param>
+        /// <param name="identityAcls"> The access control levels of the identities. </param>
+        /// <param name="containerGroupProfile"> The reference container group profile properties. </param>
+        /// <param name="standbyPoolProfile"> The reference standby pool profile properties. </param>
+        /// <param name="isCreatedFromStandbyPool"> The flag to determine whether the container group is created from standby pool. </param>
+        /// <param name="zones"> The zones for the container group. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerGroupProvisioningState? containerGroupProvisioningState, IList<ContainerGroupSecretReference> secretReferences, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType? containerGroupOSType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, ContainerGroupProfileReferenceDefinition containerGroupProfile, StandbyPoolProfileDefinition standbyPoolProfile, bool? isCreatedFromStandbyPool, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Zones = zones;
             Identity = identity;
-            Properties = properties;
+            ContainerGroupProvisioningState = containerGroupProvisioningState;
+            SecretReferences = secretReferences;
+            Containers = containers;
+            ImageRegistryCredentials = imageRegistryCredentials;
+            RestartPolicy = restartPolicy;
+            IPAddress = ipAddress;
+            ContainerGroupOSType = containerGroupOSType;
+            Volumes = volumes;
+            InstanceView = instanceView;
+            Diagnostics = diagnostics;
+            SubnetIds = subnetIds;
+            DnsConfig = dnsConfig;
+            Sku = sku;
+            EncryptionProperties = encryptionProperties;
+            InitContainers = initContainers;
+            Extensions = extensions;
+            ConfidentialComputeProperties = confidentialComputeProperties;
+            Priority = priority;
+            IdentityAcls = identityAcls;
+            ContainerGroupProfile = containerGroupProfile;
+            StandbyPoolProfile = standbyPoolProfile;
+            IsCreatedFromStandbyPool = isCreatedFromStandbyPool;
+            Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The availability zones. </summary>
-        public IList<string> Zones { get; }
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupData"/> for deserialization. </summary>
+        internal ContainerGroupData()
+        {
+        }
 
         /// <summary> The identity of the container group, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-
-        /// <summary> The container group properties. </summary>
-        internal ContainerGroupPropertiesProperties Properties { get; set; }
-
         /// <summary> The provisioning state of the container group. This only appears in the response. </summary>
-        public string ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
+        public ContainerGroupProvisioningState? ContainerGroupProvisioningState { get; }
         /// <summary> The secret references that will be referenced within the container group. </summary>
-        public IList<ContainerGroupSecretReference> SecretReferences
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                return Properties.SecretReferences;
-            }
-        }
-
+        public IList<ContainerGroupSecretReference> SecretReferences { get; }
         /// <summary> The containers within the container group. </summary>
-        public IList<ContainerInstanceContainer> Containers
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                return Properties.Containers;
-            }
-        }
-
+        public IList<ContainerInstanceContainer> Containers { get; }
         /// <summary> The image registry credentials by which the container group is created from. </summary>
-        public IList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                return Properties.ImageRegistryCredentials;
-            }
-        }
-
+        public IList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials { get; }
         /// <summary>
         /// Restart policy for all containers within the container group.
-        /// <list type="bullet"><item><description>`Always` Always restart</description></item><item><description>`OnFailure` Restart on failure</description></item><item><description>`Never` Never restart</description></item></list>
+        /// - `Always` Always restart
+        /// - `OnFailure` Restart on failure
+        /// - `Never` Never restart
+        ///
         /// </summary>
-        public ContainerGroupRestartPolicy? RestartPolicy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RestartPolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.RestartPolicy = value;
-            }
-        }
-
+        public ContainerGroupRestartPolicy? RestartPolicy { get; set; }
         /// <summary> The IP address type of the container group. </summary>
-        public ContainerGroupIPAddress IPAddress
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IPAddress;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.IPAddress = value;
-            }
-        }
-
+        public ContainerGroupIPAddress IPAddress { get; set; }
         /// <summary> The operating system type required by the containers in the container group. </summary>
-        public ContainerInstanceOperatingSystemType? ContainerGroupOSType
+        public ContainerInstanceOperatingSystemType? ContainerGroupOSType { get; set; }
+        /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
+        public IList<ContainerVolume> Volumes { get; }
+        /// <summary> The instance view of the container group. Only valid in response. </summary>
+        public ContainerGroupInstanceView InstanceView { get; }
+        /// <summary> The diagnostic information for a container group. </summary>
+        internal ContainerGroupDiagnostics Diagnostics { get; set; }
+        /// <summary> Container group log analytics information. </summary>
+        public ContainerGroupLogAnalytics DiagnosticsLogAnalytics
         {
-            get
-            {
-                return Properties is null ? default : Properties.ContainerGroupOSType;
-            }
+            get => Diagnostics is null ? default : Diagnostics.LogAnalytics;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.ContainerGroupOSType = value;
-            }
-        }
-
-        /// <summary> The list of volumes that can be mounted by containers in this container group. </summary>
-        public IList<ContainerVolume> Volumes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                return Properties.Volumes;
-            }
-        }
-
-        /// <summary> The instance view of the container group. Only valid in response. </summary>
-        public ContainerGroupInstanceView InstanceView
-        {
-            get
-            {
-                return Properties is null ? default : Properties.InstanceView;
+                if (Diagnostics is null)
+                    Diagnostics = new ContainerGroupDiagnostics();
+                Diagnostics.LogAnalytics = value;
             }
         }
 
         /// <summary> The subnet resource IDs for a container group. </summary>
-        public IList<ContainerGroupSubnetId> SubnetIds
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                return Properties.SubnetIds;
-            }
-        }
-
+        public IList<ContainerGroupSubnetId> SubnetIds { get; }
         /// <summary> The DNS config information for a container group. </summary>
-        public ContainerGroupDnsConfiguration DnsConfig
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DnsConfig;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.DnsConfig = value;
-            }
-        }
-
+        public ContainerGroupDnsConfiguration DnsConfig { get; set; }
         /// <summary> The SKU for a container group. </summary>
-        public ContainerGroupSku? Sku
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Sku;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.Sku = value;
-            }
-        }
-
+        public ContainerGroupSku? Sku { get; set; }
         /// <summary> The encryption properties for a container group. </summary>
-        public ContainerGroupEncryptionProperties EncryptionProperties
+        public ContainerGroupEncryptionProperties EncryptionProperties { get; set; }
+        /// <summary> The init containers for a container group. </summary>
+        public IList<InitContainerDefinitionContent> InitContainers { get; }
+        /// <summary> extensions used by virtual kubelet. </summary>
+        public IList<DeploymentExtensionSpec> Extensions { get; }
+        /// <summary> The properties for confidential container group. </summary>
+        internal ConfidentialComputeProperties ConfidentialComputeProperties { get; set; }
+        /// <summary> The base64 encoded confidential compute enforcement policy. </summary>
+        public string ConfidentialComputeCcePolicy
         {
-            get
-            {
-                return Properties is null ? default : Properties.EncryptionProperties;
-            }
+            get => ConfidentialComputeProperties is null ? default : ConfidentialComputeProperties.CcePolicy;
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.EncryptionProperties = value;
-            }
-        }
-
-        /// <summary> The init containers for a container group. </summary>
-        public IList<InitContainerDefinitionContent> InitContainers
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                return Properties.InitContainers;
-            }
-        }
-
-        /// <summary> extensions used by virtual kubelet. </summary>
-        public IList<DeploymentExtensionSpec> Extensions
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                return Properties.Extensions;
+                if (ConfidentialComputeProperties is null)
+                    ConfidentialComputeProperties = new ConfidentialComputeProperties();
+                ConfidentialComputeProperties.CcePolicy = value;
             }
         }
 
         /// <summary> The priority of the container group. </summary>
-        public ContainerGroupPriority? Priority
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Priority;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.Priority = value;
-            }
-        }
-
+        public ContainerGroupPriority? Priority { get; set; }
         /// <summary> The access control levels of the identities. </summary>
-        public ContainerGroupIdentityAccessControlLevels IdentityAcls
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IdentityAcls;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.IdentityAcls = value;
-            }
-        }
-
+        public ContainerGroupIdentityAccessControlLevels IdentityAcls { get; set; }
         /// <summary> The reference container group profile properties. </summary>
-        public ContainerGroupProfileReferenceDefinition ContainerGroupProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ContainerGroupProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.ContainerGroupProfile = value;
-            }
-        }
-
+        public ContainerGroupProfileReferenceDefinition ContainerGroupProfile { get; set; }
         /// <summary> The reference standby pool profile properties. </summary>
-        public StandbyPoolProfileDefinition StandbyPoolProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StandbyPoolProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.StandbyPoolProfile = value;
-            }
-        }
-
+        public StandbyPoolProfileDefinition StandbyPoolProfile { get; set; }
         /// <summary> The flag to determine whether the container group is created from standby pool. </summary>
-        public bool? IsCreatedFromStandbyPool
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsCreatedFromStandbyPool;
-            }
-        }
-
-        /// <summary> Container group log analytics information. </summary>
-        public ContainerGroupLogAnalytics DiagnosticsLogAnalytics
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DiagnosticsLogAnalytics;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.DiagnosticsLogAnalytics = value;
-            }
-        }
-
-        /// <summary> The base64 encoded confidential compute enforcement policy. </summary>
-        public string ConfidentialComputeCcePolicy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConfidentialComputeCcePolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerGroupPropertiesProperties();
-                }
-                Properties.ConfidentialComputeCcePolicy = value;
-            }
-        }
+        public bool? IsCreatedFromStandbyPool { get; }
+        /// <summary> The zones for the container group. </summary>
+        public IList<string> Zones { get; }
     }
 }

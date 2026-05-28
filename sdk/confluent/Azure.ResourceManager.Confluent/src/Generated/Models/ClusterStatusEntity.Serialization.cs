@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Confluent;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Status of the cluster record. </summary>
-    public partial class ClusterStatusEntity : IJsonModel<ClusterStatusEntity>
+    public partial class ClusterStatusEntity : IUtf8JsonSerializable, IJsonModel<ClusterStatusEntity>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterStatusEntity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterStatusEntity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeClusterStatusEntity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClusterStatusEntity)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterStatusEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterStatusEntity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClusterStatusEntity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterStatusEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterStatusEntity IPersistableModel<ClusterStatusEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterStatusEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClusterStatusEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterStatusEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterStatusEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterStatusEntity)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
@@ -84,15 +44,15 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("cku"u8);
                 writer.WriteNumberValue(Cku.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,56 +61,84 @@ namespace Azure.ResourceManager.Confluent.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterStatusEntity IJsonModel<ClusterStatusEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterStatusEntity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterStatusEntity IJsonModel<ClusterStatusEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterStatusEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterStatusEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterStatusEntity)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClusterStatusEntity(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterStatusEntity DeserializeClusterStatusEntity(JsonElement element, ModelReaderWriterOptions options)
+        internal static ClusterStatusEntity DeserializeClusterStatusEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string phase = default;
             int? cku = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("phase"u8))
+                if (property.NameEquals("phase"u8))
                 {
-                    phase = prop.Value.GetString();
+                    phase = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("cku"u8))
+                if (property.NameEquals("cku"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cku = prop.Value.GetInt32();
+                    cku = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ClusterStatusEntity(phase, cku, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ClusterStatusEntity(phase, cku, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterStatusEntity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterStatusEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterStatusEntity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ClusterStatusEntity IPersistableModel<ClusterStatusEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterStatusEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeClusterStatusEntity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterStatusEntity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClusterStatusEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

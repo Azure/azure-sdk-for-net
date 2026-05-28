@@ -264,8 +264,7 @@ namespace Azure.Storage.DataMovement
                 if (mem > 0)
                 {
                     MemoryUsage = mem;
-                }
-                else
+                } else
                 {
                     MemoryUsage = (double)CurrentProcess.WorkingSet64;
                 }

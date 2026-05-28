@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary></summary>
+    /// <summary> The ProviderHubProvisioningState. </summary>
     public readonly partial struct ProviderHubProvisioningState : IEquatable<ProviderHubProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderHubProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProviderHubProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NotSpecifiedValue = "NotSpecified";
         private const string AcceptedValue = "Accepted";
         private const string RunningValue = "Running";
@@ -29,85 +36,49 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string TransientFailureValue = "TransientFailure";
         private const string RolloutInProgressValue = "RolloutInProgress";
 
-        /// <summary> Initializes a new instance of <see cref="ProviderHubProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProviderHubProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NotSpecified. </summary>
+        /// <summary> NotSpecified. </summary>
         public static ProviderHubProvisioningState NotSpecified { get; } = new ProviderHubProvisioningState(NotSpecifiedValue);
-
-        /// <summary> Gets the Accepted. </summary>
+        /// <summary> Accepted. </summary>
         public static ProviderHubProvisioningState Accepted { get; } = new ProviderHubProvisioningState(AcceptedValue);
-
-        /// <summary> Gets the Running. </summary>
+        /// <summary> Running. </summary>
         public static ProviderHubProvisioningState Running { get; } = new ProviderHubProvisioningState(RunningValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static ProviderHubProvisioningState Creating { get; } = new ProviderHubProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Created. </summary>
+        /// <summary> Created. </summary>
         public static ProviderHubProvisioningState Created { get; } = new ProviderHubProvisioningState(CreatedValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static ProviderHubProvisioningState Deleting { get; } = new ProviderHubProvisioningState(DeletingValue);
-
-        /// <summary> Gets the Deleted. </summary>
+        /// <summary> Deleted. </summary>
         public static ProviderHubProvisioningState Deleted { get; } = new ProviderHubProvisioningState(DeletedValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static ProviderHubProvisioningState Canceled { get; } = new ProviderHubProvisioningState(CanceledValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static ProviderHubProvisioningState Failed { get; } = new ProviderHubProvisioningState(FailedValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static ProviderHubProvisioningState Succeeded { get; } = new ProviderHubProvisioningState(SucceededValue);
-
-        /// <summary> Gets the MovingResources. </summary>
+        /// <summary> MovingResources. </summary>
         public static ProviderHubProvisioningState MovingResources { get; } = new ProviderHubProvisioningState(MovingResourcesValue);
-
-        /// <summary> Gets the TransientFailure. </summary>
+        /// <summary> TransientFailure. </summary>
         public static ProviderHubProvisioningState TransientFailure { get; } = new ProviderHubProvisioningState(TransientFailureValue);
-
-        /// <summary> Gets the RolloutInProgress. </summary>
+        /// <summary> RolloutInProgress. </summary>
         public static ProviderHubProvisioningState RolloutInProgress { get; } = new ProviderHubProvisioningState(RolloutInProgressValue);
-
         /// <summary> Determines if two <see cref="ProviderHubProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderHubProvisioningState left, ProviderHubProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ProviderHubProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderHubProvisioningState left, ProviderHubProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ProviderHubProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderHubProvisioningState"/>. </summary>
         public static implicit operator ProviderHubProvisioningState(string value) => new ProviderHubProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ProviderHubProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ProviderHubProvisioningState?(string value) => value == null ? null : new ProviderHubProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderHubProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ProviderHubProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

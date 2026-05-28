@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct VaultPrivateEndpointState : IEquatable<VaultPrivateEndpointState>
     {
         private readonly string _value;
-        private const string NoneValue = "None";
-        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="VaultPrivateEndpointState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VaultPrivateEndpointState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the None. </summary>
+        private const string NoneValue = "None";
+        private const string EnabledValue = "Enabled";
+
+        /// <summary> None. </summary>
         public static VaultPrivateEndpointState None { get; } = new VaultPrivateEndpointState(NoneValue);
-
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Enabled. </summary>
         public static VaultPrivateEndpointState Enabled { get; } = new VaultPrivateEndpointState(EnabledValue);
-
         /// <summary> Determines if two <see cref="VaultPrivateEndpointState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VaultPrivateEndpointState left, VaultPrivateEndpointState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="VaultPrivateEndpointState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VaultPrivateEndpointState left, VaultPrivateEndpointState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="VaultPrivateEndpointState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VaultPrivateEndpointState"/>. </summary>
         public static implicit operator VaultPrivateEndpointState(string value) => new VaultPrivateEndpointState(value);
 
-        /// <summary> Converts a string to a <see cref="VaultPrivateEndpointState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator VaultPrivateEndpointState?(string value) => value == null ? null : new VaultPrivateEndpointState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VaultPrivateEndpointState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(VaultPrivateEndpointState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

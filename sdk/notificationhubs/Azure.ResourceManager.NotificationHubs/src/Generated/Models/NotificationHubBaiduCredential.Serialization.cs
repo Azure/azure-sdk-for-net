@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.NotificationHubs;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Description of a NotificationHub BaiduCredential. </summary>
-    public partial class NotificationHubBaiduCredential : IJsonModel<NotificationHubBaiduCredential>
+    public partial class NotificationHubBaiduCredential : IUtf8JsonSerializable, IJsonModel<NotificationHubBaiduCredential>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NotificationHubBaiduCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubBaiduCredential>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNotificationHubBaiduCredential(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubBaiduCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubBaiduCredential>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NotificationHubBaiduCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NotificationHubBaiduCredential IPersistableModel<NotificationHubBaiduCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NotificationHubBaiduCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NotificationHubBaiduCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,22 +28,30 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubBaiduCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubBaiduCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteStartObject();
+            writer.WritePropertyName("baiduApiKey"u8);
+            writer.WriteStringValue(BaiduApiKey);
+            writer.WritePropertyName("baiduEndPoint"u8);
+            writer.WriteStringValue(BaiduEndpoint.AbsoluteUri);
+            writer.WritePropertyName("baiduSecretKey"u8);
+            writer.WriteStringValue(BaiduSecretKey);
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -93,46 +60,98 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NotificationHubBaiduCredential IJsonModel<NotificationHubBaiduCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NotificationHubBaiduCredential JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NotificationHubBaiduCredential IJsonModel<NotificationHubBaiduCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubBaiduCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubBaiduCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNotificationHubBaiduCredential(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NotificationHubBaiduCredential DeserializeNotificationHubBaiduCredential(JsonElement element, ModelReaderWriterOptions options)
+        internal static NotificationHubBaiduCredential DeserializeNotificationHubBaiduCredential(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BaiduCredentialProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string baiduApiKey = default;
+            Uri baiduEndPoint = default;
+            string baiduSecretKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    properties = BaiduCredentialProperties.DeserializeBaiduCredentialProperties(prop.Value, options);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("baiduApiKey"u8))
+                        {
+                            baiduApiKey = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("baiduEndPoint"u8))
+                        {
+                            baiduEndPoint = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("baiduSecretKey"u8))
+                        {
+                            baiduSecretKey = property0.Value.GetString();
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new NotificationHubBaiduCredential(properties, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NotificationHubBaiduCredential(baiduApiKey, baiduEndPoint, baiduSecretKey, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NotificationHubBaiduCredential>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubBaiduCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NotificationHubBaiduCredential IPersistableModel<NotificationHubBaiduCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubBaiduCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeNotificationHubBaiduCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NotificationHubBaiduCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

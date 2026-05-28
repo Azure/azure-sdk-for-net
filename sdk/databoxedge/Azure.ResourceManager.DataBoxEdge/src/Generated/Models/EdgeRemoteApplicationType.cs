@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct EdgeRemoteApplicationType : IEquatable<EdgeRemoteApplicationType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeRemoteApplicationType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EdgeRemoteApplicationType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string PowershellValue = "Powershell";
         private const string WacValue = "WAC";
         private const string LocalUIValue = "LocalUI";
         private const string AllApplicationsValue = "AllApplications";
 
-        /// <summary> Initializes a new instance of <see cref="EdgeRemoteApplicationType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EdgeRemoteApplicationType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Powershell. </summary>
+        /// <summary> Powershell. </summary>
         public static EdgeRemoteApplicationType Powershell { get; } = new EdgeRemoteApplicationType(PowershellValue);
-
-        /// <summary> Gets the Wac. </summary>
+        /// <summary> WAC. </summary>
         public static EdgeRemoteApplicationType Wac { get; } = new EdgeRemoteApplicationType(WacValue);
-
-        /// <summary> Gets the LocalUI. </summary>
+        /// <summary> LocalUI. </summary>
         public static EdgeRemoteApplicationType LocalUI { get; } = new EdgeRemoteApplicationType(LocalUIValue);
-
-        /// <summary> Gets the AllApplications. </summary>
+        /// <summary> AllApplications. </summary>
         public static EdgeRemoteApplicationType AllApplications { get; } = new EdgeRemoteApplicationType(AllApplicationsValue);
-
         /// <summary> Determines if two <see cref="EdgeRemoteApplicationType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeRemoteApplicationType left, EdgeRemoteApplicationType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="EdgeRemoteApplicationType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeRemoteApplicationType left, EdgeRemoteApplicationType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="EdgeRemoteApplicationType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeRemoteApplicationType"/>. </summary>
         public static implicit operator EdgeRemoteApplicationType(string value) => new EdgeRemoteApplicationType(value);
 
-        /// <summary> Converts a string to a <see cref="EdgeRemoteApplicationType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator EdgeRemoteApplicationType?(string value) => value == null ? null : new EdgeRemoteApplicationType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeRemoteApplicationType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(EdgeRemoteApplicationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

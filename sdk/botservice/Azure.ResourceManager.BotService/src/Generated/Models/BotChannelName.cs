@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary></summary>
+    /// <summary> The BotChannelName. </summary>
     public readonly partial struct BotChannelName : IEquatable<BotChannelName>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="BotChannelName"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BotChannelName(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AlexaChannelValue = "AlexaChannel";
         private const string FacebookChannelValue = "FacebookChannel";
         private const string EmailChannelValue = "EmailChannel";
@@ -35,103 +42,61 @@ namespace Azure.ResourceManager.BotService.Models
         private const string SearchAssistantValue = "SearchAssistant";
         private const string M365ExtensionsValue = "M365Extensions";
 
-        /// <summary> Initializes a new instance of <see cref="BotChannelName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BotChannelName(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the AlexaChannel. </summary>
+        /// <summary> AlexaChannel. </summary>
         public static BotChannelName AlexaChannel { get; } = new BotChannelName(AlexaChannelValue);
-
-        /// <summary> Gets the FacebookChannel. </summary>
+        /// <summary> FacebookChannel. </summary>
         public static BotChannelName FacebookChannel { get; } = new BotChannelName(FacebookChannelValue);
-
-        /// <summary> Gets the EmailChannel. </summary>
+        /// <summary> EmailChannel. </summary>
         public static BotChannelName EmailChannel { get; } = new BotChannelName(EmailChannelValue);
-
-        /// <summary> Gets the KikChannel. </summary>
+        /// <summary> KikChannel. </summary>
         public static BotChannelName KikChannel { get; } = new BotChannelName(KikChannelValue);
-
-        /// <summary> Gets the TelegramChannel. </summary>
+        /// <summary> TelegramChannel. </summary>
         public static BotChannelName TelegramChannel { get; } = new BotChannelName(TelegramChannelValue);
-
-        /// <summary> Gets the SlackChannel. </summary>
+        /// <summary> SlackChannel. </summary>
         public static BotChannelName SlackChannel { get; } = new BotChannelName(SlackChannelValue);
-
-        /// <summary> Gets the MsTeamsChannel. </summary>
+        /// <summary> MsTeamsChannel. </summary>
         public static BotChannelName MsTeamsChannel { get; } = new BotChannelName(MsTeamsChannelValue);
-
-        /// <summary> Gets the SkypeChannel. </summary>
+        /// <summary> SkypeChannel. </summary>
         public static BotChannelName SkypeChannel { get; } = new BotChannelName(SkypeChannelValue);
-
-        /// <summary> Gets the WebChatChannel. </summary>
+        /// <summary> WebChatChannel. </summary>
         public static BotChannelName WebChatChannel { get; } = new BotChannelName(WebChatChannelValue);
-
-        /// <summary> Gets the DirectLineChannel. </summary>
+        /// <summary> DirectLineChannel. </summary>
         public static BotChannelName DirectLineChannel { get; } = new BotChannelName(DirectLineChannelValue);
-
-        /// <summary> Gets the SmsChannel. </summary>
+        /// <summary> SmsChannel. </summary>
         public static BotChannelName SmsChannel { get; } = new BotChannelName(SmsChannelValue);
-
-        /// <summary> Gets the LineChannel. </summary>
+        /// <summary> LineChannel. </summary>
         public static BotChannelName LineChannel { get; } = new BotChannelName(LineChannelValue);
-
-        /// <summary> Gets the DirectLineSpeechChannel. </summary>
+        /// <summary> DirectLineSpeechChannel. </summary>
         public static BotChannelName DirectLineSpeechChannel { get; } = new BotChannelName(DirectLineSpeechChannelValue);
-
-        /// <summary> Gets the OutlookChannel. </summary>
+        /// <summary> OutlookChannel. </summary>
         public static BotChannelName OutlookChannel { get; } = new BotChannelName(OutlookChannelValue);
-
-        /// <summary> Gets the Omnichannel. </summary>
+        /// <summary> Omnichannel. </summary>
         public static BotChannelName Omnichannel { get; } = new BotChannelName(OmnichannelValue);
-
-        /// <summary> Gets the TelephonyChannel. </summary>
+        /// <summary> TelephonyChannel. </summary>
         public static BotChannelName TelephonyChannel { get; } = new BotChannelName(TelephonyChannelValue);
-
-        /// <summary> Gets the AcsChatChannel. </summary>
+        /// <summary> AcsChatChannel. </summary>
         public static BotChannelName AcsChatChannel { get; } = new BotChannelName(AcsChatChannelValue);
-
-        /// <summary> Gets the SearchAssistant. </summary>
+        /// <summary> SearchAssistant. </summary>
         public static BotChannelName SearchAssistant { get; } = new BotChannelName(SearchAssistantValue);
-
-        /// <summary> Gets the M365Extensions. </summary>
+        /// <summary> M365Extensions. </summary>
         public static BotChannelName M365Extensions { get; } = new BotChannelName(M365ExtensionsValue);
-
         /// <summary> Determines if two <see cref="BotChannelName"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BotChannelName left, BotChannelName right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BotChannelName"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BotChannelName left, BotChannelName right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BotChannelName"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BotChannelName"/>. </summary>
         public static implicit operator BotChannelName(string value) => new BotChannelName(value);
 
-        /// <summary> Converts a string to a <see cref="BotChannelName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BotChannelName?(string value) => value == null ? null : new BotChannelName(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BotChannelName other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BotChannelName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

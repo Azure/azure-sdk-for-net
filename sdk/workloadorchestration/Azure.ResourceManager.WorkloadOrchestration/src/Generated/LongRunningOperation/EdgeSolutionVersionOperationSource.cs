@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
-    /// <summary></summary>
-    internal partial class EdgeSolutionVersionOperationSource : IOperationSource<EdgeSolutionVersionResource>
+    internal class EdgeSolutionVersionOperationSource : IOperationSource<EdgeSolutionVersionResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal EdgeSolutionVersionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         EdgeSolutionVersionResource IOperationSource<EdgeSolutionVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            EdgeSolutionVersionData data = EdgeSolutionVersionData.DeserializeEdgeSolutionVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<EdgeSolutionVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
             return new EdgeSolutionVersionResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<EdgeSolutionVersionResource> IOperationSource<EdgeSolutionVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            EdgeSolutionVersionData data = EdgeSolutionVersionData.DeserializeEdgeSolutionVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new EdgeSolutionVersionResource(_client, data);
+            var data = ModelReaderWriter.Read<EdgeSolutionVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            return await Task.FromResult(new EdgeSolutionVersionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

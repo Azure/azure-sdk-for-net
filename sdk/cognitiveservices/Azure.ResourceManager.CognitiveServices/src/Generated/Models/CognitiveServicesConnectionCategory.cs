@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -15,18 +14,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct CognitiveServicesConnectionCategory : IEquatable<CognitiveServicesConnectionCategory>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesConnectionCategory"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CognitiveServicesConnectionCategory(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string PythonFeedValue = "PythonFeed";
         private const string ContainerRegistryValue = "ContainerRegistry";
         private const string GitValue = "Git";
         private const string S3Value = "S3";
         private const string SnowflakeValue = "Snowflake";
-        private const string AzureKeyVaultValue = "AzureKeyVault";
         private const string AzureSqlDBValue = "AzureSqlDb";
         private const string AzureSynapseAnalyticsValue = "AzureSynapseAnalytics";
         private const string AzureMySqlDBValue = "AzureMySqlDb";
         private const string AzurePostgresDBValue = "AzurePostgresDb";
         private const string AdlsGen2Value = "ADLSGen2";
-        private const string AzureContainerAppEnvironmentValue = "AzureContainerAppEnvironment";
         private const string RedisValue = "Redis";
         private const string ApiKeyValue = "ApiKey";
         private const string AzureOpenAIValue = "AzureOpenAI";
@@ -35,7 +40,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string CognitiveServiceValue = "CognitiveService";
         private const string CustomKeysValue = "CustomKeys";
         private const string AzureBlobValue = "AzureBlob";
-        private const string AzureStorageAccountValue = "AzureStorageAccount";
         private const string AzureOneLakeValue = "AzureOneLake";
         private const string CosmosDBValue = "CosmosDb";
         private const string CosmosDBMongoDBApiValue = "CosmosDbMongoDbApi";
@@ -73,7 +77,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string TeradataValue = "Teradata";
         private const string VerticaValue = "Vertica";
         private const string PineconeValue = "Pinecone";
-        private const string DatabricksValue = "Databricks";
         private const string CassandraValue = "Cassandra";
         private const string CouchbaseValue = "Couchbase";
         private const string MongoDBV2Value = "MongoDbV2";
@@ -89,7 +92,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string ODataRestValue = "ODataRest";
         private const string OdbcValue = "Odbc";
         private const string GenericRestValue = "GenericRest";
-        private const string RemoteToolValue = "RemoteTool";
         private const string AmazonMwsValue = "AmazonMws";
         private const string ConcurValue = "Concur";
         private const string DynamicsValue = "Dynamics";
@@ -120,422 +122,239 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string ZohoValue = "Zoho";
         private const string GenericContainerRegistryValue = "GenericContainerRegistry";
         private const string ElasticsearchValue = "Elasticsearch";
-        private const string AppInsightsValue = "AppInsights";
-        private const string AppConfigValue = "AppConfig";
         private const string OpenAIValue = "OpenAI";
         private const string SerpValue = "Serp";
         private const string BingLLMSearchValue = "BingLLMSearch";
         private const string ServerlessValue = "Serverless";
         private const string ManagedOnlineEndpointValue = "ManagedOnlineEndpoint";
-        private const string ApiManagementValue = "ApiManagement";
-        private const string ModelGatewayValue = "ModelGateway";
-        private const string GroundingWithBingSearchValue = "GroundingWithBingSearch";
-        private const string GroundingWithCustomSearchValue = "GroundingWithCustomSearch";
-        private const string SharepointValue = "Sharepoint";
-        private const string MicrosoftFabricValue = "MicrosoftFabric";
-        private const string PowerPlatformEnvironmentValue = "PowerPlatformEnvironment";
-        private const string RemoteA2AValue = "RemoteA2A";
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesConnectionCategory"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CognitiveServicesConnectionCategory(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the PythonFeed. </summary>
+        /// <summary> PythonFeed. </summary>
         public static CognitiveServicesConnectionCategory PythonFeed { get; } = new CognitiveServicesConnectionCategory(PythonFeedValue);
-
-        /// <summary> Gets the ContainerRegistry. </summary>
+        /// <summary> ContainerRegistry. </summary>
         public static CognitiveServicesConnectionCategory ContainerRegistry { get; } = new CognitiveServicesConnectionCategory(ContainerRegistryValue);
-
-        /// <summary> Gets the Git. </summary>
+        /// <summary> Git. </summary>
         public static CognitiveServicesConnectionCategory Git { get; } = new CognitiveServicesConnectionCategory(GitValue);
-
-        /// <summary> Gets the S3. </summary>
+        /// <summary> S3. </summary>
         public static CognitiveServicesConnectionCategory S3 { get; } = new CognitiveServicesConnectionCategory(S3Value);
-
-        /// <summary> Gets the Snowflake. </summary>
+        /// <summary> Snowflake. </summary>
         public static CognitiveServicesConnectionCategory Snowflake { get; } = new CognitiveServicesConnectionCategory(SnowflakeValue);
-
-        /// <summary> Gets the AzureKeyVault. </summary>
-        public static CognitiveServicesConnectionCategory AzureKeyVault { get; } = new CognitiveServicesConnectionCategory(AzureKeyVaultValue);
-
-        /// <summary> Gets the AzureSqlDB. </summary>
+        /// <summary> AzureSqlDb. </summary>
         public static CognitiveServicesConnectionCategory AzureSqlDB { get; } = new CognitiveServicesConnectionCategory(AzureSqlDBValue);
-
-        /// <summary> Gets the AzureSynapseAnalytics. </summary>
+        /// <summary> AzureSynapseAnalytics. </summary>
         public static CognitiveServicesConnectionCategory AzureSynapseAnalytics { get; } = new CognitiveServicesConnectionCategory(AzureSynapseAnalyticsValue);
-
-        /// <summary> Gets the AzureMySqlDB. </summary>
+        /// <summary> AzureMySqlDb. </summary>
         public static CognitiveServicesConnectionCategory AzureMySqlDB { get; } = new CognitiveServicesConnectionCategory(AzureMySqlDBValue);
-
-        /// <summary> Gets the AzurePostgresDB. </summary>
+        /// <summary> AzurePostgresDb. </summary>
         public static CognitiveServicesConnectionCategory AzurePostgresDB { get; } = new CognitiveServicesConnectionCategory(AzurePostgresDBValue);
-
-        /// <summary> Gets the AdlsGen2. </summary>
+        /// <summary> ADLSGen2. </summary>
         public static CognitiveServicesConnectionCategory AdlsGen2 { get; } = new CognitiveServicesConnectionCategory(AdlsGen2Value);
-
-        /// <summary> Gets the AzureContainerAppEnvironment. </summary>
-        public static CognitiveServicesConnectionCategory AzureContainerAppEnvironment { get; } = new CognitiveServicesConnectionCategory(AzureContainerAppEnvironmentValue);
-
-        /// <summary> Gets the Redis. </summary>
+        /// <summary> Redis. </summary>
         public static CognitiveServicesConnectionCategory Redis { get; } = new CognitiveServicesConnectionCategory(RedisValue);
-
-        /// <summary> Gets the ApiKey. </summary>
+        /// <summary> ApiKey. </summary>
         public static CognitiveServicesConnectionCategory ApiKey { get; } = new CognitiveServicesConnectionCategory(ApiKeyValue);
-
-        /// <summary> Gets the AzureOpenAI. </summary>
+        /// <summary> AzureOpenAI. </summary>
         public static CognitiveServicesConnectionCategory AzureOpenAI { get; } = new CognitiveServicesConnectionCategory(AzureOpenAIValue);
-
-        /// <summary> Gets the AIServices. </summary>
+        /// <summary> AIServices. </summary>
         public static CognitiveServicesConnectionCategory AIServices { get; } = new CognitiveServicesConnectionCategory(AIServicesValue);
-
-        /// <summary> Gets the CognitiveSearch. </summary>
+        /// <summary> CognitiveSearch. </summary>
         public static CognitiveServicesConnectionCategory CognitiveSearch { get; } = new CognitiveServicesConnectionCategory(CognitiveSearchValue);
-
-        /// <summary> Gets the CognitiveService. </summary>
+        /// <summary> CognitiveService. </summary>
         public static CognitiveServicesConnectionCategory CognitiveService { get; } = new CognitiveServicesConnectionCategory(CognitiveServiceValue);
-
-        /// <summary> Gets the CustomKeys. </summary>
+        /// <summary> CustomKeys. </summary>
         public static CognitiveServicesConnectionCategory CustomKeys { get; } = new CognitiveServicesConnectionCategory(CustomKeysValue);
-
-        /// <summary> Gets the AzureBlob. </summary>
+        /// <summary> AzureBlob. </summary>
         public static CognitiveServicesConnectionCategory AzureBlob { get; } = new CognitiveServicesConnectionCategory(AzureBlobValue);
-
-        /// <summary> Gets the AzureStorageAccount. </summary>
-        public static CognitiveServicesConnectionCategory AzureStorageAccount { get; } = new CognitiveServicesConnectionCategory(AzureStorageAccountValue);
-
-        /// <summary> Gets the AzureOneLake. </summary>
+        /// <summary> AzureOneLake. </summary>
         public static CognitiveServicesConnectionCategory AzureOneLake { get; } = new CognitiveServicesConnectionCategory(AzureOneLakeValue);
-
-        /// <summary> Gets the CosmosDB. </summary>
+        /// <summary> CosmosDb. </summary>
         public static CognitiveServicesConnectionCategory CosmosDB { get; } = new CognitiveServicesConnectionCategory(CosmosDBValue);
-
-        /// <summary> Gets the CosmosDBMongoDBApi. </summary>
+        /// <summary> CosmosDbMongoDbApi. </summary>
         public static CognitiveServicesConnectionCategory CosmosDBMongoDBApi { get; } = new CognitiveServicesConnectionCategory(CosmosDBMongoDBApiValue);
-
-        /// <summary> Gets the AzureDataExplorer. </summary>
+        /// <summary> AzureDataExplorer. </summary>
         public static CognitiveServicesConnectionCategory AzureDataExplorer { get; } = new CognitiveServicesConnectionCategory(AzureDataExplorerValue);
-
-        /// <summary> Gets the AzureMariaDB. </summary>
+        /// <summary> AzureMariaDb. </summary>
         public static CognitiveServicesConnectionCategory AzureMariaDB { get; } = new CognitiveServicesConnectionCategory(AzureMariaDBValue);
-
-        /// <summary> Gets the AzureDatabricksDeltaLake. </summary>
+        /// <summary> AzureDatabricksDeltaLake. </summary>
         public static CognitiveServicesConnectionCategory AzureDatabricksDeltaLake { get; } = new CognitiveServicesConnectionCategory(AzureDatabricksDeltaLakeValue);
-
-        /// <summary> Gets the AzureSqlMI. </summary>
+        /// <summary> AzureSqlMi. </summary>
         public static CognitiveServicesConnectionCategory AzureSqlMI { get; } = new CognitiveServicesConnectionCategory(AzureSqlMIValue);
-
-        /// <summary> Gets the AzureTableStorage. </summary>
+        /// <summary> AzureTableStorage. </summary>
         public static CognitiveServicesConnectionCategory AzureTableStorage { get; } = new CognitiveServicesConnectionCategory(AzureTableStorageValue);
-
-        /// <summary> Gets the AmazonRdsForOracle. </summary>
+        /// <summary> AmazonRdsForOracle. </summary>
         public static CognitiveServicesConnectionCategory AmazonRdsForOracle { get; } = new CognitiveServicesConnectionCategory(AmazonRdsForOracleValue);
-
-        /// <summary> Gets the AmazonRdsForSqlServer. </summary>
+        /// <summary> AmazonRdsForSqlServer. </summary>
         public static CognitiveServicesConnectionCategory AmazonRdsForSqlServer { get; } = new CognitiveServicesConnectionCategory(AmazonRdsForSqlServerValue);
-
-        /// <summary> Gets the AmazonRedshift. </summary>
+        /// <summary> AmazonRedshift. </summary>
         public static CognitiveServicesConnectionCategory AmazonRedshift { get; } = new CognitiveServicesConnectionCategory(AmazonRedshiftValue);
-
-        /// <summary> Gets the Db2. </summary>
+        /// <summary> Db2. </summary>
         public static CognitiveServicesConnectionCategory Db2 { get; } = new CognitiveServicesConnectionCategory(Db2Value);
-
-        /// <summary> Gets the Drill. </summary>
+        /// <summary> Drill. </summary>
         public static CognitiveServicesConnectionCategory Drill { get; } = new CognitiveServicesConnectionCategory(DrillValue);
-
-        /// <summary> Gets the GoogleBigQuery. </summary>
+        /// <summary> GoogleBigQuery. </summary>
         public static CognitiveServicesConnectionCategory GoogleBigQuery { get; } = new CognitiveServicesConnectionCategory(GoogleBigQueryValue);
-
-        /// <summary> Gets the Greenplum. </summary>
+        /// <summary> Greenplum. </summary>
         public static CognitiveServicesConnectionCategory Greenplum { get; } = new CognitiveServicesConnectionCategory(GreenplumValue);
-
-        /// <summary> Gets the Hbase. </summary>
+        /// <summary> Hbase. </summary>
         public static CognitiveServicesConnectionCategory Hbase { get; } = new CognitiveServicesConnectionCategory(HbaseValue);
-
-        /// <summary> Gets the Hive. </summary>
+        /// <summary> Hive. </summary>
         public static CognitiveServicesConnectionCategory Hive { get; } = new CognitiveServicesConnectionCategory(HiveValue);
-
-        /// <summary> Gets the Impala. </summary>
+        /// <summary> Impala. </summary>
         public static CognitiveServicesConnectionCategory Impala { get; } = new CognitiveServicesConnectionCategory(ImpalaValue);
-
-        /// <summary> Gets the Informix. </summary>
+        /// <summary> Informix. </summary>
         public static CognitiveServicesConnectionCategory Informix { get; } = new CognitiveServicesConnectionCategory(InformixValue);
-
-        /// <summary> Gets the MariaDB. </summary>
+        /// <summary> MariaDb. </summary>
         public static CognitiveServicesConnectionCategory MariaDB { get; } = new CognitiveServicesConnectionCategory(MariaDBValue);
-
-        /// <summary> Gets the MicrosoftAccess. </summary>
+        /// <summary> MicrosoftAccess. </summary>
         public static CognitiveServicesConnectionCategory MicrosoftAccess { get; } = new CognitiveServicesConnectionCategory(MicrosoftAccessValue);
-
-        /// <summary> Gets the MySql. </summary>
+        /// <summary> MySql. </summary>
         public static CognitiveServicesConnectionCategory MySql { get; } = new CognitiveServicesConnectionCategory(MySqlValue);
-
-        /// <summary> Gets the Netezza. </summary>
+        /// <summary> Netezza. </summary>
         public static CognitiveServicesConnectionCategory Netezza { get; } = new CognitiveServicesConnectionCategory(NetezzaValue);
-
-        /// <summary> Gets the Oracle. </summary>
+        /// <summary> Oracle. </summary>
         public static CognitiveServicesConnectionCategory Oracle { get; } = new CognitiveServicesConnectionCategory(OracleValue);
-
-        /// <summary> Gets the Phoenix. </summary>
+        /// <summary> Phoenix. </summary>
         public static CognitiveServicesConnectionCategory Phoenix { get; } = new CognitiveServicesConnectionCategory(PhoenixValue);
-
-        /// <summary> Gets the PostgreSql. </summary>
+        /// <summary> PostgreSql. </summary>
         public static CognitiveServicesConnectionCategory PostgreSql { get; } = new CognitiveServicesConnectionCategory(PostgreSqlValue);
-
-        /// <summary> Gets the Presto. </summary>
+        /// <summary> Presto. </summary>
         public static CognitiveServicesConnectionCategory Presto { get; } = new CognitiveServicesConnectionCategory(PrestoValue);
-
-        /// <summary> Gets the SapOpenHub. </summary>
+        /// <summary> SapOpenHub. </summary>
         public static CognitiveServicesConnectionCategory SapOpenHub { get; } = new CognitiveServicesConnectionCategory(SapOpenHubValue);
-
-        /// <summary> Gets the SapBw. </summary>
+        /// <summary> SapBw. </summary>
         public static CognitiveServicesConnectionCategory SapBw { get; } = new CognitiveServicesConnectionCategory(SapBwValue);
-
-        /// <summary> Gets the SapHana. </summary>
+        /// <summary> SapHana. </summary>
         public static CognitiveServicesConnectionCategory SapHana { get; } = new CognitiveServicesConnectionCategory(SapHanaValue);
-
-        /// <summary> Gets the SapTable. </summary>
+        /// <summary> SapTable. </summary>
         public static CognitiveServicesConnectionCategory SapTable { get; } = new CognitiveServicesConnectionCategory(SapTableValue);
-
-        /// <summary> Gets the Spark. </summary>
+        /// <summary> Spark. </summary>
         public static CognitiveServicesConnectionCategory Spark { get; } = new CognitiveServicesConnectionCategory(SparkValue);
-
-        /// <summary> Gets the SqlServer. </summary>
+        /// <summary> SqlServer. </summary>
         public static CognitiveServicesConnectionCategory SqlServer { get; } = new CognitiveServicesConnectionCategory(SqlServerValue);
-
-        /// <summary> Gets the Sybase. </summary>
+        /// <summary> Sybase. </summary>
         public static CognitiveServicesConnectionCategory Sybase { get; } = new CognitiveServicesConnectionCategory(SybaseValue);
-
-        /// <summary> Gets the Teradata. </summary>
+        /// <summary> Teradata. </summary>
         public static CognitiveServicesConnectionCategory Teradata { get; } = new CognitiveServicesConnectionCategory(TeradataValue);
-
-        /// <summary> Gets the Vertica. </summary>
+        /// <summary> Vertica. </summary>
         public static CognitiveServicesConnectionCategory Vertica { get; } = new CognitiveServicesConnectionCategory(VerticaValue);
-
-        /// <summary> Gets the Pinecone. </summary>
+        /// <summary> Pinecone. </summary>
         public static CognitiveServicesConnectionCategory Pinecone { get; } = new CognitiveServicesConnectionCategory(PineconeValue);
-
-        /// <summary> Gets the Databricks. </summary>
-        public static CognitiveServicesConnectionCategory Databricks { get; } = new CognitiveServicesConnectionCategory(DatabricksValue);
-
-        /// <summary> Gets the Cassandra. </summary>
+        /// <summary> Cassandra. </summary>
         public static CognitiveServicesConnectionCategory Cassandra { get; } = new CognitiveServicesConnectionCategory(CassandraValue);
-
-        /// <summary> Gets the Couchbase. </summary>
+        /// <summary> Couchbase. </summary>
         public static CognitiveServicesConnectionCategory Couchbase { get; } = new CognitiveServicesConnectionCategory(CouchbaseValue);
-
-        /// <summary> Gets the MongoDBV2. </summary>
+        /// <summary> MongoDbV2. </summary>
         public static CognitiveServicesConnectionCategory MongoDBV2 { get; } = new CognitiveServicesConnectionCategory(MongoDBV2Value);
-
-        /// <summary> Gets the MongoDBAtlas. </summary>
+        /// <summary> MongoDbAtlas. </summary>
         public static CognitiveServicesConnectionCategory MongoDBAtlas { get; } = new CognitiveServicesConnectionCategory(MongoDBAtlasValue);
-
-        /// <summary> Gets the AmazonS3Compatible. </summary>
+        /// <summary> AmazonS3Compatible. </summary>
         public static CognitiveServicesConnectionCategory AmazonS3Compatible { get; } = new CognitiveServicesConnectionCategory(AmazonS3CompatibleValue);
-
-        /// <summary> Gets the FileServer. </summary>
+        /// <summary> FileServer. </summary>
         public static CognitiveServicesConnectionCategory FileServer { get; } = new CognitiveServicesConnectionCategory(FileServerValue);
-
-        /// <summary> Gets the FtpServer. </summary>
+        /// <summary> FtpServer. </summary>
         public static CognitiveServicesConnectionCategory FtpServer { get; } = new CognitiveServicesConnectionCategory(FtpServerValue);
-
-        /// <summary> Gets the GoogleCloudStorage. </summary>
+        /// <summary> GoogleCloudStorage. </summary>
         public static CognitiveServicesConnectionCategory GoogleCloudStorage { get; } = new CognitiveServicesConnectionCategory(GoogleCloudStorageValue);
-
-        /// <summary> Gets the Hdfs. </summary>
+        /// <summary> Hdfs. </summary>
         public static CognitiveServicesConnectionCategory Hdfs { get; } = new CognitiveServicesConnectionCategory(HdfsValue);
-
-        /// <summary> Gets the OracleCloudStorage. </summary>
+        /// <summary> OracleCloudStorage. </summary>
         public static CognitiveServicesConnectionCategory OracleCloudStorage { get; } = new CognitiveServicesConnectionCategory(OracleCloudStorageValue);
-
-        /// <summary> Gets the Sftp. </summary>
+        /// <summary> Sftp. </summary>
         public static CognitiveServicesConnectionCategory Sftp { get; } = new CognitiveServicesConnectionCategory(SftpValue);
-
-        /// <summary> Gets the GenericHttp. </summary>
+        /// <summary> GenericHttp. </summary>
         public static CognitiveServicesConnectionCategory GenericHttp { get; } = new CognitiveServicesConnectionCategory(GenericHttpValue);
-
-        /// <summary> Gets the ODataRest. </summary>
+        /// <summary> ODataRest. </summary>
         public static CognitiveServicesConnectionCategory ODataRest { get; } = new CognitiveServicesConnectionCategory(ODataRestValue);
-
-        /// <summary> Gets the Odbc. </summary>
+        /// <summary> Odbc. </summary>
         public static CognitiveServicesConnectionCategory Odbc { get; } = new CognitiveServicesConnectionCategory(OdbcValue);
-
-        /// <summary> Gets the GenericRest. </summary>
+        /// <summary> GenericRest. </summary>
         public static CognitiveServicesConnectionCategory GenericRest { get; } = new CognitiveServicesConnectionCategory(GenericRestValue);
-
-        /// <summary> Gets the RemoteTool. </summary>
-        public static CognitiveServicesConnectionCategory RemoteTool { get; } = new CognitiveServicesConnectionCategory(RemoteToolValue);
-
-        /// <summary> Gets the AmazonMws. </summary>
+        /// <summary> AmazonMws. </summary>
         public static CognitiveServicesConnectionCategory AmazonMws { get; } = new CognitiveServicesConnectionCategory(AmazonMwsValue);
-
-        /// <summary> Gets the Concur. </summary>
+        /// <summary> Concur. </summary>
         public static CognitiveServicesConnectionCategory Concur { get; } = new CognitiveServicesConnectionCategory(ConcurValue);
-
-        /// <summary> Gets the Dynamics. </summary>
+        /// <summary> Dynamics. </summary>
         public static CognitiveServicesConnectionCategory Dynamics { get; } = new CognitiveServicesConnectionCategory(DynamicsValue);
-
-        /// <summary> Gets the DynamicsAx. </summary>
+        /// <summary> DynamicsAx. </summary>
         public static CognitiveServicesConnectionCategory DynamicsAx { get; } = new CognitiveServicesConnectionCategory(DynamicsAxValue);
-
-        /// <summary> Gets the DynamicsCrm. </summary>
+        /// <summary> DynamicsCrm. </summary>
         public static CognitiveServicesConnectionCategory DynamicsCrm { get; } = new CognitiveServicesConnectionCategory(DynamicsCrmValue);
-
-        /// <summary> Gets the GoogleAdWords. </summary>
+        /// <summary> GoogleAdWords. </summary>
         public static CognitiveServicesConnectionCategory GoogleAdWords { get; } = new CognitiveServicesConnectionCategory(GoogleAdWordsValue);
-
-        /// <summary> Gets the Hubspot. </summary>
+        /// <summary> Hubspot. </summary>
         public static CognitiveServicesConnectionCategory Hubspot { get; } = new CognitiveServicesConnectionCategory(HubspotValue);
-
-        /// <summary> Gets the Jira. </summary>
+        /// <summary> Jira. </summary>
         public static CognitiveServicesConnectionCategory Jira { get; } = new CognitiveServicesConnectionCategory(JiraValue);
-
-        /// <summary> Gets the Magento. </summary>
+        /// <summary> Magento. </summary>
         public static CognitiveServicesConnectionCategory Magento { get; } = new CognitiveServicesConnectionCategory(MagentoValue);
-
-        /// <summary> Gets the Marketo. </summary>
+        /// <summary> Marketo. </summary>
         public static CognitiveServicesConnectionCategory Marketo { get; } = new CognitiveServicesConnectionCategory(MarketoValue);
-
-        /// <summary> Gets the Office365. </summary>
+        /// <summary> Office365. </summary>
         public static CognitiveServicesConnectionCategory Office365 { get; } = new CognitiveServicesConnectionCategory(Office365Value);
-
-        /// <summary> Gets the Eloqua. </summary>
+        /// <summary> Eloqua. </summary>
         public static CognitiveServicesConnectionCategory Eloqua { get; } = new CognitiveServicesConnectionCategory(EloquaValue);
-
-        /// <summary> Gets the Responsys. </summary>
+        /// <summary> Responsys. </summary>
         public static CognitiveServicesConnectionCategory Responsys { get; } = new CognitiveServicesConnectionCategory(ResponsysValue);
-
-        /// <summary> Gets the OracleServiceCloud. </summary>
+        /// <summary> OracleServiceCloud. </summary>
         public static CognitiveServicesConnectionCategory OracleServiceCloud { get; } = new CognitiveServicesConnectionCategory(OracleServiceCloudValue);
-
-        /// <summary> Gets the PayPal. </summary>
+        /// <summary> PayPal. </summary>
         public static CognitiveServicesConnectionCategory PayPal { get; } = new CognitiveServicesConnectionCategory(PayPalValue);
-
-        /// <summary> Gets the QuickBooks. </summary>
+        /// <summary> QuickBooks. </summary>
         public static CognitiveServicesConnectionCategory QuickBooks { get; } = new CognitiveServicesConnectionCategory(QuickBooksValue);
-
-        /// <summary> Gets the Salesforce. </summary>
+        /// <summary> Salesforce. </summary>
         public static CognitiveServicesConnectionCategory Salesforce { get; } = new CognitiveServicesConnectionCategory(SalesforceValue);
-
-        /// <summary> Gets the SalesforceServiceCloud. </summary>
+        /// <summary> SalesforceServiceCloud. </summary>
         public static CognitiveServicesConnectionCategory SalesforceServiceCloud { get; } = new CognitiveServicesConnectionCategory(SalesforceServiceCloudValue);
-
-        /// <summary> Gets the SalesforceMarketingCloud. </summary>
+        /// <summary> SalesforceMarketingCloud. </summary>
         public static CognitiveServicesConnectionCategory SalesforceMarketingCloud { get; } = new CognitiveServicesConnectionCategory(SalesforceMarketingCloudValue);
-
-        /// <summary> Gets the SapCloudForCustomer. </summary>
+        /// <summary> SapCloudForCustomer. </summary>
         public static CognitiveServicesConnectionCategory SapCloudForCustomer { get; } = new CognitiveServicesConnectionCategory(SapCloudForCustomerValue);
-
-        /// <summary> Gets the SapEcc. </summary>
+        /// <summary> SapEcc. </summary>
         public static CognitiveServicesConnectionCategory SapEcc { get; } = new CognitiveServicesConnectionCategory(SapEccValue);
-
-        /// <summary> Gets the ServiceNow. </summary>
+        /// <summary> ServiceNow. </summary>
         public static CognitiveServicesConnectionCategory ServiceNow { get; } = new CognitiveServicesConnectionCategory(ServiceNowValue);
-
-        /// <summary> Gets the SharePointOnlineList. </summary>
+        /// <summary> SharePointOnlineList. </summary>
         public static CognitiveServicesConnectionCategory SharePointOnlineList { get; } = new CognitiveServicesConnectionCategory(SharePointOnlineListValue);
-
-        /// <summary> Gets the Shopify. </summary>
+        /// <summary> Shopify. </summary>
         public static CognitiveServicesConnectionCategory Shopify { get; } = new CognitiveServicesConnectionCategory(ShopifyValue);
-
-        /// <summary> Gets the Square. </summary>
+        /// <summary> Square. </summary>
         public static CognitiveServicesConnectionCategory Square { get; } = new CognitiveServicesConnectionCategory(SquareValue);
-
-        /// <summary> Gets the WebTable. </summary>
+        /// <summary> WebTable. </summary>
         public static CognitiveServicesConnectionCategory WebTable { get; } = new CognitiveServicesConnectionCategory(WebTableValue);
-
-        /// <summary> Gets the Xero. </summary>
+        /// <summary> Xero. </summary>
         public static CognitiveServicesConnectionCategory Xero { get; } = new CognitiveServicesConnectionCategory(XeroValue);
-
-        /// <summary> Gets the Zoho. </summary>
+        /// <summary> Zoho. </summary>
         public static CognitiveServicesConnectionCategory Zoho { get; } = new CognitiveServicesConnectionCategory(ZohoValue);
-
-        /// <summary> Gets the GenericContainerRegistry. </summary>
+        /// <summary> GenericContainerRegistry. </summary>
         public static CognitiveServicesConnectionCategory GenericContainerRegistry { get; } = new CognitiveServicesConnectionCategory(GenericContainerRegistryValue);
-
-        /// <summary> Gets the Elasticsearch. </summary>
+        /// <summary> Elasticsearch. </summary>
         public static CognitiveServicesConnectionCategory Elasticsearch { get; } = new CognitiveServicesConnectionCategory(ElasticsearchValue);
-
-        /// <summary> Gets the AppInsights. </summary>
-        public static CognitiveServicesConnectionCategory AppInsights { get; } = new CognitiveServicesConnectionCategory(AppInsightsValue);
-
-        /// <summary> Gets the AppConfig. </summary>
-        public static CognitiveServicesConnectionCategory AppConfig { get; } = new CognitiveServicesConnectionCategory(AppConfigValue);
-
-        /// <summary> Gets the OpenAI. </summary>
+        /// <summary> OpenAI. </summary>
         public static CognitiveServicesConnectionCategory OpenAI { get; } = new CognitiveServicesConnectionCategory(OpenAIValue);
-
-        /// <summary> Gets the Serp. </summary>
+        /// <summary> Serp. </summary>
         public static CognitiveServicesConnectionCategory Serp { get; } = new CognitiveServicesConnectionCategory(SerpValue);
-
-        /// <summary> Gets the BingLLMSearch. </summary>
+        /// <summary> BingLLMSearch. </summary>
         public static CognitiveServicesConnectionCategory BingLLMSearch { get; } = new CognitiveServicesConnectionCategory(BingLLMSearchValue);
-
-        /// <summary> Gets the Serverless. </summary>
+        /// <summary> Serverless. </summary>
         public static CognitiveServicesConnectionCategory Serverless { get; } = new CognitiveServicesConnectionCategory(ServerlessValue);
-
-        /// <summary> Gets the ManagedOnlineEndpoint. </summary>
+        /// <summary> ManagedOnlineEndpoint. </summary>
         public static CognitiveServicesConnectionCategory ManagedOnlineEndpoint { get; } = new CognitiveServicesConnectionCategory(ManagedOnlineEndpointValue);
-
-        /// <summary> Gets the ApiManagement. </summary>
-        public static CognitiveServicesConnectionCategory ApiManagement { get; } = new CognitiveServicesConnectionCategory(ApiManagementValue);
-
-        /// <summary> Gets the ModelGateway. </summary>
-        public static CognitiveServicesConnectionCategory ModelGateway { get; } = new CognitiveServicesConnectionCategory(ModelGatewayValue);
-
-        /// <summary> Gets the GroundingWithBingSearch. </summary>
-        public static CognitiveServicesConnectionCategory GroundingWithBingSearch { get; } = new CognitiveServicesConnectionCategory(GroundingWithBingSearchValue);
-
-        /// <summary> Gets the GroundingWithCustomSearch. </summary>
-        public static CognitiveServicesConnectionCategory GroundingWithCustomSearch { get; } = new CognitiveServicesConnectionCategory(GroundingWithCustomSearchValue);
-
-        /// <summary> Gets the Sharepoint. </summary>
-        public static CognitiveServicesConnectionCategory Sharepoint { get; } = new CognitiveServicesConnectionCategory(SharepointValue);
-
-        /// <summary> Gets the MicrosoftFabric. </summary>
-        public static CognitiveServicesConnectionCategory MicrosoftFabric { get; } = new CognitiveServicesConnectionCategory(MicrosoftFabricValue);
-
-        /// <summary> Gets the PowerPlatformEnvironment. </summary>
-        public static CognitiveServicesConnectionCategory PowerPlatformEnvironment { get; } = new CognitiveServicesConnectionCategory(PowerPlatformEnvironmentValue);
-
-        /// <summary> Gets the RemoteA2A. </summary>
-        public static CognitiveServicesConnectionCategory RemoteA2A { get; } = new CognitiveServicesConnectionCategory(RemoteA2AValue);
-
         /// <summary> Determines if two <see cref="CognitiveServicesConnectionCategory"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CognitiveServicesConnectionCategory left, CognitiveServicesConnectionCategory right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CognitiveServicesConnectionCategory"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CognitiveServicesConnectionCategory left, CognitiveServicesConnectionCategory right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CognitiveServicesConnectionCategory"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CognitiveServicesConnectionCategory"/>. </summary>
         public static implicit operator CognitiveServicesConnectionCategory(string value) => new CognitiveServicesConnectionCategory(value);
 
-        /// <summary> Converts a string to a <see cref="CognitiveServicesConnectionCategory"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesConnectionCategory?(string value) => value == null ? null : new CognitiveServicesConnectionCategory(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CognitiveServicesConnectionCategory other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CognitiveServicesConnectionCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

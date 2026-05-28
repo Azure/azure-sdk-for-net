@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DependencyMap
 {
-    /// <summary></summary>
-    internal partial class DependencyMapDiscoverySourceOperationSource : IOperationSource<DependencyMapDiscoverySourceResource>
+    internal class DependencyMapDiscoverySourceOperationSource : IOperationSource<DependencyMapDiscoverySourceResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DependencyMapDiscoverySourceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DependencyMapDiscoverySourceResource IOperationSource<DependencyMapDiscoverySourceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DependencyMapDiscoverySourceData data = DependencyMapDiscoverySourceData.DeserializeDependencyMapDiscoverySourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DependencyMapDiscoverySourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDependencyMapContext.Default);
             return new DependencyMapDiscoverySourceResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DependencyMapDiscoverySourceResource> IOperationSource<DependencyMapDiscoverySourceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DependencyMapDiscoverySourceData data = DependencyMapDiscoverySourceData.DeserializeDependencyMapDiscoverySourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DependencyMapDiscoverySourceResource(_client, data);
+            var data = ModelReaderWriter.Read<DependencyMapDiscoverySourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDependencyMapContext.Default);
+            return await Task.FromResult(new DependencyMapDiscoverySourceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.Extensions;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -35,11 +34,8 @@ namespace Azure.Generator.Providers
             new("nextLink", $"The next link to use for the next page of results.", new CSharpType(typeof(Uri), isNullable: true));
         private static readonly ParameterProvider PageSizeHintParameter =
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
-        private static readonly ParameterProvider ScopeParameter =
-            new("diagnosticScope", $"The diagnostic scope name.", new CSharpType(typeof(string)));
 
         private readonly bool _isProtocol;
-        private readonly FieldProvider _scopeField;
 
         protected override string RequestOptionsFieldName => "_context";
 
@@ -52,11 +48,6 @@ namespace Azure.Generator.Providers
             _isProtocol = itemModelType == null;
             _itemModelType = itemModelType ?? new CSharpType(typeof(BinaryData));
             _scopeName = Client.GetScopeName(_operation);
-            _scopeField = new FieldProvider(
-                FieldModifiers.Private | FieldModifiers.ReadOnly,
-                typeof(string),
-                "_diagnosticScope",
-                this);
         }
 
         private IReadOnlyList<ParameterProvider> CreateRequestParameters
@@ -65,11 +56,10 @@ namespace Azure.Generator.Providers
         private string CreateRequestMethodName
             => Client.RestClient.GetCreateRequestMethod(_operation).Signature.Name;
 
-        // We use "_diagnosticScope" rather than "_scope" to reduce collision risk with API parameters.
-        // If a collision does occur, the framework's CodeWriter dedup renames declarations but not
-        // AsValueExpression references, causing incorrect codegen. See: https://github.com/microsoft/typespec/issues/10130
-        protected override FieldProvider[] BuildFields()
-            => [.. base.BuildFields(), _scopeField];
+        protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
+
+        protected override string BuildName()
+            => $"{Client.Type.Name}{_operation.Name.ToIdentifierName()}{(IsAsync ? "Async" : "")}CollectionResult{(_isProtocol ? "" : "OfT")}";
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
@@ -131,12 +121,7 @@ namespace Azure.Generator.Providers
                 Declare("result", ResponseModelType, responseVariable.CastTo(ResponseModelType), out var resultVariable),
             };
 
-            ValueExpression nextPageExpression = _paging.NextLink != null
-                ? new TernaryConditionalExpression(
-                    nextPageVariable.NullConditional().Property(nameof(Uri.IsAbsoluteUri)).Equal(True),
-                    nextPageVariable.Property(nameof(Uri.AbsoluteUri)),
-                    nextPageVariable.NullConditional().Property(nameof(Uri.OriginalString)))
-                : nextPageVariable;
+            var nextPageExpression = _paging.NextLink != null ? nextPageVariable.NullConditional().Property("AbsoluteUri") : nextPageVariable;
             if (_isProtocol)
             {
                 // Convert items to BinaryData
@@ -164,14 +149,9 @@ namespace Azure.Generator.Providers
             [
                 Declare("items", new CSharpType(typeof(List<>), typeof(BinaryData)),
                     New.Instance(new CSharpType(typeof(List<>), typeof(BinaryData))), out itemsVariable),
-                new ForEachStatement("item", BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).As<IEnumerable<object>>(), out var itemVariable)
+                new ForEachStatement("item", BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).As<IEnumerable<KeyValuePair<string, object>>>(), out var itemVariable)
                 {
-                    itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write),
-                        [
-                            itemVariable,
-                            Static<ModelSerializationExtensionsDefinition>().Property(ModelSerializationExtensionsDefinition.WireOptionsFieldName),
-                            Static<ModelReaderWriterContextDefinition>().Property("Default")
-                        ])).Terminate()
+                    itemsVariable.Invoke("Add", [Static<BinaryData>().Invoke("FromObjectAsJson", [itemVariable])]).Terminate()
                 }
             ];
         }
@@ -213,85 +193,63 @@ namespace Azure.Generator.Providers
                 null,
                 [PageSizeHintParameter, nextPageParameter]);
 
-            var bodyStatements = new List<MethodBodyStatement>();
-
-            // If there's a page size field, declare a local variable that uses pageSizeHint if available, otherwise the stored field
-            VariableExpression? pageSizeVariable = null;
-            if (PageSizeField != null)
+            var body = new MethodBodyStatement[]
             {
-                bodyStatements.Add(Declare("pageSize", PageSizeField.Type,
-                    new TernaryConditionalExpression(
-                        PageSizeHintParameter.Property("HasValue"),
-                        PageSizeHintParameter.Property("Value"),
-                        PageSizeField),
-                    out pageSizeVariable));
-            }
-
-            bodyStatements.Add(Declare("message", AzureClientGenerator.Instance.TypeFactory.HttpMessageApi.HttpMessageType, BuildCreateHttpMessageExpression(), out var messageVariable));
-            bodyStatements.Add(UsingDeclare("scope", typeof(DiagnosticScope), ClientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [_scopeField]), out var scopeVariable));
-            bodyStatements.Add(scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate());
-            bodyStatements.Add(new TryCatchFinallyStatement
-                (BuildTryExpression(), Catch(Declare<Exception>("e", out var exceptionVariable), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVariable).Terminate(), Throw()])));
+                Declare("message", AzureClientGenerator.Instance.TypeFactory.HttpMessageApi.HttpMessageType, BuildCreateHttpMessageExpression(), out var messageVariable),
+                UsingDeclare("scope", typeof(DiagnosticScope), ClientField.Property("ClientDiagnostics").Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(_scopeName)]), out var scopeVariable),
+                scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
+                new TryCatchFinallyStatement
+                    (BuildTryExpression(), Catch(Declare<Exception>("e", out var exceptionVariable), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVariable).Terminate(), Throw()]))
+            };
 
             ValueExpression BuildCreateHttpMessageExpression()
             {
                 if (_paging.NextLink is not null)
                 {
-                    return InvokeCreateRequestForNextLink(nextPageParameter, pageSizeVariable);
+                    return InvokeCreateRequestForNextLink(nextPageParameter);
                 }
-
-                return ClientField.Invoke(CreateRequestMethodName, ApplyRequestArgumentTransformations(pageSizeVariable)).As<HttpMessage>();
+                else if (_paging.ContinuationToken is not null)
+                {
+                    return InvokeCreateRequestForContinuationToken(nextPageParameter);
+                }
+                else
+                {
+                    return InvokeCreateRequestForSingle();
+                }
             }
 
             TryExpression BuildTryExpression()
                 => new TryExpression(Return(ClientField.Property("Pipeline").Invoke(IsAsync ? "ProcessMessageAsync" : "ProcessMessage", [messageVariable, RequestOptionsField], IsAsync)));
 
-            return new MethodProvider(signature, bodyStatements.ToArray(), this);
+            return new MethodProvider(signature, body, this);
         }
 
-        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri, VariableExpression? pageSizeVariable)
+        private ScopedApi<HttpMessage> InvokeCreateRequestForNextLink(ValueExpression nextPageUri)
         {
-            var createNextLinkRequestMethodSignature =
-                Client.RestClient.GetCreateNextLinkRequestMethod(_operation).Signature;
-
-            // The next link request method may not contain all the same parameters as the original create request method.
-            var createNextLinkParameters = new HashSet<string>(createNextLinkRequestMethodSignature.Parameters.Select(p => p.Name.ToVariableName()));
-
+            var createNextLinkRequestMethodName =
+                Client.RestClient.GetCreateNextLinkRequestMethod(_operation).Signature.Name;
             return new TernaryConditionalExpression(
                 nextPageUri.NotEqual(Null),
                 ClientField.Invoke(
-                    createNextLinkRequestMethodSignature.Name,
-                    [
-                        nextPageUri,
-                        .. ApplyRequestArgumentTransformations(
-                            pageSizeVariable,
-                            RequestFields.Where(f => createNextLinkParameters.Contains(f.AsParameter.Name.ToVariableName())))
-                    ]),
+                    createNextLinkRequestMethodName,
+                    [nextPageUri, .. RequestFields.Select(f => f.AsValueExpression)]),
                 ClientField.Invoke(
                     CreateRequestMethodName,
-                    [.. ApplyRequestArgumentTransformations(pageSizeVariable)])).As<HttpMessage>();
+                    [.. RequestFields.Select(f => f.AsValueExpression)])).As<HttpMessage>();
         }
 
-        private IReadOnlyList<ValueExpression> ApplyRequestArgumentTransformations(
-            VariableExpression? pageSizeVariable,
-            IEnumerable<FieldProvider>? requestFields = null)
+        private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken)
         {
-            FieldProvider? pageSizeField = null;
-            requestFields ??= RequestFields;
+            var arguments = RequestFields.Select(f => f.Name.Equals(NextTokenField?.Name) ? continuationToken : f.AsValueExpression);
 
-            if (PageSizeField != null)
-            {
-                pageSizeField = PageSizeField;
-            }
+            return ClientField.Invoke(CreateRequestMethodName, arguments).As<HttpMessage>();
+        }
 
-            if (_paging.ContinuationToken != null)
-            {
-                return [.. requestFields.Select(
-                    f => f.Name == NextTokenField?.Name ? ContinuationTokenParameter
-                        : f.Name == pageSizeField?.Name && pageSizeVariable != null ? pageSizeVariable : f.AsValueExpression) ];
-            }
+        private ScopedApi<HttpMessage> InvokeCreateRequestForSingle()
+        {
+            ValueExpression[] arguments = [.. RequestFields.Select(f => f.AsValueExpression)];
 
-            return [.. requestFields.Select(f => f.Name == pageSizeField?.Name && pageSizeVariable != null ? pageSizeVariable : f.AsValueExpression)];
+            return ClientField.Invoke(CreateRequestMethodName, arguments).As<HttpMessage>();
         }
 
         protected override ConstructorProvider[] BuildConstructors()
@@ -299,26 +257,10 @@ namespace Azure.Generator.Providers
             var ctors = base.BuildConstructors();
             foreach (var ctor in ctors)
             {
-                ctor.Signature.Update(
-                    parameters: [.. ctor.Signature.Parameters, ScopeParameter],
-                    initializer: new ConstructorInitializer(
-                        true,
-                        // Pass the request context cancellation token to the base Pageable constructor
-                        [CreateRequestParameters[^1].NullConditional().Property("CancellationToken").NullCoalesce(Default)]));
-
-                // Add _scope = scope assignment to the constructor body
-                List<MethodBodyStatement> updatedBody = ctor.BodyStatements != null
-                    ? [ctor.BodyStatements, _scopeField.Assign(ScopeParameter).Terminate()]
-                    : [_scopeField.Assign(ScopeParameter).Terminate()];
-
-                // Add XML doc for the scope parameter
-                if (ctor.XmlDocs != null)
-                {
-                    List<XmlDocParamStatement> updatedParams = [.. ctor.XmlDocs.Parameters, new XmlDocParamStatement(ScopeParameter)];
-                    ctor.XmlDocs.Update(parameters: updatedParams);
-                }
-
-                ctor.Update(bodyStatements: updatedBody);
+                ctor.Signature.Update(initializer: new ConstructorInitializer(
+                    true,
+                    // Pass the request context cancellation token to the base Pageable constructor
+                    [CreateRequestParameters[^1].NullConditional().Property("CancellationToken").NullCoalesce(Default)]));
             }
 
             return ctors;

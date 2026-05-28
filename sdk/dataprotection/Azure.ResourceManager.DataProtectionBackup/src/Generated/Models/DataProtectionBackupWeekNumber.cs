@@ -7,75 +7,54 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary></summary>
+    /// <summary> The DataProtectionBackupWeekNumber. </summary>
     public readonly partial struct DataProtectionBackupWeekNumber : IEquatable<DataProtectionBackupWeekNumber>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupWeekNumber"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataProtectionBackupWeekNumber(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string FirstValue = "First";
         private const string FourthValue = "Fourth";
         private const string LastValue = "Last";
         private const string SecondValue = "Second";
         private const string ThirdValue = "Third";
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupWeekNumber"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataProtectionBackupWeekNumber(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the First. </summary>
+        /// <summary> First. </summary>
         public static DataProtectionBackupWeekNumber First { get; } = new DataProtectionBackupWeekNumber(FirstValue);
-
-        /// <summary> Gets the Fourth. </summary>
+        /// <summary> Fourth. </summary>
         public static DataProtectionBackupWeekNumber Fourth { get; } = new DataProtectionBackupWeekNumber(FourthValue);
-
-        /// <summary> Gets the Last. </summary>
+        /// <summary> Last. </summary>
         public static DataProtectionBackupWeekNumber Last { get; } = new DataProtectionBackupWeekNumber(LastValue);
-
-        /// <summary> Gets the Second. </summary>
+        /// <summary> Second. </summary>
         public static DataProtectionBackupWeekNumber Second { get; } = new DataProtectionBackupWeekNumber(SecondValue);
-
-        /// <summary> Gets the Third. </summary>
+        /// <summary> Third. </summary>
         public static DataProtectionBackupWeekNumber Third { get; } = new DataProtectionBackupWeekNumber(ThirdValue);
-
         /// <summary> Determines if two <see cref="DataProtectionBackupWeekNumber"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataProtectionBackupWeekNumber left, DataProtectionBackupWeekNumber right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataProtectionBackupWeekNumber"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataProtectionBackupWeekNumber left, DataProtectionBackupWeekNumber right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataProtectionBackupWeekNumber"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataProtectionBackupWeekNumber"/>. </summary>
         public static implicit operator DataProtectionBackupWeekNumber(string value) => new DataProtectionBackupWeekNumber(value);
 
-        /// <summary> Converts a string to a <see cref="DataProtectionBackupWeekNumber"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataProtectionBackupWeekNumber?(string value) => value == null ? null : new DataProtectionBackupWeekNumber(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataProtectionBackupWeekNumber other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataProtectionBackupWeekNumber other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

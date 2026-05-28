@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ApplicationOwnershipRole : IEquatable<ApplicationOwnershipRole>
     {
         private readonly string _value;
-        private const string ServiceOwnerValue = "ServiceOwner";
-        private const string LimitedOwnerValue = "LimitedOwner";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationOwnershipRole"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationOwnershipRole(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the ServiceOwner. </summary>
+        private const string ServiceOwnerValue = "ServiceOwner";
+        private const string LimitedOwnerValue = "LimitedOwner";
+
+        /// <summary> ServiceOwner. </summary>
         public static ApplicationOwnershipRole ServiceOwner { get; } = new ApplicationOwnershipRole(ServiceOwnerValue);
-
-        /// <summary> Gets the LimitedOwner. </summary>
+        /// <summary> LimitedOwner. </summary>
         public static ApplicationOwnershipRole LimitedOwner { get; } = new ApplicationOwnershipRole(LimitedOwnerValue);
-
         /// <summary> Determines if two <see cref="ApplicationOwnershipRole"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationOwnershipRole left, ApplicationOwnershipRole right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ApplicationOwnershipRole"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationOwnershipRole left, ApplicationOwnershipRole right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ApplicationOwnershipRole"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationOwnershipRole"/>. </summary>
         public static implicit operator ApplicationOwnershipRole(string value) => new ApplicationOwnershipRole(value);
 
-        /// <summary> Converts a string to a <see cref="ApplicationOwnershipRole"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ApplicationOwnershipRole?(string value) => value == null ? null : new ApplicationOwnershipRole(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationOwnershipRole other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ApplicationOwnershipRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

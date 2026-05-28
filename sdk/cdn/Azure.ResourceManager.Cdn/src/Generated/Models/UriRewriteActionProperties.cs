@@ -7,49 +7,77 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the url rewrite action. </summary>
+    /// <summary>
+    /// Defines the parameters for the url rewrite action.
+    /// Serialized Name: UrlRewriteActionParameters
+    /// </summary>
     public partial class UriRewriteActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UriRewriteActionProperties"/>. </summary>
-        /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
-        /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
+        /// <param name="sourcePattern">
+        /// define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched.
+        /// Serialized Name: UrlRewriteActionParameters.sourcePattern
+        /// </param>
+        /// <param name="destination">
+        /// Define the relative URL to which the above requests will be rewritten by.
+        /// Serialized Name: UrlRewriteActionParameters.destination
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePattern"/> or <paramref name="destination"/> is null. </exception>
-        public UriRewriteActionProperties(string sourcePattern, string destination) : base(DeliveryRuleActionParametersType.DeliveryRuleUrlRewriteActionParameters)
+        public UriRewriteActionProperties(string sourcePattern, string destination)
         {
             Argument.AssertNotNull(sourcePattern, nameof(sourcePattern));
             Argument.AssertNotNull(destination, nameof(destination));
 
             SourcePattern = sourcePattern;
             Destination = destination;
+            TypeName = DeliveryRuleActionParametersType.DeliveryRuleUriRewriteActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="UriRewriteActionProperties"/>. </summary>
-        /// <param name="typeName"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sourcePattern"> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </param>
-        /// <param name="destination"> Define the relative URL to which the above requests will be rewritten by. </param>
-        /// <param name="preserveUnmatchedPath"> Whether to preserve unmatched path. Default value is true. </param>
-        internal UriRewriteActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sourcePattern, string destination, bool? preserveUnmatchedPath) : base(typeName, additionalBinaryDataProperties)
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sourcePattern">
+        /// define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched.
+        /// Serialized Name: UrlRewriteActionParameters.sourcePattern
+        /// </param>
+        /// <param name="destination">
+        /// Define the relative URL to which the above requests will be rewritten by.
+        /// Serialized Name: UrlRewriteActionParameters.destination
+        /// </param>
+        /// <param name="preserveUnmatchedPath">
+        /// Whether to preserve unmatched path. Default value is true.
+        /// Serialized Name: UrlRewriteActionParameters.preserveUnmatchedPath
+        /// </param>
+        internal UriRewriteActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string sourcePattern, string destination, bool? preserveUnmatchedPath) : base(typeName, serializedAdditionalRawData)
         {
             SourcePattern = sourcePattern;
             Destination = destination;
             PreserveUnmatchedPath = preserveUnmatchedPath;
+            TypeName = typeName;
         }
 
-        /// <summary> define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched. </summary>
-        [WirePath("sourcePattern")]
+        /// <summary> Initializes a new instance of <see cref="UriRewriteActionProperties"/> for deserialization. </summary>
+        internal UriRewriteActionProperties()
+        {
+        }
+
+        /// <summary>
+        /// define a request URI pattern that identifies the type of requests that may be rewritten. If value is blank, all strings are matched.
+        /// Serialized Name: UrlRewriteActionParameters.sourcePattern
+        /// </summary>
         public string SourcePattern { get; set; }
-
-        /// <summary> Define the relative URL to which the above requests will be rewritten by. </summary>
-        [WirePath("destination")]
+        /// <summary>
+        /// Define the relative URL to which the above requests will be rewritten by.
+        /// Serialized Name: UrlRewriteActionParameters.destination
+        /// </summary>
         public string Destination { get; set; }
-
-        /// <summary> Whether to preserve unmatched path. Default value is true. </summary>
-        [WirePath("preserveUnmatchedPath")]
+        /// <summary>
+        /// Whether to preserve unmatched path. Default value is true.
+        /// Serialized Name: UrlRewriteActionParameters.preserveUnmatchedPath
+        /// </summary>
         public bool? PreserveUnmatchedPath { get; set; }
     }
 }

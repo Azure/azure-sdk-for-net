@@ -8,61 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Cdn;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Parameters required for profile upgrade. </summary>
-    public partial class ProfileChangeSkuWafMapping : IJsonModel<ProfileChangeSkuWafMapping>
+    public partial class ProfileChangeSkuWafMapping : IUtf8JsonSerializable, IJsonModel<ProfileChangeSkuWafMapping>
     {
-        /// <summary> Initializes a new instance of <see cref="ProfileChangeSkuWafMapping"/> for deserialization. </summary>
-        internal ProfileChangeSkuWafMapping()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfileChangeSkuWafMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileChangeSkuWafMapping PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileChangeSkuWafMapping>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeProfileChangeSkuWafMapping(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProfileChangeSkuWafMapping)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileChangeSkuWafMapping>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ProfileChangeSkuWafMapping)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProfileChangeSkuWafMapping>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProfileChangeSkuWafMapping IPersistableModel<ProfileChangeSkuWafMapping>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProfileChangeSkuWafMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProfileChangeSkuWafMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,24 +30,25 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileChangeSkuWafMapping>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProfileChangeSkuWafMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProfileChangeSkuWafMapping)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("securityPolicyName"u8);
             writer.WriteStringValue(SecurityPolicyName);
             writer.WritePropertyName("changeToWafPolicy"u8);
-            writer.WriteObjectValue(ChangeToWafPolicy, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            ((IJsonModel<WritableSubResource>)ChangeToWafPolicy).Write(writer, options);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -100,52 +57,80 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProfileChangeSkuWafMapping IJsonModel<ProfileChangeSkuWafMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProfileChangeSkuWafMapping JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProfileChangeSkuWafMapping IJsonModel<ProfileChangeSkuWafMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProfileChangeSkuWafMapping>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProfileChangeSkuWafMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProfileChangeSkuWafMapping)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeProfileChangeSkuWafMapping(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProfileChangeSkuWafMapping DeserializeProfileChangeSkuWafMapping(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProfileChangeSkuWafMapping DeserializeProfileChangeSkuWafMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string securityPolicyName = default;
-            CdnResourceReference changeToWafPolicy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            WritableSubResource changeToWafPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("securityPolicyName"u8))
+                if (property.NameEquals("securityPolicyName"u8))
                 {
-                    securityPolicyName = prop.Value.GetString();
+                    securityPolicyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("changeToWafPolicy"u8))
+                if (property.NameEquals("changeToWafPolicy"u8))
                 {
-                    changeToWafPolicy = CdnResourceReference.DeserializeCdnResourceReference(prop.Value, options);
+                    changeToWafPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ProfileChangeSkuWafMapping(securityPolicyName, changeToWafPolicy, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProfileChangeSkuWafMapping(securityPolicyName, changeToWafPolicy, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProfileChangeSkuWafMapping>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProfileChangeSkuWafMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ProfileChangeSkuWafMapping)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProfileChangeSkuWafMapping IPersistableModel<ProfileChangeSkuWafMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProfileChangeSkuWafMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeProfileChangeSkuWafMapping(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProfileChangeSkuWafMapping)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProfileChangeSkuWafMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

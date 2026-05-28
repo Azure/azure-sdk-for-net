@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,8 +16,6 @@ namespace Client.Naming.Model
     public partial class ModelClient
     {
         protected ModelClient() => throw null;
-
-        internal ModelClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

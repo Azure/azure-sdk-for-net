@@ -49,10 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(managementGroupId, true);
             uri.AppendPath("/providers/MgmtTypeSpec/quotas/", false);
             uri.AppendPath(requestId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

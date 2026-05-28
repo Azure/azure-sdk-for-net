@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Tests
 {
@@ -155,8 +155,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
         public override void GlobalTimeoutTearDown()
         {
             var duration = DateTime.UtcNow - TestStartTime;
-            if (duration > _maxTimeout)
-            {
+            if (duration > _maxTimeout) {
                 base.GlobalTimeoutTearDown();
             }
         }

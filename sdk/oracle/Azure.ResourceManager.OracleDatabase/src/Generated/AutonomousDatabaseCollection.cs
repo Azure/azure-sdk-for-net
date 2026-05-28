@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -22,53 +21,55 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing a collection of <see cref="AutonomousDatabaseResource"/> and their operations.
     /// Each <see cref="AutonomousDatabaseResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="AutonomousDatabaseCollection"/> instance call the GetAutonomousDatabases method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AutonomousDatabaseCollection"/> instance call the GetAutonomousDatabases method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AutonomousDatabaseCollection : ArmCollection, IEnumerable<AutonomousDatabaseResource>, IAsyncEnumerable<AutonomousDatabaseResource>
     {
-        private readonly ClientDiagnostics _autonomousDatabasesClientDiagnostics;
-        private readonly AutonomousDatabases _autonomousDatabasesRestClient;
+        private readonly ClientDiagnostics _autonomousDatabaseClientDiagnostics;
+        private readonly AutonomousDatabasesRestOperations _autonomousDatabaseRestClient;
 
-        /// <summary> Initializes a new instance of AutonomousDatabaseCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutonomousDatabaseCollection"/> class for mocking. </summary>
         protected AutonomousDatabaseCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutonomousDatabaseCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AutonomousDatabaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _autonomousDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AutonomousDatabaseResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AutonomousDatabaseResource.ResourceType, out string autonomousDatabaseApiVersion);
-            _autonomousDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", AutonomousDatabaseResource.ResourceType.Namespace, Diagnostics);
-            _autonomousDatabasesRestClient = new AutonomousDatabases(_autonomousDatabasesClientDiagnostics, Pipeline, Endpoint, autonomousDatabaseApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _autonomousDatabaseRestClient = new AutonomousDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, autonomousDatabaseApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a AutonomousDatabase
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="autonomousdatabasename"> The database name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutonomousDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string autonomousdatabasename, AutonomousDatabaseData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseCollection.CreateOrUpdate");
+            using var scope = _autonomousDatabaseClientDiagnostics.CreateScope("AutonomousDatabaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, autonomousdatabasename, AutonomousDatabaseData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
-                    _autonomousDatabasesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _autonomousDatabaseRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, autonomousdatabasename, data, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(new AutonomousDatabaseOperationSource(Client), _autonomousDatabaseClientDiagnostics, Pipeline, _autonomousDatabaseRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, autonomousdatabasename, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Create a AutonomousDatabase
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="autonomousdatabasename"> The database name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutonomousDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string autonomousdatabasename, AutonomousDatabaseData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseCollection.CreateOrUpdate");
+            using var scope = _autonomousDatabaseClientDiagnostics.CreateScope("AutonomousDatabaseCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, autonomousdatabasename, AutonomousDatabaseData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
-                    _autonomousDatabasesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _autonomousDatabaseRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, autonomousdatabasename, data, cancellationToken);
+                var operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(new AutonomousDatabaseOperationSource(Client), _autonomousDatabaseClientDiagnostics, Pipeline, _autonomousDatabaseRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, autonomousdatabasename, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a AutonomousDatabase
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autonomousdatabasename"> The database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         public virtual async Task<Response<AutonomousDatabaseResource>> GetAsync(string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseCollection.Get");
+            using var scope = _autonomousDatabaseClientDiagnostics.CreateScope("AutonomousDatabaseCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, autonomousdatabasename, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AutonomousDatabaseData> response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
+                var response = await _autonomousDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, autonomousdatabasename, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AutonomousDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a AutonomousDatabase
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autonomousdatabasename"> The database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         public virtual Response<AutonomousDatabaseResource> Get(string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseCollection.Get");
+            using var scope = _autonomousDatabaseClientDiagnostics.CreateScope("AutonomousDatabaseCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, autonomousdatabasename, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AutonomousDatabaseData> response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
+                var response = _autonomousDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, autonomousdatabasename, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AutonomousDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.OracleDatabase
         /// List AutonomousDatabase resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutonomousDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutonomousDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutonomousDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetByResourceGroupAsyncCollectionResultOfT(_autonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutonomousDatabaseCollection.GetAll"), data => new AutonomousDatabaseResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _autonomousDatabaseRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autonomousDatabaseRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutonomousDatabaseResource(Client, AutonomousDatabaseData.DeserializeAutonomousDatabaseData(e)), _autonomousDatabaseClientDiagnostics, Pipeline, "AutonomousDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List AutonomousDatabase resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="AutonomousDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutonomousDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<AutonomousDatabaseData, AutonomousDatabaseResource>(new AutonomousDatabasesGetByResourceGroupCollectionResultOfT(_autonomousDatabasesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AutonomousDatabaseCollection.GetAll"), data => new AutonomousDatabaseResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _autonomousDatabaseRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autonomousDatabaseRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutonomousDatabaseResource(Client, AutonomousDatabaseData.DeserializeAutonomousDatabaseData(e)), _autonomousDatabaseClientDiagnostics, Pipeline, "AutonomousDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autonomousdatabasename"> The database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseCollection.Exists");
+            using var scope = _autonomousDatabaseClientDiagnostics.CreateScope("AutonomousDatabaseCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, autonomousdatabasename, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<AutonomousDatabaseData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AutonomousDatabaseData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _autonomousDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, autonomousdatabasename, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autonomousdatabasename"> The database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         public virtual Response<bool> Exists(string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseCollection.Exists");
+            using var scope = _autonomousDatabaseClientDiagnostics.CreateScope("AutonomousDatabaseCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, autonomousdatabasename, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<AutonomousDatabaseData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AutonomousDatabaseData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _autonomousDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, autonomousdatabasename, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autonomousdatabasename"> The database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         public virtual async Task<NullableResponse<AutonomousDatabaseResource>> GetIfExistsAsync(string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseCollection.GetIfExists");
+            using var scope = _autonomousDatabaseClientDiagnostics.CreateScope("AutonomousDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, autonomousdatabasename, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<AutonomousDatabaseData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AutonomousDatabaseData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _autonomousDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, autonomousdatabasename, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<AutonomousDatabaseResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new AutonomousDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autonomousdatabasename"> The database name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="autonomousdatabasename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="autonomousdatabasename"/> is null. </exception>
         public virtual NullableResponse<AutonomousDatabaseResource> GetIfExists(string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
 
-            using DiagnosticScope scope = _autonomousDatabasesClientDiagnostics.CreateScope("AutonomousDatabaseCollection.GetIfExists");
+            using var scope = _autonomousDatabaseClientDiagnostics.CreateScope("AutonomousDatabaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _autonomousDatabasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, autonomousdatabasename, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<AutonomousDatabaseData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AutonomousDatabaseData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AutonomousDatabaseData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _autonomousDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, autonomousdatabasename, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<AutonomousDatabaseResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new AutonomousDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AutonomousDatabaseResource> IAsyncEnumerable<AutonomousDatabaseResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

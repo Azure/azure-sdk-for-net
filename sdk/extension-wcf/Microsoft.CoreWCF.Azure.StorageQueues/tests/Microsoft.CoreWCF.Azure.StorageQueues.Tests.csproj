@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <GenerateRuntimeConfigDevFile>true</GenerateRuntimeConfigDevFile>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <PackageReference Include="Microsoft.AspNetCore" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+  </ItemGroup>
+
+  <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Storage.Files.Shares" />
+    <PackageReference Include="Azure.Storage.Queues" />
+    <PackageReference Include="CoreWCF.Queue" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
+    <PackageReference Include="System.ServiceModel.Primitives" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.CoreWCF.Azure.StorageQueues.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
+    <ProjectReference Include="..\..\Microsoft.WCF.Azure.StorageQueues\src\Microsoft.WCF.Azure.StorageQueues.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\storage\Azure.Storage.Common\tests\Shared\AzuriteNUnitFixture.cs" LinkBase="Shared" />
+    <Compile Include="..\..\..\storage\Azure.Storage.Common\tests\Shared\AzuriteFixture.cs" LinkBase="Shared" />
+    <None Include="..\..\..\storage\Azure.Storage.Common\tests\Shared\*.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\..\storage\Azure.Storage.Common\tests\Shared\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="..\..\..\storage\Azure.Storage.Common\tests\Shared\TestConfigurations.xml" />
+    <None Remove="..\..\..\storage\Azure.Storage.Common\tests\Shared\TestConfigurationsTemplate.xml" />
+  </ItemGroup>
+
+</Project>

@@ -75,15 +75,15 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
     },
 };
 
-Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextJobState analyzeTextJobState = response.Value;
+AnalyzeTextOperationState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
 {
-    if (analyzeTextOperationResult is ExtractiveSummarizationOperationResult)
+    if (analyzeTextLROResult is ExtractiveSummarizationOperationResult)
     {
-        ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextOperationResult;
+        ExtractiveSummarizationOperationResult extractiveSummarizationLROResult = (ExtractiveSummarizationOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
         foreach (ExtractedSummaryActionResult extractedSummyDocument in extractiveSummarizationLROResult.Results.Documents)

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    /// <summary></summary>
-    internal partial class CloudVmClusterDBNodeOperationSource : IOperationSource<CloudVmClusterDBNodeResource>
+    internal class CloudVmClusterDBNodeOperationSource : IOperationSource<CloudVmClusterDBNodeResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal CloudVmClusterDBNodeOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         CloudVmClusterDBNodeResource IOperationSource<CloudVmClusterDBNodeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CloudVmClusterDBNodeData data = CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<CloudVmClusterDBNodeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new CloudVmClusterDBNodeResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<CloudVmClusterDBNodeResource> IOperationSource<CloudVmClusterDBNodeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CloudVmClusterDBNodeData data = CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CloudVmClusterDBNodeResource(_client, data);
+            var data = ModelReaderWriter.Read<CloudVmClusterDBNodeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
+            return await Task.FromResult(new CloudVmClusterDBNodeResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

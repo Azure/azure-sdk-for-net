@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Microsoft.TypeSpec.Generator.Customizations
+namespace Azure.Monitor.Ingestion
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute

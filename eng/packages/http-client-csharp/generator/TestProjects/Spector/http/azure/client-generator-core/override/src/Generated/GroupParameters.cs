@@ -5,20 +5,17 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 using Customization;
 
-namespace Specs.Azure.ClientGenerator.Core.Override
+namespace _Specs_.Azure.ClientGenerator.Core.Override
 {
     public partial class GroupParameters
     {
         protected GroupParameters() => throw null;
-
-        internal GroupParameters(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

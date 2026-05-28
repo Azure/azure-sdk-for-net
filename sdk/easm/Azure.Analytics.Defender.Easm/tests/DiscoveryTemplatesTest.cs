@@ -26,16 +26,16 @@ namespace Azure.Analytics.Defender.Easm.Tests
             var response = client.GetDiscoveryTemplatesAsync(PartialName);
             await foreach (var template in response)
             {
-                Assert.That(template.Name.ToLower().Contains(PartialName), Is.True);
+                Assert.IsTrue(template.Name.ToLower().Contains(PartialName));
             }
         }
         [RecordedTest]
         public async System.Threading.Tasks.Task DiscoveryTemplatesGetTest()
         {
-            var response = await client.GetDiscoveryTemplateAsync(TemplateId);
+            var response =  await client.GetDiscoveryTemplateAsync(TemplateId);
             DiscoveryTemplate discoTemplate = response.Value;
-            Assert.That(discoTemplate.Name, Is.Not.Null);
-            Assert.That(discoTemplate.Id, Is.Not.Null);
+            Assert.IsNotNull(discoTemplate.Name);
+            Assert.IsNotNull(discoTemplate.Id);
         }
     }
 }

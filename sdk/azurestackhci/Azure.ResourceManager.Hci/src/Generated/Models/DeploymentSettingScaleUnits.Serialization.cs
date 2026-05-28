@@ -8,61 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Scale units will contains list of deployment data. </summary>
-    public partial class DeploymentSettingScaleUnits : IJsonModel<DeploymentSettingScaleUnits>
+    public partial class DeploymentSettingScaleUnits : IUtf8JsonSerializable, IJsonModel<DeploymentSettingScaleUnits>
     {
-        /// <summary> Initializes a new instance of <see cref="DeploymentSettingScaleUnits"/> for deserialization. </summary>
-        internal DeploymentSettingScaleUnits()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentSettingScaleUnits>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeploymentSettingScaleUnits PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingScaleUnits>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDeploymentSettingScaleUnits(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingScaleUnits)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingScaleUnits>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingScaleUnits)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeploymentSettingScaleUnits>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentSettingScaleUnits IPersistableModel<DeploymentSettingScaleUnits>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeploymentSettingScaleUnits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentSettingScaleUnits>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +29,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingScaleUnits>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingScaleUnits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingScaleUnits)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("deploymentData"u8);
             writer.WriteObjectValue(DeploymentData, options);
             if (Optional.IsDefined(SbePartnerInfo))
@@ -86,15 +42,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("sbePartnerInfo"u8);
                 writer.WriteObjectValue(SbePartnerInfo, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -103,56 +59,131 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeploymentSettingScaleUnits IJsonModel<DeploymentSettingScaleUnits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DeploymentSettingScaleUnits JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeploymentSettingScaleUnits IJsonModel<DeploymentSettingScaleUnits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingScaleUnits>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingScaleUnits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingScaleUnits)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeploymentSettingScaleUnits(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeploymentSettingScaleUnits DeserializeDeploymentSettingScaleUnits(JsonElement element, ModelReaderWriterOptions options)
+        internal static DeploymentSettingScaleUnits DeserializeDeploymentSettingScaleUnits(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             HciClusterDeploymentInfo deploymentData = default;
             SbePartnerInfo sbePartnerInfo = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("deploymentData"u8))
+                if (property.NameEquals("deploymentData"u8))
                 {
-                    deploymentData = HciClusterDeploymentInfo.DeserializeHciClusterDeploymentInfo(prop.Value, options);
+                    deploymentData = HciClusterDeploymentInfo.DeserializeHciClusterDeploymentInfo(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("sbePartnerInfo"u8))
+                if (property.NameEquals("sbePartnerInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sbePartnerInfo = SbePartnerInfo.DeserializeSbePartnerInfo(prop.Value, options);
+                    sbePartnerInfo = SbePartnerInfo.DeserializeSbePartnerInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DeploymentSettingScaleUnits(deploymentData, sbePartnerInfo, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeploymentSettingScaleUnits(deploymentData, sbePartnerInfo, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentData))
+                {
+                    builder.Append("  deploymentData: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DeploymentData, options, 2, false, "  deploymentData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SbePartnerInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sbePartnerInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SbePartnerInfo))
+                {
+                    builder.Append("  sbePartnerInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SbePartnerInfo, options, 2, false, "  sbePartnerInfo: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<DeploymentSettingScaleUnits>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingScaleUnits>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingScaleUnits)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DeploymentSettingScaleUnits IPersistableModel<DeploymentSettingScaleUnits>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingScaleUnits>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDeploymentSettingScaleUnits(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingScaleUnits)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeploymentSettingScaleUnits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    /// <summary> MarketplaceDetails of PAN Firewall resource. </summary>
-    public partial class PanFirewallMarketplaceDetails : IJsonModel<PanFirewallMarketplaceDetails>
+    public partial class PanFirewallMarketplaceDetails : IUtf8JsonSerializable, IJsonModel<PanFirewallMarketplaceDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="PanFirewallMarketplaceDetails"/> for deserialization. </summary>
-        internal PanFirewallMarketplaceDetails()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PanFirewallMarketplaceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PanFirewallMarketplaceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PanFirewallMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePanFirewallMarketplaceDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PanFirewallMarketplaceDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PanFirewallMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PanFirewallMarketplaceDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PanFirewallMarketplaceDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PanFirewallMarketplaceDetails IPersistableModel<PanFirewallMarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PanFirewallMarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PanFirewallMarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PanFirewallMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PanFirewallMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PanFirewallMarketplaceDetails)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionId))
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
@@ -93,15 +48,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -110,27 +65,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PanFirewallMarketplaceDetails IJsonModel<PanFirewallMarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PanFirewallMarketplaceDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PanFirewallMarketplaceDetails IJsonModel<PanFirewallMarketplaceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PanFirewallMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PanFirewallMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PanFirewallMarketplaceDetails)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePanFirewallMarketplaceDetails(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PanFirewallMarketplaceDetails DeserializePanFirewallMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static PanFirewallMarketplaceDetails DeserializePanFirewallMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,39 +89,72 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             string offerId = default;
             string publisherId = default;
             MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("marketplaceSubscriptionId"u8))
+                if (property.NameEquals("marketplaceSubscriptionId"u8))
                 {
-                    marketplaceSubscriptionId = prop.Value.GetString();
+                    marketplaceSubscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("offerId"u8))
+                if (property.NameEquals("offerId"u8))
                 {
-                    offerId = prop.Value.GetString();
+                    offerId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("publisherId"u8))
+                if (property.NameEquals("publisherId"u8))
                 {
-                    publisherId = prop.Value.GetString();
+                    publisherId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("marketplaceSubscriptionStatus"u8))
+                if (property.NameEquals("marketplaceSubscriptionStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(prop.Value.GetString());
+                    marketplaceSubscriptionStatus = new MarketplaceSubscriptionStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId, offerId, publisherId, marketplaceSubscriptionStatus, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PanFirewallMarketplaceDetails(marketplaceSubscriptionId, offerId, publisherId, marketplaceSubscriptionStatus, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PanFirewallMarketplaceDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PanFirewallMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PanFirewallMarketplaceDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PanFirewallMarketplaceDetails IPersistableModel<PanFirewallMarketplaceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PanFirewallMarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePanFirewallMarketplaceDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PanFirewallMarketplaceDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PanFirewallMarketplaceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

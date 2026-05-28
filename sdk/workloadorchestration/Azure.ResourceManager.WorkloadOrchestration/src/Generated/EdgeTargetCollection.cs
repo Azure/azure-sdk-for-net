@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
@@ -22,53 +21,55 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     /// <summary>
     /// A class representing a collection of <see cref="EdgeTargetResource"/> and their operations.
     /// Each <see cref="EdgeTargetResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="EdgeTargetCollection"/> instance call the GetEdgeTargets method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="EdgeTargetCollection"/> instance call the GetEdgeTargets method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class EdgeTargetCollection : ArmCollection, IEnumerable<EdgeTargetResource>, IAsyncEnumerable<EdgeTargetResource>
     {
-        private readonly ClientDiagnostics _targetsClientDiagnostics;
-        private readonly Targets _targetsRestClient;
+        private readonly ClientDiagnostics _edgeTargetTargetsClientDiagnostics;
+        private readonly TargetsRestOperations _edgeTargetTargetsRestClient;
 
-        /// <summary> Initializes a new instance of EdgeTargetCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeTargetCollection"/> class for mocking. </summary>
         protected EdgeTargetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeTargetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeTargetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EdgeTargetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeTargetResource.ResourceType, out string edgeTargetApiVersion);
-            _targetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeTargetResource.ResourceType.Namespace, Diagnostics);
-            _targetsRestClient = new Targets(_targetsClientDiagnostics, Pipeline, Endpoint, edgeTargetApiVersion ?? "2025-06-01");
-            ValidateResourceId(id);
+            _edgeTargetTargetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeTargetResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EdgeTargetResource.ResourceType, out string edgeTargetTargetsApiVersion);
+            _edgeTargetTargetsRestClient = new TargetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeTargetTargetsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a Target Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="targetName"> Name of the target. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EdgeTargetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string targetName, EdgeTargetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("EdgeTargetCollection.CreateOrUpdate");
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, targetName, EdgeTargetData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WorkloadOrchestrationArmOperation<EdgeTargetResource> operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(
-                    new EdgeTargetOperationSource(Client),
-                    _targetsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _edgeTargetTargetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, targetName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(new EdgeTargetOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, targetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Create or update a Target Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="targetName"> Name of the target. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EdgeTargetResource> CreateOrUpdate(WaitUntil waitUntil, string targetName, EdgeTargetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("EdgeTargetCollection.CreateOrUpdate");
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, targetName, EdgeTargetData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                WorkloadOrchestrationArmOperation<EdgeTargetResource> operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(
-                    new EdgeTargetOperationSource(Client),
-                    _targetsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _edgeTargetTargetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, targetName, data, cancellationToken);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(new EdgeTargetOperationSource(Client), _edgeTargetTargetsClientDiagnostics, Pipeline, _edgeTargetTargetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, targetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Target Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> Name of the target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual async Task<Response<EdgeTargetResource>> GetAsync(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("EdgeTargetCollection.Get");
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, targetName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EdgeTargetData> response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
+                var response = await _edgeTargetTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, targetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Target Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> Name of the target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual Response<EdgeTargetResource> Get(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("EdgeTargetCollection.Get");
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, targetName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<EdgeTargetData> response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
+                var response = _edgeTargetTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, targetName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List by specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeTargetResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EdgeTargetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeTargetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<EdgeTargetData, EdgeTargetResource>(new TargetsGetByResourceGroupAsyncCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeTargetCollection.GetAll"), data => new EdgeTargetResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeTargetTargetsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeTargetTargetsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeTargetResource(Client, EdgeTargetData.DeserializeEdgeTargetData(e)), _edgeTargetTargetsClientDiagnostics, Pipeline, "EdgeTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List by specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeTargetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeTargetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<EdgeTargetData, EdgeTargetResource>(new TargetsGetByResourceGroupCollectionResultOfT(_targetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeTargetCollection.GetAll"), data => new EdgeTargetResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeTargetTargetsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeTargetTargetsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeTargetResource(Client, EdgeTargetData.DeserializeEdgeTargetData(e)), _edgeTargetTargetsClientDiagnostics, Pipeline, "EdgeTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> Name of the target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("EdgeTargetCollection.Exists");
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, targetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<EdgeTargetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeTargetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _edgeTargetTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, targetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> Name of the target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual Response<bool> Exists(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("EdgeTargetCollection.Exists");
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, targetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<EdgeTargetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeTargetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _edgeTargetTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, targetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> Name of the target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual async Task<NullableResponse<EdgeTargetResource>> GetIfExistsAsync(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("EdgeTargetCollection.GetIfExists");
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, targetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<EdgeTargetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeTargetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _edgeTargetTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, targetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<EdgeTargetResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> Name of the target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual NullableResponse<EdgeTargetResource> GetIfExists(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("EdgeTargetCollection.GetIfExists");
+            using var scope = _edgeTargetTargetsClientDiagnostics.CreateScope("EdgeTargetCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, targetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<EdgeTargetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeTargetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeTargetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _edgeTargetTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, targetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<EdgeTargetResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeTargetResource> IAsyncEnumerable<EdgeTargetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

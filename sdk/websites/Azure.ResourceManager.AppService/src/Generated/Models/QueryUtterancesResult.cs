@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Result for utterances query.
-    /// Serialized Name: QueryUtterancesResult
-    /// </summary>
+    /// <summary> Result for utterances query. </summary>
     public partial class QueryUtterancesResult
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryUtterancesResult"/>. </summary>
-        /// <param name="sampleUtterance">
-        /// A sample utterance.
-        /// Serialized Name: QueryUtterancesResult.sampleUtterance
-        /// </param>
-        /// <param name="score">
-        /// Score of a sample utterance.
-        /// Serialized Name: QueryUtterancesResult.score
-        /// </param>
+        /// <param name="sampleUtterance"> A sample utterance. </param>
+        /// <param name="score"> Score of a sample utterance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QueryUtterancesResult(SampleUtterance sampleUtterance, float? score, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A sample utterance.
-        /// Serialized Name: QueryUtterancesResult.sampleUtterance
-        /// </summary>
+        /// <summary> A sample utterance. </summary>
         [WirePath("sampleUtterance")]
         public SampleUtterance SampleUtterance { get; set; }
-        /// <summary>
-        /// Score of a sample utterance.
-        /// Serialized Name: QueryUtterancesResult.score
-        /// </summary>
+        /// <summary> Score of a sample utterance. </summary>
         [WirePath("score")]
         public float? Score { get; set; }
     }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public readonly partial struct ServiceBusPrivateLinkConnectionStatus : IEquatable<ServiceBusPrivateLinkConnectionStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateLinkConnectionStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceBusPrivateLinkConnectionStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string PendingValue = "Pending";
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBusPrivateLinkConnectionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceBusPrivateLinkConnectionStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Pending. </summary>
+        /// <summary> Pending. </summary>
         public static ServiceBusPrivateLinkConnectionStatus Pending { get; } = new ServiceBusPrivateLinkConnectionStatus(PendingValue);
-
-        /// <summary> Gets the Approved. </summary>
+        /// <summary> Approved. </summary>
         public static ServiceBusPrivateLinkConnectionStatus Approved { get; } = new ServiceBusPrivateLinkConnectionStatus(ApprovedValue);
-
-        /// <summary> Gets the Rejected. </summary>
+        /// <summary> Rejected. </summary>
         public static ServiceBusPrivateLinkConnectionStatus Rejected { get; } = new ServiceBusPrivateLinkConnectionStatus(RejectedValue);
-
-        /// <summary> Gets the Disconnected. </summary>
+        /// <summary> Disconnected. </summary>
         public static ServiceBusPrivateLinkConnectionStatus Disconnected { get; } = new ServiceBusPrivateLinkConnectionStatus(DisconnectedValue);
-
         /// <summary> Determines if two <see cref="ServiceBusPrivateLinkConnectionStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceBusPrivateLinkConnectionStatus left, ServiceBusPrivateLinkConnectionStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ServiceBusPrivateLinkConnectionStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceBusPrivateLinkConnectionStatus left, ServiceBusPrivateLinkConnectionStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ServiceBusPrivateLinkConnectionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusPrivateLinkConnectionStatus"/>. </summary>
         public static implicit operator ServiceBusPrivateLinkConnectionStatus(string value) => new ServiceBusPrivateLinkConnectionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ServiceBusPrivateLinkConnectionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusPrivateLinkConnectionStatus?(string value) => value == null ? null : new ServiceBusPrivateLinkConnectionStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceBusPrivateLinkConnectionStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ServiceBusPrivateLinkConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

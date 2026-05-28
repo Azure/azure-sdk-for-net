@@ -10,65 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    /// <summary> Pre Restore request object. </summary>
-    public partial class PreRestoreContent : IJsonModel<PreRestoreContent>
+    public partial class PreRestoreContent : IUtf8JsonSerializable, IJsonModel<PreRestoreContent>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PreRestoreContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePreRestoreContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PreRestoreContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PreRestoreContent IPersistableModel<PreRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PreRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="preRestoreContent"> The <see cref="PreRestoreContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PreRestoreContent preRestoreContent)
-        {
-            if (preRestoreContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(preRestoreContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PreRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -80,11 +28,12 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PreRestoreContent)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Partition))
             {
                 writer.WritePropertyName("partition"u8);
@@ -124,7 +73,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 writer.WritePropertyName("restoreFileSpec"u8);
                 writer.WriteStartArray();
-                foreach (RestoreFileSpec item in RestoreFileSpec)
+                foreach (var item in RestoreFileSpec)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -135,15 +84,15 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("pauseWaitForSyncDrainTimePeriodInSeconds"u8);
                 writer.WriteNumberValue(PauseWaitForSyncDrainTimePeriodInSeconds.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -152,27 +101,22 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PreRestoreContent IJsonModel<PreRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PreRestoreContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PreRestoreContent IJsonModel<PreRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PreRestoreContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePreRestoreContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PreRestoreContent DeserializePreRestoreContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static PreRestoreContent DeserializePreRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -186,80 +130,82 @@ namespace Azure.ResourceManager.StorageSync.Models
             string backupMetadataPropertyBag = default;
             IList<RestoreFileSpec> restoreFileSpec = default;
             int? pauseWaitForSyncDrainTimePeriodInSeconds = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("partition"u8))
+                if (property.NameEquals("partition"u8))
                 {
-                    partition = prop.Value.GetString();
+                    partition = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("replicaGroup"u8))
+                if (property.NameEquals("replicaGroup"u8))
                 {
-                    replicaGroup = prop.Value.GetString();
+                    replicaGroup = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("requestId"u8))
+                if (property.NameEquals("requestId"u8))
                 {
-                    requestId = prop.Value.GetString();
+                    requestId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("azureFileShareUri"u8))
+                if (property.NameEquals("azureFileShareUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureFileShareUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    azureFileShareUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceAzureFileShareUri"u8))
+                if (property.NameEquals("sourceAzureFileShareUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceAzureFileShareUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    sourceAzureFileShareUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("backupMetadataPropertyBag"u8))
+                if (property.NameEquals("backupMetadataPropertyBag"u8))
                 {
-                    backupMetadataPropertyBag = prop.Value.GetString();
+                    backupMetadataPropertyBag = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("restoreFileSpec"u8))
+                if (property.NameEquals("restoreFileSpec"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RestoreFileSpec> array = new List<RestoreFileSpec>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item, options));
                     }
                     restoreFileSpec = array;
                     continue;
                 }
-                if (prop.NameEquals("pauseWaitForSyncDrainTimePeriodInSeconds"u8))
+                if (property.NameEquals("pauseWaitForSyncDrainTimePeriodInSeconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pauseWaitForSyncDrainTimePeriodInSeconds = prop.Value.GetInt32();
+                    pauseWaitForSyncDrainTimePeriodInSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new PreRestoreContent(
                 partition,
                 replicaGroup,
@@ -270,7 +216,38 @@ namespace Azure.ResourceManager.StorageSync.Models
                 backupMetadataPropertyBag,
                 restoreFileSpec ?? new ChangeTrackingList<RestoreFileSpec>(),
                 pauseWaitForSyncDrainTimePeriodInSeconds,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PreRestoreContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PreRestoreContent IPersistableModel<PreRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePreRestoreContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PreRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

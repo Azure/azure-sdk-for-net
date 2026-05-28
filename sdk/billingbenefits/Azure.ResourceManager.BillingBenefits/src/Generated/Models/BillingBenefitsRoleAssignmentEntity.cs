@@ -14,8 +14,37 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Role assignment entity. </summary>
     public partial class BillingBenefitsRoleAssignmentEntity
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsRoleAssignmentEntity"/>. </summary>
         internal BillingBenefitsRoleAssignmentEntity()
@@ -25,50 +54,29 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsRoleAssignmentEntity"/>. </summary>
         /// <param name="id"> Role assignment entity id. </param>
         /// <param name="name"> Role assignment entity name. </param>
-        /// <param name="properties"> Role assignment entity properties. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingBenefitsRoleAssignmentEntity(ResourceIdentifier id, string name, RoleAssignmentEntityProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="principalId"> Principal Id. </param>
+        /// <param name="roleDefinitionId"> Role definition id. </param>
+        /// <param name="scope"> Scope of the role assignment entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsRoleAssignmentEntity(ResourceIdentifier id, string name, string principalId, ResourceIdentifier roleDefinitionId, ResourceIdentifier scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
-            Properties = properties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            PrincipalId = principalId;
+            RoleDefinitionId = roleDefinitionId;
+            Scope = scope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Role assignment entity id. </summary>
         public ResourceIdentifier Id { get; }
-
         /// <summary> Role assignment entity name. </summary>
         public string Name { get; }
-
-        /// <summary> Role assignment entity properties. </summary>
-        internal RoleAssignmentEntityProperties Properties { get; }
-
         /// <summary> Principal Id. </summary>
-        public string PrincipalId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrincipalId;
-            }
-        }
-
+        public string PrincipalId { get; }
         /// <summary> Role definition id. </summary>
-        public ResourceIdentifier RoleDefinitionId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RoleDefinitionId;
-            }
-        }
-
+        public ResourceIdentifier RoleDefinitionId { get; }
         /// <summary> Scope of the role assignment entity. </summary>
-        public ResourceIdentifier Scope
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Scope;
-            }
-        }
+        public ResourceIdentifier Scope { get; }
     }
 }

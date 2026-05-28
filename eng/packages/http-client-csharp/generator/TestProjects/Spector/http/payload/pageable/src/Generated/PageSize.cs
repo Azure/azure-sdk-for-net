@@ -17,8 +17,6 @@ namespace Payload.Pageable._PageSize
     {
         protected PageSize() => throw null;
 
-        internal PageSize(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
-
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Pageable<BinaryData> GetWithoutContinuation(RequestContext context) => throw null;

@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    /// <summary></summary>
     public partial class MongoClusterFirewallRuleResource : IJsonModel<MongoClusterFirewallRuleData>
     {
-        private static IJsonModel<MongoClusterFirewallRuleData> s_dataDeserializationInstance;
+        private static MongoClusterFirewallRuleData s_dataDeserializationInstance;
+        private static MongoClusterFirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<MongoClusterFirewallRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MongoClusterFirewallRuleData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoClusterFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterFirewallRuleData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MongoClusterFirewallRuleData IJsonModel<MongoClusterFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        MongoClusterFirewallRuleData IJsonModel<MongoClusterFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoClusterFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MongoClusterFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoClusterFirewallRuleData>(Data, options, AzureResourceManagerMongoClusterContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         MongoClusterFirewallRuleData IPersistableModel<MongoClusterFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoClusterFirewallRuleData>(data, options, AzureResourceManagerMongoClusterContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MongoClusterFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<MongoClusterFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoClusterFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

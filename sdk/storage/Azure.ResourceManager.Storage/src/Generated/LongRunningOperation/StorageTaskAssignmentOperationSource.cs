@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary></summary>
-    internal partial class StorageTaskAssignmentOperationSource : IOperationSource<StorageTaskAssignmentResource>
+    internal class StorageTaskAssignmentOperationSource : IOperationSource<StorageTaskAssignmentResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal StorageTaskAssignmentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         StorageTaskAssignmentResource IOperationSource<StorageTaskAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            StorageTaskAssignmentData data = StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<StorageTaskAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageContext.Default);
             return new StorageTaskAssignmentResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<StorageTaskAssignmentResource> IOperationSource<StorageTaskAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            StorageTaskAssignmentData data = StorageTaskAssignmentData.DeserializeStorageTaskAssignmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StorageTaskAssignmentResource(_client, data);
+            var data = ModelReaderWriter.Read<StorageTaskAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageContext.Default);
+            return await Task.FromResult(new StorageTaskAssignmentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

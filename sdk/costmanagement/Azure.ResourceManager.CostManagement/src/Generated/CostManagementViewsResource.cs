@@ -6,35 +6,44 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a CostManagementViews along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CostManagementViewsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAllCostManagementViews method.
+    /// A Class representing a CostManagementViews along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CostManagementViewsResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCostManagementViewsResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCostManagementViews method.
     /// </summary>
     public partial class CostManagementViewsResource : ArmResource
     {
-        private readonly ClientDiagnostics _viewOperationGroupClientDiagnostics;
-        private readonly ViewOperationGroup _viewOperationGroupRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="CostManagementViewsResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="viewName"> The viewName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string viewName)
+        {
+            var resourceId = $"{scope}/providers/Microsoft.CostManagement/views/{viewName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _costManagementViewsViewsClientDiagnostics;
+        private readonly ViewsRestOperations _costManagementViewsViewsRestClient;
         private readonly CostManagementViewData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CostManagement/views";
 
-        /// <summary> Initializes a new instance of CostManagementViewsResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CostManagementViewsResource"/> class for mocking. </summary>
         protected CostManagementViewsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CostManagementViewsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CostManagementViewsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CostManagementViewsResource(ArmClient client, CostManagementViewData data) : this(client, data.Id)
@@ -43,91 +52,71 @@ namespace Azure.ResourceManager.CostManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CostManagementViewsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CostManagementViewsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CostManagementViewsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string costManagementViewsApiVersion);
-            _viewOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
-            _viewOperationGroupRestClient = new ViewOperationGroup(_viewOperationGroupClientDiagnostics, Pipeline, Endpoint, costManagementViewsApiVersion ?? "2025-03-01");
-            ValidateResourceId(id);
+            _costManagementViewsViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string costManagementViewsViewsApiVersion);
+            _costManagementViewsViewsRestClient = new ViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementViewsViewsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CostManagementViewData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="viewName"> The viewName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string viewName)
-        {
-            string resourceId = $"{scope}/providers/Microsoft.CostManagement/views/{viewName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets the view for the defined scope by view name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/views/{viewName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ViewOperationGroup_GetByScope. </description>
+        /// <term>Operation Id</term>
+        /// <description>Views_GetByScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CostManagementViewsResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CostManagementViewsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _viewOperationGroupClientDiagnostics.CreateScope("CostManagementViewsResource.Get");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CostManagementViewData> response = Response.FromValue(CostManagementViewData.FromResponse(result), result);
+                var response = await _costManagementViewsViewsRestClient.GetByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CostManagementViewsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -141,41 +130,33 @@ namespace Azure.ResourceManager.CostManagement
         /// Gets the view for the defined scope by view name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/views/{viewName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ViewOperationGroup_GetByScope. </description>
+        /// <term>Operation Id</term>
+        /// <description>Views_GetByScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CostManagementViewsResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CostManagementViewsResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _viewOperationGroupClientDiagnostics.CreateScope("CostManagementViewsResource.Get");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _viewOperationGroupRestClient.CreateGetByScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CostManagementViewData> response = Response.FromValue(CostManagementViewData.FromResponse(result), result);
+                var response = _costManagementViewsViewsRestClient.GetByScope(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CostManagementViewsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -189,20 +170,20 @@ namespace Azure.ResourceManager.CostManagement
         /// The operation to delete a view.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/views/{viewName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ViewOperationGroup_DeleteByScope. </description>
+        /// <term>Operation Id</term>
+        /// <description>Views_DeleteByScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CostManagementViewsResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,23 +191,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _viewOperationGroupClientDiagnostics.CreateScope("CostManagementViewsResource.Delete");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _viewOperationGroupRestClient.CreateDeleteByScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CostManagementArmOperation operation = new CostManagementArmOperation(response, rehydrationToken);
+                var response = await _costManagementViewsViewsRestClient.DeleteByScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _costManagementViewsViewsRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +214,20 @@ namespace Azure.ResourceManager.CostManagement
         /// The operation to delete a view.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/views/{viewName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ViewOperationGroup_DeleteByScope. </description>
+        /// <term>Operation Id</term>
+        /// <description>Views_DeleteByScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CostManagementViewsResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,23 +235,16 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _viewOperationGroupClientDiagnostics.CreateScope("CostManagementViewsResource.Delete");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _viewOperationGroupRestClient.CreateDeleteByScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CostManagementArmOperation operation = new CostManagementArmOperation(response, rehydrationToken);
+                var response = _costManagementViewsViewsRestClient.DeleteByScope(Id.Parent, Id.Name, cancellationToken);
+                var uri = _costManagementViewsViewsRestClient.CreateDeleteByScopeRequestUri(Id.Parent, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -288,23 +255,23 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Update a CostManagementViews.
+        /// The operation to create or update a view. Update operation requires latest eTag to be set in the request. You may obtain the latest eTag by performing a get operation. Create operation does not require eTag.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/views/{viewName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ViewOperationGroup_CreateOrUpdateByScope. </description>
+        /// <term>Operation Id</term>
+        /// <description>Views_CreateOrUpdateByScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CostManagementViewsResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,24 +283,16 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _viewOperationGroupClientDiagnostics.CreateScope("CostManagementViewsResource.Update");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _viewOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.Parent.ToString(), Id.Name, CostManagementViewData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CostManagementViewData> response = Response.FromValue(CostManagementViewData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CostManagementArmOperation<CostManagementViewsResource> operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _costManagementViewsViewsRestClient.CreateOrUpdateByScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _costManagementViewsViewsRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -344,23 +303,23 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Update a CostManagementViews.
+        /// The operation to create or update a view. Update operation requires latest eTag to be set in the request. You may obtain the latest eTag by performing a get operation. Create operation does not require eTag.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/views/{viewName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.CostManagement/views/{viewName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ViewOperationGroup_CreateOrUpdateByScope. </description>
+        /// <term>Operation Id</term>
+        /// <description>Views_CreateOrUpdateByScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CostManagementViewsResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,24 +331,16 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _viewOperationGroupClientDiagnostics.CreateScope("CostManagementViewsResource.Update");
+            using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _viewOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.Parent.ToString(), Id.Name, CostManagementViewData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CostManagementViewData> response = Response.FromValue(CostManagementViewData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CostManagementArmOperation<CostManagementViewsResource> operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _costManagementViewsViewsRestClient.CreateOrUpdateByScope(Id.Parent, Id.Name, data, cancellationToken);
+                var uri = _costManagementViewsViewsRestClient.CreateCreateOrUpdateByScopeRequestUri(Id.Parent, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CostManagementArmOperation<CostManagementViewsResource>(Response.FromValue(new CostManagementViewsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

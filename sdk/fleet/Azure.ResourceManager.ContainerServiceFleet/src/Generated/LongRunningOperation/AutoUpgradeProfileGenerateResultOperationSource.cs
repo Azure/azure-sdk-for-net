@@ -8,36 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    /// <summary></summary>
-    internal partial class AutoUpgradeProfileGenerateResultOperationSource : IOperationSource<AutoUpgradeProfileGenerateResult>
+    internal class AutoUpgradeProfileGenerateResultOperationSource : IOperationSource<AutoUpgradeProfileGenerateResult>
     {
-        /// <summary></summary>
-        internal AutoUpgradeProfileGenerateResultOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         AutoUpgradeProfileGenerateResult IOperationSource<AutoUpgradeProfileGenerateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return AutoUpgradeProfileGenerateResult.DeserializeAutoUpgradeProfileGenerateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return AutoUpgradeProfileGenerateResult.DeserializeAutoUpgradeProfileGenerateResult(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<AutoUpgradeProfileGenerateResult> IOperationSource<AutoUpgradeProfileGenerateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return AutoUpgradeProfileGenerateResult.DeserializeAutoUpgradeProfileGenerateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return AutoUpgradeProfileGenerateResult.DeserializeAutoUpgradeProfileGenerateResult(document.RootElement);
         }
     }
 }

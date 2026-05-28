@@ -13,120 +13,90 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> Represents a Storage Account on the  Data Box Edge/Gateway device. </summary>
+    /// <summary>
+    /// A class representing the DataBoxEdgeStorageAccount data model.
+    /// Represents a Storage Account on the  Data Box Edge/Gateway device.
+    /// </summary>
     public partial class DataBoxEdgeStorageAccountData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountData"/>. </summary>
         /// <param name="dataPolicy"> Data policy of the storage Account. </param>
         public DataBoxEdgeStorageAccountData(DataBoxEdgeDataPolicy dataPolicy)
         {
-
-            Properties = new StorageAccountProperties(dataPolicy);
+            DataPolicy = dataPolicy;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The Storage Account properties. </param>
-        internal DataBoxEdgeStorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Description for the storage Account. </param>
+        /// <param name="storageAccountStatus"> Current status of the storage account. </param>
+        /// <param name="dataPolicy"> Data policy of the storage Account. </param>
+        /// <param name="storageAccountCredentialId"> Storage Account Credential Id. </param>
+        /// <param name="blobEndpoint"> BlobEndpoint of Storage Account. </param>
+        /// <param name="containerCount"> The Container Count. Present only for Storage Accounts with DataPolicy set to Cloud. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeStorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, DataBoxEdgeStorageAccountStatus? storageAccountStatus, DataBoxEdgeDataPolicy dataPolicy, ResourceIdentifier storageAccountCredentialId, string blobEndpoint, int? containerCount, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            Description = description;
+            StorageAccountStatus = storageAccountStatus;
+            DataPolicy = dataPolicy;
+            StorageAccountCredentialId = storageAccountCredentialId;
+            BlobEndpoint = blobEndpoint;
+            ContainerCount = containerCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Storage Account properties. </summary>
-        internal StorageAccountProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountData"/> for deserialization. </summary>
+        internal DataBoxEdgeStorageAccountData()
+        {
+        }
 
         /// <summary> Description for the storage Account. </summary>
-        public string Description
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountProperties();
-                }
-                Properties.Description = value;
-            }
-        }
-
+        public string Description { get; set; }
         /// <summary> Current status of the storage account. </summary>
-        public DataBoxEdgeStorageAccountStatus? StorageAccountStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StorageAccountStatus;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountProperties();
-                }
-                Properties.StorageAccountStatus = value;
-            }
-        }
-
+        public DataBoxEdgeStorageAccountStatus? StorageAccountStatus { get; set; }
         /// <summary> Data policy of the storage Account. </summary>
-        public DataBoxEdgeDataPolicy DataPolicy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DataPolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountProperties();
-                }
-                Properties.DataPolicy = value;
-            }
-        }
-
+        public DataBoxEdgeDataPolicy DataPolicy { get; set; }
         /// <summary> Storage Account Credential Id. </summary>
-        public ResourceIdentifier StorageAccountCredentialId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StorageAccountCredentialId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountProperties();
-                }
-                Properties.StorageAccountCredentialId = value;
-            }
-        }
-
+        public ResourceIdentifier StorageAccountCredentialId { get; set; }
         /// <summary> BlobEndpoint of Storage Account. </summary>
-        public string BlobEndpoint
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BlobEndpoint;
-            }
-        }
-
+        public string BlobEndpoint { get; }
         /// <summary> The Container Count. Present only for Storage Accounts with DataPolicy set to Cloud. </summary>
-        public int? ContainerCount
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ContainerCount;
-            }
-        }
+        public int? ContainerCount { get; }
     }
 }

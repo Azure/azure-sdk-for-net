@@ -1,6 +1,5 @@
-commit: 08572abd40647121b70f7d66158bdd8a270778ce
+commit: a0a2a2ccc3b8cbf61d6044db2b434091ec769acf
 directory: specification/communication/Communication.JobRouter
 additionalDirectories: []
 repo: Azure/azure-rest-api-specs
 
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

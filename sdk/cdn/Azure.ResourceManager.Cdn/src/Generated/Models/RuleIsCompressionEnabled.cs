@@ -7,63 +7,54 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </summary>
+    /// <summary>
+    /// Indicates whether content compression is enabled. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
+    /// Serialized Name: RuleIsCompressionEnabled
+    /// </summary>
     public readonly partial struct RuleIsCompressionEnabled : IEquatable<RuleIsCompressionEnabled>
     {
         private readonly string _value;
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="RuleIsCompressionEnabled"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RuleIsCompressionEnabled(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
+
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: RuleIsCompressionEnabled.Enabled
+        /// </summary>
         public static RuleIsCompressionEnabled Enabled { get; } = new RuleIsCompressionEnabled(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: RuleIsCompressionEnabled.Disabled
+        /// </summary>
         public static RuleIsCompressionEnabled Disabled { get; } = new RuleIsCompressionEnabled(DisabledValue);
-
         /// <summary> Determines if two <see cref="RuleIsCompressionEnabled"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RuleIsCompressionEnabled left, RuleIsCompressionEnabled right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RuleIsCompressionEnabled"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RuleIsCompressionEnabled left, RuleIsCompressionEnabled right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RuleIsCompressionEnabled"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleIsCompressionEnabled"/>. </summary>
         public static implicit operator RuleIsCompressionEnabled(string value) => new RuleIsCompressionEnabled(value);
 
-        /// <summary> Converts a string to a <see cref="RuleIsCompressionEnabled"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RuleIsCompressionEnabled?(string value) => value == null ? null : new RuleIsCompressionEnabled(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RuleIsCompressionEnabled other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RuleIsCompressionEnabled other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

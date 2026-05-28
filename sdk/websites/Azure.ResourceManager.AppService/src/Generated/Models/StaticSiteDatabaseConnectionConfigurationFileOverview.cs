@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A database connection configuration file
-    /// Serialized Name: StaticSiteDatabaseConnectionConfigurationFileOverview
-    /// </summary>
+    /// <summary> A database connection configuration file. </summary>
     public partial class StaticSiteDatabaseConnectionConfigurationFileOverview
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteDatabaseConnectionConfigurationFileOverview"/>. </summary>
-        /// <param name="fileName">
-        /// The name of the configuration file.
-        /// Serialized Name: StaticSiteDatabaseConnectionConfigurationFileOverview.fileName
-        /// </param>
-        /// <param name="contents">
-        /// The Base64 encoding of the file contents.
-        /// Serialized Name: StaticSiteDatabaseConnectionConfigurationFileOverview.contents
-        /// </param>
-        /// <param name="staticSiteDatabaseConnectionConfigurationFileOverviewType">
-        /// The type of configuration file.
-        /// Serialized Name: StaticSiteDatabaseConnectionConfigurationFileOverview.type
-        /// </param>
+        /// <param name="fileName"> The name of the configuration file. </param>
+        /// <param name="contents"> The Base64 encoding of the file contents. </param>
+        /// <param name="staticSiteDatabaseConnectionConfigurationFileOverviewType"> The type of configuration file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteDatabaseConnectionConfigurationFileOverview(string fileName, string contents, string staticSiteDatabaseConnectionConfigurationFileOverviewType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the configuration file.
-        /// Serialized Name: StaticSiteDatabaseConnectionConfigurationFileOverview.fileName
-        /// </summary>
+        /// <summary> The name of the configuration file. </summary>
         [WirePath("fileName")]
         public string FileName { get; }
-        /// <summary>
-        /// The Base64 encoding of the file contents.
-        /// Serialized Name: StaticSiteDatabaseConnectionConfigurationFileOverview.contents
-        /// </summary>
+        /// <summary> The Base64 encoding of the file contents. </summary>
         [WirePath("contents")]
         public string Contents { get; }
-        /// <summary>
-        /// The type of configuration file.
-        /// Serialized Name: StaticSiteDatabaseConnectionConfigurationFileOverview.type
-        /// </summary>
+        /// <summary> The type of configuration file. </summary>
         [WirePath("type")]
         public string StaticSiteDatabaseConnectionConfigurationFileOverviewType { get; }
     }

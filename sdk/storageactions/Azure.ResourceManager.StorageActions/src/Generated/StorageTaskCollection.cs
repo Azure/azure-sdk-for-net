@@ -21,13 +21,17 @@ namespace Azure.ResourceManager.StorageActions
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageTaskResource"/> and their operations.
-    /// Each <see cref="StorageTaskResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="StorageTaskCollection"/> instance call the GetStorageTasks method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="StorageTaskResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="StorageTaskCollection"/> instance call the GetStorageTasks method from an instance of the parent resource.
     /// </summary>
     public partial class StorageTaskCollection : ArmCollection, IEnumerable<StorageTaskResource>, IAsyncEnumerable<StorageTaskResource>
     {
         private readonly ClientDiagnostics _storageTasksClientDiagnostics;
         private readonly StorageTasks _storageTasksRestClient;
+        private readonly ClientDiagnostics _storageTasksReportClientDiagnostics;
+        private readonly StorageTasksReport _storageTasksReportRestClient;
+        private readonly ClientDiagnostics _storageTaskAssignmentClientDiagnostics;
+        private readonly StorageTaskAssignment _storageTaskAssignmentRestClient;
 
         /// <summary> Initializes a new instance of StorageTaskCollection for mocking. </summary>
         protected StorageTaskCollection()
@@ -42,6 +46,10 @@ namespace Azure.ResourceManager.StorageActions
             TryGetApiVersion(StorageTaskResource.ResourceType, out string storageTaskApiVersion);
             _storageTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", StorageTaskResource.ResourceType.Namespace, Diagnostics);
             _storageTasksRestClient = new StorageTasks(_storageTasksClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
+            _storageTasksReportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", StorageTaskResource.ResourceType.Namespace, Diagnostics);
+            _storageTasksReportRestClient = new StorageTasksReport(_storageTasksReportClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
+            _storageTaskAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageActions", StorageTaskResource.ResourceType.Namespace, Diagnostics);
+            _storageTaskAssignmentRestClient = new StorageTaskAssignment(_storageTaskAssignmentClientDiagnostics, Pipeline, Endpoint, storageTaskApiVersion ?? "2023-01-01");
             ValidateResourceId(id);
         }
 
@@ -51,27 +59,11 @@ namespace Azure.ResourceManager.StorageActions
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Asynchronously creates a new storage task resource with the specified parameters. If a storage task is already created and a subsequent create request is issued with different properties, the storage task properties will be updated. If a storage task is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageTasks_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Asynchronously creates a new storage task resource with the specified parameters. If a storage task is already created and a subsequent create request is issued with different properties, the storage task properties will be updated. If a storage task is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="data"> The parameters to create a Storage Task. </param>
@@ -113,23 +105,7 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary>
-        /// Asynchronously creates a new storage task resource with the specified parameters. If a storage task is already created and a subsequent create request is issued with different properties, the storage task properties will be updated. If a storage task is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageTasks_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Asynchronously creates a new storage task resource with the specified parameters. If a storage task is already created and a subsequent create request is issued with different properties, the storage task properties will be updated. If a storage task is already created and a subsequent create or update request is issued with the exact same set of properties, the request will succeed. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="data"> The parameters to create a Storage Task. </param>
@@ -171,23 +147,7 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary>
-        /// Get the storage task properties
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageTasks_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the storage task properties. </summary>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> is null. </exception>
@@ -220,23 +180,7 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary>
-        /// Get the storage task properties
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageTasks_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get the storage task properties. </summary>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> is null. </exception>
@@ -269,23 +213,7 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary>
-        /// Lists all the storage tasks available under the given resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageTasks_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all the storage tasks available under the given resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageTaskResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -294,26 +222,10 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupAsyncCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageTaskCollection.GetAll"), data => new StorageTaskResource(Client, data));
+            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupAsyncCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageTaskResource(Client, data));
         }
 
-        /// <summary>
-        /// Lists all the storage tasks available under the given resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageTasks_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Lists all the storage tasks available under the given resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageTaskResource> GetAll(CancellationToken cancellationToken = default)
@@ -322,26 +234,10 @@ namespace Azure.ResourceManager.StorageActions
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageTaskCollection.GetAll"), data => new StorageTaskResource(Client, data));
+            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetByResourceGroupCollectionResultOfT(_storageTasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageTaskResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageTasks_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> is null. </exception>
@@ -382,23 +278,7 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageTasks_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> is null. </exception>
@@ -439,23 +319,7 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageTasks_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> is null. </exception>
@@ -500,23 +364,7 @@ namespace Azure.ResourceManager.StorageActions
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageActions/storageTasks/{storageTaskName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageTasks_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTaskName"/> is null. </exception>

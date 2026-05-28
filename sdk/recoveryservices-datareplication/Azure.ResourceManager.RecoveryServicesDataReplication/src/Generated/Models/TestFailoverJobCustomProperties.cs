@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -15,19 +14,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public partial class TestFailoverJobCustomProperties : DataReplicationJobCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="TestFailoverJobCustomProperties"/>. </summary>
-        internal TestFailoverJobCustomProperties() : base("TestFailoverJobDetails")
+        internal TestFailoverJobCustomProperties()
         {
             ProtectedItemDetails = new ChangeTrackingList<FailoverProtectedItemProperties>();
+            InstanceType = "TestFailoverJobDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="TestFailoverJobCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationJobCustomProperties. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="protectedItemDetails"> Gets or sets the test VM details. </param>
-        internal TestFailoverJobCustomProperties(string instanceType, AffectedObjectDetails affectedObjectDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<FailoverProtectedItemProperties> protectedItemDetails) : base(instanceType, affectedObjectDetails, additionalBinaryDataProperties)
+        internal TestFailoverJobCustomProperties(string instanceType, AffectedObjectDetails affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FailoverProtectedItemProperties> protectedItemDetails) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
         {
             ProtectedItemDetails = protectedItemDetails;
+            InstanceType = instanceType ?? "TestFailoverJobDetails";
         }
 
         /// <summary> Gets or sets the test VM details. </summary>

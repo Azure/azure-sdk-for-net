@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the storage of the tokens if a file system is used.
-    /// Serialized Name: FileSystemTokenStore
-    /// </summary>
+    /// <summary> The configuration settings of the storage of the tokens if a file system is used. </summary>
     internal partial class FileSystemTokenStore
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FileSystemTokenStore"/>. </summary>
-        /// <param name="directory">
-        /// The directory in which the tokens will be stored.
-        /// Serialized Name: FileSystemTokenStore.directory
-        /// </param>
+        /// <param name="directory"> The directory in which the tokens will be stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FileSystemTokenStore(string directory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The directory in which the tokens will be stored.
-        /// Serialized Name: FileSystemTokenStore.directory
-        /// </summary>
+        /// <summary> The directory in which the tokens will be stored. </summary>
         [WirePath("directory")]
         public string Directory { get; set; }
     }

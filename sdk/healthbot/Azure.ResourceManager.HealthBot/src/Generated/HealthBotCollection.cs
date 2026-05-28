@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthBot
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.HealthBot
     /// </summary>
     public partial class HealthBotCollection : ArmCollection, IEnumerable<HealthBotResource>, IAsyncEnumerable<HealthBotResource>
     {
-        private readonly ClientDiagnostics _botsClientDiagnostics;
-        private readonly Bots _botsRestClient;
+        private readonly ClientDiagnostics _healthBotBotsClientDiagnostics;
+        private readonly BotsRestOperations _healthBotBotsRestClient;
 
-        /// <summary> Initializes a new instance of HealthBotCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthBotCollection"/> class for mocking. </summary>
         protected HealthBotCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthBotCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthBotCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HealthBotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HealthBotResource.ResourceType, out string healthBotApiVersion);
-            _botsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthBot", HealthBotResource.ResourceType.Namespace, Diagnostics);
-            _botsRestClient = new Bots(_botsClientDiagnostics, Pipeline, Endpoint, healthBotApiVersion ?? "2025-11-01");
-            ValidateResourceId(id);
+            _healthBotBotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthBot", HealthBotResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HealthBotResource.ResourceType, out string healthBotBotsApiVersion);
+            _healthBotBotsRestClient = new BotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthBotBotsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a new Azure Health Bot.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthBots_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.HealthBot
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="data"> The parameters to provide for the created Azure Health Bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HealthBotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string botName, HealthBotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(botName, nameof(botName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _botsClientDiagnostics.CreateScope("HealthBotCollection.CreateOrUpdate");
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, HealthBotData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
-                    new HealthBotOperationSource(Client),
-                    _botsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _healthBotBotsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, botName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HealthBotArmOperation<HealthBotResource>(new HealthBotOperationSource(Client), _healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.HealthBot
         /// Create a new Azure Health Bot.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthBots_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.HealthBot
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="data"> The parameters to provide for the created Azure Health Bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HealthBotResource> CreateOrUpdate(WaitUntil waitUntil, string botName, HealthBotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(botName, nameof(botName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _botsClientDiagnostics.CreateScope("HealthBotCollection.CreateOrUpdate");
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, HealthBotData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
-                    new HealthBotOperationSource(Client),
-                    _botsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _healthBotBotsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, botName, data, cancellationToken);
+                var operation = new HealthBotArmOperation<HealthBotResource>(new HealthBotOperationSource(Client), _healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.HealthBot
         /// Get a HealthBot.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthBots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual async Task<Response<HealthBotResource>> GetAsync(string botName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
-            using DiagnosticScope scope = _botsClientDiagnostics.CreateScope("HealthBotCollection.Get");
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HealthBotData> response = Response.FromValue(HealthBotData.FromResponse(result), result);
+                var response = await _healthBotBotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, botName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HealthBotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.HealthBot
         /// Get a HealthBot.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthBots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual Response<HealthBotResource> Get(string botName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
-            using DiagnosticScope scope = _botsClientDiagnostics.CreateScope("HealthBotCollection.Get");
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HealthBotData> response = Response.FromValue(HealthBotData.FromResponse(result), result);
+                var response = _healthBotBotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, botName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HealthBotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.HealthBot
         /// Returns all the resources of a particular type belonging to a resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthBots_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthBotResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthBotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthBotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthBotCollection.GetAll"), data => new HealthBotResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthBotBotsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthBotBotsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), _healthBotBotsClientDiagnostics, Pipeline, "HealthBotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthBots_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> A collection of <see cref="HealthBotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthBotResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthBotCollection.GetAll"), data => new HealthBotResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthBotBotsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthBotBotsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthBotResource(Client, HealthBotData.DeserializeHealthBotData(e)), _healthBotBotsClientDiagnostics, Pipeline, "HealthBotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthBots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string botName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
-            using DiagnosticScope scope = _botsClientDiagnostics.CreateScope("HealthBotCollection.Exists");
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<HealthBotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HealthBotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HealthBotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _healthBotBotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, botName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.HealthBot
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthBots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual Response<bool> Exists(string botName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
-            using DiagnosticScope scope = _botsClientDiagnostics.CreateScope("HealthBotCollection.Exists");
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<HealthBotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HealthBotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HealthBotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _healthBotBotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, botName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.HealthBot
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthBots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual async Task<NullableResponse<HealthBotResource>> GetIfExistsAsync(string botName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
-            using DiagnosticScope scope = _botsClientDiagnostics.CreateScope("HealthBotCollection.GetIfExists");
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<HealthBotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HealthBotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HealthBotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _healthBotBotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, botName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<HealthBotResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new HealthBotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.HealthBot
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthBots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="botName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="botName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="botName"/> is null. </exception>
         public virtual NullableResponse<HealthBotResource> GetIfExists(string botName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(botName, nameof(botName));
 
-            using DiagnosticScope scope = _botsClientDiagnostics.CreateScope("HealthBotCollection.GetIfExists");
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _botsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<HealthBotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HealthBotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HealthBotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _healthBotBotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, botName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<HealthBotResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new HealthBotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.HealthBot
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HealthBotResource> IAsyncEnumerable<HealthBotResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

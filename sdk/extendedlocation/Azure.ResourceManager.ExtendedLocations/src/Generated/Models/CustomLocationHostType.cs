@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ExtendedLocations;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
@@ -15,52 +14,35 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
     public readonly partial struct CustomLocationHostType : IEquatable<CustomLocationHostType>
     {
         private readonly string _value;
-        /// <summary> Kubernetes. </summary>
-        private const string KubernetesValue = "Kubernetes";
 
         /// <summary> Initializes a new instance of <see cref="CustomLocationHostType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CustomLocationHostType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string KubernetesValue = "Kubernetes";
 
         /// <summary> Kubernetes. </summary>
         public static CustomLocationHostType Kubernetes { get; } = new CustomLocationHostType(KubernetesValue);
-
         /// <summary> Determines if two <see cref="CustomLocationHostType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomLocationHostType left, CustomLocationHostType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CustomLocationHostType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomLocationHostType left, CustomLocationHostType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CustomLocationHostType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomLocationHostType"/>. </summary>
         public static implicit operator CustomLocationHostType(string value) => new CustomLocationHostType(value);
 
-        /// <summary> Converts a string to a <see cref="CustomLocationHostType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CustomLocationHostType?(string value) => value == null ? null : new CustomLocationHostType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomLocationHostType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CustomLocationHostType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

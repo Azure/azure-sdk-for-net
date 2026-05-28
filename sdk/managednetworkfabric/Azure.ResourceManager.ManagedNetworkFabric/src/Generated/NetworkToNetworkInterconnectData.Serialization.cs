@@ -67,11 +67,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
                 writer.WriteObjectValue(NpbStaticRouteConfiguration, options);
             }
-            if (Optional.IsDefined(StaticRouteConfiguration))
-            {
-                writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue(StaticRouteConfiguration, options);
-            }
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
@@ -91,21 +86,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
-            }
-            if (Optional.IsDefined(MicroBfdState))
-            {
-                writer.WritePropertyName("microBfdState"u8);
-                writer.WriteStringValue(MicroBfdState.Value.ToString());
-            }
-            if (Optional.IsDefined(ConditionalDefaultRouteConfiguration))
-            {
-                writer.WritePropertyName("conditionalDefaultRouteConfiguration"u8);
-                writer.WriteObjectValue(ConditionalDefaultRouteConfiguration, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastOperation))
-            {
-                writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue(LastOperation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -155,14 +135,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Layer2Configuration layer2Configuration = default;
             NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration = default;
             NpbStaticRouteConfiguration npbStaticRouteConfiguration = default;
-            NniStaticRouteConfiguration staticRouteConfiguration = default;
             ImportRoutePolicyInformation importRoutePolicy = default;
             ExportRoutePolicyInformation exportRoutePolicy = default;
             ResourceIdentifier egressAclId = default;
             ResourceIdentifier ingressAclId = default;
-            NetworkFabricMicroBfdState? microBfdState = default;
-            ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration = default;
-            LastOperationProperties lastOperation = default;
             NetworkFabricConfigurationState? configurationState = default;
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
@@ -253,15 +229,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("staticRouteConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            staticRouteConfiguration = NniStaticRouteConfiguration.DeserializeNniStaticRouteConfiguration(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("importRoutePolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -296,33 +263,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                                 continue;
                             }
                             ingressAclId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("microBfdState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            microBfdState = new NetworkFabricMicroBfdState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("conditionalDefaultRouteConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            conditionalDefaultRouteConfiguration = ConditionalDefaultRouteProperties.DeserializeConditionalDefaultRouteProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("lastOperation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastOperation = LastOperationProperties.DeserializeLastOperationProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("configurationState"u8))
@@ -372,14 +312,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 layer2Configuration,
                 optionBLayer3Configuration,
                 npbStaticRouteConfiguration,
-                staticRouteConfiguration,
                 importRoutePolicy,
                 exportRoutePolicy,
                 egressAclId,
                 ingressAclId,
-                microBfdState,
-                conditionalDefaultRouteConfiguration,
-                lastOperation,
                 configurationState,
                 provisioningState,
                 administrativeState,

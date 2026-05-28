@@ -7,14 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The response of a WorkflowTrigger list operation.
-    /// Serialized Name: WorkflowTriggerListResult
-    /// </summary>
+    /// <summary> The list of workflow triggers. </summary>
     internal partial class WorkflowTriggerListResult
     {
         /// <summary>
@@ -50,49 +46,25 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerListResult"/>. </summary>
-        /// <param name="value">
-        /// The WorkflowTrigger items on this page
-        /// Serialized Name: WorkflowTriggerListResult.value
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WorkflowTriggerListResult(IEnumerable<WorkflowTriggerData> value)
+        internal WorkflowTriggerListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<WorkflowTriggerData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerListResult"/>. </summary>
-        /// <param name="value">
-        /// The WorkflowTrigger items on this page
-        /// Serialized Name: WorkflowTriggerListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: WorkflowTriggerListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of workflow triggers. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerListResult(IReadOnlyList<WorkflowTriggerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkflowTriggerListResult(IReadOnlyList<WorkflowTriggerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowTriggerListResult"/> for deserialization. </summary>
-        internal WorkflowTriggerListResult()
-        {
-        }
-
-        /// <summary>
-        /// The WorkflowTrigger items on this page
-        /// Serialized Name: WorkflowTriggerListResult.value
-        /// </summary>
+        /// <summary> A list of workflow triggers. </summary>
         public IReadOnlyList<WorkflowTriggerData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: WorkflowTriggerListResult.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> The URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

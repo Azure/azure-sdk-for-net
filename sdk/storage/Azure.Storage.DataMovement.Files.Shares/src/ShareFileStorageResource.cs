@@ -17,11 +17,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
     internal class ShareFileStorageResource : StorageResourceItemInternal
     {
         internal readonly ShareFileStorageResourceOptions _options;
-        private Uri _uri;
 
         internal ShareFileClient ShareFileClient { get; }
 
-        public override Uri Uri => _uri ??= ShareFileClient.Uri.BuildSanitizedUri();
+        public override Uri Uri => ShareFileClient.Uri;
 
         public override string ProviderId => "share";
 
@@ -45,14 +44,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileClient fileClient,
             ShareFileStorageResourceOptions options = default)
         {
-            _options = options ?? new ShareFileStorageResourceOptions();
-
-            fileClient = fileClient.ValidateAndApplySnapshotAndVersionId(
-                fileClient.Uri,
-                options,
-                (c, s) => c.WithSnapshot(s));
-
             ShareFileClient = fileClient;
+            _options = options ?? new ShareFileStorageResourceOptions();
         }
 
         /// <summary>
@@ -90,23 +83,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
             IDictionary<string, string> metadata = _options?.GetFileMetadata(sourceProperties?.RawProperties);
             string filePermission = _options?.GetFilePermission(sourceProperties);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
             FilePosixProperties posixProperties = _options?.GetFilePosixProperties(sourceProperties);
 
-            FileSmbProperties smbProperties;
-            // For non-empty files, do not set SMB properties (attributes, timestamps)
-            // during creation. These will be set in CompleteTransferAsync after all data
-            // has been written. This matches v2 behavior and prevents Azure File Sync
-            // from picking up incomplete files during upload.
-            if (sourceProperties == null || sourceProperties.ResourceLength > 0)
+            // if transfer is not empty and File Attribute contains ReadOnly, we should not set it before creating the file.
+            if ((sourceProperties == null || sourceProperties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
             {
-                smbProperties = new FileSmbProperties
-                {
-                    FilePermissionKey = _options?.GetFilePermissionKey(sourceProperties, _destinationPermissionKey)
-                };
-            }
-            else
-            {
-                smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
+                smbProperties.FileAttributes = default;
             }
 
             ShareFileCreateOptions options = new ShareFileCreateOptions()
@@ -125,6 +108,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
+        private bool IsReadOnlySet(NtfsFileAttributes? fileAttributes)
+        {
+            return fileAttributes?.HasFlag(NtfsFileAttributes.ReadOnly) ?? false;
+        }
+
         protected override async Task CompleteTransferAsync(
             bool overwrite,
             StorageResourceCompleteTransferOptions completeTransferOptions,
@@ -133,33 +121,21 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
-
-            if (!ShouldFinalizeSmbProperties(sourceProperties))
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
+            // Call Set Properties
+            // if transfer is not empty and original File Attribute contains ReadOnly
+            // or if FileChangedOn is to be preserved or manually set
+            if (((sourceProperties == null || sourceProperties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
+                    || (_options?._isFileChangedOnSet == false || _options?.FileChangedOn != null))
             {
-                return;
+                ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
+                await ShareFileClient.SetHttpHeadersAsync(new()
+                {
+                    HttpHeaders = httpHeaders,
+                    SmbProperties = smbProperties,
+                },
+                cancellationToken: cancellationToken).ConfigureAwait(false);
             }
-
-            ShareFileSetHttpHeadersOptions setOptions = new()
-            {
-                HttpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties),
-                SmbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey),
-            };
-
-            await ShareFileClient.SetHttpHeadersAsync(setOptions, cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        private bool ShouldFinalizeSmbProperties(StorageResourceItemProperties sourceProperties)
-        {
-            // Always set final SMB properties for non-empty files. SMB properties were
-            // intentionally deferred from CreateAsync so that Azure File Sync does not
-            // pick up the file until the upload is complete (matching v2 behavior).
-            // For empty files, SMB properties are already set during CreateAsync, so
-            // this call is only needed if the user explicitly configured FileChangedOn.
-            bool isNonEmptyFile = sourceProperties == null || sourceProperties.ResourceLength > 0;
-            bool fileChangedOnConfigured = _options?._isFileChangedOnSet == true || _options?.FileChangedOn != null;
-
-            return isNonEmptyFile || fileChangedOnConfigured;
         }
 
         protected override async Task CopyBlockFromUriAsync(
@@ -186,7 +162,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
 
             await ShareFileClient.UploadRangeFromUriAsync(
-                sourceUri: options?.SourceUri,
+                sourceUri: sourceResource.Uri,
                 range: range,
                 sourceRange: range,
                 options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
@@ -243,7 +219,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (completeLength > 0)
             {
                 await ShareFileClient.UploadRangeFromUriAsync(
-                    sourceUri: options?.SourceUri,
+                    sourceUri: sourceResource.Uri,
                     range: new HttpRange(0, completeLength),
                     sourceRange: new HttpRange(0, completeLength),
                     options: _options?.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
@@ -260,11 +236,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
             return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
-        }
-
-        protected override Uri GetSasWithUri()
-        {
-            return ShareFileClientInternals.GetSasUri(ShareFileClient);
         }
 
         protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
@@ -356,10 +327,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            // Snapshot is preserved in the URI (from BuildSanitizedUri)
-            // No need to store it separately in checkpoint details
-            return new ShareFileSourceCheckpointDetails(
-                shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
+            return new ShareFileSourceCheckpointDetails(shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()

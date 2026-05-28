@@ -7,34 +7,54 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the SslProtocol condition for the delivery rule. </summary>
+    /// <summary>
+    /// Defines the SslProtocol condition for the delivery rule.
+    /// Serialized Name: DeliveryRuleSslProtocolCondition
+    /// </summary>
     public partial class DeliveryRuleSslProtocolCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolCondition"/>. </summary>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleSslProtocolCondition.parameters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DeliveryRuleSslProtocolCondition(DeliveryRuleSslProtocolMatchCondition properties) : base(DeliveryRuleMatchVariable.SslProtocol)
+        public DeliveryRuleSslProtocolCondition(DeliveryRuleSslProtocolMatchCondition properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+            Name = MatchVariable.SslProtocol;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolCondition"/>. </summary>
-        /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleSslProtocolCondition(DeliveryRuleMatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeliveryRuleSslProtocolMatchCondition properties) : base(name, additionalBinaryDataProperties)
+        /// <param name="name">
+        /// The name of the condition for the delivery rule.
+        /// Serialized Name: DeliveryRuleCondition.name
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleSslProtocolCondition.parameters
+        /// </param>
+        internal DeliveryRuleSslProtocolCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, DeliveryRuleSslProtocolMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
+            Name = name;
         }
 
-        /// <summary> Defines the parameters for the condition. </summary>
-        [WirePath("parameters")]
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolCondition"/> for deserialization. </summary>
+        internal DeliveryRuleSslProtocolCondition()
+        {
+        }
+
+        /// <summary>
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleSslProtocolCondition.parameters
+        /// </summary>
         public DeliveryRuleSslProtocolMatchCondition Properties { get; set; }
     }
 }

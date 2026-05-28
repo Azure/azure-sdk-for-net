@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.Containers.ContainerRegistry;
+using System.Linq;
 using Azure.Core.TestFramework;
+using Azure.Containers.ContainerRegistry;
 using Azure.Identity;
 using NUnit.Framework;
 

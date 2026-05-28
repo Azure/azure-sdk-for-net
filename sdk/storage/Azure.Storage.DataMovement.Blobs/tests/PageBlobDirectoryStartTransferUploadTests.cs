@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias BaseBlobs;
 extern alias DMBlobs;
+extern alias BaseBlobs;
+
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await pageBlobClient.CreateAsync(Constants.KB * 5);
             if (contents != default)
             {
-                if (contents.Length % (Constants.KB / 2) != 0)
+                if (contents.Length % (Constants.KB/2) != 0)
                 {
                     Assert.Inconclusive("Cannot upload a page that has a Content-Length not an increment of 512");
                 }

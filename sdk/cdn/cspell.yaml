@@ -1,8 +1,0 @@
-import:
-  - ../../.vscode/cspell.json
-overrides:
-  - filename: '**/sdk/cdn/**/*'
-    words:
-      - DHERSAAES
-      - ECDHERSAAES
-      - TLSAES

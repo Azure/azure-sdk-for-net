@@ -308,9 +308,7 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_OAuth();
 
             // Act
-            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
-            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(
-                options: options);
+            Response<UserDelegationKey> response = await service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1));
 
             // Assert
             Assert.IsNotNull(response.Value);
@@ -324,9 +322,8 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_SharedKey();
 
             // Act
-            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                service.GetUserDelegationKeyAsync(options: options),
+                service.GetUserDelegationKeyAsync(startsOn: null, expiresOn: Recording.UtcNow.AddHours(1)),
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
@@ -338,15 +335,14 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_OAuth();
 
             // Act
-            QueueGetUserDelegationKeyOptions options = new QueueGetUserDelegationKeyOptions(
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                service.GetUserDelegationKeyAsync(
+                    startsOn: null,
                     // ensure the time used is not UTC, as DateTimeOffset.Now could actually be UTC based on OS settings
                     // Use a custom time zone so we aren't dependent on OS having specific standard time zone.
                     expiresOn: TimeZoneInfo.ConvertTime(
                         Recording.Now.AddHours(1),
-                        TimeZoneInfo.CreateCustomTimeZone("Storage Test Custom Time Zone", TimeSpan.FromHours(-3), "CTZ", "CTZ")));
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                service.GetUserDelegationKeyAsync(
-                    options: options),
+                        TimeZoneInfo.CreateCustomTimeZone("Storage Test Custom Time Zone", TimeSpan.FromHours(-3), "CTZ", "CTZ"))),
                 e => Assert.AreEqual("expiresOn must be UTC", e.Message));
             ;
         }

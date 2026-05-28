@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeDataResidencyType : IEquatable<DataBoxEdgeDataResidencyType>
     {
         private readonly string _value;
-        private const string GeoZoneReplicationValue = "GeoZoneReplication";
-        private const string ZoneReplicationValue = "ZoneReplication";
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDataResidencyType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataBoxEdgeDataResidencyType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the GeoZoneReplication. </summary>
+        private const string GeoZoneReplicationValue = "GeoZoneReplication";
+        private const string ZoneReplicationValue = "ZoneReplication";
+
+        /// <summary> GeoZoneReplication. </summary>
         public static DataBoxEdgeDataResidencyType GeoZoneReplication { get; } = new DataBoxEdgeDataResidencyType(GeoZoneReplicationValue);
-
-        /// <summary> Gets the ZoneReplication. </summary>
+        /// <summary> ZoneReplication. </summary>
         public static DataBoxEdgeDataResidencyType ZoneReplication { get; } = new DataBoxEdgeDataResidencyType(ZoneReplicationValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeDataResidencyType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeDataResidencyType left, DataBoxEdgeDataResidencyType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeDataResidencyType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeDataResidencyType left, DataBoxEdgeDataResidencyType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeDataResidencyType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeDataResidencyType"/>. </summary>
         public static implicit operator DataBoxEdgeDataResidencyType(string value) => new DataBoxEdgeDataResidencyType(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeDataResidencyType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeDataResidencyType?(string value) => value == null ? null : new DataBoxEdgeDataResidencyType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeDataResidencyType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeDataResidencyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

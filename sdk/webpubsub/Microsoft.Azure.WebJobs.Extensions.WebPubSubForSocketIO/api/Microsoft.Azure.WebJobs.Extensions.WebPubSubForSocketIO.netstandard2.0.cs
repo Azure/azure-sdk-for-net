@@ -72,6 +72,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         public SocketIOFunctionsOptions() { }
         public string ConnectionString { get { throw null; } set { } }
         public string Hub { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute]

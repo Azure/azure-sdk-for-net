@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: IotHub
 namespace: Azure.ResourceManager.IotHub
-require: https://github.com/Azure/azure-rest-api-specs/blob/72cee8dc40fe3bc4b7956c87f269f5a363411913/specification/iothub/resource-manager/Microsoft.Devices/IoTHub/readme.md
-#tag: package-preview-2025-08
+require: https://github.com/Azure/azure-rest-api-specs/blob/624dbc769880e5676ae8bb20d3c82ebd1783c64a/specification/iothub/resource-manager/readme.md
+#tag: package-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -28,89 +28,84 @@ override-operation-name:
   ResourceProviderCommon_GetSubscriptionQuota: GetIotHubUserSubscriptionQuota
 
 rename-mapping:
-  AccessRights: IotHubSharedAccessRight
-  Capabilities: IotHubCapability
-  CertificateProperties.created: CreatedOn
-  CertificateProperties.expiry: ExpireOn
-  CertificateProperties.thumbprint: ThumbprintString
-  CertificateProperties.updated: UpdatedOn
-  CertificatePropertiesWithNonce.created: CreatedOn
-  CertificatePropertiesWithNonce.expiry: ExpireOn
-  CertificatePropertiesWithNonce.thumbprint: ThumbprintString
-  CertificatePropertiesWithNonce.updated: UpdatedOn
-  CertificateVerificationDescription: IotHubCertificateVerificationContent
-  DefaultAction: IotHubNetworkRuleSetDefaultAction
-  EncryptionPropertiesDescription: IotHubEncryptionProperties
-  EndpointHealthData: IotHubEndpointHealthInfo
-  EndpointHealthDataListResult: IotHubEndpointHealthInfoListResult
-  EventHubProperties: EventHubCompatibleEndpointProperties
-  EventHubProperties.path: EventHubCompatibleName
-  FeedbackProperties: CloudToDeviceFeedbackQueueProperties
-  GroupIdInformation: IotHubPrivateEndpointGroupInformation
-  GroupIdInformationProperties: IotHubPrivateEndpointGroupInformationProperties
-  GroupIdInformationProperties.requiredZoneNames: RequiredDnsZoneNames
   IotHubNameAvailabilityInfo: IotHubNameAvailabilityResponse
   IotHubNameAvailabilityInfo.nameAvailable: IsNameAvailable
+  OperationInputs: IotHubNameAvailabilityContent
+  Capabilities: IotHubCapability
+  CertificateProperties.created: CreatedOn
+  CertificateProperties.updated: UpdatedOn
+  CertificateProperties.expiry: ExpireOn
+  CertificatePropertiesWithNonce.created: CreatedOn
+  CertificatePropertiesWithNonce.updated: UpdatedOn
+  CertificatePropertiesWithNonce.expiry: ExpireOn
+  CertificateVerificationDescription: IotHubCertificateVerificationContent
+  GroupIdInformation: IotHubPrivateEndpointGroupInformation
+  GroupIdInformationProperties: IotHubPrivateEndpointGroupInformationProperties
+  DefaultAction: IotHubNetworkRuleSetDefaultAction
+  AccessRights: IotHubSharedAccessRight
+  FeedbackProperties: CloudToDeviceFeedbackQueueProperties
+  Name: IotHubTypeName
+  EventHubProperties.path: EventHubCompatibleName
+  EventHubProperties: EventHubCompatibleEndpointProperties
+  RouteProperties: RoutingRuleProperties
+  JobResponse.startTimeUtc: StartOn
+  JobResponse.endTimeUtc: EndOn
+  JobResponse: IotHubJobInfo
+  JobResponseListResult : IotHubJobInfoListResult
+  EndpointHealthData: IotHubEndpointHealthInfo
+  EndpointHealthDataListResult: IotHubEndpointHealthInfoListResult
+  UserSubscriptionQuota.id: IotHubTypeId
   IotHubNameUnavailabilityReason: IotHubNameUnavailableReason
   IotHubProperties.allowedFqdnList: allowedFqdns
-  IotHubSku.GEN2: Gen2
-  IotHubSkuDescription.resourceType: -|resource-type
-  JobResponse: IotHubJobInfo
-  JobResponse.endTimeUtc: EndOn
-  JobResponse.startTimeUtc: StartOn
-  JobResponseListResult : IotHubJobInfoListResult
-  Name: IotHubTypeName
-  OperationInputs: IotHubNameAvailabilityContent
-  RootCertificateProperties.enableRootCertificateV2: IsRootCertificateV2Enabled
-  RootCertificateProperties.lastUpdatedTimeUtc: LastUpdatedOn
-  RouteProperties: RoutingRuleProperties
+  GroupIdInformationProperties.requiredZoneNames: RequiredDnsZoneNames
   RoutingEventHubProperties.endpointUri: Endpoint
   RoutingServiceBusQueueEndpointProperties.endpointUri: Endpoint
   RoutingServiceBusTopicEndpointProperties.endpointUri: Endpoint
   RoutingStorageContainerProperties.endpointUri: Endpoint
-  UserSubscriptionQuota.id: IotHubTypeId
+  IotHubSkuDescription.resourceType: -|resource-type
+  CertificateProperties.thumbprint: ThumbprintString
+  CertificatePropertiesWithNonce.thumbprint: ThumbprintString
+  RootCertificateProperties.enableRootCertificateV2: IsRootCertificateV2Enabled
+  RootCertificateProperties.lastUpdatedTimeUtc: LastUpdatedOn
 
 prepend-rp-prefix:
   - AuthenticationType
-  - CertificateDescription
-  - CertificateListDescription
+  - TestAllRoutesResult
+  - TestAllRoutesInput
+  - TestRouteInput
+  - TestRouteResult
+  - TestRouteResultDetails
+  - TestResultStatus
   - CertificateProperties
   - CertificatePropertiesWithNonce
+  - CertificateDescription
+  - CertificateListDescription
   - CertificateWithNonceDescription
-  - DeviceRegistry
   - EndpointHealthStatus
   - EnrichmentProperties
   - FailoverInput
   - FallbackRouteProperties
   - ImportDevicesRequest
-  - IpFilterActionType
-  - IpFilterRule
-  - IpVersion
-  - JobStatus
-  - JobType
-  - KeyVaultKeyProperties
-  - MatchedRoute
-  - NetworkRuleIPAction
-  - NetworkRuleSetIpRule
-  - NetworkRuleSetProperties
-  - PrivateEndpointConnectionProperties
-  - PrivateEndpointConnectionsList
-  - PrivateLinkResources
-  - PrivateLinkServiceConnectionStatus
   - PublicNetworkAccess
-  - RegistryStatistics
-  - RootCertificateProperties
-  - RoutingProperties
-  - RoutingSource
-  - StorageEndpointProperties
-  - TestAllRoutesInput
-  - TestAllRoutesResult
-  - TestResultStatus
-  - TestRouteInput
-  - TestRouteResult
-  - TestRouteResultDetails
   - UserSubscriptionQuota
   - UserSubscriptionQuotaListResult
+  - IpFilterRule
+  - IpFilterActionType
+  - RoutingSource
+  - JobStatus
+  - JobType
+  - PrivateLinkResources
+  - PrivateEndpointConnectionsList
+  - PrivateLinkServiceConnectionStatus
+  - PrivateEndpointConnectionProperties
+  - RegistryStatistics
+  - MatchedRoute
+  - NetworkRuleSetProperties
+  - NetworkRuleSetIpRule
+  - NetworkRuleIPAction
+  - RoutingProperties
+  - StorageEndpointProperties
+  - IPVersion
 
 format-by-name-rules:
   'tenantId': 'uuid'

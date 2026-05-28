@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> A skill that analyzes image files. It extracts a rich set of visual features based on the image content. </summary>
-    public partial class ImageAnalysisSkill : SearchIndexerSkill, IJsonModel<ImageAnalysisSkill>
+    public partial class ImageAnalysisSkill : IUtf8JsonSerializable, IJsonModel<ImageAnalysisSkill>
     {
-        /// <summary> Initializes a new instance of <see cref="ImageAnalysisSkill"/> for deserialization. </summary>
-        internal ImageAnalysisSkill()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageAnalysisSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeImageAnalysisSkill(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImageAnalysisSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ImageAnalysisSkill IPersistableModel<ImageAnalysisSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (ImageAnalysisSkill)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImageAnalysisSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImageAnalysisSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,22 +28,30 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DefaultLanguageCode))
             {
-                writer.WritePropertyName("defaultLanguageCode"u8);
-                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                if (DefaultLanguageCode != null)
+                {
+                    writer.WritePropertyName("defaultLanguageCode"u8);
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("defaultLanguageCode");
+                }
             }
             if (Optional.IsCollectionDefined(VisualFeatures))
             {
                 writer.WritePropertyName("visualFeatures"u8);
                 writer.WriteStartArray();
-                foreach (VisualFeature item in VisualFeatures)
+                foreach (var item in VisualFeatures)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -99,7 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
-                foreach (ImageDetail item in Details)
+                foreach (var item in Details)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -107,125 +69,123 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ImageAnalysisSkill IJsonModel<ImageAnalysisSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ImageAnalysisSkill)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ImageAnalysisSkill IJsonModel<ImageAnalysisSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeImageAnalysisSkill(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ImageAnalysisSkill DeserializeImageAnalysisSkill(JsonElement element, ModelReaderWriterOptions options)
+        internal static ImageAnalysisSkill DeserializeImageAnalysisSkill(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string odataType = "#Microsoft.Skills.Vision.ImageAnalysisSkill";
+            ImageAnalysisSkillLanguage? defaultLanguageCode = default;
+            IList<VisualFeature> visualFeatures = default;
+            IList<ImageDetail> details = default;
+            string odataType = default;
             string name = default;
             string description = default;
             string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ImageAnalysisSkillLanguage? defaultLanguageCode = default;
-            IList<VisualFeature> visualFeatures = default;
-            IList<ImageDetail> details = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (property.NameEquals("defaultLanguageCode"u8))
                 {
-                    odataType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("context"u8))
-                {
-                    context = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("inputs"u8))
-                {
-                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
-                    }
-                    inputs = array;
-                    continue;
-                }
-                if (prop.NameEquals("outputs"u8))
-                {
-                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
-                    }
-                    outputs = array;
-                    continue;
-                }
-                if (prop.NameEquals("defaultLanguageCode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
+                        defaultLanguageCode = null;
                         continue;
                     }
-                    defaultLanguageCode = new ImageAnalysisSkillLanguage(prop.Value.GetString());
+                    defaultLanguageCode = new ImageAnalysisSkillLanguage(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("visualFeatures"u8))
+                if (property.NameEquals("visualFeatures"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VisualFeature> array = new List<VisualFeature>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new VisualFeature(item.GetString()));
                     }
                     visualFeatures = array;
                     continue;
                 }
-                if (prop.NameEquals("details"u8))
+                if (property.NameEquals("details"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ImageDetail> array = new List<ImageDetail>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new ImageDetail(item.GetString()));
                     }
                     details = array;
                     continue;
                 }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("context"u8))
+                {
+                    context = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("inputs"u8))
+                {
+                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
+                    }
+                    inputs = array;
+                    continue;
+                }
+                if (property.NameEquals("outputs"u8))
+                {
+                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
+                    }
+                    outputs = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ImageAnalysisSkill(
                 odataType,
                 name,
@@ -233,10 +193,57 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 defaultLanguageCode,
                 visualFeatures ?? new ChangeTrackingList<VisualFeature>(),
                 details ?? new ChangeTrackingList<ImageDetail>());
+        }
+
+        BinaryData IPersistableModel<ImageAnalysisSkill>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ImageAnalysisSkill IPersistableModel<ImageAnalysisSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeImageAnalysisSkill(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ImageAnalysisSkill)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ImageAnalysisSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ImageAnalysisSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeImageAnalysisSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

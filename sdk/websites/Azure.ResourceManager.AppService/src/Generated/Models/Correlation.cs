@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The correlation property.
-    /// Serialized Name: Correlation
-    /// </summary>
+    /// <summary> The correlation property. </summary>
     internal partial class Correlation
     {
         /// <summary>
@@ -49,15 +46,12 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="Correlation"/>. </summary>
-        public Correlation()
+        internal Correlation()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="Correlation"/>. </summary>
-        /// <param name="clientTrackingId">
-        /// The client tracking id.
-        /// Serialized Name: Correlation.clientTrackingId
-        /// </param>
+        /// <param name="clientTrackingId"> The client tracking id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Correlation(string clientTrackingId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,11 +59,8 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The client tracking id.
-        /// Serialized Name: Correlation.clientTrackingId
-        /// </summary>
+        /// <summary> The client tracking id. </summary>
         [WirePath("clientTrackingId")]
-        public string ClientTrackingId { get; set; }
+        public string ClientTrackingId { get; }
     }
 }

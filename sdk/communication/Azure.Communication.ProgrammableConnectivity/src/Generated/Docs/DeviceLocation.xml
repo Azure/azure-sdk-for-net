@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="VerifyAsync(string,DeviceLocationVerificationContent,CancellationToken)">
+      <example>
+This sample shows how to call VerifyAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
+
+DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("ipv4", "12.12.12.12"), 70, -161, 91, new LocationDevice
+{
+    NetworkAccessIdentifier = "122345@domain.com",
+    PhoneNumber = "+447000000000",
+    Ipv4Address = new Ipv4Address("12.12.12.12", 2442),
+    Ipv6Address = new Ipv6Address("3001:0da8:75a3:0000:0000:8a2e:0370:7334", 1643),
+});
+Response<DeviceLocationVerificationResult> response = await client.VerifyAsync("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="Verify(string,DeviceLocationVerificationContent,CancellationToken)">
+      <example>
+This sample shows how to call Verify.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
+
+DeviceLocationVerificationContent body = new DeviceLocationVerificationContent(new NetworkIdentifier("ipv4", "12.12.12.12"), 70, -161, 91, new LocationDevice
+{
+    NetworkAccessIdentifier = "122345@domain.com",
+    PhoneNumber = "+447000000000",
+    Ipv4Address = new Ipv4Address("12.12.12.12", 2442),
+    Ipv6Address = new Ipv6Address("3001:0da8:75a3:0000:0000:8a2e:0370:7334", 1643),
+});
+Response<DeviceLocationVerificationResult> response = client.Verify("zdgrzzaxlodrvewbksn", body);
+]]></code></example>
+    </member>
+    <member name="VerifyAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call VerifyAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    networkIdentifier = new
+    {
+        identifierType = "ipv4",
+        identifier = "12.12.12.12",
+    },
+    latitude = 70,
+    longitude = -161,
+    accuracy = 91,
+    device = new
+    {
+        networkAccessIdentifier = "122345@domain.com",
+        phoneNumber = "+447000000000",
+        ipv4Address = new
+        {
+            ipv4 = "12.12.12.12",
+            port = 2442,
+        },
+        ipv6Address = new
+        {
+            ipv6 = "3001:0da8:75a3:0000:0000:8a2e:0370:7334",
+            port = 1643,
+        },
+    },
+});
+Response response = await client.VerifyAsync("zdgrzzaxlodrvewbksn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("verificationResult").ToString());
+]]></code></example>
+    </member>
+    <member name="Verify(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Verify and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeviceLocation client = new ProgrammableConnectivityClient(endpoint, credential).GetDeviceLocationClient(apiVersion: "2024-02-09-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    networkIdentifier = new
+    {
+        identifierType = "ipv4",
+        identifier = "12.12.12.12",
+    },
+    latitude = 70,
+    longitude = -161,
+    accuracy = 91,
+    device = new
+    {
+        networkAccessIdentifier = "122345@domain.com",
+        phoneNumber = "+447000000000",
+        ipv4Address = new
+        {
+            ipv4 = "12.12.12.12",
+            port = 2442,
+        },
+        ipv6Address = new
+        {
+            ipv6 = "3001:0da8:75a3:0000:0000:8a2e:0370:7334",
+            port = 1643,
+        },
+    },
+});
+Response response = client.Verify("zdgrzzaxlodrvewbksn", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("verificationResult").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

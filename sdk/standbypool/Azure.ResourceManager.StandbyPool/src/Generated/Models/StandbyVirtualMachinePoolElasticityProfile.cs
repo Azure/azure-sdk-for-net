@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.StandbyPool.Models
     /// <summary> Details of the elasticity profile. </summary>
     public partial class StandbyVirtualMachinePoolElasticityProfile
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/>. </summary>
         /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
@@ -26,45 +55,22 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/>. </summary>
         /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
         /// <param name="minReadyCapacity"> Specifies the desired minimum number of virtual machines in the standby virtual machine pool. MinReadyCapacity cannot exceed MaxReadyCapacity. </param>
-        /// <param name="postProvisioningDelay"> Specifies the duration to wait after virtual machine provisioning before the virtual machine becomes available for use. The duration should be specified in ISO 8601 format (e.g., PT2S for 2 seconds). </param>
-        /// <param name="dynamicSizing"> Specifies the dynamic sizing configuration. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity, long? minReadyCapacity, string postProvisioningDelay, DynamicSizing dynamicSizing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity, long? minReadyCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxReadyCapacity = maxReadyCapacity;
             MinReadyCapacity = minReadyCapacity;
-            PostProvisioningDelay = postProvisioningDelay;
-            DynamicSizing = dynamicSizing;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityProfile"/> for deserialization. </summary>
+        internal StandbyVirtualMachinePoolElasticityProfile()
+        {
         }
 
         /// <summary> Specifies the maximum number of virtual machines in the standby virtual machine pool. </summary>
         public long MaxReadyCapacity { get; set; }
-
         /// <summary> Specifies the desired minimum number of virtual machines in the standby virtual machine pool. MinReadyCapacity cannot exceed MaxReadyCapacity. </summary>
         public long? MinReadyCapacity { get; set; }
-
-        /// <summary> Specifies the duration to wait after virtual machine provisioning before the virtual machine becomes available for use. The duration should be specified in ISO 8601 format (e.g., PT2S for 2 seconds). </summary>
-        public string PostProvisioningDelay { get; set; }
-
-        /// <summary> Specifies the dynamic sizing configuration. </summary>
-        internal DynamicSizing DynamicSizing { get; set; }
-
-        /// <summary> Indicates whether dynamic sizing is enabled for the standby pool. </summary>
-        public bool? DynamicSizingEnabled
-        {
-            get
-            {
-                return DynamicSizing is null ? default : DynamicSizing.Enabled;
-            }
-            set
-            {
-                if (DynamicSizing is null)
-                {
-                    DynamicSizing = new DynamicSizing();
-                }
-                DynamicSizing.Enabled = value;
-            }
-        }
     }
 }

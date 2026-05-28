@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary></summary>
     public partial class DeletedManagedHsmResource : IJsonModel<DeletedManagedHsmData>
     {
-        private static IJsonModel<DeletedManagedHsmData> s_dataDeserializationInstance;
+        private static DeletedManagedHsmData s_dataDeserializationInstance;
+        private static DeletedManagedHsmData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<DeletedManagedHsmData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeletedManagedHsmData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeletedManagedHsmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedManagedHsmData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedManagedHsmData IJsonModel<DeletedManagedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DeletedManagedHsmData IJsonModel<DeletedManagedHsmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedManagedHsmData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeletedManagedHsmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedManagedHsmData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         DeletedManagedHsmData IPersistableModel<DeletedManagedHsmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedManagedHsmData>(data, options, AzureResourceManagerKeyVaultContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeletedManagedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DeletedManagedHsmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedManagedHsmData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

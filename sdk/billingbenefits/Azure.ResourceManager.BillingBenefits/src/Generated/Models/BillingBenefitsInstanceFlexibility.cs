@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     public readonly partial struct BillingBenefitsInstanceFlexibility : IEquatable<BillingBenefitsInstanceFlexibility>
     {
         private readonly string _value;
-        private const string OnValue = "On";
-        private const string OffValue = "Off";
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsInstanceFlexibility"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingBenefitsInstanceFlexibility(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the On. </summary>
+        private const string OnValue = "On";
+        private const string OffValue = "Off";
+
+        /// <summary> On. </summary>
         public static BillingBenefitsInstanceFlexibility On { get; } = new BillingBenefitsInstanceFlexibility(OnValue);
-
-        /// <summary> Gets the Off. </summary>
+        /// <summary> Off. </summary>
         public static BillingBenefitsInstanceFlexibility Off { get; } = new BillingBenefitsInstanceFlexibility(OffValue);
-
         /// <summary> Determines if two <see cref="BillingBenefitsInstanceFlexibility"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingBenefitsInstanceFlexibility left, BillingBenefitsInstanceFlexibility right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BillingBenefitsInstanceFlexibility"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingBenefitsInstanceFlexibility left, BillingBenefitsInstanceFlexibility right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BillingBenefitsInstanceFlexibility"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitsInstanceFlexibility"/>. </summary>
         public static implicit operator BillingBenefitsInstanceFlexibility(string value) => new BillingBenefitsInstanceFlexibility(value);
 
-        /// <summary> Converts a string to a <see cref="BillingBenefitsInstanceFlexibility"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BillingBenefitsInstanceFlexibility?(string value) => value == null ? null : new BillingBenefitsInstanceFlexibility(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingBenefitsInstanceFlexibility other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BillingBenefitsInstanceFlexibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

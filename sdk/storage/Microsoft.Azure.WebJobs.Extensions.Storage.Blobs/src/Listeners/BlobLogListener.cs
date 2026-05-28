@@ -111,21 +111,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                             using (StreamReader reader = new StreamReader(stream))
                             {
                                 int lineNumber = 0;
-                                string line;
-                                while ((line = await reader.ReadLineAsync().ConfigureAwait(false)) is not null)
+                                while (!reader.EndOfStream)
                                 {
                                     cancellationToken.ThrowIfCancellationRequested();
+                                    string line = await reader.ReadLineAsync().ConfigureAwait(false);
                                     lineNumber++;
 
-                                    var entry = _parser.ParseLine(line, logBlobClient.Name, lineNumber.ToString(CultureInfo.InvariantCulture));
-                                    if (entry != null && entry.IsBlobWrite)
+                                    if (line != null)
                                     {
-                                        var path = entry.ToBlobPath();
-                                        if (path != null &&
-                                            string.Equals(path.ContainerName, containerName, StringComparison.OrdinalIgnoreCase))
+                                        var entry = _parser.ParseLine(line, logBlobClient.Name, lineNumber.ToString(CultureInfo.InvariantCulture));
+                                        if (entry != null && entry.IsBlobWrite)
                                         {
-                                            // If we found a valid write entry, we can stop searching.
-                                            return entry;
+                                            var path = entry.ToBlobPath();
+                                            if (path != null &&
+                                                string.Equals(path.ContainerName, containerName, StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                // If we found a valid write entry, we can stop searching.
+                                                return entry;
+                                            }
                                         }
                                     }
                                 }

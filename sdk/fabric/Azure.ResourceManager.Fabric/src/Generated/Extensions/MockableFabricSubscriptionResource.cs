@@ -8,80 +8,88 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Fabric;
 using Azure.ResourceManager.Fabric.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Fabric.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableFabricSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _fabricCapacitiesClientDiagnostics;
-        private FabricCapacities _fabricCapacitiesRestClient;
+        private ClientDiagnostics _fabricCapacityClientDiagnostics;
+        private FabricCapacitiesRestOperations _fabricCapacityRestClient;
 
-        /// <summary> Initializes a new instance of MockableFabricSubscriptionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableFabricSubscriptionResource"/> class for mocking. </summary>
         protected MockableFabricSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableFabricSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableFabricSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableFabricSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics FabricCapacitiesClientDiagnostics => _fabricCapacitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Fabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics FabricCapacityClientDiagnostics => _fabricCapacityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Fabric", FabricCapacityResource.ResourceType.Namespace, Diagnostics);
+        private FabricCapacitiesRestOperations FabricCapacityRestClient => _fabricCapacityRestClient ??= new FabricCapacitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FabricCapacityResource.ResourceType));
 
-        private FabricCapacities FabricCapacitiesRestClient => _fabricCapacitiesRestClient ??= new FabricCapacities(FabricCapacitiesClientDiagnostics, Pipeline, Endpoint, "2025-01-15-preview");
-
-        /// <summary>
-        /// List FabricCapacity resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Fabric/capacities. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FabricCapacityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FabricCapacityResource> GetFabricCapacitiesAsync(CancellationToken cancellationToken = default)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetBySubscriptionAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetFabricCapacities"), data => new FabricCapacityResource(Client, data));
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
 
         /// <summary>
         /// List FabricCapacity resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Fabric/capacities. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/capacities</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_ListBySubscription. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_ListBySubscription</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="FabricCapacityResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FabricCapacityResource> GetFabricCapacitiesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FabricCapacityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FabricCapacityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FabricCapacityResource(Client, FabricCapacityData.DeserializeFabricCapacityData(e)), FabricCapacityClientDiagnostics, Pipeline, "MockableFabricSubscriptionResource.GetFabricCapacities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List FabricCapacity resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/capacities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacity_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,27 +97,29 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// <returns> A collection of <see cref="FabricCapacityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FabricCapacityResource> GetFabricCapacities(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetBySubscriptionCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetFabricCapacities"), data => new FabricCapacityResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FabricCapacityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FabricCapacityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FabricCapacityResource(Client, FabricCapacityData.DeserializeFabricCapacityData(e)), FabricCapacityClientDiagnostics, Pipeline, "MockableFabricSubscriptionResource.GetFabricCapacities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Implements local CheckNameAvailability operations
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/checkNameAvailability. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/checkNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_CheckNameAvailability. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_CheckFabricCapacityNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,21 +131,11 @@ namespace Azure.ResourceManager.Fabric.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FabricCapacitiesClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailability");
+            using var scope = FabricCapacityClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailability");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = FabricCapacitiesRestClient.CreateCheckFabricCapacityNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FabricNameAvailabilityContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FabricNameAvailabilityResult> response = Response.FromValue(FabricNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await FabricCapacityRestClient.CheckFabricCapacityNameAvailabilityAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -149,16 +149,20 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// Implements local CheckNameAvailability operations
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/checkNameAvailability. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/checkNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_CheckNameAvailability. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_CheckFabricCapacityNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,21 +174,11 @@ namespace Azure.ResourceManager.Fabric.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FabricCapacitiesClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailability");
+            using var scope = FabricCapacityClientDiagnostics.CreateScope("MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailability");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = FabricCapacitiesRestClient.CreateCheckFabricCapacityNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, FabricNameAvailabilityContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FabricNameAvailabilityResult> response = Response.FromValue(FabricNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = FabricCapacityRestClient.CheckFabricCapacityNameAvailability(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -198,44 +192,50 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// List eligible SKUs for Microsoft Fabric resource provider
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Fabric/skus. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/skus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_ListSkus. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_ListSkus</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FabricSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FabricSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FabricSkuDetailsForNewCapacity> GetSkusFabricCapacitiesAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new FabricCapacitiesGetSkusFabricCapacitiesAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetSkusFabricCapacities");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FabricCapacityRestClient.CreateListSkusRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FabricCapacityRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FabricSkuDetailsForNewCapacity.DeserializeFabricSkuDetailsForNewCapacity(e), FabricCapacityClientDiagnostics, Pipeline, "MockableFabricSubscriptionResource.GetSkusFabricCapacities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List eligible SKUs for Microsoft Fabric resource provider
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Fabric/skus. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Fabric/skus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_ListSkus. </description>
+        /// <term>Operation Id</term>
+        /// <description>FabricCapacities_ListSkus</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FabricCapacityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,69 +243,9 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// <returns> A collection of <see cref="FabricSkuDetailsForNewCapacity"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FabricSkuDetailsForNewCapacity> GetSkusFabricCapacities(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new FabricCapacitiesGetSkusFabricCapacitiesCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableFabricSubscriptionResource.GetSkusFabricCapacities");
-        }
-
-        /// <summary>
-        /// List the current consumption and limit in this location for the provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/usages. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_ListUsages. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FabricCapacitiesQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FabricCapacitiesQuota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new FabricCapacitiesGetUsagesAsyncCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableFabricSubscriptionResource.GetUsages");
-        }
-
-        /// <summary>
-        /// List the current consumption and limit in this location for the provided subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Fabric/locations/{location}/usages. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FabricCapacities_ListUsages. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FabricCapacitiesQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FabricCapacitiesQuota> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new FabricCapacitiesGetUsagesCollectionResultOfT(FabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableFabricSubscriptionResource.GetUsages");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FabricCapacityRestClient.CreateListSkusRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FabricCapacityRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FabricSkuDetailsForNewCapacity.DeserializeFabricSkuDetailsForNewCapacity(e), FabricCapacityClientDiagnostics, Pipeline, "MockableFabricSubscriptionResource.GetSkusFabricCapacities", "value", "nextLink", cancellationToken);
         }
     }
 }

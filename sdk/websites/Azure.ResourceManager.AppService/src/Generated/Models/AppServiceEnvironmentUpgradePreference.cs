@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Upgrade Preference
-    /// Serialized Name: UpgradePreference
-    /// </summary>
+    /// <summary> Upgrade Preference. </summary>
     public readonly partial struct AppServiceEnvironmentUpgradePreference : IEquatable<AppServiceEnvironmentUpgradePreference>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.AppService.Models
         private const string LateValue = "Late";
         private const string ManualValue = "Manual";
 
-        /// <summary>
-        /// No preference on when this App Service Environment will be upgraded
-        /// Serialized Name: UpgradePreference.None
-        /// </summary>
+        /// <summary> No preference on when this App Service Environment will be upgraded. </summary>
         public static AppServiceEnvironmentUpgradePreference None { get; } = new AppServiceEnvironmentUpgradePreference(NoneValue);
-        /// <summary>
-        /// This App Service Environment will be upgraded before others in the same region that have Upgrade Preference 'Late'
-        /// Serialized Name: UpgradePreference.Early
-        /// </summary>
+        /// <summary> This App Service Environment will be upgraded before others in the same region that have Upgrade Preference 'Late'. </summary>
         public static AppServiceEnvironmentUpgradePreference Early { get; } = new AppServiceEnvironmentUpgradePreference(EarlyValue);
-        /// <summary>
-        /// This App Service Environment will be upgraded after others in the same region that have Upgrade Preference 'Early'
-        /// Serialized Name: UpgradePreference.Late
-        /// </summary>
+        /// <summary> This App Service Environment will be upgraded after others in the same region that have Upgrade Preference 'Early'. </summary>
         public static AppServiceEnvironmentUpgradePreference Late { get; } = new AppServiceEnvironmentUpgradePreference(LateValue);
-        /// <summary>
-        /// ASEv3 only. Once an upgrade is available, this App Service Environment will wait 10 days for the upgrade to be manually initiated. After 10 days the upgrade will begin automatically
-        /// Serialized Name: UpgradePreference.Manual
-        /// </summary>
+        /// <summary> ASEv3 only. Once an upgrade is available, this App Service Environment will wait 10 days for the upgrade to be manually initiated. After 10 days the upgrade will begin automatically. </summary>
         public static AppServiceEnvironmentUpgradePreference Manual { get; } = new AppServiceEnvironmentUpgradePreference(ManualValue);
         /// <summary> Determines if two <see cref="AppServiceEnvironmentUpgradePreference"/> values are the same. </summary>
         public static bool operator ==(AppServiceEnvironmentUpgradePreference left, AppServiceEnvironmentUpgradePreference right) => left.Equals(right);

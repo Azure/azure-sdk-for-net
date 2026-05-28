@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -54,13 +53,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixRules"/> is null. </exception>
-        public NetworkFabricIPPrefixData(AzureLocation location, IEnumerable<IPPrefixRule> ipPrefixRules) : base(location)
+        public NetworkFabricIPPrefixData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(ipPrefixRules, nameof(ipPrefixRules));
-
-            IPPrefixRules = ipPrefixRules.ToList();
+            IPPrefixRules = new ChangeTrackingList<IPPrefixRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixData"/>. </summary>
@@ -71,19 +66,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
-        /// <param name="lastOperation"> Details of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricIPPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkFabricId, IList<IPPrefixRule> ipPrefixRules, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricIPPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<IPPrefixRule> ipPrefixRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
-            NetworkFabricId = networkFabricId;
             IPPrefixRules = ipPrefixRules;
-            LastOperation = lastOperation;
             ConfigurationState = configurationState;
             ProvisioningState = provisioningState;
             AdministrativeState = administrativeState;
@@ -97,18 +88,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> ARM Resource ID of the Network Fabric. </summary>
-        public ResourceIdentifier NetworkFabricId { get; }
         /// <summary> The list of IP Prefix Rules. </summary>
         public IList<IPPrefixRule> IPPrefixRules { get; }
-        /// <summary> Details of the last operation performed on the resource. </summary>
-        internal LastOperationProperties LastOperation { get; }
-        /// <summary> Details status of the last operation performed on the resource. </summary>
-        public string LastOperationDetails
-        {
-            get => LastOperation?.Details;
-        }
-
         /// <summary> Configuration state of the resource. </summary>
         public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provisioning state of the resource. </summary>

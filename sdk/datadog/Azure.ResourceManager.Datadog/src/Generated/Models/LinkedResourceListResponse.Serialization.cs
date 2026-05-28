@@ -8,69 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.Datadog;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary> Response of a list operation. </summary>
-    internal partial class LinkedResourceListResponse : IJsonModel<LinkedResourceListResponse>
+    internal partial class LinkedResourceListResponse : IUtf8JsonSerializable, IJsonModel<LinkedResourceListResponse>
     {
-        /// <summary> Initializes a new instance of <see cref="LinkedResourceListResponse"/> for deserialization. </summary>
-        internal LinkedResourceListResponse()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedResourceListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkedResourceListResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLinkedResourceListResponse(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LinkedResourceListResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LinkedResourceListResponse IPersistableModel<LinkedResourceListResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LinkedResourceListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LinkedResourceListResponse"/> from. </param>
-        internal static LinkedResourceListResponse FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLinkedResourceListResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LinkedResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -82,32 +30,36 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("value"u8);
-            writer.WriteStartArray();
-            foreach (DatadogLinkedResourceResult item in Value)
+
+            if (Optional.IsCollectionDefined(Value))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
+                writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,61 +68,89 @@ namespace Azure.ResourceManager.Datadog.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LinkedResourceListResponse IJsonModel<LinkedResourceListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkedResourceListResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LinkedResourceListResponse IJsonModel<LinkedResourceListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLinkedResourceListResponse(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LinkedResourceListResponse DeserializeLinkedResourceListResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static LinkedResourceListResponse DeserializeLinkedResourceListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<DatadogLinkedResourceResult> value = default;
-            Uri nextLink = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IReadOnlyList<SubResource> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("value"u8))
+                if (property.NameEquals("value"u8))
                 {
-                    List<DatadogLinkedResourceResult> array = new List<DatadogLinkedResourceResult>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(DatadogLinkedResourceResult.DeserializeDatadogLinkedResourceResult(item, options));
+                        continue;
+                    }
+                    List<SubResource> array = new List<SubResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerDatadogContext.Default));
                     }
                     value = array;
                     continue;
                 }
-                if (prop.NameEquals("nextLink"u8))
+                if (property.NameEquals("nextLink"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    nextLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new LinkedResourceListResponse(value, nextLink, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LinkedResourceListResponse(value ?? new ChangeTrackingList<SubResource>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinkedResourceListResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LinkedResourceListResponse IPersistableModel<LinkedResourceListResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedResourceListResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeLinkedResourceListResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LinkedResourceListResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LinkedResourceListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

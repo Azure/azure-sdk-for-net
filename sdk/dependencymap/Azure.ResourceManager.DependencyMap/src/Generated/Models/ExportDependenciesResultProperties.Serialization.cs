@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.DependencyMap;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
-    /// <summary> Model representing properties returned upon successful completion of the export dependencies asynchronous operation. </summary>
-    public partial class ExportDependenciesResultProperties : IJsonModel<ExportDependenciesResultProperties>
+    public partial class ExportDependenciesResultProperties : IUtf8JsonSerializable, IJsonModel<ExportDependenciesResultProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExportDependenciesResultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesResultProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExportDependenciesResultProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExportDependenciesResultProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportDependenciesResultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesResultProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDependencyMapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExportDependenciesResultProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExportDependenciesResultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExportDependenciesResultProperties IPersistableModel<ExportDependenciesResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExportDependenciesResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExportDependenciesResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExportDependenciesResultProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ExportedDataSasUri))
             {
                 writer.WritePropertyName("exportedDataSasUri"u8);
@@ -89,15 +49,15 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 writer.WritePropertyName("additionalInfo"u8);
                 writer.WriteObjectValue(AdditionalInfo, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,27 +66,22 @@ namespace Azure.ResourceManager.DependencyMap.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExportDependenciesResultProperties IJsonModel<ExportDependenciesResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExportDependenciesResultProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExportDependenciesResultProperties IJsonModel<ExportDependenciesResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExportDependenciesResultProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExportDependenciesResultProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExportDependenciesResultProperties DeserializeExportDependenciesResultProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExportDependenciesResultProperties DeserializeExportDependenciesResultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,38 +89,71 @@ namespace Azure.ResourceManager.DependencyMap.Models
             string exportedDataSasUri = default;
             ExportDependenciesStatusCode? statusCode = default;
             ExportDependenciesAdditionalInfo additionalInfo = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("exportedDataSasUri"u8))
+                if (property.NameEquals("exportedDataSasUri"u8))
                 {
-                    exportedDataSasUri = prop.Value.GetString();
+                    exportedDataSasUri = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("statusCode"u8))
+                if (property.NameEquals("statusCode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    statusCode = new ExportDependenciesStatusCode(prop.Value.GetString());
+                    statusCode = new ExportDependenciesStatusCode(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("additionalInfo"u8))
+                if (property.NameEquals("additionalInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    additionalInfo = ExportDependenciesAdditionalInfo.DeserializeExportDependenciesAdditionalInfo(prop.Value, options);
+                    additionalInfo = ExportDependenciesAdditionalInfo.DeserializeExportDependenciesAdditionalInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ExportDependenciesResultProperties(exportedDataSasUri, statusCode, additionalInfo, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExportDependenciesResultProperties(exportedDataSasUri, statusCode, additionalInfo, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExportDependenciesResultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDependencyMapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExportDependenciesResultProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExportDependenciesResultProperties IPersistableModel<ExportDependenciesResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportDependenciesResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeExportDependenciesResultProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExportDependenciesResultProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExportDependenciesResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

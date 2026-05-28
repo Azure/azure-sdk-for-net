@@ -1,0 +1,106 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/TestImportedApp0623/:import?api-version=2025-05-15-preview&format=Conversation",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "985",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250623.1 (.NET 9.0.5; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "projectFileVersion": "2025-05-15-preview",
+        "stringIndexType": "Utf16CodeUnit",
+        "metadata": {
+          "projectKind": "Conversation",
+          "settings": {
+            "confidenceThreshold": 0.7
+          },
+          "projectName": "TestImportedApp0623",
+          "multilingual": true,
+          "description": "Trying out CLU",
+          "language": "en-us"
+        },
+        "assets": {
+          "projectKind": "Conversation",
+          "intents": [
+            {
+              "category": "Read",
+              "description": "The read intent",
+              "associatedEntities": [
+                {
+                  "category": "Sender"
+                }
+              ]
+            },
+            {
+              "category": "Delete",
+              "description": "The delete intent"
+            }
+          ],
+          "entities": [
+            {
+              "category": "Sender",
+              "description": "The description of Sender"
+            },
+            {
+              "category": "Number",
+              "description": "The description of Number",
+              "regex": {
+                "expressions": [
+                  {
+                    "regexKey": "UK Phone numbers",
+                    "language": "en-us",
+                    "regexPattern": "^\\(?([0-9]{3})\\)?[-.\\s]?([0-9]{3})[-.\\s]?([0-9]{4})$"
+                  }
+                ]
+              }
+            }
+          ],
+          "utterances": [
+            {
+              "entities": [
+                {
+                  "category": "Sender",
+                  "offset": 5,
+                  "length": 5
+                }
+              ],
+              "text": "Open Blake's email",
+              "intent": "Read",
+              "dataset": "Train"
+            },
+            {
+              "text": "Delete last email",
+              "language": "en-gb",
+              "intent": "Delete",
+              "dataset": "Test"
+            }
+          ]
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "faaa46d9-2c85-4945-9611-a60a9d5e4d84",
+        "Content-Length": "0",
+        "Date": "Mon, 23 Jun 2025 17:20:54 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/TestImportedApp0623/import/jobs/b58d7f7f-7b2b-45f6-bbdd-3303ef664d4b_638862336000000000?api-version=2025-05-15-preview",
+        "request-id": "faaa46d9-2c85-4945-9611-a60a9d5e4d84",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "575",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1857523084"
+  }
+}

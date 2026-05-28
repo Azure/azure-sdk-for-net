@@ -8,36 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ComputeSchedule.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
-    /// <summary></summary>
-    internal partial class ScheduledActionResourceOperationResultOperationSource : IOperationSource<ScheduledActionResourceOperationResult>
+    internal class ScheduledActionResourceOperationResultOperationSource : IOperationSource<ScheduledActionResourceOperationResult>
     {
-        /// <summary></summary>
-        internal ScheduledActionResourceOperationResultOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ScheduledActionResourceOperationResult IOperationSource<ScheduledActionResourceOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ScheduledActionResourceOperationResult.DeserializeScheduledActionResourceOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return ScheduledActionResourceOperationResult.DeserializeScheduledActionResourceOperationResult(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ScheduledActionResourceOperationResult> IOperationSource<ScheduledActionResourceOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ScheduledActionResourceOperationResult.DeserializeScheduledActionResourceOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return ScheduledActionResourceOperationResult.DeserializeScheduledActionResourceOperationResult(document.RootElement);
         }
     }
 }

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> SAPAse specific recoverypoint, specifically encapsulates full/diff recoverypoints. </summary>
-    public partial class WorkloadSapAseRecoveryPoint : WorkloadRecoveryPoint, IJsonModel<WorkloadSapAseRecoveryPoint>
+    public partial class WorkloadSapAseRecoveryPoint : IUtf8JsonSerializable, IJsonModel<WorkloadSapAseRecoveryPoint>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupGenericRecoveryPoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWorkloadSapAseRecoveryPoint(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadSapAseRecoveryPoint)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadSapAseRecoveryPoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadSapAseRecoveryPoint)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkloadSapAseRecoveryPoint>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadSapAseRecoveryPoint IPersistableModel<WorkloadSapAseRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options) => (WorkloadSapAseRecoveryPoint)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkloadSapAseRecoveryPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadSapAseRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,148 +28,150 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadSapAseRecoveryPoint)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadSapAseRecoveryPoint IJsonModel<WorkloadSapAseRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WorkloadSapAseRecoveryPoint)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupGenericRecoveryPoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WorkloadSapAseRecoveryPoint IJsonModel<WorkloadSapAseRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadSapAseRecoveryPoint)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWorkloadSapAseRecoveryPoint(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WorkloadSapAseRecoveryPoint DeserializeWorkloadSapAseRecoveryPoint(JsonElement element, ModelReaderWriterOptions options)
+        internal static WorkloadSapAseRecoveryPoint DeserializeWorkloadSapAseRecoveryPoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string objectType = "AzureWorkloadSAPAseRecoveryPoint";
-            BackupThreatStatus? threatStatus = default;
-            IList<BackupThreatInfo> threatInfo = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? recoveryPointCreatedOn = default;
-            RestorePointType? restorePointType = default;
+            DateTimeOffset? recoveryPointTimeInUTC = default;
+            RestorePointType? type = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
             IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
             RecoveryPointProperties recoveryPointProperties = default;
-            foreach (var prop in element.EnumerateObject())
+            string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("objectType"u8))
+                if (property.NameEquals("recoveryPointTimeInUTC"u8))
                 {
-                    objectType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("threatStatus"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    threatStatus = new BackupThreatStatus(prop.Value.GetString());
+                    recoveryPointTimeInUTC = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("threatInfo"u8))
+                if (property.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<BackupThreatInfo> array = new List<BackupThreatInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(BackupThreatInfo.DeserializeBackupThreatInfo(item, options));
-                    }
-                    threatInfo = array;
+                    type = new RestorePointType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("recoveryPointTimeInUTC"u8))
+                if (property.NameEquals("recoveryPointTierDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryPointCreatedOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    restorePointType = new RestorePointType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("recoveryPointTierDetails"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RecoveryPointTierInformationV2> array = new List<RecoveryPointTierInformationV2>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(RecoveryPointTierInformationV2.DeserializeRecoveryPointTierInformationV2(item, options));
                     }
                     recoveryPointTierDetails = array;
                     continue;
                 }
-                if (prop.NameEquals("recoveryPointMoveReadinessInfo"u8))
+                if (property.NameEquals("recoveryPointMoveReadinessInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, RecoveryPointMoveReadinessInfo> dictionary = new Dictionary<string, RecoveryPointMoveReadinessInfo>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, Models.RecoveryPointMoveReadinessInfo.DeserializeRecoveryPointMoveReadinessInfo(prop0.Value, options));
+                        dictionary.Add(property0.Name, Models.RecoveryPointMoveReadinessInfo.DeserializeRecoveryPointMoveReadinessInfo(property0.Value, options));
                     }
                     recoveryPointMoveReadinessInfo = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("recoveryPointProperties"u8))
+                if (property.NameEquals("recoveryPointProperties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(prop.Value, options);
+                    recoveryPointProperties = RecoveryPointProperties.DeserializeRecoveryPointProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new WorkloadSapAseRecoveryPoint(
                 objectType,
-                threatStatus,
-                threatInfo ?? new ChangeTrackingList<BackupThreatInfo>(),
-                additionalBinaryDataProperties,
-                recoveryPointCreatedOn,
-                restorePointType,
+                serializedAdditionalRawData,
+                recoveryPointTimeInUTC,
+                type,
                 recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),
                 recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(),
                 recoveryPointProperties);
         }
+
+        BinaryData IPersistableModel<WorkloadSapAseRecoveryPoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadSapAseRecoveryPoint)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WorkloadSapAseRecoveryPoint IPersistableModel<WorkloadSapAseRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapAseRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWorkloadSapAseRecoveryPoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadSapAseRecoveryPoint)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkloadSapAseRecoveryPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

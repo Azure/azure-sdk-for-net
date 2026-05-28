@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary></summary>
-    internal partial class DevTestLabServiceFabricOperationSource : IOperationSource<DevTestLabServiceFabricResource>
+    internal class DevTestLabServiceFabricOperationSource : IOperationSource<DevTestLabServiceFabricResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DevTestLabServiceFabricOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DevTestLabServiceFabricResource IOperationSource<DevTestLabServiceFabricResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DevTestLabServiceFabricData data = DevTestLabServiceFabricData.DeserializeDevTestLabServiceFabricData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DevTestLabServiceFabricData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
             return new DevTestLabServiceFabricResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DevTestLabServiceFabricResource> IOperationSource<DevTestLabServiceFabricResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DevTestLabServiceFabricData data = DevTestLabServiceFabricData.DeserializeDevTestLabServiceFabricData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DevTestLabServiceFabricResource(_client, data);
+            var data = ModelReaderWriter.Read<DevTestLabServiceFabricData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
+            return await Task.FromResult(new DevTestLabServiceFabricResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

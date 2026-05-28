@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -17,20 +16,27 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="BrokerSubscriberQueueCustomPolicy"/>. </summary>
         /// <param name="subscriberQueueSettings"> Custom policy, required if mode is Custom. Subscriber queues from all groups are persisted to disk (logical OR). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriberQueueSettings"/> is null. </exception>
-        public BrokerSubscriberQueueCustomPolicy(BrokerSubscriberQueueCustomPolicySettings subscriberQueueSettings) : base(BrokerPersistencePolicyMode.Custom)
+        public BrokerSubscriberQueueCustomPolicy(BrokerSubscriberQueueCustomPolicySettings subscriberQueueSettings)
         {
             Argument.AssertNotNull(subscriberQueueSettings, nameof(subscriberQueueSettings));
 
             SubscriberQueueSettings = subscriberQueueSettings;
+            Mode = BrokerPersistencePolicyMode.Custom;
         }
 
         /// <summary> Initializes a new instance of <see cref="BrokerSubscriberQueueCustomPolicy"/>. </summary>
         /// <param name="mode"> 'All' to persist all subscriber queues, 'None' to not persist any, 'Custom' to persist only the specified queues. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subscriberQueueSettings"> Custom policy, required if mode is Custom. Subscriber queues from all groups are persisted to disk (logical OR). </param>
-        internal BrokerSubscriberQueueCustomPolicy(BrokerPersistencePolicyMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties, BrokerSubscriberQueueCustomPolicySettings subscriberQueueSettings) : base(mode, additionalBinaryDataProperties)
+        internal BrokerSubscriberQueueCustomPolicy(BrokerPersistencePolicyMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData, BrokerSubscriberQueueCustomPolicySettings subscriberQueueSettings) : base(mode, serializedAdditionalRawData)
         {
             SubscriberQueueSettings = subscriberQueueSettings;
+            Mode = mode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BrokerSubscriberQueueCustomPolicy"/> for deserialization. </summary>
+        internal BrokerSubscriberQueueCustomPolicy()
+        {
         }
 
         /// <summary> Custom policy, required if mode is Custom. Subscriber queues from all groups are persisted to disk (logical OR). </summary>

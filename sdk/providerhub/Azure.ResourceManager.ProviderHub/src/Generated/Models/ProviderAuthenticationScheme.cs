@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ProviderAuthenticationScheme : IEquatable<ProviderAuthenticationScheme>
     {
         private readonly string _value;
-        private const string PoPValue = "PoP";
-        private const string BearerValue = "Bearer";
 
         /// <summary> Initializes a new instance of <see cref="ProviderAuthenticationScheme"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProviderAuthenticationScheme(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the PoP. </summary>
+        private const string PoPValue = "PoP";
+        private const string BearerValue = "Bearer";
+
+        /// <summary> PoP. </summary>
         public static ProviderAuthenticationScheme PoP { get; } = new ProviderAuthenticationScheme(PoPValue);
-
-        /// <summary> Gets the Bearer. </summary>
+        /// <summary> Bearer. </summary>
         public static ProviderAuthenticationScheme Bearer { get; } = new ProviderAuthenticationScheme(BearerValue);
-
         /// <summary> Determines if two <see cref="ProviderAuthenticationScheme"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderAuthenticationScheme left, ProviderAuthenticationScheme right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ProviderAuthenticationScheme"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderAuthenticationScheme left, ProviderAuthenticationScheme right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ProviderAuthenticationScheme"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderAuthenticationScheme"/>. </summary>
         public static implicit operator ProviderAuthenticationScheme(string value) => new ProviderAuthenticationScheme(value);
 
-        /// <summary> Converts a string to a <see cref="ProviderAuthenticationScheme"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ProviderAuthenticationScheme?(string value) => value == null ? null : new ProviderAuthenticationScheme(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderAuthenticationScheme other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ProviderAuthenticationScheme other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary></summary>
-    internal partial class EmailServiceResourceOperationSource : IOperationSource<EmailServiceResource>
+    internal class EmailServiceResourceOperationSource : IOperationSource<EmailServiceResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal EmailServiceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         EmailServiceResource IOperationSource<EmailServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            EmailServiceResourceData data = EmailServiceResourceData.DeserializeEmailServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<EmailServiceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCommunicationContext.Default);
             return new EmailServiceResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<EmailServiceResource> IOperationSource<EmailServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            EmailServiceResourceData data = EmailServiceResourceData.DeserializeEmailServiceResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new EmailServiceResource(_client, data);
+            var data = ModelReaderWriter.Read<EmailServiceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCommunicationContext.Default);
+            return await Task.FromResult(new EmailServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

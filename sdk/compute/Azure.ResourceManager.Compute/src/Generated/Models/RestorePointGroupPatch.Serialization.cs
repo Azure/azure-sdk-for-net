@@ -62,11 +62,6 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InstantAccess))
-            {
-                writer.WritePropertyName("instantAccess"u8);
-                writer.WriteBooleanValue(InstantAccess.Value);
-            }
             writer.WriteEndObject();
         }
 
@@ -95,7 +90,6 @@ namespace Azure.ResourceManager.Compute.Models
             string provisioningState = default;
             string restorePointGroupId = default;
             IReadOnlyList<RestorePointData> restorePoints = default;
-            bool? instantAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,15 +150,6 @@ namespace Azure.ResourceManager.Compute.Models
                             restorePoints = array;
                             continue;
                         }
-                        if (property0.NameEquals("instantAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            instantAccess = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -180,8 +165,7 @@ namespace Azure.ResourceManager.Compute.Models
                 source,
                 provisioningState,
                 restorePointGroupId,
-                restorePoints ?? new ChangeTrackingList<RestorePointData>(),
-                instantAccess);
+                restorePoints ?? new ChangeTrackingList<RestorePointData>());
         }
 
         BinaryData IPersistableModel<RestorePointGroupPatch>.Write(ModelReaderWriterOptions options)

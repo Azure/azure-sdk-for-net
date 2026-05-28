@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.CloudHealth;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    /// <summary> Evaluation rule for a signal definition. </summary>
-    public partial class EntitySignalEvaluationRule : IJsonModel<EntitySignalEvaluationRule>
+    public partial class EntitySignalEvaluationRule : IUtf8JsonSerializable, IJsonModel<EntitySignalEvaluationRule>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EntitySignalEvaluationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalEvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEntitySignalEvaluationRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EntitySignalEvaluationRule)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntitySignalEvaluationRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalEvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EntitySignalEvaluationRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EntitySignalEvaluationRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EntitySignalEvaluationRule IPersistableModel<EntitySignalEvaluationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EntitySignalEvaluationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EntitySignalEvaluationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalEvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntitySignalEvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EntitySignalEvaluationRule)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(DynamicDetectionRule))
             {
                 writer.WritePropertyName("dynamicDetectionRule"u8);
@@ -89,15 +49,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("unhealthyRule"u8);
                 writer.WriteObjectValue(UnhealthyRule, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,27 +66,22 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EntitySignalEvaluationRule IJsonModel<EntitySignalEvaluationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EntitySignalEvaluationRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EntitySignalEvaluationRule IJsonModel<EntitySignalEvaluationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EntitySignalEvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntitySignalEvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EntitySignalEvaluationRule)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEntitySignalEvaluationRule(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EntitySignalEvaluationRule DeserializeEntitySignalEvaluationRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static EntitySignalEvaluationRule DeserializeEntitySignalEvaluationRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,42 +89,75 @@ namespace Azure.ResourceManager.CloudHealth.Models
             DynamicDetectionRule dynamicDetectionRule = default;
             EntitySignalThresholdRule degradedRule = default;
             EntitySignalThresholdRule unhealthyRule = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("dynamicDetectionRule"u8))
+                if (property.NameEquals("dynamicDetectionRule"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dynamicDetectionRule = DynamicDetectionRule.DeserializeDynamicDetectionRule(prop.Value, options);
+                    dynamicDetectionRule = DynamicDetectionRule.DeserializeDynamicDetectionRule(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("degradedRule"u8))
+                if (property.NameEquals("degradedRule"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    degradedRule = EntitySignalThresholdRule.DeserializeEntitySignalThresholdRule(prop.Value, options);
+                    degradedRule = EntitySignalThresholdRule.DeserializeEntitySignalThresholdRule(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("unhealthyRule"u8))
+                if (property.NameEquals("unhealthyRule"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unhealthyRule = EntitySignalThresholdRule.DeserializeEntitySignalThresholdRule(prop.Value, options);
+                    unhealthyRule = EntitySignalThresholdRule.DeserializeEntitySignalThresholdRule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new EntitySignalEvaluationRule(dynamicDetectionRule, degradedRule, unhealthyRule, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EntitySignalEvaluationRule(dynamicDetectionRule, degradedRule, unhealthyRule, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EntitySignalEvaluationRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EntitySignalEvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EntitySignalEvaluationRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EntitySignalEvaluationRule IPersistableModel<EntitySignalEvaluationRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EntitySignalEvaluationRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEntitySignalEvaluationRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EntitySignalEvaluationRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EntitySignalEvaluationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

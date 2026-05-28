@@ -9,7 +9,7 @@ namespace Azure.Generator.Management.Tests.Common
     {
         public static void AreEqual(BinaryData expected, BinaryData result)
         {
-            Assert.That(result?.ToArray(), Is.EqualTo(expected?.ToArray()));
+            CollectionAssert.AreEqual(expected?.ToArray(), result?.ToArray());
         }
     }
 }

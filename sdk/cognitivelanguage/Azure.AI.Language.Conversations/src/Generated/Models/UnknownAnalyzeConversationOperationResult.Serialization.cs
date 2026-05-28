@@ -9,59 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Language.Conversations;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    internal partial class UnknownAnalyzeConversationOperationResult : AnalyzeConversationOperationResult, IJsonModel<AnalyzeConversationOperationResult>
+    internal partial class UnknownAnalyzeConversationOperationResult : IUtf8JsonSerializable, IJsonModel<AnalyzeConversationOperationResult>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeConversationOperationResult"/> for deserialization. </summary>
-        internal UnknownAnalyzeConversationOperationResult()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeConversationOperationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeConversationOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationOperationResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAnalyzeConversationOperationResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AnalyzeConversationOperationResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationOperationResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AnalyzeConversationOperationResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeConversationOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeConversationOperationResult IPersistableModel<AnalyzeConversationOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeConversationOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AnalyzeConversationOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -73,72 +28,117 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalyzeConversationOperationResult)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeConversationOperationResult IJsonModel<AnalyzeConversationOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AnalyzeConversationOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AnalyzeConversationOperationResult IJsonModel<AnalyzeConversationOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AnalyzeConversationOperationResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAnalyzeConversationOperationResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownAnalyzeConversationOperationResult DeserializeUnknownAnalyzeConversationOperationResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownAnalyzeConversationOperationResult DeserializeUnknownAnalyzeConversationOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset lastUpdateDateTime = default;
             ConversationActionState status = default;
-            string name = default;
-            AnalyzeConversationOperationResultsKind kind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string taskName = default;
+            AnalyzeConversationOperationResultsKind kind = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("lastUpdateDateTime"u8))
+                if (property.NameEquals("lastUpdateDateTime"u8))
                 {
-                    lastUpdateDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastUpdateDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    status = new ConversationActionState(prop.Value.GetString());
+                    status = new ConversationActionState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("taskName"u8))
+                if (property.NameEquals("taskName"u8))
                 {
-                    name = prop.Value.GetString();
+                    taskName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("kind"u8))
+                if (property.NameEquals("kind"u8))
                 {
-                    kind = new AnalyzeConversationOperationResultsKind(prop.Value.GetString());
+                    kind = new AnalyzeConversationOperationResultsKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new UnknownAnalyzeConversationOperationResult(lastUpdateDateTime, status, name, kind, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownAnalyzeConversationOperationResult(lastUpdateDateTime, status, taskName, kind, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AnalyzeConversationOperationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeConversationOperationResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AnalyzeConversationOperationResult IPersistableModel<AnalyzeConversationOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeConversationOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAnalyzeConversationOperationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeConversationOperationResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalyzeConversationOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownAnalyzeConversationOperationResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeUnknownAnalyzeConversationOperationResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnalyzeConversationOperationResult>(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Additional workflow properties.
-    /// Serialized Name: WorkflowEnvelopeProperties
-    /// </summary>
+    /// <summary> Additional workflow properties. </summary>
     public partial class WorkflowEnvelopeProperties
     {
         /// <summary>
@@ -49,24 +46,15 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowEnvelopeProperties"/>. </summary>
-        public WorkflowEnvelopeProperties()
+        internal WorkflowEnvelopeProperties()
         {
             Files = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowEnvelopeProperties"/>. </summary>
-        /// <param name="files">
-        /// Gets or sets the files.
-        /// Serialized Name: WorkflowEnvelopeProperties.files
-        /// </param>
-        /// <param name="flowState">
-        /// Gets or sets the state of the workflow.
-        /// Serialized Name: WorkflowEnvelopeProperties.flowState
-        /// </param>
-        /// <param name="health">
-        /// Gets or sets workflow health.
-        /// Serialized Name: WorkflowEnvelopeProperties.health
-        /// </param>
+        /// <param name="files"> Gets or sets the files. </param>
+        /// <param name="flowState"> Gets or sets the state of the workflow. </param>
+        /// <param name="health"> Gets or sets workflow health. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowEnvelopeProperties(IReadOnlyDictionary<string, BinaryData> files, WorkflowState? flowState, WorkflowHealth health, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,17 +63,44 @@ namespace Azure.ResourceManager.AppService.Models
             Health = health;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
         /// <summary>
-        /// Gets or sets the state of the workflow.
-        /// Serialized Name: WorkflowEnvelopeProperties.flowState
+        /// Gets or sets the files.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
+        [WirePath("files")]
+        public IReadOnlyDictionary<string, BinaryData> Files { get; }
+        /// <summary> Gets or sets the state of the workflow. </summary>
         [WirePath("flowState")]
-        public WorkflowState? FlowState { get; set; }
-        /// <summary>
-        /// Gets or sets workflow health.
-        /// Serialized Name: WorkflowEnvelopeProperties.health
-        /// </summary>
+        public WorkflowState? FlowState { get; }
+        /// <summary> Gets or sets workflow health. </summary>
         [WirePath("health")]
-        public WorkflowHealth Health { get; set; }
+        public WorkflowHealth Health { get; }
     }
 }

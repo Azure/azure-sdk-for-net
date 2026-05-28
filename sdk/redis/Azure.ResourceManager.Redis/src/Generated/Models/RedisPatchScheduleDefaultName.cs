@@ -7,60 +7,42 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> The name of the resource that is the target of a particular operation. For singleton resources, it must be 'Default'. </summary>
+    /// <summary> The RedisPatchScheduleDefaultName. </summary>
     public readonly partial struct RedisPatchScheduleDefaultName : IEquatable<RedisPatchScheduleDefaultName>
     {
         private readonly string _value;
-        /// <summary> The name of e.g. the patch schedules resource, which is a singleton, must always be 'Default'. </summary>
-        private const string DefaultValue = "default";
 
         /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleDefaultName"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisPatchScheduleDefaultName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The name of e.g. the patch schedules resource, which is a singleton, must always be 'Default'. </summary>
+        private const string DefaultValue = "default";
+
+        /// <summary> default. </summary>
         public static RedisPatchScheduleDefaultName Default { get; } = new RedisPatchScheduleDefaultName(DefaultValue);
-
         /// <summary> Determines if two <see cref="RedisPatchScheduleDefaultName"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisPatchScheduleDefaultName left, RedisPatchScheduleDefaultName right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RedisPatchScheduleDefaultName"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisPatchScheduleDefaultName left, RedisPatchScheduleDefaultName right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RedisPatchScheduleDefaultName"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisPatchScheduleDefaultName"/>. </summary>
         public static implicit operator RedisPatchScheduleDefaultName(string value) => new RedisPatchScheduleDefaultName(value);
 
-        /// <summary> Converts a string to a <see cref="RedisPatchScheduleDefaultName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RedisPatchScheduleDefaultName?(string value) => value == null ? null : new RedisPatchScheduleDefaultName(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisPatchScheduleDefaultName other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RedisPatchScheduleDefaultName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

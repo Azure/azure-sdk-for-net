@@ -10,69 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary>
-    /// Information about BI whose secondary RecoveryPoints are requested
-    /// Source region and
-    /// BI ARM path
-    /// </summary>
-    public partial class FetchSecondaryRPsRequestContent : IJsonModel<FetchSecondaryRPsRequestContent>
+    public partial class FetchSecondaryRPsRequestContent : IUtf8JsonSerializable, IJsonModel<FetchSecondaryRPsRequestContent>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FetchSecondaryRPsRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FetchSecondaryRPsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFetchSecondaryRPsRequestContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FetchSecondaryRPsRequestContent)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FetchSecondaryRPsRequestContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FetchSecondaryRPsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FetchSecondaryRPsRequestContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FetchSecondaryRPsRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FetchSecondaryRPsRequestContent IPersistableModel<FetchSecondaryRPsRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FetchSecondaryRPsRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="fetchSecondaryRPsRequestContent"> The <see cref="FetchSecondaryRPsRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(FetchSecondaryRPsRequestContent fetchSecondaryRPsRequestContent)
-        {
-            if (fetchSecondaryRPsRequestContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(fetchSecondaryRPsRequestContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FetchSecondaryRPsRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -84,11 +28,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FetchSecondaryRPsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FetchSecondaryRPsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FetchSecondaryRPsRequestContent)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(SourceRegion))
             {
                 writer.WritePropertyName("sourceRegion"u8);
@@ -99,15 +44,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("sourceBackupInstanceId"u8);
                 writer.WriteStringValue(SourceBackupInstanceId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,60 +61,88 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FetchSecondaryRPsRequestContent IJsonModel<FetchSecondaryRPsRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FetchSecondaryRPsRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FetchSecondaryRPsRequestContent IJsonModel<FetchSecondaryRPsRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FetchSecondaryRPsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FetchSecondaryRPsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FetchSecondaryRPsRequestContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFetchSecondaryRPsRequestContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FetchSecondaryRPsRequestContent DeserializeFetchSecondaryRPsRequestContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static FetchSecondaryRPsRequestContent DeserializeFetchSecondaryRPsRequestContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AzureLocation? sourceRegion = default;
             ResourceIdentifier sourceBackupInstanceId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("sourceRegion"u8))
+                if (property.NameEquals("sourceRegion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceRegion = new AzureLocation(prop.Value.GetString());
+                    sourceRegion = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sourceBackupInstanceId"u8))
+                if (property.NameEquals("sourceBackupInstanceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceBackupInstanceId = new ResourceIdentifier(prop.Value.GetString());
+                    sourceBackupInstanceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new FetchSecondaryRPsRequestContent(sourceRegion, sourceBackupInstanceId, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FetchSecondaryRPsRequestContent(sourceRegion, sourceBackupInstanceId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FetchSecondaryRPsRequestContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FetchSecondaryRPsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FetchSecondaryRPsRequestContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FetchSecondaryRPsRequestContent IPersistableModel<FetchSecondaryRPsRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FetchSecondaryRPsRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeFetchSecondaryRPsRequestContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FetchSecondaryRPsRequestContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FetchSecondaryRPsRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

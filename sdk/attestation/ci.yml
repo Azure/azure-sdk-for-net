@@ -12,6 +12,19 @@ trigger:
     exclude:
     - sdk/attestation/Azure.ResourceManager.Attestation/
 
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/attestation/
+    exclude:
+    - sdk/attestation/Azure.ResourceManager.Attestation/
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

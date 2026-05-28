@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RedisEnterprise;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RedisEnterprise.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableRedisEnterpriseResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableRedisEnterpriseResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableRedisEnterpriseResourceGroupResource"/> class for mocking. </summary>
         protected MockableRedisEnterpriseResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableRedisEnterpriseResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableRedisEnterpriseResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRedisEnterpriseResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of RedisEnterpriseClusters in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of RedisEnterpriseClusters and their operations over a RedisEnterpriseClusterResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of RedisEnterpriseClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of RedisEnterpriseClusterResources and their operations over a RedisEnterpriseClusterResource. </returns>
         public virtual RedisEnterpriseClusterCollection GetRedisEnterpriseClusters()
         {
             return GetCachedClient(client => new RedisEnterpriseClusterCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// Gets information about a Redis Enterprise cluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<RedisEnterpriseClusterResource>> GetRedisEnterpriseClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
             return await GetRedisEnterpriseClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// Gets information about a Redis Enterprise cluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         [ForwardsClientCalls]
         public virtual Response<RedisEnterpriseClusterResource> GetRedisEnterpriseCluster(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
             return GetRedisEnterpriseClusters().Get(clusterName, cancellationToken);
         }
     }

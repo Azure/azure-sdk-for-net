@@ -74,18 +74,18 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
     },
 };
 
-Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextJobState analyzeTextJobState = response.Value;
+AnalyzeTextOperationState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
 {
-    if (taskResult is EntityRecognitionOperationResult)
+    if (analyzeTextLROResult is EntityRecognitionOperationResult)
     {
-        EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)taskResult;
+        EntityRecognitionOperationResult entityRecognitionLROResult = (EntityRecognitionOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (EntityActionResultWithMetadata nerResult in EntityRecognitionOperationResult.Results.Documents)
+        foreach (EntityActionResultWithMetadata nerResult in entityRecognitionLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 
@@ -109,7 +109,7 @@ foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Item
             Console.WriteLine();
         }
         // View the errors in the document
-        foreach (DocumentError error in EntityRecognitionOperationResult.Results.Errors)
+        foreach (DocumentError error in entityRecognitionLROResult.Results.Errors)
         {
             Console.WriteLine($"  Error in document: {error.Id}!");
             Console.WriteLine($"  Document error: {error.Error}");
@@ -117,9 +117,9 @@ foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Item
         }
     }
 
-    if (taskResult is KeyPhraseExtractionOperationResult)
+    if (analyzeTextLROResult is KeyPhraseExtractionOperationResult)
     {
-        KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)taskResult;
+        KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
         foreach (KeyPhrasesActionResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)

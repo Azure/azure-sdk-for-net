@@ -40,7 +40,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static Azure.Communication.ShortCodes.Models.BillingFrequency Monthly { get { throw null; } }
         public static Azure.Communication.ShortCodes.Models.BillingFrequency Once { get { throw null; } }
         public bool Equals(Azure.Communication.ShortCodes.Models.BillingFrequency other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.ShortCodes.Models.BillingFrequency left, Azure.Communication.ShortCodes.Models.BillingFrequency right) { throw null; }
         public static implicit operator Azure.Communication.ShortCodes.Models.BillingFrequency (string value) { throw null; }
@@ -121,7 +123,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static Azure.Communication.ShortCodes.Models.MessageContentCategory Voting { get { throw null; } }
         public static Azure.Communication.ShortCodes.Models.MessageContentCategory WallpaperScreensaver { get { throw null; } }
         public bool Equals(Azure.Communication.ShortCodes.Models.MessageContentCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.ShortCodes.Models.MessageContentCategory left, Azure.Communication.ShortCodes.Models.MessageContentCategory right) { throw null; }
         public static implicit operator Azure.Communication.ShortCodes.Models.MessageContentCategory (string value) { throw null; }
@@ -150,7 +154,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static Azure.Communication.ShortCodes.Models.MessageDirection FromUser { get { throw null; } }
         public static Azure.Communication.ShortCodes.Models.MessageDirection ToUser { get { throw null; } }
         public bool Equals(Azure.Communication.ShortCodes.Models.MessageDirection other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.ShortCodes.Models.MessageDirection left, Azure.Communication.ShortCodes.Models.MessageDirection right) { throw null; }
         public static implicit operator Azure.Communication.ShortCodes.Models.MessageDirection (string value) { throw null; }
@@ -166,7 +172,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static Azure.Communication.ShortCodes.Models.MessageDirectionality OneWay { get { throw null; } }
         public static Azure.Communication.ShortCodes.Models.MessageDirectionality TwoWay { get { throw null; } }
         public bool Equals(Azure.Communication.ShortCodes.Models.MessageDirectionality other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.ShortCodes.Models.MessageDirectionality left, Azure.Communication.ShortCodes.Models.MessageDirectionality right) { throw null; }
         public static implicit operator Azure.Communication.ShortCodes.Models.MessageDirectionality (string value) { throw null; }
@@ -193,7 +201,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static Azure.Communication.ShortCodes.Models.MessageProtocol Mms { get { throw null; } }
         public static Azure.Communication.ShortCodes.Models.MessageProtocol Sms { get { throw null; } }
         public bool Equals(Azure.Communication.ShortCodes.Models.MessageProtocol other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.ShortCodes.Models.MessageProtocol left, Azure.Communication.ShortCodes.Models.MessageProtocol right) { throw null; }
         public static implicit operator Azure.Communication.ShortCodes.Models.MessageProtocol (string value) { throw null; }
@@ -209,7 +219,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static Azure.Communication.ShortCodes.Models.MessageRecurrence Subscription { get { throw null; } }
         public static Azure.Communication.ShortCodes.Models.MessageRecurrence Transaction { get { throw null; } }
         public bool Equals(Azure.Communication.ShortCodes.Models.MessageRecurrence other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.ShortCodes.Models.MessageRecurrence left, Azure.Communication.ShortCodes.Models.MessageRecurrence right) { throw null; }
         public static implicit operator Azure.Communication.ShortCodes.Models.MessageRecurrence (string value) { throw null; }
@@ -225,7 +237,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static Azure.Communication.ShortCodes.Models.NumberType AlphaId { get { throw null; } }
         public static Azure.Communication.ShortCodes.Models.NumberType ShortCode { get { throw null; } }
         public bool Equals(Azure.Communication.ShortCodes.Models.NumberType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.ShortCodes.Models.NumberType left, Azure.Communication.ShortCodes.Models.NumberType right) { throw null; }
         public static implicit operator Azure.Communication.ShortCodes.Models.NumberType (string value) { throw null; }
@@ -245,7 +259,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static Azure.Communication.ShortCodes.Models.ProgramBriefStatus Submitted { get { throw null; } }
         public static Azure.Communication.ShortCodes.Models.ProgramBriefStatus UpdateProgramBrief { get { throw null; } }
         public bool Equals(Azure.Communication.ShortCodes.Models.ProgramBriefStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.ShortCodes.Models.ProgramBriefStatus left, Azure.Communication.ShortCodes.Models.ProgramBriefStatus right) { throw null; }
         public static implicit operator Azure.Communication.ShortCodes.Models.ProgramBriefStatus (string value) { throw null; }
@@ -279,7 +295,9 @@ namespace Azure.Communication.ShortCodes.Models
         public static Azure.Communication.ShortCodes.Models.ProgramSignUpType Sms { get { throw null; } }
         public static Azure.Communication.ShortCodes.Models.ProgramSignUpType Website { get { throw null; } }
         public bool Equals(Azure.Communication.ShortCodes.Models.ProgramSignUpType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.ShortCodes.Models.ProgramSignUpType left, Azure.Communication.ShortCodes.Models.ProgramSignUpType right) { throw null; }
         public static implicit operator Azure.Communication.ShortCodes.Models.ProgramSignUpType (string value) { throw null; }

@@ -22,24 +22,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const string CustomEventAttributeName = "microsoft.custom_event.name";
         private const string ClientIpAttributeName = "microsoft.client.ip";
-        private const string EndUserPseudoIdAttributeName = "enduser.pseudo.id";
-        private const string EndUserIdAttributeName = "enduser.id";
-        private const string UserAgentOriginalAttributeName = "user_agent.original";
-        private const string OperationNameAttributeName = "microsoft.operation_name";
-        private const string SessionIdAttributeName = "microsoft.session.id";
-        private const string DeviceIdAttributeName = "ai.device.id";
-        private const string DeviceModelAttributeName = "ai.device.model";
-        private const string DeviceTypeAttributeName = "ai.device.type";
-        private const string DeviceOsVersionAttributeName = "ai.device.osVersion";
-        private const string SyntheticSourceAttributeName = "microsoft.synthetic_source";
-        private const string UserAccountIdAttributeName = "microsoft.user.account_id";
-        private const string AvailabilityIdAttributeName = "microsoft.availability.id";
-        private const string AvailabilityNameAttributeName = "microsoft.availability.name";
-        private const string AvailabilityDurationAttributeName = "microsoft.availability.duration";
-        private const string AvailabilitySuccessAttributeName = "microsoft.availability.success";
-        private const string AvailabilityRunLocationAttributeName = "microsoft.availability.runLocation";
-        private const string AvailabilityMessageAttributeName = "microsoft.availability.message";
-        private const string AvailabilityTestTimestampAttributeName = "microsoft.availability.testTimestamp";
         private const int Version = 2;
         private static readonly Action<LogRecordScope, IDictionary<string, string>> s_processScope = (scope, properties) =>
         {
@@ -57,11 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         if (!properties.ContainsKey(scopeItem.Key))
                         {
-                            var maxValueLength = SchemaConstants.GenAiProperties.Contains(scopeItem.Key)
-                                ? SchemaConstants.GenAi_Properties_MaxValueLength
-                                : SchemaConstants.MessageData_Properties_MaxValueLength;
-                            var stringValue = Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(maxValueLength)!;
-                            properties.Add(scopeItem.Key, stringValue);
+                            properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
                         }
                     }
                     catch (Exception ex)
@@ -74,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
         {
-            List<TelemetryItem> telemetryItems = new List<TelemetryItem>(capacity: (int)batchLogRecord.Count);
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
             TelemetryItem telemetryItem;
 
@@ -83,11 +61,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 try
                 {
                     var properties = new ChangeTrackingDictionary<string, string>();
-                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo);
+                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out string? microsoftClientIp);
 
                     if (logRecord.Exception is not null)
                     {
-                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey, logContext)
+                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey, microsoftClientIp)
                         {
                             Data = new MonitorBase
                             {
@@ -99,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else if (eventName is not null)
                     {
-                        telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey, logContext)
+                        telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey, microsoftClientIp)
                         {
                             Data = new MonitorBase
                             {
@@ -109,30 +87,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         };
                         telemetrySchemaTypeCounter._eventCount++;
                     }
-                    else if (availabilityInfo is not null)
-                    {
-                        DateTimeOffset envelopeTime = availabilityInfo.Value.TestTimestamp != null
-                            && DateTimeOffset.TryParse(
-                                availabilityInfo.Value.TestTimestamp,
-                                CultureInfo.InvariantCulture,
-                                System.Globalization.DateTimeStyles.RoundtripKind,
-                                out var parsedTs)
-                            ? parsedTs.ToUniversalTime()
-                            : TelemetryItem.FormatUtcTimestamp(logRecord.Timestamp);
-
-                        telemetryItem = new TelemetryItem("Availability", envelopeTime, logRecord, resource, instrumentationKey, logContext)
-                        {
-                            Data = new MonitorBase
-                            {
-                                BaseType = "AvailabilityData",
-                                BaseData = new AvailabilityData(Version, availabilityInfo.Value, properties, logRecord),
-                            }
-                        };
-                        telemetrySchemaTypeCounter._availabilityCount++;
-                    }
                     else
                     {
-                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey, logContext)
+                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey, microsoftClientIp)
                         {
                             Data = new MonitorBase
                             {
@@ -154,123 +111,64 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return (telemetryItems, telemetrySchemaTypeCounter);
         }
 
-        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo)
+        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out string? microsoftClientIp)
         {
             eventName = null;
-            availabilityInfo = null;
             message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
-            logContext = default;
-            bool hasAvailabilityData = false;
+            microsoftClientIp = null;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
-                switch (item.Key)
+                if (item.Key == CustomEventAttributeName)
                 {
-                    case CustomEventAttributeName:
-                        eventName = item.Value?.ToString();
-                        break;
-                    case AvailabilityNameAttributeName:
-                        hasAvailabilityData = true;
-                        break;
-                    case ClientIpAttributeName:
-                        logContext.MicrosoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength);
-                        break;
-                    case EndUserPseudoIdAttributeName:
-                        logContext.EndUserPseudoId = item.Value?.ToString();
-                        break;
-                    case EndUserIdAttributeName:
-                        logContext.EndUserId = item.Value?.ToString();
-                        break;
-                    case UserAgentOriginalAttributeName:
-                        logContext.UserAgent = item.Value?.ToString();
-                        break;
-                    case OperationNameAttributeName:
-                        logContext.OperationName = item.Value?.ToString();
-                        break;
-                    case SessionIdAttributeName:
-                        logContext.SessionId = item.Value?.ToString();
-                        break;
-                    case DeviceIdAttributeName:
-                        logContext.DeviceId = item.Value?.ToString();
-                        break;
-                    case DeviceModelAttributeName:
-                        logContext.DeviceModel = item.Value?.ToString();
-                        break;
-                    case DeviceTypeAttributeName:
-                        logContext.DeviceType = item.Value?.ToString();
-                        break;
-                    case DeviceOsVersionAttributeName:
-                        logContext.DeviceOsVersion = item.Value?.ToString();
-                        break;
-                    case SyntheticSourceAttributeName:
-                        logContext.SyntheticSource = item.Value?.ToString();
-                        break;
-                    case UserAccountIdAttributeName:
-                        logContext.UserAccountId = item.Value?.ToString();
-                        break;
-                    default:
-                        // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
-                        if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)
+                    eventName = item.Value?.ToString();
+                }
+
+                else if (item.Key == ClientIpAttributeName)
+                {
+                    microsoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength);
+                }
+                // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
+                else if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)
+                {
+                    try
+                    {
+                        if (item.Key == "{OriginalFormat}")
                         {
-                            try
+                            if (logRecord.Exception?.Message != null)
                             {
-                                if (item.Key == "{OriginalFormat}")
-                                {
-                                    if (logRecord.Exception?.Message != null)
-                                    {
-                                        properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
-                                    }
-                                    else if (message == null)
-                                    {
-                                        message = item.Value.ToString();
-                                    }
-                                }
-                                else
-                                {
-                                    if (!properties.ContainsKey(item.Key))
-                                    {
-                                        var maxValueLength = SchemaConstants.GenAiProperties.Contains(item.Key)
-                                            ? SchemaConstants.GenAi_Properties_MaxValueLength
-                                            : SchemaConstants.MessageData_Properties_MaxValueLength;
-                                        var stringValue = item.Value.ToString().Truncate(maxValueLength)!;
-                                        properties.Add(item.Key, stringValue);
-                                    }
-                                }
+                                properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
                             }
-                            catch (Exception ex)
+                            else if (message == null)
                             {
-                                AzureMonitorExporterEventSource.Log.FailedToAddLogAttribute(item.Key, ex);
+                                message = item.Value.ToString();
                             }
                         }
-
-                        break;
+                        else
+                        {
+                            if (!properties.ContainsKey(item.Key))
+                            {
+                                properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.FailedToAddLogAttribute(item.Key, ex);
+                    }
                 }
-
-                if (hasAvailabilityData)
-                {
-                    break;
-                }
-            }
-
-            // If we detected availability data, do a second pass to extract all availability attributes
-            if (hasAvailabilityData)
-            {
-                availabilityInfo = ExtractAvailabilityInfo(logRecord, properties, message, out logContext);
             }
 
             logRecord.ForEachScope(s_processScope, properties);
 
-            if (availabilityInfo is null)
+            if (eventName is null) // we will omit the following properties if we've detected a custom event.
             {
                 var categoryName = logRecord.CategoryName;
                 if (!properties.ContainsKey("CategoryName") && !string.IsNullOrEmpty(categoryName))
                 {
                     properties.Add("CategoryName", categoryName.Truncate(SchemaConstants.KVP_MaxValueLength)!);
                 }
-            }
 
-            if (eventName is null && availabilityInfo is null) // we will omit the following properties if we've detected a custom event or availability.
-            {
                 if (!properties.ContainsKey("EventId") && logRecord.EventId.Id != 0)
                 {
                     properties.Add("EventId", logRecord.EventId.Id.ToString(CultureInfo.InvariantCulture));
@@ -281,107 +179,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     properties.Add("EventName", logRecord.EventId.Name!.Truncate(SchemaConstants.KVP_MaxValueLength));
                 }
             }
-        }
-
-        private static AvailabilityInfo? ExtractAvailabilityInfo(LogRecord logRecord, IDictionary<string, string> properties, string? message, out LogContextInfo logContext)
-        {
-            string? availabilityId = null;
-            string? availabilityName = null;
-            string? availabilityDuration = null;
-            string? availabilitySuccess = null;
-            string? availabilityRunLocation = null;
-            string? availabilityMessage = null;
-            string? availabilityTestTimestamp = null;
-            logContext = default;
-
-            foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
-            {
-                switch (item.Key)
-                {
-                    case AvailabilityIdAttributeName:
-                        availabilityId = item.Value?.ToString();
-                        break;
-                    case AvailabilityNameAttributeName:
-                        availabilityName = item.Value?.ToString();
-                        break;
-                    case AvailabilityDurationAttributeName:
-                        availabilityDuration = item.Value?.ToString();
-                        break;
-                    case AvailabilitySuccessAttributeName:
-                        availabilitySuccess = item.Value?.ToString();
-                        break;
-                    case AvailabilityRunLocationAttributeName:
-                        availabilityRunLocation = item.Value?.ToString();
-                        break;
-                    case AvailabilityMessageAttributeName:
-                        availabilityMessage = item.Value?.ToString();
-                        break;
-                    case AvailabilityTestTimestampAttributeName:
-                        availabilityTestTimestamp = item.Value?.ToString();
-                        break;
-                    case ClientIpAttributeName:
-                        logContext.MicrosoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.AvailabilityData_Properties_MaxValueLength);
-                        break;
-                    case EndUserPseudoIdAttributeName:
-                        logContext.EndUserPseudoId = item.Value?.ToString();
-                        break;
-                    case EndUserIdAttributeName:
-                        logContext.EndUserId = item.Value?.ToString();
-                        break;
-                    case UserAgentOriginalAttributeName:
-                        logContext.UserAgent = item.Value?.ToString();
-                        break;
-                    case OperationNameAttributeName:
-                        logContext.OperationName = item.Value?.ToString();
-                        break;
-                    case SessionIdAttributeName:
-                        logContext.SessionId = item.Value?.ToString();
-                        break;
-                    case DeviceIdAttributeName:
-                        logContext.DeviceId = item.Value?.ToString();
-                        break;
-                    case DeviceModelAttributeName:
-                        logContext.DeviceModel = item.Value?.ToString();
-                        break;
-                    case DeviceTypeAttributeName:
-                        logContext.DeviceType = item.Value?.ToString();
-                        break;
-                    case DeviceOsVersionAttributeName:
-                        logContext.DeviceOsVersion = item.Value?.ToString();
-                        break;
-                    case SyntheticSourceAttributeName:
-                        logContext.SyntheticSource = item.Value?.ToString();
-                        break;
-                    case UserAccountIdAttributeName:
-                        logContext.UserAccountId = item.Value?.ToString();
-                        break;
-                    default:
-                        if (item.Key.Length <= SchemaConstants.AvailabilityData_Properties_MaxValueLength && item.Value != null && !properties.ContainsKey(item.Key))
-                        {
-                            properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.AvailabilityData_Properties_MaxValueLength)!);
-                        }
-
-                        break;
-                }
-            }
-
-            // Construct availability info if we have required fields
-            if (!string.IsNullOrEmpty(availabilityId) && !string.IsNullOrEmpty(availabilityName) &&
-                !string.IsNullOrEmpty(availabilityDuration) && !string.IsNullOrEmpty(availabilitySuccess))
-            {
-                return new AvailabilityInfo
-                {
-                    Id = availabilityId!,
-                    Name = availabilityName!,
-                    Duration = availabilityDuration!,
-                    Success = bool.TryParse(availabilitySuccess, out var success) ? success : false,
-                    RunLocation = availabilityRunLocation,
-                    Message = availabilityMessage ?? message,
-                    TestTimestamp = availabilityTestTimestamp
-                };
-            }
-
-            return null;
         }
 
         internal static string GetProblemId(Exception exception)
@@ -446,19 +243,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return SeverityLevel.Verbose;
             }
         }
-    }
-
-    /// <summary>
-    /// Struct to hold availability test information extracted from log attributes.
-    /// </summary>
-    internal struct AvailabilityInfo
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Duration { get; set; }
-        public bool Success { get; set; }
-        public string? RunLocation { get; set; }
-        public string? Message { get; set; }
-        public string? TestTimestamp { get; set; }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,8 +16,6 @@ namespace _Type.Property.AdditionalProperties
     public partial class SpreadString
     {
         protected SpreadString() => throw null;
-
-        internal SpreadString(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

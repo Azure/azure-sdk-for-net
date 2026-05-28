@@ -43,19 +43,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal NamespaceUpdateProperties Properties { get; set; }
-
-        /// <summary> Dictionary of messaging endpoints. </summary>
-        public IDictionary<string, MessagingEndpoint> NamespaceUpdateMessagingEndpoints
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NamespaceUpdateProperties();
-                }
-                return Properties.MessagingEndpoints;
-            }
-        }
+        public NamespaceUpdateProperties Properties { get; set; }
     }
 }

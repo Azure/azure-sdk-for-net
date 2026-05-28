@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.Core.Foundations
 {
     /// <summary> Paged collection of Connection items. </summary>
     internal partial class PagedConnection

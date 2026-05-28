@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -16,8 +15,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class OAuth2AuthTypeConnectionProperties : CognitiveServicesConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="OAuth2AuthTypeConnectionProperties"/>. </summary>
-        public OAuth2AuthTypeConnectionProperties() : base(ConnectionAuthType.OAuth2)
+        public OAuth2AuthTypeConnectionProperties()
         {
+            AuthType = ConnectionAuthType.OAuth2;
         }
 
         /// <summary> Initializes a new instance of <see cref="OAuth2AuthTypeConnectionProperties"/>. </summary>
@@ -34,14 +34,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sharedUserList"></param>
         /// <param name="target"> The connection URL to be used. </param>
         /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials">
         /// ClientId and ClientSecret are required. Other properties are optional
         /// depending on each OAuth2 provider's implementation.
         /// </param>
-        internal OAuth2AuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? @group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesConnectionOAuth2 credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, @group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, additionalBinaryDataProperties)
+        internal OAuth2AuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, CognitiveServicesConnectionOAuth2 credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
         {
             Credentials = credentials;
+            AuthType = authType;
         }
 
         /// <summary>

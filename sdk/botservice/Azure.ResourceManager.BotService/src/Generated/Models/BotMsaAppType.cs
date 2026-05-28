@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.BotService.Models
     public readonly partial struct BotMsaAppType : IEquatable<BotMsaAppType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="BotMsaAppType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BotMsaAppType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UserAssignedMSIValue = "UserAssignedMSI";
         private const string SingleTenantValue = "SingleTenant";
         private const string MultiTenantValue = "MultiTenant";
 
-        /// <summary> Initializes a new instance of <see cref="BotMsaAppType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BotMsaAppType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the UserAssignedMSI. </summary>
+        /// <summary> UserAssignedMSI. </summary>
         public static BotMsaAppType UserAssignedMSI { get; } = new BotMsaAppType(UserAssignedMSIValue);
-
-        /// <summary> Gets the SingleTenant. </summary>
+        /// <summary> SingleTenant. </summary>
         public static BotMsaAppType SingleTenant { get; } = new BotMsaAppType(SingleTenantValue);
-
-        /// <summary> Gets the MultiTenant. </summary>
+        /// <summary> MultiTenant. </summary>
         public static BotMsaAppType MultiTenant { get; } = new BotMsaAppType(MultiTenantValue);
-
         /// <summary> Determines if two <see cref="BotMsaAppType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BotMsaAppType left, BotMsaAppType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BotMsaAppType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BotMsaAppType left, BotMsaAppType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BotMsaAppType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BotMsaAppType"/>. </summary>
         public static implicit operator BotMsaAppType(string value) => new BotMsaAppType(value);
 
-        /// <summary> Converts a string to a <see cref="BotMsaAppType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BotMsaAppType?(string value) => value == null ? null : new BotMsaAppType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BotMsaAppType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BotMsaAppType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

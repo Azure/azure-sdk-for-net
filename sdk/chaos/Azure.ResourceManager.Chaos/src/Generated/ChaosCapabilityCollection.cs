@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Chaos
 {
@@ -24,38 +25,51 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class ChaosCapabilityCollection : ArmCollection, IEnumerable<ChaosCapabilityResource>, IAsyncEnumerable<ChaosCapabilityResource>
     {
-        private readonly ClientDiagnostics _capabilitiesClientDiagnostics;
-        private readonly Capabilities _capabilitiesRestClient;
+        private readonly ClientDiagnostics _chaosCapabilityCapabilitiesClientDiagnostics;
+        private readonly CapabilitiesRestOperations _chaosCapabilityCapabilitiesRestClient;
 
-        /// <summary> Initializes a new instance of ChaosCapabilityCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityCollection"/> class for mocking. </summary>
         protected ChaosCapabilityCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ChaosCapabilityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ChaosCapabilityResource.ResourceType, out string chaosCapabilityApiVersion);
-            _capabilitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosCapabilityResource.ResourceType.Namespace, Diagnostics);
-            _capabilitiesRestClient = new Capabilities(_capabilitiesClientDiagnostics, Pipeline, Endpoint, chaosCapabilityApiVersion ?? "2025-01-01");
+            _chaosCapabilityCapabilitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosCapabilityResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ChaosCapabilityResource.ResourceType, out string chaosCapabilityCapabilitiesApiVersion);
+            _chaosCapabilityCapabilitiesRestClient = new CapabilitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosCapabilityCapabilitiesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
+        }
+
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ChaosTargetResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ChaosTargetResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a Capability resource that extends a Target resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Capabilities_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Capability_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosCapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -63,31 +77,23 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="data"> Capability resource to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ChaosCapabilityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string capabilityName, ChaosCapabilityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.CreateOrUpdate");
+            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, ChaosCapabilityData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ChaosArmOperation<ChaosCapabilityResource> operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _chaosCapabilityCapabilitiesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _chaosCapabilityCapabilitiesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -101,16 +107,20 @@ namespace Azure.ResourceManager.Chaos
         /// Create or update a Capability resource that extends a Target resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Capabilities_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Capability_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosCapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,31 +128,23 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="data"> Capability resource to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ChaosCapabilityResource> CreateOrUpdate(WaitUntil waitUntil, string capabilityName, ChaosCapabilityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.CreateOrUpdate");
+            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _capabilitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, ChaosCapabilityData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ChaosArmOperation<ChaosCapabilityResource> operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _chaosCapabilityCapabilitiesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data, cancellationToken);
+                var uri = _chaosCapabilityCapabilitiesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -156,42 +158,38 @@ namespace Azure.ResourceManager.Chaos
         /// Get a Capability resource that extends a Target resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Capabilities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Capability_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosCapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         public virtual async Task<Response<ChaosCapabilityResource>> GetAsync(string capabilityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.Get");
+            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
+                var response = await _chaosCapabilityCapabilitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ChaosCapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,42 +203,38 @@ namespace Azure.ResourceManager.Chaos
         /// Get a Capability resource that extends a Target resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Capabilities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Capability_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosCapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         public virtual Response<ChaosCapabilityResource> Get(string capabilityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.Get");
+            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ChaosCapabilityData> response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
+                var response = _chaosCapabilityCapabilitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ChaosCapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,128 +248,98 @@ namespace Azure.ResourceManager.Chaos
         /// Get a list of Capability resources that extend a Target resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Capabilities_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Capability_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosCapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ChaosCapabilityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ChaosCapabilityResource> GetAllAsync(string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ChaosCapabilityResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ChaosCapabilityResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ChaosCapabilityData, ChaosCapabilityResource>(new CapabilitiesGetAllAsyncCollectionResultOfT(
-                _capabilitiesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.ResourceType.Namespace,
-                Id.Parent.ResourceType.Type,
-                Id.Parent.Name,
-                Id.Name,
-                continuationToken,
-                context,
-                "ChaosCapabilityCollection.GetAll"), data => new ChaosCapabilityResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosCapabilityCapabilitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosCapabilityCapabilitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosCapabilityResource(Client, ChaosCapabilityData.DeserializeChaosCapabilityData(e)), _chaosCapabilityCapabilitiesClientDiagnostics, Pipeline, "ChaosCapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get a list of Capability resources that extend a Target resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Capabilities_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Capability_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosCapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ChaosCapabilityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ChaosCapabilityResource> GetAll(string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ChaosCapabilityResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ChaosCapabilityData, ChaosCapabilityResource>(new CapabilitiesGetAllCollectionResultOfT(
-                _capabilitiesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.ResourceType.Namespace,
-                Id.Parent.ResourceType.Type,
-                Id.Parent.Name,
-                Id.Name,
-                continuationToken,
-                context,
-                "ChaosCapabilityCollection.GetAll"), data => new ChaosCapabilityResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosCapabilityCapabilitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosCapabilityCapabilitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosCapabilityResource(Client, ChaosCapabilityData.DeserializeChaosCapabilityData(e)), _chaosCapabilityCapabilitiesClientDiagnostics, Pipeline, "ChaosCapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Capabilities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Capability_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosCapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string capabilityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.Exists");
+            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ChaosCapabilityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ChaosCapabilityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _chaosCapabilityCapabilitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,50 +353,36 @@ namespace Azure.ResourceManager.Chaos
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Capabilities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Capability_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosCapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         public virtual Response<bool> Exists(string capabilityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.Exists");
+            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ChaosCapabilityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ChaosCapabilityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _chaosCapabilityCapabilitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -446,54 +396,38 @@ namespace Azure.ResourceManager.Chaos
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Capabilities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Capability_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosCapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         public virtual async Task<NullableResponse<ChaosCapabilityResource>> GetIfExistsAsync(string capabilityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.GetIfExists");
+            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ChaosCapabilityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ChaosCapabilityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _chaosCapabilityCapabilitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ChaosCapabilityResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ChaosCapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -507,54 +441,38 @@ namespace Azure.ResourceManager.Chaos
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}/capabilities/{capabilityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Capabilities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Capability_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ChaosCapabilityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         public virtual NullableResponse<ChaosCapabilityResource> GetIfExists(string capabilityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.GetIfExists");
+            using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, capabilityName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ChaosCapabilityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ChaosCapabilityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ChaosCapabilityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _chaosCapabilityCapabilitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ChaosCapabilityResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ChaosCapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -574,7 +492,6 @@ namespace Azure.ResourceManager.Chaos
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ChaosCapabilityResource> IAsyncEnumerable<ChaosCapabilityResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

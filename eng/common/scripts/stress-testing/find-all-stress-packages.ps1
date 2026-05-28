@@ -31,10 +31,8 @@ function FindStressPackages(
     $filters['stressTest'] = 'true'
     $packages = @()
     $chartFiles = Get-ChildItem -Recurse -Filter 'Chart.yaml' $directory
-    if ($chartFiles) {
-        Write-Host "Found chart files:"
-        Write-Host ($chartFiles -join "`n")
-    }
+    Write-Host "Found chart files:"
+    Write-Host ($chartFiles -join "`n")
 
     if (!$MatrixFileName) {
         $MatrixFileName = 'scenarios-matrix.yaml'

@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Tests
 
         private SearchClient CreateTestClient(HttpPipelineTransport transport)
         {
-            var options = new SearchClientOptions(SearchClientOptions.LatestVersion)
+            var options = new SearchClientOptions(SearchClientOptions.ServiceVersion.V2023_11_01)
             {
                 Transport = transport
             };
@@ -73,9 +73,9 @@ namespace Azure.Search.Documents.Tests
                 MakeValueFacet(1, "Budget"));
         }
 
-        public FacetResult MakeValueFacet(int count, object value) => SearchModelFactory.FacetResult(count, additionalProperties: new Dictionary<string, BinaryData>()
+        public FacetResult MakeValueFacet(int count, object value) => SearchModelFactory.FacetResult(count, new Dictionary<string, object>()
         {
-            ["value"] = BinaryData.FromObjectAsJson(value)
+            ["value"] = value
         });
 
         private void AssertFacetsEqual(ICollection<FacetResult> actualFacets, params FacetResult[] expectedFacets)

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct SkipShutdown : IEquatable<SkipShutdown>
     {
         private readonly string _value;
-        /// <summary> Skip the graceful OS shutdown and power off the virtual machine immediately. </summary>
-        private const string TrueValue = "True";
-        /// <summary> Do not skip the graceful OS shutdown. </summary>
-        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="SkipShutdown"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SkipShutdown(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Skip the graceful OS shutdown and power off the virtual machine immediately. </summary>
+        private const string TrueValue = "True";
+        private const string FalseValue = "False";
+
+        /// <summary> True. </summary>
         public static SkipShutdown True { get; } = new SkipShutdown(TrueValue);
-
-        /// <summary> Do not skip the graceful OS shutdown. </summary>
+        /// <summary> False. </summary>
         public static SkipShutdown False { get; } = new SkipShutdown(FalseValue);
-
         /// <summary> Determines if two <see cref="SkipShutdown"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SkipShutdown left, SkipShutdown right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SkipShutdown"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SkipShutdown left, SkipShutdown right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SkipShutdown"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SkipShutdown"/>. </summary>
         public static implicit operator SkipShutdown(string value) => new SkipShutdown(value);
 
-        /// <summary> Converts a string to a <see cref="SkipShutdown"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SkipShutdown?(string value) => value == null ? null : new SkipShutdown(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SkipShutdown other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SkipShutdown other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

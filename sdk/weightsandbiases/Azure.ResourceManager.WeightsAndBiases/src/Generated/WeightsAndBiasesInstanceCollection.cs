@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WeightsAndBiases
 {
     /// <summary>
     /// A class representing a collection of <see cref="WeightsAndBiasesInstanceResource"/> and their operations.
-    /// Each <see cref="WeightsAndBiasesInstanceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="WeightsAndBiasesInstanceCollection"/> instance call the GetWeightsAndBiasesInstances method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="WeightsAndBiasesInstanceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="WeightsAndBiasesInstanceCollection"/> instance call the GetWeightsAndBiasesInstances method from an instance of the parent resource.
     /// </summary>
     public partial class WeightsAndBiasesInstanceCollection : ArmCollection, IEnumerable<WeightsAndBiasesInstanceResource>, IAsyncEnumerable<WeightsAndBiasesInstanceResource>
     {
@@ -51,27 +51,11 @@ namespace Azure.ResourceManager.WeightsAndBiases
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Create a InstanceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instances_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-18. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a InstanceResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -113,23 +97,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary>
-        /// Create a InstanceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instances_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-18. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a InstanceResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -171,23 +139,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary>
-        /// Get a InstanceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instances_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-18. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a InstanceResource. </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
@@ -220,23 +172,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary>
-        /// Get a InstanceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instances_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-18. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a InstanceResource. </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
@@ -269,23 +205,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary>
-        /// List InstanceResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instances_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-18. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List InstanceResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WeightsAndBiasesInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -294,26 +214,10 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupAsyncCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WeightsAndBiasesInstanceCollection.GetAll"), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupAsyncCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
-        /// <summary>
-        /// List InstanceResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instances_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-18. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List InstanceResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WeightsAndBiasesInstanceResource> GetAll(CancellationToken cancellationToken = default)
@@ -322,26 +226,10 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WeightsAndBiasesInstanceCollection.GetAll"), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instances_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-18. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
@@ -382,23 +270,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instances_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-18. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
@@ -439,23 +311,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instances_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-18. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>
@@ -500,23 +356,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances/{instancename}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Instances_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-18. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="instancename"> Name of the Instance resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instancename"/> is null. </exception>

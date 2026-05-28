@@ -52,18 +52,18 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             Operation<BinaryData> createResponse = await client.CreateOrReplaceReceivedShareAsync(WaitUntil.Completed, receivedShareId, RequestContent.Create(data));
 
-            Assert.That(createResponse.HasCompleted, Is.True);
+            Assert.IsTrue(createResponse.HasCompleted);
 
             var jsonDocument = JsonDocument.Parse(createResponse.Value);
             var actualId = jsonDocument.RootElement.GetProperty("id").ToString();
 
-            Assert.That(actualId, Is.EqualTo(receivedShareId));
+            Assert.AreEqual(receivedShareId, actualId);
 
             JsonElement properties = jsonDocument.RootElement.GetProperty("properties");
 
             var actualShareStatus = properties.GetProperty("shareStatus").ToString();
 
-            Assert.That(actualShareStatus, Is.EqualTo("Attached"));
+            Assert.AreEqual("Attached", actualShareStatus);
         }
 
         [RecordedTest]
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
             var jsonDocument = JsonDocument.Parse(GetContentFromResponse(response));
             JsonElement getBodyJson = jsonDocument.RootElement;
 
-            Assert.That(getBodyJson.GetProperty("id").GetString(), Is.EqualTo(receivedShareId));
+            Assert.AreEqual(receivedShareId, getBodyJson.GetProperty("id").GetString());
         }
 
         [RecordedTest]
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             Operation response = await client.DeleteReceivedShareAsync(WaitUntil.Completed, receivedShareId, new());
 
-            Assert.That(response.HasCompleted, Is.True);
+            Assert.IsTrue(response.HasCompleted);
         }
 
         [RecordedTest]
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             List<BinaryData> detachedReceivedShares = await client.GetAllDetachedReceivedSharesAsync(null, null, new()).ToEnumerableAsync();
 
-            Assert.That(detachedReceivedShares.Count, Is.GreaterThan(0));
+            Assert.Greater(detachedReceivedShares.Count, 0);
 
             var detachedReceivedShare = detachedReceivedShares[0];
 
@@ -104,7 +104,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             var actualShareStatus = jsonDocument.RootElement.GetProperty("properties").GetProperty("shareStatus").ToString();
 
-            Assert.That(actualShareStatus, Is.EqualTo("Detached"));
+            Assert.AreEqual("Detached", actualShareStatus);
         }
 
         [RecordedTest]
@@ -114,7 +114,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             List<BinaryData> attachedReceivedShares = await client.GetAllAttachedReceivedSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/consumeraccount", null, null, new()).ToEnumerableAsync();
 
-            Assert.That(attachedReceivedShares.Count, Is.GreaterThan(0));
+            Assert.Greater(attachedReceivedShares.Count, 0);
 
             var attachedReceivedShare = attachedReceivedShares[0];
 
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             var actualShareStatus = jsonDocument.RootElement.GetProperty("properties").GetProperty("shareStatus").ToString();
 
-            Assert.That(actualShareStatus, Is.EqualTo("Attached"));
+            Assert.AreEqual("Attached", actualShareStatus);
         }
 
         #region Helpers

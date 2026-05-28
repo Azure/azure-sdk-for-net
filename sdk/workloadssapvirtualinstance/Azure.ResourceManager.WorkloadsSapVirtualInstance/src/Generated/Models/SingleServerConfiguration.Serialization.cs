@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    /// <summary> Gets or sets the single server configuration. For prerequisites for creating the infrastructure, please see [here](https://go.microsoft.com/fwlink/?linkid=2212611&amp;clcid=0x409). </summary>
-    public partial class SingleServerConfiguration : InfrastructureConfiguration, IJsonModel<SingleServerConfiguration>
+    public partial class SingleServerConfiguration : IUtf8JsonSerializable, IJsonModel<SingleServerConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="SingleServerConfiguration"/> for deserialization. </summary>
-        internal SingleServerConfiguration()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleServerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InfrastructureConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSingleServerConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SingleServerConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SingleServerConfiguration IPersistableModel<SingleServerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (SingleServerConfiguration)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SingleServerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SingleServerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(NetworkConfiguration))
             {
@@ -107,107 +61,104 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SingleServerConfiguration IJsonModel<SingleServerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SingleServerConfiguration)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InfrastructureConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SingleServerConfiguration IJsonModel<SingleServerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSingleServerConfiguration(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string appResourceGroup = default;
-            SapDeploymentType deploymentType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkConfiguration networkConfiguration = default;
             SapDatabaseType? databaseType = default;
             ResourceIdentifier subnetId = default;
             SapVirtualMachineConfiguration virtualMachineConfiguration = default;
             DiskConfiguration dbDiskConfiguration = default;
             SingleServerCustomResourceNames customResourceNames = default;
-            foreach (var prop in element.EnumerateObject())
+            string appResourceGroup = default;
+            SapDeploymentType deploymentType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("appResourceGroup"u8))
+                if (property.NameEquals("networkConfiguration"u8))
                 {
-                    appResourceGroup = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("deploymentType"u8))
-                {
-                    deploymentType = new SapDeploymentType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("networkConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(prop.Value, options);
+                    networkConfiguration = NetworkConfiguration.DeserializeNetworkConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("databaseType"u8))
+                if (property.NameEquals("databaseType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    databaseType = new SapDatabaseType(prop.Value.GetString());
+                    databaseType = new SapDatabaseType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("subnetId"u8))
+                if (property.NameEquals("subnetId"u8))
                 {
-                    subnetId = new ResourceIdentifier(prop.Value.GetString());
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("virtualMachineConfiguration"u8))
+                if (property.NameEquals("virtualMachineConfiguration"u8))
                 {
-                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(prop.Value, options);
+                    virtualMachineConfiguration = SapVirtualMachineConfiguration.DeserializeSapVirtualMachineConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("dbDiskConfiguration"u8))
+                if (property.NameEquals("dbDiskConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dbDiskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(prop.Value, options);
+                    dbDiskConfiguration = DiskConfiguration.DeserializeDiskConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("customResourceNames"u8))
+                if (property.NameEquals("customResourceNames"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customResourceNames = SingleServerCustomResourceNames.DeserializeSingleServerCustomResourceNames(prop.Value, options);
+                    customResourceNames = SingleServerCustomResourceNames.DeserializeSingleServerCustomResourceNames(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("appResourceGroup"u8))
+                {
+                    appResourceGroup = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("deploymentType"u8))
+                {
+                    deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new SingleServerConfiguration(
                 appResourceGroup,
                 deploymentType,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 networkConfiguration,
                 databaseType,
                 subnetId,
@@ -215,5 +166,36 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 dbDiskConfiguration,
                 customResourceNames);
         }
+
+        BinaryData IPersistableModel<SingleServerConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SingleServerConfiguration IPersistableModel<SingleServerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSingleServerConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SingleServerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

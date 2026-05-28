@@ -14,12 +14,53 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     /// <summary> The disconnected operation manifest. </summary>
     public partial class DisconnectedOperationDeploymentManifest
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationDeploymentManifest"/>. </summary>
-        internal DisconnectedOperationDeploymentManifest()
+        /// <param name="resourceId"> The resource identifier of the disconnected operations resource. </param>
+        /// <param name="resourceName"> The resource name. </param>
+        /// <param name="stampId"> The unique GUID of the stamp. </param>
+        /// <param name="location"> The resource location. </param>
+        /// <param name="billingModel"> The billing model. </param>
+        /// <param name="connectionIntent"> The connection intent. </param>
+        internal DisconnectedOperationDeploymentManifest(ResourceIdentifier resourceId, string resourceName, string stampId, string location, DisconnectedOperationsBillingModel billingModel, DisconnectedOperationsConnectionIntent connectionIntent)
         {
+            ResourceId = resourceId;
+            ResourceName = resourceName;
+            StampId = stampId;
+            Location = location;
+            BillingModel = billingModel;
+            ConnectionIntent = connectionIntent;
         }
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationDeploymentManifest"/>. </summary>
@@ -30,10 +71,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <param name="billingModel"> The billing model. </param>
         /// <param name="connectionIntent"> The connection intent. </param>
         /// <param name="cloud"> The cloud in which the resource is registered. </param>
-        /// <param name="billingConfiguration"> The billing configuration. </param>
-        /// <param name="benefitPlans"> The benefit plans. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DisconnectedOperationDeploymentManifest(ResourceIdentifier resourceId, string resourceName, string stampId, AzureLocation location, DisconnectedOperationsBillingModel billingModel, DisconnectedOperationsConnectionIntent connectionIntent, string cloud, DisconnectedOperationsBillingConfiguration billingConfiguration, DisconnectedOperationsBenefitPlans benefitPlans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DisconnectedOperationDeploymentManifest(ResourceIdentifier resourceId, string resourceName, string stampId, string location, DisconnectedOperationsBillingModel billingModel, DisconnectedOperationsConnectionIntent connectionIntent, string cloud, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ResourceName = resourceName;
@@ -42,36 +81,27 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             BillingModel = billingModel;
             ConnectionIntent = connectionIntent;
             Cloud = cloud;
-            BillingConfiguration = billingConfiguration;
-            BenefitPlans = benefitPlans;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DisconnectedOperationDeploymentManifest"/> for deserialization. </summary>
+        internal DisconnectedOperationDeploymentManifest()
+        {
         }
 
         /// <summary> The resource identifier of the disconnected operations resource. </summary>
         public ResourceIdentifier ResourceId { get; }
-
         /// <summary> The resource name. </summary>
         public string ResourceName { get; }
-
         /// <summary> The unique GUID of the stamp. </summary>
         public string StampId { get; }
-
         /// <summary> The resource location. </summary>
-        public AzureLocation Location { get; }
-
+        public string Location { get; }
         /// <summary> The billing model. </summary>
         public DisconnectedOperationsBillingModel BillingModel { get; }
-
         /// <summary> The connection intent. </summary>
         public DisconnectedOperationsConnectionIntent ConnectionIntent { get; }
-
         /// <summary> The cloud in which the resource is registered. </summary>
         public string Cloud { get; }
-
-        /// <summary> The billing configuration. </summary>
-        public DisconnectedOperationsBillingConfiguration BillingConfiguration { get; }
-
-        /// <summary> The benefit plans. </summary>
-        public DisconnectedOperationsBenefitPlans BenefitPlans { get; }
     }
 }

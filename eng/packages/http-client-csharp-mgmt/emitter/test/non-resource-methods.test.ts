@@ -3,18 +3,14 @@ import {
   createCSharpSdkContext,
   createEmitterContext,
   createEmitterTestHost,
-  typeSpecCompile,
-  normalizeSchemaForComparison
+  typeSpecCompile
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
-import { buildArmProviderSchema } from "../src/resource-detection.js";
-import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
-import { ok, strictEqual, deepStrictEqual } from "assert";
-import {
-  ResourceScopeKind,
-  ResourceOperationKind
-} from "../src/resource-metadata.js";
+import { updateClients } from "../src/resource-detection.js";
+import { ok, strictEqual } from "assert";
+import { nonResourceMethodMetadata } from "../src/sdk-context-options.js";
+import { ResourceScope } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
   let runner: TestHost;
@@ -58,17 +54,26 @@ model ValidationResponse {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const [root] = createModel(sdkContext);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
 
-    // Build ARM provider schema and verify non-resource methods
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-    ok(armProviderSchemaResult, "Should have ARM provider schema");
+    // Check that the first client has non-resource method decorators
+    const firstClient = root.clients[0];
+    ok(firstClient, "First client should exist");
+    ok(firstClient.decorators, "Client should have decorators");
+
+    const nonResourceMethodDecorator = firstClient.decorators.find(
+      (d) => d.name === nonResourceMethodMetadata
+    );
+
+    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
     ok(
-      armProviderSchemaResult.nonResourceMethods,
+      nonResourceMethodDecorator.arguments.nonResourceMethods,
       "Should have non-resource methods array"
     );
 
-    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       1,
@@ -78,21 +83,11 @@ model ValidationResponse {
     const method = nonResourceMethods[0];
     // The path should be generated from the ARM template
     strictEqual(
-      method.operationPath.path,
+      method.operationPath,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/validateConfiguration"
     );
-    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
+    strictEqual(method.operationScope, ResourceScope.Subscription);
     ok(method.methodId, "Method should have an ID");
-
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchemaResult)
-    );
   });
 
   it("should detect non-resource methods on tenant scope", async () => {
@@ -147,15 +142,20 @@ model GlobalSettings {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const [root] = createModel(sdkContext);
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
 
-    ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(
-      armProviderSchemaResult.nonResourceMethods,
-      "Should have non-resource methods array"
+    const firstClient = root.clients[0];
+    ok(firstClient, "First client should exist");
+
+    const nonResourceMethodDecorator = firstClient.decorators?.find(
+      (d) => d.name === nonResourceMethodMetadata
     );
-    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
+
+    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       2,
@@ -165,36 +165,26 @@ model GlobalSettings {
     // All tenant-scope methods should have Tenant scope
     nonResourceMethods.forEach((method: any) => {
       strictEqual(
-        method.scope.kind,
-        ResourceScopeKind.Tenant,
-        `Method ${method.operationPath.path} should have Tenant scope`
+        method.operationScope,
+        ResourceScope.Tenant,
+        `Method ${method.operationPath} should have Tenant scope`
       );
     });
 
     // Verify specific paths
     const tenantInfoMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath.path ===
+        m.operationPath ===
         "/providers/Microsoft.ContosoProviderHub/getTenantInfo"
     );
     ok(tenantInfoMethod, "Should find tenantInfo method");
 
     const globalSettingsMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath.path ===
+        m.operationPath ===
         "/providers/Microsoft.ContosoProviderHub/updateGlobalSettings"
     );
     ok(globalSettingsMethod, "Should find globalSettings method");
-
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchemaResult)
-    );
   });
 
   it("should not detect ARM resource operations as non-resource methods", async () => {
@@ -233,27 +223,26 @@ interface Employees {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const [root] = createModel(sdkContext);
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
 
-    // Should not have non-resource methods since all methods are standard ARM operations
-    ok(armProviderSchemaResult, "Should have ARM provider schema");
-    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
-    strictEqual(
-      nonResourceMethods.length,
-      0,
-      "Should have no non-resource methods for standard ARM operations"
+    const firstClient = root.clients[0];
+
+    // Check if there are any non-resource method decorators
+    const nonResourceMethodDecorator = firstClient.decorators?.find(
+      (d) => d.name === nonResourceMethodMetadata
     );
 
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchemaResult)
-    );
+    // Should not have non-resource method decorator since all methods are standard ARM operations
+    if (nonResourceMethodDecorator) {
+      const nonResourceMethods =
+        nonResourceMethodDecorator.arguments.nonResourceMethods;
+      strictEqual(
+        nonResourceMethods.length,
+        0,
+        "Should have no non-resource methods for standard ARM operations"
+      );
+    }
   });
 
   it("should detect mixed resource and non-resource methods", async () => {
@@ -341,15 +330,20 @@ model MigrationResponse {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const [root] = createModel(sdkContext);
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
 
-    ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(
-      armProviderSchemaResult.nonResourceMethods,
-      "Should have non-resource methods array"
+    const firstClient = root.clients[0];
+    ok(firstClient, "First client should exist");
+
+    const nonResourceMethodDecorator = firstClient.decorators?.find(
+      (d) => d.name === nonResourceMethodMetadata
     );
-    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
+
+    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       2,
@@ -359,29 +353,19 @@ model MigrationResponse {
     // Check that we have the expected non-resource methods
     const bulkImportMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath.path ===
+        m.operationPath ===
         "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/bulkImportEmployees"
     );
     ok(bulkImportMethod, "Should find bulk import method");
-    strictEqual(bulkImportMethod.scope.kind, ResourceScopeKind.Subscription);
+    strictEqual(bulkImportMethod.operationScope, ResourceScope.Subscription);
 
     const migrateMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath.path ===
+        m.operationPath ===
         "/providers/Microsoft.ContosoProviderHub/migrateEmployees"
     );
     ok(migrateMethod, "Should find migrate method");
-    strictEqual(migrateMethod.scope.kind, ResourceScopeKind.Tenant);
-
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchemaResult)
-    );
+    strictEqual(migrateMethod.operationScope, ResourceScope.Tenant);
   });
 
   it("should handle complex operation paths correctly", async () => {
@@ -425,15 +409,20 @@ model WorkspaceValidationResponse {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const [root] = createModel(sdkContext);
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
 
-    ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(
-      armProviderSchemaResult.nonResourceMethods,
-      "Should have non-resource methods array"
+    const firstClient = root.clients[0];
+    ok(firstClient, "First client should exist");
+
+    const nonResourceMethodDecorator = firstClient.decorators?.find(
+      (d) => d.name === nonResourceMethodMetadata
     );
-    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
+
+    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       1,
@@ -443,21 +432,11 @@ model WorkspaceValidationResponse {
     const method = nonResourceMethods[0];
     // The path should be generated from the ARM template with nested segments
     strictEqual(
-      method.operationPath.path,
+      method.operationPath,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/workspaces/{workspaceName}/validateWorkspace"
     );
-    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
+    strictEqual(method.operationScope, ResourceScope.Subscription);
     ok(method.methodId, "Method should have an ID");
-
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchemaResult)
-    );
   });
 
   it("should handle methods with query parameters correctly", async () => {
@@ -511,15 +490,20 @@ model SearchResult {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const [root] = createModel(sdkContext);
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
 
-    ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(
-      armProviderSchemaResult.nonResourceMethods,
-      "Should have non-resource methods array"
+    const firstClient = root.clients[0];
+    ok(firstClient, "First client should exist");
+
+    const nonResourceMethodDecorator = firstClient.decorators?.find(
+      (d) => d.name === nonResourceMethodMetadata
     );
-    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
+
+    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       1,
@@ -528,20 +512,10 @@ model SearchResult {
 
     const method = nonResourceMethods[0];
     strictEqual(
-      method.operationPath.path,
+      method.operationPath,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/search/{action}/searchResources"
     );
-    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
-
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchemaResult)
-    );
+    strictEqual(method.operationScope, ResourceScope.Subscription);
   });
 
   it("should detect ARM provider actions with location parameters", async () => {
@@ -579,15 +553,20 @@ model FooPreviewAction {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const [root] = createModel(sdkContext);
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
 
-    ok(armProviderSchemaResult, "Should have ARM provider schema");
-    ok(
-      armProviderSchemaResult.nonResourceMethods,
-      "Should have non-resource methods array"
+    const firstClient = root.clients[0];
+    ok(firstClient, "First client should exist");
+
+    const nonResourceMethodDecorator = firstClient.decorators?.find(
+      (d) => d.name === nonResourceMethodMetadata
     );
-    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
+
+    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
+
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       1,
@@ -596,214 +575,9 @@ model FooPreviewAction {
 
     const method = nonResourceMethods[0];
     strictEqual(
-      method.operationPath.path,
+      method.operationPath,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/previewActions"
     );
-    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
-
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchemaResult)
-    );
-  });
-
-  it("should assign non-resource method to resource when operationPath has resource prefix", async () => {
-    const program = await typeSpecCompile(
-      `
-/** A host pool resource */
-model HostPool is TrackedResource<HostPoolProperties> {
-  ...ResourceNameParameter<HostPool>;
-}
-
-/** Host pool properties */
-model HostPoolProperties {
-  /** Description */
-  description?: string;
-}
-
-/** Session host provisioning status response */
-model SessionHostProvisioningStatus {
-  /** The provisioning status */
-  status: string;
-}
-
-/** Standard ARM resource operations for HostPool */
-@armResourceOperations
-interface HostPools {
-  get is ArmResourceRead<HostPool>;
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<HostPool>;
-  delete is ArmResourceDeleteWithoutOkAsync<HostPool>;
-  listByResourceGroup is ArmResourceListByParent<HostPool>;
-}
-
-/** Non-resource operations that sit under the HostPool path */
-interface SessionHostManagementOperations {
-  /**
-   * Gets provisioning status under a host pool.
-   */
-  @autoRoute
-  @doc("Gets the provisioning status")
-  @armResourceAction(HostPool)
-  getProvisioningStatus is ArmResourceActionSync<
-    HostPool,
-    {},
-    SessionHostProvisioningStatus
-  >;
-}
-`,
-      runner,
-      { providerNamespace: "Microsoft.DesktopVirtualization" }
-    );
-
-    const context = createEmitterContext(program);
-    const sdkContext = await createCSharpSdkContext(context);
-    const [root] = createModel(sdkContext);
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-
-    ok(armProviderSchemaResult, "Should have ARM provider schema");
-
-    // The non-resource method whose path starts with the HostPool resource path
-    // should have been moved into the HostPool resource as an Action
-    const hostPoolResource = armProviderSchemaResult.resources.find(
-      (r) => r.metadata.resourceName === "HostPool"
-    );
-    ok(hostPoolResource, "Should find HostPool resource");
-
-    // The resource should have an Action method from the non-resource operation
-    const actionMethods = hostPoolResource.metadata.methods.filter(
-      (m) => m.kind === ResourceOperationKind.Action
-    );
-    ok(
-      actionMethods.length > 0,
-      "HostPool resource should have at least one Action method from the non-resource operation"
-    );
-
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchemaResult)
-    );
-  });
-
-  it("should assign non-resource method to longest-prefix-matching resource", async () => {
-    const program = await typeSpecCompile(
-      `
-/** A parent resource */
-model ParentResource is TrackedResource<ParentResourceProperties> {
-  ...ResourceNameParameter<ParentResource>;
-}
-
-/** Parent resource properties */
-model ParentResourceProperties {
-  /** Description */
-  description?: string;
-}
-
-/** A child resource under the parent */
-model ChildResource is ProxyResource<ChildResourceProperties> {
-  @key("childResourceName")
-  @segment("childResources")
-  @path
-  @doc("The name of the child resource")
-  @visibility(Lifecycle.Read)
-  name: string;
-}
-
-/** Child resource properties */
-model ChildResourceProperties {
-  /** Status */
-  status?: string;
-}
-
-/** Status response */
-model StatusResponse {
-  /** The status */
-  status: string;
-}
-
-/** Standard operations for ParentResource */
-@armResourceOperations
-interface ParentResources {
-  get is ArmResourceRead<ParentResource>;
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<ParentResource>;
-  delete is ArmResourceDeleteWithoutOkAsync<ParentResource>;
-  listByResourceGroup is ArmResourceListByParent<ParentResource>;
-}
-
-/** Standard operations for ChildResource */
-@armResourceOperations
-interface ChildResources {
-  get is ArmResourceRead<ChildResource>;
-  createOrUpdate is ArmResourceCreateOrReplaceSync<ChildResource>;
-  delete is ArmResourceDeleteSync<ChildResource>;
-  listByParent is ArmResourceListByParent<ChildResource>;
-  /** Gets provisioning status under a child resource. */
-  @autoRoute
-  getProvisioningStatus is ArmResourceActionSync<
-    ChildResource,
-    {},
-    StatusResponse
-  >;
-}
-`,
-      runner,
-      { providerNamespace: "Microsoft.TestProvider" }
-    );
-
-    const context = createEmitterContext(program);
-    const sdkContext = await createCSharpSdkContext(context);
-    const [root] = createModel(sdkContext);
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-
-    ok(armProviderSchemaResult, "Should have ARM provider schema");
-
-    // The child operation with a path that extends the child resource path
-    // should be assigned to the ChildResource, not the ParentResource (longest prefix wins)
-    const childResource = armProviderSchemaResult.resources.find(
-      (r) => r.metadata.resourceName === "ChildResource"
-    );
-    ok(childResource, "Should find ChildResource");
-
-    const childActionMethods = childResource.metadata.methods.filter(
-      (m) => m.kind === ResourceOperationKind.Action
-    );
-    ok(
-      childActionMethods.length > 0,
-      "ChildResource should have an Action method"
-    );
-
-    // ParentResource should NOT have the action method
-    const parentResource = armProviderSchemaResult.resources.find(
-      (r) => r.metadata.resourceName === "ParentResource"
-    );
-    ok(parentResource, "Should find ParentResource");
-
-    const parentActionMethods = parentResource.metadata.methods.filter(
-      (m) => m.kind === ResourceOperationKind.Action
-    );
-    strictEqual(
-      parentActionMethods.length,
-      0,
-      "ParentResource should NOT have the action method (child resource has longer prefix)"
-    );
-
-    // Validate using resolveArmResources API - use deep equality to ensure schemas match
-    const resolvedSchema = resolveArmResources(program, sdkContext);
-    ok(resolvedSchema);
-
-    // Compare the entire schemas using deep equality
-    deepStrictEqual(
-      normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchemaResult)
-    );
+    strictEqual(method.operationScope, ResourceScope.Subscription);
   });
 });

@@ -71,7 +71,7 @@ namespace Azure.Communication.Identity
                     AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
                 });
             var accessToken = await tokenCredential.GetTokenAsync();
-            Assert.That(accessToken.Token, Is.EqualTo(SampleToken));
+            Assert.AreEqual(SampleToken, accessToken.Token);
         }
 
         [Test]
@@ -105,8 +105,8 @@ namespace Azure.Communication.Identity
             using var tokenCredential = new CommunicationTokenCredential(token);
             AccessToken accessToken = await tokenCredential.GetTokenAsync();
 
-            Assert.That(accessToken.Token, Is.EqualTo(token));
-            Assert.That(accessToken.ExpiresOn.ToUnixTimeSeconds(), Is.EqualTo(expectedExpiryUnixTimeSeconds));
+            Assert.AreEqual(token, accessToken.Token);
+            Assert.AreEqual(expectedExpiryUnixTimeSeconds, accessToken.ExpiresOn.ToUnixTimeSeconds());
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace Azure.Communication.Identity
             using var tokenCredential = new CommunicationTokenCredential(ExpiredToken);
 
             AccessToken token = async ? await tokenCredential.GetTokenAsync() : tokenCredential.GetToken();
-            Assert.That(token.Token, Is.EqualTo(ExpiredToken));
+            Assert.AreEqual(ExpiredToken, token.Token);
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace Azure.Communication.Identity
                 });
 
             AccessToken token = async ? await tokenCredential.GetTokenAsync(cancellationToken) : tokenCredential.GetToken(cancellationToken);
-            Assert.That(actualCancellationToken, Is.EqualTo(cancellationToken));
+            Assert.AreEqual(cancellationToken, actualCancellationToken);
 
             string RefreshToken(CancellationToken token)
             {
@@ -173,9 +173,9 @@ namespace Azure.Communication.Identity
                 _ => throw new NotImplementedException(),
                 expiredToken);
 
-            Assert.That(testClock.ScheduledActions.Count(), Is.EqualTo(1));
+            Assert.AreEqual(1, testClock.ScheduledActions.Count());
             testClock.Tick();
-            Assert.That(refreshCallCount, Is.EqualTo(1));
+            Assert.AreEqual(1, refreshCallCount);
 
             string RefreshToken(CancellationToken _)
             {
@@ -197,14 +197,14 @@ namespace Azure.Communication.Identity
                 _ => new ValueTask<string>(token),
                 initialToken: ExpiredToken);
 
-            Assert.That(testClock.ScheduledActions.Count(), Is.EqualTo(0));
+            Assert.AreEqual(0, testClock.ScheduledActions.Count());
 
             AccessToken accessToken = async
                 ? await tokenCredential.GetTokenAsync()
                 : tokenCredential.GetToken();
 
-            Assert.That(accessToken.Token, Is.EqualTo(token));
-            Assert.That(accessToken.ExpiresOn.ToUnixTimeSeconds(), Is.EqualTo(expectedExpiryUnixTimeSeconds));
+            Assert.AreEqual(token, accessToken.Token);
+            Assert.AreEqual(expectedExpiryUnixTimeSeconds, accessToken.ExpiresOn.ToUnixTimeSeconds());
         }
 
         [Test]
@@ -254,10 +254,10 @@ namespace Azure.Communication.Identity
                 _ => SampleToken,
                 _ => new ValueTask<string>(SampleToken));
 
-            Assert.That(testClock.ScheduledActions.Count(), Is.EqualTo(1));
+            Assert.AreEqual(1, testClock.ScheduledActions.Count());
             tokenCredential.Dispose();
 
-            Assert.That(testClock.ScheduledActions.Count(), Is.EqualTo(0));
+            Assert.AreEqual(0, testClock.ScheduledActions.Count());
         }
 
         [Test]
@@ -285,12 +285,12 @@ namespace Azure.Communication.Identity
 
             testClock.Tick(TimeSpan.FromMinutes(tokenValidForMinutes - ThreadSafeRefreshableAccessTokenCache.ProactiveRefreshIntervalInMinutes + 0.5));
 
-            Assert.That(refreshCallCount, Is.EqualTo(1));
+            Assert.AreEqual(1, refreshCallCount);
 
             AccessToken afterRefreshToken = tokenCredential.GetToken();
 
-            Assert.That(token.Token, Is.EqualTo(inCriticalExpiryWindow ? newToken : initialToken));
-            Assert.That(afterRefreshToken.Token, Is.EqualTo(newToken));
+            Assert.AreEqual(inCriticalExpiryWindow ? newToken : initialToken, token.Token);
+            Assert.AreEqual(newToken, afterRefreshToken.Token);
 
             string RefreshToken(CancellationToken _)
             {
@@ -330,14 +330,14 @@ namespace Azure.Communication.Identity
                 _ => throw new NotImplementedException(),
                 twentyMinToken);
 
-            Assert.That(testClock.ScheduledActions.Count(), Is.EqualTo(1));
+            Assert.AreEqual(1, testClock.ScheduledActions.Count());
             ThreadSafeRefreshableAccessTokenCache.IScheduledAction? firstTimer = testClock.ScheduledActions.First();
             // Go into the soon-to-expire window
             testClock.Tick(TimeSpan.FromMinutes(20 - ThreadSafeRefreshableAccessTokenCache.ProactiveRefreshIntervalInMinutes + 0.5));
 
-            Assert.That(testClock.ScheduledActions.Count(), Is.EqualTo(1));
+            Assert.AreEqual(1, testClock.ScheduledActions.Count());
             ThreadSafeRefreshableAccessTokenCache.IScheduledAction? secondTimer = testClock.ScheduledActions.First();
-            Assert.That(secondTimer, Is.Not.EqualTo(firstTimer));
+            Assert.AreNotEqual(firstTimer, secondTimer);
         }
 
         [Test]
@@ -367,7 +367,7 @@ namespace Azure.Communication.Identity
                     tokenCredential.GetToken();
             }
 
-            Assert.That(refreshCallCount, Is.EqualTo(1));
+            Assert.AreEqual(1, refreshCallCount);
 
             string RefreshToken(CancellationToken _)
             {
@@ -398,7 +398,7 @@ namespace Azure.Communication.Identity
             AccessToken refreshedToken = tokenCredential.GetToken();
 
             // Expect the token to be refreshed only once within the first 10 minutes
-            Assert.That(refreshCallCount, Is.EqualTo(expectedTotalCallCounts));
+            Assert.AreEqual(expectedTotalCallCounts, refreshCallCount);
 
             // iterate until the penultimate millisecond of the token expiration
             // to prevent an exception being thrown due to the token being expired
@@ -410,7 +410,7 @@ namespace Azure.Communication.Identity
                 testClock.Tick(TimeSpan.FromMilliseconds(soonToExpireMs));
                 expectedTotalCallCounts++;
             }
-            Assert.That(refreshCallCount, Is.EqualTo(expectedTotalCallCounts));
+            Assert.AreEqual(expectedTotalCallCounts, refreshCallCount);
 
             string RefreshToken(CancellationToken _)
             {
@@ -446,7 +446,7 @@ namespace Azure.Communication.Identity
             var expiresOn = utcNow.AddMinutes(minutes).ToUnixTimeSeconds();
             var tokenString = $"{{\"exp\": {expiresOn}}}";
             var base64Token = Convert.ToBase64String(Encoding.ASCII.GetBytes(tokenString));
-            return $"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.{base64Token}.adM-ddBZZlQ1WlN3pdPBOF5G4Wh9iZpxNP_fSvpF4cWs";
+            return $"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.{ base64Token}.adM-ddBZZlQ1WlN3pdPBOF5G4Wh9iZpxNP_fSvpF4cWs";
         }
     }
 }

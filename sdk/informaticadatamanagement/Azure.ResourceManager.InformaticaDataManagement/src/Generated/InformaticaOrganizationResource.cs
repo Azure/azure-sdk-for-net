@@ -89,31 +89,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Get a InformaticaOrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="InformaticaOrganizationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a InformaticaOrganizationResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<InformaticaOrganizationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -141,27 +121,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Get a InformaticaOrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="InformaticaOrganizationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a InformaticaOrganizationResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<InformaticaOrganizationResource> Get(CancellationToken cancellationToken = default)
         {
@@ -189,27 +149,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Update a InformaticaOrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="InformaticaOrganizationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a InformaticaOrganizationResource. </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -241,27 +181,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Update a InformaticaOrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="InformaticaOrganizationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a InformaticaOrganizationResource. </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -293,27 +213,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Delete a InformaticaOrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="InformaticaOrganizationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Delete a InformaticaOrganizationResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -342,27 +242,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Delete a InformaticaOrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="InformaticaOrganizationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Delete a InformaticaOrganizationResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -391,123 +271,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Gets all serverless runtime resources in a given informatica organization resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/getAllServerlessRuntimes. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_GetAllServerlessRuntimes. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="InformaticaOrganizationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<InformaticaServerlessRuntimeResourceList>> GetAllServerlessRuntimesAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("InformaticaOrganizationResource.GetAllServerlessRuntimes");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _organizationsRestClient.CreateGetAllServerlessRuntimesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<InformaticaServerlessRuntimeResourceList> response = Response.FromValue(InformaticaServerlessRuntimeResourceList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets all serverless runtime resources in a given informatica organization resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/getAllServerlessRuntimes. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_GetAllServerlessRuntimes. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="InformaticaOrganizationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<InformaticaServerlessRuntimeResourceList> GetAllServerlessRuntimes(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("InformaticaOrganizationResource.GetAllServerlessRuntimes");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _organizationsRestClient.CreateGetAllServerlessRuntimesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<InformaticaServerlessRuntimeResourceList> response = Response.FromValue(InformaticaServerlessRuntimeResourceList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets Metadata of the serverless runtime environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/getServerlessMetadata. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_GetServerlessMetadata. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="InformaticaOrganizationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets Metadata of the serverless runtime environment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServerlessMetadataResponse>> GetServerlessMetadataAsync(CancellationToken cancellationToken = default)
         {
@@ -535,27 +299,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Gets Metadata of the serverless runtime environment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/getServerlessMetadata. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_GetServerlessMetadata. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="InformaticaOrganizationResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets Metadata of the serverless runtime environment. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerlessMetadataResponse> GetServerlessMetadata(CancellationToken cancellationToken = default)
         {
@@ -570,6 +314,62 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 HttpMessage message = _organizationsRestClient.CreateGetServerlessMetadataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServerlessMetadataResponse> response = Response.FromValue(ServerlessMetadataResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets all serverless runtime resources in a given informatica organization resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<InformaticaServerlessRuntimeResourceList>> GetAllServerlessRuntimesAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("InformaticaOrganizationResource.GetAllServerlessRuntimes");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetAllServerlessRuntimesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<InformaticaServerlessRuntimeResourceList> response = Response.FromValue(InformaticaServerlessRuntimeResourceList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets all serverless runtime resources in a given informatica organization resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<InformaticaServerlessRuntimeResourceList> GetAllServerlessRuntimes(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("InformaticaOrganizationResource.GetAllServerlessRuntimes");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _organizationsRestClient.CreateGetAllServerlessRuntimesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<InformaticaServerlessRuntimeResourceList> response = Response.FromValue(InformaticaServerlessRuntimeResourceList.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -620,7 +420,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -668,7 +468,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -711,7 +511,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     InformaticaOrganizationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     InformaticaOrganizationPatch patch = new InformaticaOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -754,7 +554,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     InformaticaOrganizationData current = Get(cancellationToken: cancellationToken).Value.Data;
                     InformaticaOrganizationPatch patch = new InformaticaOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -800,7 +600,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -846,7 +646,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

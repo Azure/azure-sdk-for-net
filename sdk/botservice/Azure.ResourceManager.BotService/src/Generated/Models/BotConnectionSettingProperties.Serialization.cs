@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.BotService;
+using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary> Properties for a Connection Setting Item. </summary>
-    public partial class BotConnectionSettingProperties : IJsonModel<BotConnectionSettingProperties>
+    public partial class BotConnectionSettingProperties : IUtf8JsonSerializable, IJsonModel<BotConnectionSettingProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BotConnectionSettingProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBotConnectionSettingProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotConnectionSettingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BotConnectionSettingProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BotConnectionSettingProperties IPersistableModel<BotConnectionSettingProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BotConnectionSettingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BotConnectionSettingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,21 +28,12 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
+
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
@@ -118,7 +68,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
-                foreach (BotConnectionSettingParameter item in Parameters)
+                foreach (var item in Parameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -129,15 +79,15 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -146,33 +96,26 @@ namespace Azure.ResourceManager.BotService.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BotConnectionSettingProperties IJsonModel<BotConnectionSettingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BotConnectionSettingProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BotConnectionSettingProperties IJsonModel<BotConnectionSettingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBotConnectionSettingProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BotConnectionSettingProperties DeserializeBotConnectionSettingProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static BotConnectionSettingProperties DeserializeBotConnectionSettingProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
-            string name = default;
             string clientId = default;
             string settingId = default;
             string clientSecret = default;
@@ -181,76 +124,66 @@ namespace Azure.ResourceManager.BotService.Models
             string serviceProviderDisplayName = default;
             IList<BotConnectionSettingParameter> parameters = default;
             string provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("clientId"u8))
                 {
-                    id = prop.Value.GetString();
+                    clientId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("settingId"u8))
                 {
-                    name = prop.Value.GetString();
+                    settingId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("clientId"u8))
+                if (property.NameEquals("clientSecret"u8))
                 {
-                    clientId = prop.Value.GetString();
+                    clientSecret = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("settingId"u8))
+                if (property.NameEquals("scopes"u8))
                 {
-                    settingId = prop.Value.GetString();
+                    scopes = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("clientSecret"u8))
+                if (property.NameEquals("serviceProviderId"u8))
                 {
-                    clientSecret = prop.Value.GetString();
+                    serviceProviderId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("scopes"u8))
+                if (property.NameEquals("serviceProviderDisplayName"u8))
                 {
-                    scopes = prop.Value.GetString();
+                    serviceProviderDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("serviceProviderId"u8))
+                if (property.NameEquals("parameters"u8))
                 {
-                    serviceProviderId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("serviceProviderDisplayName"u8))
-                {
-                    serviceProviderDisplayName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("parameters"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BotConnectionSettingParameter> array = new List<BotConnectionSettingParameter>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(BotConnectionSettingParameter.DeserializeBotConnectionSettingParameter(item, options));
                     }
                     parameters = array;
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = prop.Value.GetString();
+                    provisioningState = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new BotConnectionSettingProperties(
-                id,
-                name,
                 clientId,
                 settingId,
                 clientSecret,
@@ -259,7 +192,38 @@ namespace Azure.ResourceManager.BotService.Models
                 serviceProviderDisplayName,
                 parameters ?? new ChangeTrackingList<BotConnectionSettingParameter>(),
                 provisioningState,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BotConnectionSettingProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BotConnectionSettingProperties IPersistableModel<BotConnectionSettingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBotConnectionSettingProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BotConnectionSettingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

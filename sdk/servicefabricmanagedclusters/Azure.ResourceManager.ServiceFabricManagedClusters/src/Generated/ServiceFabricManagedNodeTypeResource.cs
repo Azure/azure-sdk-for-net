@@ -7,39 +7,50 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
-    /// A class representing a ServiceFabricManagedNodeType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricManagedNodeTypeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricManagedClusterResource"/> using the GetServiceFabricManagedNodeTypes method.
+    /// A Class representing a ServiceFabricManagedNodeType along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceFabricManagedNodeTypeResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceFabricManagedNodeTypeResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ServiceFabricManagedClusterResource"/> using the GetServiceFabricManagedNodeType method.
     /// </summary>
     public partial class ServiceFabricManagedNodeTypeResource : ArmResource
     {
-        private readonly ClientDiagnostics _nodeTypesClientDiagnostics;
-        private readonly NodeTypes _nodeTypesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="ServiceFabricManagedNodeTypeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="nodeTypeName"> The nodeTypeName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics;
+        private readonly NodeTypesRestOperations _serviceFabricManagedNodeTypeNodeTypesRestClient;
         private readonly ClientDiagnostics _nodeTypeSkusClientDiagnostics;
-        private readonly NodeTypeSkus _nodeTypeSkusRestClient;
+        private readonly NodeTypeSkusRestOperations _nodeTypeSkusRestClient;
         private readonly ServiceFabricManagedNodeTypeData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceFabric/managedClusters/nodeTypes";
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypeResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedNodeTypeResource"/> class for mocking. </summary>
         protected ServiceFabricManagedNodeTypeResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedNodeTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceFabricManagedNodeTypeResource(ArmClient client, ServiceFabricManagedNodeTypeData data) : this(client, data.Id)
@@ -48,95 +59,73 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceFabricManagedNodeTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceFabricManagedNodeTypeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string serviceFabricManagedNodeTypeApiVersion);
-            _nodeTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            _nodeTypesRestClient = new NodeTypes(_nodeTypesClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2026-02-01");
-            _nodeTypeSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
-            _nodeTypeSkusRestClient = new NodeTypeSkus(_nodeTypeSkusClientDiagnostics, Pipeline, Endpoint, serviceFabricManagedNodeTypeApiVersion ?? "2026-02-01");
-            ValidateResourceId(id);
+            _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string serviceFabricManagedNodeTypeNodeTypesApiVersion);
+            _serviceFabricManagedNodeTypeNodeTypesRestClient = new NodeTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricManagedNodeTypeNodeTypesApiVersion);
+            _nodeTypeSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _nodeTypeSkusRestClient = new NodeTypeSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ServiceFabricManagedNodeTypeData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="clusterName"> The clusterName. </param>
-        /// <param name="nodeTypeName"> The nodeTypeName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a Service Fabric node type of a given managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Get");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServiceFabricManagedNodeTypeData> response = Response.FromValue(ServiceFabricManagedNodeTypeData.FromResponse(result), result);
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -150,41 +139,33 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Get a Service Fabric node type of a given managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceFabricManagedNodeTypeResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Get");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServiceFabricManagedNodeTypeData> response = Response.FromValue(ServiceFabricManagedNodeTypeData.FromResponse(result), result);
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,23 +176,107 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Update the configuration of a node type of a given managed cluster, only updating tags or capacity.
+        /// Delete a Service Fabric node type of a given managed cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Service Fabric node type of a given managed cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the configuration of a node type of a given managed cluster, only updating tags.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,27 +288,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Update");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricManagedNodeTypePatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceFabricManagedClustersArmOperation<ServiceFabricManagedNodeTypeResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedNodeTypeResource>(
-                    new ServiceFabricManagedNodeTypeOperationSource(Client),
-                    _nodeTypesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedNodeTypeResource>(new ServiceFabricManagedNodeTypeOperationSource(Client), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -254,23 +306,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Update the configuration of a node type of a given managed cluster, only updating tags or capacity.
+        /// Update the configuration of a node type of a given managed cluster, only updating tags.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,125 +334,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Update");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricManagedNodeTypePatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceFabricManagedClustersArmOperation<ServiceFabricManagedNodeTypeResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedNodeTypeResource>(
-                    new ServiceFabricManagedNodeTypeOperationSource(Client),
-                    _nodeTypesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedNodeTypeResource>(new ServiceFabricManagedNodeTypeOperationSource(Client), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Service Fabric node type of a given managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a Service Fabric node type of a given managed cluster.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -414,20 +355,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Deallocates one or more nodes on the node type. It will disable the fabric nodes, trigger a shutdown on the VMs and release them from the cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/deallocate. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/deallocate</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Deallocate. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Deallocate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -439,21 +380,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Deallocate");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Deallocate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.DeallocateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -467,20 +401,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Deallocates one or more nodes on the node type. It will disable the fabric nodes, trigger a shutdown on the VMs and release them from the cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/deallocate. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/deallocate</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Deallocate. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Deallocate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -492,21 +426,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Deallocate");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Deallocate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.Deallocate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateDeallocateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -520,20 +447,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Deletes one or more nodes on the node type. It will disable the fabric nodes, trigger a delete on the VMs and removes the state from the cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/deleteNode. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/deleteNode</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_DeleteNode. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_DeleteNode</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -545,21 +472,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.DeleteNode");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.DeleteNode");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateDeleteNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.DeleteNodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateDeleteNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -573,20 +493,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Deletes one or more nodes on the node type. It will disable the fabric nodes, trigger a delete on the VMs and removes the state from the cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/deleteNode. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/deleteNode</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_DeleteNode. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_DeleteNode</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -598,21 +518,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.DeleteNode");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.DeleteNode");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateDeleteNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.DeleteNode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateDeleteNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -626,20 +539,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Redeploys one or more nodes on the node type. It will disable the fabric nodes, trigger a shut down on the VMs, move them to a new node, and power them back on.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/redeploy. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/redeploy</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Redeploy. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Redeploy</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -651,21 +564,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Redeploy");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Redeploy");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.RedeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -679,20 +585,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Redeploys one or more nodes on the node type. It will disable the fabric nodes, trigger a shut down on the VMs, move them to a new node, and power them back on.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/redeploy. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/redeploy</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Redeploy. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Redeploy</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -704,21 +610,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Redeploy");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Redeploy");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.Redeploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateRedeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -732,20 +631,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Reimages one or more nodes on the node type. It will disable the fabric nodes, trigger a reimage on the VMs and activate the nodes back again.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/reimage. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/reimage</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Reimage. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Reimage</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -757,21 +656,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Reimage");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Reimage");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.ReimageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -785,20 +677,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Reimages one or more nodes on the node type. It will disable the fabric nodes, trigger a reimage on the VMs and activate the nodes back again.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/reimage. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/reimage</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Reimage. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Reimage</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -810,21 +702,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Reimage");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Reimage");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.Reimage(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateReimageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -838,20 +723,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Restarts one or more nodes on the node type. It will disable the fabric nodes, trigger a restart on the VMs and activate the nodes back again.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/restart. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/restart</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Restart. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Restart</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -863,21 +748,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Restart");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Restart");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -891,20 +769,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Restarts one or more nodes on the node type. It will disable the fabric nodes, trigger a restart on the VMs and activate the nodes back again.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/restart. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/restart</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Restart. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Restart</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -916,21 +794,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Restart");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Restart");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -944,20 +815,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Starts one or more nodes on the node type. It will trigger an allocation of the fabric node if needed and activate them.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/start. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/start</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Start. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Start</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -969,21 +840,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Start");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Start");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -997,20 +861,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Starts one or more nodes on the node type. It will trigger an allocation of the fabric node if needed and activate them.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/start. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/start</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypes_Start. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_Start</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1022,21 +886,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Start");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Start");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nodeTypesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NodeTypeActionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_nodeTypesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation(_serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -1047,62 +904,373 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Get a Service Fabric node type supported SKUs.
+        /// Starts a fault simulation on the node type.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/skus. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/startFaultSimulation</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypeSkus_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_StartFaultSimulation</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="faultSimulationContentWrapper"> parameters describing the fault simulation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="faultSimulationContentWrapper"/> is null. </exception>
+        public virtual async Task<ArmOperation<FaultSimulation>> StartFaultSimulationAsync(WaitUntil waitUntil, FaultSimulationContentWrapper faultSimulationContentWrapper, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(faultSimulationContentWrapper, nameof(faultSimulationContentWrapper));
+
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.StartFaultSimulation");
+            scope.Start();
+            try
+            {
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.StartFaultSimulationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, faultSimulationContentWrapper, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(new FaultSimulationOperationSource(), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateStartFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, faultSimulationContentWrapper).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts a fault simulation on the node type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/startFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_StartFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="faultSimulationContentWrapper"> parameters describing the fault simulation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="faultSimulationContentWrapper"/> is null. </exception>
+        public virtual ArmOperation<FaultSimulation> StartFaultSimulation(WaitUntil waitUntil, FaultSimulationContentWrapper faultSimulationContentWrapper, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(faultSimulationContentWrapper, nameof(faultSimulationContentWrapper));
+
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.StartFaultSimulation");
+            scope.Start();
+            try
+            {
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.StartFaultSimulation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, faultSimulationContentWrapper, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(new FaultSimulationOperationSource(), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateStartFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, faultSimulationContentWrapper).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops a fault simulation on the node type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/stopFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_StopFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<FaultSimulation>> StopFaultSimulationAsync(WaitUntil waitUntil, FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.StopFaultSimulation");
+            scope.Start();
+            try
+            {
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.StopFaultSimulationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(new FaultSimulationOperationSource(), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateStopFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops a fault simulation on the node type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/stopFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_StopFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<FaultSimulation> StopFaultSimulation(WaitUntil waitUntil, FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.StopFaultSimulation");
+            scope.Start();
+            try
+            {
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.StopFaultSimulation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new ServiceFabricManagedClustersArmOperation<FaultSimulation>(new FaultSimulationOperationSource(), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateStopFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a fault simulation by the simulationId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/getFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_GetFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<FaultSimulation>> GetFaultSimulationAsync(FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.GetFaultSimulation");
+            scope.Start();
+            try
+            {
+                var response = await _serviceFabricManagedNodeTypeNodeTypesRestClient.GetFaultSimulationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a fault simulation by the simulationId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/getFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_GetFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> parameter with fault simulation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<FaultSimulation> GetFaultSimulation(FaultSimulationIdContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.GetFaultSimulation");
+            scope.Start();
+            try
+            {
+                var response = _serviceFabricManagedNodeTypeNodeTypesRestClient.GetFaultSimulation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of recent fault simulations for the node type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/listFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_ListFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NodeTypeAvailableSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NodeTypeAvailableSku> GetAvailableSkusAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FaultSimulation> GetFaultSimulationAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new NodeTypeSkusGetAvailableSkusAsyncCollectionResultOfT(
-                _nodeTypeSkusRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "ServiceFabricManagedNodeTypeResource.GetAvailableSkus");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateListFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateListFaultSimulationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetFaultSimulation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of recent fault simulations for the node type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/listFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypes_ListFaultSimulation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FaultSimulation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FaultSimulation> GetFaultSimulation(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateListFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateListFaultSimulationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetFaultSimulation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get a Service Fabric node type supported SKUs.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/skus. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/skus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NodeTypeSkus_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypeSkus_GetAvailableSkus</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NodeTypeAvailableSku"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NodeTypeAvailableSku> GetAvailableSkusAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeTypeSkusRestClient.CreateGetAvailableSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodeTypeSkusRestClient.CreateGetAvailableSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(e), _nodeTypeSkusClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a Service Fabric node type supported SKUs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}/skus</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ServiceFabricManagedNodeTypeResource"/>. </description>
+        /// <term>Operation Id</term>
+        /// <description>NodeTypeSkus_GetAvailableSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1110,21 +1278,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <returns> A collection of <see cref="NodeTypeAvailableSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NodeTypeAvailableSku> GetAvailableSkus(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new NodeTypeSkusGetAvailableSkusCollectionResultOfT(
-                _nodeTypeSkusRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "ServiceFabricManagedNodeTypeResource.GetAvailableSkus");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeTypeSkusRestClient.CreateGetAvailableSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodeTypeSkusRestClient.CreateGetAvailableSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(e), _nodeTypeSkusClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1134,34 +1313,28 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.AddTag");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ServiceFabricManagedNodeTypeData> response = Response.FromValue(ServiceFabricManagedNodeTypeData.FromResponse(result), result);
-                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _serviceFabricManagedNodeTypeNodeTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricManagedNodeTypeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceFabricManagedNodeTypePatch patch = new ServiceFabricManagedNodeTypePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ServiceFabricManagedNodeTypePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<ServiceFabricManagedNodeTypeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1172,7 +1345,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1182,34 +1375,28 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.AddTag");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ServiceFabricManagedNodeTypeData> response = Response.FromValue(ServiceFabricManagedNodeTypeData.FromResponse(result), result);
-                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _serviceFabricManagedNodeTypeNodeTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricManagedNodeTypeData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceFabricManagedNodeTypePatch patch = new ServiceFabricManagedNodeTypePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ServiceFabricManagedNodeTypePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<ServiceFabricManagedNodeTypeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1220,39 +1407,53 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.SetTags");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ServiceFabricManagedNodeTypeData> response = Response.FromValue(ServiceFabricManagedNodeTypeData.FromResponse(result), result);
-                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _serviceFabricManagedNodeTypeNodeTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricManagedNodeTypeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceFabricManagedNodeTypePatch patch = new ServiceFabricManagedNodeTypePatch();
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ServiceFabricManagedNodeTypePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<ServiceFabricManagedNodeTypeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1263,39 +1464,53 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ServiceFabricManagedNodeTypeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.SetTags");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ServiceFabricManagedNodeTypeData> response = Response.FromValue(ServiceFabricManagedNodeTypeData.FromResponse(result), result);
-                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _serviceFabricManagedNodeTypeNodeTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricManagedNodeTypeData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceFabricManagedNodeTypePatch patch = new ServiceFabricManagedNodeTypePatch();
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ServiceFabricManagedNodeTypePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<ServiceFabricManagedNodeTypeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1306,7 +1521,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1314,34 +1549,28 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.RemoveTag");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ServiceFabricManagedNodeTypeData> response = Response.FromValue(ServiceFabricManagedNodeTypeData.FromResponse(result), result);
-                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _serviceFabricManagedNodeTypeNodeTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricManagedNodeTypeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceFabricManagedNodeTypePatch patch = new ServiceFabricManagedNodeTypePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ServiceFabricManagedNodeTypePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<ServiceFabricManagedNodeTypeResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1352,7 +1581,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NodeType_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedNodeTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1360,34 +1609,28 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _nodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.RemoveTag");
+            using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _nodeTypesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ServiceFabricManagedNodeTypeData> response = Response.FromValue(ServiceFabricManagedNodeTypeData.FromResponse(result), result);
-                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _serviceFabricManagedNodeTypeNodeTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ServiceFabricManagedNodeTypeResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ServiceFabricManagedNodeTypeData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceFabricManagedNodeTypePatch patch = new ServiceFabricManagedNodeTypePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ServiceFabricManagedNodeTypePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<ServiceFabricManagedNodeTypeResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

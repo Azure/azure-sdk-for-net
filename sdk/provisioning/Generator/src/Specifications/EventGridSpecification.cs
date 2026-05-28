@@ -9,7 +9,7 @@ using Azure.ResourceManager.EventGrid.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class EventGridSpecification() :
-    Specification("EventGrid", typeof(EventGridExtensions), serviceDirectory: "eventgrid")
+    Specification("EventGrid", typeof(EventGridExtensions))
 {
     protected override void Customize()
     {

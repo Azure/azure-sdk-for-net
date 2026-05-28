@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Health.Deidentification;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Microsoft.Extensions.Azure
 {

@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MongoCluster
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.MongoCluster
     /// </summary>
     public partial class MongoClusterUserCollection : ArmCollection, IEnumerable<MongoClusterUserResource>, IAsyncEnumerable<MongoClusterUserResource>
     {
-        private readonly ClientDiagnostics _usersClientDiagnostics;
-        private readonly Users _usersRestClient;
+        private readonly ClientDiagnostics _mongoClusterUserUsersClientDiagnostics;
+        private readonly UsersRestOperations _mongoClusterUserUsersRestClient;
 
-        /// <summary> Initializes a new instance of MongoClusterUserCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MongoClusterUserCollection"/> class for mocking. </summary>
         protected MongoClusterUserCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterUserCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MongoClusterUserCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MongoClusterUserCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MongoClusterUserResource.ResourceType, out string mongoClusterUserApiVersion);
-            _usersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterUserResource.ResourceType.Namespace, Diagnostics);
-            _usersRestClient = new Users(_usersClientDiagnostics, Pipeline, Endpoint, mongoClusterUserApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _mongoClusterUserUsersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterUserResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MongoClusterUserResource.ResourceType, out string mongoClusterUserUsersApiVersion);
+            _mongoClusterUserUsersRestClient = new UsersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mongoClusterUserUsersApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != MongoClusterResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MongoClusterResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MongoClusterResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates a new user or updates an existing user on a mongo cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Users_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>User_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="userName"> The name of the mongo cluster user. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MongoClusterUserResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string userName, MongoClusterUserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserCollection.CreateOrUpdate");
+            using var scope = _mongoClusterUserUsersClientDiagnostics.CreateScope("MongoClusterUserCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _usersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userName, MongoClusterUserData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MongoClusterArmOperation<MongoClusterUserResource> operation = new MongoClusterArmOperation<MongoClusterUserResource>(
-                    new MongoClusterUserOperationSource(Client),
-                    _usersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _mongoClusterUserUsersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MongoClusterArmOperation<MongoClusterUserResource>(new MongoClusterUserOperationSource(Client), _mongoClusterUserUsersClientDiagnostics, Pipeline, _mongoClusterUserUsersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.MongoCluster
         /// Creates a new user or updates an existing user on a mongo cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Users_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>User_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="userName"> The name of the mongo cluster user. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MongoClusterUserResource> CreateOrUpdate(WaitUntil waitUntil, string userName, MongoClusterUserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserCollection.CreateOrUpdate");
+            using var scope = _mongoClusterUserUsersClientDiagnostics.CreateScope("MongoClusterUserCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _usersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userName, MongoClusterUserData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                MongoClusterArmOperation<MongoClusterUserResource> operation = new MongoClusterArmOperation<MongoClusterUserResource>(
-                    new MongoClusterUserOperationSource(Client),
-                    _usersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _mongoClusterUserUsersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, data, cancellationToken);
+                var operation = new MongoClusterArmOperation<MongoClusterUserResource>(new MongoClusterUserOperationSource(Client), _mongoClusterUserUsersClientDiagnostics, Pipeline, _mongoClusterUserUsersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.MongoCluster
         /// Gets the defintion of a Mongo cluster user.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Users_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>User_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="userName"> The name of the mongo cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         public virtual async Task<Response<MongoClusterUserResource>> GetAsync(string userName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserCollection.Get");
+            using var scope = _mongoClusterUserUsersClientDiagnostics.CreateScope("MongoClusterUserCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MongoClusterUserData> response = Response.FromValue(MongoClusterUserData.FromResponse(result), result);
+                var response = await _mongoClusterUserUsersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MongoClusterUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.MongoCluster
         /// Gets the defintion of a Mongo cluster user.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Users_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>User_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="userName"> The name of the mongo cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         public virtual Response<MongoClusterUserResource> Get(string userName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserCollection.Get");
+            using var scope = _mongoClusterUserUsersClientDiagnostics.CreateScope("MongoClusterUserCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MongoClusterUserData> response = Response.FromValue(MongoClusterUserData.FromResponse(result), result);
+                var response = _mongoClusterUserUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MongoClusterUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.MongoCluster
         /// List all the users on a mongo cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Users_ListByMongoCluster. </description>
+        /// <term>Operation Id</term>
+        /// <description>User_ListByMongoCluster</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoClusterUserResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MongoClusterUserResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoClusterUserResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MongoClusterUserData, MongoClusterUserResource>(new UsersGetByMongoClusterAsyncCollectionResultOfT(
-                _usersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "MongoClusterUserCollection.GetAll"), data => new MongoClusterUserResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoClusterUserUsersRestClient.CreateListByMongoClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mongoClusterUserUsersRestClient.CreateListByMongoClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MongoClusterUserResource(Client, MongoClusterUserData.DeserializeMongoClusterUserData(e)), _mongoClusterUserUsersClientDiagnostics, Pipeline, "MongoClusterUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all the users on a mongo cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Users_ListByMongoCluster. </description>
+        /// <term>Operation Id</term>
+        /// <description>User_ListByMongoCluster</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.MongoCluster
         /// <returns> A collection of <see cref="MongoClusterUserResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MongoClusterUserResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MongoClusterUserData, MongoClusterUserResource>(new UsersGetByMongoClusterCollectionResultOfT(
-                _usersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "MongoClusterUserCollection.GetAll"), data => new MongoClusterUserResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoClusterUserUsersRestClient.CreateListByMongoClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mongoClusterUserUsersRestClient.CreateListByMongoClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MongoClusterUserResource(Client, MongoClusterUserData.DeserializeMongoClusterUserData(e)), _mongoClusterUserUsersClientDiagnostics, Pipeline, "MongoClusterUserCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Users_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>User_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="userName"> The name of the mongo cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string userName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserCollection.Exists");
+            using var scope = _mongoClusterUserUsersClientDiagnostics.CreateScope("MongoClusterUserCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MongoClusterUserData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MongoClusterUserData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MongoClusterUserData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _mongoClusterUserUsersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.MongoCluster
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Users_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>User_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="userName"> The name of the mongo cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         public virtual Response<bool> Exists(string userName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserCollection.Exists");
+            using var scope = _mongoClusterUserUsersClientDiagnostics.CreateScope("MongoClusterUserCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MongoClusterUserData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MongoClusterUserData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MongoClusterUserData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _mongoClusterUserUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.MongoCluster
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Users_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>User_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="userName"> The name of the mongo cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         public virtual async Task<NullableResponse<MongoClusterUserResource>> GetIfExistsAsync(string userName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserCollection.GetIfExists");
+            using var scope = _mongoClusterUserUsersClientDiagnostics.CreateScope("MongoClusterUserCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MongoClusterUserData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MongoClusterUserData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MongoClusterUserData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _mongoClusterUserUsersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MongoClusterUserResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MongoClusterUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.MongoCluster
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/users/{userName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Users_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>User_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterUserResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="userName"> The name of the mongo cluster user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         public virtual NullableResponse<MongoClusterUserResource> GetIfExists(string userName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            using DiagnosticScope scope = _usersClientDiagnostics.CreateScope("MongoClusterUserCollection.GetIfExists");
+            using var scope = _mongoClusterUserUsersClientDiagnostics.CreateScope("MongoClusterUserCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _usersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, userName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MongoClusterUserData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MongoClusterUserData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MongoClusterUserData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _mongoClusterUserUsersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, userName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MongoClusterUserResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MongoClusterUserResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.MongoCluster
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MongoClusterUserResource> IAsyncEnumerable<MongoClusterUserResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

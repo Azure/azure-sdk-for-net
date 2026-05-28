@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public readonly partial struct OperationProvisioningState : IEquatable<OperationProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="OperationProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public OperationProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UnknownValue = "Unknown";
         private const string InProgressValue = "InProgress";
         private const string SucceededValue = "Succeeded";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private const string PendingValue = "Pending";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="OperationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OperationProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static OperationProvisioningState Unknown { get; } = new OperationProvisioningState(UnknownValue);
-
-        /// <summary> Gets the InProgress. </summary>
+        /// <summary> InProgress. </summary>
         public static OperationProvisioningState InProgress { get; } = new OperationProvisioningState(InProgressValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static OperationProvisioningState Succeeded { get; } = new OperationProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static OperationProvisioningState Failed { get; } = new OperationProvisioningState(FailedValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static OperationProvisioningState Canceled { get; } = new OperationProvisioningState(CanceledValue);
-
-        /// <summary> Gets the Pending. </summary>
+        /// <summary> Pending. </summary>
         public static OperationProvisioningState Pending { get; } = new OperationProvisioningState(PendingValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static OperationProvisioningState Disabled { get; } = new OperationProvisioningState(DisabledValue);
-
         /// <summary> Determines if two <see cref="OperationProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationProvisioningState left, OperationProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="OperationProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationProvisioningState left, OperationProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="OperationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationProvisioningState"/>. </summary>
         public static implicit operator OperationProvisioningState(string value) => new OperationProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="OperationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator OperationProvisioningState?(string value) => value == null ? null : new OperationProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(OperationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

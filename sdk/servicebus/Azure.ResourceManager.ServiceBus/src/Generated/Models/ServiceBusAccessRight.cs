@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary></summary>
+    /// <summary> The ServiceBusAccessRight. </summary>
     public enum ServiceBusAccessRight
     {
         /// <summary> Manage. </summary>

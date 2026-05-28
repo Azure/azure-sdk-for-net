@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {

@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableWorkloadOrchestrationResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableWorkloadOrchestrationResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableWorkloadOrchestrationResourceGroupResource"/> class for mocking. </summary>
         protected MockableWorkloadOrchestrationResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableWorkloadOrchestrationResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableWorkloadOrchestrationResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableWorkloadOrchestrationResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of EdgeSchemas in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EdgeSchemas and their operations over a EdgeSchemaResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of EdgeSchemaResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeSchemaResources and their operations over a EdgeSchemaResource. </returns>
         public virtual EdgeSchemaCollection GetEdgeSchemas()
         {
             return GetCachedClient(client => new EdgeSchemaCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Get a Schema Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EdgeSchemaResource>> GetEdgeSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-
             return await GetEdgeSchemas().GetAsync(schemaName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Get a Schema Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,13 +99,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual Response<EdgeSchemaResource> GetEdgeSchema(string schemaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
-
             return GetEdgeSchemas().Get(schemaName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EdgeTargets in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EdgeTargets and their operations over a EdgeTargetResource. </returns>
+        /// <summary> Gets a collection of EdgeTargetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeTargetResources and their operations over a EdgeTargetResource. </returns>
         public virtual EdgeTargetCollection GetEdgeTargets()
         {
             return GetCachedClient(client => new EdgeTargetCollection(client, Id));
@@ -107,16 +113,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Get a Target Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,8 +137,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EdgeTargetResource>> GetEdgeTargetAsync(string targetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
-
             return await GetEdgeTargets().GetAsync(targetName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,16 +144,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Get a Target Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,13 +168,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual Response<EdgeTargetResource> GetEdgeTarget(string targetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
-
             return GetEdgeTargets().Get(targetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EdgeSolutionTemplates in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EdgeSolutionTemplates and their operations over a EdgeSolutionTemplateResource. </returns>
+        /// <summary> Gets a collection of EdgeSolutionTemplateResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeSolutionTemplateResources and their operations over a EdgeSolutionTemplateResource. </returns>
         public virtual EdgeSolutionTemplateCollection GetEdgeSolutionTemplates()
         {
             return GetCachedClient(client => new EdgeSolutionTemplateCollection(client, Id));
@@ -172,16 +182,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Get a Solution Template Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionTemplates_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SolutionTemplate_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,8 +206,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EdgeSolutionTemplateResource>> GetEdgeSolutionTemplateAsync(string solutionTemplateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionTemplateName, nameof(solutionTemplateName));
-
             return await GetEdgeSolutionTemplates().GetAsync(solutionTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -201,16 +213,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Get a Solution Template Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/solutionTemplates/{solutionTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionTemplates_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SolutionTemplate_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSolutionTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,13 +237,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual Response<EdgeSolutionTemplateResource> GetEdgeSolutionTemplate(string solutionTemplateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionTemplateName, nameof(solutionTemplateName));
-
             return GetEdgeSolutionTemplates().Get(solutionTemplateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EdgeConfigTemplates in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EdgeConfigTemplates and their operations over a EdgeConfigTemplateResource. </returns>
+        /// <summary> Gets a collection of EdgeConfigTemplateResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeConfigTemplateResources and their operations over a EdgeConfigTemplateResource. </returns>
         public virtual EdgeConfigTemplateCollection GetEdgeConfigTemplates()
         {
             return GetCachedClient(client => new EdgeConfigTemplateCollection(client, Id));
@@ -237,16 +251,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Get a Config Template Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigTemplates_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplate_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeConfigTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -257,8 +275,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EdgeConfigTemplateResource>> GetEdgeConfigTemplateAsync(string configTemplateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configTemplateName, nameof(configTemplateName));
-
             return await GetEdgeConfigTemplates().GetAsync(configTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -266,16 +282,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Get a Config Template Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigTemplates_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplate_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeConfigTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,13 +306,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual Response<EdgeConfigTemplateResource> GetEdgeConfigTemplate(string configTemplateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configTemplateName, nameof(configTemplateName));
-
             return GetEdgeConfigTemplates().Get(configTemplateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EdgeDiagnostics in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EdgeDiagnostics and their operations over a EdgeDiagnosticResource. </returns>
+        /// <summary> Gets a collection of EdgeDiagnosticResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeDiagnosticResources and their operations over a EdgeDiagnosticResource. </returns>
         public virtual EdgeDiagnosticCollection GetEdgeDiagnostics()
         {
             return GetCachedClient(client => new EdgeDiagnosticCollection(client, Id));
@@ -302,16 +320,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Returns details of specified Diagnostic resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Diagnostics_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostic_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,8 +344,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EdgeDiagnosticResource>> GetEdgeDiagnosticAsync(string diagnosticName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
-
             return await GetEdgeDiagnostics().GetAsync(diagnosticName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -331,16 +351,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Returns details of specified Diagnostic resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/diagnostics/{diagnosticName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Diagnostics_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostic_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,13 +375,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual Response<EdgeDiagnosticResource> GetEdgeDiagnostic(string diagnosticName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(diagnosticName, nameof(diagnosticName));
-
             return GetEdgeDiagnostics().Get(diagnosticName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EdgeContexts in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EdgeContexts and their operations over a EdgeContextResource. </returns>
+        /// <summary> Gets a collection of EdgeContextResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EdgeContextResources and their operations over a EdgeContextResource. </returns>
         public virtual EdgeContextCollection GetEdgeContexts()
         {
             return GetCachedClient(client => new EdgeContextCollection(client, Id));
@@ -367,16 +389,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Get Context Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Contexts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Context_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeContextResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -387,8 +413,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EdgeContextResource>> GetEdgeContextAsync(string contextName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(contextName, nameof(contextName));
-
             return await GetEdgeContexts().GetAsync(contextName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -396,16 +420,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// Get Context Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/contexts/{contextName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Contexts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Context_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeContextResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,8 +444,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         [ForwardsClientCalls]
         public virtual Response<EdgeContextResource> GetEdgeContext(string contextName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(contextName, nameof(contextName));
-
             return GetEdgeContexts().Get(contextName, cancellationToken);
         }
     }

@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
+using Azure.Core;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql
 {

@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> properties for Arc-enabled edge device with HCI OS. </summary>
-    public partial class HciArcEnabledEdgeDeviceProperties : HciEdgeDeviceProperties, IJsonModel<HciArcEnabledEdgeDeviceProperties>
+    public partial class HciArcEnabledEdgeDeviceProperties : IUtf8JsonSerializable, IJsonModel<HciArcEnabledEdgeDeviceProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override HciEdgeDeviceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciArcEnabledEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciArcEnabledEdgeDeviceProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciArcEnabledEdgeDeviceProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciArcEnabledEdgeDeviceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciArcEnabledEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HciArcEnabledEdgeDeviceProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciArcEnabledEdgeDeviceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciArcEnabledEdgeDeviceProperties IPersistableModel<HciArcEnabledEdgeDeviceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (HciArcEnabledEdgeDeviceProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciArcEnabledEdgeDeviceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciArcEnabledEdgeDeviceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciArcEnabledEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciArcEnabledEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciArcEnabledEdgeDeviceProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
             {
@@ -82,70 +43,160 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciArcEnabledEdgeDeviceProperties IJsonModel<HciArcEnabledEdgeDeviceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HciArcEnabledEdgeDeviceProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override HciEdgeDeviceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciArcEnabledEdgeDeviceProperties IJsonModel<HciArcEnabledEdgeDeviceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciArcEnabledEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciArcEnabledEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciArcEnabledEdgeDeviceProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciArcEnabledEdgeDeviceProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciArcEnabledEdgeDeviceProperties DeserializeHciArcEnabledEdgeDeviceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciArcEnabledEdgeDeviceProperties DeserializeHciArcEnabledEdgeDeviceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            HciReportedProperties reportedProperties = default;
             HciEdgeDeviceConfiguration deviceConfiguration = default;
             HciProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            HciReportedProperties reportedProperties = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("deviceConfiguration"u8))
+                if (property.NameEquals("reportedProperties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deviceConfiguration = HciEdgeDeviceConfiguration.DeserializeHciEdgeDeviceConfiguration(prop.Value, options);
+                    reportedProperties = HciReportedProperties.DeserializeHciReportedProperties(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("deviceConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new HciProvisioningState(prop.Value.GetString());
+                    deviceConfiguration = HciEdgeDeviceConfiguration.DeserializeHciEdgeDeviceConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("reportedProperties"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reportedProperties = HciReportedProperties.DeserializeHciReportedProperties(prop.Value, options);
+                    provisioningState = new HciProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new HciArcEnabledEdgeDeviceProperties(deviceConfiguration, provisioningState, additionalBinaryDataProperties, reportedProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HciArcEnabledEdgeDeviceProperties(deviceConfiguration, provisioningState, serializedAdditionalRawData, reportedProperties);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReportedProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reportedProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReportedProperties))
+                {
+                    builder.Append("  reportedProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ReportedProperties, options, 2, false, "  reportedProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deviceConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeviceConfiguration))
+                {
+                    builder.Append("  deviceConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DeviceConfiguration, options, 2, false, "  deviceConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<HciArcEnabledEdgeDeviceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciArcEnabledEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(HciArcEnabledEdgeDeviceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HciArcEnabledEdgeDeviceProperties IPersistableModel<HciArcEnabledEdgeDeviceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciArcEnabledEdgeDeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHciArcEnabledEdgeDeviceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciArcEnabledEdgeDeviceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciArcEnabledEdgeDeviceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

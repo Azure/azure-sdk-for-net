@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     internal static partial class DeviceProvisioningServicesIPFilterActionTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DeviceProvisioningServicesIPFilterActionType value) => value switch
         {
             DeviceProvisioningServicesIPFilterActionType.Accept => "Accept",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeviceProvisioningServicesIPFilterActionType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static DeviceProvisioningServicesIPFilterActionType ToDeviceProvisioningServicesIPFilterActionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accept"))
-            {
-                return DeviceProvisioningServicesIPFilterActionType.Accept;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Reject"))
-            {
-                return DeviceProvisioningServicesIPFilterActionType.Reject;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accept")) return DeviceProvisioningServicesIPFilterActionType.Accept;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Reject")) return DeviceProvisioningServicesIPFilterActionType.Reject;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeviceProvisioningServicesIPFilterActionType value.");
         }
     }

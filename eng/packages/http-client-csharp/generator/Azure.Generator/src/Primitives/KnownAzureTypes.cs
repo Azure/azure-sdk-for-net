@@ -15,19 +15,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text;
 using System.Text.Json;
-using System.Xml;
-using System.Xml.Linq;
-using static Microsoft.TypeSpec.Generator.Primitives.CSharpType;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Primitives
 {
     internal static class KnownAzureTypes
     {
-        public delegate MethodBodyStatement SerializationExpression(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
+        public delegate MethodBodyStatement SerializationExpression(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
         public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<BinaryData> data, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
-        public delegate MethodBodyStatement XmlSerializationExpression(CSharpType valueType, ValueExpression value, ScopedApi<XmlWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
-        public delegate ValueExpression XmlDeserializationExpression(CSharpType valueType, ScopedApi<XElement> element, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
 
         private const string UuidId = "Azure.Core.uuid";
         private const string IPv4AddressId = "Azure.Core.ipV4Address";
@@ -38,25 +33,19 @@ namespace Azure.Generator.Primitives
         private const string AzureError = "Azure.Core.Foundations.Error";
         private const string EmbeddingVector = "Azure.Core.EmbeddingVector";
 
-        private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
-        {
-            value = value.NullableStructValue(valueType);
-            return writer.WriteStringValue(value);
-        }
+        private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+            => writer.WriteStringValue(value);
 
         private static ValueExpression DeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<BinaryData> data, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => New.Instance(valueType, element.GetString());
 
-        private static MethodBodyStatement SerializeTypeWithToString(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
-        {
-            value = value.NullableStructValue(valueType);
-            return writer.WriteStringValue(value.InvokeToString());
-        }
+        private static MethodBodyStatement SerializeTypeWithToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+            => writer.WriteStringValue(value.InvokeToString());
 
         private static ValueExpression DeserializeParsableStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, ScopedApi<BinaryData> data, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => Static(valueType).Invoke("Parse", element.GetString());
 
-        private static MethodBodyStatement SerializeResponseError(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+        private static MethodBodyStatement SerializeResponseError(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
         {
             var asJsonModel = value.CastTo(typeof(IJsonModel<ResponseError>));
             return asJsonModel.Invoke(nameof(IJsonModel<ResponseError>.Write), writer, options).Terminate();
@@ -91,7 +80,7 @@ namespace Azure.Generator.Primitives
             [EmbeddingVector] = typeof(ReadOnlyMemory<>)
         };
 
-        private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>(new CSharpTypeIgnoreNullableComparer())
+        private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>
         {
             [typeof(Guid)] = SerializeTypeWithImplicitOperatorToString,
             [typeof(IPAddress)] = SerializeTypeWithToString,
@@ -101,7 +90,7 @@ namespace Azure.Generator.Primitives
             [typeof(ResponseError)] = SerializeResponseError,
         };
 
-        private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>(new CSharpTypeIgnoreNullableComparer())
+        private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>
         {
             [typeof(Guid)] = DeserializeNewInstanceStringLikeType,
             [typeof(IPAddress)] = DeserializeParsableStringLikeType,
@@ -111,33 +100,10 @@ namespace Azure.Generator.Primitives
             [typeof(ResponseError)] = DeserializeResponseError,
         };
 
-        private static MethodBodyStatement XmlSerializeTypeWithToString(CSharpType valueType, ValueExpression value, ScopedApi<XmlWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
-        {
-            value = value.NullableStructValue(valueType);
-            return writer.Invoke(nameof(XmlWriter.WriteValue), value.InvokeToString()).Terminate();
-        }
-
-        private static ValueExpression XmlDeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<XElement> element, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
-            => New.Instance(valueType, element.Property(nameof(XElement.Value)));
-
-        private static readonly IReadOnlyDictionary<CSharpType, XmlSerializationExpression> _typeToXmlSerializationExpression = new Dictionary<CSharpType, XmlSerializationExpression>(new CSharpTypeIgnoreNullableComparer())
-        {
-            [typeof(ETag)] = XmlSerializeTypeWithToString,
-        };
-
-        private static readonly IReadOnlyDictionary<CSharpType, XmlDeserializationExpression> _typeToXmlDeserializationExpression = new Dictionary<CSharpType, XmlDeserializationExpression>(new CSharpTypeIgnoreNullableComparer())
-        {
-            [typeof(ETag)] = XmlDeserializeNewInstanceStringLikeType,
-        };
-
         public static bool TryGetKnownType(string id, [MaybeNullWhen(false)] out Type type) => _idToTypes.TryGetValue(id, out type);
 
         public static bool TryGetJsonSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
 
         public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression) => _typeToDeserializationExpression.TryGetValue(type, out expression);
-
-        public static bool TryGetXmlSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out XmlSerializationExpression expression) => _typeToXmlSerializationExpression.TryGetValue(type, out expression);
-
-        public static bool TryGetXmlDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out XmlDeserializationExpression expression) => _typeToXmlDeserializationExpression.TryGetValue(type, out expression);
     }
 }

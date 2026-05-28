@@ -3,16 +3,19 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
+using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NotificationHubs.Models;
+using System.Linq;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    // Backward-compat: Sku and Rights properties existed in baseline but are not in the spec.
-    // Required by ApiCompat.
-    public partial class NotificationHubAuthorizationRuleData
+    /// <summary>
+    /// A class representing the NotificationHubAuthorizationRule data model.
+    /// Description of a Namespace AuthorizationRules.
+    /// </summary>
+    public partial class NotificationHubAuthorizationRuleData : TrackedResourceData
     {
         /// <summary> The sku of the created namespace. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

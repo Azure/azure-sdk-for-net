@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -15,67 +14,44 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorTimeSeriesType : IEquatable<FrontDoorTimeSeriesType>
     {
         private readonly string _value;
-        /// <summary> MeasurementCounts. </summary>
-        private const string MeasurementCountsValue = "MeasurementCounts";
-        /// <summary> LatencyP50. </summary>
-        private const string LatencyP50Value = "LatencyP50";
-        /// <summary> LatencyP75. </summary>
-        private const string LatencyP75Value = "LatencyP75";
-        /// <summary> LatencyP95. </summary>
-        private const string LatencyP95Value = "LatencyP95";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorTimeSeriesType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string MeasurementCountsValue = "MeasurementCounts";
+        private const string LatencyP50Value = "LatencyP50";
+        private const string LatencyP75Value = "LatencyP75";
+        private const string LatencyP95Value = "LatencyP95";
 
         /// <summary> MeasurementCounts. </summary>
         public static FrontDoorTimeSeriesType MeasurementCounts { get; } = new FrontDoorTimeSeriesType(MeasurementCountsValue);
-
         /// <summary> LatencyP50. </summary>
         public static FrontDoorTimeSeriesType LatencyP50 { get; } = new FrontDoorTimeSeriesType(LatencyP50Value);
-
         /// <summary> LatencyP75. </summary>
         public static FrontDoorTimeSeriesType LatencyP75 { get; } = new FrontDoorTimeSeriesType(LatencyP75Value);
-
         /// <summary> LatencyP95. </summary>
         public static FrontDoorTimeSeriesType LatencyP95 { get; } = new FrontDoorTimeSeriesType(LatencyP95Value);
-
         /// <summary> Determines if two <see cref="FrontDoorTimeSeriesType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorTimeSeriesType left, FrontDoorTimeSeriesType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="FrontDoorTimeSeriesType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorTimeSeriesType left, FrontDoorTimeSeriesType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="FrontDoorTimeSeriesType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorTimeSeriesType"/>. </summary>
         public static implicit operator FrontDoorTimeSeriesType(string value) => new FrontDoorTimeSeriesType(value);
 
-        /// <summary> Converts a string to a <see cref="FrontDoorTimeSeriesType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorTimeSeriesType?(string value) => value == null ? null : new FrontDoorTimeSeriesType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorTimeSeriesType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(FrontDoorTimeSeriesType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

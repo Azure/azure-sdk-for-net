@@ -7,67 +7,48 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary></summary>
+    /// <summary> The RecoveryServicesSourceScanState. </summary>
     public readonly partial struct RecoveryServicesSourceScanState : IEquatable<RecoveryServicesSourceScanState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSourceScanState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecoveryServicesSourceScanState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSourceScanState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RecoveryServicesSourceScanState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static RecoveryServicesSourceScanState Invalid { get; } = new RecoveryServicesSourceScanState(InvalidValue);
-
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Enabled. </summary>
         public static RecoveryServicesSourceScanState Enabled { get; } = new RecoveryServicesSourceScanState(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static RecoveryServicesSourceScanState Disabled { get; } = new RecoveryServicesSourceScanState(DisabledValue);
-
         /// <summary> Determines if two <see cref="RecoveryServicesSourceScanState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryServicesSourceScanState left, RecoveryServicesSourceScanState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RecoveryServicesSourceScanState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryServicesSourceScanState left, RecoveryServicesSourceScanState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RecoveryServicesSourceScanState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesSourceScanState"/>. </summary>
         public static implicit operator RecoveryServicesSourceScanState(string value) => new RecoveryServicesSourceScanState(value);
 
-        /// <summary> Converts a string to a <see cref="RecoveryServicesSourceScanState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryServicesSourceScanState?(string value) => value == null ? null : new RecoveryServicesSourceScanState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryServicesSourceScanState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RecoveryServicesSourceScanState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

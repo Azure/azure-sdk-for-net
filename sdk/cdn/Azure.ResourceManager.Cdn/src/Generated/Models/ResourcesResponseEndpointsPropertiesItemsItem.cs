@@ -7,15 +7,46 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The ResourcesResponseEndpointsPropertiesItemsItem. </summary>
+    /// <summary>
+    /// The ResourcesResponseEndpointsPropertiesItemsItem.
+    /// Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem
+    /// </summary>
     public partial class ResourcesResponseEndpointsPropertiesItemsItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
         internal ResourcesResponseEndpointsPropertiesItemsItem()
@@ -23,34 +54,27 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="endpointId"></param>
-        /// <param name="history"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourcesResponseEndpointsPropertiesItemsItem(string id, string name, string endpointId, bool? history, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="id"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.id. </param>
+        /// <param name="name"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.name. </param>
+        /// <param name="endpointId"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.endpointId. </param>
+        /// <param name="history"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.history. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourcesResponseEndpointsPropertiesItemsItem(string id, string name, string endpointId, bool? history, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             EndpointId = endpointId;
             History = history;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the Id. </summary>
-        [WirePath("id")]
+        /// <summary> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.id. </summary>
         public string Id { get; }
-
-        /// <summary> Gets the Name. </summary>
-        [WirePath("name")]
+        /// <summary> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.name. </summary>
         public string Name { get; }
-
-        /// <summary> Gets the EndpointId. </summary>
-        [WirePath("endpointId")]
+        /// <summary> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.endpointId. </summary>
         public string EndpointId { get; }
-
-        /// <summary> Gets the History. </summary>
-        [WirePath("history")]
+        /// <summary> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.history. </summary>
         public bool? History { get; }
     }
 }

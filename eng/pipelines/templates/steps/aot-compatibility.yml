@@ -1,7 +1,7 @@
 parameters:
   ServiceDirectory: ''
-  Artifacts: ''
   PackageInfoFolder: ''
+  AOTTestInputs: []
 
 steps:
 
@@ -9,44 +9,21 @@ steps:
   - task: Powershell@2
     displayName: Check for AOT compatibility regressions for PR
     inputs:
-      pwsh: true
-      targetType: inline
-      script: |
-        $packageInfos = Get-ChildItem -Path "${{ parameters.PackageInfoFolder }}" -Filter "*.json" -File `
-          | ForEach-Object { Get-Content -Raw $_.FullName | ConvertFrom-Json }
-
-        Write-Host "Found $($packageInfos.Count) package(s) to check for AOT compatibility."
-        
-        $failedAotChecks = $false
-        foreach ($package in $packageInfos) {
-          $packagePath = "$($package.DirectoryPath)/src/$($package.ArtifactName).csproj"
-          
-          Write-Host "Running Check-AOT-Compatibility.ps1 for Package: $($package.ArtifactName)"
-          Write-Host "Package Path: $packagePath"
-          Write-Host "$(Build.SourcesDirectory)\eng\scripts\compatibility\Check-AOT-Compatibility.ps1"
-          
-          & "$(Build.SourcesDirectory)\eng\scripts\compatibility\Check-AOT-Compatibility.ps1" -PackagePath "$packagePath"
-          
-          if ($LASTEXITCODE -ne 0) {
-            $failedAotChecks = $true
-          }
-        }
-        
-        if ($failedAotChecks) {
-          Write-Error "AOT compatibility check failed for one or more packages."
-          exit 1
-        }
+      targetType: filepath
+      filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility-For-PR.ps1
+      arguments: >-
+        -PackageInfoFolder "${{ parameters.PackageInfoFolder }}"
+        -ProjectNames "$(ProjectNames)"
       workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
 - ${{ else }}:
-  - ${{ each artifact in parameters.Artifacts }}:
+  - ${{ each aotTestInput in parameters.AOTTestInputs }}:
     - task: Powershell@2
-      displayName: Check for AOT compatibility regressions in ${{ artifact.name }}
+      displayName: Check for AOT compatibility regressions in ${{ aotTestInput.ArtifactName }}
       inputs:
-        pwsh: true
         targetType: filepath
         filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility.ps1
         arguments: >-
           -ServiceDirectory ${{ parameters.ServiceDirectory }}
-          -PackageName ${{ artifact.name }}
-          -DirectoryName ${{ coalesce(artifact.directoryName, artifact.name) }}
+          -PackageName ${{ aotTestInput.ArtifactName }}
+          -ExpectedWarningsFilePath ${{ aotTestInput.ExpectedWarningsFilePath }}
         workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility

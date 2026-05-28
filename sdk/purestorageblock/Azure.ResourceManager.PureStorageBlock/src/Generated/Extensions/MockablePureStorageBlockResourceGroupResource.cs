@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PureStorageBlock;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PureStorageBlock.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockablePureStorageBlockResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockablePureStorageBlockResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockablePureStorageBlockResourceGroupResource"/> class for mocking. </summary>
         protected MockablePureStorageBlockResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockablePureStorageBlockResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockablePureStorageBlockResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePureStorageBlockResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of PureStorageReservations in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PureStorageReservations and their operations over a PureStorageReservationResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of PureStorageReservationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PureStorageReservationResources and their operations over a PureStorageReservationResource. </returns>
         public virtual PureStorageReservationCollection GetPureStorageReservations()
         {
             return GetCachedClient(client => new PureStorageReservationCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// Get a reservation
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Reservations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStorageReservationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PureStorageReservationResource>> GetPureStorageReservationAsync(string reservationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationName, nameof(reservationName));
-
             return await GetPureStorageReservations().GetAsync(reservationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// Get a reservation
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/reservations/{reservationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Reservations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Reservation_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStorageReservationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,13 +99,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         [ForwardsClientCalls]
         public virtual Response<PureStorageReservationResource> GetPureStorageReservation(string reservationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reservationName, nameof(reservationName));
-
             return GetPureStorageReservations().Get(reservationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PureStoragePools in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PureStoragePools and their operations over a PureStoragePoolResource. </returns>
+        /// <summary> Gets a collection of PureStoragePoolResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PureStoragePoolResources and their operations over a PureStoragePoolResource. </returns>
         public virtual PureStoragePoolCollection GetPureStoragePools()
         {
             return GetCachedClient(client => new PureStoragePoolCollection(client, Id));
@@ -107,16 +113,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// Get a storage pool
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,8 +137,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PureStoragePoolResource>> GetPureStoragePoolAsync(string storagePoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-
             return await GetPureStoragePools().GetAsync(storagePoolName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,16 +144,20 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// Get a storage pool
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StoragePools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StoragePool_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PureStoragePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,8 +168,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         [ForwardsClientCalls]
         public virtual Response<PureStoragePoolResource> GetPureStoragePool(string storagePoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(storagePoolName, nameof(storagePoolName));
-
             return GetPureStoragePools().Get(storagePoolName, cancellationToken);
         }
     }

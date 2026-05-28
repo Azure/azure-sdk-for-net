@@ -247,8 +247,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             try
             {
-                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri)
-                {
+                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) {
                     SourceFilter = trainingOptions.TrainingFileFilter,
                     UseLabelFile = useTrainingLabels
                 };
@@ -293,8 +292,7 @@ namespace Azure.AI.FormRecognizer.Training
 
             try
             {
-                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri)
-                {
+                var trainRequest = new TrainRequest(trainingFilesUri.AbsoluteUri) {
                     SourceFilter = trainingOptions.TrainingFileFilter,
                     UseLabelFile = useTrainingLabels
                 };

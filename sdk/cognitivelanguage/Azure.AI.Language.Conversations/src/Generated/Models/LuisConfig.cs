@@ -14,17 +14,18 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class LuisConfig : AnalysisConfig
     {
         /// <summary> Initializes a new instance of <see cref="LuisConfig"/>. </summary>
-        public LuisConfig() : base(TargetProjectKind.Luis)
+        public LuisConfig()
         {
+            TargetProjectKind = TargetProjectKind.Luis;
         }
 
         /// <summary> Initializes a new instance of <see cref="LuisConfig"/>. </summary>
         /// <param name="targetProjectKind"> The type of a target service. </param>
         /// <param name="apiVersion"> The API version to use when call a specific target service. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="query"> The utterance to predict. </param>
         /// <param name="callingOptions"> This customizes how the service calls LUIS Generally Available projects. </param>
-        internal LuisConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties, string query, LuisCallingConfig callingOptions) : base(targetProjectKind, apiVersion, additionalBinaryDataProperties)
+        internal LuisConfig(TargetProjectKind targetProjectKind, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, LuisCallingConfig callingOptions) : base(targetProjectKind, apiVersion, serializedAdditionalRawData)
         {
             Query = query;
             CallingOptions = callingOptions;
@@ -32,7 +33,6 @@ namespace Azure.AI.Language.Conversations.Models
 
         /// <summary> The utterance to predict. </summary>
         public string Query { get; set; }
-
         /// <summary> This customizes how the service calls LUIS Generally Available projects. </summary>
         public LuisCallingConfig CallingOptions { get; set; }
     }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -30,13 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 if (_configuration != null)
                 {
-                    var azureMonitorSection = _configuration.GetSection(AzureMonitorExporterSectionFromConfig);
-                    azureMonitorSection.Bind(options);
-                    if (azureMonitorSection["TracesPerSecond"] == null && azureMonitorSection["SamplingRatio"] != null)
-                    {
-                        // This is so user does not have to explicitly set TracesPerSecond to null in config to use fixed-percentage sampling.
-                        options.TracesPerSecond = null;
-                    }
+                    BindIConfigurationOptions(_configuration, options);
 
                     // IConfiguration can read from EnvironmentVariables or InMemoryCollection if configured to do so.
                     var connectionStringFromIConfig = _configuration[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
@@ -105,7 +100,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                             if (ratio >= 0.0 && ratio <= 1.0)
                             {
                                 options.SamplingRatio = (float)ratio;
-                                options.TracesPerSecond = null; // Explicitly set to null to use fixed-percentage sampling
                             }
                             else
                             {
@@ -126,6 +120,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 AzureMonitorExporterEventSource.Log.ConfigureFailed(ex);
             }
+        }
+
+        [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "Binding options is a known source of trim warnings; this is a deliberate usage.")]
+        [UnconditionalSuppressMessage("AOT", "IL3050", Justification = "Binding options is a known source of AOT warnings; this is a deliberate usage.")]
+        private static void BindIConfigurationOptions(IConfiguration configuration, AzureMonitorExporterOptions options)
+        {
+            configuration.GetSection(AzureMonitorExporterSectionFromConfig).Bind(options);
         }
     }
 }

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    /// <summary></summary>
-    internal partial class DynatraceMonitorOperationSource : IOperationSource<DynatraceMonitorResource>
+    internal class DynatraceMonitorOperationSource : IOperationSource<DynatraceMonitorResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DynatraceMonitorOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DynatraceMonitorResource IOperationSource<DynatraceMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DynatraceMonitorData data = DynatraceMonitorData.DeserializeDynatraceMonitorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DynatraceMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
             return new DynatraceMonitorResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DynatraceMonitorResource> IOperationSource<DynatraceMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DynatraceMonitorData data = DynatraceMonitorData.DeserializeDynatraceMonitorData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DynatraceMonitorResource(_client, data);
+            var data = ModelReaderWriter.Read<DynatraceMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
+            return await Task.FromResult(new DynatraceMonitorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

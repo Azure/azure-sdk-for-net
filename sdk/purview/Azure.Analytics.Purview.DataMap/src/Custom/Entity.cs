@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -20,6 +19,24 @@ public partial class Entity
     // CUSTOM CODE NOTE:
     //   This file is the central hub of .NET client customization for Purview DataMap.
 
+    internal HttpMessage CreateImportBusinessMetadataRequest(RequestContent content, RequestContext context)
+    {
+        var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        var request = message.Request;
+        request.Method = RequestMethod.Post;
+        var uri = new RawRequestUriBuilder();
+        uri.Reset(_endpoint);
+        uri.AppendRaw("/datamap/api", false);
+        uri.AppendPath("/atlas/v2/entity/businessmetadata/import", false);
+        uri.AppendQuery("api-version", _apiVersion, true);
+        request.Uri = uri;
+        request.Headers.Add("Accept", "application/json");
+        request.Headers.Add("content-type", "multipart/form-data");
+        request.Content = content;
+        (content as MultipartFormDataContent).ApplyToRequest(request);
+        return message;
+    }
+
     /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
     /// <param name="file"> InputStream of file. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -28,10 +45,10 @@ public partial class Entity
     {
         Argument.AssertNotNull(file, nameof(file));
 
-        RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-        BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(file);
-        using MultiPartFormDataRequestContent content = (MultiPartFormDataRequestContent)businessMetadataOptions.ToRequestContent();
+        RequestContext context = FromCancellationToken(cancellationToken);
+        BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(file.ToStream());
+        using MultipartFormDataRequestContent content = businessMetadataOptions.ToMultipartRequestContent();
         Response response = ImportBusinessMetadata(content, content.ContentType, context);
-        return Response.FromValue(BulkImportResult.DeserializeBulkImportResult(JsonDocument.Parse(response.Content).RootElement, new ModelReaderWriterOptions("W")), response);
+        return Response.FromValue(BulkImportResult.FromResponse(response), response);
     }
 }

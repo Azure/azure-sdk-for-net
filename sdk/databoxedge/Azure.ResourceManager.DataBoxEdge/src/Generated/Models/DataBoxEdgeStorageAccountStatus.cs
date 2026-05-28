@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,67 +14,47 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeStorageAccountStatus : IEquatable<DataBoxEdgeStorageAccountStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeStorageAccountStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string OKValue = "OK";
         private const string OfflineValue = "Offline";
         private const string UnknownValue = "Unknown";
         private const string UpdatingValue = "Updating";
         private const string NeedsAttentionValue = "NeedsAttention";
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeStorageAccountStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the OK. </summary>
+        /// <summary> OK. </summary>
         public static DataBoxEdgeStorageAccountStatus OK { get; } = new DataBoxEdgeStorageAccountStatus(OKValue);
-
-        /// <summary> Gets the Offline. </summary>
+        /// <summary> Offline. </summary>
         public static DataBoxEdgeStorageAccountStatus Offline { get; } = new DataBoxEdgeStorageAccountStatus(OfflineValue);
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static DataBoxEdgeStorageAccountStatus Unknown { get; } = new DataBoxEdgeStorageAccountStatus(UnknownValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static DataBoxEdgeStorageAccountStatus Updating { get; } = new DataBoxEdgeStorageAccountStatus(UpdatingValue);
-
-        /// <summary> Gets the NeedsAttention. </summary>
+        /// <summary> NeedsAttention. </summary>
         public static DataBoxEdgeStorageAccountStatus NeedsAttention { get; } = new DataBoxEdgeStorageAccountStatus(NeedsAttentionValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageAccountStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeStorageAccountStatus left, DataBoxEdgeStorageAccountStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeStorageAccountStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeStorageAccountStatus left, DataBoxEdgeStorageAccountStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeStorageAccountStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeStorageAccountStatus"/>. </summary>
         public static implicit operator DataBoxEdgeStorageAccountStatus(string value) => new DataBoxEdgeStorageAccountStatus(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeStorageAccountStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeStorageAccountStatus?(string value) => value == null ? null : new DataBoxEdgeStorageAccountStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeStorageAccountStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeStorageAccountStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

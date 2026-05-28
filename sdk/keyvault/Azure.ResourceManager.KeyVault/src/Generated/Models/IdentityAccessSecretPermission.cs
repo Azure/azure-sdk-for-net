@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary></summary>
+    /// <summary> The IdentityAccessSecretPermission. </summary>
     public readonly partial struct IdentityAccessSecretPermission : IEquatable<IdentityAccessSecretPermission>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="IdentityAccessSecretPermission"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IdentityAccessSecretPermission(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AllValue = "all";
         private const string GetValue = "get";
         private const string ListValue = "list";
@@ -25,73 +32,41 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string RecoverValue = "recover";
         private const string PurgeValue = "purge";
 
-        /// <summary> Initializes a new instance of <see cref="IdentityAccessSecretPermission"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IdentityAccessSecretPermission(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the All. </summary>
+        /// <summary> all. </summary>
         public static IdentityAccessSecretPermission All { get; } = new IdentityAccessSecretPermission(AllValue);
-
-        /// <summary> Gets the Get. </summary>
+        /// <summary> get. </summary>
         public static IdentityAccessSecretPermission Get { get; } = new IdentityAccessSecretPermission(GetValue);
-
-        /// <summary> Gets the List. </summary>
+        /// <summary> list. </summary>
         public static IdentityAccessSecretPermission List { get; } = new IdentityAccessSecretPermission(ListValue);
-
-        /// <summary> Gets the Set. </summary>
+        /// <summary> set. </summary>
         public static IdentityAccessSecretPermission Set { get; } = new IdentityAccessSecretPermission(SetValue);
-
-        /// <summary> Gets the Delete. </summary>
+        /// <summary> delete. </summary>
         public static IdentityAccessSecretPermission Delete { get; } = new IdentityAccessSecretPermission(DeleteValue);
-
-        /// <summary> Gets the Backup. </summary>
+        /// <summary> backup. </summary>
         public static IdentityAccessSecretPermission Backup { get; } = new IdentityAccessSecretPermission(BackupValue);
-
-        /// <summary> Gets the Restore. </summary>
+        /// <summary> restore. </summary>
         public static IdentityAccessSecretPermission Restore { get; } = new IdentityAccessSecretPermission(RestoreValue);
-
-        /// <summary> Gets the Recover. </summary>
+        /// <summary> recover. </summary>
         public static IdentityAccessSecretPermission Recover { get; } = new IdentityAccessSecretPermission(RecoverValue);
-
-        /// <summary> Gets the Purge. </summary>
+        /// <summary> purge. </summary>
         public static IdentityAccessSecretPermission Purge { get; } = new IdentityAccessSecretPermission(PurgeValue);
-
         /// <summary> Determines if two <see cref="IdentityAccessSecretPermission"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IdentityAccessSecretPermission left, IdentityAccessSecretPermission right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="IdentityAccessSecretPermission"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IdentityAccessSecretPermission left, IdentityAccessSecretPermission right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="IdentityAccessSecretPermission"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityAccessSecretPermission"/>. </summary>
         public static implicit operator IdentityAccessSecretPermission(string value) => new IdentityAccessSecretPermission(value);
 
-        /// <summary> Converts a string to a <see cref="IdentityAccessSecretPermission"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator IdentityAccessSecretPermission?(string value) => value == null ? null : new IdentityAccessSecretPermission(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IdentityAccessSecretPermission other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(IdentityAccessSecretPermission other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

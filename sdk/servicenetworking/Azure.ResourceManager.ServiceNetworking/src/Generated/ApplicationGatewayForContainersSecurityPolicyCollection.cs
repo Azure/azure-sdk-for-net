@@ -8,66 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> and their operations.
     /// Each <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
-    /// To get a <see cref="ApplicationGatewayForContainersSecurityPolicyCollection"/> instance call the GetApplicationGatewayForContainersSecurityPolicies method from an instance of <see cref="TrafficControllerResource"/>.
+    /// To get an <see cref="ApplicationGatewayForContainersSecurityPolicyCollection"/> instance call the GetApplicationGatewayForContainersSecurityPolicies method from an instance of <see cref="TrafficControllerResource"/>.
     /// </summary>
     public partial class ApplicationGatewayForContainersSecurityPolicyCollection : ArmCollection, IEnumerable<ApplicationGatewayForContainersSecurityPolicyResource>, IAsyncEnumerable<ApplicationGatewayForContainersSecurityPolicyResource>
     {
-        private readonly ClientDiagnostics _securityPoliciesInterfaceClientDiagnostics;
-        private readonly SecurityPoliciesInterface _securityPoliciesInterfaceRestClient;
+        private readonly ClientDiagnostics _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics;
+        private readonly SecurityPoliciesInterfaceRestOperations _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient;
 
-        /// <summary> Initializes a new instance of ApplicationGatewayForContainersSecurityPolicyCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayForContainersSecurityPolicyCollection"/> class for mocking. </summary>
         protected ApplicationGatewayForContainersSecurityPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayForContainersSecurityPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayForContainersSecurityPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ApplicationGatewayForContainersSecurityPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ApplicationGatewayForContainersSecurityPolicyResource.ResourceType, out string applicationGatewayForContainersSecurityPolicyApiVersion);
-            _securityPoliciesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ApplicationGatewayForContainersSecurityPolicyResource.ResourceType.Namespace, Diagnostics);
-            _securityPoliciesInterfaceRestClient = new SecurityPoliciesInterface(_securityPoliciesInterfaceClientDiagnostics, Pipeline, Endpoint, applicationGatewayForContainersSecurityPolicyApiVersion ?? "2025-03-01-preview");
-            ValidateResourceId(id);
+            _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ApplicationGatewayForContainersSecurityPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApplicationGatewayForContainersSecurityPolicyResource.ResourceType, out string applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceApiVersion);
+            _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient = new SecurityPoliciesInterfaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TrafficControllerResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a SecurityPolicy
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPoliciesInterface_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _securityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.CreateOrUpdate");
+            using var scope = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> operation = new ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>(
-                    new ApplicationGatewayForContainersSecurityPolicyOperationSource(Client),
-                    _securityPoliciesInterfaceClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>(new ApplicationGatewayForContainersSecurityPolicyOperationSource(Client), _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// Create a SecurityPolicy
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPoliciesInterface_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _securityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.CreateOrUpdate");
+            using var scope = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, ApplicationGatewayForContainersSecurityPolicyData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource> operation = new ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>(
-                    new ApplicationGatewayForContainersSecurityPolicyOperationSource(Client),
-                    _securityPoliciesInterfaceClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken);
+                var operation = new ServiceNetworkingArmOperation<ApplicationGatewayForContainersSecurityPolicyResource>(new ApplicationGatewayForContainersSecurityPolicyOperationSource(Client), _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// Get a SecurityPolicy
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPoliciesInterface_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual async Task<Response<ApplicationGatewayForContainersSecurityPolicyResource>> GetAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.Get");
+            using var scope = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApplicationGatewayForContainersSecurityPolicyData> response = Response.FromValue(ApplicationGatewayForContainersSecurityPolicyData.FromResponse(result), result);
+                var response = await _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ApplicationGatewayForContainersSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// Get a SecurityPolicy
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPoliciesInterface_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual Response<ApplicationGatewayForContainersSecurityPolicyResource> Get(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.Get");
+            using var scope = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApplicationGatewayForContainersSecurityPolicyData> response = Response.FromValue(ApplicationGatewayForContainersSecurityPolicyData.FromResponse(result), result);
+                var response = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ApplicationGatewayForContainersSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// List SecurityPolicy resources by TrafficController
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPoliciesInterface_ListByTrafficController. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_ListByTrafficController</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayForContainersSecurityPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
-                _securityPoliciesInterfaceRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ApplicationGatewayForContainersSecurityPolicyCollection.GetAll"), data => new ApplicationGatewayForContainersSecurityPolicyResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayForContainersSecurityPolicyResource(Client, ApplicationGatewayForContainersSecurityPolicyData.DeserializeApplicationGatewayForContainersSecurityPolicyData(e)), _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, "ApplicationGatewayForContainersSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List SecurityPolicy resources by TrafficController
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPoliciesInterface_ListByTrafficController. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_ListByTrafficController</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> A collection of <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayForContainersSecurityPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ApplicationGatewayForContainersSecurityPolicyData, ApplicationGatewayForContainersSecurityPolicyResource>(new SecurityPoliciesInterfaceGetByTrafficControllerCollectionResultOfT(
-                _securityPoliciesInterfaceRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ApplicationGatewayForContainersSecurityPolicyCollection.GetAll"), data => new ApplicationGatewayForContainersSecurityPolicyResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayForContainersSecurityPolicyResource(Client, ApplicationGatewayForContainersSecurityPolicyData.DeserializeApplicationGatewayForContainersSecurityPolicyData(e)), _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, "ApplicationGatewayForContainersSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPoliciesInterface_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.Exists");
+            using var scope = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ApplicationGatewayForContainersSecurityPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ApplicationGatewayForContainersSecurityPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApplicationGatewayForContainersSecurityPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPoliciesInterface_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.Exists");
+            using var scope = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ApplicationGatewayForContainersSecurityPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ApplicationGatewayForContainersSecurityPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApplicationGatewayForContainersSecurityPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPoliciesInterface_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<ApplicationGatewayForContainersSecurityPolicyResource>> GetIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.GetIfExists");
+            using var scope = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ApplicationGatewayForContainersSecurityPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ApplicationGatewayForContainersSecurityPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApplicationGatewayForContainersSecurityPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ApplicationGatewayForContainersSecurityPolicyResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ApplicationGatewayForContainersSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceNetworking/trafficControllers/{trafficControllerName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPoliciesInterface_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityPolicy_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual NullableResponse<ApplicationGatewayForContainersSecurityPolicyResource> GetIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.GetIfExists");
+            using var scope = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("ApplicationGatewayForContainersSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ApplicationGatewayForContainersSecurityPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ApplicationGatewayForContainersSecurityPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApplicationGatewayForContainersSecurityPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _applicationGatewayForContainersSecurityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ApplicationGatewayForContainersSecurityPolicyResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ApplicationGatewayForContainersSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.ServiceNetworking
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApplicationGatewayForContainersSecurityPolicyResource> IAsyncEnumerable<ApplicationGatewayForContainersSecurityPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

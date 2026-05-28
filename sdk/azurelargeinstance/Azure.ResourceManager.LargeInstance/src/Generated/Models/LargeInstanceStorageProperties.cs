@@ -13,11 +13,40 @@ namespace Azure.ResourceManager.LargeInstance.Models
     /// <summary> described the storage properties of the azure large storage instance. </summary>
     public partial class LargeInstanceStorageProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceStorageProperties"/>. </summary>
-        public LargeInstanceStorageProperties()
+        internal LargeInstanceStorageProperties()
         {
         }
 
@@ -29,8 +58,8 @@ namespace Azure.ResourceManager.LargeInstance.Models
         /// <param name="hardwareType"> the hardware type of the storage instance. </param>
         /// <param name="workloadType"> the workload for which the resource is getting provisioned. </param>
         /// <param name="storageBillingProperties"> the billing related information for the resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LargeInstanceStorageProperties(LargeStorageInstanceProvisioningState? provisioningState, string offeringType, string storageType, string generation, LargeInstanceHardwareTypeName? hardwareType, string workloadType, LargeInstanceStorageBillingProperties storageBillingProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LargeInstanceStorageProperties(LargeInstanceProvisioningState? provisioningState, string offeringType, string storageType, string generation, LargeInstanceHardwareTypeName? hardwareType, string workloadType, LargeInstanceStorageBillingProperties storageBillingProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             OfferingType = offeringType;
@@ -39,28 +68,22 @@ namespace Azure.ResourceManager.LargeInstance.Models
             HardwareType = hardwareType;
             WorkloadType = workloadType;
             StorageBillingProperties = storageBillingProperties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> State of provisioning of the AzureLargeStorageInstance. </summary>
-        public LargeStorageInstanceProvisioningState? ProvisioningState { get; set; }
-
+        public LargeInstanceProvisioningState? ProvisioningState { get; }
         /// <summary> the offering type for which the resource is getting provisioned. </summary>
-        public string OfferingType { get; set; }
-
+        public string OfferingType { get; }
         /// <summary> the storage protocol for which the resource is getting provisioned. </summary>
-        public string StorageType { get; set; }
-
+        public string StorageType { get; }
         /// <summary> the kind of storage instance. </summary>
-        public string Generation { get; set; }
-
+        public string Generation { get; }
         /// <summary> the hardware type of the storage instance. </summary>
-        public LargeInstanceHardwareTypeName? HardwareType { get; set; }
-
+        public LargeInstanceHardwareTypeName? HardwareType { get; }
         /// <summary> the workload for which the resource is getting provisioned. </summary>
-        public string WorkloadType { get; set; }
-
+        public string WorkloadType { get; }
         /// <summary> the billing related information for the resource. </summary>
-        public LargeInstanceStorageBillingProperties StorageBillingProperties { get; set; }
+        public LargeInstanceStorageBillingProperties StorageBillingProperties { get; }
     }
 }

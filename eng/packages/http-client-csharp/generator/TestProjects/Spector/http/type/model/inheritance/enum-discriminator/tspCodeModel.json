@@ -77,7 +77,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept",
+      "name": "getExtensibleModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -93,7 +93,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept1",
+      "name": "putExtensibleModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -109,7 +109,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept2",
+      "name": "getExtensibleModelMissingDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -125,7 +125,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept3",
+      "name": "getExtensibleModelWrongDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -141,7 +141,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept4",
+      "name": "getFixedModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -157,7 +157,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept5",
+      "name": "putFixedModelContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -173,7 +173,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept6",
+      "name": "getFixedModelMissingDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -189,7 +189,7 @@
     {
       "$id": "21",
       "kind": "constant",
-      "name": "GetExtensibleModelAccept7",
+      "name": "getFixedModelWrongDiscriminatorContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -213,11 +213,6 @@
       "usage": "Input,Output,Json",
       "doc": "Test extensible enum type for discriminator",
       "decorators": [],
-      "serializationOptions": {
-        "json": {
-          "name": "Dog"
-        }
-      },
       "discriminatorProperty": {
         "$id": "24",
         "kind": "property",
@@ -282,11 +277,6 @@
           "doc": "Golden dog model",
           "discriminatorValue": "golden",
           "decorators": [],
-          "serializationOptions": {
-            "json": {
-              "name": "Golden"
-            }
-          },
           "baseModel": {
             "$ref": "23"
           },
@@ -312,7 +302,6 @@
                   "doc": "extensible enum type for discriminator",
                   "name": "DogKind",
                   "isGeneratedName": false,
-                  "isExactName": false,
                   "namespace": "Type.Model.Inheritance.EnumDiscriminator",
                   "valueType": {
                     "$id": "31",
@@ -335,8 +324,7 @@
                       },
                       "enumType": {
                         "$ref": "30"
-                      },
-                      "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.DogKind.Golden"
+                      }
                     }
                   ],
                   "isFixed": false,
@@ -380,11 +368,6 @@
       "usage": "Input,Output,Json",
       "doc": "Test fixed enum type for discriminator",
       "decorators": [],
-      "serializationOptions": {
-        "json": {
-          "name": "Snake"
-        }
-      },
       "discriminatorProperty": {
         "$id": "34",
         "kind": "property",
@@ -449,11 +432,6 @@
           "doc": "Cobra model",
           "discriminatorValue": "cobra",
           "decorators": [],
-          "serializationOptions": {
-            "json": {
-              "name": "Cobra"
-            }
-          },
           "baseModel": {
             "$ref": "33"
           },
@@ -479,7 +457,6 @@
                   "doc": "fixed enum type for discriminator",
                   "name": "SnakeKind",
                   "isGeneratedName": false,
-                  "isExactName": false,
                   "namespace": "Type.Model.Inheritance.EnumDiscriminator",
                   "valueType": {
                     "$id": "41",
@@ -502,8 +479,7 @@
                       },
                       "valueType": {
                         "$ref": "41"
-                      },
-                      "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.SnakeKind.Cobra"
+                      }
                     }
                   ],
                   "isFixed": true,
@@ -575,26 +551,7 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModel.accept",
-                "methodParameterSegments": [
-                  {
-                    "$id": "47",
-                    "kind": "method",
-                    "name": "accept",
-                    "serializedName": "Accept",
-                    "type": {
-                      "$ref": "7"
-                    },
-                    "location": "Header",
-                    "isApiVersion": false,
-                    "optional": false,
-                    "scope": "Constant",
-                    "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModel.accept",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ]
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModel.accept"
               }
             ],
             "responses": [
@@ -609,12 +566,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -624,12 +576,25 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModel",
-            "decorators": [],
-            "namespace": "Type.Model.Inheritance.EnumDiscriminator"
+            "decorators": []
           },
           "parameters": [
             {
-              "$ref": "47"
+              "$id": "47",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "7"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModel.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -671,30 +636,10 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.contentType",
-                "methodParameterSegments": [
-                  {
-                    "$id": "51",
-                    "kind": "method",
-                    "name": "contentType",
-                    "serializedName": "Content-Type",
-                    "doc": "Body parameter's content type. Known values are application/json",
-                    "type": {
-                      "$ref": "9"
-                    },
-                    "location": "Header",
-                    "isApiVersion": false,
-                    "optional": false,
-                    "scope": "Constant",
-                    "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.contentType",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ]
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.contentType"
               },
               {
-                "$id": "52",
+                "$id": "51",
                 "kind": "body",
                 "name": "input",
                 "serializedName": "input",
@@ -711,32 +656,7 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.input",
-                "methodParameterSegments": [
-                  {
-                    "$id": "53",
-                    "kind": "method",
-                    "name": "input",
-                    "serializedName": "input",
-                    "doc": "Dog to create",
-                    "type": {
-                      "$ref": "23"
-                    },
-                    "location": "Body",
-                    "isApiVersion": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.input",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": "input"
-                  }
-                }
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.input"
               }
             ],
             "responses": [
@@ -745,8 +665,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "PUT",
@@ -759,15 +678,44 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel",
-            "decorators": [],
-            "namespace": "Type.Model.Inheritance.EnumDiscriminator"
+            "decorators": []
           },
           "parameters": [
             {
-              "$ref": "53"
+              "$id": "52",
+              "kind": "method",
+              "name": "input",
+              "serializedName": "input",
+              "doc": "Dog to create",
+              "type": {
+                "$ref": "23"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
-              "$ref": "51"
+              "$id": "53",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "9"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putExtensibleModel.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {},
@@ -804,26 +752,7 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelMissingDiscriminator.accept",
-                "methodParameterSegments": [
-                  {
-                    "$id": "57",
-                    "kind": "method",
-                    "name": "accept",
-                    "serializedName": "Accept",
-                    "type": {
-                      "$ref": "11"
-                    },
-                    "location": "Header",
-                    "isApiVersion": false,
-                    "optional": false,
-                    "scope": "Constant",
-                    "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelMissingDiscriminator.accept",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ]
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelMissingDiscriminator.accept"
               }
             ],
             "responses": [
@@ -838,12 +767,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -853,12 +777,25 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelMissingDiscriminator",
-            "decorators": [],
-            "namespace": "Type.Model.Inheritance.EnumDiscriminator"
+            "decorators": []
           },
           "parameters": [
             {
-              "$ref": "57"
+              "$id": "57",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "11"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelMissingDiscriminator.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -899,26 +836,7 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelWrongDiscriminator.accept",
-                "methodParameterSegments": [
-                  {
-                    "$id": "61",
-                    "kind": "method",
-                    "name": "accept",
-                    "serializedName": "Accept",
-                    "type": {
-                      "$ref": "13"
-                    },
-                    "location": "Header",
-                    "isApiVersion": false,
-                    "optional": false,
-                    "scope": "Constant",
-                    "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelWrongDiscriminator.accept",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ]
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelWrongDiscriminator.accept"
               }
             ],
             "responses": [
@@ -933,12 +851,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -948,12 +861,25 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelWrongDiscriminator",
-            "decorators": [],
-            "namespace": "Type.Model.Inheritance.EnumDiscriminator"
+            "decorators": []
           },
           "parameters": [
             {
-              "$ref": "61"
+              "$id": "61",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "13"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getExtensibleModelWrongDiscriminator.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -994,26 +920,7 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModel.accept",
-                "methodParameterSegments": [
-                  {
-                    "$id": "65",
-                    "kind": "method",
-                    "name": "accept",
-                    "serializedName": "Accept",
-                    "type": {
-                      "$ref": "15"
-                    },
-                    "location": "Header",
-                    "isApiVersion": false,
-                    "optional": false,
-                    "scope": "Constant",
-                    "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModel.accept",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ]
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModel.accept"
               }
             ],
             "responses": [
@@ -1028,12 +935,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -1043,12 +945,25 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModel",
-            "decorators": [],
-            "namespace": "Type.Model.Inheritance.EnumDiscriminator"
+            "decorators": []
           },
           "parameters": [
             {
-              "$ref": "65"
+              "$id": "65",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "15"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModel.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -1090,30 +1005,10 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.contentType",
-                "methodParameterSegments": [
-                  {
-                    "$id": "69",
-                    "kind": "method",
-                    "name": "contentType",
-                    "serializedName": "Content-Type",
-                    "doc": "Body parameter's content type. Known values are application/json",
-                    "type": {
-                      "$ref": "17"
-                    },
-                    "location": "Header",
-                    "isApiVersion": false,
-                    "optional": false,
-                    "scope": "Constant",
-                    "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.contentType",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ]
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.contentType"
               },
               {
-                "$id": "70",
+                "$id": "69",
                 "kind": "body",
                 "name": "input",
                 "serializedName": "input",
@@ -1130,32 +1025,7 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.input",
-                "methodParameterSegments": [
-                  {
-                    "$id": "71",
-                    "kind": "method",
-                    "name": "input",
-                    "serializedName": "input",
-                    "doc": "Snake to create",
-                    "type": {
-                      "$ref": "33"
-                    },
-                    "location": "Body",
-                    "isApiVersion": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.input",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": "input"
-                  }
-                }
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.input"
               }
             ],
             "responses": [
@@ -1164,8 +1034,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "PUT",
@@ -1178,15 +1047,44 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel",
-            "decorators": [],
-            "namespace": "Type.Model.Inheritance.EnumDiscriminator"
+            "decorators": []
           },
           "parameters": [
             {
-              "$ref": "71"
+              "$id": "70",
+              "kind": "method",
+              "name": "input",
+              "serializedName": "input",
+              "doc": "Snake to create",
+              "type": {
+                "$ref": "33"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
-              "$ref": "69"
+              "$id": "71",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "17"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.putFixedModel.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {},
@@ -1223,26 +1121,7 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelMissingDiscriminator.accept",
-                "methodParameterSegments": [
-                  {
-                    "$id": "75",
-                    "kind": "method",
-                    "name": "accept",
-                    "serializedName": "Accept",
-                    "type": {
-                      "$ref": "19"
-                    },
-                    "location": "Header",
-                    "isApiVersion": false,
-                    "optional": false,
-                    "scope": "Constant",
-                    "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelMissingDiscriminator.accept",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ]
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelMissingDiscriminator.accept"
               }
             ],
             "responses": [
@@ -1257,12 +1136,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -1272,12 +1146,25 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelMissingDiscriminator",
-            "decorators": [],
-            "namespace": "Type.Model.Inheritance.EnumDiscriminator"
+            "decorators": []
           },
           "parameters": [
             {
-              "$ref": "75"
+              "$id": "75",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "19"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelMissingDiscriminator.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -1318,26 +1205,7 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelWrongDiscriminator.accept",
-                "methodParameterSegments": [
-                  {
-                    "$id": "79",
-                    "kind": "method",
-                    "name": "accept",
-                    "serializedName": "Accept",
-                    "type": {
-                      "$ref": "21"
-                    },
-                    "location": "Header",
-                    "isApiVersion": false,
-                    "optional": false,
-                    "scope": "Constant",
-                    "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelWrongDiscriminator.accept",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ]
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelWrongDiscriminator.accept"
               }
             ],
             "responses": [
@@ -1352,12 +1220,7 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ],
-                "serializationOptions": {
-                  "json": {
-                    "name": ""
-                  }
-                }
+                ]
               }
             ],
             "httpMethod": "GET",
@@ -1367,12 +1230,25 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelWrongDiscriminator",
-            "decorators": [],
-            "namespace": "Type.Model.Inheritance.EnumDiscriminator"
+            "decorators": []
           },
           "parameters": [
             {
-              "$ref": "79"
+              "$id": "79",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "21"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.getFixedModelWrongDiscriminator.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -1418,11 +1294,9 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.endpoint"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator",
-      "apiVersions": [],
-      "isMultiServiceClient": false
+      "apiVersions": []
     }
   ]
 }

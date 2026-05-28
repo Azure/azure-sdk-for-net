@@ -21,7 +21,7 @@ public class MessageStatusUpdate : StreamingUpdate<PersistentThreadMessage>
         StreamingUpdateReason updateKind,
         ModelReaderWriterOptions options = null)
     {
-        PersistentThreadMessage message = PersistentThreadMessage.DeserializePersistentThreadMessage(element, options ?? ModelSerializationExtensions.WireOptions);
+        PersistentThreadMessage message = PersistentThreadMessage.DeserializePersistentThreadMessage(element, options);
         return updateKind switch
         {
             _ => [new MessageStatusUpdate(message, updateKind)],

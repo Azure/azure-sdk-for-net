@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
@@ -25,73 +23,67 @@ namespace Azure.ResourceManager.TrafficManager
     /// </summary>
     public partial class TrafficManagerHeatMapCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _heatMapClientDiagnostics;
-        private readonly HeatMap _heatMapRestClient;
+        private readonly ClientDiagnostics _trafficManagerHeatMapHeatMapClientDiagnostics;
+        private readonly HeatMapRestOperations _trafficManagerHeatMapHeatMapRestClient;
 
-        /// <summary> Initializes a new instance of TrafficManagerHeatMapCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerHeatMapCollection"/> class for mocking. </summary>
         protected TrafficManagerHeatMapCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficManagerHeatMapCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerHeatMapCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal TrafficManagerHeatMapCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(TrafficManagerHeatMapResource.ResourceType, out string trafficManagerHeatMapApiVersion);
-            _heatMapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerHeatMapResource.ResourceType.Namespace, Diagnostics);
-            _heatMapRestClient = new HeatMap(_heatMapClientDiagnostics, Pipeline, Endpoint, trafficManagerHeatMapApiVersion ?? "2022-04-01");
-            ValidateResourceId(id);
+            _trafficManagerHeatMapHeatMapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerHeatMapResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(TrafficManagerHeatMapResource.ResourceType, out string trafficManagerHeatMapHeatMapApiVersion);
+            _trafficManagerHeatMapHeatMapRestClient = new HeatMapRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerHeatMapHeatMapApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TrafficManagerProfileResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficManagerProfileResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TrafficManagerProfileResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets latest heatmap for Traffic Manager profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HeatMapModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="heatMapType"> The type of the heatmap. </param>
+        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TrafficManagerHeatMapResource>> GetAsync(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerHeatMapResource>> GetAsync(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _heatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.Get");
+            using var scope = _trafficManagerHeatMapHeatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TrafficManagerHeatMapData> response = Response.FromValue(TrafficManagerHeatMapData.FromResponse(result), result);
+                var response = await _trafficManagerHeatMapHeatMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType, topLeft, botRight, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -105,40 +97,36 @@ namespace Azure.ResourceManager.TrafficManager
         /// Gets latest heatmap for Traffic Manager profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HeatMapModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="heatMapType"> The type of the heatmap. </param>
+        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TrafficManagerHeatMapResource> Get(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerHeatMapResource> Get(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _heatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.Get");
+            using var scope = _trafficManagerHeatMapHeatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<TrafficManagerHeatMapData> response = Response.FromValue(TrafficManagerHeatMapData.FromResponse(result), result);
+                var response = _trafficManagerHeatMapHeatMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType, topLeft, botRight, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -152,48 +140,34 @@ namespace Azure.ResourceManager.TrafficManager
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HeatMapModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="heatMapType"> The type of the heatmap. </param>
+        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _heatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.Exists");
+            using var scope = _trafficManagerHeatMapHeatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<TrafficManagerHeatMapData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(TrafficManagerHeatMapData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((TrafficManagerHeatMapData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _trafficManagerHeatMapHeatMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType, topLeft, botRight, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -207,48 +181,34 @@ namespace Azure.ResourceManager.TrafficManager
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HeatMapModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="heatMapType"> The type of the heatmap. </param>
+        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _heatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.Exists");
+            using var scope = _trafficManagerHeatMapHeatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<TrafficManagerHeatMapData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(TrafficManagerHeatMapData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((TrafficManagerHeatMapData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _trafficManagerHeatMapHeatMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType, topLeft, botRight, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -262,52 +222,36 @@ namespace Azure.ResourceManager.TrafficManager
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HeatMapModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="heatMapType"> The type of the heatmap. </param>
+        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<TrafficManagerHeatMapResource>> GetIfExistsAsync(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<TrafficManagerHeatMapResource>> GetIfExistsAsync(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _heatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.GetIfExists");
+            using var scope = _trafficManagerHeatMapHeatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<TrafficManagerHeatMapData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(TrafficManagerHeatMapData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((TrafficManagerHeatMapData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _trafficManagerHeatMapHeatMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType, topLeft, botRight, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<TrafficManagerHeatMapResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,52 +265,36 @@ namespace Azure.ResourceManager.TrafficManager
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HeatMapModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>HeatMap_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerHeatMapResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="heatMapType"> The type of the heatmap. </param>
+        /// <param name="heatMapType"> The type of HeatMap for the Traffic Manager profile. </param>
         /// <param name="topLeft"> The top left latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="botRight"> The bottom right latitude,longitude pair of the rectangular viewport to query for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<TrafficManagerHeatMapResource> GetIfExists(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<TrafficManagerHeatMapResource> GetIfExists(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = null, IEnumerable<double> botRight = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _heatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.GetIfExists");
+            using var scope = _trafficManagerHeatMapHeatMapClientDiagnostics.CreateScope("TrafficManagerHeatMapCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _heatMapRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType.ToString(), topLeft, botRight, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<TrafficManagerHeatMapData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(TrafficManagerHeatMapData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((TrafficManagerHeatMapData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _trafficManagerHeatMapHeatMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, heatMapType, topLeft, botRight, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<TrafficManagerHeatMapResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new TrafficManagerHeatMapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

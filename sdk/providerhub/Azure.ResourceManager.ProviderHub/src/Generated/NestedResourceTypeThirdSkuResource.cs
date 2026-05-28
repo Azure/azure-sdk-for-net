@@ -6,71 +6,23 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a NestedResourceTypeThirdSku along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NestedResourceTypeThirdSkuResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource"/> using the GetNestedResourceTypeThirdSkus method.
+    /// A Class representing a NestedResourceTypeThirdSku along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NestedResourceTypeThirdSkuResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNestedResourceTypeThirdSkuResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceTypeRegistrationResource"/> using the GetNestedResourceTypeThirdSku method.
     /// </summary>
     public partial class NestedResourceTypeThirdSkuResource : ArmResource
     {
-        private readonly ClientDiagnostics _nestedResourceTypeThirdSkuClientDiagnostics;
-        private readonly NestedResourceTypeThirdSku _nestedResourceTypeThirdSkuRestClient;
-        private readonly ResourceTypeSkuData _data;
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/skus";
-
-        /// <summary> Initializes a new instance of NestedResourceTypeThirdSkuResource for mocking. </summary>
-        protected NestedResourceTypeThirdSkuResource()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NestedResourceTypeThirdSkuResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="data"> The resource that is the target of operations. </param>
-        internal NestedResourceTypeThirdSkuResource(ArmClient client, ResourceTypeSkuData data) : this(client, data.Id)
-        {
-            HasData = true;
-            _data = data;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NestedResourceTypeThirdSkuResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NestedResourceTypeThirdSkuResource(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            TryGetApiVersion(ResourceType, out string nestedResourceTypeThirdSkuApiVersion);
-            _nestedResourceTypeThirdSkuClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            _nestedResourceTypeThirdSkuRestClient = new NestedResourceTypeThirdSku(_nestedResourceTypeThirdSkuClientDiagnostics, Pipeline, Endpoint, nestedResourceTypeThirdSkuApiVersion ?? "2024-09-01");
-            ValidateResourceId(id);
-        }
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ResourceTypeSkuData Data
-        {
-            get
-            {
-                if (!HasData)
-                {
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
-                return _data;
-            }
-        }
-
-        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NestedResourceTypeThirdSkuResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="providerNamespace"> The providerNamespace. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -80,59 +32,96 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="sku"> The sku. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string resourceType, string nestedResourceTypeFirst, string nestedResourceTypeSecond, string nestedResourceTypeThird, string sku)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}";
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}";
             return new ResourceIdentifier(resourceId);
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
+        private readonly ClientDiagnostics _nestedResourceTypeThirdSkuSkusClientDiagnostics;
+        private readonly SkusRestOperations _nestedResourceTypeThirdSkuSkusRestClient;
+        private readonly ResourceTypeSkuData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/resourcetypeRegistrations/skus";
+
+        /// <summary> Initializes a new instance of the <see cref="NestedResourceTypeThirdSkuResource"/> class for mocking. </summary>
+        protected NestedResourceTypeThirdSkuResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="NestedResourceTypeThirdSkuResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal NestedResourceTypeThirdSkuResource(ArmClient client, ResourceTypeSkuData data) : this(client, data.Id)
+        {
+            HasData = true;
+            _data = data;
+        }
+
+        /// <summary> Initializes a new instance of the <see cref="NestedResourceTypeThirdSkuResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal NestedResourceTypeThirdSkuResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            _nestedResourceTypeThirdSkuSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string nestedResourceTypeThirdSkuSkusApiVersion);
+            _nestedResourceTypeThirdSkuSkusRestClient = new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nestedResourceTypeThirdSkuSkusApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
+        }
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
+        public virtual ResourceTypeSkuData Data
+        {
+            get
+            {
+                if (!HasData)
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                return _data;
+            }
+        }
+
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets the sku details for the given resource type and sku name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_GetNestedResourceTypeThird. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_GetNestedResourceTypeThird</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="NestedResourceTypeThirdSkuResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NestedResourceTypeThirdSkuResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _nestedResourceTypeThirdSkuClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Get");
+            using var scope = _nestedResourceTypeThirdSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
+                var response = await _nestedResourceTypeThirdSkuSkusRestClient.GetNestedResourceTypeThirdAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,41 +135,33 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets the sku details for the given resource type and sku name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_GetNestedResourceTypeThird. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_GetNestedResourceTypeThird</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="NestedResourceTypeThirdSkuResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NestedResourceTypeThirdSkuResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _nestedResourceTypeThirdSkuClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Get");
+            using var scope = _nestedResourceTypeThirdSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateGetNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
+                var response = _nestedResourceTypeThirdSkuSkusRestClient.GetNestedResourceTypeThird(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,20 +175,20 @@ namespace Azure.ResourceManager.ProviderHub
         /// Deletes a resource type sku.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_DeleteNestedResourceTypeThird. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_DeleteNestedResourceTypeThird</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="NestedResourceTypeThirdSkuResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,23 +196,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _nestedResourceTypeThirdSkuClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Delete");
+            using var scope = _nestedResourceTypeThirdSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateDeleteNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ProviderHubArmOperation operation = new ProviderHubArmOperation(response, rehydrationToken);
+                var response = await _nestedResourceTypeThirdSkuSkusRestClient.DeleteNestedResourceTypeThirdAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _nestedResourceTypeThirdSkuSkusRestClient.CreateDeleteNestedResourceTypeThirdRequestUri(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -245,20 +219,20 @@ namespace Azure.ResourceManager.ProviderHub
         /// Deletes a resource type sku.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_DeleteNestedResourceTypeThird. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_DeleteNestedResourceTypeThird</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="NestedResourceTypeThirdSkuResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,23 +240,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _nestedResourceTypeThirdSkuClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Delete");
+            using var scope = _nestedResourceTypeThirdSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateDeleteNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ProviderHubArmOperation operation = new ProviderHubArmOperation(response, rehydrationToken);
+                var response = _nestedResourceTypeThirdSkuSkusRestClient.DeleteNestedResourceTypeThird(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _nestedResourceTypeThirdSkuSkusRestClient.CreateDeleteNestedResourceTypeThirdRequestUri(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -293,23 +260,23 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Update a NestedResourceTypeThirdSku.
+        /// Creates or updates the resource type skus in the given resource type.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_CreateOrUpdateNestedResourceTypeThird. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_CreateOrUpdateNestedResourceTypeThird</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="NestedResourceTypeThirdSkuResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,24 +288,16 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _nestedResourceTypeThirdSkuClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Update");
+            using var scope = _nestedResourceTypeThirdSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ResourceTypeSkuData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ProviderHubArmOperation<NestedResourceTypeThirdSkuResource> operation = new ProviderHubArmOperation<NestedResourceTypeThirdSkuResource>(Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _nestedResourceTypeThirdSkuSkusRestClient.CreateOrUpdateNestedResourceTypeThirdAsync(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _nestedResourceTypeThirdSkuSkusRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequestUri(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation<NestedResourceTypeThirdSkuResource>(Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -349,23 +308,23 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Update a NestedResourceTypeThirdSku.
+        /// Creates or updates the resource type skus in the given resource type.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/resourcetypeRegistrations/{nestedResourceTypeFirst}/resourcetypeRegistrations/{nestedResourceTypeSecond}/resourcetypeRegistrations/{nestedResourceTypeThird}/skus/{sku}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SkuResourceOperationGroup_CreateOrUpdateNestedResourceTypeThird. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_CreateOrUpdateNestedResourceTypeThird</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="NestedResourceTypeThirdSkuResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,24 +336,16 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _nestedResourceTypeThirdSkuClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Update");
+            using var scope = _nestedResourceTypeThirdSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeThirdSkuResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _nestedResourceTypeThirdSkuRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ResourceTypeSkuData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceTypeSkuData> response = Response.FromValue(ResourceTypeSkuData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ProviderHubArmOperation<NestedResourceTypeThirdSkuResource> operation = new ProviderHubArmOperation<NestedResourceTypeThirdSkuResource>(Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _nestedResourceTypeThirdSkuSkusRestClient.CreateOrUpdateNestedResourceTypeThird(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _nestedResourceTypeThirdSkuSkusRestClient.CreateCreateOrUpdateNestedResourceTypeThirdRequestUri(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation<NestedResourceTypeThirdSkuResource>(Response.FromValue(new NestedResourceTypeThirdSkuResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

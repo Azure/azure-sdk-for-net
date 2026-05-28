@@ -7,91 +7,90 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary></summary>
+    /// <summary>
+    /// The DeliveryRuleActionParametersType.
+    /// Serialized Name: DeliveryRuleActionParametersType
+    /// </summary>
     internal readonly partial struct DeliveryRuleActionParametersType : IEquatable<DeliveryRuleActionParametersType>
     {
         private readonly string _value;
-        private const string DeliveryRuleUrlRedirectActionParametersValue = "DeliveryRuleUrlRedirectActionParameters";
-        private const string DeliveryRuleUrlSigningActionParametersValue = "DeliveryRuleUrlSigningActionParameters";
+
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionParametersType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DeliveryRuleActionParametersType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string DeliveryRuleUriRedirectActionParametersValue = "DeliveryRuleUrlRedirectActionParameters";
+        private const string DeliveryRuleUriSigningActionParametersValue = "DeliveryRuleUrlSigningActionParameters";
         private const string DeliveryRuleOriginGroupOverrideActionParametersValue = "DeliveryRuleOriginGroupOverrideActionParameters";
-        private const string DeliveryRuleUrlRewriteActionParametersValue = "DeliveryRuleUrlRewriteActionParameters";
+        private const string DeliveryRuleUriRewriteActionParametersValue = "DeliveryRuleUrlRewriteActionParameters";
         private const string DeliveryRuleHeaderActionParametersValue = "DeliveryRuleHeaderActionParameters";
         private const string DeliveryRuleCacheExpirationActionParametersValue = "DeliveryRuleCacheExpirationActionParameters";
         private const string DeliveryRuleCacheKeyQueryStringBehaviorActionParametersValue = "DeliveryRuleCacheKeyQueryStringBehaviorActionParameters";
         private const string DeliveryRuleRouteConfigurationOverrideActionParametersValue = "DeliveryRuleRouteConfigurationOverrideActionParameters";
-        private const string DeliveryRuleEdgeActionParametersValue = "DeliveryRuleEdgeActionParameters";
 
-        /// <summary> Initializes a new instance of <see cref="DeliveryRuleActionParametersType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeliveryRuleActionParametersType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the DeliveryRuleUrlRedirectActionParameters. </summary>
-        public static DeliveryRuleActionParametersType DeliveryRuleUrlRedirectActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleUrlRedirectActionParametersValue);
-
-        /// <summary> Gets the DeliveryRuleUrlSigningActionParameters. </summary>
-        public static DeliveryRuleActionParametersType DeliveryRuleUrlSigningActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleUrlSigningActionParametersValue);
-
-        /// <summary> Gets the DeliveryRuleOriginGroupOverrideActionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleUrlRedirectActionParameters
+        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleUrlRedirectActionParameters
+        /// </summary>
+        public static DeliveryRuleActionParametersType DeliveryRuleUriRedirectActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleUriRedirectActionParametersValue);
+        /// <summary>
+        /// DeliveryRuleUrlSigningActionParameters
+        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleUrlSigningActionParameters
+        /// </summary>
+        public static DeliveryRuleActionParametersType DeliveryRuleUriSigningActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleUriSigningActionParametersValue);
+        /// <summary>
+        /// DeliveryRuleOriginGroupOverrideActionParameters
+        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleOriginGroupOverrideActionParameters
+        /// </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleOriginGroupOverrideActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleOriginGroupOverrideActionParametersValue);
-
-        /// <summary> Gets the DeliveryRuleUrlRewriteActionParameters. </summary>
-        public static DeliveryRuleActionParametersType DeliveryRuleUrlRewriteActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleUrlRewriteActionParametersValue);
-
-        /// <summary> Gets the DeliveryRuleHeaderActionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleUrlRewriteActionParameters
+        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleUrlRewriteActionParameters
+        /// </summary>
+        public static DeliveryRuleActionParametersType DeliveryRuleUriRewriteActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleUriRewriteActionParametersValue);
+        /// <summary>
+        /// DeliveryRuleHeaderActionParameters
+        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleHeaderActionParameters
+        /// </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleHeaderActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleHeaderActionParametersValue);
-
-        /// <summary> Gets the DeliveryRuleCacheExpirationActionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleCacheExpirationActionParameters
+        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleCacheExpirationActionParameters
+        /// </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleCacheExpirationActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleCacheExpirationActionParametersValue);
-
-        /// <summary> Gets the DeliveryRuleCacheKeyQueryStringBehaviorActionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleCacheKeyQueryStringBehaviorActionParameters
+        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters
+        /// </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleCacheKeyQueryStringBehaviorActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleCacheKeyQueryStringBehaviorActionParametersValue);
-
-        /// <summary> Gets the DeliveryRuleRouteConfigurationOverrideActionParameters. </summary>
+        /// <summary>
+        /// DeliveryRuleRouteConfigurationOverrideActionParameters
+        /// Serialized Name: DeliveryRuleActionParametersType.DeliveryRuleRouteConfigurationOverrideActionParameters
+        /// </summary>
         public static DeliveryRuleActionParametersType DeliveryRuleRouteConfigurationOverrideActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleRouteConfigurationOverrideActionParametersValue);
-
-        /// <summary> Gets the DeliveryRuleEdgeActionParameters. </summary>
-        public static DeliveryRuleActionParametersType DeliveryRuleEdgeActionParameters { get; } = new DeliveryRuleActionParametersType(DeliveryRuleEdgeActionParametersValue);
-
         /// <summary> Determines if two <see cref="DeliveryRuleActionParametersType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeliveryRuleActionParametersType left, DeliveryRuleActionParametersType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DeliveryRuleActionParametersType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeliveryRuleActionParametersType left, DeliveryRuleActionParametersType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DeliveryRuleActionParametersType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeliveryRuleActionParametersType"/>. </summary>
         public static implicit operator DeliveryRuleActionParametersType(string value) => new DeliveryRuleActionParametersType(value);
 
-        /// <summary> Converts a string to a <see cref="DeliveryRuleActionParametersType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DeliveryRuleActionParametersType?(string value) => value == null ? null : new DeliveryRuleActionParametersType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeliveryRuleActionParametersType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DeliveryRuleActionParametersType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

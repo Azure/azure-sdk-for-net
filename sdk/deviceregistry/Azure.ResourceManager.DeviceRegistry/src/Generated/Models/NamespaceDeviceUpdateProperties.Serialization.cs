@@ -16,46 +16,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     /// <summary> The updatable properties of the NamespaceDevice. </summary>
     public partial class NamespaceDeviceUpdateProperties : IJsonModel<NamespaceDeviceUpdateProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NamespaceDeviceUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceDeviceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNamespaceDeviceUpdateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NamespaceDeviceUpdateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceDeviceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NamespaceDeviceUpdateProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NamespaceDeviceUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NamespaceDeviceUpdateProperties IPersistableModel<NamespaceDeviceUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NamespaceDeviceUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NamespaceDeviceUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -107,11 +67,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Policy))
-            {
-                writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy, options);
-            }
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -162,7 +117,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string operatingSystemVersion = default;
             MessagingEndpoints endpoints = default;
             IDictionary<string, BinaryData> attributes = default;
-            DeviceCredentialPolicy policy = default;
             bool? enabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -202,15 +156,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     attributes = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("policy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    policy = DeviceCredentialPolicy.DeserializeDeviceCredentialPolicy(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("enabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -225,13 +170,47 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NamespaceDeviceUpdateProperties(
-                operatingSystemVersion,
-                endpoints,
-                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                policy,
-                enabled,
-                additionalBinaryDataProperties);
+            return new NamespaceDeviceUpdateProperties(operatingSystemVersion, endpoints, attributes ?? new ChangeTrackingDictionary<string, BinaryData>(), enabled, additionalBinaryDataProperties);
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NamespaceDeviceUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceDeviceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NamespaceDeviceUpdateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamespaceDeviceUpdateProperties IPersistableModel<NamespaceDeviceUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NamespaceDeviceUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceDeviceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeNamespaceDeviceUpdateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NamespaceDeviceUpdateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NamespaceDeviceUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

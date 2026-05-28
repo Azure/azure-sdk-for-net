@@ -1,14 +1,14 @@
 # Release History
 
-## 1.10.1 (2026-04-24)
-
-### Bugs Fixed
-- Fix NullPointerException with custom connection name.
-
-## 1.10.0 (2026-01-19)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
-- Support identity-based connection.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.9.0 (2025-07-29)
 

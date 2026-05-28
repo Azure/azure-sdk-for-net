@@ -23,8 +23,6 @@ Or alternatively using the endpoint and access key acquired from an Azure Commun
 ```C# Snippet:CreateCommunicationIdentityFromAccessKey
 var endpoint = new Uri("https://my-resource.communication.azure.com");
 var accessKey = "<access_key>";
-endpoint = TestEnvironment.LiveTestDynamicEndpoint;
-accessKey = TestEnvironment.LiveTestDynamicAccessKey;
 var client = new CommunicationIdentityClient(endpoint, new AzureKeyCredential(accessKey));
 ```
 
@@ -32,7 +30,6 @@ Clients also have the option to authenticate using a valid Active Directory toke
 
 ```C# Snippet:CreateCommunicationIdentityFromToken
 var endpoint = new Uri("https://my-resource.communication.azure.com");
-endpoint = TestEnvironment.LiveTestDynamicEndpoint;
 TokenCredential tokenCredential = TestEnvironment.Credential;
 var client = new CommunicationIdentityClient(endpoint, tokenCredential);
 ```

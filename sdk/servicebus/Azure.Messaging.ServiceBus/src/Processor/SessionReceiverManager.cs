@@ -283,7 +283,6 @@ namespace Azure.Messaging.ServiceBus
         {
             ServiceBusErrorSource errorSource = ServiceBusErrorSource.AcceptSession;
             bool canProcess = false;
-            Exception caughtException = null;
             try
             {
                 try
@@ -311,7 +310,6 @@ namespace Azure.Messaging.ServiceBus
                         maxWaitTime: _maxReceiveWaitTime,
                         isProcessor: true,
                         cancellationToken: linkedTokenSource.Token).ConfigureAwait(false);
-                    ResetConsecutiveErrors();
                     ServiceBusReceivedMessage message = messages.Count == 0 ? null : messages[0];
                     if (message == null)
                     {
@@ -355,8 +353,6 @@ namespace Azure.Messaging.ServiceBus
                         Processor.Identifier,
                         processorCancellationToken))
                     .ConfigureAwait(false);
-
-                caughtException = ex;
             }
             finally
             {
@@ -364,13 +360,6 @@ namespace Azure.Messaging.ServiceBus
                 {
                     await CloseReceiverCore(forceClose: false, processorCancellationToken).ConfigureAwait(false);
                 }
-            }
-
-            // Delay after receiver cleanup to prevent a tight retry loop when
-            // persistent errors occur, without blocking session resource release.
-            if (caughtException != null)
-            {
-                await DelayAfterErrorAsync(processorCancellationToken).ConfigureAwait(false);
             }
         }
 

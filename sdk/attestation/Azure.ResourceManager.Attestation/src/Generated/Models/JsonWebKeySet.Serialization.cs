@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Attestation;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> The JsonWebKeySet. </summary>
-    internal partial class JsonWebKeySet : IJsonModel<JsonWebKeySet>
+    internal partial class JsonWebKeySet : IUtf8JsonSerializable, IJsonModel<JsonWebKeySet>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JsonWebKeySet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeJsonWebKeySet(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonWebKeySet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAttestationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JsonWebKeySet>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        JsonWebKeySet IPersistableModel<JsonWebKeySet>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<JsonWebKeySet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JsonWebKeySet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,30 +28,31 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
-                foreach (AttestationJsonWebKey item in Keys)
+                foreach (var item in Keys)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,55 +61,83 @@ namespace Azure.ResourceManager.Attestation.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        JsonWebKeySet IJsonModel<JsonWebKeySet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JsonWebKeySet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        JsonWebKeySet IJsonModel<JsonWebKeySet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeJsonWebKeySet(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static JsonWebKeySet DeserializeJsonWebKeySet(JsonElement element, ModelReaderWriterOptions options)
+        internal static JsonWebKeySet DeserializeJsonWebKeySet(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<AttestationJsonWebKey> keys = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IList<JsonWebKey> keys = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("keys"u8))
+                if (property.NameEquals("keys"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<AttestationJsonWebKey> array = new List<AttestationJsonWebKey>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    List<JsonWebKey> array = new List<JsonWebKey>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttestationJsonWebKey.DeserializeAttestationJsonWebKey(item, options));
+                        array.Add(JsonWebKey.DeserializeJsonWebKey(item, options));
                     }
                     keys = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new JsonWebKeySet(keys ?? new ChangeTrackingList<AttestationJsonWebKey>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new JsonWebKeySet(keys ?? new ChangeTrackingList<JsonWebKey>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JsonWebKeySet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAttestationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        JsonWebKeySet IPersistableModel<JsonWebKeySet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKeySet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeJsonWebKeySet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JsonWebKeySet)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JsonWebKeySet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

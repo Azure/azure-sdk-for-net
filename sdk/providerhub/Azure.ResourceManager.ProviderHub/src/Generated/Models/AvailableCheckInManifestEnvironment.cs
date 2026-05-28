@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct AvailableCheckInManifestEnvironment : IEquatable<AvailableCheckInManifestEnvironment>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableCheckInManifestEnvironment"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AvailableCheckInManifestEnvironment(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NotSpecifiedValue = "NotSpecified";
         private const string CanaryValue = "Canary";
         private const string ProdValue = "Prod";
@@ -22,64 +29,35 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string MooncakeValue = "Mooncake";
         private const string FairfaxValue = "Fairfax";
 
-        /// <summary> Initializes a new instance of <see cref="AvailableCheckInManifestEnvironment"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AvailableCheckInManifestEnvironment(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NotSpecified. </summary>
+        /// <summary> NotSpecified. </summary>
         public static AvailableCheckInManifestEnvironment NotSpecified { get; } = new AvailableCheckInManifestEnvironment(NotSpecifiedValue);
-
-        /// <summary> Gets the Canary. </summary>
+        /// <summary> Canary. </summary>
         public static AvailableCheckInManifestEnvironment Canary { get; } = new AvailableCheckInManifestEnvironment(CanaryValue);
-
-        /// <summary> Gets the Prod. </summary>
+        /// <summary> Prod. </summary>
         public static AvailableCheckInManifestEnvironment Prod { get; } = new AvailableCheckInManifestEnvironment(ProdValue);
-
-        /// <summary> Gets the All. </summary>
+        /// <summary> All. </summary>
         public static AvailableCheckInManifestEnvironment All { get; } = new AvailableCheckInManifestEnvironment(AllValue);
-
-        /// <summary> Gets the Mooncake. </summary>
+        /// <summary> Mooncake. </summary>
         public static AvailableCheckInManifestEnvironment Mooncake { get; } = new AvailableCheckInManifestEnvironment(MooncakeValue);
-
-        /// <summary> Gets the Fairfax. </summary>
+        /// <summary> Fairfax. </summary>
         public static AvailableCheckInManifestEnvironment Fairfax { get; } = new AvailableCheckInManifestEnvironment(FairfaxValue);
-
         /// <summary> Determines if two <see cref="AvailableCheckInManifestEnvironment"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvailableCheckInManifestEnvironment left, AvailableCheckInManifestEnvironment right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AvailableCheckInManifestEnvironment"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvailableCheckInManifestEnvironment left, AvailableCheckInManifestEnvironment right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AvailableCheckInManifestEnvironment"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailableCheckInManifestEnvironment"/>. </summary>
         public static implicit operator AvailableCheckInManifestEnvironment(string value) => new AvailableCheckInManifestEnvironment(value);
 
-        /// <summary> Converts a string to a <see cref="AvailableCheckInManifestEnvironment"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AvailableCheckInManifestEnvironment?(string value) => value == null ? null : new AvailableCheckInManifestEnvironment(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvailableCheckInManifestEnvironment other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AvailableCheckInManifestEnvironment other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

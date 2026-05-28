@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/EntitySearch" -AutoRestVersion "latest"

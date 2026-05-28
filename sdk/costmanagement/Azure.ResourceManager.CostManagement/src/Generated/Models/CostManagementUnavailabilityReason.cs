@@ -7,65 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> Possible reasons for a name not being available. </summary>
+    /// <summary> The reason why the given name is not available. </summary>
     public readonly partial struct CostManagementUnavailabilityReason : IEquatable<CostManagementUnavailabilityReason>
     {
         private readonly string _value;
-        /// <summary> Name is invalid. </summary>
-        private const string InvalidValue = "Invalid";
-        /// <summary> Name already exists. </summary>
-        private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="CostManagementUnavailabilityReason"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CostManagementUnavailabilityReason(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Name is invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        private const string AlreadyExistsValue = "AlreadyExists";
+
+        /// <summary> Invalid. </summary>
         public static CostManagementUnavailabilityReason Invalid { get; } = new CostManagementUnavailabilityReason(InvalidValue);
-
-        /// <summary> Name already exists. </summary>
+        /// <summary> AlreadyExists. </summary>
         public static CostManagementUnavailabilityReason AlreadyExists { get; } = new CostManagementUnavailabilityReason(AlreadyExistsValue);
-
         /// <summary> Determines if two <see cref="CostManagementUnavailabilityReason"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CostManagementUnavailabilityReason left, CostManagementUnavailabilityReason right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CostManagementUnavailabilityReason"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CostManagementUnavailabilityReason left, CostManagementUnavailabilityReason right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CostManagementUnavailabilityReason"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CostManagementUnavailabilityReason"/>. </summary>
         public static implicit operator CostManagementUnavailabilityReason(string value) => new CostManagementUnavailabilityReason(value);
 
-        /// <summary> Converts a string to a <see cref="CostManagementUnavailabilityReason"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CostManagementUnavailabilityReason?(string value) => value == null ? null : new CostManagementUnavailabilityReason(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CostManagementUnavailabilityReason other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CostManagementUnavailabilityReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

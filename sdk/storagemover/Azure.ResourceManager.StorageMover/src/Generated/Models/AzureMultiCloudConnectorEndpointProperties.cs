@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -19,32 +18,37 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="multiCloudConnectorId"> The Azure Resource ID of the MultiCloud Connector resource. </param>
         /// <param name="awsS3BucketId"> The AWS S3 bucket ARM resource Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="multiCloudConnectorId"/> or <paramref name="awsS3BucketId"/> is null. </exception>
-        public AzureMultiCloudConnectorEndpointProperties(ResourceIdentifier multiCloudConnectorId, ResourceIdentifier awsS3BucketId) : base(EndpointType.AzureMultiCloudConnector)
+        public AzureMultiCloudConnectorEndpointProperties(ResourceIdentifier multiCloudConnectorId, ResourceIdentifier awsS3BucketId)
         {
             Argument.AssertNotNull(multiCloudConnectorId, nameof(multiCloudConnectorId));
             Argument.AssertNotNull(awsS3BucketId, nameof(awsS3BucketId));
 
             MultiCloudConnectorId = multiCloudConnectorId;
             AwsS3BucketId = awsS3BucketId;
+            EndpointType = EndpointType.AzureMultiCloudConnector;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMultiCloudConnectorEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="endpointKind"> The Endpoint resource kind source or target. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="multiCloudConnectorId"> The Azure Resource ID of the MultiCloud Connector resource. </param>
         /// <param name="awsS3BucketId"> The AWS S3 bucket ARM resource Id. </param>
-        internal AzureMultiCloudConnectorEndpointProperties(EndpointType endpointType, string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier multiCloudConnectorId, ResourceIdentifier awsS3BucketId) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
+        internal AzureMultiCloudConnectorEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier multiCloudConnectorId, ResourceIdentifier awsS3BucketId) : base(endpointType, description, provisioningState, serializedAdditionalRawData)
         {
             MultiCloudConnectorId = multiCloudConnectorId;
             AwsS3BucketId = awsS3BucketId;
+            EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMultiCloudConnectorEndpointProperties"/> for deserialization. </summary>
+        internal AzureMultiCloudConnectorEndpointProperties()
+        {
         }
 
         /// <summary> The Azure Resource ID of the MultiCloud Connector resource. </summary>
         public ResourceIdentifier MultiCloudConnectorId { get; set; }
-
         /// <summary> The AWS S3 bucket ARM resource Id. </summary>
         public ResourceIdentifier AwsS3BucketId { get; set; }
     }

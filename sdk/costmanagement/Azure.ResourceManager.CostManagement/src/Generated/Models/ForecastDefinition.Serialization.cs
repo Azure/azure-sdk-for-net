@@ -10,70 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The definition of a forecast. </summary>
-    public partial class ForecastDefinition : IJsonModel<ForecastDefinition>
+    public partial class ForecastDefinition : IUtf8JsonSerializable, IJsonModel<ForecastDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="ForecastDefinition"/> for deserialization. </summary>
-        internal ForecastDefinition()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ForecastDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeForecastDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ForecastDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ForecastDefinition IPersistableModel<ForecastDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ForecastDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="forecastDefinition"> The <see cref="ForecastDefinition"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ForecastDefinition forecastDefinition)
-        {
-            if (forecastDefinition == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(forecastDefinition, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ForecastDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -85,11 +28,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ForecastDefinition)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ForecastType.ToString());
             writer.WritePropertyName("timeframe"u8);
@@ -111,15 +55,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("includeFreshPartialCost"u8);
                 writer.WriteBooleanValue(IncludeFreshPartialCost.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -128,95 +72,123 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ForecastDefinition IJsonModel<ForecastDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ForecastDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ForecastDefinition IJsonModel<ForecastDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ForecastDefinition)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeForecastDefinition(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ForecastDefinition DeserializeForecastDefinition(JsonElement element, ModelReaderWriterOptions options)
+        internal static ForecastDefinition DeserializeForecastDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ForecastType forecastType = default;
+            ForecastType type = default;
             ForecastTimeframe timeframe = default;
             ForecastTimePeriod timePeriod = default;
             ForecastDataset dataset = default;
             bool? includeActualCost = default;
             bool? includeFreshPartialCost = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (property.NameEquals("type"u8))
                 {
-                    forecastType = new ForecastType(prop.Value.GetString());
+                    type = new ForecastType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("timeframe"u8))
+                if (property.NameEquals("timeframe"u8))
                 {
-                    timeframe = new ForecastTimeframe(prop.Value.GetString());
+                    timeframe = new ForecastTimeframe(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("timePeriod"u8))
+                if (property.NameEquals("timePeriod"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timePeriod = ForecastTimePeriod.DeserializeForecastTimePeriod(prop.Value, options);
+                    timePeriod = ForecastTimePeriod.DeserializeForecastTimePeriod(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("dataset"u8))
+                if (property.NameEquals("dataset"u8))
                 {
-                    dataset = ForecastDataset.DeserializeForecastDataset(prop.Value, options);
+                    dataset = ForecastDataset.DeserializeForecastDataset(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("includeActualCost"u8))
+                if (property.NameEquals("includeActualCost"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    includeActualCost = prop.Value.GetBoolean();
+                    includeActualCost = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("includeFreshPartialCost"u8))
+                if (property.NameEquals("includeFreshPartialCost"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    includeFreshPartialCost = prop.Value.GetBoolean();
+                    includeFreshPartialCost = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ForecastDefinition(
-                forecastType,
+                type,
                 timeframe,
                 timePeriod,
                 dataset,
                 includeActualCost,
                 includeFreshPartialCost,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ForecastDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ForecastDefinition IPersistableModel<ForecastDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeForecastDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ForecastDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

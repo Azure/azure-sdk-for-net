@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct SetStartVmOnConnect : IEquatable<SetStartVmOnConnect>
     {
         private readonly string _value;
-        /// <summary> Start VM on Connect is enabled. </summary>
-        private const string EnableValue = "Enable";
-        /// <summary> Start VM on Connect is disabled, must use rampUpAutoStartHosts or turn on manually. </summary>
-        private const string DisableValue = "Disable";
 
         /// <summary> Initializes a new instance of <see cref="SetStartVmOnConnect"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SetStartVmOnConnect(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Start VM on Connect is enabled. </summary>
+        private const string EnableValue = "Enable";
+        private const string DisableValue = "Disable";
+
+        /// <summary> Enable. </summary>
         public static SetStartVmOnConnect Enable { get; } = new SetStartVmOnConnect(EnableValue);
-
-        /// <summary> Start VM on Connect is disabled, must use rampUpAutoStartHosts or turn on manually. </summary>
+        /// <summary> Disable. </summary>
         public static SetStartVmOnConnect Disable { get; } = new SetStartVmOnConnect(DisableValue);
-
         /// <summary> Determines if two <see cref="SetStartVmOnConnect"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SetStartVmOnConnect left, SetStartVmOnConnect right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SetStartVmOnConnect"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SetStartVmOnConnect left, SetStartVmOnConnect right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SetStartVmOnConnect"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SetStartVmOnConnect"/>. </summary>
         public static implicit operator SetStartVmOnConnect(string value) => new SetStartVmOnConnect(value);
 
-        /// <summary> Converts a string to a <see cref="SetStartVmOnConnect"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SetStartVmOnConnect?(string value) => value == null ? null : new SetStartVmOnConnect(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SetStartVmOnConnect other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SetStartVmOnConnect other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

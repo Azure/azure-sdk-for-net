@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Get the details of the management group.
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2021-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Get the details of the management group.
+        ///
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -71,7 +73,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2021-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

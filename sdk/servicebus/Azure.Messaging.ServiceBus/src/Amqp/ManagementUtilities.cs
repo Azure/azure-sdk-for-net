@@ -40,8 +40,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 requestResponseAmqpLink = await managementLink.GetOrCreateAsync(timeout).ConfigureAwait(false);
             }
 
-            var responseAmqpMessage = await requestResponseAmqpLink
-                .RequestAsync(amqpMessage, transactionId, timeout).ConfigureAwait(false);
+            var responseAmqpMessage = await Task.Factory.FromAsync(
+                (c, s) => requestResponseAmqpLink.BeginRequest(amqpMessage, transactionId, timeout, c, s),
+                (a) => requestResponseAmqpLink.EndRequest(a),
+                null).ConfigureAwait(false);
 
             return AmqpResponseMessage.CreateResponse(responseAmqpMessage);
         }

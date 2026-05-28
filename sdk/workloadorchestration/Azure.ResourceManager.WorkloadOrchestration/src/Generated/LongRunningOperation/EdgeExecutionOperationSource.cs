@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
-    /// <summary></summary>
-    internal partial class EdgeExecutionOperationSource : IOperationSource<EdgeExecutionResource>
+    internal class EdgeExecutionOperationSource : IOperationSource<EdgeExecutionResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal EdgeExecutionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         EdgeExecutionResource IOperationSource<EdgeExecutionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            EdgeExecutionData data = EdgeExecutionData.DeserializeEdgeExecutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<EdgeExecutionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
             return new EdgeExecutionResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<EdgeExecutionResource> IOperationSource<EdgeExecutionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            EdgeExecutionData data = EdgeExecutionData.DeserializeEdgeExecutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new EdgeExecutionResource(_client, data);
+            var data = ModelReaderWriter.Read<EdgeExecutionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            return await Task.FromResult(new EdgeExecutionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

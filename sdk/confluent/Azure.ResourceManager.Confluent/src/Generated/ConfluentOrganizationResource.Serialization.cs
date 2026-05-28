@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Confluent
 {
-    /// <summary></summary>
     public partial class ConfluentOrganizationResource : IJsonModel<ConfluentOrganizationData>
     {
-        private static IJsonModel<ConfluentOrganizationData> s_dataDeserializationInstance;
+        private static ConfluentOrganizationData s_dataDeserializationInstance;
+        private static ConfluentOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<ConfluentOrganizationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ConfluentOrganizationData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConfluentOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConfluentOrganizationData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConfluentOrganizationData IJsonModel<ConfluentOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ConfluentOrganizationData IJsonModel<ConfluentOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConfluentOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ConfluentOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConfluentOrganizationData>(Data, options, AzureResourceManagerConfluentContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ConfluentOrganizationData IPersistableModel<ConfluentOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConfluentOrganizationData>(data, options, AzureResourceManagerConfluentContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfluentOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ConfluentOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConfluentOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

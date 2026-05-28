@@ -160,11 +160,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             try
             {
-                currentBlobs = container.GetBlobsAsync(
-                    traits: BlobTraits.None,
-                    states: BlobStates.None,
-                    prefix: null,
-                    cancellationToken: cancellationToken);
+                currentBlobs = container.GetBlobsAsync(cancellationToken: cancellationToken);
 
                 List<BlobBaseClient> newBlobs = new List<BlobBaseClient>();
 

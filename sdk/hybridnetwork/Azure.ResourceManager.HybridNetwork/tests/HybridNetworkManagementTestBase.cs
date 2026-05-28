@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.HybridNetwork.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TestFramework;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using Newtonsoft.Json.Linq;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace Azure.ResourceManager.HybridNetwork.Tests
 {

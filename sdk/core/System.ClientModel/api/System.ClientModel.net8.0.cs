@@ -9,7 +9,6 @@ namespace System.ClientModel
     public abstract partial class AsyncCollectionResult<T> : System.ClientModel.Primitives.AsyncCollectionResult, System.Collections.Generic.IAsyncEnumerable<T>
     {
         protected internal AsyncCollectionResult() { }
-        public static System.ClientModel.AsyncCollectionResult<T> FromPages(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>> pages) { throw null; }
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
@@ -56,31 +55,14 @@ namespace System.ClientModel
     {
         protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual T Value { get { throw null; } }
-        public static implicit operator T (System.ClientModel.ClientResult<T>? result) { throw null; }
+        public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
     public abstract partial class CollectionResult<T> : System.ClientModel.Primitives.CollectionResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
         protected internal CollectionResult() { }
-        public static System.ClientModel.CollectionResult<T> FromPages(System.Collections.Generic.IEnumerable<System.Collections.Generic.IEnumerable<T>> pages) { throw null; }
         public System.Collections.Generic.IEnumerator<T> GetEnumerator() { throw null; }
         protected abstract System.Collections.Generic.IEnumerable<T> GetValuesFromPage(System.ClientModel.ClientResult page);
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-    public static partial class ConfigurationExtensions
-    {
-        public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddCredentialResolver<T>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) where T : System.ClientModel.Primitives.CredentialResolver, new() { throw null; }
-        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddCredentialResolver<T>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder) where T : System.ClientModel.Primitives.CredentialResolver, new() { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
-        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
     }
     public partial class ContinuationToken
     {
@@ -88,47 +70,6 @@ namespace System.ClientModel
         protected ContinuationToken(System.BinaryData bytes) { }
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-    public sealed partial class FileBinaryContent : System.ClientModel.BinaryContent
-    {
-        public FileBinaryContent(System.BinaryData data, string? mediaType = "application/octet-stream") { }
-        public FileBinaryContent(System.IO.Stream stream, string? mediaType = "application/octet-stream") { }
-        public FileBinaryContent(string path, string? mediaType = "application/octet-stream") { }
-        public string? Filename { get { throw null; } set { } }
-        public override void Dispose() { }
-        public override bool TryComputeLength(out long length) { throw null; }
-        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-    public sealed partial class MultiPartFormContent : System.ClientModel.BinaryContent
-    {
-        public MultiPartFormContent() { }
-        public MultiPartFormContent(string boundary) { }
-        public void Add(string name, System.BinaryData content) { }
-        public void Add(string name, bool content, string? mediaType = "text/plain") { }
-        public void Add(string name, byte content, string? mediaType = "text/plain") { }
-        public void Add(string name, byte[] content, string? mediaType = "application/octet-stream") { }
-        public void Add(string name, char content, string? mediaType = "text/plain") { }
-        public void Add(string name, System.ClientModel.FileBinaryContent fileContent) { }
-        public void Add(string name, decimal content, string? mediaType = "text/plain") { }
-        public void Add(string name, double content, string? mediaType = "text/plain") { }
-        public void Add(string name, short content, string? mediaType = "text/plain") { }
-        public void Add(string name, int content, string? mediaType = "text/plain") { }
-        public void Add(string name, long content, string? mediaType = "text/plain") { }
-        public void Add(string name, sbyte content, string? mediaType = "text/plain") { }
-        public void Add(string name, float content, string? mediaType = "text/plain") { }
-        public void Add(string name, string content, string? mediaType = "text/plain") { }
-        public void Add(string name, ushort content, string? mediaType = "text/plain") { }
-        public void Add(string name, uint content, string? mediaType = "text/plain") { }
-        public void Add(string name, ulong content, string? mediaType = "text/plain") { }
-        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model) { }
-        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext? context, System.ClientModel.Primitives.ModelReaderWriterOptions? options, string? mediaType) { }
-        public override void Dispose() { }
-        public override bool TryComputeLength(out long length) { throw null; }
-        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
@@ -156,8 +97,6 @@ namespace System.ClientModel.Primitives
     public abstract partial class AuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         protected AuthenticationPolicy() { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-        public static System.ClientModel.Primitives.AuthenticationPolicy Create(System.ClientModel.Primitives.ClientSettings settings) { throw null; }
     }
     public partial class AuthenticationToken
     {
@@ -204,6 +143,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class ClientConnectionProvider
     {
         protected ClientConnectionProvider(int maxCacheSize) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.ClientModel.Primitives.ClientCache Subclients { get { throw null; } }
         public abstract System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections();
         public abstract System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId);
@@ -222,11 +162,9 @@ namespace System.ClientModel.Primitives
         public bool? EnableLogging { get { throw null; } set { } }
         public bool? EnableMessageContentLogging { get { throw null; } set { } }
         public bool? EnableMessageLogging { get { throw null; } set { } }
-        public bool IsReadOnly { get { throw null; } }
         public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
         public int? MessageContentSizeLimit { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
-        public virtual System.ClientModel.Primitives.ClientLoggingOptions Clone() { throw null; }
         public virtual void Freeze() { }
     }
     public sealed partial class ClientPipeline
@@ -242,18 +180,14 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-        protected ClientPipelineOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
         public bool? EnableDistributedTracing { get { throw null; } set { } }
-        public bool IsReadOnly { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
         protected void AssertNotFrozen() { }
-        public virtual System.ClientModel.Primitives.ClientPipelineOptions Clone() { throw null; }
         public virtual void Freeze() { }
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -274,16 +208,6 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-    public abstract partial class ClientSettings
-    {
-        protected ClientSettings() { }
-        public System.ClientModel.Primitives.CredentialSettings? Credential { get { throw null; } set { } }
-        public System.ClientModel.AuthenticationTokenProvider? CredentialProvider { get { throw null; } set { } }
-        public void Bind(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
-        protected abstract void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
-        public void PostConfigure(System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configure) { }
-    }
     public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
@@ -295,22 +219,6 @@ namespace System.ClientModel.Primitives
         None = 0,
         ApiKeyString = 1,
         TokenCredential = 2,
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-    public abstract partial class CredentialResolver
-    {
-        protected CredentialResolver() { }
-        public abstract bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider);
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-    public sealed partial class CredentialSettings
-    {
-        public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
-        public Microsoft.Extensions.Configuration.IConfigurationSection? AdditionalProperties { get { throw null; } set { } }
-        public string? CredentialSource { get { throw null; } set { } }
-        public string? this[string key] { get { throw null; } }
-        public string? Key { get { throw null; } set { } }
-        public System.ClientModel.AuthenticationTokenProvider? TokenProvider { get { throw null; } set { } }
     }
     public partial class GetTokenOptions
     {
@@ -335,12 +243,6 @@ namespace System.ClientModel.Primitives
         protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
         protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
-    public partial interface IClientBuilder
-    {
-        System.ClientModel.Primitives.IClientBuilder ConfigureCredential(System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides);
-        System.ClientModel.Primitives.IClientBuilder PostConfigure(System.Action<System.ClientModel.Primitives.ClientSettings> configure);
-    }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {
         T? Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options);
@@ -360,18 +262,6 @@ namespace System.ClientModel.Primitives
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override System.ClientModel.Primitives.IJsonModel<object>? Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
-    }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0003")]
-    public abstract partial class JsonModel<T> : System.ClientModel.Primitives.IJsonModel<T>, System.ClientModel.Primitives.IPersistableModel<T>
-    {
-        protected JsonModel() { }
-        public T Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
-        protected abstract T CreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options);
-        T System.ClientModel.Primitives.IJsonModel<T>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<T>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        string System.ClientModel.Primitives.IPersistableModel<T>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<T>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected abstract void WriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0001")]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -402,8 +292,8 @@ namespace System.ClientModel.Primitives
         public void Append(System.ReadOnlySpan<byte> arrayPath, ulong value) { }
         public void AppendNull(System.ReadOnlySpan<byte> arrayPath) { }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool Contains(System.ReadOnlySpan<byte> prefix, System.ReadOnlySpan<byte> property) { throw null; }
-        public System.ClientModel.Primitives.JsonPatch.ArrayEnumerator EnumerateArray(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool GetBoolean(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public byte GetByte(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public System.DateTime GetDateTime(System.ReadOnlySpan<byte> jsonPath, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
@@ -429,6 +319,7 @@ namespace System.ClientModel.Primitives
         public void Set(System.ReadOnlySpan<byte> jsonPath, bool value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, byte value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, byte[] utf8Json) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Set(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.JsonPatch.EncodedValue value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, System.DateTime value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, System.DateTimeOffset value, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { }
@@ -447,11 +338,11 @@ namespace System.ClientModel.Primitives
         public void Set(System.ReadOnlySpan<byte> jsonPath, uint value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, ulong value) { }
         public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetPropagators(System.ClientModel.Primitives.JsonPatch.PropagatorSetter setter, System.ClientModel.Primitives.JsonPatch.PropagatorGetter getter) { }
-        public System.BinaryData ToBinaryData() { throw null; }
-        public System.BinaryData ToBinaryData(string format) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(string format) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool TryGetEncodedValue(System.ReadOnlySpan<byte> jsonPath, out System.ClientModel.Primitives.JsonPatch.EncodedValue value) { throw null; }
         public bool TryGetJson(System.ReadOnlySpan<byte> jsonPath, out System.ReadOnlyMemory<byte> value) { throw null; }
         public bool TryGetNullableValue<T>(System.ReadOnlySpan<byte> jsonPath, out T? value) where T : struct { throw null; }
@@ -472,26 +363,19 @@ namespace System.ClientModel.Primitives
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out ushort value) { throw null; }
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out uint value) { throw null; }
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out ulong value) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> jsonPath) { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0001")]
-        [System.Runtime.CompilerServices.CompilerFeatureRequiredAttribute("RefStructs")]
-        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-        public ref partial struct ArrayEnumerator
-        {
-            private object _dummy;
-            private int _dummyPrimitive;
-            public System.ReadOnlyMemory<byte> Current { get { throw null; } }
-            public System.ClientModel.Primitives.JsonPatch.ArrayEnumerator GetEnumerator() { throw null; }
-            public bool MoveNext() { throw null; }
-        }
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct EncodedValue
         {
             private object _dummy;
             private int _dummyPrimitive;
         }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public delegate bool PropagatorGetter(System.ReadOnlySpan<byte> jsonPath, out System.ClientModel.Primitives.JsonPatch.EncodedValue value);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public delegate bool PropagatorSetter(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.JsonPatch.EncodedValue value);
     }
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -529,6 +413,7 @@ namespace System.ClientModel.Primitives
         protected virtual bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder? builder) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly)]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public sealed partial class ModelReaderWriterContextTypeAttribute : System.Attribute
     {
         public ModelReaderWriterContextTypeAttribute(System.Type contextType) { }
@@ -611,7 +496,6 @@ namespace System.ClientModel.Primitives
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
-        public virtual string ClientRequestId { get { throw null; } }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
         protected abstract System.ClientModel.BinaryContent? ContentCore { get; set; }
         public System.ClientModel.Primitives.PipelineRequestHeaders Headers { get { throw null; } }

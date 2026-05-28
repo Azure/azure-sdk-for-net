@@ -6,25 +6,19 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Specs.Azure.Core.Lro.Standard
+namespace _Specs_.Azure.Core.Lro.Standard
 {
     public partial class StandardClient
     {
         public StandardClient() : this(new Uri("http://localhost:3000"), new StandardClientOptions()) => throw null;
 
-        internal StandardClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, StandardClientOptions options) => throw null;
-
-        public StandardClient(Uri endpoint, StandardClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public StandardClient(StandardClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public StandardClient(Uri endpoint, StandardClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

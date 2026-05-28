@@ -12,10 +12,7 @@ param (
     [string] $SDKType = "all",
 
     [Parameter()]
-    [switch] $SpellCheckPublicApiSurface,
-
-    [Parameter()]
-    [switch] $SkipDiffValidation
+    [switch] $SpellCheckPublicApiSurface
 )
 
 Write-Host "Service Directory $ServiceDirectory"
@@ -27,7 +24,6 @@ $Env:NODE_OPTIONS = "--max-old-space-size=8192"
 Set-StrictMode -Version 1
 
 . (Join-Path $PSScriptRoot\..\common\scripts common.ps1)
-. (Join-Path $PSScriptRoot CodeChecks.Helpers.ps1)
 
 [string[]] $errors = @()
 
@@ -59,17 +55,6 @@ function Invoke-Block([scriptblock]$cmd) {
 }
 
 try {
-    # When SkipDiffValidation is set, snapshot the current git state so we can later report
-    # only the files that were changed by the code checks, not pre-existing changes.
-    $preExistingChanges = @()
-    if ($SkipDiffValidation) {
-        $statusLines = git status --porcelain
-        foreach ($line in $statusLines) {
-            $preExistingChanges += Get-PorcelainPaths $line
-        }
-        $preExistingChanges = $preExistingChanges | Sort-Object -Unique
-    }
-
     Write-Host "Restore ./node_modules"
     Invoke-Block {
         & npm ci --prefix $RepoRoot
@@ -84,18 +69,6 @@ try {
     }
     if (-not $ProjectDirectory)
     {
-        # In PR builds, check if only CI config files changed for this service directory.
-        # If so, skip expensive codegen/snippet/API operations since ci*.yml changes
-        # don't affect generated code. Only apply this optimization in PR builds —
-        # release and CI push pipelines should always run the full checks.
-        $onlyCiConfigChanged = $false
-        if ($env:BUILD_REASON -eq "PullRequest") {
-            $onlyCiConfigChanged = Test-OnlyCiConfigChanged -ServiceDirectory $ServiceDirectory -RepoRoot $RepoRoot
-            if ($onlyCiConfigChanged) {
-                Write-Host "`nOnly CI config files (ci*.yml) changed in sdk/$ServiceDirectory — skipping codegen, snippets, and API export."
-            }
-        }
-
         Write-Host "Force .NET Welcome experience"
         Invoke-Block {
             & dotnet msbuild -version
@@ -114,52 +87,29 @@ try {
                     | % {
                             $proj = Join-Path $slnDir $_
                             if (-not (Test-Path $proj)) {
-                                LogError `
-"Missing project. Solution '$sln' references a project which does not exist: $proj.`
-    To remove the stale reference, run: dotnet sln `"$sln`" remove `"$_`"`
-    Or restore the missing project file if it was deleted unintentionally."
+                                LogError "Missing project. Solution references a project which does not exist: $proj. [$sln] "
                             }
                         }
             }
 
-        if ($SkipDiffValidation -and -not $onlyCiConfigChanged) {
-            Write-Host "`nRunning dotnet format"
-            Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory `
-                | Resolve-Path `
-                | % { Get-ChildItem $_ -Filter "*.csproj" -Recurse } `
-                | % {
-                    Write-Host "Formatting $(Split-Path -Leaf $_)"
-                    Invoke-Block {
-                        & dotnet format $_ --verbosity quiet
-                    }
-                }
-        }
+        $debugLogging = $env:SYSTEM_DEBUG -eq "true"
+        $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
+        $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/generatecode.binlog" : ""
 
-        if (-not $onlyCiConfigChanged) {
-            $debugLogging = $env:SYSTEM_DEBUG -eq "true"
-            $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
-            $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/generatecode.binlog" : ""
-
-            Write-Host "Re-generating clients"
-            Invoke-Block {
-                & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments /p:ProjectListOverrideFile=""
-            }
+        Write-Host "Re-generating clients"
+        Invoke-Block {
+            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments /p:ProjectListOverrideFile=""
         }
     }
 
-    if ($ServiceDirectory -ne "tools" -and -not $onlyCiConfigChanged) {
-        Write-Host "Re-generating snippets"
-        Invoke-Block {
-            & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
-        }
-
-        Write-Host "Re-generating listings"
-        Invoke-Block {
-            & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
-        }
+    Write-Host "Re-generating snippets"
+    Invoke-Block {
+        & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
     }
-    elseif ($ServiceDirectory -eq "tools") {
-        Write-Host "Skipping snippet and API listing generation for tools directory"
+
+    Write-Host "Re-generating listings"
+    Invoke-Block {
+        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
     }
 
     Write-Host "Validating installation instructions"
@@ -172,18 +122,12 @@ try {
 
             if ($readmeContent -Match "Install-Package")
             {
-                LogError `
-"README '$readmePath' uses 'Install-Package' (NuGet Package Manager Console syntax).`
-    Replace with the dotnet CLI equivalent: dotnet add package <PackageName>`
-    See https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md for conventions."
+                LogError "README files should use dotnet CLI for installation instructions. '$readmePath'"
             }
 
             if ($readmeContent -Match "dotnet add .*--version")
             {
-                LogError `
-"README '$readmePath' pins a specific version with --version.`
-    Remove the --version flag so users always get the latest.`
-    For beta packages, use '--prerelease' instead of '--version <x.y.z-beta.n>'."
+                LogError "Specific versions should not be specified in the installation instructions in '$readmePath'. For beta versions, include the --prerelease flag."
             }
 
             if ($readmeContent -Match "dotnet add")
@@ -213,9 +157,9 @@ try {
                     if (-Not ($readmeContent -Match "dotnet add (?!.*--prerelease)"))
                     {
                         LogError `
-"README '$readmePath' is missing GA installation instructions, but the changelog has a GA release.`
-    Add a line like: dotnet add package <PackageName>`
-    You may also include a separate beta install line with --prerelease."
+"No GA installation instructions found in '$readmePath' but there was a GA entry in the Changelog '$changelogPath'. `
+    Ensure that there are installation instructions that do not contain the --prerelease flag. You may also include `
+    instructions for installing a beta that does include the --prerelease flag."
                     }
                 }
                 elseif ($hasRelease)
@@ -223,16 +167,12 @@ try {
                     if (-Not ($readmeContent -Match "dotnet add .*--prerelease$"))
                     {
                         LogError `
-"README '$readmePath' is missing beta installation instructions, but the changelog has a beta release.`
-    Add a line like: dotnet add package <PackageName> --prerelease"
+"No beta installation instructions found in '$readmePath' but there was a beta entry in the Changelog '$changelogPath'. `
+    Ensure that there are installation instructions that contain the --prerelease flag."
                     }
                 }
             }
         }
-
-    # TestDependsOnDependency validation is no longer needed. Cross-service dependency
-    # testing is handled dynamically by Get-dotnet-AdditionalValidationPackagesFromPackageSet
-    # in Language-Settings.ps1, which discovers dependents for ALL changed packages at PR time.
 
     if (-not $ProjectDirectory)
     {
@@ -240,30 +180,16 @@ try {
         # prevent warning related to EOL differences which triggers an exception for some reason
         & git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code
         if ($LastExitCode -ne 0) {
-            $diffResult = Get-DiffCheckResult `
-                -HasDiff $true `
-                -SkipDiffValidation $SkipDiffValidation `
-                -CurrentStatusLines (git status --porcelain) `
-                -PreExistingChanges $preExistingChanges `
-                -ServiceDirectory $ServiceDirectory
-
-            switch ($diffResult.Action) {
-                "error" {
-                    LogError $diffResult.ErrorMessage
-                }
-                "report" {
-                    if ($diffResult.Summary.NewStatusLines) {
-                        $newStatus = ($diffResult.Summary.NewStatusLines | ForEach-Object { "    $_" }) -join "`n"
-                        Write-Host ""
-                        Write-Host -f Green "The following files were updated by code checks and should be included in your commit:"
-                        Write-Host -f Yellow $newStatus
-                    }
-                    if ($diffResult.Summary.PreExistingCount -gt 0) {
-                        Write-Host ""
-                        Write-Host -f Cyan "Note: $($diffResult.Summary.PreExistingCount) file(s) already had changes before code checks ran and were excluded from the list above."
-                    }
-                }
-            }
+            $status = git status -s | Out-String
+            $status = $status -replace "`n","`n    "
+            LogError `
+"Generated code is not up to date.`
+    You may need to rebase on the latest main, `
+    run 'eng\scripts\Update-Snippets.ps1 $ServiceDirectory' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#updating-sample-snippets), `
+    run 'eng\scripts\Export-API.ps1 $ServiceDirectory' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#public-api-additions). `
+    run 'dotnet build /t:GenerateCode' to update the generated code and samples.`
+    `
+To reproduce this error locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory'."
         }
     }
 }
@@ -276,11 +202,6 @@ finally {
 
     foreach ($err in $errors) {
         Write-Host -f Red "error : $err"
-    }
-
-    if ($SkipDiffValidation -and $errors) {
-        Write-Host ""
-        Write-Host -f Yellow "The above $($errors.Length) issue(s) require manual attention and cannot be auto-fixed."
     }
 
     if ($errors) {

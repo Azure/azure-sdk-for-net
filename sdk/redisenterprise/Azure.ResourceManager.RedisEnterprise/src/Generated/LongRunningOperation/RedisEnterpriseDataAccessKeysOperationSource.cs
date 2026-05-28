@@ -8,36 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    /// <summary></summary>
-    internal partial class RedisEnterpriseDataAccessKeysOperationSource : IOperationSource<RedisEnterpriseDataAccessKeys>
+    internal class RedisEnterpriseDataAccessKeysOperationSource : IOperationSource<RedisEnterpriseDataAccessKeys>
     {
-        /// <summary></summary>
-        internal RedisEnterpriseDataAccessKeysOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         RedisEnterpriseDataAccessKeys IOperationSource<RedisEnterpriseDataAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<RedisEnterpriseDataAccessKeys> IOperationSource<RedisEnterpriseDataAccessKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return RedisEnterpriseDataAccessKeys.DeserializeRedisEnterpriseDataAccessKeys(document.RootElement);
         }
     }
 }

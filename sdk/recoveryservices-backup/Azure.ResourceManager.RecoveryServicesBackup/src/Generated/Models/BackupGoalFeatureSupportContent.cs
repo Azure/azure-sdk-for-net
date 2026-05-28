@@ -14,15 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class BackupGoalFeatureSupportContent : FeatureSupportContent
     {
         /// <summary> Initializes a new instance of <see cref="BackupGoalFeatureSupportContent"/>. </summary>
-        public BackupGoalFeatureSupportContent() : base("AzureBackupGoals")
+        public BackupGoalFeatureSupportContent()
         {
+            FeatureType = "AzureBackupGoals";
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupGoalFeatureSupportContent"/>. </summary>
         /// <param name="featureType"> backup support feature type. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupGoalFeatureSupportContent(string featureType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(featureType, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGoalFeatureSupportContent(string featureType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(featureType, serializedAdditionalRawData)
         {
+            FeatureType = featureType ?? "AzureBackupGoals";
         }
     }
 }

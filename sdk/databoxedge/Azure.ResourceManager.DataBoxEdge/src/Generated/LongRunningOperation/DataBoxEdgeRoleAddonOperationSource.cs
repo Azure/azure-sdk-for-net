@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary></summary>
-    internal partial class DataBoxEdgeRoleAddonOperationSource : IOperationSource<DataBoxEdgeRoleAddonResource>
+    internal class DataBoxEdgeRoleAddonOperationSource : IOperationSource<DataBoxEdgeRoleAddonResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DataBoxEdgeRoleAddonOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DataBoxEdgeRoleAddonResource IOperationSource<DataBoxEdgeRoleAddonResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DataBoxEdgeRoleAddonData data = DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DataBoxEdgeRoleAddonData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new DataBoxEdgeRoleAddonResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DataBoxEdgeRoleAddonResource> IOperationSource<DataBoxEdgeRoleAddonResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DataBoxEdgeRoleAddonData data = DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DataBoxEdgeRoleAddonResource(_client, data);
+            var data = ModelReaderWriter.Read<DataBoxEdgeRoleAddonData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            return await Task.FromResult(new DataBoxEdgeRoleAddonResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

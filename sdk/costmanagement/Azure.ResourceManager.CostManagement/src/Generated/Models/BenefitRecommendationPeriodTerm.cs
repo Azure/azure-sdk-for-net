@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct BenefitRecommendationPeriodTerm : IEquatable<BenefitRecommendationPeriodTerm>
     {
         private readonly string _value;
-        /// <summary> Benefit term is 1 year. </summary>
-        private const string P1YValue = "P1Y";
-        /// <summary> Benefit term is 3 years. </summary>
-        private const string P3YValue = "P3Y";
 
         /// <summary> Initializes a new instance of <see cref="BenefitRecommendationPeriodTerm"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BenefitRecommendationPeriodTerm(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string P1YValue = "P1Y";
+        private const string P3YValue = "P3Y";
 
         /// <summary> Benefit term is 1 year. </summary>
         public static BenefitRecommendationPeriodTerm P1Y { get; } = new BenefitRecommendationPeriodTerm(P1YValue);
-
         /// <summary> Benefit term is 3 years. </summary>
         public static BenefitRecommendationPeriodTerm P3Y { get; } = new BenefitRecommendationPeriodTerm(P3YValue);
-
         /// <summary> Determines if two <see cref="BenefitRecommendationPeriodTerm"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BenefitRecommendationPeriodTerm left, BenefitRecommendationPeriodTerm right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BenefitRecommendationPeriodTerm"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BenefitRecommendationPeriodTerm left, BenefitRecommendationPeriodTerm right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BenefitRecommendationPeriodTerm"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BenefitRecommendationPeriodTerm"/>. </summary>
         public static implicit operator BenefitRecommendationPeriodTerm(string value) => new BenefitRecommendationPeriodTerm(value);
 
-        /// <summary> Converts a string to a <see cref="BenefitRecommendationPeriodTerm"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BenefitRecommendationPeriodTerm?(string value) => value == null ? null : new BenefitRecommendationPeriodTerm(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BenefitRecommendationPeriodTerm other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BenefitRecommendationPeriodTerm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

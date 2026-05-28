@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Rl.Net;
+using System;
 
 namespace Azure.AI.Personalizer
 {

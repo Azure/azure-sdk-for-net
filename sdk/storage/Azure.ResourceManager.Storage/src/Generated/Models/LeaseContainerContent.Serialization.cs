@@ -10,70 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Lease Container request schema. </summary>
-    public partial class LeaseContainerContent : IJsonModel<LeaseContainerContent>
+    public partial class LeaseContainerContent : IUtf8JsonSerializable, IJsonModel<LeaseContainerContent>
     {
-        /// <summary> Initializes a new instance of <see cref="LeaseContainerContent"/> for deserialization. </summary>
-        internal LeaseContainerContent()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LeaseContainerContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LeaseContainerContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LeaseContainerContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLeaseContainerContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LeaseContainerContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LeaseContainerContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LeaseContainerContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LeaseContainerContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LeaseContainerContent IPersistableModel<LeaseContainerContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LeaseContainerContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="leaseContainerContent"> The <see cref="LeaseContainerContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LeaseContainerContent leaseContainerContent)
-        {
-            if (leaseContainerContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(leaseContainerContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LeaseContainerContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -85,11 +28,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LeaseContainerContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LeaseContainerContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LeaseContainerContent)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
             if (Optional.IsDefined(LeaseId))
@@ -112,15 +56,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("proposedLeaseId"u8);
                 writer.WriteStringValue(ProposedLeaseId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -129,27 +73,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LeaseContainerContent IJsonModel<LeaseContainerContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LeaseContainerContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LeaseContainerContent IJsonModel<LeaseContainerContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LeaseContainerContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LeaseContainerContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LeaseContainerContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLeaseContainerContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LeaseContainerContent DeserializeLeaseContainerContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static LeaseContainerContent DeserializeLeaseContainerContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -159,54 +98,87 @@ namespace Azure.ResourceManager.Storage.Models
             int? breakPeriod = default;
             int? leaseDuration = default;
             string proposedLeaseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("action"u8))
+                if (property.NameEquals("action"u8))
                 {
-                    action = new LeaseContainerAction(prop.Value.GetString());
+                    action = new LeaseContainerAction(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("leaseId"u8))
+                if (property.NameEquals("leaseId"u8))
                 {
-                    leaseId = prop.Value.GetString();
+                    leaseId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("breakPeriod"u8))
+                if (property.NameEquals("breakPeriod"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    breakPeriod = prop.Value.GetInt32();
+                    breakPeriod = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("leaseDuration"u8))
+                if (property.NameEquals("leaseDuration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    leaseDuration = prop.Value.GetInt32();
+                    leaseDuration = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("proposedLeaseId"u8))
+                if (property.NameEquals("proposedLeaseId"u8))
                 {
-                    proposedLeaseId = prop.Value.GetString();
+                    proposedLeaseId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new LeaseContainerContent(
                 action,
                 leaseId,
                 breakPeriod,
                 leaseDuration,
                 proposedLeaseId,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LeaseContainerContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LeaseContainerContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LeaseContainerContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LeaseContainerContent IPersistableModel<LeaseContainerContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LeaseContainerContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeLeaseContainerContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LeaseContainerContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LeaseContainerContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

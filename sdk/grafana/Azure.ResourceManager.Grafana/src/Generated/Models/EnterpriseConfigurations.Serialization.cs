@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Grafana;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> Enterprise settings of a Grafana instance. </summary>
-    public partial class EnterpriseConfigurations : IJsonModel<EnterpriseConfigurations>
+    public partial class EnterpriseConfigurations : IUtf8JsonSerializable, IJsonModel<EnterpriseConfigurations>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EnterpriseConfigurations PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EnterpriseConfigurations>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEnterpriseConfigurations(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EnterpriseConfigurations)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnterpriseConfigurations>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EnterpriseConfigurations>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EnterpriseConfigurations)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EnterpriseConfigurations>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EnterpriseConfigurations IPersistableModel<EnterpriseConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EnterpriseConfigurations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EnterpriseConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EnterpriseConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EnterpriseConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnterpriseConfigurations)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(MarketplacePlanId))
             {
                 writer.WritePropertyName("marketplacePlanId"u8);
@@ -84,15 +44,15 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("marketplaceAutoRenew"u8);
                 writer.WriteStringValue(MarketplaceAutoRenew.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,56 +61,84 @@ namespace Azure.ResourceManager.Grafana.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EnterpriseConfigurations IJsonModel<EnterpriseConfigurations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EnterpriseConfigurations JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EnterpriseConfigurations IJsonModel<EnterpriseConfigurations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EnterpriseConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EnterpriseConfigurations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnterpriseConfigurations)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEnterpriseConfigurations(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EnterpriseConfigurations DeserializeEnterpriseConfigurations(JsonElement element, ModelReaderWriterOptions options)
+        internal static EnterpriseConfigurations DeserializeEnterpriseConfigurations(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string marketplacePlanId = default;
             MarketplaceAutoRenew? marketplaceAutoRenew = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("marketplacePlanId"u8))
+                if (property.NameEquals("marketplacePlanId"u8))
                 {
-                    marketplacePlanId = prop.Value.GetString();
+                    marketplacePlanId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("marketplaceAutoRenew"u8))
+                if (property.NameEquals("marketplaceAutoRenew"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplaceAutoRenew = new MarketplaceAutoRenew(prop.Value.GetString());
+                    marketplaceAutoRenew = new MarketplaceAutoRenew(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new EnterpriseConfigurations(marketplacePlanId, marketplaceAutoRenew, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EnterpriseConfigurations(marketplacePlanId, marketplaceAutoRenew, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EnterpriseConfigurations>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EnterpriseConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EnterpriseConfigurations)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EnterpriseConfigurations IPersistableModel<EnterpriseConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EnterpriseConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEnterpriseConfigurations(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EnterpriseConfigurations)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EnterpriseConfigurations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

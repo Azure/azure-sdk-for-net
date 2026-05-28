@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorCustomDomainCollection : ArmCollection, IEnumerable<FrontDoorCustomDomainResource>, IAsyncEnumerable<FrontDoorCustomDomainResource>
     {
-        private readonly ClientDiagnostics _afdCustomDomainsClientDiagnostics;
-        private readonly AFDCustomDomains _afdCustomDomainsRestClient;
+        private readonly ClientDiagnostics _frontDoorCustomDomainClientDiagnostics;
+        private readonly FrontDoorCustomDomainsRestOperations _frontDoorCustomDomainRestClient;
 
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorCustomDomainCollection"/> class for mocking. </summary>
         protected FrontDoorCustomDomainCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorCustomDomainCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontDoorCustomDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _frontDoorCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorCustomDomainResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FrontDoorCustomDomainResource.ResourceType, out string frontDoorCustomDomainApiVersion);
-            _afdCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorCustomDomainResource.ResourceType.Namespace, Diagnostics);
-            _afdCustomDomainsRestClient = new AFDCustomDomains(_afdCustomDomainsClientDiagnostics, Pipeline, Endpoint, frontDoorCustomDomainApiVersion ?? "2025-09-01-preview");
-            ValidateResourceId(id);
+            _frontDoorCustomDomainRestClient = new FrontDoorCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorCustomDomainApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ProfileResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates a new domain within the specified profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AFDDomains_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorCustomDomains_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="data"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorCustomDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customDomainName, FrontDoorCustomDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _afdCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.CreateOrUpdate");
+            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _afdCustomDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customDomainName, FrontDoorCustomDomainData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CdnArmOperation<FrontDoorCustomDomainResource> operation = new CdnArmOperation<FrontDoorCustomDomainResource>(
-                    new FrontDoorCustomDomainOperationSource(Client),
-                    _afdCustomDomainsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorCustomDomainRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorCustomDomainResource>(new FrontDoorCustomDomainOperationSource(Client), _frontDoorCustomDomainClientDiagnostics, Pipeline, _frontDoorCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.Cdn
         /// Creates a new domain within the specified profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AFDDomains_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorCustomDomains_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="data"> Domain properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorCustomDomainResource> CreateOrUpdate(WaitUntil waitUntil, string customDomainName, FrontDoorCustomDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _afdCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.CreateOrUpdate");
+            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _afdCustomDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customDomainName, FrontDoorCustomDomainData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                CdnArmOperation<FrontDoorCustomDomainResource> operation = new CdnArmOperation<FrontDoorCustomDomainResource>(
-                    new FrontDoorCustomDomainOperationSource(Client),
-                    _afdCustomDomainsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorCustomDomainRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorCustomDomainResource>(new FrontDoorCustomDomainOperationSource(Client), _frontDoorCustomDomainClientDiagnostics, Pipeline, _frontDoorCustomDomainRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.Cdn
         /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AFDDomains_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorCustomDomains_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorCustomDomainResource>> GetAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using DiagnosticScope scope = _afdCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Get");
+            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _afdCustomDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customDomainName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FrontDoorCustomDomainData> response = Response.FromValue(FrontDoorCustomDomainData.FromResponse(result), result);
+                var response = await _frontDoorCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorCustomDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.Cdn
         /// Gets an existing AzureFrontDoor domain with the specified domain name under the specified subscription, resource group and profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AFDDomains_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorCustomDomains_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<FrontDoorCustomDomainResource> Get(string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using DiagnosticScope scope = _afdCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Get");
+            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _afdCustomDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customDomainName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FrontDoorCustomDomainData> response = Response.FromValue(FrontDoorCustomDomainData.FromResponse(result), result);
+                var response = _frontDoorCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorCustomDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.Cdn
         /// Lists existing AzureFrontDoor domains.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AFDDomains_ListByProfile. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorCustomDomains_ListByProfile</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorCustomDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<FrontDoorCustomDomainData, FrontDoorCustomDomainResource>(new AFDCustomDomainsGetByProfileAsyncCollectionResultOfT(
-                _afdCustomDomainsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "FrontDoorCustomDomainCollection.GetAll"), data => new FrontDoorCustomDomainResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorCustomDomainRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorCustomDomainRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorCustomDomainResource(Client, FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(e)), _frontDoorCustomDomainClientDiagnostics, Pipeline, "FrontDoorCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists existing AzureFrontDoor domains.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AFDDomains_ListByProfile. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorCustomDomains_ListByProfile</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorCustomDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<FrontDoorCustomDomainData, FrontDoorCustomDomainResource>(new AFDCustomDomainsGetByProfileCollectionResultOfT(
-                _afdCustomDomainsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "FrontDoorCustomDomainCollection.GetAll"), data => new FrontDoorCustomDomainResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorCustomDomainRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorCustomDomainRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorCustomDomainResource(Client, FrontDoorCustomDomainData.DeserializeFrontDoorCustomDomainData(e)), _frontDoorCustomDomainClientDiagnostics, Pipeline, "FrontDoorCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AFDDomains_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorCustomDomains_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using DiagnosticScope scope = _afdCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Exists");
+            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _afdCustomDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customDomainName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<FrontDoorCustomDomainData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorCustomDomainData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorCustomDomainData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _frontDoorCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.Cdn
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AFDDomains_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorCustomDomains_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual Response<bool> Exists(string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using DiagnosticScope scope = _afdCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Exists");
+            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _afdCustomDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customDomainName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<FrontDoorCustomDomainData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorCustomDomainData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorCustomDomainData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _frontDoorCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.Cdn
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AFDDomains_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorCustomDomains_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorCustomDomainResource>> GetIfExistsAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using DiagnosticScope scope = _afdCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.GetIfExists");
+            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _afdCustomDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customDomainName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<FrontDoorCustomDomainData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorCustomDomainData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorCustomDomainData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _frontDoorCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<FrontDoorCustomDomainResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorCustomDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.Cdn
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/customDomains/{customDomainName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AFDDomains_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorCustomDomains_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorCustomDomainResource> GetIfExists(string customDomainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customDomainName, nameof(customDomainName));
 
-            using DiagnosticScope scope = _afdCustomDomainsClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.GetIfExists");
+            using var scope = _frontDoorCustomDomainClientDiagnostics.CreateScope("FrontDoorCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _afdCustomDomainsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, customDomainName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<FrontDoorCustomDomainData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorCustomDomainData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorCustomDomainData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _frontDoorCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, customDomainName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<FrontDoorCustomDomainResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorCustomDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.Cdn
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FrontDoorCustomDomainResource> IAsyncEnumerable<FrontDoorCustomDomainResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

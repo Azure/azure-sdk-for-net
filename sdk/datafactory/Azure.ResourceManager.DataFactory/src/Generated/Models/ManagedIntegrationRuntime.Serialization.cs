@@ -62,11 +62,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("customerVirtualNetwork"u8);
                 writer.WriteObjectValue(CustomerVirtualNetwork, options);
             }
-            if (Optional.IsDefined(InteractiveQuery))
-            {
-                writer.WritePropertyName("interactiveQuery"u8);
-                writer.WriteObjectValue(InteractiveQuery, options);
-            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -109,7 +104,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             IntegrationRuntimeComputeProperties computeProperties = default;
             IntegrationRuntimeSsisProperties ssisProperties = default;
             IntegrationRuntimeCustomerVirtualNetwork customerVirtualNetwork = default;
-            InteractiveQueryProperties interactiveQuery = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,15 +172,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                             customerVirtualNetwork = IntegrationRuntimeCustomerVirtualNetwork.DeserializeIntegrationRuntimeCustomerVirtualNetwork(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("interactiveQuery"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            interactiveQuery = InteractiveQueryProperties.DeserializeInteractiveQueryProperties(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -201,8 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 managedVirtualNetwork,
                 computeProperties,
                 ssisProperties,
-                customerVirtualNetwork,
-                interactiveQuery);
+                customerVirtualNetwork);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

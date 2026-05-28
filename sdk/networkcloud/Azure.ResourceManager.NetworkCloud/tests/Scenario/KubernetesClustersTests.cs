@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public partial class KubernetesClustersTests : NetworkCloudManagementTestBase
     {
-        public KubernetesClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
-        public KubernetesClustersTests(bool isAsync) : base(isAsync) { }
+        public KubernetesClustersTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
+        public KubernetesClustersTests(bool isAsync) : base(isAsync) {}
 
         [Test]
         [RecordedTest]
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             InitialAgentPoolConfiguration[] initialAgentPoolConfigurationsArray = new InitialAgentPoolConfiguration[]
             {
-                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "NC_G2_8_v1", "agentPoolConfig")
+                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "agentPoolConfig", "NC_G2_8_v1")
                 {
                     AgentOptions = new NetworkCloudAgentConfiguration(4)
                     {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration(new AzureLocation(TestEnvironment.Location), kubernetesClusterName + "-MRG", null)
             };
 
-            ArmOperation<NetworkCloudKubernetesClusterResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, createData, matchConditions: null);
+            ArmOperation<NetworkCloudKubernetesClusterResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, createData);
             Assert.AreEqual(createResult.Value.Data.Name, kubernetesClusterName);
 
             // Get KubernetesCluster
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 KubernetesVersion = TestEnvironment.KubernetesVersionUpdate,
                 Tags = { { "test", "patch" } },
             };
-            ArmOperation<NetworkCloudKubernetesClusterResource> updateResult = await kubernetesCluster.UpdateAsync(WaitUntil.Completed, updateData, matchConditions: null);
+            ArmOperation<NetworkCloudKubernetesClusterResource> updateResult = await kubernetesCluster.UpdateAsync(WaitUntil.Completed, updateData);
             Assert.AreEqual(updateResult.Value.Data.Tags["test"], "patch");
 
             // Get KubernetesClusters by Resource Group

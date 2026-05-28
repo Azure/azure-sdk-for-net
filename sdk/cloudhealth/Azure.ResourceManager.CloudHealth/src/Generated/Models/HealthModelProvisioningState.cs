@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -15,70 +14,47 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public readonly partial struct HealthModelProvisioningState : IEquatable<HealthModelProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Resource has been created. </summary>
+
+        /// <summary> Initializes a new instance of <see cref="HealthModelProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public HealthModelProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string SucceededValue = "Succeeded";
-        /// <summary> Resource creation failed. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> Resource creation was canceled. </summary>
         private const string CanceledValue = "Canceled";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Initializes a new instance of <see cref="HealthModelProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HealthModelProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
         /// <summary> Resource has been created. </summary>
         public static HealthModelProvisioningState Succeeded { get; } = new HealthModelProvisioningState(SucceededValue);
-
         /// <summary> Resource creation failed. </summary>
         public static HealthModelProvisioningState Failed { get; } = new HealthModelProvisioningState(FailedValue);
-
         /// <summary> Resource creation was canceled. </summary>
         public static HealthModelProvisioningState Canceled { get; } = new HealthModelProvisioningState(CanceledValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static HealthModelProvisioningState Creating { get; } = new HealthModelProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static HealthModelProvisioningState Deleting { get; } = new HealthModelProvisioningState(DeletingValue);
-
         /// <summary> Determines if two <see cref="HealthModelProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HealthModelProvisioningState left, HealthModelProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="HealthModelProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HealthModelProvisioningState left, HealthModelProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="HealthModelProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthModelProvisioningState"/>. </summary>
         public static implicit operator HealthModelProvisioningState(string value) => new HealthModelProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="HealthModelProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HealthModelProvisioningState?(string value) => value == null ? null : new HealthModelProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HealthModelProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(HealthModelProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

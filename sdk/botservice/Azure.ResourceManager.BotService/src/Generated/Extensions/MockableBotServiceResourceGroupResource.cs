@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.BotService;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.BotService.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableBotServiceResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableBotServiceResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableBotServiceResourceGroupResource"/> class for mocking. </summary>
         protected MockableBotServiceResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableBotServiceResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableBotServiceResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableBotServiceResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of Bots in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Bots and their operations over a BotResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of BotResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BotResources and their operations over a BotResource. </returns>
         public virtual BotCollection GetBots()
         {
             return GetCachedClient(client => new BotCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// Returns a BotService specified by the parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Bots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-09-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.BotService.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<BotResource>> GetBotAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return await GetBots().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// Returns a BotService specified by the parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Bots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Bots_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-09-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.BotService.Mocking
         [ForwardsClientCalls]
         public virtual Response<BotResource> GetBot(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return GetBots().Get(resourceName, cancellationToken);
         }
     }

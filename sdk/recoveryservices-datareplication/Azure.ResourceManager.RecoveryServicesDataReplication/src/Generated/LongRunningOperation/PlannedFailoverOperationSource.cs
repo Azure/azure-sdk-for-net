@@ -8,36 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
-    /// <summary></summary>
-    internal partial class PlannedFailoverOperationSource : IOperationSource<PlannedFailover>
+    internal class PlannedFailoverOperationSource : IOperationSource<PlannedFailover>
     {
-        /// <summary></summary>
-        internal PlannedFailoverOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         PlannedFailover IOperationSource<PlannedFailover>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return PlannedFailover.DeserializePlannedFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return PlannedFailover.DeserializePlannedFailover(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<PlannedFailover> IOperationSource<PlannedFailover>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return PlannedFailover.DeserializePlannedFailover(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return PlannedFailover.DeserializePlannedFailover(document.RootElement);
         }
     }
 }

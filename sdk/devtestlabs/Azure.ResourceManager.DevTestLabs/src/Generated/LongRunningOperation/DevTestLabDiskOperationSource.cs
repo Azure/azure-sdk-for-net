@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary></summary>
-    internal partial class DevTestLabDiskOperationSource : IOperationSource<DevTestLabDiskResource>
+    internal class DevTestLabDiskOperationSource : IOperationSource<DevTestLabDiskResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DevTestLabDiskOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DevTestLabDiskResource IOperationSource<DevTestLabDiskResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DevTestLabDiskData data = DevTestLabDiskData.DeserializeDevTestLabDiskData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DevTestLabDiskData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
             return new DevTestLabDiskResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DevTestLabDiskResource> IOperationSource<DevTestLabDiskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DevTestLabDiskData data = DevTestLabDiskData.DeserializeDevTestLabDiskData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DevTestLabDiskResource(_client, data);
+            var data = ModelReaderWriter.Read<DevTestLabDiskData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
+            return await Task.FromResult(new DevTestLabDiskResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

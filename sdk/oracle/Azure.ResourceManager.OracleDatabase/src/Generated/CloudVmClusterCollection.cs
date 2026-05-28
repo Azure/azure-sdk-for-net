@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.OracleDatabase
     /// </summary>
     public partial class CloudVmClusterCollection : ArmCollection, IEnumerable<CloudVmClusterResource>, IAsyncEnumerable<CloudVmClusterResource>
     {
-        private readonly ClientDiagnostics _cloudVmClustersClientDiagnostics;
-        private readonly CloudVmClusters _cloudVmClustersRestClient;
+        private readonly ClientDiagnostics _cloudVmClusterClientDiagnostics;
+        private readonly CloudVmClustersRestOperations _cloudVmClusterRestClient;
 
-        /// <summary> Initializes a new instance of CloudVmClusterCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudVmClusterCollection"/> class for mocking. </summary>
         protected CloudVmClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudVmClusterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudVmClusterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CloudVmClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _cloudVmClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CloudVmClusterResource.ResourceType, out string cloudVmClusterApiVersion);
-            _cloudVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudVmClusterResource.ResourceType.Namespace, Diagnostics);
-            _cloudVmClustersRestClient = new CloudVmClusters(_cloudVmClustersClientDiagnostics, Pipeline, Endpoint, cloudVmClusterApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _cloudVmClusterRestClient = new CloudVmClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a CloudVmCluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CloudVmClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudvmclustername, CloudVmClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _cloudVmClustersClientDiagnostics.CreateScope("CloudVmClusterCollection.CreateOrUpdate");
+            using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudVmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, CloudVmClusterData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
-                    new CloudVmClusterOperationSource(Client),
-                    _cloudVmClustersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cloudVmClusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudvmclustername, data, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudvmclustername, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Create a CloudVmCluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CloudVmClusterResource> CreateOrUpdate(WaitUntil waitUntil, string cloudvmclustername, CloudVmClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _cloudVmClustersClientDiagnostics.CreateScope("CloudVmClusterCollection.CreateOrUpdate");
+            using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudVmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, CloudVmClusterData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OracleDatabaseArmOperation<CloudVmClusterResource> operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(
-                    new CloudVmClusterOperationSource(Client),
-                    _cloudVmClustersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cloudVmClusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudvmclustername, data, cancellationToken);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterResource>(new CloudVmClusterOperationSource(Client), _cloudVmClusterClientDiagnostics, Pipeline, _cloudVmClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudvmclustername, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a CloudVmCluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         public virtual async Task<Response<CloudVmClusterResource>> GetAsync(string cloudvmclustername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
 
-            using DiagnosticScope scope = _cloudVmClustersClientDiagnostics.CreateScope("CloudVmClusterCollection.Get");
+            using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CloudVmClusterData> response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
+                var response = await _cloudVmClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudvmclustername, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudVmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a CloudVmCluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         public virtual Response<CloudVmClusterResource> Get(string cloudvmclustername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
 
-            using DiagnosticScope scope = _cloudVmClustersClientDiagnostics.CreateScope("CloudVmClusterCollection.Get");
+            using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CloudVmClusterData> response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
+                var response = _cloudVmClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudvmclustername, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudVmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.OracleDatabase
         /// List CloudVmCluster resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudVmClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClustersGetByResourceGroupAsyncCollectionResultOfT(_cloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudVmClusterCollection.GetAll"), data => new CloudVmClusterResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudVmClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudVmClusterResource(Client, CloudVmClusterData.DeserializeCloudVmClusterData(e)), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List CloudVmCluster resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="CloudVmClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudVmClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<CloudVmClusterData, CloudVmClusterResource>(new CloudVmClustersGetByResourceGroupCollectionResultOfT(_cloudVmClustersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudVmClusterCollection.GetAll"), data => new CloudVmClusterResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudVmClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudVmClusterResource(Client, CloudVmClusterData.DeserializeCloudVmClusterData(e)), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cloudvmclustername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
 
-            using DiagnosticScope scope = _cloudVmClustersClientDiagnostics.CreateScope("CloudVmClusterCollection.Exists");
+            using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<CloudVmClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudVmClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _cloudVmClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudvmclustername, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         public virtual Response<bool> Exists(string cloudvmclustername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
 
-            using DiagnosticScope scope = _cloudVmClustersClientDiagnostics.CreateScope("CloudVmClusterCollection.Exists");
+            using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<CloudVmClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudVmClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _cloudVmClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudvmclustername, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         public virtual async Task<NullableResponse<CloudVmClusterResource>> GetIfExistsAsync(string cloudvmclustername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
 
-            using DiagnosticScope scope = _cloudVmClustersClientDiagnostics.CreateScope("CloudVmClusterCollection.GetIfExists");
+            using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<CloudVmClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudVmClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _cloudVmClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudvmclustername, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<CloudVmClusterResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudVmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudvmclustername"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudvmclustername"/> is null. </exception>
         public virtual NullableResponse<CloudVmClusterResource> GetIfExists(string cloudvmclustername, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
 
-            using DiagnosticScope scope = _cloudVmClustersClientDiagnostics.CreateScope("CloudVmClusterCollection.GetIfExists");
+            using var scope = _cloudVmClusterClientDiagnostics.CreateScope("CloudVmClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudVmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudvmclustername, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<CloudVmClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudVmClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudVmClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _cloudVmClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudvmclustername, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<CloudVmClusterResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudVmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CloudVmClusterResource> IAsyncEnumerable<CloudVmClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

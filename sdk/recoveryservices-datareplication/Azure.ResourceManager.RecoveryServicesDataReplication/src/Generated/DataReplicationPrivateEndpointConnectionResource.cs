@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
-    /// A class representing a DataReplicationPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationPrivateEndpointConnections method.
+    /// A Class representing a DataReplicationPrivateEndpointConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationPrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataReplicationPrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationPrivateEndpointConnection method.
     /// </summary>
     public partial class DataReplicationPrivateEndpointConnectionResource : ArmResource
     {
-        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="DataReplicationPrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly DataReplicationPrivateEndpointConnectionData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of DataReplicationPrivateEndpointConnectionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationPrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected DataReplicationPrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataReplicationPrivateEndpointConnectionResource(ArmClient client, DataReplicationPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationPrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataReplicationPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataReplicationPrivateEndpointConnectionApiVersion);
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, dataReplicationPrivateEndpointConnectionApiVersion ?? "2024-09-01");
-            ValidateResourceId(id);
+            _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DataReplicationPrivateEndpointConnectionData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="vaultName"> The vaultName. </param>
-        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string privateEndpointConnectionName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets the private endpoint connection details.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPrivateEndpointConnectionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataReplicationPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Get");
+            using var scope = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataReplicationPrivateEndpointConnectionData> response = Response.FromValue(DataReplicationPrivateEndpointConnectionData.FromResponse(result), result);
+                var response = await _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +132,33 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the private endpoint connection details.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPrivateEndpointConnectionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataReplicationPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Get");
+            using var scope = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataReplicationPrivateEndpointConnectionData> response = Response.FromValue(DataReplicationPrivateEndpointConnectionData.FromResponse(result), result);
+                var response = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +172,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Deletes the private endpoint connection.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPrivateEndpointConnectionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,21 +193,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Delete");
+            using var scope = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesDataReplicationArmOperation operation = new RecoveryServicesDataReplicationArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesDataReplicationArmOperation(_dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +214,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Deletes the private endpoint connection.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPrivateEndpointConnectionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,21 +235,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Delete");
+            using var scope = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesDataReplicationArmOperation operation = new RecoveryServicesDataReplicationArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new RecoveryServicesDataReplicationArmOperation(_dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -286,23 +253,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         }
 
         /// <summary>
-        /// Update a DataReplicationPrivateEndpointConnection.
+        /// Updated the private endpoint connection status (Approval/Rejected). This gets invoked by resource admin.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPrivateEndpointConnectionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,24 +281,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Update");
+            using var scope = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationPrivateEndpointConnectionData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataReplicationPrivateEndpointConnectionData> response = Response.FromValue(DataReplicationPrivateEndpointConnectionData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionResource>(Response.FromValue(new DataReplicationPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionResource>(Response.FromValue(new DataReplicationPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -342,23 +301,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         }
 
         /// <summary>
-        /// Update a DataReplicationPrivateEndpointConnection.
+        /// Updated the private endpoint connection status (Approval/Rejected). This gets invoked by resource admin.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPrivateEndpointConnectionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,24 +329,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Update");
+            using var scope = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("DataReplicationPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationPrivateEndpointConnectionData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataReplicationPrivateEndpointConnectionData> response = Response.FromValue(DataReplicationPrivateEndpointConnectionData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionResource>(Response.FromValue(new DataReplicationPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _dataReplicationPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPrivateEndpointConnectionResource>(Response.FromValue(new DataReplicationPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ProviderHub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> Resource management options. </summary>
-    public partial class ResourceTypeRegistrationResourceManagementOptions : IJsonModel<ResourceTypeRegistrationResourceManagementOptions>
+    public partial class ResourceTypeRegistrationResourceManagementOptions : IUtf8JsonSerializable, IJsonModel<ResourceTypeRegistrationResourceManagementOptions>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceTypeRegistrationResourceManagementOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceTypeRegistrationResourceManagementOptions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceManagementOptions)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeRegistrationResourceManagementOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceManagementOptions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceTypeRegistrationResourceManagementOptions IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceTypeRegistrationResourceManagementOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceManagementOptions)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(BatchProvisioningSupport))
             {
                 writer.WritePropertyName("batchProvisioningSupport"u8);
@@ -83,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("deleteDependencies"u8);
                 writer.WriteStartArray();
-                foreach (ResourceTypeRegistrationDeleteDependency item in DeleteDependencies)
+                foreach (var item in DeleteDependencies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -94,15 +54,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("nestedProvisioningSupport"u8);
                 writer.WriteObjectValue(NestedProvisioningSupport, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,27 +71,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceTypeRegistrationResourceManagementOptions IJsonModel<ResourceTypeRegistrationResourceManagementOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceTypeRegistrationResourceManagementOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceTypeRegistrationResourceManagementOptions IJsonModel<ResourceTypeRegistrationResourceManagementOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceManagementOptions)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceTypeRegistrationResourceManagementOptions(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceTypeRegistrationResourceManagementOptions DeserializeResourceTypeRegistrationResourceManagementOptions(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceTypeRegistrationResourceManagementOptions DeserializeResourceTypeRegistrationResourceManagementOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,47 +94,80 @@ namespace Azure.ResourceManager.ProviderHub.Models
             BatchProvisioningSupport batchProvisioningSupport = default;
             IList<ResourceTypeRegistrationDeleteDependency> deleteDependencies = default;
             NestedProvisioningSupport nestedProvisioningSupport = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("batchProvisioningSupport"u8))
+                if (property.NameEquals("batchProvisioningSupport"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    batchProvisioningSupport = BatchProvisioningSupport.DeserializeBatchProvisioningSupport(prop.Value, options);
+                    batchProvisioningSupport = BatchProvisioningSupport.DeserializeBatchProvisioningSupport(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("deleteDependencies"u8))
+                if (property.NameEquals("deleteDependencies"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceTypeRegistrationDeleteDependency> array = new List<ResourceTypeRegistrationDeleteDependency>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ResourceTypeRegistrationDeleteDependency.DeserializeResourceTypeRegistrationDeleteDependency(item, options));
                     }
                     deleteDependencies = array;
                     continue;
                 }
-                if (prop.NameEquals("nestedProvisioningSupport"u8))
+                if (property.NameEquals("nestedProvisioningSupport"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nestedProvisioningSupport = NestedProvisioningSupport.DeserializeNestedProvisioningSupport(prop.Value, options);
+                    nestedProvisioningSupport = NestedProvisioningSupport.DeserializeNestedProvisioningSupport(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ResourceTypeRegistrationResourceManagementOptions(batchProvisioningSupport, deleteDependencies ?? new ChangeTrackingList<ResourceTypeRegistrationDeleteDependency>(), nestedProvisioningSupport, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceTypeRegistrationResourceManagementOptions(batchProvisioningSupport, deleteDependencies ?? new ChangeTrackingList<ResourceTypeRegistrationDeleteDependency>(), nestedProvisioningSupport, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceManagementOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceTypeRegistrationResourceManagementOptions IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeResourceTypeRegistrationResourceManagementOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationResourceManagementOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceTypeRegistrationResourceManagementOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

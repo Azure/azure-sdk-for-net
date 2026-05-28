@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Backup engine type when Azure Backup Server is used to manage the backups. </summary>
-    public partial class BackupServerEngine : BackupGenericEngine, IJsonModel<BackupServerEngine>
+    public partial class BackupServerEngine : IUtf8JsonSerializable, IJsonModel<BackupServerEngine>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupGenericEngine PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupServerEngine>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBackupServerEngine(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupServerEngine)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupServerEngine>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupServerEngine>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupServerEngine)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupServerEngine>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupServerEngine IPersistableModel<BackupServerEngine>.Create(BinaryData data, ModelReaderWriterOptions options) => (BackupServerEngine)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupServerEngine>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupServerEngine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,35 +28,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupServerEngine>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupServerEngine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupServerEngine)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupServerEngine IJsonModel<BackupServerEngine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BackupServerEngine)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupGenericEngine JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BackupServerEngine IJsonModel<BackupServerEngine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupServerEngine>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupServerEngine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupServerEngine)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBackupServerEngine(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupServerEngine DeserializeBackupServerEngine(JsonElement element, ModelReaderWriterOptions options)
+        internal static BackupServerEngine DeserializeBackupServerEngine(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -115,99 +70,101 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             bool? isAzureBackupAgentUpgradeAvailable = default;
             bool? isDpmUpgradeAvailable = default;
             BackupEngineExtendedInfo extendedInfo = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("friendlyName"u8))
+                if (property.NameEquals("friendlyName"u8))
                 {
-                    friendlyName = prop.Value.GetString();
+                    friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("backupManagementType"u8))
+                if (property.NameEquals("backupManagementType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupManagementType = new BackupManagementType(prop.Value.GetString());
+                    backupManagementType = new BackupManagementType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("registrationStatus"u8))
+                if (property.NameEquals("registrationStatus"u8))
                 {
-                    registrationStatus = prop.Value.GetString();
+                    registrationStatus = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("backupEngineState"u8))
+                if (property.NameEquals("backupEngineState"u8))
                 {
-                    backupEngineState = prop.Value.GetString();
+                    backupEngineState = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("healthStatus"u8))
+                if (property.NameEquals("healthStatus"u8))
                 {
-                    healthStatus = prop.Value.GetString();
+                    healthStatus = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("backupEngineType"u8))
+                if (property.NameEquals("backupEngineType"u8))
                 {
-                    backupEngineType = new BackupEngineType(prop.Value.GetString());
+                    backupEngineType = new BackupEngineType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("canReRegister"u8))
+                if (property.NameEquals("canReRegister"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    canReRegister = prop.Value.GetBoolean();
+                    canReRegister = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("backupEngineId"u8))
+                if (property.NameEquals("backupEngineId"u8))
                 {
-                    backupEngineId = prop.Value.GetString();
+                    backupEngineId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dpmVersion"u8))
+                if (property.NameEquals("dpmVersion"u8))
                 {
-                    dpmVersion = prop.Value.GetString();
+                    dpmVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("azureBackupAgentVersion"u8))
+                if (property.NameEquals("azureBackupAgentVersion"u8))
                 {
-                    azureBackupAgentVersion = prop.Value.GetString();
+                    azureBackupAgentVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isAzureBackupAgentUpgradeAvailable"u8))
+                if (property.NameEquals("isAzureBackupAgentUpgradeAvailable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAzureBackupAgentUpgradeAvailable = prop.Value.GetBoolean();
+                    isAzureBackupAgentUpgradeAvailable = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isDpmUpgradeAvailable"u8))
+                if (property.NameEquals("isDpmUpgradeAvailable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDpmUpgradeAvailable = prop.Value.GetBoolean();
+                    isDpmUpgradeAvailable = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("extendedInfo"u8))
+                if (property.NameEquals("extendedInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extendedInfo = BackupEngineExtendedInfo.DeserializeBackupEngineExtendedInfo(prop.Value, options);
+                    extendedInfo = BackupEngineExtendedInfo.DeserializeBackupEngineExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupServerEngine(
                 friendlyName,
                 backupManagementType,
@@ -222,7 +179,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 isAzureBackupAgentUpgradeAvailable,
                 isDpmUpgradeAvailable,
                 extendedInfo,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupServerEngine>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupServerEngine>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupServerEngine)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupServerEngine IPersistableModel<BackupServerEngine>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupServerEngine>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBackupServerEngine(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupServerEngine)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupServerEngine>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

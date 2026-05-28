@@ -3,9 +3,13 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry.Mocking;
+using Azure.ResourceManager.DeviceRegistry.Models;
 using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {

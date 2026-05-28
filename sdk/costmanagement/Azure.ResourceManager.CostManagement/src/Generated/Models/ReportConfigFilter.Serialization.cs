@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.CostManagement;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The filter expression to be used in the report. </summary>
-    public partial class ReportConfigFilter : IJsonModel<ReportConfigFilter>
+    public partial class ReportConfigFilter : IUtf8JsonSerializable, IJsonModel<ReportConfigFilter>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReportConfigFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportConfigFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeReportConfigFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportConfigFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportConfigFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReportConfigFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ReportConfigFilter IPersistableModel<ReportConfigFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReportConfigFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReportConfigFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,16 +28,17 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportConfigFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReportConfigFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(And))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
-                foreach (ReportConfigFilter item in And)
+                foreach (var item in And)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,7 +48,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("or"u8);
                 writer.WriteStartArray();
-                foreach (ReportConfigFilter item in Or)
+                foreach (var item in Or)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -104,15 +64,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,90 +81,118 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ReportConfigFilter IJsonModel<ReportConfigFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReportConfigFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ReportConfigFilter IJsonModel<ReportConfigFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReportConfigFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReportConfigFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeReportConfigFilter(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ReportConfigFilter DeserializeReportConfigFilter(JsonElement element, ModelReaderWriterOptions options)
+        internal static ReportConfigFilter DeserializeReportConfigFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ReportConfigFilter> @and = default;
-            IList<ReportConfigFilter> @or = default;
+            IList<ReportConfigFilter> and = default;
+            IList<ReportConfigFilter> or = default;
             ReportConfigComparisonExpression dimensions = default;
             ReportConfigComparisonExpression tags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("and"u8))
+                if (property.NameEquals("and"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ReportConfigFilter> array = new List<ReportConfigFilter>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(DeserializeReportConfigFilter(item, options));
                     }
-                    @and = array;
+                    and = array;
                     continue;
                 }
-                if (prop.NameEquals("or"u8))
+                if (property.NameEquals("or"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ReportConfigFilter> array = new List<ReportConfigFilter>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(DeserializeReportConfigFilter(item, options));
                     }
-                    @or = array;
+                    or = array;
                     continue;
                 }
-                if (prop.NameEquals("dimensions"u8))
+                if (property.NameEquals("dimensions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dimensions = ReportConfigComparisonExpression.DeserializeReportConfigComparisonExpression(prop.Value, options);
+                    dimensions = ReportConfigComparisonExpression.DeserializeReportConfigComparisonExpression(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("tags"u8))
+                if (property.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tags = ReportConfigComparisonExpression.DeserializeReportConfigComparisonExpression(prop.Value, options);
+                    tags = ReportConfigComparisonExpression.DeserializeReportConfigComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ReportConfigFilter(@and ?? new ChangeTrackingList<ReportConfigFilter>(), @or ?? new ChangeTrackingList<ReportConfigFilter>(), dimensions, tags, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReportConfigFilter(and ?? new ChangeTrackingList<ReportConfigFilter>(), or ?? new ChangeTrackingList<ReportConfigFilter>(), dimensions, tags, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReportConfigFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportConfigFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ReportConfigFilter IPersistableModel<ReportConfigFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportConfigFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeReportConfigFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReportConfigFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

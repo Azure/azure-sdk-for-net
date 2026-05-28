@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public readonly partial struct NotificationHubsPrivateEndpointConnectionProvisioningState : IEquatable<NotificationHubsPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NotificationHubsPrivateEndpointConnectionProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UnknownValue = "Unknown";
         private const string SucceededValue = "Succeeded";
         private const string CreatingValue = "Creating";
@@ -24,70 +31,39 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private const string DeletingByProxyValue = "DeletingByProxy";
         private const string DeletedValue = "Deleted";
 
-        /// <summary> Initializes a new instance of <see cref="NotificationHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NotificationHubsPrivateEndpointConnectionProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static NotificationHubsPrivateEndpointConnectionProvisioningState Unknown { get; } = new NotificationHubsPrivateEndpointConnectionProvisioningState(UnknownValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static NotificationHubsPrivateEndpointConnectionProvisioningState Succeeded { get; } = new NotificationHubsPrivateEndpointConnectionProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static NotificationHubsPrivateEndpointConnectionProvisioningState Creating { get; } = new NotificationHubsPrivateEndpointConnectionProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static NotificationHubsPrivateEndpointConnectionProvisioningState Updating { get; } = new NotificationHubsPrivateEndpointConnectionProvisioningState(UpdatingValue);
-
-        /// <summary> Gets the UpdatingByProxy. </summary>
+        /// <summary> UpdatingByProxy. </summary>
         public static NotificationHubsPrivateEndpointConnectionProvisioningState UpdatingByProxy { get; } = new NotificationHubsPrivateEndpointConnectionProvisioningState(UpdatingByProxyValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static NotificationHubsPrivateEndpointConnectionProvisioningState Deleting { get; } = new NotificationHubsPrivateEndpointConnectionProvisioningState(DeletingValue);
-
-        /// <summary> Gets the DeletingByProxy. </summary>
+        /// <summary> DeletingByProxy. </summary>
         public static NotificationHubsPrivateEndpointConnectionProvisioningState DeletingByProxy { get; } = new NotificationHubsPrivateEndpointConnectionProvisioningState(DeletingByProxyValue);
-
-        /// <summary> Gets the Deleted. </summary>
+        /// <summary> Deleted. </summary>
         public static NotificationHubsPrivateEndpointConnectionProvisioningState Deleted { get; } = new NotificationHubsPrivateEndpointConnectionProvisioningState(DeletedValue);
-
         /// <summary> Determines if two <see cref="NotificationHubsPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationHubsPrivateEndpointConnectionProvisioningState left, NotificationHubsPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NotificationHubsPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationHubsPrivateEndpointConnectionProvisioningState left, NotificationHubsPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NotificationHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator NotificationHubsPrivateEndpointConnectionProvisioningState(string value) => new NotificationHubsPrivateEndpointConnectionProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="NotificationHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NotificationHubsPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new NotificationHubsPrivateEndpointConnectionProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationHubsPrivateEndpointConnectionProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NotificationHubsPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

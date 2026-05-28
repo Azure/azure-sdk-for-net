@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace _Type._Array
@@ -15,12 +14,7 @@ namespace _Type._Array
     {
         public ArrayClient() : this(new Uri("http://localhost:3000"), new ArrayClientOptions()) => throw null;
 
-        internal ArrayClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ArrayClientOptions options) => throw null;
-
-        public ArrayClient(Uri endpoint, ArrayClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public ArrayClient(ArrayClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public ArrayClient(Uri endpoint, ArrayClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

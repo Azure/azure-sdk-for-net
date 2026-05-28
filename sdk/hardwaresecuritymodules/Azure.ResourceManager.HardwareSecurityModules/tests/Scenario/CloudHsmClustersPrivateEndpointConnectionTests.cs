@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.HardwareSecurityModules.Models;
+using NUnit.Framework;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using NUnit.Framework;
+using Azure.Core;
+using Azure.ResourceManager.HardwareSecurityModules.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Tests
 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             var expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
             Assert.IsNotNull(privateEndpointConnectionResource);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(),privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
             Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
             Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.Properties.GroupIds);
             Assert.AreEqual(CloudHsmClusterPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.Properties.ConnectionState.Status);

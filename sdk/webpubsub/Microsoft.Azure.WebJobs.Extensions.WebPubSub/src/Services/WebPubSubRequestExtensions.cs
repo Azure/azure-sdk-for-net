@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     /// </summary>
     internal static class WebPubSubRequestExtensions
     {
-        public static async Task<WebPubSubEventRequest> ReadWebPubSubRequestAsync(this HttpRequest request, RequestValidator validator)
+        public static async Task<WebPubSubEventRequest> ReadWebPubSubRequestAsync(this HttpRequest request, WebPubSubValidationOptions options)
         {
             if (request == null)
             {
@@ -29,12 +30,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             }
 
             // validation request.
-            if (RequestValidator.IsValidationRequest(
-                    request.Method,
-                    request.Headers[Constants.Headers.WebHookRequestOrigin],
-                    out var requestHosts) == true)
+            if (request.IsValidationRequest(out var requestHosts))
             {
-                return new PreflightRequest(validator.IsValidHost(requestHosts));
+                if (options == null || !options.ContainsHost())
+                {
+                    return new PreflightRequest(true);
+                }
+                else
+                {
+                    foreach (var item in requestHosts)
+                    {
+                        if (options.ContainsHost(item))
+                        {
+                            return new PreflightRequest(true);
+                        }
+                    }
+                }
+                return new PreflightRequest(false);
             }
 
             if (!request.TryParseCloudEvents(out var context))
@@ -42,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 throw new ArgumentException("Invalid Web PubSub upstream request missing required fields in header.");
             }
 
-            if (!validator.IsValidSignature(context.Origin, context.Signature, context.ConnectionId))
+            if (!context.IsValidSignature(options))
             {
                 throw new UnauthorizedAccessException("Signature validation failed.");
             }
@@ -97,6 +109,56 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     return null;
             }
         }
+
+        internal static bool IsValidationRequest(this HttpRequest request, out List<string> requestHosts)
+        {
+            if (HttpMethods.IsOptions(request.Method))
+            {
+                request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
+                if (requestOrigin.Any())
+                {
+                    requestHosts = requestOrigin.SelectMany(x => x.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries)).ToList();
+                    return true;
+                }
+            }
+            requestHosts = null;
+            return false;
+        }
+
+        internal static bool IsValidSignature(this WebPubSubConnectionContext connectionContext, WebPubSubValidationOptions options)
+        {
+            // no options skip validation.
+            if (options == null || !options.ContainsHost())
+            {
+                return true;
+            }
+            foreach (var origin in connectionContext.Origin.ToHeaderList())
+            {
+                if (options.TryGetKey(origin, out var accessKey))
+                {
+                    // server side disable signature checks.
+                    if (string.IsNullOrEmpty(accessKey))
+                    {
+                        return true;
+                    }
+
+                    var signatures = connectionContext.Signature.ToHeaderList();
+                    if (signatures == null)
+                    {
+                        return false;
+                    }
+                    using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
+                    var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionContext.ConnectionId));
+                    var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
+                    if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         internal static Dictionary<string, BinaryData> DecodeConnectionStates(this string connectionStates)
         {
             if (!string.IsNullOrEmpty(connectionStates))
@@ -232,6 +294,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 dataType = WebPubSubDataType.Binary;
                 return false;
             }
+        }
+
+        private static IReadOnlyList<string> ToHeaderList(this string signatures)
+        {
+            if (string.IsNullOrEmpty(signatures))
+            {
+                return default;
+            }
+
+            return signatures.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private static WebPubSubEventType GetEventType(this string ceType)

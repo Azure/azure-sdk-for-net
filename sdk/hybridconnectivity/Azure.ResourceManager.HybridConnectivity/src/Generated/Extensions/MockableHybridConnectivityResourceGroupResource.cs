@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HybridConnectivity;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridConnectivity.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableHybridConnectivityResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableHybridConnectivityResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableHybridConnectivityResourceGroupResource"/> class for mocking. </summary>
         protected MockableHybridConnectivityResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableHybridConnectivityResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableHybridConnectivityResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHybridConnectivityResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of PublicCloudConnectors in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PublicCloudConnectors and their operations over a PublicCloudConnectorResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of PublicCloudConnectorResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PublicCloudConnectorResources and their operations over a PublicCloudConnectorResource. </returns>
         public virtual PublicCloudConnectorCollection GetPublicCloudConnectors()
         {
             return GetCachedClient(client => new PublicCloudConnectorCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// Get a PublicCloudConnector
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/publicCloudConnectors/{publicCloudConnector}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/publicCloudConnectors/{publicCloudConnector}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PublicCloudConnectors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PublicCloudConnector_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublicCloudConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PublicCloudConnectorResource>> GetPublicCloudConnectorAsync(string publicCloudConnector, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicCloudConnector, nameof(publicCloudConnector));
-
             return await GetPublicCloudConnectors().GetAsync(publicCloudConnector, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// Get a PublicCloudConnector
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/publicCloudConnectors/{publicCloudConnector}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/publicCloudConnectors/{publicCloudConnector}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PublicCloudConnectors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PublicCloudConnector_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublicCloudConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,13 +99,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         [ForwardsClientCalls]
         public virtual Response<PublicCloudConnectorResource> GetPublicCloudConnector(string publicCloudConnector, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publicCloudConnector, nameof(publicCloudConnector));
-
             return GetPublicCloudConnectors().Get(publicCloudConnector, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PublicCloudConnectorSolutionTypes in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PublicCloudConnectorSolutionTypes and their operations over a PublicCloudConnectorSolutionTypeResource. </returns>
+        /// <summary> Gets a collection of PublicCloudConnectorSolutionTypeResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PublicCloudConnectorSolutionTypeResources and their operations over a PublicCloudConnectorSolutionTypeResource. </returns>
         public virtual PublicCloudConnectorSolutionTypeCollection GetPublicCloudConnectorSolutionTypes()
         {
             return GetCachedClient(client => new PublicCloudConnectorSolutionTypeCollection(client, Id));
@@ -107,16 +113,20 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// Get a SolutionTypeResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionTypes_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SolutionTypeResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublicCloudConnectorSolutionTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,8 +137,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PublicCloudConnectorSolutionTypeResource>> GetPublicCloudConnectorSolutionTypeAsync(string solutionType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionType, nameof(solutionType));
-
             return await GetPublicCloudConnectorSolutionTypes().GetAsync(solutionType, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,16 +144,20 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// Get a SolutionTypeResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridConnectivity/solutionTypes/{solutionType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionTypes_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SolutionTypeResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublicCloudConnectorSolutionTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,8 +168,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         [ForwardsClientCalls]
         public virtual Response<PublicCloudConnectorSolutionTypeResource> GetPublicCloudConnectorSolutionType(string solutionType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(solutionType, nameof(solutionType));
-
             return GetPublicCloudConnectorSolutionTypes().Get(solutionType, cancellationToken);
         }
     }

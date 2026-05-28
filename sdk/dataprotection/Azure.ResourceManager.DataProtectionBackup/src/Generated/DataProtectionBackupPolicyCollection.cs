@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
@@ -25,81 +24,75 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// </summary>
     public partial class DataProtectionBackupPolicyCollection : ArmCollection, IEnumerable<DataProtectionBackupPolicyResource>, IAsyncEnumerable<DataProtectionBackupPolicyResource>
     {
-        private readonly ClientDiagnostics _baseBackupPolicyResourcesClientDiagnostics;
-        private readonly BaseBackupPolicyResources _baseBackupPolicyResourcesRestClient;
+        private readonly ClientDiagnostics _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics;
+        private readonly BackupPoliciesRestOperations _dataProtectionBackupPolicyBackupPoliciesRestClient;
 
-        /// <summary> Initializes a new instance of DataProtectionBackupPolicyCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupPolicyCollection"/> class for mocking. </summary>
         protected DataProtectionBackupPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataProtectionBackupPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DataProtectionBackupPolicyResource.ResourceType, out string dataProtectionBackupPolicyApiVersion);
-            _baseBackupPolicyResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupPolicyResource.ResourceType.Namespace, Diagnostics);
-            _baseBackupPolicyResourcesRestClient = new BaseBackupPolicyResources(_baseBackupPolicyResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupPolicyApiVersion ?? "2026-03-01");
-            ValidateResourceId(id);
+            _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataProtectionBackupPolicyResource.ResourceType, out string dataProtectionBackupPolicyBackupPoliciesApiVersion);
+            _dataProtectionBackupPolicyBackupPoliciesRestClient = new BackupPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataProtectionBackupPolicyBackupPoliciesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataProtectionBackupVaultResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataProtectionBackupVaultResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or Updates a backup policy belonging to a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BaseBackupPolicyResources_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="backupPolicyName"></param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionBackupPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupPolicyName, DataProtectionBackupPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _baseBackupPolicyResourcesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.CreateOrUpdate");
+            using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _baseBackupPolicyResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, DataProtectionBackupPolicyData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataProtectionBackupPolicyData> response = Response.FromValue(DataProtectionBackupPolicyData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DataProtectionBackupArmOperation<DataProtectionBackupPolicyResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupPolicyResource>(Response.FromValue(new DataProtectionBackupPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupPolicyResource>(Response.FromValue(new DataProtectionBackupPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,48 +106,44 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Creates or Updates a backup policy belonging to a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BaseBackupPolicyResources_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="backupPolicyName"></param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataProtectionBackupPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string backupPolicyName, DataProtectionBackupPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _baseBackupPolicyResourcesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.CreateOrUpdate");
+            using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _baseBackupPolicyResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, DataProtectionBackupPolicyData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataProtectionBackupPolicyData> response = Response.FromValue(DataProtectionBackupPolicyData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DataProtectionBackupArmOperation<DataProtectionBackupPolicyResource> operation = new DataProtectionBackupArmOperation<DataProtectionBackupPolicyResource>(Response.FromValue(new DataProtectionBackupPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data, cancellationToken);
+                var uri = _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataProtectionBackupArmOperation<DataProtectionBackupPolicyResource>(Response.FromValue(new DataProtectionBackupPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Gets a backup policy belonging to a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BaseBackupPolicyResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupPolicyName"></param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupPolicyResource>> GetAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using DiagnosticScope scope = _baseBackupPolicyResourcesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Get");
+            using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _baseBackupPolicyResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataProtectionBackupPolicyData> response = Response.FromValue(DataProtectionBackupPolicyData.FromResponse(result), result);
+                var response = await _dataProtectionBackupPolicyBackupPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataProtectionBackupPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Gets a backup policy belonging to a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BaseBackupPolicyResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupPolicyName"></param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual Response<DataProtectionBackupPolicyResource> Get(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using DiagnosticScope scope = _baseBackupPolicyResourcesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Get");
+            using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _baseBackupPolicyResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataProtectionBackupPolicyData> response = Response.FromValue(DataProtectionBackupPolicyData.FromResponse(result), result);
+                var response = _dataProtectionBackupPolicyBackupPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataProtectionBackupPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,50 +247,50 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Returns list of backup policies belonging to a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BaseBackupPolicyResources_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataProtectionBackupPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataProtectionBackupPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProtectionBackupPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DataProtectionBackupPolicyData, DataProtectionBackupPolicyResource>(new BaseBackupPolicyResourcesGetAllAsyncCollectionResultOfT(
-                _baseBackupPolicyResourcesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DataProtectionBackupPolicyCollection.GetAll"), data => new DataProtectionBackupPolicyResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupPolicyResource(Client, DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(e)), _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "DataProtectionBackupPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns list of backup policies belonging to a backup vault
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BaseBackupPolicyResources_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,67 +298,45 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="DataProtectionBackupPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProtectionBackupPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DataProtectionBackupPolicyData, DataProtectionBackupPolicyResource>(new BaseBackupPolicyResourcesGetAllCollectionResultOfT(
-                _baseBackupPolicyResourcesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DataProtectionBackupPolicyCollection.GetAll"), data => new DataProtectionBackupPolicyResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupPolicyResource(Client, DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(e)), _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "DataProtectionBackupPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BaseBackupPolicyResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupPolicyName"></param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using DiagnosticScope scope = _baseBackupPolicyResourcesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Exists");
+            using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _baseBackupPolicyResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DataProtectionBackupPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataProtectionBackupPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataProtectionBackupPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dataProtectionBackupPolicyBackupPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,50 +350,36 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BaseBackupPolicyResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupPolicyName"></param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using DiagnosticScope scope = _baseBackupPolicyResourcesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Exists");
+            using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _baseBackupPolicyResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DataProtectionBackupPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataProtectionBackupPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataProtectionBackupPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dataProtectionBackupPolicyBackupPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -448,54 +393,38 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BaseBackupPolicyResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupPolicyName"></param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataProtectionBackupPolicyResource>> GetIfExistsAsync(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using DiagnosticScope scope = _baseBackupPolicyResourcesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.GetIfExists");
+            using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _baseBackupPolicyResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DataProtectionBackupPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataProtectionBackupPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataProtectionBackupPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dataProtectionBackupPolicyBackupPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DataProtectionBackupPolicyResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataProtectionBackupPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -509,54 +438,38 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BaseBackupPolicyResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupPolicyName"></param>
+        /// <param name="backupPolicyName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="backupPolicyName"/> is null. </exception>
         public virtual NullableResponse<DataProtectionBackupPolicyResource> GetIfExists(string backupPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupPolicyName, nameof(backupPolicyName));
 
-            using DiagnosticScope scope = _baseBackupPolicyResourcesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.GetIfExists");
+            using var scope = _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics.CreateScope("DataProtectionBackupPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _baseBackupPolicyResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DataProtectionBackupPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataProtectionBackupPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataProtectionBackupPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dataProtectionBackupPolicyBackupPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DataProtectionBackupPolicyResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataProtectionBackupPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -576,7 +489,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataProtectionBackupPolicyResource> IAsyncEnumerable<DataProtectionBackupPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

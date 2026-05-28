@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The sku name.
-    /// Serialized Name: WorkflowSkuName
-    /// </summary>
+    /// <summary> The sku name. </summary>
     public readonly partial struct WorkflowSkuName : IEquatable<WorkflowSkuName>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
 
-        /// <summary>
-        /// NotSpecified
-        /// Serialized Name: WorkflowSkuName.NotSpecified
-        /// </summary>
+        /// <summary> NotSpecified. </summary>
         public static WorkflowSkuName NotSpecified { get; } = new WorkflowSkuName(NotSpecifiedValue);
-        /// <summary>
-        /// Free
-        /// Serialized Name: WorkflowSkuName.Free
-        /// </summary>
+        /// <summary> Free. </summary>
         public static WorkflowSkuName Free { get; } = new WorkflowSkuName(FreeValue);
-        /// <summary>
-        /// Shared
-        /// Serialized Name: WorkflowSkuName.Shared
-        /// </summary>
+        /// <summary> Shared. </summary>
         public static WorkflowSkuName Shared { get; } = new WorkflowSkuName(SharedValue);
-        /// <summary>
-        /// Basic
-        /// Serialized Name: WorkflowSkuName.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static WorkflowSkuName Basic { get; } = new WorkflowSkuName(BasicValue);
-        /// <summary>
-        /// Standard
-        /// Serialized Name: WorkflowSkuName.Standard
-        /// </summary>
+        /// <summary> Standard. </summary>
         public static WorkflowSkuName Standard { get; } = new WorkflowSkuName(StandardValue);
-        /// <summary>
-        /// Premium
-        /// Serialized Name: WorkflowSkuName.Premium
-        /// </summary>
+        /// <summary> Premium. </summary>
         public static WorkflowSkuName Premium { get; } = new WorkflowSkuName(PremiumValue);
         /// <summary> Determines if two <see cref="WorkflowSkuName"/> values are the same. </summary>
         public static bool operator ==(WorkflowSkuName left, WorkflowSkuName right) => left.Equals(right);

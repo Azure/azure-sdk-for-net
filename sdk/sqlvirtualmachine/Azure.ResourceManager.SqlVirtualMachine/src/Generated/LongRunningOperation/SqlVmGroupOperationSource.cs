@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    /// <summary></summary>
-    internal partial class SqlVmGroupOperationSource : IOperationSource<SqlVmGroupResource>
+    internal class SqlVmGroupOperationSource : IOperationSource<SqlVmGroupResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal SqlVmGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         SqlVmGroupResource IOperationSource<SqlVmGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SqlVmGroupData data = SqlVmGroupData.DeserializeSqlVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<SqlVmGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
             return new SqlVmGroupResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<SqlVmGroupResource> IOperationSource<SqlVmGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SqlVmGroupData data = SqlVmGroupData.DeserializeSqlVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SqlVmGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlVmGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
+            return await Task.FromResult(new SqlVmGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -32,8 +32,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -43,8 +42,7 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.Union.validKey",
-            "decorators": [],
-            "namespace": "Authentication.Union"
+            "decorators": []
           },
           "parameters": [],
           "response": {},
@@ -73,8 +71,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -84,8 +81,7 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.Union.validToken",
-            "decorators": [],
-            "namespace": "Authentication.Union"
+            "decorators": []
           },
           "parameters": [],
           "response": {},
@@ -127,11 +123,9 @@
           "crossLanguageDefinitionId": "Authentication.Union.endpoint"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.Union",
-      "apiVersions": [],
-      "isMultiServiceClient": false
+      "apiVersions": []
     }
   ],
   "auth": {

@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DatabaseWatcher
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.DatabaseWatcher
     /// </summary>
     public partial class DatabaseWatcherSharedPrivateLinkResourceCollection : ArmCollection, IEnumerable<DatabaseWatcherSharedPrivateLinkResource>, IAsyncEnumerable<DatabaseWatcherSharedPrivateLinkResource>
     {
-        private readonly ClientDiagnostics _sharedPrivateLinkResourcesClientDiagnostics;
-        private readonly SharedPrivateLinkResources _sharedPrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics;
+        private readonly SharedPrivateLinkResourcesRestOperations _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient;
 
-        /// <summary> Initializes a new instance of DatabaseWatcherSharedPrivateLinkResourceCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseWatcherSharedPrivateLinkResourceCollection"/> class for mocking. </summary>
         protected DatabaseWatcherSharedPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherSharedPrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseWatcherSharedPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DatabaseWatcherSharedPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DatabaseWatcherSharedPrivateLinkResource.ResourceType, out string databaseWatcherSharedPrivateLinkResourceApiVersion);
-            _sharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherSharedPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _sharedPrivateLinkResourcesRestClient = new SharedPrivateLinkResources(_sharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, databaseWatcherSharedPrivateLinkResourceApiVersion ?? "2025-01-02");
-            ValidateResourceId(id);
+            _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherSharedPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DatabaseWatcherSharedPrivateLinkResource.ResourceType, out string databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesApiVersion);
+            _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient = new SharedPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DatabaseWatcherResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a SharedPrivateLinkResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResource_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherSharedPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="sharedPrivateLinkResourceName"> The Shared Private Link resource name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DatabaseWatcherSharedPrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.CreateOrUpdate");
+            using var scope = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DatabaseWatcherArmOperation<DatabaseWatcherSharedPrivateLinkResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherSharedPrivateLinkResource>(
-                    new DatabaseWatcherSharedPrivateLinkResourceOperationSource(Client),
-                    _sharedPrivateLinkResourcesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DatabaseWatcherArmOperation<DatabaseWatcherSharedPrivateLinkResource>(new DatabaseWatcherSharedPrivateLinkResourceOperationSource(Client), _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Create a SharedPrivateLinkResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResource_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherSharedPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="sharedPrivateLinkResourceName"> The Shared Private Link resource name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DatabaseWatcherSharedPrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, string sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.CreateOrUpdate");
+            using var scope = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, DatabaseWatcherSharedPrivateLinkResourceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DatabaseWatcherArmOperation<DatabaseWatcherSharedPrivateLinkResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherSharedPrivateLinkResource>(
-                    new DatabaseWatcherSharedPrivateLinkResourceOperationSource(Client),
-                    _sharedPrivateLinkResourcesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data, cancellationToken);
+                var operation = new DatabaseWatcherArmOperation<DatabaseWatcherSharedPrivateLinkResource>(new DatabaseWatcherSharedPrivateLinkResourceOperationSource(Client), _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Get a SharedPrivateLinkResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherSharedPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The Shared Private Link resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<DatabaseWatcherSharedPrivateLinkResource>> GetAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.Get");
+            using var scope = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DatabaseWatcherSharedPrivateLinkResourceData> response = Response.FromValue(DatabaseWatcherSharedPrivateLinkResourceData.FromResponse(result), result);
+                var response = await _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DatabaseWatcherSharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Get a SharedPrivateLinkResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherSharedPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The Shared Private Link resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual Response<DatabaseWatcherSharedPrivateLinkResource> Get(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.Get");
+            using var scope = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DatabaseWatcherSharedPrivateLinkResourceData> response = Response.FromValue(DatabaseWatcherSharedPrivateLinkResourceData.FromResponse(result), result);
+                var response = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DatabaseWatcherSharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// List SharedPrivateLinkResource resources by Watcher
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_ListByWatcher. </description>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResource_ListByWatcher</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherSharedPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseWatcherSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatabaseWatcherSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseWatcherSharedPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DatabaseWatcherSharedPrivateLinkResourceData, DatabaseWatcherSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetByWatcherAsyncCollectionResultOfT(
-                _sharedPrivateLinkResourcesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DatabaseWatcherSharedPrivateLinkResourceCollection.GetAll"), data => new DatabaseWatcherSharedPrivateLinkResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByWatcherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByWatcherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatabaseWatcherSharedPrivateLinkResource(Client, DatabaseWatcherSharedPrivateLinkResourceData.DeserializeDatabaseWatcherSharedPrivateLinkResourceData(e)), _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "DatabaseWatcherSharedPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List SharedPrivateLinkResource resources by Watcher
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_ListByWatcher. </description>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResource_ListByWatcher</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherSharedPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <returns> A collection of <see cref="DatabaseWatcherSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseWatcherSharedPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DatabaseWatcherSharedPrivateLinkResourceData, DatabaseWatcherSharedPrivateLinkResource>(new SharedPrivateLinkResourcesGetByWatcherCollectionResultOfT(
-                _sharedPrivateLinkResourcesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DatabaseWatcherSharedPrivateLinkResourceCollection.GetAll"), data => new DatabaseWatcherSharedPrivateLinkResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByWatcherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.CreateListByWatcherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatabaseWatcherSharedPrivateLinkResource(Client, DatabaseWatcherSharedPrivateLinkResourceData.DeserializeDatabaseWatcherSharedPrivateLinkResourceData(e)), _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics, Pipeline, "DatabaseWatcherSharedPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherSharedPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The Shared Private Link resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.Exists");
+            using var scope = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DatabaseWatcherSharedPrivateLinkResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DatabaseWatcherSharedPrivateLinkResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DatabaseWatcherSharedPrivateLinkResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherSharedPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The Shared Private Link resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.Exists");
+            using var scope = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DatabaseWatcherSharedPrivateLinkResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DatabaseWatcherSharedPrivateLinkResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DatabaseWatcherSharedPrivateLinkResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherSharedPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The Shared Private Link resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<DatabaseWatcherSharedPrivateLinkResource>> GetIfExistsAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.GetIfExists");
+            using var scope = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DatabaseWatcherSharedPrivateLinkResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DatabaseWatcherSharedPrivateLinkResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DatabaseWatcherSharedPrivateLinkResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DatabaseWatcherSharedPrivateLinkResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DatabaseWatcherSharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SharedPrivateLinkResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherSharedPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The Shared Private Link resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual NullableResponse<DatabaseWatcherSharedPrivateLinkResource> GetIfExists(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
-            using DiagnosticScope scope = _sharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.GetIfExists");
+            using var scope = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("DatabaseWatcherSharedPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _sharedPrivateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DatabaseWatcherSharedPrivateLinkResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DatabaseWatcherSharedPrivateLinkResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DatabaseWatcherSharedPrivateLinkResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _databaseWatcherSharedPrivateLinkResourceSharedPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sharedPrivateLinkResourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DatabaseWatcherSharedPrivateLinkResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DatabaseWatcherSharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.DatabaseWatcher
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DatabaseWatcherSharedPrivateLinkResource> IAsyncEnumerable<DatabaseWatcherSharedPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

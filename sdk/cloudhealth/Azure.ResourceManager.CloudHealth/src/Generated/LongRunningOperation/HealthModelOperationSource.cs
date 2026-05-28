@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CloudHealth
 {
-    /// <summary></summary>
-    internal partial class HealthModelOperationSource : IOperationSource<HealthModelResource>
+    internal class HealthModelOperationSource : IOperationSource<HealthModelResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal HealthModelOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         HealthModelResource IOperationSource<HealthModelResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HealthModelData data = HealthModelData.DeserializeHealthModelData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<HealthModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCloudHealthContext.Default);
             return new HealthModelResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<HealthModelResource> IOperationSource<HealthModelResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HealthModelData data = HealthModelData.DeserializeHealthModelData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HealthModelResource(_client, data);
+            var data = ModelReaderWriter.Read<HealthModelData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCloudHealthContext.Default);
+            return await Task.FromResult(new HealthModelResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

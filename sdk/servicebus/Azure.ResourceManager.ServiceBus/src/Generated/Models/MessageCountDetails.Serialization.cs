@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.ServiceBus;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> Message Count Details. </summary>
-    public partial class MessageCountDetails : IJsonModel<MessageCountDetails>
+    public partial class MessageCountDetails : IUtf8JsonSerializable, IJsonModel<MessageCountDetails>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MessageCountDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMessageCountDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MessageCountDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageCountDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MessageCountDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MessageCountDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MessageCountDetails IPersistableModel<MessageCountDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MessageCountDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MessageCountDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MessageCountDetails)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(ActiveMessageCount))
             {
                 writer.WritePropertyName("activeMessageCount"u8);
@@ -99,15 +60,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("transferDeadLetterMessageCount"u8);
                 writer.WriteNumberValue(TransferDeadLetterMessageCount.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,27 +77,22 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MessageCountDetails IJsonModel<MessageCountDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MessageCountDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MessageCountDetails IJsonModel<MessageCountDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MessageCountDetails)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMessageCountDetails(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MessageCountDetails DeserializeMessageCountDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static MessageCountDetails DeserializeMessageCountDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,66 +102,191 @@ namespace Azure.ResourceManager.ServiceBus.Models
             long? scheduledMessageCount = default;
             long? transferMessageCount = default;
             long? transferDeadLetterMessageCount = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("activeMessageCount"u8))
+                if (property.NameEquals("activeMessageCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    activeMessageCount = prop.Value.GetInt64();
+                    activeMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("deadLetterMessageCount"u8))
+                if (property.NameEquals("deadLetterMessageCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deadLetterMessageCount = prop.Value.GetInt64();
+                    deadLetterMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("scheduledMessageCount"u8))
+                if (property.NameEquals("scheduledMessageCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scheduledMessageCount = prop.Value.GetInt64();
+                    scheduledMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("transferMessageCount"u8))
+                if (property.NameEquals("transferMessageCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transferMessageCount = prop.Value.GetInt64();
+                    transferMessageCount = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("transferDeadLetterMessageCount"u8))
+                if (property.NameEquals("transferDeadLetterMessageCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transferDeadLetterMessageCount = prop.Value.GetInt64();
+                    transferDeadLetterMessageCount = property.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new MessageCountDetails(
                 activeMessageCount,
                 deadLetterMessageCount,
                 scheduledMessageCount,
                 transferMessageCount,
                 transferDeadLetterMessageCount,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveMessageCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  activeMessageCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActiveMessageCount))
+                {
+                    builder.Append("  activeMessageCount: ");
+                    builder.AppendLine($"'{ActiveMessageCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeadLetterMessageCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deadLetterMessageCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeadLetterMessageCount))
+                {
+                    builder.Append("  deadLetterMessageCount: ");
+                    builder.AppendLine($"'{DeadLetterMessageCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduledMessageCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scheduledMessageCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScheduledMessageCount))
+                {
+                    builder.Append("  scheduledMessageCount: ");
+                    builder.AppendLine($"'{ScheduledMessageCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransferMessageCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  transferMessageCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TransferMessageCount))
+                {
+                    builder.Append("  transferMessageCount: ");
+                    builder.AppendLine($"'{TransferMessageCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransferDeadLetterMessageCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  transferDeadLetterMessageCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TransferDeadLetterMessageCount))
+                {
+                    builder.Append("  transferDeadLetterMessageCount: ");
+                    builder.AppendLine($"'{TransferDeadLetterMessageCount.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MessageCountDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MessageCountDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MessageCountDetails IPersistableModel<MessageCountDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMessageCountDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MessageCountDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MessageCountDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,15 +26,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     try
                     {
-                        var telemetryItem = new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
+                        telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
                         {
                             Data = new MonitorBase
                             {
                                 BaseType = "MetricData",
                                 BaseData = new MetricsData(Version, metric, metricPoint)
                             }
-                        };
-                        telemetryItems.Add(telemetryItem);
+                        });
                     }
                     catch (Exception ex)
                     {

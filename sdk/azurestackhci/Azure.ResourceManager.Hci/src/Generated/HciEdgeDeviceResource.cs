@@ -6,36 +6,45 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
-    /// A class representing a HciEdgeDevice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciEdgeDeviceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetHciEdgeDevices method.
+    /// A Class representing a HciEdgeDevice along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciEdgeDeviceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHciEdgeDeviceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetHciEdgeDevice method.
     /// </summary>
     public partial class HciEdgeDeviceResource : ArmResource
     {
-        private readonly ClientDiagnostics _edgeDevicesClientDiagnostics;
-        private readonly EdgeDevices _edgeDevicesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="HciEdgeDeviceResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="edgeDeviceName"> The edgeDeviceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string edgeDeviceName)
+        {
+            var resourceId = $"{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _hciEdgeDeviceEdgeDevicesClientDiagnostics;
+        private readonly EdgeDevicesRestOperations _hciEdgeDeviceEdgeDevicesRestClient;
         private readonly HciEdgeDeviceData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/edgeDevices";
 
-        /// <summary> Initializes a new instance of HciEdgeDeviceResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciEdgeDeviceResource"/> class for mocking. </summary>
         protected HciEdgeDeviceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciEdgeDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HciEdgeDeviceResource(ArmClient client, HciEdgeDeviceData data) : this(client, data.Id)
@@ -44,91 +53,71 @@ namespace Azure.ResourceManager.Hci
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciEdgeDeviceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciEdgeDeviceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string hciEdgeDeviceApiVersion);
-            _edgeDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _edgeDevicesRestClient = new EdgeDevices(_edgeDevicesClientDiagnostics, Pipeline, Endpoint, hciEdgeDeviceApiVersion ?? "2026-04-01-preview");
-            ValidateResourceId(id);
+            _hciEdgeDeviceEdgeDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hciEdgeDeviceEdgeDevicesApiVersion);
+            _hciEdgeDeviceEdgeDevicesRestClient = new EdgeDevicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciEdgeDeviceEdgeDevicesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HciEdgeDeviceData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="edgeDeviceName"> The edgeDeviceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string edgeDeviceName)
-        {
-            string resourceId = $"{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a EdgeDevice
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EdgeDevices_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EdgeDevices_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciEdgeDeviceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HciEdgeDeviceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _edgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Get");
+            using var scope = _hciEdgeDeviceEdgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HciEdgeDeviceData> response = Response.FromValue(HciEdgeDeviceData.FromResponse(result), result);
+                var response = await _hciEdgeDeviceEdgeDevicesRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,41 +131,33 @@ namespace Azure.ResourceManager.Hci
         /// Get a EdgeDevice
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EdgeDevices_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EdgeDevices_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciEdgeDeviceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HciEdgeDeviceResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _edgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Get");
+            using var scope = _hciEdgeDeviceEdgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _edgeDevicesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HciEdgeDeviceData> response = Response.FromValue(HciEdgeDeviceData.FromResponse(result), result);
+                var response = _hciEdgeDeviceEdgeDevicesRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciEdgeDeviceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -190,20 +171,20 @@ namespace Azure.ResourceManager.Hci
         /// Delete a EdgeDevice
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EdgeDevices_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>EdgeDevices_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciEdgeDeviceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,21 +192,14 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _edgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Delete");
+            using var scope = _hciEdgeDeviceEdgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _edgeDevicesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HciArmOperation operation = new HciArmOperation(_edgeDevicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _hciEdgeDeviceEdgeDevicesRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation(_hciEdgeDeviceEdgeDevicesClientDiagnostics, Pipeline, _hciEdgeDeviceEdgeDevicesRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -239,20 +213,20 @@ namespace Azure.ResourceManager.Hci
         /// Delete a EdgeDevice
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EdgeDevices_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>EdgeDevices_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciEdgeDeviceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,21 +234,14 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _edgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Delete");
+            using var scope = _hciEdgeDeviceEdgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _edgeDevicesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HciArmOperation operation = new HciArmOperation(_edgeDevicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _hciEdgeDeviceEdgeDevicesRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
+                var operation = new HciArmOperation(_hciEdgeDeviceEdgeDevicesClientDiagnostics, Pipeline, _hciEdgeDeviceEdgeDevicesRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -285,141 +252,23 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Create a EdgeDevice
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}/validate. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EdgeDevices_Validate. </description>
+        /// <term>Operation Id</term>
+        /// <description>EdgeDevices_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciEdgeDeviceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<HciEdgeDeviceValidateResult>> ValidateAsync(WaitUntil waitUntil, HciEdgeDeviceValidateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _edgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Validate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _edgeDevicesRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, HciEdgeDeviceValidateContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HciArmOperation<HciEdgeDeviceValidateResult> operation = new HciArmOperation<HciEdgeDeviceValidateResult>(
-                    new HciEdgeDeviceValidateResultOperationSource(),
-                    _edgeDevicesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// A long-running resource action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}/validate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EdgeDevices_Validate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciEdgeDeviceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<HciEdgeDeviceValidateResult> Validate(WaitUntil waitUntil, HciEdgeDeviceValidateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _edgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Validate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _edgeDevicesRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, HciEdgeDeviceValidateContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HciArmOperation<HciEdgeDeviceValidateResult> operation = new HciArmOperation<HciEdgeDeviceValidateResult>(
-                    new HciEdgeDeviceValidateResultOperationSource(),
-                    _edgeDevicesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a HciEdgeDevice.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EdgeDevices_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciEdgeDeviceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -431,27 +280,14 @@ namespace Azure.ResourceManager.Hci
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _edgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Update");
+            using var scope = _hciEdgeDeviceEdgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, HciEdgeDeviceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HciArmOperation<HciEdgeDeviceResource> operation = new HciArmOperation<HciEdgeDeviceResource>(
-                    new HciEdgeDeviceOperationSource(Client),
-                    _edgeDevicesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _hciEdgeDeviceEdgeDevicesRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation<HciEdgeDeviceResource>(new HciEdgeDeviceOperationSource(Client), _hciEdgeDeviceEdgeDevicesClientDiagnostics, Pipeline, _hciEdgeDeviceEdgeDevicesRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -462,23 +298,23 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// Update a HciEdgeDevice.
+        /// Create a EdgeDevice
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EdgeDevices_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>EdgeDevices_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciEdgeDeviceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -490,27 +326,14 @@ namespace Azure.ResourceManager.Hci
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _edgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Update");
+            using var scope = _hciEdgeDeviceEdgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _edgeDevicesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, HciEdgeDeviceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HciArmOperation<HciEdgeDeviceResource> operation = new HciArmOperation<HciEdgeDeviceResource>(
-                    new HciEdgeDeviceOperationSource(Client),
-                    _edgeDevicesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _hciEdgeDeviceEdgeDevicesRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
+                var operation = new HciArmOperation<HciEdgeDeviceResource>(new HciEdgeDeviceOperationSource(Client), _hciEdgeDeviceEdgeDevicesClientDiagnostics, Pipeline, _hciEdgeDeviceEdgeDevicesRestClient.CreateCreateOrUpdateRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -520,37 +343,96 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        /// <summary> Gets a collection of EdgeDeviceJobs in the <see cref="HciEdgeDeviceResource"/>. </summary>
-        /// <returns> An object representing collection of EdgeDeviceJobs and their operations over a EdgeDeviceJobResource. </returns>
-        public virtual EdgeDeviceJobCollection GetEdgeDeviceJobs()
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EdgeDevices_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciEdgeDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<HciEdgeDeviceValidateResult>> ValidateAsync(WaitUntil waitUntil, HciEdgeDeviceValidateContent content, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new EdgeDeviceJobCollection(client, Id));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _hciEdgeDeviceEdgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Validate");
+            scope.Start();
+            try
+            {
+                var response = await _hciEdgeDeviceEdgeDevicesRestClient.ValidateAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation<HciEdgeDeviceValidateResult>(new HciEdgeDeviceValidateResultOperationSource(), _hciEdgeDeviceEdgeDevicesClientDiagnostics, Pipeline, _hciEdgeDeviceEdgeDevicesRestClient.CreateValidateRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Get a EdgeDeviceJob. </summary>
-        /// <param name="jobsName"> Name of EdgeDevice Job. </param>
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.AzureStackHCI/edgeDevices/{edgeDeviceName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EdgeDevices_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciEdgeDeviceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobsName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeDeviceJobResource>> GetEdgeDeviceJobAsync(string jobsName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<HciEdgeDeviceValidateResult> Validate(WaitUntil waitUntil, HciEdgeDeviceValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(jobsName, nameof(jobsName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetEdgeDeviceJobs().GetAsync(jobsName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a EdgeDeviceJob. </summary>
-        /// <param name="jobsName"> Name of EdgeDevice Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobsName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeDeviceJobResource> GetEdgeDeviceJob(string jobsName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobsName, nameof(jobsName));
-
-            return GetEdgeDeviceJobs().Get(jobsName, cancellationToken);
+            using var scope = _hciEdgeDeviceEdgeDevicesClientDiagnostics.CreateScope("HciEdgeDeviceResource.Validate");
+            scope.Start();
+            try
+            {
+                var response = _hciEdgeDeviceEdgeDevicesRestClient.Validate(Id.Parent, Id.Name, content, cancellationToken);
+                var operation = new HciArmOperation<HciEdgeDeviceValidateResult>(new HciEdgeDeviceValidateResultOperationSource(), _hciEdgeDeviceEdgeDevicesClientDiagnostics, Pipeline, _hciEdgeDeviceEdgeDevicesRestClient.CreateValidateRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

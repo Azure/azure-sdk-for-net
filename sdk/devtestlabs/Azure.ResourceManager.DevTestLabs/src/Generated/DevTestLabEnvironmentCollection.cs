@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabEnvironmentCollection : ArmCollection, IEnumerable<DevTestLabEnvironmentResource>, IAsyncEnumerable<DevTestLabEnvironmentResource>
     {
-        private readonly ClientDiagnostics _environmentsClientDiagnostics;
-        private readonly Environments _environmentsRestClient;
+        private readonly ClientDiagnostics _devTestLabEnvironmentEnvironmentsClientDiagnostics;
+        private readonly EnvironmentsRestOperations _devTestLabEnvironmentEnvironmentsRestClient;
 
-        /// <summary> Initializes a new instance of DevTestLabEnvironmentCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabEnvironmentCollection"/> class for mocking. </summary>
         protected DevTestLabEnvironmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabEnvironmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevTestLabEnvironmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DevTestLabEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DevTestLabEnvironmentResource.ResourceType, out string devTestLabEnvironmentApiVersion);
-            _environmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _environmentsRestClient = new Environments(_environmentsClientDiagnostics, Pipeline, Endpoint, devTestLabEnvironmentApiVersion ?? "2018-09-15");
-            ValidateResourceId(id);
+            _devTestLabEnvironmentEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabEnvironmentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DevTestLabEnvironmentResource.ResourceType, out string devTestLabEnvironmentEnvironmentsApiVersion);
+            _devTestLabEnvironmentEnvironmentsRestClient = new EnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabEnvironmentEnvironmentsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DevTestLabUserResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabUserResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabUserResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or replace an existing environment. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Environments_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Environments_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the environment. </param>
         /// <param name="data"> An environment, which is essentially an ARM template deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevTestLabEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DevTestLabEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.CreateOrUpdate");
+            using var scope = _devTestLabEnvironmentEnvironmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _environmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabEnvironmentData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DevTestLabsArmOperation<DevTestLabEnvironmentResource> operation = new DevTestLabsArmOperation<DevTestLabEnvironmentResource>(
-                    new DevTestLabEnvironmentOperationSource(Client),
-                    _environmentsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _devTestLabEnvironmentEnvironmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DevTestLabsArmOperation<DevTestLabEnvironmentResource>(new DevTestLabEnvironmentOperationSource(Client), _devTestLabEnvironmentEnvironmentsClientDiagnostics, Pipeline, _devTestLabEnvironmentEnvironmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Create or replace an existing environment. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Environments_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Environments_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="name"> The name of the environment. </param>
         /// <param name="data"> An environment, which is essentially an ARM template deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevTestLabEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string name, DevTestLabEnvironmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.CreateOrUpdate");
+            using var scope = _devTestLabEnvironmentEnvironmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _environmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabEnvironmentData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DevTestLabsArmOperation<DevTestLabEnvironmentResource> operation = new DevTestLabsArmOperation<DevTestLabEnvironmentResource>(
-                    new DevTestLabEnvironmentOperationSource(Client),
-                    _environmentsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _devTestLabEnvironmentEnvironmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data, cancellationToken);
+                var operation = new DevTestLabsArmOperation<DevTestLabEnvironmentResource>(new DevTestLabEnvironmentOperationSource(Client), _devTestLabEnvironmentEnvironmentsClientDiagnostics, Pipeline, _devTestLabEnvironmentEnvironmentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,43 +153,39 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Get environment.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Environments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Environments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the environment. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DevTestLabEnvironmentResource>> GetAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<DevTestLabEnvironmentResource>> GetAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.Get");
+            using var scope = _devTestLabEnvironmentEnvironmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _environmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DevTestLabEnvironmentData> response = Response.FromValue(DevTestLabEnvironmentData.FromResponse(result), result);
+                var response = await _devTestLabEnvironmentEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,43 +199,39 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Get environment.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Environments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Environments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the environment. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DevTestLabEnvironmentResource> Get(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<DevTestLabEnvironmentResource> Get(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.Get");
+            using var scope = _devTestLabEnvironmentEnvironmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _environmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DevTestLabEnvironmentData> response = Response.FromValue(DevTestLabEnvironmentData.FromResponse(result), result);
+                var response = _devTestLabEnvironmentEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -274,16 +245,20 @@ namespace Azure.ResourceManager.DevTestLabs
         /// List environments in a given user profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Environments_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Environments_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,41 +267,32 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabEnvironmentResource> GetAllAsync(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DevTestLabEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabEnvironmentResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DevTestLabEnvironmentData, DevTestLabEnvironmentResource>(new EnvironmentsGetAllAsyncCollectionResultOfT(
-                _environmentsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                expand,
-                filter,
-                top,
-                @orderby,
-                context,
-                "DevTestLabEnvironmentCollection.GetAll"), data => new DevTestLabEnvironmentResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabEnvironmentEnvironmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabEnvironmentEnvironmentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabEnvironmentResource(Client, DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(e)), _devTestLabEnvironmentEnvironmentsClientDiagnostics, Pipeline, "DevTestLabEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List environments in a given user profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Environments_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Environments_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,75 +302,48 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabEnvironmentResource> GetAll(string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabEnvironmentResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DevTestLabEnvironmentData, DevTestLabEnvironmentResource>(new EnvironmentsGetAllCollectionResultOfT(
-                _environmentsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                expand,
-                filter,
-                top,
-                @orderby,
-                context,
-                "DevTestLabEnvironmentCollection.GetAll"), data => new DevTestLabEnvironmentResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabEnvironmentEnvironmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabEnvironmentEnvironmentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabEnvironmentResource(Client, DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(e)), _devTestLabEnvironmentEnvironmentsClientDiagnostics, Pipeline, "DevTestLabEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Environments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Environments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the environment. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.Exists");
+            using var scope = _devTestLabEnvironmentEnvironmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _environmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DevTestLabEnvironmentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DevTestLabEnvironmentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DevTestLabEnvironmentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _devTestLabEnvironmentEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -418,51 +357,37 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Environments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Environments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the environment. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual Response<bool> Exists(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.Exists");
+            using var scope = _devTestLabEnvironmentEnvironmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _environmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DevTestLabEnvironmentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DevTestLabEnvironmentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DevTestLabEnvironmentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _devTestLabEnvironmentEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -476,55 +401,39 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Environments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Environments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the environment. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DevTestLabEnvironmentResource>> GetIfExistsAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevTestLabEnvironmentResource>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.GetIfExists");
+            using var scope = _devTestLabEnvironmentEnvironmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _environmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DevTestLabEnvironmentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DevTestLabEnvironmentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DevTestLabEnvironmentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _devTestLabEnvironmentEnvironmentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DevTestLabEnvironmentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -538,55 +447,39 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Environments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Environments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-09-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the environment. </param>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DevTestLabEnvironmentResource> GetIfExists(string name, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DevTestLabEnvironmentResource> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _environmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.GetIfExists");
+            using var scope = _devTestLabEnvironmentEnvironmentsClientDiagnostics.CreateScope("DevTestLabEnvironmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _environmentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DevTestLabEnvironmentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DevTestLabEnvironmentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DevTestLabEnvironmentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _devTestLabEnvironmentEnvironmentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DevTestLabEnvironmentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DevTestLabEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -606,7 +499,6 @@ namespace Azure.ResourceManager.DevTestLabs
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DevTestLabEnvironmentResource> IAsyncEnumerable<DevTestLabEnvironmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -7,34 +7,54 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the Cookies condition for the delivery rule. </summary>
+    /// <summary>
+    /// Defines the Cookies condition for the delivery rule.
+    /// Serialized Name: DeliveryRuleCookiesCondition
+    /// </summary>
     public partial class DeliveryRuleCookiesCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCookiesCondition"/>. </summary>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleCookiesCondition.parameters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DeliveryRuleCookiesCondition(CookiesMatchCondition properties) : base(DeliveryRuleMatchVariable.Cookies)
+        public DeliveryRuleCookiesCondition(CookiesMatchCondition properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+            Name = MatchVariable.Cookies;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCookiesCondition"/>. </summary>
-        /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleCookiesCondition(DeliveryRuleMatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, CookiesMatchCondition properties) : base(name, additionalBinaryDataProperties)
+        /// <param name="name">
+        /// The name of the condition for the delivery rule.
+        /// Serialized Name: DeliveryRuleCondition.name
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleCookiesCondition.parameters
+        /// </param>
+        internal DeliveryRuleCookiesCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, CookiesMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
+            Name = name;
         }
 
-        /// <summary> Defines the parameters for the condition. </summary>
-        [WirePath("parameters")]
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleCookiesCondition"/> for deserialization. </summary>
+        internal DeliveryRuleCookiesCondition()
+        {
+        }
+
+        /// <summary>
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleCookiesCondition.parameters
+        /// </summary>
         public CookiesMatchCondition Properties { get; set; }
     }
 }

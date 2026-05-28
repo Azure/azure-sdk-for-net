@@ -115,8 +115,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -126,8 +125,7 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.one",
-            "decorators": [],
-            "namespace": "Client.Structure.ClientOperationGroup"
+            "decorators": []
           },
           "parameters": [],
           "response": {},
@@ -157,7 +155,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
         },
         {
           "$id": "13",
@@ -175,10 +173,9 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.client"
+          "crossLanguageDefinitionId": "Client.Structure.Service.client"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup",
       "apiVersions": [],
@@ -207,8 +204,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -218,8 +214,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group3.two",
-                "decorators": [],
-                "namespace": "Client.Structure.ClientOperationGroup"
+                "decorators": []
               },
               "parameters": [],
               "response": {},
@@ -246,8 +241,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -257,8 +251,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group3.three",
-                "decorators": [],
-                "namespace": "Client.Structure.ClientOperationGroup"
+                "decorators": []
               },
               "parameters": [],
               "response": {},
@@ -288,7 +281,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group3.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
             },
             {
               "$id": "21",
@@ -306,17 +299,15 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group3.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
-          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group3",
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          },
-          "isMultiServiceClient": false
+          }
         },
         {
           "$id": "22",
@@ -342,8 +333,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -353,8 +343,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group4.four",
-                "decorators": [],
-                "namespace": "Client.Structure.ClientOperationGroup"
+                "decorators": []
               },
               "parameters": [],
               "response": {},
@@ -384,7 +373,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group4.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
             },
             {
               "$id": "27",
@@ -402,20 +391,17 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group4.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
-          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.ClientOperationGroup.Group4",
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          },
-          "isMultiServiceClient": false
+          }
         }
-      ],
-      "isMultiServiceClient": false
+      ]
     },
     {
       "$id": "28",
@@ -441,8 +427,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -452,8 +437,7 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.five",
-            "decorators": [],
-            "namespace": "Client.Structure.AnotherClientOperationGroup"
+            "decorators": []
           },
           "parameters": [],
           "response": {},
@@ -483,7 +467,7 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.endpoint"
+          "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
         },
         {
           "$id": "33",
@@ -501,10 +485,9 @@
           "serverUrlTemplate": "{endpoint}/client/structure/{client}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.client"
+          "crossLanguageDefinitionId": "Client.Structure.Service.client"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup",
       "apiVersions": [],
@@ -533,8 +516,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -544,8 +526,7 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.Group5.six",
-                "decorators": [],
-                "namespace": "Client.Structure.AnotherClientOperationGroup"
+                "decorators": []
               },
               "parameters": [],
               "response": {},
@@ -575,7 +556,7 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.Group5.endpoint"
+              "crossLanguageDefinitionId": "Client.Structure.Service.endpoint"
             },
             {
               "$id": "39",
@@ -593,20 +574,17 @@
               "serverUrlTemplate": "{endpoint}/client/structure/{client}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.Group5.client"
+              "crossLanguageDefinitionId": "Client.Structure.Service.client"
             }
           ],
-          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Client.Structure.AnotherClientOperationGroup.Group5",
           "apiVersions": [],
           "parent": {
             "$ref": "28"
-          },
-          "isMultiServiceClient": false
+          }
         }
-      ],
-      "isMultiServiceClient": false
+      ]
     }
   ]
 }

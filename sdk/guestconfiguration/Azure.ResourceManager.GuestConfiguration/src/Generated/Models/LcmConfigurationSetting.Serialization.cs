@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.GuestConfiguration;
+using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Configuration setting of LCM (Local Configuration Manager). </summary>
-    public partial class LcmConfigurationSetting : IJsonModel<LcmConfigurationSetting>
+    public partial class LcmConfigurationSetting : IUtf8JsonSerializable, IJsonModel<LcmConfigurationSetting>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LcmConfigurationSetting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLcmConfigurationSetting(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LcmConfigurationSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGuestConfigurationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LcmConfigurationSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LcmConfigurationSetting IPersistableModel<LcmConfigurationSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LcmConfigurationSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LcmConfigurationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(ConfigurationMode))
             {
                 writer.WritePropertyName("configurationMode"u8);
@@ -104,15 +65,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("configurationModeFrequencyMins"u8);
                 writer.WriteNumberValue(ConfigurationModeFrequencyInMins.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,107 +82,244 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LcmConfigurationSetting IJsonModel<LcmConfigurationSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LcmConfigurationSetting JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LcmConfigurationSetting IJsonModel<LcmConfigurationSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLcmConfigurationSetting(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element, ModelReaderWriterOptions options)
+        internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             LcmConfigurationMode? configurationMode = default;
-            bool? isModuleOverwriteAllowed = default;
+            bool? allowModuleOverwrite = default;
             ActionAfterReboot? actionAfterReboot = default;
-            float? refreshFrequencyInMins = default;
+            float? refreshFrequencyMins = default;
             bool? rebootIfNeeded = default;
-            float? configurationModeFrequencyInMins = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            float? configurationModeFrequencyMins = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("configurationMode"u8))
+                if (property.NameEquals("configurationMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    configurationMode = new LcmConfigurationMode(prop.Value.GetString());
+                    configurationMode = new LcmConfigurationMode(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("allowModuleOverwrite"u8))
+                if (property.NameEquals("allowModuleOverwrite"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isModuleOverwriteAllowed = prop.Value.GetBoolean();
+                    allowModuleOverwrite = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("actionAfterReboot"u8))
+                if (property.NameEquals("actionAfterReboot"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    actionAfterReboot = new ActionAfterReboot(prop.Value.GetString());
+                    actionAfterReboot = new ActionAfterReboot(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("refreshFrequencyMins"u8))
+                if (property.NameEquals("refreshFrequencyMins"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    refreshFrequencyInMins = prop.Value.GetSingle();
+                    refreshFrequencyMins = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("rebootIfNeeded"u8))
+                if (property.NameEquals("rebootIfNeeded"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rebootIfNeeded = prop.Value.GetBoolean();
+                    rebootIfNeeded = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("configurationModeFrequencyMins"u8))
+                if (property.NameEquals("configurationModeFrequencyMins"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    configurationModeFrequencyInMins = prop.Value.GetSingle();
+                    configurationModeFrequencyMins = property.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new LcmConfigurationSetting(
                 configurationMode,
-                isModuleOverwriteAllowed,
+                allowModuleOverwrite,
                 actionAfterReboot,
-                refreshFrequencyInMins,
+                refreshFrequencyMins,
                 rebootIfNeeded,
-                configurationModeFrequencyInMins,
-                additionalBinaryDataProperties);
+                configurationModeFrequencyMins,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  configurationMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConfigurationMode))
+                {
+                    builder.Append("  configurationMode: ");
+                    builder.AppendLine($"'{ConfigurationMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsModuleOverwriteAllowed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowModuleOverwrite: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsModuleOverwriteAllowed))
+                {
+                    builder.Append("  allowModuleOverwrite: ");
+                    var boolValue = IsModuleOverwriteAllowed.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionAfterReboot), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionAfterReboot: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionAfterReboot))
+                {
+                    builder.Append("  actionAfterReboot: ");
+                    builder.AppendLine($"'{ActionAfterReboot.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefreshFrequencyInMins), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  refreshFrequencyMins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RefreshFrequencyInMins))
+                {
+                    builder.Append("  refreshFrequencyMins: ");
+                    builder.AppendLine($"'{RefreshFrequencyInMins.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RebootIfNeeded), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rebootIfNeeded: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RebootIfNeeded))
+                {
+                    builder.Append("  rebootIfNeeded: ");
+                    var boolValue = RebootIfNeeded.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationModeFrequencyInMins), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  configurationModeFrequencyMins: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConfigurationModeFrequencyInMins))
+                {
+                    builder.Append("  configurationModeFrequencyMins: ");
+                    builder.AppendLine($"'{ConfigurationModeFrequencyInMins.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<LcmConfigurationSetting>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGuestConfigurationContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LcmConfigurationSetting IPersistableModel<LcmConfigurationSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LcmConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeLcmConfigurationSetting(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LcmConfigurationSetting)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LcmConfigurationSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

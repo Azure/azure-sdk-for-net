@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -24,8 +25,11 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationStatus(string value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
             _value = value;
         }
 

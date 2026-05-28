@@ -6,13 +6,11 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -24,49 +22,51 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// </summary>
     public partial class BackupPrivateEndpointConnectionCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _privateEndpointConnectionResourcesClientDiagnostics;
-        private readonly PrivateEndpointConnectionResources _privateEndpointConnectionResourcesRestClient;
+        private readonly ClientDiagnostics _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics;
+        private readonly PrivateEndpointConnectionRestOperations _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient;
 
-        /// <summary> Initializes a new instance of BackupPrivateEndpointConnectionCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupPrivateEndpointConnectionCollection"/> class for mocking. </summary>
         protected BackupPrivateEndpointConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupPrivateEndpointConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BackupPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(BackupPrivateEndpointConnectionResource.ResourceType, out string backupPrivateEndpointConnectionApiVersion);
-            _privateEndpointConnectionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionResourcesRestClient = new PrivateEndpointConnectionResources(_privateEndpointConnectionResourcesClientDiagnostics, Pipeline, Endpoint, backupPrivateEndpointConnectionApiVersion ?? "2026-01-31-preview");
-            ValidateResourceId(id);
+            _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BackupPrivateEndpointConnectionResource.ResourceType, out string backupPrivateEndpointConnectionPrivateEndpointConnectionApiVersion);
+            _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient = new PrivateEndpointConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupPrivateEndpointConnectionPrivateEndpointConnectionApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Approve or Reject Private Endpoint requests. This call is made by Backup Admin.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionResources_Put. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Put</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,35 +75,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BackupPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string privateEndpointConnectionName, BackupPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionResourcesClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, BackupPrivateEndpointConnectionData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource> operation = new RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource>(
-                    new BackupPrivateEndpointConnectionOperationSource(Client),
-                    _privateEndpointConnectionResourcesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource>(new BackupPrivateEndpointConnectionOperationSource(Client), _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +104,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Approve or Reject Private Endpoint requests. This call is made by Backup Admin.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionResources_Put. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Put</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,35 +126,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="data"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BackupPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string privateEndpointConnectionName, BackupPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionResourcesClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, BackupPrivateEndpointConnectionData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource> operation = new RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource>(
-                    new BackupPrivateEndpointConnectionOperationSource(Client),
-                    _privateEndpointConnectionResourcesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new RecoveryServicesBackupArmOperation<BackupPrivateEndpointConnectionResource>(new BackupPrivateEndpointConnectionOperationSource(Client), _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics, Pipeline, _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.CreatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -177,44 +155,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Get Private Endpoint Connection. This call is made by Backup Admin.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<BackupPrivateEndpointConnectionResource>> GetAsync(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionResourcesClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Get");
+            using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BackupPrivateEndpointConnectionData> response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
+                var response = await _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BackupPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -228,44 +202,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Get Private Endpoint Connection. This call is made by Backup Admin.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<BackupPrivateEndpointConnectionResource> Get(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionResourcesClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Get");
+            using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BackupPrivateEndpointConnectionData> response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
+                var response = _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BackupPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -279,52 +249,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionResourcesClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Exists");
+            using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<BackupPrivateEndpointConnectionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BackupPrivateEndpointConnectionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -338,52 +294,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionResourcesClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Exists");
+            using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<BackupPrivateEndpointConnectionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BackupPrivateEndpointConnectionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,56 +339,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupPrivateEndpointConnectionResource>> GetIfExistsAsync(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionResourcesClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.GetIfExists");
+            using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<BackupPrivateEndpointConnectionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BackupPrivateEndpointConnectionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<BackupPrivateEndpointConnectionResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new BackupPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -460,56 +386,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnectionResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The name of the VaultResource. </param>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual NullableResponse<BackupPrivateEndpointConnectionResource> GetIfExists(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionResourcesClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.GetIfExists");
+            using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateEndpointConnectionResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<BackupPrivateEndpointConnectionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BackupPrivateEndpointConnectionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BackupPrivateEndpointConnectionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _backupPrivateEndpointConnectionPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, privateEndpointConnectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<BackupPrivateEndpointConnectionResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new BackupPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

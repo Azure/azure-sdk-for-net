@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Grafana;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Grafana.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableGrafanaResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableGrafanaResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableGrafanaResourceGroupResource"/> class for mocking. </summary>
         protected MockableGrafanaResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableGrafanaResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableGrafanaResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableGrafanaResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of ManagedGrafanas in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ManagedGrafanas and their operations over a ManagedGrafanaResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of ManagedGrafanaResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ManagedGrafanaResources and their operations over a ManagedGrafanaResource. </returns>
         public virtual ManagedGrafanaCollection GetManagedGrafanas()
         {
             return GetCachedClient(client => new ManagedGrafanaCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// Get the properties of a specific workspace for Grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedGrafanas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.Grafana.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedGrafanaResource>> GetManagedGrafanaAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
             return await GetManagedGrafanas().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// Get the properties of a specific workspace for Grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedGrafanas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,13 +99,11 @@ namespace Azure.ResourceManager.Grafana.Mocking
         [ForwardsClientCalls]
         public virtual Response<ManagedGrafanaResource> GetManagedGrafana(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
             return GetManagedGrafanas().Get(workspaceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedDashboards in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ManagedDashboards and their operations over a ManagedDashboardResource. </returns>
+        /// <summary> Gets a collection of ManagedDashboardResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ManagedDashboardResources and their operations over a ManagedDashboardResource. </returns>
         public virtual ManagedDashboardCollection GetManagedDashboards()
         {
             return GetCachedClient(client => new ManagedDashboardCollection(client, Id));
@@ -107,16 +113,20 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// Get the properties of a specific dashboard for grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,8 +137,6 @@ namespace Azure.ResourceManager.Grafana.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedDashboardResource>> GetManagedDashboardAsync(string dashboardName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dashboardName, nameof(dashboardName));
-
             return await GetManagedDashboards().GetAsync(dashboardName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,16 +144,20 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// Get the properties of a specific dashboard for grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,8 +168,6 @@ namespace Azure.ResourceManager.Grafana.Mocking
         [ForwardsClientCalls]
         public virtual Response<ManagedDashboardResource> GetManagedDashboard(string dashboardName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dashboardName, nameof(dashboardName));
-
             return GetManagedDashboards().Get(dashboardName, cancellationToken);
         }
     }

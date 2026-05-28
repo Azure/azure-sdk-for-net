@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Peering;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Peering.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockablePeeringResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockablePeeringResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockablePeeringResourceGroupResource"/> class for mocking. </summary>
         protected MockablePeeringResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockablePeeringResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockablePeeringResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePeeringResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of Peerings in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Peerings and their operations over a PeeringResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of PeeringResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PeeringResources and their operations over a PeeringResource. </returns>
         public virtual PeeringCollection GetPeerings()
         {
             return GetCachedClient(client => new PeeringCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// Gets an existing peering with the specified name under the given subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Peerings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PeeringResource>> GetPeeringAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-
             return await GetPeerings().GetAsync(peeringName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// Gets an existing peering with the specified name under the given subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Peerings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Peerings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,13 +99,11 @@ namespace Azure.ResourceManager.Peering.Mocking
         [ForwardsClientCalls]
         public virtual Response<PeeringResource> GetPeering(string peeringName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
-
             return GetPeerings().Get(peeringName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PeeringServices in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of PeeringServices and their operations over a PeeringServiceResource. </returns>
+        /// <summary> Gets a collection of PeeringServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PeeringServiceResources and their operations over a PeeringServiceResource. </returns>
         public virtual PeeringServiceCollection GetPeeringServices()
         {
             return GetCachedClient(client => new PeeringServiceCollection(client, Id));
@@ -107,16 +113,20 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// Gets an existing peering service with the specified name under the given subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PeeringServices_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,8 +137,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<PeeringServiceResource>> GetPeeringServiceAsync(string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
-
             return await GetPeeringServices().GetAsync(peeringServiceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,16 +144,20 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// Gets an existing peering service with the specified name under the given subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PeeringServices_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PeeringServices_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,8 +168,6 @@ namespace Azure.ResourceManager.Peering.Mocking
         [ForwardsClientCalls]
         public virtual Response<PeeringServiceResource> GetPeeringService(string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
-
             return GetPeeringServices().Get(peeringServiceName, cancellationToken);
         }
     }

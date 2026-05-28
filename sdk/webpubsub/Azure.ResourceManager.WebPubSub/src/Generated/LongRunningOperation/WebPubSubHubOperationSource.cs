@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary></summary>
-    internal partial class WebPubSubHubOperationSource : IOperationSource<WebPubSubHubResource>
+    internal class WebPubSubHubOperationSource : IOperationSource<WebPubSubHubResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal WebPubSubHubOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         WebPubSubHubResource IOperationSource<WebPubSubHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            WebPubSubHubData data = WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<WebPubSubHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWebPubSubContext.Default);
             return new WebPubSubHubResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<WebPubSubHubResource> IOperationSource<WebPubSubHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            WebPubSubHubData data = WebPubSubHubData.DeserializeWebPubSubHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WebPubSubHubResource(_client, data);
+            var data = ModelReaderWriter.Read<WebPubSubHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWebPubSubContext.Default);
+            return await Task.FromResult(new WebPubSubHubResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

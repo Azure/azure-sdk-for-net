@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.Peering.Models
     public readonly partial struct PeeringSessionAddressProvider : IEquatable<PeeringSessionAddressProvider>
     {
         private readonly string _value;
-        private const string MicrosoftValue = "Microsoft";
-        private const string PeerValue = "Peer";
 
         /// <summary> Initializes a new instance of <see cref="PeeringSessionAddressProvider"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PeeringSessionAddressProvider(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Microsoft. </summary>
+        private const string MicrosoftValue = "Microsoft";
+        private const string PeerValue = "Peer";
+
+        /// <summary> Microsoft. </summary>
         public static PeeringSessionAddressProvider Microsoft { get; } = new PeeringSessionAddressProvider(MicrosoftValue);
-
-        /// <summary> Gets the Peer. </summary>
+        /// <summary> Peer. </summary>
         public static PeeringSessionAddressProvider Peer { get; } = new PeeringSessionAddressProvider(PeerValue);
-
         /// <summary> Determines if two <see cref="PeeringSessionAddressProvider"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PeeringSessionAddressProvider left, PeeringSessionAddressProvider right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PeeringSessionAddressProvider"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PeeringSessionAddressProvider left, PeeringSessionAddressProvider right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PeeringSessionAddressProvider"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringSessionAddressProvider"/>. </summary>
         public static implicit operator PeeringSessionAddressProvider(string value) => new PeeringSessionAddressProvider(value);
 
-        /// <summary> Converts a string to a <see cref="PeeringSessionAddressProvider"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PeeringSessionAddressProvider?(string value) => value == null ? null : new PeeringSessionAddressProvider(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PeeringSessionAddressProvider other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PeeringSessionAddressProvider other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

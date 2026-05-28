@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.ServiceNetworking;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> The updatable properties of the SecurityPolicy. </summary>
-    public partial class SecurityPolicyUpdateProperties : IJsonModel<SecurityPolicyUpdateProperties>
+    public partial class SecurityPolicyUpdateProperties : IUtf8JsonSerializable, IJsonModel<SecurityPolicyUpdateProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecurityPolicyUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSecurityPolicyUpdateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityPolicyUpdateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityPolicyUpdateProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SecurityPolicyUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityPolicyUpdateProperties IPersistableModel<SecurityPolicyUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SecurityPolicyUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityPolicyUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,30 +30,31 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityPolicyUpdateProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(WafPolicy))
             {
                 writer.WritePropertyName("wafPolicy"u8);
-                writer.WriteObjectValue(WafPolicy, options);
+                ((IJsonModel<WritableSubResource>)WafPolicy).Write(writer, options);
             }
-            if (Optional.IsDefined(IpAccessRulesPolicy))
+            if (Optional.IsDefined(IPAccessRulesPolicy))
             {
                 writer.WritePropertyName("ipAccessRulesPolicy"u8);
-                writer.WriteObjectValue(IpAccessRulesPolicy, options);
+                writer.WriteObjectValue(IPAccessRulesPolicy, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,60 +63,88 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityPolicyUpdateProperties IJsonModel<SecurityPolicyUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecurityPolicyUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityPolicyUpdateProperties IJsonModel<SecurityPolicyUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityPolicyUpdateProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityPolicyUpdateProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SecurityPolicyUpdateProperties DeserializeSecurityPolicyUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityPolicyUpdateProperties DeserializeSecurityPolicyUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            WafPolicy wafPolicy = default;
-            ServiceNetworkingIPAccessRulesPolicy ipAccessRulesPolicy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            WritableSubResource wafPolicy = default;
+            IPAccessRulesPolicy ipAccessRulesPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("wafPolicy"u8))
+                if (property.NameEquals("wafPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    wafPolicy = WafPolicy.DeserializeWafPolicy(prop.Value, options);
+                    wafPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerServiceNetworkingContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("ipAccessRulesPolicy"u8))
+                if (property.NameEquals("ipAccessRulesPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipAccessRulesPolicy = ServiceNetworkingIPAccessRulesPolicy.DeserializeServiceNetworkingIPAccessRulesPolicy(prop.Value, options);
+                    ipAccessRulesPolicy = IPAccessRulesPolicy.DeserializeIPAccessRulesPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SecurityPolicyUpdateProperties(wafPolicy, ipAccessRulesPolicy, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityPolicyUpdateProperties(wafPolicy, ipAccessRulesPolicy, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityPolicyUpdateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityPolicyUpdateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityPolicyUpdateProperties IPersistableModel<SecurityPolicyUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSecurityPolicyUpdateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityPolicyUpdateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityPolicyUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

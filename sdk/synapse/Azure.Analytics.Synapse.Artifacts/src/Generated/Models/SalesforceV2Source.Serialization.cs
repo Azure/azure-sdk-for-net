@@ -39,11 +39,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("pageSize"u8);
                 writer.WriteObjectValue<object>(PageSize);
             }
-            if (Optional.IsDefined(PartitionOption))
-            {
-                writer.WritePropertyName("partitionOption"u8);
-                writer.WriteObjectValue<object>(PartitionOption);
-            }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
@@ -89,7 +84,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object query = default;
             object includeDeletedObjects = default;
             object pageSize = default;
-            object partitionOption = default;
             object queryTimeout = default;
             object additionalColumns = default;
             string type = default;
@@ -134,15 +128,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     pageSize = property.Value.GetObject();
-                    continue;
-                }
-                if (property.NameEquals("partitionOption"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partitionOption = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -209,8 +194,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 soqlQuery,
                 query,
                 includeDeletedObjects,
-                pageSize,
-                partitionOption);
+                pageSize);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

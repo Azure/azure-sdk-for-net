@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -15,51 +14,35 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ForecastTimeframe : IEquatable<ForecastTimeframe>
     {
         private readonly string _value;
-        private const string CustomValue = "Custom";
 
         /// <summary> Initializes a new instance of <see cref="ForecastTimeframe"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ForecastTimeframe(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Custom. </summary>
+        private const string CustomValue = "Custom";
+
+        /// <summary> Custom. </summary>
         public static ForecastTimeframe Custom { get; } = new ForecastTimeframe(CustomValue);
-
         /// <summary> Determines if two <see cref="ForecastTimeframe"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ForecastTimeframe left, ForecastTimeframe right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ForecastTimeframe"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ForecastTimeframe left, ForecastTimeframe right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ForecastTimeframe"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ForecastTimeframe"/>. </summary>
         public static implicit operator ForecastTimeframe(string value) => new ForecastTimeframe(value);
 
-        /// <summary> Converts a string to a <see cref="ForecastTimeframe"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ForecastTimeframe?(string value) => value == null ? null : new ForecastTimeframe(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ForecastTimeframe other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ForecastTimeframe other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,15 +7,46 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Output of check name availability API. </summary>
+    /// <summary>
+    /// Output of check name availability API.
+    /// Serialized Name: CheckNameAvailabilityOutput
+    /// </summary>
     public partial class CdnNameAvailabilityResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityResult"/>. </summary>
         internal CdnNameAvailabilityResult()
@@ -23,28 +54,41 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Indicates whether the name is available. </param>
-        /// <param name="reason"> The reason why the name is not available. </param>
-        /// <param name="message"> The detailed error message describing why the name is not available. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CdnNameAvailabilityResult(bool? nameAvailable, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="nameAvailable">
+        /// Indicates whether the name is available.
+        /// Serialized Name: CheckNameAvailabilityOutput.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// The reason why the name is not available.
+        /// Serialized Name: CheckNameAvailabilityOutput.reason
+        /// </param>
+        /// <param name="message">
+        /// The detailed error message describing why the name is not available.
+        /// Serialized Name: CheckNameAvailabilityOutput.message
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnNameAvailabilityResult(bool? nameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
             Message = message;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates whether the name is available. </summary>
-        [WirePath("nameAvailable")]
+        /// <summary>
+        /// Indicates whether the name is available.
+        /// Serialized Name: CheckNameAvailabilityOutput.nameAvailable
+        /// </summary>
         public bool? NameAvailable { get; }
-
-        /// <summary> The reason why the name is not available. </summary>
-        [WirePath("reason")]
+        /// <summary>
+        /// The reason why the name is not available.
+        /// Serialized Name: CheckNameAvailabilityOutput.reason
+        /// </summary>
         public string Reason { get; }
-
-        /// <summary> The detailed error message describing why the name is not available. </summary>
-        [WirePath("message")]
+        /// <summary>
+        /// The detailed error message describing why the name is not available.
+        /// Serialized Name: CheckNameAvailabilityOutput.message
+        /// </summary>
         public string Message { get; }
     }
 }

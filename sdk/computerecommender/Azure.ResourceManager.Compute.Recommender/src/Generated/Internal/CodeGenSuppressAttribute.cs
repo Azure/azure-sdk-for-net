@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Microsoft.TypeSpec.Generator.Customizations
+namespace Azure.ResourceManager.Compute.Recommender
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct), AllowMultiple = true)]
     internal partial class CodeGenSuppressAttribute : Attribute

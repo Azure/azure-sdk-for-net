@@ -8,66 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
     /// A class representing a collection of <see cref="EdgeDynamicSchemaResource"/> and their operations.
     /// Each <see cref="EdgeDynamicSchemaResource"/> in the collection will belong to the same instance of <see cref="EdgeSchemaResource"/>.
-    /// To get a <see cref="EdgeDynamicSchemaCollection"/> instance call the GetEdgeDynamicSchemas method from an instance of <see cref="EdgeSchemaResource"/>.
+    /// To get an <see cref="EdgeDynamicSchemaCollection"/> instance call the GetEdgeDynamicSchemas method from an instance of <see cref="EdgeSchemaResource"/>.
     /// </summary>
     public partial class EdgeDynamicSchemaCollection : ArmCollection, IEnumerable<EdgeDynamicSchemaResource>, IAsyncEnumerable<EdgeDynamicSchemaResource>
     {
-        private readonly ClientDiagnostics _dynamicSchemasClientDiagnostics;
-        private readonly DynamicSchemas _dynamicSchemasRestClient;
+        private readonly ClientDiagnostics _edgeDynamicSchemaDynamicSchemasClientDiagnostics;
+        private readonly DynamicSchemasRestOperations _edgeDynamicSchemaDynamicSchemasRestClient;
 
-        /// <summary> Initializes a new instance of EdgeDynamicSchemaCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeDynamicSchemaCollection"/> class for mocking. </summary>
         protected EdgeDynamicSchemaCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeDynamicSchemaCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeDynamicSchemaCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EdgeDynamicSchemaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeDynamicSchemaResource.ResourceType, out string edgeDynamicSchemaApiVersion);
-            _dynamicSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDynamicSchemaResource.ResourceType.Namespace, Diagnostics);
-            _dynamicSchemasRestClient = new DynamicSchemas(_dynamicSchemasClientDiagnostics, Pipeline, Endpoint, edgeDynamicSchemaApiVersion ?? "2025-06-01");
-            ValidateResourceId(id);
+            _edgeDynamicSchemaDynamicSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDynamicSchemaResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EdgeDynamicSchemaResource.ResourceType, out string edgeDynamicSchemaDynamicSchemasApiVersion);
+            _edgeDynamicSchemaDynamicSchemasRestClient = new DynamicSchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDynamicSchemaDynamicSchemasApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != EdgeSchemaResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSchemaResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EdgeSchemaResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a DynamicSchema Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DynamicSchemas_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DynamicSchema_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDynamicSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="dynamicSchemaName"> The name of the DynamicSchema. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EdgeDynamicSchemaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dynamicSchemaName, EdgeDynamicSchemaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dynamicSchemaName, nameof(dynamicSchemaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _dynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.CreateOrUpdate");
+            using var scope = _edgeDynamicSchemaDynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dynamicSchemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, EdgeDynamicSchemaData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource>(
-                    new EdgeDynamicSchemaOperationSource(Client),
-                    _dynamicSchemasClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _edgeDynamicSchemaDynamicSchemasRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dynamicSchemaName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource>(new EdgeDynamicSchemaOperationSource(Client), _edgeDynamicSchemaDynamicSchemasClientDiagnostics, Pipeline, _edgeDynamicSchemaDynamicSchemasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dynamicSchemaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Create or update a DynamicSchema Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DynamicSchemas_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DynamicSchema_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDynamicSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="dynamicSchemaName"> The name of the DynamicSchema. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EdgeDynamicSchemaResource> CreateOrUpdate(WaitUntil waitUntil, string dynamicSchemaName, EdgeDynamicSchemaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dynamicSchemaName, nameof(dynamicSchemaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _dynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.CreateOrUpdate");
+            using var scope = _edgeDynamicSchemaDynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dynamicSchemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, EdgeDynamicSchemaData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource>(
-                    new EdgeDynamicSchemaOperationSource(Client),
-                    _dynamicSchemasClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _edgeDynamicSchemaDynamicSchemasRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dynamicSchemaName, data, cancellationToken);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource>(new EdgeDynamicSchemaOperationSource(Client), _edgeDynamicSchemaDynamicSchemasClientDiagnostics, Pipeline, _edgeDynamicSchemaDynamicSchemasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dynamicSchemaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a DynamicSchema Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DynamicSchemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DynamicSchema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDynamicSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dynamicSchemaName"> The name of the DynamicSchema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         public virtual async Task<Response<EdgeDynamicSchemaResource>> GetAsync(string dynamicSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dynamicSchemaName, nameof(dynamicSchemaName));
 
-            using DiagnosticScope scope = _dynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.Get");
+            using var scope = _edgeDynamicSchemaDynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dynamicSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EdgeDynamicSchemaData> response = Response.FromValue(EdgeDynamicSchemaData.FromResponse(result), result);
+                var response = await _edgeDynamicSchemaDynamicSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dynamicSchemaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeDynamicSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a DynamicSchema Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DynamicSchemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DynamicSchema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDynamicSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dynamicSchemaName"> The name of the DynamicSchema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         public virtual Response<EdgeDynamicSchemaResource> Get(string dynamicSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dynamicSchemaName, nameof(dynamicSchemaName));
 
-            using DiagnosticScope scope = _dynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.Get");
+            using var scope = _edgeDynamicSchemaDynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dynamicSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<EdgeDynamicSchemaData> response = Response.FromValue(EdgeDynamicSchemaData.FromResponse(result), result);
+                var response = _edgeDynamicSchemaDynamicSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dynamicSchemaName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeDynamicSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List by Schema
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DynamicSchemas_ListBySchema. </description>
+        /// <term>Operation Id</term>
+        /// <description>DynamicSchema_ListBySchema</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDynamicSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeDynamicSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EdgeDynamicSchemaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeDynamicSchemaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new DynamicSchemasGetBySchemaAsyncCollectionResultOfT(
-                _dynamicSchemasRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "EdgeDynamicSchemaCollection.GetAll"), data => new EdgeDynamicSchemaResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeDynamicSchemaDynamicSchemasRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeDynamicSchemaDynamicSchemasRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeDynamicSchemaResource(Client, EdgeDynamicSchemaData.DeserializeEdgeDynamicSchemaData(e)), _edgeDynamicSchemaDynamicSchemasClientDiagnostics, Pipeline, "EdgeDynamicSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List by Schema
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DynamicSchemas_ListBySchema. </description>
+        /// <term>Operation Id</term>
+        /// <description>DynamicSchema_ListBySchema</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDynamicSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeDynamicSchemaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeDynamicSchemaResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new DynamicSchemasGetBySchemaCollectionResultOfT(
-                _dynamicSchemasRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "EdgeDynamicSchemaCollection.GetAll"), data => new EdgeDynamicSchemaResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeDynamicSchemaDynamicSchemasRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeDynamicSchemaDynamicSchemasRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeDynamicSchemaResource(Client, EdgeDynamicSchemaData.DeserializeEdgeDynamicSchemaData(e)), _edgeDynamicSchemaDynamicSchemasClientDiagnostics, Pipeline, "EdgeDynamicSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DynamicSchemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DynamicSchema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDynamicSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dynamicSchemaName"> The name of the DynamicSchema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dynamicSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dynamicSchemaName, nameof(dynamicSchemaName));
 
-            using DiagnosticScope scope = _dynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.Exists");
+            using var scope = _edgeDynamicSchemaDynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dynamicSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<EdgeDynamicSchemaData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeDynamicSchemaData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeDynamicSchemaData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _edgeDynamicSchemaDynamicSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dynamicSchemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DynamicSchemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DynamicSchema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDynamicSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dynamicSchemaName"> The name of the DynamicSchema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         public virtual Response<bool> Exists(string dynamicSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dynamicSchemaName, nameof(dynamicSchemaName));
 
-            using DiagnosticScope scope = _dynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.Exists");
+            using var scope = _edgeDynamicSchemaDynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dynamicSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<EdgeDynamicSchemaData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeDynamicSchemaData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeDynamicSchemaData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _edgeDynamicSchemaDynamicSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dynamicSchemaName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DynamicSchemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DynamicSchema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDynamicSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dynamicSchemaName"> The name of the DynamicSchema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         public virtual async Task<NullableResponse<EdgeDynamicSchemaResource>> GetIfExistsAsync(string dynamicSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dynamicSchemaName, nameof(dynamicSchemaName));
 
-            using DiagnosticScope scope = _dynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.GetIfExists");
+            using var scope = _edgeDynamicSchemaDynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dynamicSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<EdgeDynamicSchemaData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeDynamicSchemaData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeDynamicSchemaData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _edgeDynamicSchemaDynamicSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dynamicSchemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<EdgeDynamicSchemaResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeDynamicSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}/dynamicSchemas/{dynamicSchemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DynamicSchemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DynamicSchema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeDynamicSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dynamicSchemaName"> The name of the DynamicSchema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dynamicSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dynamicSchemaName"/> is null. </exception>
         public virtual NullableResponse<EdgeDynamicSchemaResource> GetIfExists(string dynamicSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dynamicSchemaName, nameof(dynamicSchemaName));
 
-            using DiagnosticScope scope = _dynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.GetIfExists");
+            using var scope = _edgeDynamicSchemaDynamicSchemasClientDiagnostics.CreateScope("EdgeDynamicSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dynamicSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<EdgeDynamicSchemaData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeDynamicSchemaData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeDynamicSchemaData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _edgeDynamicSchemaDynamicSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dynamicSchemaName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<EdgeDynamicSchemaResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeDynamicSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeDynamicSchemaResource> IAsyncEnumerable<EdgeDynamicSchemaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -7,14 +7,24 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary></summary>
+    /// <summary>
+    /// The LogRankingMetric.
+    /// Serialized Name: LogRankingMetric
+    /// </summary>
     public readonly partial struct LogRankingMetric : IEquatable<LogRankingMetric>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="LogRankingMetric"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LogRankingMetric(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string ClientRequestCountValue = "clientRequestCount";
         private const string ClientRequestTrafficValue = "clientRequestTraffic";
         private const string HitCountValue = "hitCount";
@@ -22,64 +32,53 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string UserErrorCountValue = "userErrorCount";
         private const string ErrorCountValue = "errorCount";
 
-        /// <summary> Initializes a new instance of <see cref="LogRankingMetric"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LogRankingMetric(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the ClientRequestCount. </summary>
+        /// <summary>
+        /// clientRequestCount
+        /// Serialized Name: LogRankingMetric.clientRequestCount
+        /// </summary>
         public static LogRankingMetric ClientRequestCount { get; } = new LogRankingMetric(ClientRequestCountValue);
-
-        /// <summary> Gets the ClientRequestTraffic. </summary>
+        /// <summary>
+        /// clientRequestTraffic
+        /// Serialized Name: LogRankingMetric.clientRequestTraffic
+        /// </summary>
         public static LogRankingMetric ClientRequestTraffic { get; } = new LogRankingMetric(ClientRequestTrafficValue);
-
-        /// <summary> Gets the HitCount. </summary>
+        /// <summary>
+        /// hitCount
+        /// Serialized Name: LogRankingMetric.hitCount
+        /// </summary>
         public static LogRankingMetric HitCount { get; } = new LogRankingMetric(HitCountValue);
-
-        /// <summary> Gets the MissCount. </summary>
+        /// <summary>
+        /// missCount
+        /// Serialized Name: LogRankingMetric.missCount
+        /// </summary>
         public static LogRankingMetric MissCount { get; } = new LogRankingMetric(MissCountValue);
-
-        /// <summary> Gets the UserErrorCount. </summary>
+        /// <summary>
+        /// userErrorCount
+        /// Serialized Name: LogRankingMetric.userErrorCount
+        /// </summary>
         public static LogRankingMetric UserErrorCount { get; } = new LogRankingMetric(UserErrorCountValue);
-
-        /// <summary> Gets the ErrorCount. </summary>
+        /// <summary>
+        /// errorCount
+        /// Serialized Name: LogRankingMetric.errorCount
+        /// </summary>
         public static LogRankingMetric ErrorCount { get; } = new LogRankingMetric(ErrorCountValue);
-
         /// <summary> Determines if two <see cref="LogRankingMetric"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogRankingMetric left, LogRankingMetric right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="LogRankingMetric"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogRankingMetric left, LogRankingMetric right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="LogRankingMetric"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogRankingMetric"/>. </summary>
         public static implicit operator LogRankingMetric(string value) => new LogRankingMetric(value);
 
-        /// <summary> Converts a string to a <see cref="LogRankingMetric"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator LogRankingMetric?(string value) => value == null ? null : new LogRankingMetric(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogRankingMetric other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(LogRankingMetric other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

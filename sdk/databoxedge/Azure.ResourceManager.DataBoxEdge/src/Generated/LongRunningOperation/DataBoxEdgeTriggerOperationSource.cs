@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary></summary>
-    internal partial class DataBoxEdgeTriggerOperationSource : IOperationSource<DataBoxEdgeTriggerResource>
+    internal class DataBoxEdgeTriggerOperationSource : IOperationSource<DataBoxEdgeTriggerResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DataBoxEdgeTriggerOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DataBoxEdgeTriggerResource IOperationSource<DataBoxEdgeTriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DataBoxEdgeTriggerData data = DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DataBoxEdgeTriggerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new DataBoxEdgeTriggerResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DataBoxEdgeTriggerResource> IOperationSource<DataBoxEdgeTriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DataBoxEdgeTriggerData data = DataBoxEdgeTriggerData.DeserializeDataBoxEdgeTriggerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DataBoxEdgeTriggerResource(_client, data);
+            var data = ModelReaderWriter.Read<DataBoxEdgeTriggerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            return await Task.FromResult(new DataBoxEdgeTriggerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

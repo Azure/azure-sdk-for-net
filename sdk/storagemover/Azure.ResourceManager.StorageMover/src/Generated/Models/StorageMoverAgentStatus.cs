@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.StorageMover.Models
     public readonly partial struct StorageMoverAgentStatus : IEquatable<StorageMoverAgentStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageMoverAgentStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string RegisteringValue = "Registering";
         private const string OfflineValue = "Offline";
         private const string OnlineValue = "Online";
@@ -22,64 +29,35 @@ namespace Azure.ResourceManager.StorageMover.Models
         private const string RequiresAttentionValue = "RequiresAttention";
         private const string UnregisteringValue = "Unregistering";
 
-        /// <summary> Initializes a new instance of <see cref="StorageMoverAgentStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageMoverAgentStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Registering. </summary>
+        /// <summary> Registering. </summary>
         public static StorageMoverAgentStatus Registering { get; } = new StorageMoverAgentStatus(RegisteringValue);
-
-        /// <summary> Gets the Offline. </summary>
+        /// <summary> Offline. </summary>
         public static StorageMoverAgentStatus Offline { get; } = new StorageMoverAgentStatus(OfflineValue);
-
-        /// <summary> Gets the Online. </summary>
+        /// <summary> Online. </summary>
         public static StorageMoverAgentStatus Online { get; } = new StorageMoverAgentStatus(OnlineValue);
-
-        /// <summary> Gets the Executing. </summary>
+        /// <summary> Executing. </summary>
         public static StorageMoverAgentStatus Executing { get; } = new StorageMoverAgentStatus(ExecutingValue);
-
-        /// <summary> Gets the RequiresAttention. </summary>
+        /// <summary> RequiresAttention. </summary>
         public static StorageMoverAgentStatus RequiresAttention { get; } = new StorageMoverAgentStatus(RequiresAttentionValue);
-
-        /// <summary> Gets the Unregistering. </summary>
+        /// <summary> Unregistering. </summary>
         public static StorageMoverAgentStatus Unregistering { get; } = new StorageMoverAgentStatus(UnregisteringValue);
-
         /// <summary> Determines if two <see cref="StorageMoverAgentStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageMoverAgentStatus left, StorageMoverAgentStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageMoverAgentStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageMoverAgentStatus left, StorageMoverAgentStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageMoverAgentStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageMoverAgentStatus"/>. </summary>
         public static implicit operator StorageMoverAgentStatus(string value) => new StorageMoverAgentStatus(value);
 
-        /// <summary> Converts a string to a <see cref="StorageMoverAgentStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageMoverAgentStatus?(string value) => value == null ? null : new StorageMoverAgentStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageMoverAgentStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StorageMoverAgentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

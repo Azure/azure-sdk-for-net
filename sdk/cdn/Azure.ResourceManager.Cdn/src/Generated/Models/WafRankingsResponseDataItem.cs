@@ -7,15 +7,46 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafRankingsResponseDataItem. </summary>
+    /// <summary>
+    /// The WafRankingsResponseDataItem.
+    /// Serialized Name: WafRankingsResponseDataItem
+    /// </summary>
     public partial class WafRankingsResponseDataItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WafRankingsResponseDataItem"/>. </summary>
         internal WafRankingsResponseDataItem()
@@ -25,22 +56,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WafRankingsResponseDataItem"/>. </summary>
-        /// <param name="groupValues"></param>
-        /// <param name="metrics"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WafRankingsResponseDataItem(IReadOnlyList<string> groupValues, IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="groupValues"> Serialized Name: WafRankingsResponseDataItem.groupValues. </param>
+        /// <param name="metrics"> Serialized Name: WafRankingsResponseDataItem.metrics. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WafRankingsResponseDataItem(IReadOnlyList<string> groupValues, IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> metrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupValues = groupValues;
             Metrics = metrics;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the GroupValues. </summary>
-        [WirePath("groupValues")]
+        /// <summary> Serialized Name: WafRankingsResponseDataItem.groupValues. </summary>
         public IReadOnlyList<string> GroupValues { get; }
-
-        /// <summary> Gets the Metrics. </summary>
-        [WirePath("metrics")]
+        /// <summary> Serialized Name: WafRankingsResponseDataItem.metrics. </summary>
         public IReadOnlyList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> Metrics { get; }
     }
 }

@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.CloudHealth;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    /// <summary> Properties for dependent entities, i.e. child entities. </summary>
-    public partial class DependenciesSignalGroup : IJsonModel<DependenciesSignalGroup>
+    public partial class DependenciesSignalGroup : IUtf8JsonSerializable, IJsonModel<DependenciesSignalGroup>
     {
-        /// <summary> Initializes a new instance of <see cref="DependenciesSignalGroup"/> for deserialization. </summary>
-        internal DependenciesSignalGroup()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DependenciesSignalGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DependenciesSignalGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DependenciesSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDependenciesSignalGroup(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DependenciesSignalGroup)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DependenciesSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DependenciesSignalGroup)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DependenciesSignalGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DependenciesSignalGroup IPersistableModel<DependenciesSignalGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DependenciesSignalGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DependenciesSignalGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DependenciesSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DependenciesSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DependenciesSignalGroup)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("aggregationType"u8);
             writer.WriteStringValue(AggregationType.ToString());
             if (Optional.IsDefined(DegradedThreshold))
@@ -91,15 +46,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("unhealthyThreshold"u8);
                 writer.WriteStringValue(UnhealthyThreshold);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,27 +63,22 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DependenciesSignalGroup IJsonModel<DependenciesSignalGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DependenciesSignalGroup JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DependenciesSignalGroup IJsonModel<DependenciesSignalGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DependenciesSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DependenciesSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DependenciesSignalGroup)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDependenciesSignalGroup(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DependenciesSignalGroup DeserializeDependenciesSignalGroup(JsonElement element, ModelReaderWriterOptions options)
+        internal static DependenciesSignalGroup DeserializeDependenciesSignalGroup(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -136,30 +86,63 @@ namespace Azure.ResourceManager.CloudHealth.Models
             DependenciesAggregationType aggregationType = default;
             string degradedThreshold = default;
             string unhealthyThreshold = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("aggregationType"u8))
+                if (property.NameEquals("aggregationType"u8))
                 {
-                    aggregationType = new DependenciesAggregationType(prop.Value.GetString());
+                    aggregationType = new DependenciesAggregationType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("degradedThreshold"u8))
+                if (property.NameEquals("degradedThreshold"u8))
                 {
-                    degradedThreshold = prop.Value.GetString();
+                    degradedThreshold = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("unhealthyThreshold"u8))
+                if (property.NameEquals("unhealthyThreshold"u8))
                 {
-                    unhealthyThreshold = prop.Value.GetString();
+                    unhealthyThreshold = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DependenciesSignalGroup(aggregationType, degradedThreshold, unhealthyThreshold, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DependenciesSignalGroup(aggregationType, degradedThreshold, unhealthyThreshold, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DependenciesSignalGroup>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DependenciesSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DependenciesSignalGroup)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DependenciesSignalGroup IPersistableModel<DependenciesSignalGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DependenciesSignalGroup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDependenciesSignalGroup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DependenciesSignalGroup)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DependenciesSignalGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

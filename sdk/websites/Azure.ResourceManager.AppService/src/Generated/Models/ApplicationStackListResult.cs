@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of Application Stacks
-    /// Serialized Name: ApplicationStackCollection
-    /// </summary>
+    /// <summary> Collection of Application Stacks. </summary>
     internal partial class ApplicationStackListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationStackListResult"/>. </summary>
-        /// <param name="value">
-        /// The ApplicationStackResource items on this page
-        /// Serialized Name: ApplicationStackCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApplicationStackListResult(IEnumerable<ApplicationStackResource> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationStackListResult"/>. </summary>
-        /// <param name="value">
-        /// The ApplicationStackResource items on this page
-        /// Serialized Name: ApplicationStackCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: ApplicationStackCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationStackListResult(IReadOnlyList<ApplicationStackResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationStackListResult(IReadOnlyList<ApplicationStackResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The ApplicationStackResource items on this page
-        /// Serialized Name: ApplicationStackCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<ApplicationStackResource> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: ApplicationStackCollection.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

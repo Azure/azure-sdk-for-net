@@ -9,68 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.DevOpsInfrastructure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> The CheckNameAvailability operation response. </summary>
-    public partial class DevOpsCheckNameAvailabilityResult : IJsonModel<DevOpsCheckNameAvailabilityResult>
+    public partial class DevOpsCheckNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<DevOpsCheckNameAvailabilityResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DevOpsCheckNameAvailabilityResult"/> for deserialization. </summary>
-        internal DevOpsCheckNameAvailabilityResult()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsCheckNameAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevOpsCheckNameAvailabilityResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsCheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDevOpsCheckNameAvailabilityResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevOpsCheckNameAvailabilityResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsCheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevOpsCheckNameAvailabilityResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevOpsCheckNameAvailabilityResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevOpsCheckNameAvailabilityResult IPersistableModel<DevOpsCheckNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevOpsCheckNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DevOpsCheckNameAvailabilityResult"/> from. </param>
-        internal static DevOpsCheckNameAvailabilityResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDevOpsCheckNameAvailabilityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevOpsCheckNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -82,11 +28,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsCheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsCheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsCheckNameAvailabilityResult)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("available"u8);
             writer.WriteStringValue(Available.ToString());
             writer.WritePropertyName("message"u8);
@@ -95,15 +42,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("reason"u8);
             writer.WriteStringValue(Reason.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -112,27 +59,22 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevOpsCheckNameAvailabilityResult IJsonModel<DevOpsCheckNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevOpsCheckNameAvailabilityResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DevOpsCheckNameAvailabilityResult IJsonModel<DevOpsCheckNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsCheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsCheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsCheckNameAvailabilityResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDevOpsCheckNameAvailabilityResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DevOpsCheckNameAvailabilityResult DeserializeDevOpsCheckNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static DevOpsCheckNameAvailabilityResult DeserializeDevOpsCheckNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -141,35 +83,68 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             string message = default;
             string name = default;
             CheckNameAvailabilityReason reason = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("available"u8))
+                if (property.NameEquals("available"u8))
                 {
-                    available = new DevOpsAvailabilityStatus(prop.Value.GetString());
+                    available = new DevOpsAvailabilityStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("message"u8))
+                if (property.NameEquals("message"u8))
                 {
-                    message = prop.Value.GetString();
+                    message = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("reason"u8))
+                if (property.NameEquals("reason"u8))
                 {
-                    reason = new CheckNameAvailabilityReason(prop.Value.GetString());
+                    reason = new CheckNameAvailabilityReason(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DevOpsCheckNameAvailabilityResult(available, message, name, reason, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevOpsCheckNameAvailabilityResult(available, message, name, reason, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevOpsCheckNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsCheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevOpsCheckNameAvailabilityResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevOpsCheckNameAvailabilityResult IPersistableModel<DevOpsCheckNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsCheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDevOpsCheckNameAvailabilityResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevOpsCheckNameAvailabilityResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevOpsCheckNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

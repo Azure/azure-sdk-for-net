@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Versioning;
 
@@ -51,8 +52,8 @@ namespace Azure.Messaging.ServiceBus.Core
         ///  user agents when interacting with Azure services.
         /// </summary>
         ///
-        [Description(UserAgentPropertyName)]
-        public string UserAgent => $"azsdk-net-{Product}/{Version} ({Framework}; {Platform})";
+        [Description("user-agent")]
+        public string UserAgent => $"azsdk-net-{ Product }/{ Version } ({ Framework }; { Platform })";
 
         /// <summary>
         ///   Client Information properties serialized with normalized names
@@ -68,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Core
         {
             Assembly assembly = typeof(ClientLibraryInformation).Assembly;
 
-            Product = $"{nameof(Messaging)}.{nameof(ServiceBus)}";
+            Product = $"{ nameof(Messaging) }.{ nameof(ServiceBus) }";
             Version = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
             Framework = assembly.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
 
@@ -77,27 +78,35 @@ namespace Azure.Messaging.ServiceBus.Core
 #else
             Platform = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
 #endif
-            SerializedProperties = SerializeProperties();
+            SerializedProperties = SerializeProperties(this);
         }
 
         /// <summary>
-        ///   Enumerates the client library properties with their normalized names.
+        ///   Enumerates the client library properties, normalizing the property names.
         /// </summary>
         ///
         /// <returns>An enumerable set of the properties, with name and value.</returns>
         ///
-        private KeyValuePair<string, string>[] SerializeProperties()
-        {
-            return
-            [
-                new KeyValuePair<string, string>("product", Product),
-                new KeyValuePair<string, string>("version", Version),
-                new KeyValuePair<string, string>("framework", Framework),
-                new KeyValuePair<string, string>("platform", Platform),
-                new KeyValuePair<string, string>(UserAgentPropertyName, UserAgent)
-            ];
-        }
+        private static KeyValuePair<string, string>[] SerializeProperties(ClientLibraryInformation self) =>
+            typeof(ClientLibraryInformation)
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .Where(static property => property.Name != nameof(SerializedProperties))
+                .Select(property => new KeyValuePair<string, string>(GetTelemetryName(property), (string)property.GetValue(self, null)))
+                .ToArray();
 
-        private const string UserAgentPropertyName = "user-agent";
+        /// <summary>
+        ///   Gets the name of the property, as it should appear in telemetry
+        ///   information.
+        /// </summary>
+        ///
+        /// <param name="property">The property to consider.</param>
+        ///
+        /// <returns>The name of the property for use as telemetry for the client library.</returns>
+        ///
+        private static string GetTelemetryName(MemberInfo property)
+        {
+            string name = property.GetCustomAttribute<DescriptionAttribute>(false)?.Description;
+            return (string.IsNullOrEmpty(name) ? property.Name : name).ToLowerInvariant();
+        }
     }
 }

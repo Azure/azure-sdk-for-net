@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecretsStoreExtension.Models;
-using NUnit.Framework;
+
 using static Azure.ResourceManager.SecretsStoreExtension.Tests.SseTestData;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Tests
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
                     serviceAccountName: props.ServiceAccountName,
                     forceSynchronization: props.ForceSynchronization,
                     objectSecretMapping: oms,
-                    additionalBinaryDataProperties: null)
+                    serializedAdditionalRawData: null)
             };
 
             await ss.UpdateAsync(WaitUntil.Completed, patch);

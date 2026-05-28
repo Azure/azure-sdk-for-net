@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary></summary>
+    /// <summary> The CorsRuleAllowedMethod. </summary>
     public readonly partial struct CorsRuleAllowedMethod : IEquatable<CorsRuleAllowedMethod>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CorsRuleAllowedMethod"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CorsRuleAllowedMethod(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string DeleteValue = "DELETE";
         private const string GetValue = "GET";
         private const string HeadValue = "HEAD";
@@ -26,76 +33,43 @@ namespace Azure.ResourceManager.Storage.Models
         private const string ConnectValue = "CONNECT";
         private const string TraceValue = "TRACE";
 
-        /// <summary> Initializes a new instance of <see cref="CorsRuleAllowedMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CorsRuleAllowedMethod(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Delete. </summary>
+        /// <summary> DELETE. </summary>
         public static CorsRuleAllowedMethod Delete { get; } = new CorsRuleAllowedMethod(DeleteValue);
-
-        /// <summary> Gets the Get. </summary>
+        /// <summary> GET. </summary>
         public static CorsRuleAllowedMethod Get { get; } = new CorsRuleAllowedMethod(GetValue);
-
-        /// <summary> Gets the Head. </summary>
+        /// <summary> HEAD. </summary>
         public static CorsRuleAllowedMethod Head { get; } = new CorsRuleAllowedMethod(HeadValue);
-
-        /// <summary> Gets the Merge. </summary>
+        /// <summary> MERGE. </summary>
         public static CorsRuleAllowedMethod Merge { get; } = new CorsRuleAllowedMethod(MergeValue);
-
-        /// <summary> Gets the Post. </summary>
+        /// <summary> POST. </summary>
         public static CorsRuleAllowedMethod Post { get; } = new CorsRuleAllowedMethod(PostValue);
-
-        /// <summary> Gets the Options. </summary>
+        /// <summary> OPTIONS. </summary>
         public static CorsRuleAllowedMethod Options { get; } = new CorsRuleAllowedMethod(OptionsValue);
-
-        /// <summary> Gets the Put. </summary>
+        /// <summary> PUT. </summary>
         public static CorsRuleAllowedMethod Put { get; } = new CorsRuleAllowedMethod(PutValue);
-
-        /// <summary> Gets the Patch. </summary>
+        /// <summary> PATCH. </summary>
         public static CorsRuleAllowedMethod Patch { get; } = new CorsRuleAllowedMethod(PatchValue);
-
-        /// <summary> Gets the Connect. </summary>
+        /// <summary> CONNECT. </summary>
         public static CorsRuleAllowedMethod Connect { get; } = new CorsRuleAllowedMethod(ConnectValue);
-
-        /// <summary> Gets the Trace. </summary>
+        /// <summary> TRACE. </summary>
         public static CorsRuleAllowedMethod Trace { get; } = new CorsRuleAllowedMethod(TraceValue);
-
         /// <summary> Determines if two <see cref="CorsRuleAllowedMethod"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CorsRuleAllowedMethod left, CorsRuleAllowedMethod right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CorsRuleAllowedMethod"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CorsRuleAllowedMethod left, CorsRuleAllowedMethod right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CorsRuleAllowedMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CorsRuleAllowedMethod"/>. </summary>
         public static implicit operator CorsRuleAllowedMethod(string value) => new CorsRuleAllowedMethod(value);
 
-        /// <summary> Converts a string to a <see cref="CorsRuleAllowedMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CorsRuleAllowedMethod?(string value) => value == null ? null : new CorsRuleAllowedMethod(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CorsRuleAllowedMethod other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CorsRuleAllowedMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

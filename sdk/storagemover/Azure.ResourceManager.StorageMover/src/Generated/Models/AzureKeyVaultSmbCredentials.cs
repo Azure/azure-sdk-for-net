@@ -14,24 +14,25 @@ namespace Azure.ResourceManager.StorageMover.Models
     public partial class AzureKeyVaultSmbCredentials : StorageMoverCredentials
     {
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultSmbCredentials"/>. </summary>
-        public AzureKeyVaultSmbCredentials() : base(CredentialType.AzureKeyVaultSmb)
+        public AzureKeyVaultSmbCredentials()
         {
+            Type = CredentialType.AzureKeyVaultSmb;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureKeyVaultSmbCredentials"/>. </summary>
         /// <param name="type"> The Credentials type. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="usernameUriString"> The Azure Key Vault secret URI which stores the username. Use empty string to clean-up existing value. </param>
         /// <param name="passwordUriString"> The Azure Key Vault secret URI which stores the password. Use empty string to clean-up existing value. </param>
-        internal AzureKeyVaultSmbCredentials(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string usernameUriString, string passwordUriString) : base(@type, additionalBinaryDataProperties)
+        internal AzureKeyVaultSmbCredentials(CredentialType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string usernameUriString, string passwordUriString) : base(type, serializedAdditionalRawData)
         {
             UsernameUriString = usernameUriString;
             PasswordUriString = passwordUriString;
+            Type = type;
         }
 
         /// <summary> The Azure Key Vault secret URI which stores the username. Use empty string to clean-up existing value. </summary>
         public string UsernameUriString { get; set; }
-
         /// <summary> The Azure Key Vault secret URI which stores the password. Use empty string to clean-up existing value. </summary>
         public string PasswordUriString { get; set; }
     }

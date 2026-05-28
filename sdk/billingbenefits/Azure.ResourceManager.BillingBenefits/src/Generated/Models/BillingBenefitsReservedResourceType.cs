@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     public readonly partial struct BillingBenefitsReservedResourceType : IEquatable<BillingBenefitsReservedResourceType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservedResourceType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BillingBenefitsReservedResourceType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string VirtualMachinesValue = "VirtualMachines";
         private const string SqlDatabasesValue = "SqlDatabases";
         private const string SuseLinuxValue = "SuseLinux";
@@ -42,124 +49,75 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         private const string SqlEdgeValue = "SqlEdge";
         private const string VirtualMachineSoftwareValue = "VirtualMachineSoftware";
 
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsReservedResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BillingBenefitsReservedResourceType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the VirtualMachines. </summary>
+        /// <summary> VirtualMachines. </summary>
         public static BillingBenefitsReservedResourceType VirtualMachines { get; } = new BillingBenefitsReservedResourceType(VirtualMachinesValue);
-
-        /// <summary> Gets the SqlDatabases. </summary>
+        /// <summary> SqlDatabases. </summary>
         public static BillingBenefitsReservedResourceType SqlDatabases { get; } = new BillingBenefitsReservedResourceType(SqlDatabasesValue);
-
-        /// <summary> Gets the SuseLinux. </summary>
+        /// <summary> SuseLinux. </summary>
         public static BillingBenefitsReservedResourceType SuseLinux { get; } = new BillingBenefitsReservedResourceType(SuseLinuxValue);
-
-        /// <summary> Gets the CosmosDB. </summary>
+        /// <summary> CosmosDb. </summary>
         public static BillingBenefitsReservedResourceType CosmosDB { get; } = new BillingBenefitsReservedResourceType(CosmosDBValue);
-
-        /// <summary> Gets the RedHat. </summary>
+        /// <summary> RedHat. </summary>
         public static BillingBenefitsReservedResourceType RedHat { get; } = new BillingBenefitsReservedResourceType(RedHatValue);
-
-        /// <summary> Gets the SqlDataWarehouse. </summary>
+        /// <summary> SqlDataWarehouse. </summary>
         public static BillingBenefitsReservedResourceType SqlDataWarehouse { get; } = new BillingBenefitsReservedResourceType(SqlDataWarehouseValue);
-
-        /// <summary> Gets the VMwareCloudSimple. </summary>
+        /// <summary> VMwareCloudSimple. </summary>
         public static BillingBenefitsReservedResourceType VMwareCloudSimple { get; } = new BillingBenefitsReservedResourceType(VMwareCloudSimpleValue);
-
-        /// <summary> Gets the RedHatOsa. </summary>
+        /// <summary> RedHatOsa. </summary>
         public static BillingBenefitsReservedResourceType RedHatOsa { get; } = new BillingBenefitsReservedResourceType(RedHatOsaValue);
-
-        /// <summary> Gets the Databricks. </summary>
+        /// <summary> Databricks. </summary>
         public static BillingBenefitsReservedResourceType Databricks { get; } = new BillingBenefitsReservedResourceType(DatabricksValue);
-
-        /// <summary> Gets the AppService. </summary>
+        /// <summary> AppService. </summary>
         public static BillingBenefitsReservedResourceType AppService { get; } = new BillingBenefitsReservedResourceType(AppServiceValue);
-
-        /// <summary> Gets the ManagedDisk. </summary>
+        /// <summary> ManagedDisk. </summary>
         public static BillingBenefitsReservedResourceType ManagedDisk { get; } = new BillingBenefitsReservedResourceType(ManagedDiskValue);
-
-        /// <summary> Gets the BlockBlob. </summary>
+        /// <summary> BlockBlob. </summary>
         public static BillingBenefitsReservedResourceType BlockBlob { get; } = new BillingBenefitsReservedResourceType(BlockBlobValue);
-
-        /// <summary> Gets the RedisCache. </summary>
+        /// <summary> RedisCache. </summary>
         public static BillingBenefitsReservedResourceType RedisCache { get; } = new BillingBenefitsReservedResourceType(RedisCacheValue);
-
-        /// <summary> Gets the AzureDataExplorer. </summary>
+        /// <summary> AzureDataExplorer. </summary>
         public static BillingBenefitsReservedResourceType AzureDataExplorer { get; } = new BillingBenefitsReservedResourceType(AzureDataExplorerValue);
-
-        /// <summary> Gets the MySql. </summary>
+        /// <summary> MySql. </summary>
         public static BillingBenefitsReservedResourceType MySql { get; } = new BillingBenefitsReservedResourceType(MySqlValue);
-
-        /// <summary> Gets the MariaDB. </summary>
+        /// <summary> MariaDb. </summary>
         public static BillingBenefitsReservedResourceType MariaDB { get; } = new BillingBenefitsReservedResourceType(MariaDBValue);
-
-        /// <summary> Gets the PostgreSql. </summary>
+        /// <summary> PostgreSql. </summary>
         public static BillingBenefitsReservedResourceType PostgreSql { get; } = new BillingBenefitsReservedResourceType(PostgreSqlValue);
-
-        /// <summary> Gets the DedicatedHost. </summary>
+        /// <summary> DedicatedHost. </summary>
         public static BillingBenefitsReservedResourceType DedicatedHost { get; } = new BillingBenefitsReservedResourceType(DedicatedHostValue);
-
-        /// <summary> Gets the SapHana. </summary>
+        /// <summary> SapHana. </summary>
         public static BillingBenefitsReservedResourceType SapHana { get; } = new BillingBenefitsReservedResourceType(SapHanaValue);
-
-        /// <summary> Gets the SqlAzureHybridBenefit. </summary>
+        /// <summary> SqlAzureHybridBenefit. </summary>
         public static BillingBenefitsReservedResourceType SqlAzureHybridBenefit { get; } = new BillingBenefitsReservedResourceType(SqlAzureHybridBenefitValue);
-
-        /// <summary> Gets the Avs. </summary>
+        /// <summary> AVS. </summary>
         public static BillingBenefitsReservedResourceType Avs { get; } = new BillingBenefitsReservedResourceType(AvsValue);
-
-        /// <summary> Gets the DataFactory. </summary>
+        /// <summary> DataFactory. </summary>
         public static BillingBenefitsReservedResourceType DataFactory { get; } = new BillingBenefitsReservedResourceType(DataFactoryValue);
-
-        /// <summary> Gets the NetAppStorage. </summary>
+        /// <summary> NetAppStorage. </summary>
         public static BillingBenefitsReservedResourceType NetAppStorage { get; } = new BillingBenefitsReservedResourceType(NetAppStorageValue);
-
-        /// <summary> Gets the AzureFiles. </summary>
+        /// <summary> AzureFiles. </summary>
         public static BillingBenefitsReservedResourceType AzureFiles { get; } = new BillingBenefitsReservedResourceType(AzureFilesValue);
-
-        /// <summary> Gets the SqlEdge. </summary>
+        /// <summary> SqlEdge. </summary>
         public static BillingBenefitsReservedResourceType SqlEdge { get; } = new BillingBenefitsReservedResourceType(SqlEdgeValue);
-
-        /// <summary> Gets the VirtualMachineSoftware. </summary>
+        /// <summary> VirtualMachineSoftware. </summary>
         public static BillingBenefitsReservedResourceType VirtualMachineSoftware { get; } = new BillingBenefitsReservedResourceType(VirtualMachineSoftwareValue);
-
         /// <summary> Determines if two <see cref="BillingBenefitsReservedResourceType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingBenefitsReservedResourceType left, BillingBenefitsReservedResourceType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BillingBenefitsReservedResourceType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingBenefitsReservedResourceType left, BillingBenefitsReservedResourceType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BillingBenefitsReservedResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitsReservedResourceType"/>. </summary>
         public static implicit operator BillingBenefitsReservedResourceType(string value) => new BillingBenefitsReservedResourceType(value);
 
-        /// <summary> Converts a string to a <see cref="BillingBenefitsReservedResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BillingBenefitsReservedResourceType?(string value) => value == null ? null : new BillingBenefitsReservedResourceType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingBenefitsReservedResourceType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BillingBenefitsReservedResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

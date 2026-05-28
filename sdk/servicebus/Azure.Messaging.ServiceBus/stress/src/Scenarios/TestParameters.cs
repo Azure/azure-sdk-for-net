@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace Azure.Messaging.ServiceBus.Stress;
 

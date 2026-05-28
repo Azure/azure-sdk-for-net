@@ -8,57 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Account Info of the NewRelic account. </summary>
-    public partial class NewRelicObservabilityAccountInfo : IJsonModel<NewRelicObservabilityAccountInfo>
+    public partial class NewRelicObservabilityAccountInfo : IUtf8JsonSerializable, IJsonModel<NewRelicObservabilityAccountInfo>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NewRelicObservabilityAccountInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNewRelicObservabilityAccountInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicObservabilityAccountInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NewRelicObservabilityAccountInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NewRelicObservabilityAccountInfo IPersistableModel<NewRelicObservabilityAccountInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NewRelicObservabilityAccountInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NewRelicObservabilityAccountInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,11 +29,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
@@ -90,15 +50,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -107,27 +67,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NewRelicObservabilityAccountInfo IJsonModel<NewRelicObservabilityAccountInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NewRelicObservabilityAccountInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NewRelicObservabilityAccountInfo IJsonModel<NewRelicObservabilityAccountInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNewRelicObservabilityAccountInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NewRelicObservabilityAccountInfo DeserializeNewRelicObservabilityAccountInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static NewRelicObservabilityAccountInfo DeserializeNewRelicObservabilityAccountInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -135,34 +90,145 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             string accountId = default;
             string ingestionKey = default;
             AzureLocation? region = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("accountId"u8))
+                if (property.NameEquals("accountId"u8))
                 {
-                    accountId = prop.Value.GetString();
+                    accountId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ingestionKey"u8))
+                if (property.NameEquals("ingestionKey"u8))
                 {
-                    ingestionKey = prop.Value.GetString();
+                    ingestionKey = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("region"u8))
+                if (property.NameEquals("region"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    region = new AzureLocation(prop.Value.GetString());
+                    region = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new NewRelicObservabilityAccountInfo(accountId, ingestionKey, region, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NewRelicObservabilityAccountInfo(accountId, ingestionKey, region, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accountId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountId))
+                {
+                    builder.Append("  accountId: ");
+                    if (AccountId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccountId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccountId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngestionKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ingestionKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IngestionKey))
+                {
+                    builder.Append("  ingestionKey: ");
+                    if (IngestionKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IngestionKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IngestionKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Region), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  region: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Region))
+                {
+                    builder.Append("  region: ");
+                    builder.AppendLine($"'{Region.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<NewRelicObservabilityAccountInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NewRelicObservabilityAccountInfo IPersistableModel<NewRelicObservabilityAccountInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeNewRelicObservabilityAccountInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityAccountInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NewRelicObservabilityAccountInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

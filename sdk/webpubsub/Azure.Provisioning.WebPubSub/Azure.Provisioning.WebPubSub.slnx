@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.WebPubSub.csproj" />
-  <Project Path="tests/Azure.Provisioning.WebPubSub.Tests.csproj" />
-</Solution>

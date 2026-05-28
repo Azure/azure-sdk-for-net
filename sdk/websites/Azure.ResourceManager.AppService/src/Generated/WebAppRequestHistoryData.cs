@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the WebAppRequestHistory data model.
     /// The request history.
-    /// Serialized Name: RequestHistory
     /// </summary>
     public partial class WebAppRequestHistoryData : TrackedResourceData
     {
@@ -65,10 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// The request history properties.
-        /// Serialized Name: RequestHistory.properties
-        /// </param>
+        /// <param name="properties"> The request history properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppRequestHistoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebAppRequestHistoryProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -81,10 +77,7 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary>
-        /// The request history properties.
-        /// Serialized Name: RequestHistory.properties
-        /// </summary>
+        /// <summary> The request history properties. </summary>
         [WirePath("properties")]
         public WebAppRequestHistoryProperties Properties { get; set; }
     }

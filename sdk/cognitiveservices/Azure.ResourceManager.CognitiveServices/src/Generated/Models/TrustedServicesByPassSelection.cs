@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct TrustedServicesByPassSelection : IEquatable<TrustedServicesByPassSelection>
     {
         private readonly string _value;
-        private const string NoneValue = "None";
-        private const string AzureServicesValue = "AzureServices";
 
         /// <summary> Initializes a new instance of <see cref="TrustedServicesByPassSelection"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TrustedServicesByPassSelection(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the None. </summary>
+        private const string NoneValue = "None";
+        private const string AzureServicesValue = "AzureServices";
+
+        /// <summary> None. </summary>
         public static TrustedServicesByPassSelection None { get; } = new TrustedServicesByPassSelection(NoneValue);
-
-        /// <summary> Gets the AzureServices. </summary>
+        /// <summary> AzureServices. </summary>
         public static TrustedServicesByPassSelection AzureServices { get; } = new TrustedServicesByPassSelection(AzureServicesValue);
-
         /// <summary> Determines if two <see cref="TrustedServicesByPassSelection"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrustedServicesByPassSelection left, TrustedServicesByPassSelection right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="TrustedServicesByPassSelection"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrustedServicesByPassSelection left, TrustedServicesByPassSelection right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="TrustedServicesByPassSelection"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrustedServicesByPassSelection"/>. </summary>
         public static implicit operator TrustedServicesByPassSelection(string value) => new TrustedServicesByPassSelection(value);
 
-        /// <summary> Converts a string to a <see cref="TrustedServicesByPassSelection"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator TrustedServicesByPassSelection?(string value) => value == null ? null : new TrustedServicesByPassSelection(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrustedServicesByPassSelection other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(TrustedServicesByPassSelection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

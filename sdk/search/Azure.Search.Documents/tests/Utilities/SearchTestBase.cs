@@ -16,7 +16,6 @@ using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
 using Microsoft.Spatial;
 using NUnit.Framework;
-using static Azure.Search.Documents.SearchClientOptions.ServiceVersion;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -24,15 +23,9 @@ namespace Azure.Search.Documents.Tests
     /// Base class for Search unit tests that adds shared infrastructure on top
     /// of the Azure.Core testing framework.
     /// </summary>
-    [ClientTestFixture(LatestVersion)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01)]
     public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
-        /// <summary>
-        /// The current API version under test. Change this single constant
-        /// when a new version ships — all tests update automatically.
-        /// </summary>
-        protected const SearchClientOptions.ServiceVersion LatestVersion = V2026_04_01;
-
         /// <summary>
         /// Shared HTTP client instance with a longer timeout.  It's
         /// gratuitously long for the sake of live tests in a hammered
@@ -138,7 +131,7 @@ namespace Azure.Search.Documents.Tests
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to check.</param>
         /// <returns>A task that will (optionally) delay.</returns>
         /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/> was signaled.</exception>
-        public async Task ConditionallyDelayAsync(Func<bool> predicate, TimeSpan? delayPerIteration = null, TimeSpan? playbackDelayPerIteration = null, uint maxIterations = 1, CancellationToken cancellationToken = default)
+        public async Task ConditionallyDelayAsync(Func<bool> predicate, TimeSpan ? delayPerIteration = null, TimeSpan? playbackDelayPerIteration = null, uint maxIterations = 1, CancellationToken cancellationToken = default)
         {
             TimeSpan waitPeriod = TimeSpan.Zero;
 

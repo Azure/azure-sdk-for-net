@@ -65,7 +65,8 @@ namespace Azure.Data.SchemaRegistry
             options ??= new SchemaRegistryClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes) }, new ResponseClassifier());
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -140,11 +141,11 @@ namespace Azure.Data.SchemaRegistry
                 RequestContext context = FromCancellationToken(cancellationToken);
                 if (async)
                 {
-                    response = await RegisterSchemaAsync(groupName, schemaName, content, format.ContentType, context).ConfigureAwait(false);
+                    response = await RegisterSchemaAsync(groupName, schemaName, format.ContentType, content, context).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = RegisterSchema(groupName, schemaName, content, format.ContentType, context);
+                    response = RegisterSchema(groupName, schemaName, format.ContentType, content, context);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;
@@ -231,11 +232,11 @@ namespace Azure.Data.SchemaRegistry
                 RequestContext context = FromCancellationToken(cancellationToken);
                 if (async)
                 {
-                    response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, content, format.ContentType, context).ConfigureAwait(false);
+                    response = await GetSchemaPropertiesByContentAsync(groupName, schemaName, format.ContentType, content, context).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = GetSchemaPropertiesByContent(groupName, schemaName, content, format.ContentType, context);
+                    response = GetSchemaPropertiesByContent(groupName, schemaName, format.ContentType, content, context);
                 }
 
                 var schemaIdHeader = response.Headers.TryGetValue("Schema-Id", out string idHeader) ? idHeader : null;

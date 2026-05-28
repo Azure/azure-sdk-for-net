@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Hci.Vm;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    /// <summary> Properties of the subnet. </summary>
-    public partial class HciVmNetworkingSubnet : IJsonModel<HciVmNetworkingSubnet>
+    public partial class HciVmNetworkingSubnet : IUtf8JsonSerializable, IJsonModel<HciVmNetworkingSubnet>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmNetworkingSubnet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmNetworkingSubnet(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmNetworkingSubnet)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciVmNetworkingSubnet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HciVmNetworkingSubnet)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciVmNetworkingSubnet>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmNetworkingSubnet IPersistableModel<HciVmNetworkingSubnet>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciVmNetworkingSubnet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmNetworkingSubnet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,30 +30,84 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciVmNetworkingSubnet)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AddressPrefix))
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                writer.WritePropertyName("addressPrefix"u8);
+                writer.WriteStringValue(AddressPrefix);
+            }
+            if (Optional.IsCollectionDefined(AddressPrefixes))
+            {
+                writer.WritePropertyName("addressPrefixes"u8);
+                writer.WriteStartArray();
+                foreach (var item in AddressPrefixes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IPAllocationMethod))
+            {
+                writer.WritePropertyName("ipAllocationMethod"u8);
+                writer.WriteStringValue(IPAllocationMethod.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(IPConfigurationReferences))
+            {
+                writer.WritePropertyName("ipConfigurationReferences"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPConfigurationReferences)
+                {
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NetworkSecurityGroup))
+            {
+                writer.WritePropertyName("networkSecurityGroup"u8);
+                ((IJsonModel<WritableSubResource>)NetworkSecurityGroup).Write(writer, options);
+            }
+            if (Optional.IsDefined(RouteTable))
+            {
+                writer.WritePropertyName("routeTable"u8);
+                writer.WriteObjectValue(RouteTable, options);
+            }
+            if (Optional.IsCollectionDefined(IPPools))
+            {
+                writer.WritePropertyName("ipPools"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPPools)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Vlan))
+            {
+                writer.WritePropertyName("vlan"u8);
+                writer.WriteNumberValue(Vlan.Value);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,56 +116,187 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmNetworkingSubnet IJsonModel<HciVmNetworkingSubnet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmNetworkingSubnet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciVmNetworkingSubnet IJsonModel<HciVmNetworkingSubnet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciVmNetworkingSubnet)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciVmNetworkingSubnet(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciVmNetworkingSubnet DeserializeHciVmNetworkingSubnet(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciVmNetworkingSubnet DeserializeHciVmNetworkingSubnet(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SubnetProperties properties = default;
             string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string addressPrefix = default;
+            IList<string> addressPrefixes = default;
+            HciVmIPAllocationMethod? ipAllocationMethod = default;
+            IList<WritableSubResource> ipConfigurationReferences = default;
+            WritableSubResource networkSecurityGroup = default;
+            HciVmNetworkingRouteTable routeTable = default;
+            IList<HciVmNetworkingIPPool> ipPools = default;
+            int? vlan = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = SubnetProperties.DeserializeSubnetProperties(prop.Value, options);
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    name = prop.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("addressPrefix"u8))
+                        {
+                            addressPrefix = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("addressPrefixes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            addressPrefixes = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("ipAllocationMethod"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ipAllocationMethod = new HciVmIPAllocationMethod(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("ipConfigurationReferences"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerHciVmContext.Default));
+                            }
+                            ipConfigurationReferences = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("networkSecurityGroup"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkSecurityGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerHciVmContext.Default);
+                            continue;
+                        }
+                        if (property0.NameEquals("routeTable"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            routeTable = HciVmNetworkingRouteTable.DeserializeHciVmNetworkingRouteTable(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("ipPools"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<HciVmNetworkingIPPool> array = new List<HciVmNetworkingIPPool>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(HciVmNetworkingIPPool.DeserializeHciVmNetworkingIPPool(item, options));
+                            }
+                            ipPools = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("vlan"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vlan = property0.Value.GetInt32();
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new HciVmNetworkingSubnet(properties, name, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HciVmNetworkingSubnet(
+                addressPrefix,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                ipAllocationMethod,
+                ipConfigurationReferences ?? new ChangeTrackingList<WritableSubResource>(),
+                networkSecurityGroup,
+                routeTable,
+                ipPools ?? new ChangeTrackingList<HciVmNetworkingIPPool>(),
+                vlan,
+                name,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HciVmNetworkingSubnet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciVmNetworkingSubnet)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HciVmNetworkingSubnet IPersistableModel<HciVmNetworkingSubnet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmNetworkingSubnet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHciVmNetworkingSubnet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmNetworkingSubnet)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciVmNetworkingSubnet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
-    /// <summary></summary>
-    internal partial class HciVmNetworkInterfaceOperationSource : IOperationSource<HciVmNetworkInterfaceResource>
+    internal class HciVmNetworkInterfaceOperationSource : IOperationSource<HciVmNetworkInterfaceResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal HciVmNetworkInterfaceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         HciVmNetworkInterfaceResource IOperationSource<HciVmNetworkInterfaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HciVmNetworkInterfaceData data = HciVmNetworkInterfaceData.DeserializeHciVmNetworkInterfaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<HciVmNetworkInterfaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
             return new HciVmNetworkInterfaceResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<HciVmNetworkInterfaceResource> IOperationSource<HciVmNetworkInterfaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HciVmNetworkInterfaceData data = HciVmNetworkInterfaceData.DeserializeHciVmNetworkInterfaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HciVmNetworkInterfaceResource(_client, data);
+            var data = ModelReaderWriter.Read<HciVmNetworkInterfaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
+            return await Task.FromResult(new HciVmNetworkInterfaceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

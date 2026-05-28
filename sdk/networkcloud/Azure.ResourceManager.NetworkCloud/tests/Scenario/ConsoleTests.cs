@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class ConsoleTests : NetworkCloudManagementTestBase
     {
-        public ConsoleTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
-        public ConsoleTests(bool isAsync) : base(isAsync) { }
+        public ConsoleTests (bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
+        public ConsoleTests (bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
         [RecordedTest]
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             };
 
             // Create
-            ArmOperation<NetworkCloudVirtualMachineConsoleResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ConsoleName, data, matchConditions: null);
+            ArmOperation<NetworkCloudVirtualMachineConsoleResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ConsoleName, data);
             Assert.AreEqual(ConsoleName, createResult.Value.Data.Name);
 
             // Get
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "newvalue2",
                 }
             };
-            ArmOperation<NetworkCloudVirtualMachineConsoleResource> updateResult = await console.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
+            ArmOperation<NetworkCloudVirtualMachineConsoleResource> updateResult = await console.UpdateAsync(WaitUntil.Completed, patch);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete

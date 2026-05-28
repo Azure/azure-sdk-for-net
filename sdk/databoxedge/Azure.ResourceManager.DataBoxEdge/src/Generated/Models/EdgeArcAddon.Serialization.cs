@@ -11,61 +11,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Arc Addon. </summary>
-    public partial class EdgeArcAddon : DataBoxEdgeRoleAddonData, IJsonModel<EdgeArcAddon>
+    public partial class EdgeArcAddon : IUtf8JsonSerializable, IJsonModel<EdgeArcAddon>
     {
-        /// <summary> Initializes a new instance of <see cref="EdgeArcAddon"/> for deserialization. </summary>
-        internal EdgeArcAddon()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeArcAddon>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeArcAddon(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeArcAddon>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeArcAddon IPersistableModel<EdgeArcAddon>.Create(BinaryData data, ModelReaderWriterOptions options) => (EdgeArcAddon)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeArcAddon>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeArcAddon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -77,105 +30,228 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            writer.WriteStartObject();
+            writer.WritePropertyName("subscriptionId"u8);
+            writer.WriteStringValue(SubscriptionId);
+            writer.WritePropertyName("resourceGroupName"u8);
+            writer.WriteStringValue(ResourceGroupName);
+            writer.WritePropertyName("resourceName"u8);
+            writer.WriteStringValue(ResourceName);
+            writer.WritePropertyName("resourceLocation"u8);
+            writer.WriteStringValue(ResourceLocation);
+            if (options.Format != "W" && Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostPlatform))
+            {
+                writer.WritePropertyName("hostPlatform"u8);
+                writer.WriteStringValue(HostPlatform.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
+            {
+                writer.WritePropertyName("hostPlatformType"u8);
+                writer.WriteStringValue(HostPlatformType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            writer.WriteEndObject();
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeArcAddon IJsonModel<EdgeArcAddon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EdgeArcAddon)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EdgeArcAddon IJsonModel<EdgeArcAddon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEdgeArcAddon(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EdgeArcAddon DeserializeEdgeArcAddon(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeArcAddon DeserializeEdgeArcAddon(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            AddonType kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType resourceType = default;
+            ResourceType type = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AddonType kind = default;
-            ArcAddonProperties properties = default;
-            foreach (var prop in element.EnumerateObject())
+            string subscriptionId = default;
+            string resourceGroupName = default;
+            string resourceName = default;
+            AzureLocation resourceLocation = default;
+            string version = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
+            HostPlatformType? hostPlatformType = default;
+            DataBoxEdgeRoleAddonProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("kind"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    kind = new AddonType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        continue;
+                        if (property0.NameEquals("subscriptionId"u8))
+                        {
+                            subscriptionId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceGroupName"u8))
+                        {
+                            resourceGroupName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceName"u8))
+                        {
+                            resourceName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceLocation"u8))
+                        {
+                            resourceLocation = new AzureLocation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("version"u8))
+                        {
+                            version = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("hostPlatform"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hostPlatform = new DataBoxEdgeOSPlatformType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("hostPlatformType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hostPlatformType = new HostPlatformType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new DataBoxEdgeRoleAddonProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxEdgeContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("kind"u8))
-                {
-                    kind = new AddonType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    properties = ArcAddonProperties.DeserializeArcAddonProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeArcAddon(
                 id,
                 name,
-                resourceType,
+                type,
                 systemData,
-                additionalBinaryDataProperties,
                 kind,
-                properties);
+                serializedAdditionalRawData,
+                subscriptionId,
+                resourceGroupName,
+                resourceName,
+                resourceLocation,
+                version,
+                hostPlatform,
+                hostPlatformType,
+                provisioningState);
         }
+
+        BinaryData IPersistableModel<EdgeArcAddon>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeArcAddon IPersistableModel<EdgeArcAddon>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEdgeArcAddon(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeArcAddon>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

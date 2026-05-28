@@ -309,11 +309,9 @@ namespace Azure.ResourceManager.Monitor.Tests
                 true,
                 scopes,
                 new TimeSpan(0, 1, 0),
+                new TimeSpan(0, 5, 0),
                 new MetricAlertSingleResourceMultipleMetricCriteria() { AllOf = { metricCriteria } })
-            {
-                MonitorWindowSize = TimeSpan.FromMinutes(5),
-                Actions = { metricAlertAction }
-            };
+            { Actions = { metricAlertAction } };
         }
         #endregion
 

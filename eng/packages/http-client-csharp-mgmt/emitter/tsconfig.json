@@ -20,8 +20,7 @@
     "types": ["node"],
     "lib": ["es2022", "DOM"],
     "experimentalDecorators": true,
-    "newLine": "LF",
-    "skipLibCheck": true
+    "newLine": "LF"
   },
   "include": [
     "src/**/*.ts",

@@ -7,14 +7,24 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes what transforms were applied before matching. </summary>
+    /// <summary>
+    /// Describes what transforms were applied before matching.
+    /// Serialized Name: TransformType
+    /// </summary>
     public readonly partial struct TransformType : IEquatable<TransformType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="TransformType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TransformType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string LowercaseValue = "Lowercase";
         private const string UppercaseValue = "Uppercase";
         private const string TrimValue = "Trim";
@@ -22,64 +32,53 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string UriEncodeValue = "UrlEncode";
         private const string RemoveNullsValue = "RemoveNulls";
 
-        /// <summary> Initializes a new instance of <see cref="TransformType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TransformType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Lowercase. </summary>
+        /// <summary>
+        /// Lowercase
+        /// Serialized Name: TransformType.Lowercase
+        /// </summary>
         public static TransformType Lowercase { get; } = new TransformType(LowercaseValue);
-
-        /// <summary> Gets the Uppercase. </summary>
+        /// <summary>
+        /// Uppercase
+        /// Serialized Name: TransformType.Uppercase
+        /// </summary>
         public static TransformType Uppercase { get; } = new TransformType(UppercaseValue);
-
-        /// <summary> Gets the Trim. </summary>
+        /// <summary>
+        /// Trim
+        /// Serialized Name: TransformType.Trim
+        /// </summary>
         public static TransformType Trim { get; } = new TransformType(TrimValue);
-
-        /// <summary> Gets the UriDecode. </summary>
+        /// <summary>
+        /// UrlDecode
+        /// Serialized Name: TransformType.UrlDecode
+        /// </summary>
         public static TransformType UriDecode { get; } = new TransformType(UriDecodeValue);
-
-        /// <summary> Gets the UriEncode. </summary>
+        /// <summary>
+        /// UrlEncode
+        /// Serialized Name: TransformType.UrlEncode
+        /// </summary>
         public static TransformType UriEncode { get; } = new TransformType(UriEncodeValue);
-
-        /// <summary> Gets the RemoveNulls. </summary>
+        /// <summary>
+        /// RemoveNulls
+        /// Serialized Name: TransformType.RemoveNulls
+        /// </summary>
         public static TransformType RemoveNulls { get; } = new TransformType(RemoveNullsValue);
-
         /// <summary> Determines if two <see cref="TransformType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TransformType left, TransformType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="TransformType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TransformType left, TransformType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="TransformType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TransformType"/>. </summary>
         public static implicit operator TransformType(string value) => new TransformType(value);
 
-        /// <summary> Converts a string to a <see cref="TransformType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator TransformType?(string value) => value == null ? null : new TransformType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TransformType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(TransformType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

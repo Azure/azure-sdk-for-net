@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ResourceGraph;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    /// <summary> Successfully executed facet containing additional statistics on the response of a query. </summary>
-    public partial class FacetResult : Facet, IJsonModel<FacetResult>
+    public partial class FacetResult : IUtf8JsonSerializable, IJsonModel<FacetResult>
     {
-        /// <summary> Initializes a new instance of <see cref="FacetResult"/> for deserialization. </summary>
-        internal FacetResult()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FacetResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Facet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFacetResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FacetResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceGraphContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FacetResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FacetResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FacetResult IPersistableModel<FacetResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (FacetResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FacetResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FacetResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FacetResult)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("totalRecords"u8);
             writer.WriteNumberValue(TotalRecords);
@@ -86,85 +41,113 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             writer.WriteNumberValue(Count);
             writer.WritePropertyName("data"u8);
 #if NET6_0_OR_GREATER
-            writer.WriteRawValue(Data);
+				writer.WriteRawValue(Data);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Data))
+            using (JsonDocument document = JsonDocument.Parse(Data, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FacetResult IJsonModel<FacetResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FacetResult)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Facet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FacetResult IJsonModel<FacetResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FacetResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFacetResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FacetResult DeserializeFacetResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static FacetResult DeserializeFacetResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string expression = default;
-            string resultType = "FacetResult";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long totalRecords = default;
             int count = default;
             BinaryData data = default;
-            foreach (var prop in element.EnumerateObject())
+            string expression = default;
+            string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("expression"u8))
+                if (property.NameEquals("totalRecords"u8))
                 {
-                    expression = prop.Value.GetString();
+                    totalRecords = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("resultType"u8))
+                if (property.NameEquals("count"u8))
                 {
-                    resultType = prop.Value.GetString();
+                    count = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("totalRecords"u8))
+                if (property.NameEquals("data"u8))
                 {
-                    totalRecords = prop.Value.GetInt64();
+                    data = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (prop.NameEquals("count"u8))
+                if (property.NameEquals("expression"u8))
                 {
-                    count = prop.Value.GetInt32();
+                    expression = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("data"u8))
+                if (property.NameEquals("resultType"u8))
                 {
-                    data = BinaryData.FromString(prop.Value.GetRawText());
+                    resultType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new FacetResult(
                 expression,
                 resultType,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 totalRecords,
                 count,
                 data);
         }
+
+        BinaryData IPersistableModel<FacetResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceGraphContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FacetResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FacetResult IPersistableModel<FacetResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FacetResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeFacetResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FacetResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FacetResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

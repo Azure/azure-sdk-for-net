@@ -35,11 +35,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
@@ -56,11 +51,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
-            }
-            if (Optional.IsDefined(IdentitySelector))
-            {
-                writer.WritePropertyName("identitySelector"u8);
-                writer.WriteObjectValue(IdentitySelector, options);
             }
             writer.WriteEndObject();
         }
@@ -85,25 +75,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            NetworkFabricManagedServiceIdentityPatch identity = default;
             IDictionary<string, string> tags = default;
             string annotation = default;
             string hostName = default;
             string serialNumber = default;
-            NetworkFabricIdentitySelectorPatch identitySelector = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -142,15 +121,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             serialNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("identitySelector"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            identitySelector = NetworkFabricIdentitySelectorPatch.DeserializeNetworkFabricIdentitySelectorPatch(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -160,14 +130,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkDevicePatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                identity,
-                annotation,
-                hostName,
-                serialNumber,
-                identitySelector);
+            return new NetworkDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation, hostName, serialNumber);
         }
 
         BinaryData IPersistableModel<NetworkDevicePatch>.Write(ModelReaderWriterOptions options)

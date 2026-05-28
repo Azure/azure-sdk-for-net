@@ -105,10 +105,11 @@ namespace Azure.Storage
                 // tenantId should be the guid as seen in this example: https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize
                 tenantId = new Uri(authUri).Segments[1].Trim('/');
 
-                string resourceId = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource_id");
-                if (resourceId != null)
+                string scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource_id");
+                if (scope != null)
                 {
-                    _scopes = new string[] { Constants.CreateDefaultScope(resourceId) };
+                    scope += Constants.DefaultScope;
+                    _scopes = new string[] { scope };
                 }
 
                 TokenRequestContext context = new TokenRequestContext(_scopes, message.Request.ClientRequestId, tenantId: tenantId);

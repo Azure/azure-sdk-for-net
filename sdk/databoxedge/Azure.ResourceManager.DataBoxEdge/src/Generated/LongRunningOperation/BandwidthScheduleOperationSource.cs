@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary></summary>
-    internal partial class BandwidthScheduleOperationSource : IOperationSource<BandwidthScheduleResource>
+    internal class BandwidthScheduleOperationSource : IOperationSource<BandwidthScheduleResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal BandwidthScheduleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         BandwidthScheduleResource IOperationSource<BandwidthScheduleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            BandwidthScheduleData data = BandwidthScheduleData.DeserializeBandwidthScheduleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<BandwidthScheduleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new BandwidthScheduleResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<BandwidthScheduleResource> IOperationSource<BandwidthScheduleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            BandwidthScheduleData data = BandwidthScheduleData.DeserializeBandwidthScheduleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new BandwidthScheduleResource(_client, data);
+            var data = ModelReaderWriter.Read<BandwidthScheduleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            return await Task.FromResult(new BandwidthScheduleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct KubernetesClusterFeatureRequired : IEquatable<KubernetesClusterFeatureRequired>
     {
         private readonly string _value;
-        /// <summary> A required feature. </summary>
-        private const string TrueValue = "True";
-        /// <summary> An optional feature. </summary>
-        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterFeatureRequired"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KubernetesClusterFeatureRequired(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> A required feature. </summary>
+        private const string TrueValue = "True";
+        private const string FalseValue = "False";
+
+        /// <summary> True. </summary>
         public static KubernetesClusterFeatureRequired True { get; } = new KubernetesClusterFeatureRequired(TrueValue);
-
-        /// <summary> An optional feature. </summary>
+        /// <summary> False. </summary>
         public static KubernetesClusterFeatureRequired False { get; } = new KubernetesClusterFeatureRequired(FalseValue);
-
         /// <summary> Determines if two <see cref="KubernetesClusterFeatureRequired"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KubernetesClusterFeatureRequired left, KubernetesClusterFeatureRequired right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="KubernetesClusterFeatureRequired"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KubernetesClusterFeatureRequired left, KubernetesClusterFeatureRequired right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="KubernetesClusterFeatureRequired"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesClusterFeatureRequired"/>. </summary>
         public static implicit operator KubernetesClusterFeatureRequired(string value) => new KubernetesClusterFeatureRequired(value);
 
-        /// <summary> Converts a string to a <see cref="KubernetesClusterFeatureRequired"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesClusterFeatureRequired?(string value) => value == null ? null : new KubernetesClusterFeatureRequired(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KubernetesClusterFeatureRequired other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(KubernetesClusterFeatureRequired other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

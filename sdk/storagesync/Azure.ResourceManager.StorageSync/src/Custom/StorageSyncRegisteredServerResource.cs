@@ -48,7 +48,25 @@ namespace Azure.ResourceManager.StorageSync
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method no longer works in all API versions. Please use the different UpdateAsync instead.", false)]
         public virtual async Task<ArmOperation<StorageSyncRegisteredServerResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-            => await UpdateAsync(waitUntil, new StorageSyncRegisteredServerPatch(content.Id, content.Name, content.ResourceType, content.SystemData, null, new RegisteredServerUpdateProperties(content.UseIdentity, content.ApplicationId, null)), cancellationToken).ConfigureAwait(false);
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Update");
+            scope.Start();
+            try
+            {
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Add a new registered server.
@@ -78,6 +96,24 @@ namespace Azure.ResourceManager.StorageSync
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method no longer works in all API versions. Please use the different Update instead.", false)]
         public virtual ArmOperation<StorageSyncRegisteredServerResource> Update(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-            => Update(waitUntil, new StorageSyncRegisteredServerPatch(content.Id, content.Name, content.ResourceType, content.SystemData, null, new RegisteredServerUpdateProperties(content.UseIdentity, content.ApplicationId, null)), cancellationToken);
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Update");
+            scope.Start();
+            try
+            {
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content, cancellationToken);
+                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -15,51 +14,35 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     public readonly partial struct CloudHsmClusterPublicNetworkAccess : IEquatable<CloudHsmClusterPublicNetworkAccess>
     {
         private readonly string _value;
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPublicNetworkAccess"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CloudHsmClusterPublicNetworkAccess(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+
+        /// <summary> Disabled. </summary>
         public static CloudHsmClusterPublicNetworkAccess Disabled { get; } = new CloudHsmClusterPublicNetworkAccess(DisabledValue);
-
         /// <summary> Determines if two <see cref="CloudHsmClusterPublicNetworkAccess"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CloudHsmClusterPublicNetworkAccess left, CloudHsmClusterPublicNetworkAccess right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CloudHsmClusterPublicNetworkAccess"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CloudHsmClusterPublicNetworkAccess left, CloudHsmClusterPublicNetworkAccess right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CloudHsmClusterPublicNetworkAccess"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudHsmClusterPublicNetworkAccess"/>. </summary>
         public static implicit operator CloudHsmClusterPublicNetworkAccess(string value) => new CloudHsmClusterPublicNetworkAccess(value);
 
-        /// <summary> Converts a string to a <see cref="CloudHsmClusterPublicNetworkAccess"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CloudHsmClusterPublicNetworkAccess?(string value) => value == null ? null : new CloudHsmClusterPublicNetworkAccess(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CloudHsmClusterPublicNetworkAccess other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CloudHsmClusterPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

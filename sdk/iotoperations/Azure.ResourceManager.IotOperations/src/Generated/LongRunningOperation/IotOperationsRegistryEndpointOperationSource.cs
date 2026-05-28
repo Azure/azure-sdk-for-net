@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotOperations
 {
-    /// <summary></summary>
-    internal partial class IotOperationsRegistryEndpointOperationSource : IOperationSource<IotOperationsRegistryEndpointResource>
+    internal class IotOperationsRegistryEndpointOperationSource : IOperationSource<IotOperationsRegistryEndpointResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal IotOperationsRegistryEndpointOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         IotOperationsRegistryEndpointResource IOperationSource<IotOperationsRegistryEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            IotOperationsRegistryEndpointData data = IotOperationsRegistryEndpointData.DeserializeIotOperationsRegistryEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<IotOperationsRegistryEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
             return new IotOperationsRegistryEndpointResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<IotOperationsRegistryEndpointResource> IOperationSource<IotOperationsRegistryEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            IotOperationsRegistryEndpointData data = IotOperationsRegistryEndpointData.DeserializeIotOperationsRegistryEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new IotOperationsRegistryEndpointResource(_client, data);
+            var data = ModelReaderWriter.Read<IotOperationsRegistryEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
+            return await Task.FromResult(new IotOperationsRegistryEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

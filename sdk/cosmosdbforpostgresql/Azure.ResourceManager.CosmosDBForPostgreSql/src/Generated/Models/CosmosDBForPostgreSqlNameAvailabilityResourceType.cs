@@ -7,59 +7,42 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    /// <summary> Resource type used for name availability verification. </summary>
+    /// <summary> Resource type used for verification. </summary>
     public readonly partial struct CosmosDBForPostgreSqlNameAvailabilityResourceType : IEquatable<CosmosDBForPostgreSqlNameAvailabilityResourceType>
     {
         private readonly string _value;
-        private const string ServerGroupsV2Value = "Microsoft.DBforPostgreSQL/serverGroupsv2";
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CosmosDBForPostgreSqlNameAvailabilityResourceType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the ServerGroupsV2. </summary>
+        private const string ServerGroupsV2Value = "Microsoft.DBforPostgreSQL/serverGroupsv2";
+
+        /// <summary> Microsoft.DBforPostgreSQL/serverGroupsv2. </summary>
         public static CosmosDBForPostgreSqlNameAvailabilityResourceType ServerGroupsV2 { get; } = new CosmosDBForPostgreSqlNameAvailabilityResourceType(ServerGroupsV2Value);
-
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBForPostgreSqlNameAvailabilityResourceType left, CosmosDBForPostgreSqlNameAvailabilityResourceType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBForPostgreSqlNameAvailabilityResourceType left, CosmosDBForPostgreSqlNameAvailabilityResourceType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/>. </summary>
         public static implicit operator CosmosDBForPostgreSqlNameAvailabilityResourceType(string value) => new CosmosDBForPostgreSqlNameAvailabilityResourceType(value);
 
-        /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlNameAvailabilityResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBForPostgreSqlNameAvailabilityResourceType?(string value) => value == null ? null : new CosmosDBForPostgreSqlNameAvailabilityResourceType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBForPostgreSqlNameAvailabilityResourceType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CosmosDBForPostgreSqlNameAvailabilityResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

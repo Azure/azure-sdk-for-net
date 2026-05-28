@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> A SKU for a resource. </summary>
-    public partial class AvsResourceSku : IJsonModel<AvsResourceSku>
+    public partial class AvsResourceSku : IUtf8JsonSerializable, IJsonModel<AvsResourceSku>
     {
-        /// <summary> Initializes a new instance of <see cref="AvsResourceSku"/> for deserialization. </summary>
-        internal AvsResourceSku()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsResourceSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvsResourceSku PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAvsResourceSku(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AvsResourceSku)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AvsResourceSku)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AvsResourceSku>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AvsResourceSku IPersistableModel<AvsResourceSku>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AvsResourceSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvsResourceSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsResourceSku)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType.ToString());
             writer.WritePropertyName("name"u8);
@@ -101,14 +55,14 @@ namespace Azure.ResourceManager.Avs.Models
             }
             writer.WritePropertyName("locations"u8);
             writer.WriteStartArray();
-            foreach (AzureLocation item in Locations)
+            foreach (var item in Locations)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("locationInfo"u8);
             writer.WriteStartArray();
-            foreach (AvsResourceSkuLocationInfo item in LocationInfo)
+            foreach (var item in LocationInfo)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -117,7 +71,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
-                foreach (AvsResourceSkuCapabilities item in Capabilities)
+                foreach (var item in Capabilities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -125,20 +79,20 @@ namespace Azure.ResourceManager.Avs.Models
             }
             writer.WritePropertyName("restrictions"u8);
             writer.WriteStartArray();
-            foreach (AvsResourceSkuRestrictions item in Restrictions)
+            foreach (var item in Restrictions)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -147,27 +101,22 @@ namespace Azure.ResourceManager.Avs.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AvsResourceSku IJsonModel<AvsResourceSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvsResourceSku JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AvsResourceSku IJsonModel<AvsResourceSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AvsResourceSku)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAvsResourceSku(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AvsResourceSku DeserializeAvsResourceSku(JsonElement element, ModelReaderWriterOptions options)
+        internal static AvsResourceSku DeserializeAvsResourceSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -181,72 +130,73 @@ namespace Azure.ResourceManager.Avs.Models
             IReadOnlyList<AvsResourceSkuLocationInfo> locationInfo = default;
             IReadOnlyList<AvsResourceSkuCapabilities> capabilities = default;
             IReadOnlyList<AvsResourceSkuRestrictions> restrictions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("resourceType"u8))
+                if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = new AvsResourceSkuResourceType(prop.Value.GetString());
+                    resourceType = new AvsResourceSkuResourceType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("tier"u8))
+                if (property.NameEquals("tier"u8))
                 {
-                    tier = prop.Value.GetString();
+                    tier = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("size"u8))
+                if (property.NameEquals("size"u8))
                 {
-                    size = prop.Value.GetString();
+                    size = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("family"u8))
+                if (property.NameEquals("family"u8))
                 {
-                    family = prop.Value.GetString();
+                    family = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("locations"u8))
+                if (property.NameEquals("locations"u8))
                 {
                     List<AzureLocation> array = new List<AzureLocation>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
                 }
-                if (prop.NameEquals("locationInfo"u8))
+                if (property.NameEquals("locationInfo"u8))
                 {
                     List<AvsResourceSkuLocationInfo> array = new List<AvsResourceSkuLocationInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(AvsResourceSkuLocationInfo.DeserializeAvsResourceSkuLocationInfo(item, options));
                     }
                     locationInfo = array;
                     continue;
                 }
-                if (prop.NameEquals("capabilities"u8))
+                if (property.NameEquals("capabilities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AvsResourceSkuCapabilities> array = new List<AvsResourceSkuCapabilities>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(AvsResourceSkuCapabilities.DeserializeAvsResourceSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
                 }
-                if (prop.NameEquals("restrictions"u8))
+                if (property.NameEquals("restrictions"u8))
                 {
                     List<AvsResourceSkuRestrictions> array = new List<AvsResourceSkuRestrictions>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(AvsResourceSkuRestrictions.DeserializeAvsResourceSkuRestrictions(item, options));
                     }
@@ -255,9 +205,10 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AvsResourceSku(
                 resourceType,
                 name,
@@ -268,7 +219,38 @@ namespace Azure.ResourceManager.Avs.Models
                 locationInfo,
                 capabilities ?? new ChangeTrackingList<AvsResourceSkuCapabilities>(),
                 restrictions,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AvsResourceSku>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AvsResourceSku)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AvsResourceSku IPersistableModel<AvsResourceSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsResourceSku>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAvsResourceSku(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsResourceSku)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AvsResourceSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

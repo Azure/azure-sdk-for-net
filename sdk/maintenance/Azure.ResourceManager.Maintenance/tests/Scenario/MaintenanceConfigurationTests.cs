@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             MaintenanceConfigurationResource config1 = await CreateMaintenanceConfiguration();
             MaintenanceConfigurationResource config2 = await CreateMaintenanceConfiguration();
 
-            var list = await _resourceGroup.GetMaintenanceConfigurations().GetAllAsync().ToEnumerableAsync();
+            var list = await _configCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(list.Count >= 2);
             Assert.IsNotEmpty(list);
             Assert.IsTrue(list.Exists(item => item.Data.Name == config1.Data.Name));
@@ -94,16 +94,14 @@ namespace Azure.ResourceManager.Maintenance.Tests
                 Namespace = "Microsoft.Maintenance",
                 MaintenanceScope = MaintenanceScope.InGuestPatch,
                 Visibility = MaintenanceConfigurationVisibility.Custom,
-                StartOn = new DateTimeOffset(2024, 12, 31, 14, 0, 0, TimeSpan.Zero),
-                ExpireOn = new DateTimeOffset(9999, 12, 31, 0, 0, 0, TimeSpan.Zero),
+                StartOn = DateTimeOffset.Parse("2024-12-31 14:00"),
+                ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
                 Duration = TimeSpan.Parse("03:00"),
                 TimeZone = "Pacific Standard Time",
                 RecurEvery = "Day",
-
-                // TODO: These tests are commented out for patch release.
-                //InstallPatches = new MaintenancePatchConfiguration(MaintenanceRebootOption.Always,
-                //    new MaintenanceWindowsPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, false, null),
-                //    new MaintenanceLinuxPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, null), null)
+                InstallPatches = new MaintenancePatchConfiguration(MaintenanceRebootOption.Always,
+                    new MaintenanceWindowsPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, false, null),
+                    new MaintenanceLinuxPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, null), null)
             };
             data.ExtensionProperties.Add("InGuestPatchMode", "User");
 

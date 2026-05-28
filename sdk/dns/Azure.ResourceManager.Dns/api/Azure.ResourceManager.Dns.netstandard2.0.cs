@@ -762,6 +762,7 @@ namespace Azure.ResourceManager.Dns.Models
         public static Azure.ResourceManager.Dns.DnsSoaRecordData DnsSoaRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, Azure.ResourceManager.Dns.Models.DnsSoaRecordInfo soaRecords = null) { throw null; }
         public static Azure.ResourceManager.Dns.DnsSrvRecordData DnsSrvRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsSrvRecordInfo> srvRecords = null) { throw null; }
         public static Azure.ResourceManager.Dns.DnsTxtRecordData DnsTxtRecordData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> metadata = null, long? ttl = default(long?), string fqdn = null, string provisioningState = null, Azure.ResourceManager.Resources.Models.WritableSubResource targetResource = null, System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsTxtRecordInfo> txtRecords = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Dns.DnsZoneData DnsZoneData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, System.Collections.Generic.IEnumerable<string> nameServers, Azure.ResourceManager.Dns.Models.DnsZoneType? zoneType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> registrationVirtualNetworks, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> resolutionVirtualNetworks) { throw null; }
         public static Azure.ResourceManager.Dns.DnsZoneData DnsZoneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), long? maxNumberOfRecords = default(long?), long? maxNumberOfRecordsPerRecord = default(long?), long? numberOfRecords = default(long?), System.Collections.Generic.IEnumerable<string> nameServers = null, Azure.ResourceManager.Dns.Models.DnsZoneType? zoneType = default(Azure.ResourceManager.Dns.Models.DnsZoneType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> registrationVirtualNetworks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> resolutionVirtualNetworks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dns.Models.DnsSigningKey> signingKeys = null) { throw null; }
     }
@@ -880,18 +881,13 @@ namespace Azure.ResourceManager.Dns.Models
     {
         A = 0,
         Aaaa = 1,
-        Caa = 2,
         CAA = 2,
         Cname = 3,
         MX = 4,
         NS = 5,
-        Ptr = 6,
         PTR = 6,
-        Soa = 7,
         SOA = 7,
-        Srv = 8,
         SRV = 8,
-        Txt = 9,
         TXT = 9,
         Tlsa = 10,
         DS = 11,

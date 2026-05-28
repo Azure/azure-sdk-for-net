@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Grafana
 {
-    /// <summary></summary>
-    internal partial class GrafanaIntegrationFabricOperationSource : IOperationSource<GrafanaIntegrationFabricResource>
+    internal class GrafanaIntegrationFabricOperationSource : IOperationSource<GrafanaIntegrationFabricResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal GrafanaIntegrationFabricOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         GrafanaIntegrationFabricResource IOperationSource<GrafanaIntegrationFabricResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GrafanaIntegrationFabricData data = GrafanaIntegrationFabricData.DeserializeGrafanaIntegrationFabricData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<GrafanaIntegrationFabricData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
             return new GrafanaIntegrationFabricResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<GrafanaIntegrationFabricResource> IOperationSource<GrafanaIntegrationFabricResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GrafanaIntegrationFabricData data = GrafanaIntegrationFabricData.DeserializeGrafanaIntegrationFabricData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GrafanaIntegrationFabricResource(_client, data);
+            var data = ModelReaderWriter.Read<GrafanaIntegrationFabricData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
+            return await Task.FromResult(new GrafanaIntegrationFabricResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

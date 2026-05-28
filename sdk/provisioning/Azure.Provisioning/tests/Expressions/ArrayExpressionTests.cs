@@ -45,9 +45,9 @@ namespace Azure.Provisioning.Tests.Expressions
                 );
 
             static void AssertExpression(string expected, ArrayExpression expression)
-                => Assert.That(
-                   expression.ToString().NormalizeLineEndings(),
-                   Is.EqualTo(expected.NormalizeLineEndings())
+                => Assert.AreEqual(
+                   expected.NormalizeLineEndings(),
+                   expression.ToString().NormalizeLineEndings()
                 );
         }
     }

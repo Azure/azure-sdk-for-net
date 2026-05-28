@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Deployment status collection ARM resource.
-    /// Serialized Name: CsmDeploymentStatusCollection
-    /// </summary>
+    /// <summary> Deployment status collection ARM resource. </summary>
     internal partial class CsmDeploymentStatusCollection
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CsmDeploymentStatusCollection"/>. </summary>
-        /// <param name="value">
-        /// The CsmDeploymentStatus items on this page
-        /// Serialized Name: CsmDeploymentStatusCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CsmDeploymentStatusCollection(IEnumerable<CsmDeploymentStatus> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CsmDeploymentStatusCollection"/>. </summary>
-        /// <param name="value">
-        /// The CsmDeploymentStatus items on this page
-        /// Serialized Name: CsmDeploymentStatusCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: CsmDeploymentStatusCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CsmDeploymentStatusCollection(IReadOnlyList<CsmDeploymentStatus> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CsmDeploymentStatusCollection(IReadOnlyList<CsmDeploymentStatus> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The CsmDeploymentStatus items on this page
-        /// Serialized Name: CsmDeploymentStatusCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<CsmDeploymentStatus> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: CsmDeploymentStatusCollection.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

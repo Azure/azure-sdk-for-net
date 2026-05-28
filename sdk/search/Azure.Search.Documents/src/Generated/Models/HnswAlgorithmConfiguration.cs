@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,20 +16,27 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="HnswAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public HnswAlgorithmConfiguration(string name) : base(name, VectorSearchAlgorithmKind.Hnsw)
+        public HnswAlgorithmConfiguration(string name) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
+            Kind = VectorSearchAlgorithmKind.Hnsw;
         }
 
         /// <summary> Initializes a new instance of <see cref="HnswAlgorithmConfiguration"/>. </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
-        /// <param name="kind"> Type of VectorSearchAlgorithmConfiguration. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> The name of the kind of algorithm being configured for use with vector search. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Contains the parameters specific to HNSW algorithm. </param>
-        internal HnswAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, HnswParameters parameters) : base(name, kind, additionalBinaryDataProperties)
+        internal HnswAlgorithmConfiguration(string name, VectorSearchAlgorithmKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, HnswParameters parameters) : base(name, kind, serializedAdditionalRawData)
         {
             Parameters = parameters;
+            Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HnswAlgorithmConfiguration"/> for deserialization. </summary>
+        internal HnswAlgorithmConfiguration()
+        {
         }
 
         /// <summary> Contains the parameters specific to HNSW algorithm. </summary>

@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Specs.Azure.ClientGenerator.Core.Access;
+using _Specs_.Azure.ClientGenerator.Core.Access;
 using Azure;
 using NUnit.Framework;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Specs.Azure.ClientGenerator.Core.Access._InternalOperation;
-using Specs.Azure.ClientGenerator.Core.Access._PublicOperation;
-using Specs.Azure.ClientGenerator.Core.Access._RelativeModelInOperation;
-using Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation;
+using _Specs_.Azure.ClientGenerator.Core.Access._InternalOperation;
+using _Specs_.Azure.ClientGenerator.Core.Access._PublicOperation;
+using _Specs_.Azure.ClientGenerator.Core.Access._RelativeModelInOperation;
+using _Specs_.Azure.ClientGenerator.Core.Access._SharedModelInOperation;
 
 namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Access
 {

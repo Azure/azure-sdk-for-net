@@ -241,7 +241,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // Get the latest ETag
                 ETag? etagBeforeUpdate = (await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomWithWifiTwinId)).Value.ETag;
-                Assert.That(etagBeforeUpdate, Is.Not.Null);
+                Assert.IsNotNull(etagBeforeUpdate);
 
                 // Patch component again, but with the now out of date ETag
                 JsonPatchDocument secondComponentUpdatePatchDocument = new JsonPatchDocument();

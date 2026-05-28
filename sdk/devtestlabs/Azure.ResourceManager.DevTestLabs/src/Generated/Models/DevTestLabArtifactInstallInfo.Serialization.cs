@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.DevTestLabs;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of an artifact. </summary>
-    public partial class DevTestLabArtifactInstallInfo : IJsonModel<DevTestLabArtifactInstallInfo>
+    public partial class DevTestLabArtifactInstallInfo : IUtf8JsonSerializable, IJsonModel<DevTestLabArtifactInstallInfo>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevTestLabArtifactInstallInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabArtifactInstallInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDevTestLabArtifactInstallInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabArtifactInstallInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabArtifactInstallInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevTestLabArtifactInstallInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevTestLabArtifactInstallInfo IPersistableModel<DevTestLabArtifactInstallInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevTestLabArtifactInstallInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabArtifactInstallInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabArtifactInstallInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabArtifactInstallInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ArtifactId))
             {
                 writer.WritePropertyName("artifactId"u8);
@@ -88,7 +48,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
-                foreach (DevTestLabArtifactParameter item in Parameters)
+                foreach (var item in Parameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -114,15 +74,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("installTime"u8);
                 writer.WriteStringValue(InstallOn.Value, "O");
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -131,27 +91,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevTestLabArtifactInstallInfo IJsonModel<DevTestLabArtifactInstallInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevTestLabArtifactInstallInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DevTestLabArtifactInstallInfo IJsonModel<DevTestLabArtifactInstallInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabArtifactInstallInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabArtifactInstallInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDevTestLabArtifactInstallInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DevTestLabArtifactInstallInfo DeserializeDevTestLabArtifactInstallInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static DevTestLabArtifactInstallInfo DeserializeDevTestLabArtifactInstallInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -162,63 +117,65 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             string status = default;
             string deploymentStatusMessage = default;
             string vmExtensionStatusMessage = default;
-            DateTimeOffset? installOn = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            DateTimeOffset? installTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("artifactId"u8))
+                if (property.NameEquals("artifactId"u8))
                 {
-                    artifactId = prop.Value.GetString();
+                    artifactId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("artifactTitle"u8))
+                if (property.NameEquals("artifactTitle"u8))
                 {
-                    artifactTitle = prop.Value.GetString();
+                    artifactTitle = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("parameters"u8))
+                if (property.NameEquals("parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DevTestLabArtifactParameter> array = new List<DevTestLabArtifactParameter>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(DevTestLabArtifactParameter.DeserializeDevTestLabArtifactParameter(item, options));
                     }
                     parameters = array;
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deploymentStatusMessage"u8))
+                if (property.NameEquals("deploymentStatusMessage"u8))
                 {
-                    deploymentStatusMessage = prop.Value.GetString();
+                    deploymentStatusMessage = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("vmExtensionStatusMessage"u8))
+                if (property.NameEquals("vmExtensionStatusMessage"u8))
                 {
-                    vmExtensionStatusMessage = prop.Value.GetString();
+                    vmExtensionStatusMessage = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("installTime"u8))
+                if (property.NameEquals("installTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    installOn = prop.Value.GetDateTimeOffset("O");
+                    installTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabArtifactInstallInfo(
                 artifactId,
                 artifactTitle,
@@ -226,8 +183,39 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 status,
                 deploymentStatusMessage,
                 vmExtensionStatusMessage,
-                installOn,
-                additionalBinaryDataProperties);
+                installTime,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabArtifactInstallInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabArtifactInstallInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevTestLabsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabArtifactInstallInfo IPersistableModel<DevTestLabArtifactInstallInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabArtifactInstallInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDevTestLabArtifactInstallInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabArtifactInstallInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

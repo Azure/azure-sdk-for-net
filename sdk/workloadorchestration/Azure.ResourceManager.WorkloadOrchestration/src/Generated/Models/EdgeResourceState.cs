@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public readonly partial struct EdgeResourceState : IEquatable<EdgeResourceState>
     {
         private readonly string _value;
-        /// <summary> Resource is active. </summary>
-        private const string ActiveValue = "active";
-        /// <summary> Resource is inactive. </summary>
-        private const string InactiveValue = "inactive";
 
         /// <summary> Initializes a new instance of <see cref="EdgeResourceState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeResourceState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string ActiveValue = "active";
+        private const string InactiveValue = "inactive";
 
         /// <summary> Resource is active. </summary>
         public static EdgeResourceState Active { get; } = new EdgeResourceState(ActiveValue);
-
         /// <summary> Resource is inactive. </summary>
         public static EdgeResourceState Inactive { get; } = new EdgeResourceState(InactiveValue);
-
         /// <summary> Determines if two <see cref="EdgeResourceState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeResourceState left, EdgeResourceState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="EdgeResourceState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeResourceState left, EdgeResourceState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="EdgeResourceState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeResourceState"/>. </summary>
         public static implicit operator EdgeResourceState(string value) => new EdgeResourceState(value);
 
-        /// <summary> Converts a string to a <see cref="EdgeResourceState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator EdgeResourceState?(string value) => value == null ? null : new EdgeResourceState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeResourceState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(EdgeResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

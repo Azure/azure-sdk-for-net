@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DependencyMap;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.DependencyMap.Models
     public readonly partial struct ExportDependenciesStatusCode : IEquatable<ExportDependenciesStatusCode>
     {
         private readonly string _value;
-        /// <summary> Operation completed but no data was found for the requested time range. </summary>
-        private const string NoMatchValue = "NoMatch";
-        /// <summary> Operation completed with data found for the entire requested time range. </summary>
-        private const string CompleteMatchValue = "CompleteMatch";
-        /// <summary> Operation completed with data found for a portion of the requested time range. </summary>
-        private const string PartialMatchValue = "PartialMatch";
 
         /// <summary> Initializes a new instance of <see cref="ExportDependenciesStatusCode"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExportDependenciesStatusCode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string NoMatchValue = "NoMatch";
+        private const string CompleteMatchValue = "CompleteMatch";
+        private const string PartialMatchValue = "PartialMatch";
 
         /// <summary> Operation completed but no data was found for the requested time range. </summary>
         public static ExportDependenciesStatusCode NoMatch { get; } = new ExportDependenciesStatusCode(NoMatchValue);
-
         /// <summary> Operation completed with data found for the entire requested time range. </summary>
         public static ExportDependenciesStatusCode CompleteMatch { get; } = new ExportDependenciesStatusCode(CompleteMatchValue);
-
         /// <summary> Operation completed with data found for a portion of the requested time range. </summary>
         public static ExportDependenciesStatusCode PartialMatch { get; } = new ExportDependenciesStatusCode(PartialMatchValue);
-
         /// <summary> Determines if two <see cref="ExportDependenciesStatusCode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExportDependenciesStatusCode left, ExportDependenciesStatusCode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ExportDependenciesStatusCode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExportDependenciesStatusCode left, ExportDependenciesStatusCode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ExportDependenciesStatusCode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportDependenciesStatusCode"/>. </summary>
         public static implicit operator ExportDependenciesStatusCode(string value) => new ExportDependenciesStatusCode(value);
 
-        /// <summary> Converts a string to a <see cref="ExportDependenciesStatusCode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ExportDependenciesStatusCode?(string value) => value == null ? null : new ExportDependenciesStatusCode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExportDependenciesStatusCode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ExportDependenciesStatusCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

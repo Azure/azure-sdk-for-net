@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> State Store Resource Rule properties. </summary>
-    public partial class StateStoreResourceRule : IJsonModel<StateStoreResourceRule>
+    public partial class StateStoreResourceRule : IUtf8JsonSerializable, IJsonModel<StateStoreResourceRule>
     {
-        /// <summary> Initializes a new instance of <see cref="StateStoreResourceRule"/> for deserialization. </summary>
-        internal StateStoreResourceRule()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StateStoreResourceRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StateStoreResourceRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StateStoreResourceRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStateStoreResourceRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StateStoreResourceRule)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StateStoreResourceRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StateStoreResourceRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StateStoreResourceRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StateStoreResourceRule IPersistableModel<StateStoreResourceRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StateStoreResourceRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StateStoreResourceRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,36 +28,32 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StateStoreResourceRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StateStoreResourceRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StateStoreResourceRule)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
             writer.WritePropertyName("keys"u8);
             writer.WriteStartArray();
-            foreach (string item in Keys)
+            foreach (var item in Keys)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -112,70 +62,91 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StateStoreResourceRule IJsonModel<StateStoreResourceRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StateStoreResourceRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StateStoreResourceRule IJsonModel<StateStoreResourceRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StateStoreResourceRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StateStoreResourceRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StateStoreResourceRule)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStateStoreResourceRule(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StateStoreResourceRule DeserializeStateStoreResourceRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static StateStoreResourceRule DeserializeStateStoreResourceRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             StateStoreResourceKeyType keyType = default;
             IList<string> keys = default;
-            StateStoreResourceDefinitionMethod @method = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            StateStoreResourceDefinitionMethod method = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("keyType"u8))
+                if (property.NameEquals("keyType"u8))
                 {
-                    keyType = new StateStoreResourceKeyType(prop.Value.GetString());
+                    keyType = new StateStoreResourceKeyType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("keys"u8))
+                if (property.NameEquals("keys"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     keys = array;
                     continue;
                 }
-                if (prop.NameEquals("method"u8))
+                if (property.NameEquals("method"u8))
                 {
-                    @method = new StateStoreResourceDefinitionMethod(prop.Value.GetString());
+                    method = new StateStoreResourceDefinitionMethod(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new StateStoreResourceRule(keyType, keys, @method, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StateStoreResourceRule(keyType, keys, method, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StateStoreResourceRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StateStoreResourceRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StateStoreResourceRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StateStoreResourceRule IPersistableModel<StateStoreResourceRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StateStoreResourceRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeStateStoreResourceRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StateStoreResourceRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StateStoreResourceRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

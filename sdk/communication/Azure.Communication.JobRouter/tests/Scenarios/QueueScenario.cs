@@ -27,8 +27,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var channelResponse = GenerateUniqueId($"Channel-SQ-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
-                    new LongestIdleMode())
-                { Name = "Simple-Queue-Distribution" });
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
@@ -45,7 +44,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.That(job.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
         }
 
         [Test]
@@ -57,8 +56,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var channelResponse = GenerateUniqueId($"Channel-StaticLabel-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
-                    new LongestIdleMode())
-                { Name = "Simple-Queue-Distribution" });
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
@@ -81,8 +79,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.That(job.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
-            Assert.That(queueResponse.Value.Id, Is.EqualTo(job.Value.QueueId));
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
+            Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }
 
         [Test]
@@ -94,8 +92,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var channelResponse = GenerateUniqueId($"Channel-FQ-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
-                    new LongestIdleMode())
-                { Name = "Simple-Queue-Distribution", });
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution", });
             var fallbackQueueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-default_Q"),
                     distributionPolicyResponse.Value.Id)
@@ -118,8 +115,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.That(job.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
-            Assert.That(fallbackQueueResponse.Value.Id, Is.EqualTo(job.Value.QueueId));
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
+            Assert.AreEqual(job.Value.QueueId, fallbackQueueResponse.Value.Id);
         }
 
         [Test]
@@ -131,8 +128,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var channelResponse = GenerateUniqueId($"Channel-CPWithConditionalLabels-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
-                    new LongestIdleMode())
-                { Name = "Simple-Queue-Distribution" });
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
@@ -170,8 +166,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
 
-            Assert.That(job.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
-            Assert.That(queueResponse.Value.Id, Is.EqualTo(job.Value.QueueId));
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
+            Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }
 
         [Test]
@@ -184,8 +180,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     TimeSpan.FromMinutes(10),
-                    new LongestIdleMode())
-                { Name = "Simple-Queue-Distribution", });
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution", });
 
             var uniquePrefix = GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-3");
 
@@ -234,8 +229,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.That(job.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
-            Assert.That(queueResponse.Value.Id, Is.EqualTo(job.Value.QueueId));
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
+            Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }
 
         [Test]
@@ -248,8 +243,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     TimeSpan.FromMinutes(10),
-                    new LongestIdleMode())
-                { Name = "Simple-Queue-Distribution" });
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
 
             var uniquePrefix = GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}");
 
@@ -342,10 +336,10 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
 
-            Assert.That(job1.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
-            Assert.That(job2.Value.Status, Is.EqualTo(RouterJobStatus.Queued));
-            Assert.That(queue1Response.Value.Id, Is.EqualTo(job1.Value.QueueId));
-            Assert.That(queue2Response.Value.Id, Is.EqualTo(job2.Value.QueueId));
+            Assert.AreEqual(RouterJobStatus.Queued, job1.Value.Status);
+            Assert.AreEqual(RouterJobStatus.Queued, job2.Value.Status);
+            Assert.AreEqual(job1.Value.QueueId, queue1Response.Value.Id);
+            Assert.AreEqual(job2.Value.QueueId, queue2Response.Value.Id);
         }
     }
 }

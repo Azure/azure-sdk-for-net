@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistryAssetResource"/> and their operations.
-    /// Each <see cref="DeviceRegistryAssetResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DeviceRegistryAssetCollection"/> instance call the GetDeviceRegistryAssets method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DeviceRegistryAssetResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DeviceRegistryAssetCollection"/> instance call the GetDeviceRegistryAssets method from an instance of the parent resource.
     /// </summary>
     public partial class DeviceRegistryAssetCollection : ArmCollection, IEnumerable<DeviceRegistryAssetResource>, IAsyncEnumerable<DeviceRegistryAssetResource>
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryAssetResource.ResourceType, out string deviceRegistryAssetApiVersion);
             _assetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetResource.ResourceType.Namespace, Diagnostics);
-            _assetsRestClient = new Assets(_assetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryAssetApiVersion ?? "2026-03-01-preview");
+            _assetsRestClient = new Assets(_assetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryAssetApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -51,27 +51,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Create a Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assets_CreateOrReplace. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a Asset. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -113,23 +97,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Create a Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assets_CreateOrReplace. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a Asset. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -171,23 +139,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Get a Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assets_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a Asset. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
@@ -220,23 +172,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Get a Asset
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assets_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a Asset. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
@@ -269,23 +205,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// List Asset resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assets_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List Asset resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryAssetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistryAssetResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -294,26 +214,10 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetByResourceGroupAsyncCollectionResultOfT(_assetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryAssetCollection.GetAll"), data => new DeviceRegistryAssetResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetByResourceGroupAsyncCollectionResultOfT(_assetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistryAssetResource(Client, data));
         }
 
-        /// <summary>
-        /// List Asset resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assets_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List Asset resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryAssetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistryAssetResource> GetAll(CancellationToken cancellationToken = default)
@@ -322,26 +226,10 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetByResourceGroupCollectionResultOfT(_assetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryAssetCollection.GetAll"), data => new DeviceRegistryAssetResource(Client, data));
+            return new PageableWrapper<DeviceRegistryAssetData, DeviceRegistryAssetResource>(new AssetsGetByResourceGroupCollectionResultOfT(_assetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistryAssetResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assets_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
@@ -382,23 +270,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assets_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
@@ -439,23 +311,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assets_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
@@ -500,23 +356,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Assets_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="assetName"> Asset name parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>

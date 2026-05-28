@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct MabServerType : IEquatable<MabServerType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="MabServerType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MabServerType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string UnknownValue = "Unknown";
         private const string IaasVmContainerValue = "IaasVMContainer";
@@ -31,91 +38,53 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string StorageContainerValue = "StorageContainer";
         private const string GenericContainerValue = "GenericContainer";
 
-        /// <summary> Initializes a new instance of <see cref="MabServerType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MabServerType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static MabServerType Invalid { get; } = new MabServerType(InvalidValue);
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static MabServerType Unknown { get; } = new MabServerType(UnknownValue);
-
-        /// <summary> Gets the IaasVmContainer. </summary>
+        /// <summary> IaasVMContainer. </summary>
         public static MabServerType IaasVmContainer { get; } = new MabServerType(IaasVmContainerValue);
-
-        /// <summary> Gets the IaasVmServiceContainer. </summary>
+        /// <summary> IaasVMServiceContainer. </summary>
         public static MabServerType IaasVmServiceContainer { get; } = new MabServerType(IaasVmServiceContainerValue);
-
-        /// <summary> Gets the DpmContainer. </summary>
+        /// <summary> DPMContainer. </summary>
         public static MabServerType DpmContainer { get; } = new MabServerType(DpmContainerValue);
-
-        /// <summary> Gets the AzureBackupServerContainer. </summary>
+        /// <summary> AzureBackupServerContainer. </summary>
         public static MabServerType AzureBackupServerContainer { get; } = new MabServerType(AzureBackupServerContainerValue);
-
-        /// <summary> Gets the MabContainer. </summary>
+        /// <summary> MABContainer. </summary>
         public static MabServerType MabContainer { get; } = new MabServerType(MabContainerValue);
-
-        /// <summary> Gets the Cluster. </summary>
+        /// <summary> Cluster. </summary>
         public static MabServerType Cluster { get; } = new MabServerType(ClusterValue);
-
-        /// <summary> Gets the AzureSqlContainer. </summary>
+        /// <summary> AzureSqlContainer. </summary>
         public static MabServerType AzureSqlContainer { get; } = new MabServerType(AzureSqlContainerValue);
-
-        /// <summary> Gets the Windows. </summary>
+        /// <summary> Windows. </summary>
         public static MabServerType Windows { get; } = new MabServerType(WindowsValue);
-
-        /// <summary> Gets the VCenter. </summary>
+        /// <summary> VCenter. </summary>
         public static MabServerType VCenter { get; } = new MabServerType(VCenterValue);
-
-        /// <summary> Gets the VmAppContainer. </summary>
+        /// <summary> VMAppContainer. </summary>
         public static MabServerType VmAppContainer { get; } = new MabServerType(VmAppContainerValue);
-
-        /// <summary> Gets the SqlAvailabilityGroupWorkLoadContainer. </summary>
+        /// <summary> SQLAGWorkLoadContainer. </summary>
         public static MabServerType SqlAvailabilityGroupWorkLoadContainer { get; } = new MabServerType(SqlAvailabilityGroupWorkLoadContainerValue);
-
-        /// <summary> Gets the StorageContainer. </summary>
+        /// <summary> StorageContainer. </summary>
         public static MabServerType StorageContainer { get; } = new MabServerType(StorageContainerValue);
-
-        /// <summary> Gets the GenericContainer. </summary>
+        /// <summary> GenericContainer. </summary>
         public static MabServerType GenericContainer { get; } = new MabServerType(GenericContainerValue);
-
         /// <summary> Determines if two <see cref="MabServerType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MabServerType left, MabServerType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="MabServerType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MabServerType left, MabServerType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="MabServerType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MabServerType"/>. </summary>
         public static implicit operator MabServerType(string value) => new MabServerType(value);
 
-        /// <summary> Converts a string to a <see cref="MabServerType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator MabServerType?(string value) => value == null ? null : new MabServerType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MabServerType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(MabServerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -86,8 +86,8 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.That(ex.Message, Is.Not.Empty);
-                Assert.That(ex.Message.Contains("401"), Is.True); // Unauthorized
+                Assert.IsNotEmpty(ex.Message);
+                Assert.True(ex.Message.Contains("401")); // Unauthorized
                 Console.WriteLine(ex.Message);
             }
             catch (Exception ex)
@@ -150,7 +150,7 @@ namespace Azure.Communication.Sms.Tests
                 SmsSendResult firstMessageResult = firstMessageResponse.Value;
                 SmsSendResult secondMessageResult = secondMessageResponse.Value;
 
-                Assert.That(secondMessageResult.MessageId, Is.Not.EqualTo(firstMessageResult.MessageId));
+                Assert.AreNotEqual(firstMessageResult.MessageId, secondMessageResult.MessageId);
                 AssertSmsSendingHappyPath(firstMessageResult);
                 AssertSmsSendingHappyPath(secondMessageResult);
             }
@@ -178,7 +178,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("from"));
+                Assert.AreEqual("from", ex.ParamName);
                 return;
             }
             Assert.Fail("SendAsync should have thrown an exception.");
@@ -201,7 +201,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName?.ToLower(), Is.EqualTo(nameof(MessagingConnectOptions.ApiKey).ToLower()));
+                Assert.AreEqual(nameof(MessagingConnectOptions.ApiKey).ToLower(), ex.ParamName?.ToLower());
                 return;
             }
             Assert.Fail("SendAsync should have thrown an exception.");
@@ -224,7 +224,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName?.ToLower(), Is.EqualTo(nameof(MessagingConnectOptions.Partner).ToLower()));
+                Assert.AreEqual(nameof(MessagingConnectOptions.Partner).ToLower(), ex.ParamName?.ToLower());
                 return;
             }
             Assert.Fail("SendAsync should have thrown an exception.");
@@ -244,7 +244,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("to"));
+                Assert.AreEqual("to", ex.ParamName);
                 return;
             }
             Assert.Fail("SendAsync should have thrown an exception.");
@@ -263,7 +263,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("from"));
+                Assert.AreEqual("from", ex.ParamName);
                 return;
             }
             Assert.Fail("CheckAsync should have thrown an exception.");
@@ -282,7 +282,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("to"));
+                Assert.AreEqual("to", ex.ParamName);
                 return;
             }
             Assert.Fail("CheckAsync should have thrown an exception.");
@@ -308,7 +308,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("to"));
+                Assert.AreEqual("to", ex.ParamName);
                 return;
             }
             Assert.Fail("CheckAsync should have thrown an exception.");
@@ -348,7 +348,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("from"));
+                Assert.AreEqual("from", ex.ParamName);
                 return;
             }
             Assert.Fail("AddAsync should have thrown an exception.");
@@ -367,7 +367,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("to"));
+                Assert.AreEqual("to", ex.ParamName);
                 return;
             }
             Assert.Fail("AddAsync should have thrown an exception.");
@@ -393,7 +393,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("to"));
+                Assert.AreEqual("to", ex.ParamName);
                 return;
             }
             Assert.Fail("AddAsync should have thrown an exception.");
@@ -433,7 +433,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("from"));
+                Assert.AreEqual("from", ex.ParamName);
                 return;
             }
             Assert.Fail("RemoveAsync should have thrown an exception.");
@@ -452,7 +452,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("to"));
+                Assert.AreEqual("to", ex.ParamName);
                 return;
             }
             Assert.Fail("RemoveAsync should have thrown an exception.");
@@ -478,7 +478,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("to"));
+                Assert.AreEqual("to", ex.ParamName);
                 return;
             }
             Assert.Fail("RemoveAsync should have thrown an exception.");
@@ -521,7 +521,7 @@ namespace Azure.Communication.Sms.Tests
                   from: TestEnvironment.FromPhoneNumber,
                   to: to);
 
-                Assert.That(checkResult.Value[0].IsOptedOut, Is.True);
+                Assert.IsTrue(checkResult.Value[0].IsOptedOut);
             }
             catch (Exception ex)
             {
@@ -551,7 +551,7 @@ namespace Azure.Communication.Sms.Tests
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
-                Assert.That(checkResult.Value[0].IsOptedOut, Is.False);
+                Assert.IsFalse(checkResult.Value[0].IsOptedOut);
             }
             catch (Exception ex)
             {
@@ -577,8 +577,8 @@ namespace Azure.Communication.Sms.Tests
                   from: TestEnvironment.FromPhoneNumber,
                   to: to);
 
-                Assert.That(checkResult.Value[0].IsOptedOut, Is.True);
-                Assert.That(checkResult.Value[1].IsOptedOut, Is.True);
+                Assert.IsTrue(checkResult.Value[0].IsOptedOut);
+                Assert.IsTrue(checkResult.Value[1].IsOptedOut);
             }
             catch (Exception ex)
             {
@@ -608,7 +608,7 @@ namespace Azure.Communication.Sms.Tests
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
-                Assert.That(checkResult.Value[0].IsOptedOut, Is.False);
+                Assert.IsFalse(checkResult.Value[0].IsOptedOut);
             }
             catch (Exception ex)
             {
@@ -620,9 +620,9 @@ namespace Azure.Communication.Sms.Tests
 
         private void AssertSmsSendingHappyPath(SmsSendResult sendResult)
         {
-            Assert.That(sendResult.Successful, Is.True);
-            Assert.That(sendResult.HttpStatusCode, Is.EqualTo(202));
-            Assert.That(string.IsNullOrWhiteSpace(sendResult.MessageId), Is.False);
+            Assert.True(sendResult.Successful);
+            Assert.AreEqual(202, sendResult.HttpStatusCode);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(sendResult.MessageId));
         }
 
         private void AssertSmsSendingRawResponseHappyPath(Stream contentStream)
@@ -632,7 +632,7 @@ namespace Azure.Communication.Sms.Tests
                 StreamReader streamReader = new StreamReader(contentStream);
                 streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
                 string rawResponse = streamReader.ReadToEnd();
-                Assert.That(rawResponse.Contains("\"repeatabilityResult\":\"accepted\""), Is.True);
+                Assert.True(rawResponse.Contains("\"repeatabilityResult\":\"accepted\""));
                 return;
             }
             Assert.Fail("Response content stream is empty.");

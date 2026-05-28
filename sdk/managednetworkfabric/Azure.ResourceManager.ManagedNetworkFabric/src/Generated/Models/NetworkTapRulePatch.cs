@@ -23,28 +23,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkTapRulePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
         /// <param name="tapRulesUri"> Network Tap Rules file URL. </param>
         /// <param name="matchConfigurations"> List of match configurations. </param>
         /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
-        /// <param name="identitySelector"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
-        /// <param name="globalNetworkTapRuleActions"> Global network tap rule actions. </param>
-        internal NetworkTapRulePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricManagedServiceIdentityPatch identity, string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, NetworkFabricIdentitySelectorPatch identitySelector, GlobalNetworkTapRuleActionPatchProperties globalNetworkTapRuleActions) : base(tags, serializedAdditionalRawData)
+        internal NetworkTapRulePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations) : base(tags, serializedAdditionalRawData)
         {
-            Identity = identity;
             Annotation = annotation;
             ConfigurationType = configurationType;
             TapRulesUri = tapRulesUri;
             MatchConfigurations = matchConfigurations;
             DynamicMatchConfigurations = dynamicMatchConfigurations;
-            IdentitySelector = identitySelector;
-            GlobalNetworkTapRuleActions = globalNetworkTapRuleActions;
         }
 
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Input method to configure Network Tap Rule. </summary>
@@ -55,9 +47,5 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<NetworkTapRuleMatchConfiguration> MatchConfigurations { get; }
         /// <summary> List of dynamic match configurations. </summary>
         public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get; }
-        /// <summary> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </summary>
-        public NetworkFabricIdentitySelectorPatch IdentitySelector { get; set; }
-        /// <summary> Global network tap rule actions. </summary>
-        public GlobalNetworkTapRuleActionPatchProperties GlobalNetworkTapRuleActions { get; set; }
     }
 }

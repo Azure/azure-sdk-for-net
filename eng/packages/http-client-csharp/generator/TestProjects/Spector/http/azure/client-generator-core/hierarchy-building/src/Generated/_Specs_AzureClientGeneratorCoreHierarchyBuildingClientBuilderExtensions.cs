@@ -8,7 +8,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using Specs.Azure.ClientGenerator.Core.HierarchyBuilding;
+using _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding;
 
 namespace Microsoft.Extensions.Azure
 {

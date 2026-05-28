@@ -101,8 +101,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus?), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferDetails offerDetails = null) { throw null; }
         public static Azure.ResourceManager.LambdaTestHyperExecute.LambdaTestHyperExecuteOrganizationData LambdaTestHyperExecuteOrganizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationPatch LambdaTestHyperExecuteOrganizationPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties LambdaTestHyperExecuteOrganizationProperties(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails marketplace = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails user = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState? provisioningState = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState?), int partnerLicensesSubscribed = 0, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties = null) { throw null; }
-        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties LambdaTestHyperExecuteOrganizationProperties(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails marketplace, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails user, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState? provisioningState, int? partnerLicensesSubscribed, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties) { throw null; }
+        public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOrganizationProperties LambdaTestHyperExecuteOrganizationProperties(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails marketplace = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails user = null, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState? provisioningState = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState?), int? partnerLicensesSubscribed = default(int?), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties = null) { throw null; }
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 LambdaTestHyperExecuteSingleSignOnPropertiesV2(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType type = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType), Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState? state = default(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState?), string enterpriseAppId = null, string uri = null, System.Collections.Generic.IEnumerable<string> aadDomains = null) { throw null; }
     }
     public partial class LambdaTestHyperExecuteMarketplaceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails>
@@ -132,7 +131,9 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceSubscriptionStatus (string value) { throw null; }
@@ -161,10 +162,8 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     }
     public partial class LambdaTestHyperExecuteOfferPartnerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties>
     {
-        public LambdaTestHyperExecuteOfferPartnerProperties(int subscribedLicensesCount) { }
-        [System.ObsoleteAttribute("This property has been renamed to SubscribedLicensesCount.")]
+        public LambdaTestHyperExecuteOfferPartnerProperties(int licensesSubscribed) { }
         public int LicensesSubscribed { get { throw null; } set { } }
-        public int SubscribedLicensesCount { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -185,7 +184,9 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState (string value) { throw null; }
@@ -212,9 +213,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     {
         public LambdaTestHyperExecuteOrganizationProperties(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails marketplace, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails user, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferPartnerProperties partnerProperties) { }
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteMarketplaceDetails Marketplace { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This property has been renamed to PartnerSubscribedLicensesCount.")]
         public int? PartnerLicensesSubscribed { get { throw null; } set { } }
-        public int PartnerSubscribedLicensesCount { get { throw null; } set { } }
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteOfferProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnPropertiesV2 SingleSignOnProperties { get { throw null; } set { } }
         public Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteUserDetails User { get { throw null; } set { } }
@@ -256,7 +255,9 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState Enable { get { throw null; } }
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState Initial { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnState (string value) { throw null; }
@@ -273,7 +274,9 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType OpenId { get { throw null; } }
         public static Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType Saml { get { throw null; } }
         public bool Equals(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType left, Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType right) { throw null; }
         public static implicit operator Azure.ResourceManager.LambdaTestHyperExecute.Models.LambdaTestHyperExecuteSingleSignOnType (string value) { throw null; }

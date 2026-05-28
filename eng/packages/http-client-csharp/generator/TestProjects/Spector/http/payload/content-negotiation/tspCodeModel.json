@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "GetAvatarAsPngRequestAccept",
+      "name": "PngImageContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -38,7 +38,7 @@
     {
       "$id": "5",
       "kind": "constant",
-      "name": "GetAvatarAsPngRequestAccept1",
+      "name": "PngImageContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -54,7 +54,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "GetAvatarAsPngRequestAccept2",
+      "name": "PngImageContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -70,7 +70,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "GetAvatarAsJpegRequestAccept",
+      "name": "JpegImageContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -86,7 +86,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "GetAvatarAsJpegRequestAccept1",
+      "name": "JpegImageContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +102,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "GetAvatarAsJpegRequestAccept2",
+      "name": "JpegImageContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "GetAvatarAsPngRequestAccept3",
+      "name": "PngImageContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -134,7 +134,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "GetAvatarAsPngRequestAccept4",
+      "name": "PngImageContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -150,7 +150,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "GetAvatarAsPngRequestAccept5",
+      "name": "PngImageContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -166,7 +166,7 @@
     {
       "$id": "21",
       "kind": "constant",
-      "name": "GetAvatarAsJsonRequestAccept",
+      "name": "PngImageAsJsonContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -182,7 +182,7 @@
     {
       "$id": "23",
       "kind": "constant",
-      "name": "GetAvatarAsJsonRequestAccept1",
+      "name": "PngImageAsJsonContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -198,7 +198,7 @@
     {
       "$id": "25",
       "kind": "constant",
-      "name": "GetAvatarAsJsonRequestAccept2",
+      "name": "PngImageAsJsonContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -221,11 +221,6 @@
       "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.PngImageAsJson",
       "usage": "Output,Json",
       "decorators": [],
-      "serializationOptions": {
-        "json": {
-          "name": "PngImageAsJson"
-        }
-      },
       "properties": [
         {
           "$id": "28",
@@ -317,7 +312,6 @@
           "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Payload.ContentNegotiation",
       "apiVersions": [],
@@ -354,26 +348,7 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsPng.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "39",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "5"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsPng.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsPng.accept"
                   }
                 ],
                 "responses": [
@@ -382,7 +357,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "40",
+                      "$id": "39",
                       "kind": "bytes",
                       "name": "bytes",
                       "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -393,15 +368,14 @@
                         "name": "contentType",
                         "nameInResponse": "content-type",
                         "type": {
-                          "$ref": "7"
+                          "$ref": "5"
                         }
                       }
                     ],
                     "isErrorResponse": false,
                     "contentTypes": [
                       "image/png"
-                    ],
-                    "serializationOptions": {}
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -411,17 +385,30 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsPng",
-                "decorators": [],
-                "namespace": "Payload.ContentNegotiation.SameBody"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "39"
+                  "$id": "40",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "7"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsPng.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "40"
+                  "$ref": "39"
                 }
               },
               "isOverride": false,
@@ -455,26 +442,7 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsJpeg.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "44",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "11"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsJpeg.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsJpeg.accept"
                   }
                 ],
                 "responses": [
@@ -483,7 +451,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "45",
+                      "$id": "44",
                       "kind": "bytes",
                       "name": "bytes",
                       "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -494,15 +462,14 @@
                         "name": "contentType",
                         "nameInResponse": "content-type",
                         "type": {
-                          "$ref": "13"
+                          "$ref": "11"
                         }
                       }
                     ],
                     "isErrorResponse": false,
                     "contentTypes": [
                       "image/jpeg"
-                    ],
-                    "serializationOptions": {}
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -512,17 +479,30 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsJpeg",
-                "decorators": [],
-                "namespace": "Payload.ContentNegotiation.SameBody"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "44"
+                  "$id": "45",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "13"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.getAvatarAsJpeg.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "45"
+                  "$ref": "44"
                 }
               },
               "isOverride": false,
@@ -560,17 +540,15 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody.endpoint"
+              "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint"
             }
           ],
-          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.ContentNegotiation.SameBody",
           "apiVersions": [],
           "parent": {
             "$ref": "31"
-          },
-          "isMultiServiceClient": false
+          }
         },
         {
           "$id": "49",
@@ -604,26 +582,7 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsPng.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "53",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "17"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsPng.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsPng.accept"
                   }
                 ],
                 "responses": [
@@ -632,7 +591,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "54",
+                      "$id": "53",
                       "kind": "bytes",
                       "name": "bytes",
                       "crossLanguageDefinitionId": "TypeSpec.bytes",
@@ -643,15 +602,14 @@
                         "name": "contentType",
                         "nameInResponse": "content-type",
                         "type": {
-                          "$ref": "19"
+                          "$ref": "17"
                         }
                       }
                     ],
                     "isErrorResponse": false,
                     "contentTypes": [
                       "image/png"
-                    ],
-                    "serializationOptions": {}
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -661,17 +619,30 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsPng",
-                "decorators": [],
-                "namespace": "Payload.ContentNegotiation.DifferentBody"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "53"
+                  "$id": "54",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "19"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsPng.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "54"
+                  "$ref": "53"
                 }
               },
               "isOverride": false,
@@ -705,26 +676,7 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsJson.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "58",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "23"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsJson.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsJson.accept"
                   }
                 ],
                 "responses": [
@@ -740,19 +692,14 @@
                         "name": "contentType",
                         "nameInResponse": "content-type",
                         "type": {
-                          "$ref": "25"
+                          "$ref": "23"
                         }
                       }
                     ],
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -762,12 +709,25 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsJson",
-                "decorators": [],
-                "namespace": "Payload.ContentNegotiation.DifferentBody"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "58"
+                  "$id": "58",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "25"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.getAvatarAsJson.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -810,20 +770,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody.endpoint"
+              "crossLanguageDefinitionId": "Payload.ContentNegotiation.endpoint"
             }
           ],
-          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Payload.ContentNegotiation.DifferentBody",
           "apiVersions": [],
           "parent": {
             "$ref": "31"
-          },
-          "isMultiServiceClient": false
+          }
         }
-      ],
-      "isMultiServiceClient": false
+      ]
     }
   ]
 }

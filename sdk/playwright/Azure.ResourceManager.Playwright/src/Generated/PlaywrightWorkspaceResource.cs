@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Playwright
         {
             TryGetApiVersion(ResourceType, out string playwrightWorkspaceApiVersion);
             _playwrightWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", ResourceType.Namespace, Diagnostics);
-            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2026-02-01-preview");
+            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -89,31 +89,11 @@ namespace Azure.ResourceManager.Playwright
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Get a PlaywrightWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PlaywrightWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a PlaywrightWorkspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PlaywrightWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -141,27 +121,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Get a PlaywrightWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PlaywrightWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a PlaywrightWorkspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PlaywrightWorkspaceResource> Get(CancellationToken cancellationToken = default)
         {
@@ -189,27 +149,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Updates a Playwright workspace resource synchronously.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PlaywrightWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Updates a Playwright workspace resource synchronously. </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -241,27 +181,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Updates a Playwright workspace resource synchronously.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PlaywrightWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Updates a Playwright workspace resource synchronously. </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -293,27 +213,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Deletes a Playwright workspace resource asynchronously.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PlaywrightWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Deletes a Playwright workspace resource asynchronously. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -342,27 +242,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Deletes a Playwright workspace resource asynchronously.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PlaywrightWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Deletes a Playwright workspace resource asynchronously. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -428,7 +308,7 @@ namespace Azure.ResourceManager.Playwright
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -476,7 +356,7 @@ namespace Azure.ResourceManager.Playwright
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -519,7 +399,7 @@ namespace Azure.ResourceManager.Playwright
                     PlaywrightWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     PlaywrightWorkspacePatch patch = new PlaywrightWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -562,7 +442,7 @@ namespace Azure.ResourceManager.Playwright
                     PlaywrightWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     PlaywrightWorkspacePatch patch = new PlaywrightWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -608,7 +488,7 @@ namespace Azure.ResourceManager.Playwright
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<PlaywrightWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -654,7 +534,7 @@ namespace Azure.ResourceManager.Playwright
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<PlaywrightWorkspaceResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -665,8 +545,8 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> Gets a collection of PlaywrightWorkspaceQuota in the <see cref="PlaywrightWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of PlaywrightWorkspaceQuota and their operations over a PlaywrightWorkspaceQuotaResource. </returns>
+        /// <summary> Gets a collection of PlaywrightWorkspaceQuotas in the <see cref="PlaywrightWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of PlaywrightWorkspaceQuotas and their operations over a PlaywrightWorkspaceQuotaResource. </returns>
         public virtual PlaywrightWorkspaceQuotaCollection GetAllPlaywrightWorkspaceQuota()
         {
             return GetCachedClient(client => new PlaywrightWorkspaceQuotaCollection(client, Id));

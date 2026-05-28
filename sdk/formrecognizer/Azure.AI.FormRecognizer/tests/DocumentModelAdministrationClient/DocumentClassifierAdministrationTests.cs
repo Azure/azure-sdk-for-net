@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;

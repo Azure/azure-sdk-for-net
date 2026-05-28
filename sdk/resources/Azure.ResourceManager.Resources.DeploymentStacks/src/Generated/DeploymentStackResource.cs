@@ -7,37 +7,46 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.DeploymentStacks.Models;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources.DeploymentStacks
+namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing a DeploymentStack along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeploymentStackResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDeploymentStacks method.
+    /// A Class representing a DeploymentStack along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeploymentStackResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeploymentStackResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/>, <see cref="ResourceGroupResource"/> or <see cref="ManagementGroupResource"/> using the GetDeploymentStack method.
     /// </summary>
     public partial class DeploymentStackResource : ArmResource
     {
-        private readonly ClientDiagnostics _deploymentStacksAtScopeClientDiagnostics;
-        private readonly DeploymentStacksAtScope _deploymentStacksAtScopeRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="DeploymentStackResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="deploymentStackName"> The deploymentStackName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string deploymentStackName)
+        {
+            var resourceId = $"{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _deploymentStackClientDiagnostics;
+        private readonly DeploymentStacksRestOperations _deploymentStackRestClient;
         private readonly DeploymentStackData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/deploymentStacks";
 
-        /// <summary> Initializes a new instance of DeploymentStackResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeploymentStackResource"/> class for mocking. </summary>
         protected DeploymentStackResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentStackResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeploymentStackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeploymentStackResource(ArmClient client, DeploymentStackData data) : this(client, data.Id)
@@ -46,91 +55,71 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentStackResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeploymentStackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeploymentStackResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _deploymentStackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string deploymentStackApiVersion);
-            _deploymentStacksAtScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.DeploymentStacks", ResourceType.Namespace, Diagnostics);
-            _deploymentStacksAtScopeRestClient = new DeploymentStacksAtScope(_deploymentStacksAtScopeClientDiagnostics, Pipeline, Endpoint, deploymentStackApiVersion ?? "2025-07-01");
-            ValidateResourceId(id);
+            _deploymentStackRestClient = new DeploymentStacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentStackApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DeploymentStackData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="deploymentStackName"> The deploymentStackName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string deploymentStackName)
-        {
-            string resourceId = $"{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
-        /// Gets the Deployment stack with the given name.
+        /// Gets a Deployment stack with a given name at specific scope.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentStacksAtScope_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentStackResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeploymentStackResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.Get");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
+                var response = await _deploymentStackRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -141,44 +130,36 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         }
 
         /// <summary>
-        /// Gets the Deployment stack with the given name.
+        /// Gets a Deployment stack with a given name at specific scope.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentStacksAtScope_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentStackResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeploymentStackResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.Get");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
+                var response = _deploymentStackRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -189,23 +170,23 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         }
 
         /// <summary>
-        /// Deletes a Deployment stack by name at the specified scope. When operation completes, status code 200 returned without content.
+        /// Deletes a Deployment stack by name at specific scope. When operation completes, status code 200 returned without content.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentStacksAtScope_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_DeleteAtScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentStackResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,26 +194,18 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         /// <param name="unmanageActionResources"> Flag to indicate delete rather than detach for unmanaged resources. </param>
         /// <param name="unmanageActionResourceGroups"> Flag to indicate delete rather than detach for unmanaged resource groups. </param>
         /// <param name="unmanageActionManagementGroups"> Flag to indicate delete rather than detach for unmanaged management groups. </param>
-        /// <param name="unmanageActionResourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
         /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, UnmanageActionResourceMode? unmanageActionResources = default, UnmanageActionResourceGroupMode? unmanageActionResourceGroups = default, UnmanageActionManagementGroupMode? unmanageActionManagementGroups = default, ResourcesWithoutDeleteSupportAction? unmanageActionResourcesWithoutDeleteSupport = default, bool? bypassStackOutOfSyncError = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, UnmanageActionResourceMode? unmanageActionResources = null, UnmanageActionResourceGroupMode? unmanageActionResourceGroups = null, UnmanageActionManagementGroupMode? unmanageActionManagementGroups = null, bool? bypassStackOutOfSyncError = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.Delete");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, unmanageActionResources?.ToString(), unmanageActionResourceGroups?.ToString(), unmanageActionManagementGroups?.ToString(), unmanageActionResourcesWithoutDeleteSupport?.ToString(), bypassStackOutOfSyncError, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DeploymentStacksArmOperation operation = new DeploymentStacksArmOperation(_deploymentStacksAtScopeClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _deploymentStackRestClient.DeleteAtScopeAsync(Id.Parent, Id.Name, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation(_deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -243,23 +216,23 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         }
 
         /// <summary>
-        /// Deletes a Deployment stack by name at the specified scope. When operation completes, status code 200 returned without content.
+        /// Deletes a Deployment stack by name at specific scope. When operation completes, status code 200 returned without content.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentStacksAtScope_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_DeleteAtScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentStackResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,26 +240,18 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         /// <param name="unmanageActionResources"> Flag to indicate delete rather than detach for unmanaged resources. </param>
         /// <param name="unmanageActionResourceGroups"> Flag to indicate delete rather than detach for unmanaged resource groups. </param>
         /// <param name="unmanageActionManagementGroups"> Flag to indicate delete rather than detach for unmanaged management groups. </param>
-        /// <param name="unmanageActionResourcesWithoutDeleteSupport"> Some resources do not support deletion.  This flag will denote how the stack should handle those resources. </param>
         /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, UnmanageActionResourceMode? unmanageActionResources = default, UnmanageActionResourceGroupMode? unmanageActionResourceGroups = default, UnmanageActionManagementGroupMode? unmanageActionManagementGroups = default, ResourcesWithoutDeleteSupportAction? unmanageActionResourcesWithoutDeleteSupport = default, bool? bypassStackOutOfSyncError = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, UnmanageActionResourceMode? unmanageActionResources = null, UnmanageActionResourceGroupMode? unmanageActionResourceGroups = null, UnmanageActionManagementGroupMode? unmanageActionManagementGroups = null, bool? bypassStackOutOfSyncError = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.Delete");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, unmanageActionResources?.ToString(), unmanageActionResourceGroups?.ToString(), unmanageActionManagementGroups?.ToString(), unmanageActionResourcesWithoutDeleteSupport?.ToString(), bypassStackOutOfSyncError, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DeploymentStacksArmOperation operation = new DeploymentStacksArmOperation(_deploymentStacksAtScopeClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _deploymentStackRestClient.DeleteAtScope(Id.Parent, Id.Name, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError, cancellationToken);
+                var operation = new ResourcesArmOperation(_deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateDeleteAtScopeRequest(Id.Parent, Id.Name, unmanageActionResources, unmanageActionResourceGroups, unmanageActionManagementGroups, bypassStackOutOfSyncError).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -297,269 +262,42 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         }
 
         /// <summary>
-        /// Exports the template used to create the Deployment stack at the specified scope.
+        /// Creates or updates a Deployment stack at specific scope.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentStacksAtScope_ExportTemplate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_CreateOrUpdateAtScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentStackResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeploymentStackTemplateExportResult>> ExportTemplateAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.ExportTemplate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateExportTemplateRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeploymentStackTemplateExportResult> response = Response.FromValue(DeploymentStackTemplateExportResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Exports the template used to create the Deployment stack at the specified scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentStacksAtScope_ExportTemplate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentStackResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeploymentStackTemplateExportResult> ExportTemplate(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.ExportTemplate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateExportTemplateRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeploymentStackTemplateExportResult> response = Response.FromValue(DeploymentStackTemplateExportResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Runs preflight validation on the Deployment stack template at the specified scope to verify its acceptance to Azure Resource Manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/validate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentStacksAtScope_ValidateStack. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentStackResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeploymentStackValidateResult>> ValidateStackAsync(WaitUntil waitUntil, DeploymentStackData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.ValidateStack");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateValidateStackRequest(Id.Parent.ToString(), Id.Name, DeploymentStackData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DeploymentStacksArmOperation<DeploymentStackValidateResult> operation = new DeploymentStacksArmOperation<DeploymentStackValidateResult>(
-                    new DeploymentStackValidateResultOperationSource(),
-                    _deploymentStacksAtScopeClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Runs preflight validation on the Deployment stack template at the specified scope to verify its acceptance to Azure Resource Manager.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/validate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentStacksAtScope_ValidateStack. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentStackResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DeploymentStackValidateResult> ValidateStack(WaitUntil waitUntil, DeploymentStackData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.ValidateStack");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateValidateStackRequest(Id.Parent.ToString(), Id.Name, DeploymentStackData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DeploymentStacksArmOperation<DeploymentStackValidateResult> operation = new DeploymentStacksArmOperation<DeploymentStackValidateResult>(
-                    new DeploymentStackValidateResultOperationSource(),
-                    _deploymentStacksAtScopeClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a DeploymentStack.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentStacksAtScope_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentStackResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="data"> Deployment stack supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeploymentStackResource>> UpdateAsync(WaitUntil waitUntil, DeploymentStackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.Update");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, DeploymentStackData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DeploymentStacksArmOperation<DeploymentStackResource> operation = new DeploymentStacksArmOperation<DeploymentStackResource>(
-                    new DeploymentStackOperationSource(Client),
-                    _deploymentStacksAtScopeClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _deploymentStackRestClient.CreateOrUpdateAtScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -570,55 +308,42 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         }
 
         /// <summary>
-        /// Update a DeploymentStack.
+        /// Creates or updates a Deployment stack at specific scope.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentStacksAtScope_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_CreateOrUpdateAtScope</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeploymentStackResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="data"> Deployment stack supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeploymentStackResource> Update(WaitUntil waitUntil, DeploymentStackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.Update");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentStacksAtScopeRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, DeploymentStackData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DeploymentStacksArmOperation<DeploymentStackResource> operation = new DeploymentStacksArmOperation<DeploymentStackResource>(
-                    new DeploymentStackOperationSource(Client),
-                    _deploymentStacksAtScopeClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _deploymentStackRestClient.CreateOrUpdateAtScope(Id.Parent, Id.Name, data, cancellationToken);
+                var operation = new ResourcesArmOperation<DeploymentStackResource>(new DeploymentStackOperationSource(Client), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -628,7 +353,195 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Exports the template used to create the Deployment stack.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_ExportTemplateAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DeploymentStackTemplateDefinition>> ExportTemplateAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.ExportTemplate");
+            scope.Start();
+            try
+            {
+                var response = await _deploymentStackRestClient.ExportTemplateAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Exports the template used to create the Deployment stack.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/exportTemplate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_ExportTemplateAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DeploymentStackTemplateDefinition> ExportTemplate(CancellationToken cancellationToken = default)
+        {
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.ExportTemplate");
+            scope.Start();
+            try
+            {
+                var response = _deploymentStackRestClient.ExportTemplateAtScope(Id.Parent, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Runs preflight validation on the specific scoped Deployment stack template to verify its acceptance to Azure Resource Manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_ValidateStackAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Deployment stack to validate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DeploymentStackValidateResult>> ValidateStackAsync(WaitUntil waitUntil, DeploymentStackData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.ValidateStack");
+            scope.Start();
+            try
+            {
+                var response = await _deploymentStackRestClient.ValidateStackAtScopeAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation<DeploymentStackValidateResult>(new DeploymentStackValidateResultOperationSource(), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateValidateStackAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Runs preflight validation on the specific scoped Deployment stack template to verify its acceptance to Azure Resource Manager.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_ValidateStackAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Deployment stack to validate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DeploymentStackValidateResult> ValidateStack(WaitUntil waitUntil, DeploymentStackData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.ValidateStack");
+            scope.Start();
+            try
+            {
+                var response = _deploymentStackRestClient.ValidateStackAtScope(Id.Parent, Id.Name, data, cancellationToken);
+                var operation = new ResourcesArmOperation<DeploymentStackValidateResult>(new DeploymentStackValidateResultOperationSource(), _deploymentStackClientDiagnostics, Pipeline, _deploymentStackRestClient.CreateValidateStackAtScopeRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -638,29 +551,23 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.AddTag");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
-                    return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _deploymentStackRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DeploymentStackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentStackData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<DeploymentStackResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -671,7 +578,27 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -681,29 +608,23 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.AddTag");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
-                    return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _deploymentStackRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
+                    return Response.FromValue(new DeploymentStackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentStackData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<DeploymentStackResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -714,38 +635,52 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DeploymentStackResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.SetTags");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
-                    return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _deploymentStackRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DeploymentStackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentStackData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<DeploymentStackResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -756,38 +691,52 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DeploymentStackResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.SetTags");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
-                    return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _deploymentStackRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
+                    return Response.FromValue(new DeploymentStackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentStackData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<DeploymentStackResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -798,7 +747,27 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -806,29 +775,23 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.RemoveTag");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
-                    return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _deploymentStackRestClient.GetAtScopeAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DeploymentStackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentStackData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<DeploymentStackResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -839,7 +802,27 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeploymentStacks_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeploymentStackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -847,29 +830,23 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _deploymentStacksAtScopeClientDiagnostics.CreateScope("DeploymentStackResource.RemoveTag");
+            using var scope = _deploymentStackClientDiagnostics.CreateScope("DeploymentStackResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _deploymentStacksAtScopeRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DeploymentStackData> response = Response.FromValue(DeploymentStackData.FromResponse(result), result);
-                    return Response.FromValue(new DeploymentStackResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _deploymentStackRestClient.GetAtScope(Id.Parent, Id.Name, cancellationToken);
+                    return Response.FromValue(new DeploymentStackResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    DeploymentStackData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<DeploymentStackResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System.Collections.Generic;
-using System.Diagnostics;
-using Moq;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
+using System.Diagnostics;
+using Moq;
 
 namespace Azure.AI.Agents.Persistent.Tests.Utilities
 {

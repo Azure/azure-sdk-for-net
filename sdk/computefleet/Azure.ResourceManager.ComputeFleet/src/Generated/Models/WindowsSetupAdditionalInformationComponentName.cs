@@ -7,59 +7,42 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary></summary>
+    /// <summary> The WindowsSetupAdditionalInformationComponentName. </summary>
     public readonly partial struct WindowsSetupAdditionalInformationComponentName : IEquatable<WindowsSetupAdditionalInformationComponentName>
     {
         private readonly string _value;
-        private const string MicrosoftWindowsShellSetupValue = "Microsoft-Windows-Shell-Setup";
 
         /// <summary> Initializes a new instance of <see cref="WindowsSetupAdditionalInformationComponentName"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WindowsSetupAdditionalInformationComponentName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the MicrosoftWindowsShellSetup. </summary>
+        private const string MicrosoftWindowsShellSetupValue = "Microsoft-Windows-Shell-Setup";
+
+        /// <summary> Microsoft-Windows-Shell-Setup. </summary>
         public static WindowsSetupAdditionalInformationComponentName MicrosoftWindowsShellSetup { get; } = new WindowsSetupAdditionalInformationComponentName(MicrosoftWindowsShellSetupValue);
-
         /// <summary> Determines if two <see cref="WindowsSetupAdditionalInformationComponentName"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WindowsSetupAdditionalInformationComponentName left, WindowsSetupAdditionalInformationComponentName right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="WindowsSetupAdditionalInformationComponentName"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WindowsSetupAdditionalInformationComponentName left, WindowsSetupAdditionalInformationComponentName right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="WindowsSetupAdditionalInformationComponentName"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WindowsSetupAdditionalInformationComponentName"/>. </summary>
         public static implicit operator WindowsSetupAdditionalInformationComponentName(string value) => new WindowsSetupAdditionalInformationComponentName(value);
 
-        /// <summary> Converts a string to a <see cref="WindowsSetupAdditionalInformationComponentName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator WindowsSetupAdditionalInformationComponentName?(string value) => value == null ? null : new WindowsSetupAdditionalInformationComponentName(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WindowsSetupAdditionalInformationComponentName other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(WindowsSetupAdditionalInformationComponentName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

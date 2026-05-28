@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App Runtime configuration. </summary>
     internal partial class Runtime
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="Runtime"/>. </summary>
         public Runtime()
@@ -24,74 +52,25 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="Runtime"/>. </summary>
         /// <param name="java"> Java app configuration. </param>
-        /// <param name="dotnet"> .NET app configuration. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Runtime(RuntimeJava java, RuntimeDotnet dotnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Runtime(RuntimeJava java, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Java = java;
-            Dotnet = dotnet;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Java app configuration. </summary>
-        [WirePath("java")]
         internal RuntimeJava Java { get; set; }
-
-        /// <summary> .NET app configuration. </summary>
-        [WirePath("dotnet")]
-        internal RuntimeDotnet Dotnet { get; set; }
-
         /// <summary> Enable jmx core metrics for the java app. </summary>
         [WirePath("java.enableMetrics")]
         public bool? EnableMetrics
         {
-            get
-            {
-                return Java is null ? default : Java.EnableMetrics;
-            }
+            get => Java is null ? default : Java.EnableMetrics;
             set
             {
                 if (Java is null)
-                {
                     Java = new RuntimeJava();
-                }
                 Java.EnableMetrics = value;
-            }
-        }
-
-        /// <summary> Diagnostic capabilities achieved by java agent. </summary>
-        [WirePath("java.javaAgent")]
-        public ContainerAppRuntimeJavaAgent JavaAgent
-        {
-            get
-            {
-                return Java is null ? default : Java.JavaAgent;
-            }
-            set
-            {
-                if (Java is null)
-                {
-                    Java = new RuntimeJava();
-                }
-                Java.JavaAgent = value;
-            }
-        }
-
-        /// <summary> Auto configure the ASP.NET Core Data Protection feature. </summary>
-        [WirePath("dotnet.autoConfigureDataProtection")]
-        public bool? AutoConfigureDataProtection
-        {
-            get
-            {
-                return Dotnet is null ? default : Dotnet.AutoConfigureDataProtection;
-            }
-            set
-            {
-                if (Dotnet is null)
-                {
-                    Dotnet = new RuntimeDotnet();
-                }
-                Dotnet.AutoConfigureDataProtection = value;
             }
         }
     }

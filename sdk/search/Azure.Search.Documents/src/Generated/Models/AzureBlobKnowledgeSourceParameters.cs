@@ -7,16 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
-using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for Azure Blob Storage knowledge source. </summary>
     public partial class AzureBlobKnowledgeSourceParameters
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/>. </summary>
         /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
@@ -29,43 +56,80 @@ namespace Azure.Search.Documents.Indexes.Models
 
             ConnectionString = connectionString;
             ContainerName = containerName;
+            CreatedResources = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/>. </summary>
+        /// <param name="identity">
+        /// An explicit identity to use for this knowledge source.
+        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
+        /// </param>
         /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
         /// <param name="containerName"> The name of the blob storage container. </param>
         /// <param name="folderPath"> Optional folder path within the container. </param>
-        /// <param name="isADLSGen2"> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </param>
-        /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
+        /// <param name="embeddingModel">
+        /// Optional vectorizer configuration for vectorizing content.
+        /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
+        /// </param>
+        /// <param name="chatCompletionModel">
+        /// Optional chat completion model for image verbalization or context extraction.
+        /// Please note <see cref="KnowledgeAgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KnowledgeAgentAzureOpenAIModel"/>.
+        /// </param>
+        /// <param name="ingestionSchedule"> Optional schedule for data ingestion. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobKnowledgeSourceParameters(string connectionString, string containerName, string folderPath, bool? isADLSGen2, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="disableImageVerbalization"> Indicates whether image verbalization should be disabled. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureBlobKnowledgeSourceParameters(SearchIndexerDataIdentity identity, string connectionString, string containerName, string folderPath, VectorSearchVectorizer embeddingModel, KnowledgeAgentModel chatCompletionModel, IndexingSchedule ingestionSchedule, IReadOnlyDictionary<string, string> createdResources, bool? disableImageVerbalization, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Identity = identity;
             ConnectionString = connectionString;
             ContainerName = containerName;
             FolderPath = folderPath;
-            IsADLSGen2 = isADLSGen2;
-            IngestionParameters = ingestionParameters;
+            EmbeddingModel = embeddingModel;
+            ChatCompletionModel = chatCompletionModel;
+            IngestionSchedule = ingestionSchedule;
             CreatedResources = createdResources;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            DisableImageVerbalization = disableImageVerbalization;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/> for deserialization. </summary>
+        internal AzureBlobKnowledgeSourceParameters()
+        {
+        }
+
+        /// <summary>
+        /// An explicit identity to use for this knowledge source.
+        /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
+        /// </summary>
+        public SearchIndexerDataIdentity Identity { get; set; }
         /// <summary> Key-based connection string or the ResourceId format if using a managed identity. </summary>
         public string ConnectionString { get; set; }
-
         /// <summary> The name of the blob storage container. </summary>
         public string ContainerName { get; set; }
-
         /// <summary> Optional folder path within the container. </summary>
         public string FolderPath { get; set; }
-
-        /// <summary> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </summary>
-        public bool? IsADLSGen2 { get; set; }
-
-        /// <summary> Consolidates all general ingestion settings. </summary>
-        public KnowledgeSourceIngestionParameters IngestionParameters { get; set; }
-
+        /// <summary>
+        /// Optional vectorizer configuration for vectorizing content.
+        /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AIServicesVisionVectorizer"/>, <see cref="AzureMachineLearningVectorizer"/>, <see cref="AzureOpenAIVectorizer"/> and <see cref="WebApiVectorizer"/>.
+        /// </summary>
+        public VectorSearchVectorizer EmbeddingModel { get; set; }
+        /// <summary>
+        /// Optional chat completion model for image verbalization or context extraction.
+        /// Please note <see cref="KnowledgeAgentModel"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="KnowledgeAgentAzureOpenAIModel"/>.
+        /// </summary>
+        public KnowledgeAgentModel ChatCompletionModel { get; set; }
+        /// <summary> Optional schedule for data ingestion. </summary>
+        public IndexingSchedule IngestionSchedule { get; set; }
         /// <summary> Resources created by the knowledge source. </summary>
-        public CreatedResources CreatedResources { get; }
+        public IReadOnlyDictionary<string, string> CreatedResources { get; }
+        /// <summary> Indicates whether image verbalization should be disabled. </summary>
+        public bool? DisableImageVerbalization { get; set; }
     }
 }

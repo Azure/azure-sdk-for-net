@@ -16,7 +16,7 @@ namespace Azure.AI.Vision.ImageAnalysis
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         internal HttpMessage CreateAnalyzeFromImageDataRequest(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language, bool? genderNeutralCaption, IEnumerable<float> smartCropsAspectRatios, string modelVersion, RequestContext context)
         {
@@ -24,10 +24,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.Reset(_endpoint);
             uri.AppendPath("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (visualFeatures != null && !(visualFeatures is ChangeTrackingList<VisualFeaturesImpl> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", visualFeatures, ",", escape: true);
@@ -64,10 +61,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             uri.Reset(_endpoint);
             uri.AppendPath("/computervision", false);
             uri.AppendPath("/imageanalysis:analyze", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (visualFeatures != null && !(visualFeatures is ChangeTrackingList<VisualFeaturesImpl> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("features", visualFeatures, ",", escape: true);

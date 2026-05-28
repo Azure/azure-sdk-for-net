@@ -36,8 +36,7 @@ namespace Azure.ResourceManager.Network.Tests
             };
             Operation<AvailableProvidersList> providersListOperation =
                 await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAvailableProvidersAsync(WaitUntil.Completed, parameters);
-            Response<AvailableProvidersList> providersList = await providersListOperation.WaitForCompletionAsync();
-            ;
+            Response<AvailableProvidersList> providersList = await providersListOperation.WaitForCompletionAsync();;
             Assert.AreEqual("United States", providersList.Value.Countries[0].CountryName);
         }
 
@@ -52,8 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
                 State = "washington"
             };
             Operation<AvailableProvidersList> providersListOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAvailableProvidersAsync(WaitUntil.Completed, parameters);
-            Response<AvailableProvidersList> providersList = await providersListOperation.WaitForCompletionAsync();
-            ;
+            Response<AvailableProvidersList> providersList = await providersListOperation.WaitForCompletionAsync();;
             Assert.AreEqual("United States", providersList.Value.Countries[0].CountryName);
             Assert.AreEqual("washington", providersList.Value.Countries[0].States[0].StateName);
         }
@@ -70,8 +68,7 @@ namespace Azure.ResourceManager.Network.Tests
                 City = "seattle"
             };
             Operation<AvailableProvidersList> providersListOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAvailableProvidersAsync(WaitUntil.Completed, parameters);
-            Response<AvailableProvidersList> providersList = await providersListOperation.WaitForCompletionAsync();
-            ;
+            Response<AvailableProvidersList> providersList = await providersListOperation.WaitForCompletionAsync();;
             Assert.AreEqual("United States", providersList.Value.Countries[0].CountryName);
             Assert.AreEqual("washington", providersList.Value.Countries[0].States[0].StateName);
             Assert.AreEqual("seattle", providersList.Value.Countries[0].States[0].Cities[0].CityName);

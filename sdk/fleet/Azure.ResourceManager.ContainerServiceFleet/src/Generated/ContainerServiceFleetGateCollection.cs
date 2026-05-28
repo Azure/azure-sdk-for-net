@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
@@ -25,75 +24,69 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// </summary>
     public partial class ContainerServiceFleetGateCollection : ArmCollection, IEnumerable<ContainerServiceFleetGateResource>, IAsyncEnumerable<ContainerServiceFleetGateResource>
     {
-        private readonly ClientDiagnostics _gatesClientDiagnostics;
-        private readonly Gates _gatesRestClient;
+        private readonly ClientDiagnostics _containerServiceFleetGateGatesClientDiagnostics;
+        private readonly GatesRestOperations _containerServiceFleetGateGatesRestClient;
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetGateCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetGateCollection"/> class for mocking. </summary>
         protected ContainerServiceFleetGateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetGateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ContainerServiceFleetGateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerServiceFleetGateResource.ResourceType, out string containerServiceFleetGateApiVersion);
-            _gatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetGateResource.ResourceType.Namespace, Diagnostics);
-            _gatesRestClient = new Gates(_gatesClientDiagnostics, Pipeline, Endpoint, containerServiceFleetGateApiVersion ?? "2026-02-01-preview");
-            ValidateResourceId(id);
+            _containerServiceFleetGateGatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetGateResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ContainerServiceFleetGateResource.ResourceType, out string containerServiceFleetGateGatesApiVersion);
+            _containerServiceFleetGateGatesRestClient = new GatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetGateGatesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerServiceFleetResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a Gate
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Gates_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Gates_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="gateName"> The name of the Gate resource, a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         public virtual async Task<Response<ContainerServiceFleetGateResource>> GetAsync(string gateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using DiagnosticScope scope = _gatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Get");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _gatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gateName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerServiceFleetGateData> response = Response.FromValue(ContainerServiceFleetGateData.FromResponse(result), result);
+                var response = await _containerServiceFleetGateGatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetGateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -107,42 +100,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Get a Gate
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Gates_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Gates_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="gateName"> The name of the Gate resource, a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         public virtual Response<ContainerServiceFleetGateResource> Get(string gateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using DiagnosticScope scope = _gatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Get");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _gatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gateName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerServiceFleetGateData> response = Response.FromValue(ContainerServiceFleetGateData.FromResponse(result), result);
+                var response = _containerServiceFleetGateGatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetGateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -156,130 +145,96 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// List Gate resources by Fleet
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Gates_ListByFleet. </description>
+        /// <term>Operation Id</term>
+        /// <description>Gates_ListByFleet</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceFleetGateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServiceFleetGateResource> GetAllAsync(string filter = default, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerServiceFleetGateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceFleetGateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ContainerServiceFleetGateData, ContainerServiceFleetGateResource>(new GatesGetByFleetAsyncCollectionResultOfT(
-                _gatesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                filter,
-                maxCount,
-                skipToken,
-                context,
-                "ContainerServiceFleetGateCollection.GetAll"), data => new ContainerServiceFleetGateResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetGateGatesRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetGateGatesRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetGateResource(Client, ContainerServiceFleetGateData.DeserializeContainerServiceFleetGateData(e)), _containerServiceFleetGateGatesClientDiagnostics, Pipeline, "ContainerServiceFleetGateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Gate resources by Fleet
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Gates_ListByFleet. </description>
+        /// <term>Operation Id</term>
+        /// <description>Gates_ListByFleet</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetGateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServiceFleetGateResource> GetAll(string filter = default, int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerServiceFleetGateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ContainerServiceFleetGateData, ContainerServiceFleetGateResource>(new GatesGetByFleetCollectionResultOfT(
-                _gatesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                filter,
-                maxCount,
-                skipToken,
-                context,
-                "ContainerServiceFleetGateCollection.GetAll"), data => new ContainerServiceFleetGateResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetGateGatesRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetGateGatesRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetGateResource(Client, ContainerServiceFleetGateData.DeserializeContainerServiceFleetGateData(e)), _containerServiceFleetGateGatesClientDiagnostics, Pipeline, "ContainerServiceFleetGateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Gates_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Gates_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="gateName"> The name of the Gate resource, a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string gateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using DiagnosticScope scope = _gatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Exists");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _gatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gateName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerServiceFleetGateData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetGateData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetGateData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerServiceFleetGateGatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,50 +248,36 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Gates_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Gates_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="gateName"> The name of the Gate resource, a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         public virtual Response<bool> Exists(string gateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using DiagnosticScope scope = _gatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Exists");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _gatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gateName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerServiceFleetGateData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetGateData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetGateData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerServiceFleetGateGatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,54 +291,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Gates_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Gates_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="gateName"> The name of the Gate resource, a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerServiceFleetGateResource>> GetIfExistsAsync(string gateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using DiagnosticScope scope = _gatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.GetIfExists");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _gatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gateName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerServiceFleetGateData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetGateData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetGateData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerServiceFleetGateGatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerServiceFleetGateResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetGateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -411,54 +336,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/gates/{gateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Gates_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Gates_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetGateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="gateName"> The name of the Gate resource, a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gateName"/> is null. </exception>
         public virtual NullableResponse<ContainerServiceFleetGateResource> GetIfExists(string gateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gateName, nameof(gateName));
 
-            using DiagnosticScope scope = _gatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.GetIfExists");
+            using var scope = _containerServiceFleetGateGatesClientDiagnostics.CreateScope("ContainerServiceFleetGateCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _gatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gateName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerServiceFleetGateData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetGateData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetGateData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerServiceFleetGateGatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gateName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerServiceFleetGateResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetGateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -478,7 +387,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerServiceFleetGateResource> IAsyncEnumerable<ContainerServiceFleetGateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

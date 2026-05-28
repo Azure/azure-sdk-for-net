@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Information regarding availability of a resource name.
-    /// Serialized Name: ResourceNameAvailability
-    /// </summary>
+    /// <summary> Information regarding availability of a resource name. </summary>
     public partial class AppServiceNameAvailabilityResult
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable">
-        /// &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both.
-        /// Serialized Name: ResourceNameAvailability.nameAvailable
-        /// </param>
-        /// <param name="reason">
-        /// &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable.
-        /// Serialized Name: ResourceNameAvailability.reason
-        /// </param>
-        /// <param name="message">
-        /// If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name.
-        /// Serialized Name: ResourceNameAvailability.message
-        /// </param>
+        /// <param name="isNameAvailable"> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </param>
+        /// <param name="reason"> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </param>
+        /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceNameAvailabilityResult(bool? isNameAvailable, AppServiceNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both.
-        /// Serialized Name: ResourceNameAvailability.nameAvailable
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </summary>
         [WirePath("nameAvailable")]
         public bool? IsNameAvailable { get; }
-        /// <summary>
-        /// &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable.
-        /// Serialized Name: ResourceNameAvailability.reason
-        /// </summary>
+        /// <summary> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </summary>
         [WirePath("reason")]
         public AppServiceNameUnavailableReason? Reason { get; }
-        /// <summary>
-        /// If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name.
-        /// Serialized Name: ResourceNameAvailability.message
-        /// </summary>
+        /// <summary> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </summary>
         [WirePath("message")]
         public string Message { get; }
     }

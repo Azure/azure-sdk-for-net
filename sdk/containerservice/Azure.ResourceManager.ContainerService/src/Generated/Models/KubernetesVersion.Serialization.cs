@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerService;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Kubernetes version profile for given major.minor release. </summary>
-    public partial class KubernetesVersion : IJsonModel<KubernetesVersion>
+    public partial class KubernetesVersion : IUtf8JsonSerializable, IJsonModel<KubernetesVersion>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KubernetesVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersion>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKubernetesVersion(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesVersion)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesVersion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersion>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesVersion)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KubernetesVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KubernetesVersion IPersistableModel<KubernetesVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KubernetesVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubernetesVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +30,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersion>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesVersion)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -83,11 +45,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities, options);
-            }
-            if (Optional.IsDefined(IsDefault))
-            {
-                writer.WritePropertyName("isDefault"u8);
-                writer.WriteBooleanValue(IsDefault.Value);
             }
             if (Optional.IsDefined(IsPreview))
             {
@@ -105,15 +62,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -122,97 +79,207 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KubernetesVersion IJsonModel<KubernetesVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KubernetesVersion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KubernetesVersion IJsonModel<KubernetesVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersion>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesVersion)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKubernetesVersion(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KubernetesVersion DeserializeKubernetesVersion(JsonElement element, ModelReaderWriterOptions options)
+        internal static KubernetesVersion DeserializeKubernetesVersion(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string version = default;
             KubernetesVersionCapabilities capabilities = default;
-            bool? isDefault = default;
             bool? isPreview = default;
             IReadOnlyDictionary<string, KubernetesPatchVersion> patchVersions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("version"u8))
+                if (property.NameEquals("version"u8))
                 {
-                    version = prop.Value.GetString();
+                    version = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("capabilities"u8))
+                if (property.NameEquals("capabilities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capabilities = KubernetesVersionCapabilities.DeserializeKubernetesVersionCapabilities(prop.Value, options);
+                    capabilities = KubernetesVersionCapabilities.DeserializeKubernetesVersionCapabilities(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("isDefault"u8))
+                if (property.NameEquals("isPreview"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDefault = prop.Value.GetBoolean();
+                    isPreview = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isPreview"u8))
+                if (property.NameEquals("patchVersions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isPreview = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("patchVersions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, KubernetesPatchVersion> dictionary = new Dictionary<string, KubernetesPatchVersion>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, KubernetesPatchVersion.DeserializeKubernetesPatchVersion(prop0.Value, options));
+                        dictionary.Add(property0.Name, KubernetesPatchVersion.DeserializeKubernetesPatchVersion(property0.Value, options));
                     }
                     patchVersions = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new KubernetesVersion(
-                version,
-                capabilities,
-                isDefault,
-                isPreview,
-                patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersion>(),
-                additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubernetesVersion(version, capabilities, isPreview, patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersion>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("  version: ");
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CapabilitiesSupportPlan", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  capabilities: ");
+                builder.AppendLine("{");
+                builder.Append("    supportPlan: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Capabilities))
+                {
+                    builder.Append("  capabilities: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Capabilities, options, 2, false, "  capabilities: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPreview), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isPreview: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsPreview))
+                {
+                    builder.Append("  isPreview: ");
+                    var boolValue = IsPreview.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PatchVersions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  patchVersions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PatchVersions))
+                {
+                    if (PatchVersions.Any())
+                    {
+                        builder.Append("  patchVersions: ");
+                        builder.AppendLine("{");
+                        foreach (var item in PatchVersions)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  patchVersions: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<KubernetesVersion>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesVersion)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KubernetesVersion IPersistableModel<KubernetesVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeKubernetesVersion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesVersion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

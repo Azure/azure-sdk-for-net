@@ -6,44 +6,133 @@
 #nullable disable
 
 using System;
-using Azure;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.FrontDoor.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    internal partial class FrontendEndpoints
+    internal partial class FrontendEndpointsRestOperations
     {
+        private readonly TelemetryDetails _userAgent;
+        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of FrontendEndpoints for mocking. </summary>
-        protected FrontendEndpoints()
-        {
-        }
-
-        /// <summary> Initializes a new instance of FrontendEndpoints. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <summary> Initializes a new instance of FrontendEndpointsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal FrontendEndpoints(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="applicationId"> The application id to use for user agent. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public FrontendEndpointsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-            _apiVersion = apiVersion;
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2021-06-01";
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, RequestContext context)
+        internal RequestUriBuilder CreateListByFrontDoorRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByFrontDoorRequest(string subscriptionId, string resourceGroupName, string frontDoorName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all of the frontend endpoints within a Front Door. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<FrontendEndpointsListResult>> ListByFrontDoorAsync(string subscriptionId, string resourceGroupName, string frontDoorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+
+            using var message = CreateListByFrontDoorRequest(subscriptionId, resourceGroupName, frontDoorName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FrontendEndpointsListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all of the frontend endpoints within a Front Door. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<FrontendEndpointsListResult> ListByFrontDoor(string subscriptionId, string resourceGroupName, string frontDoorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+
+            using var message = CreateListByFrontDoorRequest(subscriptionId, resourceGroupName, frontDoorName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FrontendEndpointsListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -53,21 +142,16 @@ namespace Azure.ResourceManager.FrontDoor
             uri.AppendPath(frontDoorName, true);
             uri.AppendPath("/frontendEndpoints/", false);
             uri.AppendPath(frontendEndpointName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
-        internal HttpMessage CreateGetByFrontDoorRequest(string subscriptionId, string resourceGroupName, string frontDoorName, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -75,45 +159,84 @@ namespace Azure.ResourceManager.FrontDoor
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
             uri.AppendPath(frontDoorName, true);
-            uri.AppendPath("/frontendEndpoints", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
+            uri.AppendPath("/frontendEndpoints/", false);
+            uri.AppendPath(frontendEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
             return message;
         }
 
-        internal HttpMessage CreateNextGetByFrontDoorRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string frontDoorName, RequestContext context)
+        /// <summary> Gets a Frontend endpoint with the specified name within the specified Front Door. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<FrontendEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                uri.Reset(nextPage);
+                case 200:
+                    {
+                        FrontendEndpointData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = FrontendEndpointData.DeserializeFrontendEndpointData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((FrontendEndpointData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
             }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
         }
 
-        internal HttpMessage CreateEnableHttpsRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, RequestContent content, RequestContext context)
+        /// <summary> Gets a Frontend endpoint with the specified name within the specified Front Door. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<FrontendEndpointData> Get(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CancellationToken cancellationToken = default)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FrontendEndpointData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = FrontendEndpointData.DeserializeFrontendEndpointData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((FrontendEndpointData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateEnableHttpsRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration)
+        {
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -124,22 +247,98 @@ namespace Azure.ResourceManager.FrontDoor
             uri.AppendPath("/frontendEndpoints/", false);
             uri.AppendPath(frontendEndpointName, true);
             uri.AppendPath("/enableHttps", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateEnableHttpsRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints/", false);
+            uri.AppendPath(frontendEndpointName, true);
+            uri.AppendPath("/enableHttps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(customHttpsConfiguration, ModelSerializationExtensions.WireOptions);
             request.Content = content;
+            _userAgent.Apply(message);
             return message;
         }
 
-        internal HttpMessage CreateDisableHttpsRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, RequestContext context)
+        /// <summary> Enables a frontendEndpoint for HTTPS traffic. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
+        /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/>, <paramref name="frontendEndpointName"/> or <paramref name="customHttpsConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> EnableHttpsAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration, CancellationToken cancellationToken = default)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+            Argument.AssertNotNull(customHttpsConfiguration, nameof(customHttpsConfiguration));
+
+            using var message = CreateEnableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName, customHttpsConfiguration);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Enables a frontendEndpoint for HTTPS traffic. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
+        /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/>, <paramref name="frontendEndpointName"/> or <paramref name="customHttpsConfiguration"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response EnableHttps(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+            Argument.AssertNotNull(customHttpsConfiguration, nameof(customHttpsConfiguration));
+
+            using var message = CreateEnableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName, customHttpsConfiguration);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDisableHttpsRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -150,15 +349,169 @@ namespace Azure.ResourceManager.FrontDoor
             uri.AppendPath("/frontendEndpoints/", false);
             uri.AppendPath(frontendEndpointName, true);
             uri.AppendPath("/disableHttps", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDisableHttpsRequest(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/frontendEndpoints/", false);
+            uri.AppendPath(frontendEndpointName, true);
+            uri.AppendPath("/disableHttps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
             return message;
+        }
+
+        /// <summary> Disables a frontendEndpoint for HTTPS traffic. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DisableHttpsAsync(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+
+            using var message = CreateDisableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Disables a frontendEndpoint for HTTPS traffic. </summary>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="frontDoorName"/> or <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response DisableHttps(string subscriptionId, string resourceGroupName, string frontDoorName, string frontendEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+            Argument.AssertNotNullOrEmpty(frontendEndpointName, nameof(frontendEndpointName));
+
+            using var message = CreateDisableHttpsRequest(subscriptionId, resourceGroupName, frontDoorName, frontendEndpointName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByFrontDoorNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string frontDoorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByFrontDoorNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string frontDoorName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all of the frontend endpoints within a Front Door. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<FrontendEndpointsListResult>> ListByFrontDoorNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string frontDoorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+
+            using var message = CreateListByFrontDoorNextPageRequest(nextLink, subscriptionId, resourceGroupName, frontDoorName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FrontendEndpointsListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all of the frontend endpoints within a Front Door. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<FrontendEndpointsListResult> ListByFrontDoorNextPage(string nextLink, string subscriptionId, string resourceGroupName, string frontDoorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
+
+            using var message = CreateListByFrontDoorNextPageRequest(nextLink, subscriptionId, resourceGroupName, frontDoorName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        FrontendEndpointsListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = FrontendEndpointsListResult.DeserializeFrontendEndpointsListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
     }
 }

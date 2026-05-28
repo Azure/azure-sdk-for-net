@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.ContentSafety.Tests.Samples
 {
-    public partial class ContentSafetySamples : SamplesBase<ContentSafetyClientTestEnvironment>
+    public partial class ContentSafetySamples: SamplesBase<ContentSafetyClientTestEnvironment>
     {
         [Test]
         [SyncOnly]

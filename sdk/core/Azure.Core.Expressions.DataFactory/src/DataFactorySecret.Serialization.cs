@@ -79,10 +79,8 @@ namespace Azure.Core.Expressions.DataFactory
             {
                 switch (discriminator.GetString())
                 {
-                    case "SecureString":
-                        return DataFactorySecretString.DeserializeDataFactorySecretString(element);
-                    case "AzureKeyVaultSecret":
-                        return DataFactoryKeyVaultSecret.DeserializeAzureKeyVaultSecretReference(element);
+                    case "SecureString": return DataFactorySecretString.DeserializeDataFactorySecretString(element);
+                    case "AzureKeyVaultSecret": return DataFactoryKeyVaultSecret.DeserializeAzureKeyVaultSecretReference(element);
                 }
             }
             return UnknownSecret.DeserializeUnknownSecretBase(element);

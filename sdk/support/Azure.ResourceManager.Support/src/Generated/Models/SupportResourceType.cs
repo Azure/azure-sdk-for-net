@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> The type of resource. </summary>
     public enum SupportResourceType
     {
-        /// <summary> MicrosoftSupportSupportTickets. </summary>
+        /// <summary> Microsoft.Support/supportTickets. </summary>
         MicrosoftSupportSupportTickets,
-        /// <summary> MicrosoftSupportCommunications. </summary>
+        /// <summary> Microsoft.Support/communications. </summary>
         MicrosoftSupportCommunications
     }
 }

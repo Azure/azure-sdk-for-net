@@ -8,36 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary></summary>
-    internal partial class MigrateResultOperationSource : IOperationSource<MigrateResult>
+    internal class MigrateResultOperationSource : IOperationSource<MigrateResult>
     {
-        /// <summary></summary>
-        internal MigrateResultOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         MigrateResult IOperationSource<MigrateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return MigrateResult.DeserializeMigrateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return MigrateResult.DeserializeMigrateResult(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<MigrateResult> IOperationSource<MigrateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return MigrateResult.DeserializeMigrateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return MigrateResult.DeserializeMigrateResult(document.RootElement);
         }
     }
 }

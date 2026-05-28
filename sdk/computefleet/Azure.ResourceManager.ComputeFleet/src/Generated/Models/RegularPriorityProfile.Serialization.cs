@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ComputeFleet;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> Configuration Options for Regular instances in Compute Fleet. </summary>
-    public partial class RegularPriorityProfile : IJsonModel<RegularPriorityProfile>
+    public partial class RegularPriorityProfile : IUtf8JsonSerializable, IJsonModel<RegularPriorityProfile>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegularPriorityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RegularPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRegularPriorityProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RegularPriorityProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegularPriorityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RegularPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RegularPriorityProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RegularPriorityProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RegularPriorityProfile IPersistableModel<RegularPriorityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RegularPriorityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RegularPriorityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegularPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RegularPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RegularPriorityProfile)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
@@ -89,15 +49,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("allocationStrategy"u8);
                 writer.WriteStringValue(AllocationStrategy.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,27 +66,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RegularPriorityProfile IJsonModel<RegularPriorityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegularPriorityProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RegularPriorityProfile IJsonModel<RegularPriorityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegularPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RegularPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RegularPriorityProfile)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRegularPriorityProfile(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RegularPriorityProfile DeserializeRegularPriorityProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static RegularPriorityProfile DeserializeRegularPriorityProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,42 +89,75 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             int? capacity = default;
             int? minCapacity = default;
             RegularPriorityAllocationStrategy? allocationStrategy = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("capacity"u8))
+                if (property.NameEquals("capacity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacity = prop.Value.GetInt32();
+                    capacity = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("minCapacity"u8))
+                if (property.NameEquals("minCapacity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minCapacity = prop.Value.GetInt32();
+                    minCapacity = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("allocationStrategy"u8))
+                if (property.NameEquals("allocationStrategy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allocationStrategy = new RegularPriorityAllocationStrategy(prop.Value.GetString());
+                    allocationStrategy = new RegularPriorityAllocationStrategy(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new RegularPriorityProfile(capacity, minCapacity, allocationStrategy, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RegularPriorityProfile(capacity, minCapacity, allocationStrategy, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RegularPriorityProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegularPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RegularPriorityProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RegularPriorityProfile IPersistableModel<RegularPriorityProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegularPriorityProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeRegularPriorityProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RegularPriorityProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RegularPriorityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

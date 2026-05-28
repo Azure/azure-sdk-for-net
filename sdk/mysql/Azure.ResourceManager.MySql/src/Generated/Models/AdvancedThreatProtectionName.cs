@@ -7,59 +7,42 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary></summary>
+    /// <summary> The AdvancedThreatProtectionName. </summary>
     public readonly partial struct AdvancedThreatProtectionName : IEquatable<AdvancedThreatProtectionName>
     {
         private readonly string _value;
-        private const string DefaultValue = "Default";
 
         /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionName"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AdvancedThreatProtectionName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Default. </summary>
+        private const string DefaultValue = "Default";
+
+        /// <summary> Default. </summary>
         public static AdvancedThreatProtectionName Default { get; } = new AdvancedThreatProtectionName(DefaultValue);
-
         /// <summary> Determines if two <see cref="AdvancedThreatProtectionName"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AdvancedThreatProtectionName left, AdvancedThreatProtectionName right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AdvancedThreatProtectionName"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AdvancedThreatProtectionName left, AdvancedThreatProtectionName right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AdvancedThreatProtectionName"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AdvancedThreatProtectionName"/>. </summary>
         public static implicit operator AdvancedThreatProtectionName(string value) => new AdvancedThreatProtectionName(value);
 
-        /// <summary> Converts a string to a <see cref="AdvancedThreatProtectionName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AdvancedThreatProtectionName?(string value) => value == null ? null : new AdvancedThreatProtectionName(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AdvancedThreatProtectionName other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AdvancedThreatProtectionName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

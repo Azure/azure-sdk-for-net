@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationVaultCollection : ArmCollection, IEnumerable<DataReplicationVaultResource>, IAsyncEnumerable<DataReplicationVaultResource>
     {
-        private readonly ClientDiagnostics _vaultClientDiagnostics;
-        private readonly Vault _vaultRestClient;
+        private readonly ClientDiagnostics _dataReplicationVaultVaultClientDiagnostics;
+        private readonly VaultRestOperations _dataReplicationVaultVaultRestClient;
 
-        /// <summary> Initializes a new instance of DataReplicationVaultCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationVaultCollection"/> class for mocking. </summary>
         protected DataReplicationVaultCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationVaultCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataReplicationVaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DataReplicationVaultResource.ResourceType, out string dataReplicationVaultApiVersion);
-            _vaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationVaultResource.ResourceType.Namespace, Diagnostics);
-            _vaultRestClient = new Vault(_vaultClientDiagnostics, Pipeline, Endpoint, dataReplicationVaultApiVersion ?? "2024-09-01");
-            ValidateResourceId(id);
+            _dataReplicationVaultVaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationVaultResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataReplicationVaultResource.ResourceType, out string dataReplicationVaultVaultApiVersion);
+            _dataReplicationVaultVaultRestClient = new VaultRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationVaultVaultApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates the vault.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vault_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>VaultModel_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="vaultName"> The vault name. </param>
         /// <param name="data"> Vault properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataReplicationVaultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, DataReplicationVaultData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _vaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.CreateOrUpdate");
+            using var scope = _dataReplicationVaultVaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _vaultRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, DataReplicationVaultData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesDataReplicationArmOperation<DataReplicationVaultResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationVaultResource>(
-                    new DataReplicationVaultOperationSource(Client),
-                    _vaultClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _dataReplicationVaultVaultRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationVaultResource>(new DataReplicationVaultOperationSource(Client), _dataReplicationVaultVaultClientDiagnostics, Pipeline, _dataReplicationVaultVaultRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Creates the vault.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vault_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>VaultModel_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="vaultName"> The vault name. </param>
         /// <param name="data"> Vault properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataReplicationVaultResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, DataReplicationVaultData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _vaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.CreateOrUpdate");
+            using var scope = _dataReplicationVaultVaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _vaultRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, DataReplicationVaultData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesDataReplicationArmOperation<DataReplicationVaultResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationVaultResource>(
-                    new DataReplicationVaultOperationSource(Client),
-                    _vaultClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _dataReplicationVaultVaultRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken);
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationVaultResource>(new DataReplicationVaultOperationSource(Client), _dataReplicationVaultVaultClientDiagnostics, Pipeline, _dataReplicationVaultVaultRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the details of the vault.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vault_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VaultModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<Response<DataReplicationVaultResource>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using DiagnosticScope scope = _vaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.Get");
+            using var scope = _dataReplicationVaultVaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _vaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataReplicationVaultData> response = Response.FromValue(DataReplicationVaultData.FromResponse(result), result);
+                var response = await _dataReplicationVaultVaultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the details of the vault.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vault_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VaultModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual Response<DataReplicationVaultResource> Get(string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using DiagnosticScope scope = _vaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.Get");
+            using var scope = _dataReplicationVaultVaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _vaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataReplicationVaultData> response = Response.FromValue(DataReplicationVaultData.FromResponse(result), result);
+                var response = _dataReplicationVaultVaultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,120 +244,98 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the list of vaults in the given subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vault_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>VaultModel_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataReplicationVaultResource> GetAllAsync(string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataReplicationVaultResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetAllAsyncCollectionResultOfT(
-                _vaultRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                continuationToken,
-                context,
-                "DataReplicationVaultCollection.GetAll"), data => new DataReplicationVaultResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationVaultVaultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationVaultVaultRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, continuationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataReplicationVaultResource(Client, DataReplicationVaultData.DeserializeDataReplicationVaultData(e)), _dataReplicationVaultVaultClientDiagnostics, Pipeline, "DataReplicationVaultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of vaults in the given subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vault_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>VaultModel_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> Continuation token from the previous call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataReplicationVaultResource> GetAll(string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataReplicationVaultResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DataReplicationVaultData, DataReplicationVaultResource>(new VaultGetAllCollectionResultOfT(
-                _vaultRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                continuationToken,
-                context,
-                "DataReplicationVaultCollection.GetAll"), data => new DataReplicationVaultResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationVaultVaultRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataReplicationVaultVaultRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, continuationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataReplicationVaultResource(Client, DataReplicationVaultData.DeserializeDataReplicationVaultData(e)), _dataReplicationVaultVaultClientDiagnostics, Pipeline, "DataReplicationVaultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vault_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VaultModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using DiagnosticScope scope = _vaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.Exists");
+            using var scope = _dataReplicationVaultVaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _vaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DataReplicationVaultData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataReplicationVaultData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataReplicationVaultData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dataReplicationVaultVaultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -400,50 +349,36 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vault_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VaultModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using DiagnosticScope scope = _vaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.Exists");
+            using var scope = _dataReplicationVaultVaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _vaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DataReplicationVaultData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataReplicationVaultData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataReplicationVaultData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dataReplicationVaultVaultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -457,54 +392,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vault_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VaultModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataReplicationVaultResource>> GetIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using DiagnosticScope scope = _vaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.GetIfExists");
+            using var scope = _dataReplicationVaultVaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _vaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DataReplicationVaultData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataReplicationVaultData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataReplicationVaultData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dataReplicationVaultVaultRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DataReplicationVaultResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -518,54 +437,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vault_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VaultModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vaultName"> The vault name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual NullableResponse<DataReplicationVaultResource> GetIfExists(string vaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
-            using DiagnosticScope scope = _vaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.GetIfExists");
+            using var scope = _dataReplicationVaultVaultClientDiagnostics.CreateScope("DataReplicationVaultCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _vaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, vaultName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DataReplicationVaultData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataReplicationVaultData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataReplicationVaultData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dataReplicationVaultVaultRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DataReplicationVaultResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -585,7 +488,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataReplicationVaultResource> IAsyncEnumerable<DataReplicationVaultResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

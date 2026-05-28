@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
-    /// <summary></summary>
-    internal partial class HciVmStorageContainerOperationSource : IOperationSource<HciVmStorageContainerResource>
+    internal class HciVmStorageContainerOperationSource : IOperationSource<HciVmStorageContainerResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal HciVmStorageContainerOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         HciVmStorageContainerResource IOperationSource<HciVmStorageContainerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HciVmStorageContainerData data = HciVmStorageContainerData.DeserializeHciVmStorageContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<HciVmStorageContainerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
             return new HciVmStorageContainerResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<HciVmStorageContainerResource> IOperationSource<HciVmStorageContainerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HciVmStorageContainerData data = HciVmStorageContainerData.DeserializeHciVmStorageContainerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HciVmStorageContainerResource(_client, data);
+            var data = ModelReaderWriter.Read<HciVmStorageContainerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
+            return await Task.FromResult(new HciVmStorageContainerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

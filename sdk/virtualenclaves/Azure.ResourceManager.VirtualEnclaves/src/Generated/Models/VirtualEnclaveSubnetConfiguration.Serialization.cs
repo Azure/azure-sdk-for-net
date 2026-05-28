@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary> Subnet Configuration. </summary>
-    public partial class VirtualEnclaveSubnetConfiguration : IJsonModel<VirtualEnclaveSubnetConfiguration>
+    public partial class VirtualEnclaveSubnetConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualEnclaveSubnetConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveSubnetConfiguration"/> for deserialization. </summary>
-        internal VirtualEnclaveSubnetConfiguration()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualEnclaveSubnetConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualEnclaveSubnetConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveSubnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVirtualEnclaveSubnetConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualEnclaveSubnetConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveSubnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerVirtualEnclavesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualEnclaveSubnetConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualEnclaveSubnetConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualEnclaveSubnetConfiguration IPersistableModel<VirtualEnclaveSubnetConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualEnclaveSubnetConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualEnclaveSubnetConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveSubnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveSubnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualEnclaveSubnetConfiguration)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("subnetName"u8);
             writer.WriteStringValue(SubnetName);
             if (options.Format != "W" && Optional.IsDefined(SubnetResourceId))
@@ -104,15 +58,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("networkSecurityGroupResourceId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupResourceId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +75,22 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualEnclaveSubnetConfiguration IJsonModel<VirtualEnclaveSubnetConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualEnclaveSubnetConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VirtualEnclaveSubnetConfiguration IJsonModel<VirtualEnclaveSubnetConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveSubnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveSubnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualEnclaveSubnetConfiguration)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualEnclaveSubnetConfiguration(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualEnclaveSubnetConfiguration DeserializeVirtualEnclaveSubnetConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualEnclaveSubnetConfiguration DeserializeVirtualEnclaveSubnetConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -152,52 +101,54 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             string subnetDelegation = default;
             string addressPrefix = default;
             ResourceIdentifier networkSecurityGroupResourceId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("subnetName"u8))
+                if (property.NameEquals("subnetName"u8))
                 {
-                    subnetName = prop.Value.GetString();
+                    subnetName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subnetResourceId"u8))
+                if (property.NameEquals("subnetResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subnetResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    subnetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("networkPrefixSize"u8))
+                if (property.NameEquals("networkPrefixSize"u8))
                 {
-                    networkPrefixSize = prop.Value.GetInt32();
+                    networkPrefixSize = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("subnetDelegation"u8))
+                if (property.NameEquals("subnetDelegation"u8))
                 {
-                    subnetDelegation = prop.Value.GetString();
+                    subnetDelegation = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("addressPrefix"u8))
+                if (property.NameEquals("addressPrefix"u8))
                 {
-                    addressPrefix = prop.Value.GetString();
+                    addressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("networkSecurityGroupResourceId"u8))
+                if (property.NameEquals("networkSecurityGroupResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkSecurityGroupResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    networkSecurityGroupResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualEnclaveSubnetConfiguration(
                 subnetName,
                 subnetResourceId,
@@ -205,7 +156,38 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 subnetDelegation,
                 addressPrefix,
                 networkSecurityGroupResourceId,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualEnclaveSubnetConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveSubnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerVirtualEnclavesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualEnclaveSubnetConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualEnclaveSubnetConfiguration IPersistableModel<VirtualEnclaveSubnetConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveSubnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVirtualEnclaveSubnetConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualEnclaveSubnetConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualEnclaveSubnetConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

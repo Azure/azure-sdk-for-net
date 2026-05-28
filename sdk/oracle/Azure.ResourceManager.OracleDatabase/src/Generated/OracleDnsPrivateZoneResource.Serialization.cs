@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    /// <summary></summary>
     public partial class OracleDnsPrivateZoneResource : IJsonModel<OracleDnsPrivateZoneData>
     {
-        private static IJsonModel<OracleDnsPrivateZoneData> s_dataDeserializationInstance;
+        private static OracleDnsPrivateZoneData s_dataDeserializationInstance;
+        private static OracleDnsPrivateZoneData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<OracleDnsPrivateZoneData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OracleDnsPrivateZoneData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleDnsPrivateZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OracleDnsPrivateZoneData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OracleDnsPrivateZoneData IJsonModel<OracleDnsPrivateZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        OracleDnsPrivateZoneData IJsonModel<OracleDnsPrivateZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleDnsPrivateZoneData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OracleDnsPrivateZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleDnsPrivateZoneData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         OracleDnsPrivateZoneData IPersistableModel<OracleDnsPrivateZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleDnsPrivateZoneData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OracleDnsPrivateZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<OracleDnsPrivateZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleDnsPrivateZoneData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

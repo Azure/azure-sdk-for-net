@@ -338,8 +338,7 @@ public static class ProvisioningPlanExtensions
             // Try to clean things up, but don't swallow any failures
             if (dirToCleanup is not null)
             {
-                try
-                { Directory.Delete(dirToCleanup, recursive: true); }
+                try { Directory.Delete(dirToCleanup, recursive: true); }
                 catch { }
             }
         }
@@ -348,8 +347,7 @@ public static class ProvisioningPlanExtensions
         static string CreateTempDirectory()
         {
             string? path;
-            do
-            { path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()); }
+            do { path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()); }
             while (Directory.Exists(path) || File.Exists(path));
             Directory.CreateDirectory(path);
             return path;

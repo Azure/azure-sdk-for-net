@@ -31,15 +31,15 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var devCenterResource = devCenterResponse.Value;
 
             List<DevCenterImageResource> images = await devCenterResource.GetImagesAsync().ToEnumerableAsync();
-            Assert.That(images.Count > 0, Is.True);
+            Assert.IsTrue(images.Count > 0);
 
             // List image versions for one image
             List<ImageVersionResource> imageVersions = await images.First().GetImageVersions().GetAllAsync().ToEnumerableAsync();
-            Assert.That(imageVersions.Count > 0, Is.True);
+            Assert.IsTrue(imageVersions.Count > 0);
 
             // Get one of the image versions
             ImageVersionResource imageVersion = await images.First().GetImageVersionAsync(imageVersions.First().Data.Name);
-            Assert.That(imageVersion, Is.Not.Null);
+            Assert.IsNotNull(imageVersion);
         }
     }
 }

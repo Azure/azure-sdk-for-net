@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct DnsServiceStatus : IEquatable<DnsServiceStatus>
     {
         private readonly string _value;
-        /// <summary> is success. </summary>
-        private const string SuccessValue = "SUCCESS";
-        /// <summary> is failure. </summary>
-        private const string FailureValue = "FAILURE";
 
         /// <summary> Initializes a new instance of <see cref="DnsServiceStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DnsServiceStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string SuccessValue = "SUCCESS";
+        private const string FailureValue = "FAILURE";
 
         /// <summary> is success. </summary>
         public static DnsServiceStatus Success { get; } = new DnsServiceStatus(SuccessValue);
-
         /// <summary> is failure. </summary>
         public static DnsServiceStatus Failure { get; } = new DnsServiceStatus(FailureValue);
-
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DnsServiceStatus left, DnsServiceStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DnsServiceStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DnsServiceStatus left, DnsServiceStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DnsServiceStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsServiceStatus"/>. </summary>
         public static implicit operator DnsServiceStatus(string value) => new DnsServiceStatus(value);
 
-        /// <summary> Converts a string to a <see cref="DnsServiceStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DnsServiceStatus?(string value) => value == null ? null : new DnsServiceStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DnsServiceStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DnsServiceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

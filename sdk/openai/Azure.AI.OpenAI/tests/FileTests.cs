@@ -3,9 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Files;
 using OpenAI.Files;
 using OpenAI.TestFramework;
+
+using Azure.AI.OpenAI.Files;
 
 namespace Azure.AI.OpenAI.Tests;
 

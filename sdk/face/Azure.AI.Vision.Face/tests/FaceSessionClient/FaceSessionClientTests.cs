@@ -16,8 +16,7 @@ namespace Azure.AI.Vision.Face.Tests
 {
     public class FaceSessionClientTests : RecordedTestBase<FaceTestEnvironment>
     {
-        internal enum SessionType
-        {
+        internal enum SessionType {
             Liveness,
             LivenessWithVerify
         }

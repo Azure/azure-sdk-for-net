@@ -10,14 +10,47 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary> Response for PrivateEndpoint Connection object. </summary>
+    /// <summary>
+    /// A class representing the ElasticSanPrivateEndpointConnection data model.
+    /// Response for PrivateEndpoint Connection object
+    /// </summary>
     public partial class ElasticSanPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionData"/>. </summary>
         /// <param name="connectionState"> Private Link Service Connection State. </param>
@@ -26,71 +59,47 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNull(connectionState, nameof(connectionState));
 
-            Properties = new PrivateEndpointConnectionProperties(connectionState);
+            ConnectionState = connectionState;
+            GroupIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Private Endpoint Connection Properties. </param>
-        internal ElasticSanPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning State of Private Endpoint connection resource. </param>
+        /// <param name="privateEndpoint"> Private Endpoint resource. </param>
+        /// <param name="connectionState"> Private Link Service Connection State. </param>
+        /// <param name="groupIds"> List of resources private endpoint is mapped. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ElasticSanProvisioningState? provisioningState, SubResource privateEndpoint, ElasticSanPrivateLinkServiceConnectionState connectionState, IList<string> groupIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            PrivateEndpoint = privateEndpoint;
+            ConnectionState = connectionState;
+            GroupIds = groupIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Private Endpoint Connection Properties. </summary>
-        internal PrivateEndpointConnectionProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateEndpointConnectionData"/> for deserialization. </summary>
+        internal ElasticSanPrivateEndpointConnectionData()
+        {
+        }
 
         /// <summary> Provisioning State of Private Endpoint connection resource. </summary>
-        public ElasticSanProvisioningState? ProvisioningState
+        public ElasticSanProvisioningState? ProvisioningState { get; }
+        /// <summary> Private Endpoint resource. </summary>
+        internal SubResource PrivateEndpoint { get; set; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier PrivateEndpointId
         {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
+            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
         /// <summary> Private Link Service Connection State. </summary>
-        public ElasticSanPrivateLinkServiceConnectionState ConnectionState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectionState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateEndpointConnectionProperties();
-                }
-                Properties.ConnectionState = value;
-            }
-        }
-
+        public ElasticSanPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> List of resources private endpoint is mapped. </summary>
-        public IList<string> GroupIds
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateEndpointConnectionProperties();
-                }
-                return Properties.GroupIds;
-            }
-        }
-
-        /// <summary> The ARM identifier for Private Endpoint. </summary>
-        public ResourceIdentifier PrivateEndpointId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpointId;
-            }
-        }
+        public IList<string> GroupIds { get; }
     }
 }

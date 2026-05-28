@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary></summary>
-    internal partial class DataBoxEdgeOrderOperationSource : IOperationSource<DataBoxEdgeOrderResource>
+    internal class DataBoxEdgeOrderOperationSource : IOperationSource<DataBoxEdgeOrderResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DataBoxEdgeOrderOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DataBoxEdgeOrderResource IOperationSource<DataBoxEdgeOrderResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DataBoxEdgeOrderData data = DataBoxEdgeOrderData.DeserializeDataBoxEdgeOrderData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DataBoxEdgeOrderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new DataBoxEdgeOrderResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DataBoxEdgeOrderResource> IOperationSource<DataBoxEdgeOrderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DataBoxEdgeOrderData data = DataBoxEdgeOrderData.DeserializeDataBoxEdgeOrderData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DataBoxEdgeOrderResource(_client, data);
+            var data = ModelReaderWriter.Read<DataBoxEdgeOrderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            return await Task.FromResult(new DataBoxEdgeOrderResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -83,6 +83,7 @@ namespace Azure.Maps.Search
         public static Azure.Maps.Search.SearchLanguage Turkish { get { throw null; } }
         public static Azure.Maps.Search.SearchLanguage Ukrainian { get { throw null; } }
         public static Azure.Maps.Search.SearchLanguage Vietnamese { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator Azure.Maps.Search.SearchLanguage (string value) { throw null; }
         public override string ToString() { throw null; }
@@ -146,7 +147,9 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.BoundaryResultTypeEnum PostalCode3 { get { throw null; } }
         public static Azure.Maps.Search.Models.BoundaryResultTypeEnum PostalCode4 { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.BoundaryResultTypeEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Search.Models.BoundaryResultTypeEnum left, Azure.Maps.Search.Models.BoundaryResultTypeEnum right) { throw null; }
         public static implicit operator Azure.Maps.Search.Models.BoundaryResultTypeEnum (string value) { throw null; }
@@ -164,7 +167,9 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.CalculationMethodEnum Parcel { get { throw null; } }
         public static Azure.Maps.Search.Models.CalculationMethodEnum Rooftop { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.CalculationMethodEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Search.Models.CalculationMethodEnum left, Azure.Maps.Search.Models.CalculationMethodEnum right) { throw null; }
         public static implicit operator Azure.Maps.Search.Models.CalculationMethodEnum (string value) { throw null; }
@@ -181,7 +186,9 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.ConfidenceEnum Low { get { throw null; } }
         public static Azure.Maps.Search.Models.ConfidenceEnum Medium { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.ConfidenceEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Search.Models.ConfidenceEnum left, Azure.Maps.Search.Models.ConfidenceEnum right) { throw null; }
         public static implicit operator Azure.Maps.Search.Models.ConfidenceEnum (string value) { throw null; }
@@ -211,7 +218,9 @@ namespace Azure.Maps.Search.Models
         public FeatureCollectionEnum(string value) { throw null; }
         public static Azure.Maps.Search.Models.FeatureCollectionEnum FeatureCollection { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.FeatureCollectionEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Search.Models.FeatureCollectionEnum left, Azure.Maps.Search.Models.FeatureCollectionEnum right) { throw null; }
         public static implicit operator Azure.Maps.Search.Models.FeatureCollectionEnum (string value) { throw null; }
@@ -244,7 +253,9 @@ namespace Azure.Maps.Search.Models
         public FeatureTypeEnum(string value) { throw null; }
         public static Azure.Maps.Search.Models.FeatureTypeEnum Feature { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.FeatureTypeEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Search.Models.FeatureTypeEnum left, Azure.Maps.Search.Models.FeatureTypeEnum right) { throw null; }
         public static implicit operator Azure.Maps.Search.Models.FeatureTypeEnum (string value) { throw null; }
@@ -370,7 +381,9 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.MatchCodesEnum Good { get { throw null; } }
         public static Azure.Maps.Search.Models.MatchCodesEnum UpHierarchy { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.MatchCodesEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Search.Models.MatchCodesEnum left, Azure.Maps.Search.Models.MatchCodesEnum right) { throw null; }
         public static implicit operator Azure.Maps.Search.Models.MatchCodesEnum (string value) { throw null; }
@@ -388,7 +401,9 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.ResolutionEnum Medium { get { throw null; } }
         public static Azure.Maps.Search.Models.ResolutionEnum Small { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.ResolutionEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Search.Models.ResolutionEnum left, Azure.Maps.Search.Models.ResolutionEnum right) { throw null; }
         public static implicit operator Azure.Maps.Search.Models.ResolutionEnum (string value) { throw null; }
@@ -409,7 +424,9 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.ResultTypeEnum PopulatedPlace { get { throw null; } }
         public static Azure.Maps.Search.Models.ResultTypeEnum Postcode1 { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.ResultTypeEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Search.Models.ResultTypeEnum left, Azure.Maps.Search.Models.ResultTypeEnum right) { throw null; }
         public static implicit operator Azure.Maps.Search.Models.ResultTypeEnum (string value) { throw null; }
@@ -446,7 +463,9 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum PopulatedPlace { get { throw null; } }
         public static Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum Postcode1 { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum left, Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum right) { throw null; }
         public static implicit operator Azure.Maps.Search.Models.ReverseGeocodingResultTypeEnum (string value) { throw null; }
@@ -462,7 +481,9 @@ namespace Azure.Maps.Search.Models
         public static Azure.Maps.Search.Models.UsageTypeEnum Display { get { throw null; } }
         public static Azure.Maps.Search.Models.UsageTypeEnum Route { get { throw null; } }
         public bool Equals(Azure.Maps.Search.Models.UsageTypeEnum other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Maps.Search.Models.UsageTypeEnum left, Azure.Maps.Search.Models.UsageTypeEnum right) { throw null; }
         public static implicit operator Azure.Maps.Search.Models.UsageTypeEnum (string value) { throw null; }

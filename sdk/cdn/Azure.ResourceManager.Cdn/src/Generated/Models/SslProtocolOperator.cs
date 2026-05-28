@@ -7,59 +7,48 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: SslProtocolOperator
+    /// </summary>
     public readonly partial struct SslProtocolOperator : IEquatable<SslProtocolOperator>
     {
         private readonly string _value;
-        private const string EqualValue = "Equal";
 
         /// <summary> Initializes a new instance of <see cref="SslProtocolOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SslProtocolOperator(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Equal. </summary>
+        private const string EqualValue = "Equal";
+
+        /// <summary>
+        /// Equal
+        /// Serialized Name: SslProtocolOperator.Equal
+        /// </summary>
         public static SslProtocolOperator Equal { get; } = new SslProtocolOperator(EqualValue);
-
         /// <summary> Determines if two <see cref="SslProtocolOperator"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SslProtocolOperator left, SslProtocolOperator right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SslProtocolOperator"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SslProtocolOperator left, SslProtocolOperator right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SslProtocolOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SslProtocolOperator"/>. </summary>
         public static implicit operator SslProtocolOperator(string value) => new SslProtocolOperator(value);
 
-        /// <summary> Converts a string to a <see cref="SslProtocolOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SslProtocolOperator?(string value) => value == null ? null : new SslProtocolOperator(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SslProtocolOperator other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SslProtocolOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

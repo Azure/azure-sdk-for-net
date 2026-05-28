@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -25,84 +24,73 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeRoleAddonCollection : ArmCollection, IEnumerable<DataBoxEdgeRoleAddonResource>, IAsyncEnumerable<DataBoxEdgeRoleAddonResource>
     {
-        private readonly ClientDiagnostics _addonsClientDiagnostics;
-        private readonly Addons _addonsRestClient;
+        private readonly ClientDiagnostics _dataBoxEdgeRoleAddonAddonsClientDiagnostics;
+        private readonly AddonsRestOperations _dataBoxEdgeRoleAddonAddonsRestClient;
 
-        /// <summary> Initializes a new instance of DataBoxEdgeRoleAddonCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeRoleAddonCollection"/> class for mocking. </summary>
         protected DataBoxEdgeRoleAddonCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleAddonCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeRoleAddonCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataBoxEdgeRoleAddonCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DataBoxEdgeRoleAddonResource.ResourceType, out string dataBoxEdgeRoleAddonApiVersion);
-            _addonsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeRoleAddonResource.ResourceType.Namespace, Diagnostics);
-            _addonsRestClient = new Addons(_addonsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeRoleAddonApiVersion ?? "2023-12-01");
-            ValidateResourceId(id);
+            _dataBoxEdgeRoleAddonAddonsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeRoleAddonResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataBoxEdgeRoleAddonResource.ResourceType, out string dataBoxEdgeRoleAddonAddonsApiVersion);
+            _dataBoxEdgeRoleAddonAddonsRestClient = new AddonsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeRoleAddonAddonsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataBoxEdgeRoleResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeRoleResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeRoleResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a addon.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Addons_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Addons_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="addonName"> The name of the addon. </param>
+        /// <param name="addonName"> The addon name. </param>
         /// <param name="data"> The addon properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataBoxEdgeRoleAddonResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string addonName, DataBoxEdgeRoleAddonData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.CreateOrUpdate");
+            using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, DataBoxEdgeRoleAddonData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(
-                    new DataBoxEdgeRoleAddonOperationSource(Client),
-                    _addonsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _dataBoxEdgeRoleAddonAddonsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(new DataBoxEdgeRoleAddonOperationSource(Client), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, _dataBoxEdgeRoleAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,51 +104,42 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Create or update a addon.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Addons_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Addons_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="addonName"> The name of the addon. </param>
+        /// <param name="addonName"> The addon name. </param>
         /// <param name="data"> The addon properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataBoxEdgeRoleAddonResource> CreateOrUpdate(WaitUntil waitUntil, string addonName, DataBoxEdgeRoleAddonData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.CreateOrUpdate");
+            using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _addonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, DataBoxEdgeRoleAddonData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(
-                    new DataBoxEdgeRoleAddonOperationSource(Client),
-                    _addonsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _dataBoxEdgeRoleAddonAddonsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, data, cancellationToken);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleAddonResource>(new DataBoxEdgeRoleAddonOperationSource(Client), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, _dataBoxEdgeRoleAddonAddonsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets a specific addon by name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Addons_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Addons_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="addonName"> The name of the addon. </param>
+        /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual async Task<Response<DataBoxEdgeRoleAddonResource>> GetAsync(string addonName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
-            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Get");
+            using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _addonsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataBoxEdgeRoleAddonData> response = Response.FromValue(DataBoxEdgeRoleAddonData.FromResponse(result), result);
+                var response = await _dataBoxEdgeRoleAddonAddonsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataBoxEdgeRoleAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets a specific addon by name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Addons_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Addons_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="addonName"> The name of the addon. </param>
+        /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual Response<DataBoxEdgeRoleAddonResource> Get(string addonName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
-            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Get");
+            using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _addonsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataBoxEdgeRoleAddonData> response = Response.FromValue(DataBoxEdgeRoleAddonData.FromResponse(result), result);
+                var response = _dataBoxEdgeRoleAddonAddonsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataBoxEdgeRoleAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,51 +243,50 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Lists all the addons configured in the role.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Addons_ListByRole. </description>
+        /// <term>Operation Id</term>
+        /// <description>Addons_ListByRole</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeRoleAddonResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeRoleAddonResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeRoleAddonResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DataBoxEdgeRoleAddonData, DataBoxEdgeRoleAddonResource>(new AddonsGetByRoleAsyncCollectionResultOfT(
-                _addonsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "DataBoxEdgeRoleAddonCollection.GetAll"), data => new DataBoxEdgeRoleAddonResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleAddonResource(Client, DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(e)), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, "DataBoxEdgeRoleAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the addons configured in the role.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Addons_ListByRole. </description>
+        /// <term>Operation Id</term>
+        /// <description>Addons_ListByRole</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,68 +294,45 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="DataBoxEdgeRoleAddonResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeRoleAddonResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DataBoxEdgeRoleAddonData, DataBoxEdgeRoleAddonResource>(new AddonsGetByRoleCollectionResultOfT(
-                _addonsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "DataBoxEdgeRoleAddonCollection.GetAll"), data => new DataBoxEdgeRoleAddonResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeRoleAddonAddonsRestClient.CreateListByRoleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleAddonResource(Client, DataBoxEdgeRoleAddonData.DeserializeDataBoxEdgeRoleAddonData(e)), _dataBoxEdgeRoleAddonAddonsClientDiagnostics, Pipeline, "DataBoxEdgeRoleAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Addons_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Addons_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="addonName"> The name of the addon. </param>
+        /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string addonName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
-            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Exists");
+            using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _addonsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DataBoxEdgeRoleAddonData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataBoxEdgeRoleAddonData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataBoxEdgeRoleAddonData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dataBoxEdgeRoleAddonAddonsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,50 +346,36 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Addons_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Addons_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="addonName"> The name of the addon. </param>
+        /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual Response<bool> Exists(string addonName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
-            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Exists");
+            using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _addonsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DataBoxEdgeRoleAddonData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataBoxEdgeRoleAddonData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataBoxEdgeRoleAddonData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dataBoxEdgeRoleAddonAddonsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -456,54 +389,38 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Addons_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Addons_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="addonName"> The name of the addon. </param>
+        /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataBoxEdgeRoleAddonResource>> GetIfExistsAsync(string addonName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
-            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetIfExists");
+            using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _addonsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DataBoxEdgeRoleAddonData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataBoxEdgeRoleAddonData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataBoxEdgeRoleAddonData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dataBoxEdgeRoleAddonAddonsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DataBoxEdgeRoleAddonResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataBoxEdgeRoleAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -517,54 +434,38 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/addons/{addonName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Addons_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Addons_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeRoleAddonResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="addonName"> The name of the addon. </param>
+        /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual NullableResponse<DataBoxEdgeRoleAddonResource> GetIfExists(string addonName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
-            using DiagnosticScope scope = _addonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetIfExists");
+            using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _addonsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DataBoxEdgeRoleAddonData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataBoxEdgeRoleAddonData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataBoxEdgeRoleAddonData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dataBoxEdgeRoleAddonAddonsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, addonName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DataBoxEdgeRoleAddonResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataBoxEdgeRoleAddonResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -584,7 +485,6 @@ namespace Azure.ResourceManager.DataBoxEdge
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataBoxEdgeRoleAddonResource> IAsyncEnumerable<DataBoxEdgeRoleAddonResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

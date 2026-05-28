@@ -95,39 +95,7 @@
                 "scope": "Client",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.pathApiVersion.version",
-                "methodParameterSegments": [
-                  {
-                    "$id": "10",
-                    "kind": "method",
-                    "name": "version",
-                    "serializedName": "version",
-                    "type": {
-                      "$id": "11",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "location": "",
-                    "isApiVersion": true,
-                    "defaultValue": {
-                      "type": {
-                        "$id": "12",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string"
-                      },
-                      "value": "2025-01-01"
-                    },
-                    "optional": true,
-                    "scope": "Method",
-                    "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.pathApiVersion.version",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ]
+                "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.pathApiVersion.version"
               }
             ],
             "responses": [
@@ -136,8 +104,7 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "POST",
@@ -147,8 +114,7 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.pathApiVersion",
-            "decorators": [],
-            "namespace": "Client.AlternateApiVersion.Service.Path"
+            "decorators": []
           },
           "parameters": [],
           "response": {},
@@ -160,13 +126,13 @@
       ],
       "parameters": [
         {
-          "$id": "13",
+          "$id": "10",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "14",
+            "$id": "11",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -177,7 +143,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "15",
+              "$id": "12",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -188,18 +154,13 @@
           "skipUrlEncoding": false,
           "readOnly": false,
           "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path.endpoint"
-        },
-        {
-          "$ref": "10"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Path",
       "apiVersions": [
         "2025-01-01"
-      ],
-      "isMultiServiceClient": false
+      ]
     }
   ]
 }

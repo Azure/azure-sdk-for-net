@@ -8,66 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
     /// A class representing a collection of <see cref="AppComplianceReportScopingConfigurationResource"/> and their operations.
     /// Each <see cref="AppComplianceReportScopingConfigurationResource"/> in the collection will belong to the same instance of <see cref="AppComplianceReportResource"/>.
-    /// To get a <see cref="AppComplianceReportScopingConfigurationCollection"/> instance call the GetAppComplianceReportScopingConfigurations method from an instance of <see cref="AppComplianceReportResource"/>.
+    /// To get an <see cref="AppComplianceReportScopingConfigurationCollection"/> instance call the GetAppComplianceReportScopingConfigurations method from an instance of <see cref="AppComplianceReportResource"/>.
     /// </summary>
     public partial class AppComplianceReportScopingConfigurationCollection : ArmCollection, IEnumerable<AppComplianceReportScopingConfigurationResource>, IAsyncEnumerable<AppComplianceReportScopingConfigurationResource>
     {
-        private readonly ClientDiagnostics _scopingConfigurationClientDiagnostics;
-        private readonly ScopingConfiguration _scopingConfigurationRestClient;
+        private readonly ClientDiagnostics _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics;
+        private readonly ScopingConfigurationRestOperations _appComplianceReportScopingConfigurationScopingConfigurationRestClient;
 
-        /// <summary> Initializes a new instance of AppComplianceReportScopingConfigurationCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportScopingConfigurationCollection"/> class for mocking. </summary>
         protected AppComplianceReportScopingConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppComplianceReportScopingConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportScopingConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AppComplianceReportScopingConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AppComplianceReportScopingConfigurationResource.ResourceType, out string appComplianceReportScopingConfigurationApiVersion);
-            _scopingConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportScopingConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _scopingConfigurationRestClient = new ScopingConfiguration(_scopingConfigurationClientDiagnostics, Pipeline, Endpoint, appComplianceReportScopingConfigurationApiVersion ?? "2024-06-27");
-            ValidateResourceId(id);
+            _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportScopingConfigurationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppComplianceReportScopingConfigurationResource.ResourceType, out string appComplianceReportScopingConfigurationScopingConfigurationApiVersion);
+            _appComplianceReportScopingConfigurationScopingConfigurationRestClient = new ScopingConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportScopingConfigurationScopingConfigurationApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AppComplianceReportResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppComplianceReportResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppComplianceReportResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get the AppComplianceAutomation scoping configuration of the specific report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
         /// <param name="data"> Parameters for the create or update operation, this is a singleton resource, so please make sure you're using 'default' as the name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppComplianceReportScopingConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scopingConfigurationName, AppComplianceReportScopingConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.CreateOrUpdate");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateCreateOrUpdateRequest(Id.Name, scopingConfigurationName, AppComplianceReportScopingConfigurationData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource>(Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateOrUpdateAsync(Id.Name, scopingConfigurationName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.Name, scopingConfigurationName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource>(Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation scoping configuration of the specific report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
         /// <param name="data"> Parameters for the create or update operation, this is a singleton resource, so please make sure you're using 'default' as the name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppComplianceReportScopingConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string scopingConfigurationName, AppComplianceReportScopingConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.CreateOrUpdate");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateCreateOrUpdateRequest(Id.Name, scopingConfigurationName, AppComplianceReportScopingConfigurationData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource>(Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateOrUpdate(Id.Name, scopingConfigurationName, data, cancellationToken);
+                var uri = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.Name, scopingConfigurationName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource>(Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation scoping configuration of the specific report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         public virtual async Task<Response<AppComplianceReportScopingConfigurationResource>> GetAsync(string scopingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
 
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.Get");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
+                var response = await _appComplianceReportScopingConfigurationScopingConfigurationRestClient.GetAsync(Id.Name, scopingConfigurationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation scoping configuration of the specific report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         public virtual Response<AppComplianceReportScopingConfigurationResource> Get(string scopingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
 
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.Get");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
+                var response = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.Get(Id.Name, scopingConfigurationName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,44 +247,50 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Returns a list format of the singleton scopingConfiguration for a specified report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppComplianceReportScopingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppComplianceReportScopingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppComplianceReportScopingConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<AppComplianceReportScopingConfigurationData, AppComplianceReportScopingConfigurationResource>(new ScopingConfigurationGetAllAsyncCollectionResultOfT(_scopingConfigurationRestClient, Id.Name, context, "AppComplianceReportScopingConfigurationCollection.GetAll"), data => new AppComplianceReportScopingConfigurationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateListRequest(Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppComplianceReportScopingConfigurationResource(Client, AppComplianceReportScopingConfigurationData.DeserializeAppComplianceReportScopingConfigurationData(e)), _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics, Pipeline, "AppComplianceReportScopingConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns a list format of the singleton scopingConfiguration for a specified report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,61 +298,45 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> A collection of <see cref="AppComplianceReportScopingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppComplianceReportScopingConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<AppComplianceReportScopingConfigurationData, AppComplianceReportScopingConfigurationResource>(new ScopingConfigurationGetAllCollectionResultOfT(_scopingConfigurationRestClient, Id.Name, context, "AppComplianceReportScopingConfigurationCollection.GetAll"), data => new AppComplianceReportScopingConfigurationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateListRequest(Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppComplianceReportScopingConfigurationResource(Client, AppComplianceReportScopingConfigurationData.DeserializeAppComplianceReportScopingConfigurationData(e)), _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics, Pipeline, "AppComplianceReportScopingConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scopingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
 
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.Exists");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<AppComplianceReportScopingConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AppComplianceReportScopingConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _appComplianceReportScopingConfigurationScopingConfigurationRestClient.GetAsync(Id.Name, scopingConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -379,50 +350,36 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string scopingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
 
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.Exists");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<AppComplianceReportScopingConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AppComplianceReportScopingConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.Get(Id.Name, scopingConfigurationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,54 +393,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppComplianceReportScopingConfigurationResource>> GetIfExistsAsync(string scopingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
 
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.GetIfExists");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<AppComplianceReportScopingConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AppComplianceReportScopingConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _appComplianceReportScopingConfigurationScopingConfigurationRestClient.GetAsync(Id.Name, scopingConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<AppComplianceReportScopingConfigurationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -497,54 +438,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopingConfigurationName"> The scoping configuration of the specific report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scopingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scopingConfigurationName"/> is null. </exception>
         public virtual NullableResponse<AppComplianceReportScopingConfigurationResource> GetIfExists(string scopingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopingConfigurationName, nameof(scopingConfigurationName));
 
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.GetIfExists");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Name, scopingConfigurationName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<AppComplianceReportScopingConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AppComplianceReportScopingConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.Get(Id.Name, scopingConfigurationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<AppComplianceReportScopingConfigurationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -564,7 +489,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AppComplianceReportScopingConfigurationResource> IAsyncEnumerable<AppComplianceReportScopingConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

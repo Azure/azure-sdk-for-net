@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    [CodeGenType("AzureAIDocumentIntelligenceClientOptions")]
+    [CodeGenModel("AzureAIDocumentIntelligenceClientOptions")]
     public partial class DocumentIntelligenceClientOptions
     {
         // CUSTOM CODE NOTE: overwriting the behavior of the constructor

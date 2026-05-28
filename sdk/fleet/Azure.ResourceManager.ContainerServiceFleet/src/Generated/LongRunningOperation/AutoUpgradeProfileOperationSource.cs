@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    /// <summary></summary>
-    internal partial class AutoUpgradeProfileOperationSource : IOperationSource<AutoUpgradeProfileResource>
+    internal class AutoUpgradeProfileOperationSource : IOperationSource<AutoUpgradeProfileResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal AutoUpgradeProfileOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         AutoUpgradeProfileResource IOperationSource<AutoUpgradeProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AutoUpgradeProfileData data = AutoUpgradeProfileData.DeserializeAutoUpgradeProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<AutoUpgradeProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
             return new AutoUpgradeProfileResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<AutoUpgradeProfileResource> IOperationSource<AutoUpgradeProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AutoUpgradeProfileData data = AutoUpgradeProfileData.DeserializeAutoUpgradeProfileData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AutoUpgradeProfileResource(_client, data);
+            var data = ModelReaderWriter.Read<AutoUpgradeProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
+            return await Task.FromResult(new AutoUpgradeProfileResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

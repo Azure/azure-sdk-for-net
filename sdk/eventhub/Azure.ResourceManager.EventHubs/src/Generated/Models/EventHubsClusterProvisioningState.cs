@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsClusterProvisioningState : IEquatable<EventHubsClusterProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsClusterProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsClusterProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UnknownValue = "Unknown";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
@@ -24,70 +31,39 @@ namespace Azure.ResourceManager.EventHubs.Models
         private const string SucceededValue = "Succeeded";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="EventHubsClusterProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsClusterProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static EventHubsClusterProvisioningState Unknown { get; } = new EventHubsClusterProvisioningState(UnknownValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static EventHubsClusterProvisioningState Creating { get; } = new EventHubsClusterProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static EventHubsClusterProvisioningState Deleting { get; } = new EventHubsClusterProvisioningState(DeletingValue);
-
-        /// <summary> Gets the Scaling. </summary>
+        /// <summary> Scaling. </summary>
         public static EventHubsClusterProvisioningState Scaling { get; } = new EventHubsClusterProvisioningState(ScalingValue);
-
-        /// <summary> Gets the Active. </summary>
+        /// <summary> Active. </summary>
         public static EventHubsClusterProvisioningState Active { get; } = new EventHubsClusterProvisioningState(ActiveValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static EventHubsClusterProvisioningState Failed { get; } = new EventHubsClusterProvisioningState(FailedValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static EventHubsClusterProvisioningState Succeeded { get; } = new EventHubsClusterProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static EventHubsClusterProvisioningState Canceled { get; } = new EventHubsClusterProvisioningState(CanceledValue);
-
         /// <summary> Determines if two <see cref="EventHubsClusterProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsClusterProvisioningState left, EventHubsClusterProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="EventHubsClusterProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsClusterProvisioningState left, EventHubsClusterProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="EventHubsClusterProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsClusterProvisioningState"/>. </summary>
         public static implicit operator EventHubsClusterProvisioningState(string value) => new EventHubsClusterProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="EventHubsClusterProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsClusterProvisioningState?(string value) => value == null ? null : new EventHubsClusterProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsClusterProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(EventHubsClusterProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

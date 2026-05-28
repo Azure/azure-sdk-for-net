@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Specs.Azure.Core.Model
+namespace _Specs_.Azure.Core.Model
 {
     public static partial class _Specs_AzureCoreModelModelFactory
     {

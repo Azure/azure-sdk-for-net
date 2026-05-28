@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary></summary>
-    internal partial class HciClusterDeploymentSettingOperationSource : IOperationSource<HciClusterDeploymentSettingResource>
+    internal class HciClusterDeploymentSettingOperationSource : IOperationSource<HciClusterDeploymentSettingResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal HciClusterDeploymentSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         HciClusterDeploymentSettingResource IOperationSource<HciClusterDeploymentSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HciClusterDeploymentSettingData data = HciClusterDeploymentSettingData.DeserializeHciClusterDeploymentSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<HciClusterDeploymentSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
             return new HciClusterDeploymentSettingResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<HciClusterDeploymentSettingResource> IOperationSource<HciClusterDeploymentSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HciClusterDeploymentSettingData data = HciClusterDeploymentSettingData.DeserializeHciClusterDeploymentSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HciClusterDeploymentSettingResource(_client, data);
+            var data = ModelReaderWriter.Read<HciClusterDeploymentSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciContext.Default);
+            return await Task.FromResult(new HciClusterDeploymentSettingResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

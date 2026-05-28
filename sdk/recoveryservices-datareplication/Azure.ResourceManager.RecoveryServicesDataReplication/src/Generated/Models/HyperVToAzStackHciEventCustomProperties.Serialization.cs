@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> HyperV to  AzStackHCI event model custom properties. This class provides provider specific details for events of type DataContract.HealthEvents.HealthEventType.ProtectedItemHealth and DataContract.HealthEvents.HealthEventType.AgentHealth. </summary>
-    public partial class HyperVToAzStackHciEventCustomProperties : DataReplicationEventCustomProperties, IJsonModel<HyperVToAzStackHciEventCustomProperties>
+    public partial class HyperVToAzStackHciEventCustomProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciEventCustomProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationEventCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHyperVToAzStackHciEventCustomProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciEventCustomProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciEventCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciEventCustomProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HyperVToAzStackHciEventCustomProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVToAzStackHciEventCustomProperties IPersistableModel<HyperVToAzStackHciEventCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVToAzStackHciEventCustomProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HyperVToAzStackHciEventCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVToAzStackHciEventCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVToAzStackHciEventCustomProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(EventSourceFriendlyName))
             {
@@ -102,83 +62,111 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVToAzStackHciEventCustomProperties IJsonModel<HyperVToAzStackHciEventCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HyperVToAzStackHciEventCustomProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationEventCustomProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HyperVToAzStackHciEventCustomProperties IJsonModel<HyperVToAzStackHciEventCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVToAzStackHciEventCustomProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVToAzStackHciEventCustomProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HyperVToAzStackHciEventCustomProperties DeserializeHyperVToAzStackHciEventCustomProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HyperVToAzStackHciEventCustomProperties DeserializeHyperVToAzStackHciEventCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string instanceType = "HyperVToAzStackHCI";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string eventSourceFriendlyName = default;
             string protectedItemFriendlyName = default;
             string sourceApplianceName = default;
             string targetApplianceName = default;
             string serverType = default;
-            foreach (var prop in element.EnumerateObject())
+            string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("instanceType"u8))
+                if (property.NameEquals("eventSourceFriendlyName"u8))
                 {
-                    instanceType = prop.Value.GetString();
+                    eventSourceFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("eventSourceFriendlyName"u8))
+                if (property.NameEquals("protectedItemFriendlyName"u8))
                 {
-                    eventSourceFriendlyName = prop.Value.GetString();
+                    protectedItemFriendlyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("protectedItemFriendlyName"u8))
+                if (property.NameEquals("sourceApplianceName"u8))
                 {
-                    protectedItemFriendlyName = prop.Value.GetString();
+                    sourceApplianceName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceApplianceName"u8))
+                if (property.NameEquals("targetApplianceName"u8))
                 {
-                    sourceApplianceName = prop.Value.GetString();
+                    targetApplianceName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetApplianceName"u8))
+                if (property.NameEquals("serverType"u8))
                 {
-                    targetApplianceName = prop.Value.GetString();
+                    serverType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("serverType"u8))
+                if (property.NameEquals("instanceType"u8))
                 {
-                    serverType = prop.Value.GetString();
+                    instanceType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVToAzStackHciEventCustomProperties(
                 instanceType,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 eventSourceFriendlyName,
                 protectedItemFriendlyName,
                 sourceApplianceName,
                 targetApplianceName,
                 serverType);
         }
+
+        BinaryData IPersistableModel<HyperVToAzStackHciEventCustomProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciEventCustomProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HyperVToAzStackHciEventCustomProperties IPersistableModel<HyperVToAzStackHciEventCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciEventCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHyperVToAzStackHciEventCustomProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciEventCustomProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVToAzStackHciEventCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

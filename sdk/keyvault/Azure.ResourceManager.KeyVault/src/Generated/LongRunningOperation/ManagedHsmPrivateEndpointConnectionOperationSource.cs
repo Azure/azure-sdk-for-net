@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary></summary>
-    internal partial class ManagedHsmPrivateEndpointConnectionOperationSource : IOperationSource<ManagedHsmPrivateEndpointConnectionResource>
+    internal class ManagedHsmPrivateEndpointConnectionOperationSource : IOperationSource<ManagedHsmPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ManagedHsmPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ManagedHsmPrivateEndpointConnectionResource IOperationSource<ManagedHsmPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ManagedHsmPrivateEndpointConnectionData data = ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ManagedHsmPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
             return new ManagedHsmPrivateEndpointConnectionResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ManagedHsmPrivateEndpointConnectionResource> IOperationSource<ManagedHsmPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ManagedHsmPrivateEndpointConnectionData data = ManagedHsmPrivateEndpointConnectionData.DeserializeManagedHsmPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ManagedHsmPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedHsmPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKeyVaultContext.Default);
+            return await Task.FromResult(new ManagedHsmPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

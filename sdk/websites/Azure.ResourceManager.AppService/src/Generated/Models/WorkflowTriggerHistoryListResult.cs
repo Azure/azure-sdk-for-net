@@ -7,14 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The response of a WorkflowTriggerHistory list operation.
-    /// Serialized Name: WorkflowTriggerHistoryListResult
-    /// </summary>
+    /// <summary> The list of workflow trigger histories. </summary>
     internal partial class WorkflowTriggerHistoryListResult
     {
         /// <summary>
@@ -50,49 +46,25 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerHistoryListResult"/>. </summary>
-        /// <param name="value">
-        /// The WorkflowTriggerHistory items on this page
-        /// Serialized Name: WorkflowTriggerHistoryListResult.value
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WorkflowTriggerHistoryListResult(IEnumerable<WorkflowTriggerHistoryData> value)
+        internal WorkflowTriggerHistoryListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<WorkflowTriggerHistoryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerHistoryListResult"/>. </summary>
-        /// <param name="value">
-        /// The WorkflowTriggerHistory items on this page
-        /// Serialized Name: WorkflowTriggerHistoryListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: WorkflowTriggerHistoryListResult.nextLink
-        /// </param>
+        /// <param name="value"> A list of workflow trigger histories. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerHistoryListResult(IReadOnlyList<WorkflowTriggerHistoryData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkflowTriggerHistoryListResult(IReadOnlyList<WorkflowTriggerHistoryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowTriggerHistoryListResult"/> for deserialization. </summary>
-        internal WorkflowTriggerHistoryListResult()
-        {
-        }
-
-        /// <summary>
-        /// The WorkflowTriggerHistory items on this page
-        /// Serialized Name: WorkflowTriggerHistoryListResult.value
-        /// </summary>
+        /// <summary> A list of workflow trigger histories. </summary>
         public IReadOnlyList<WorkflowTriggerHistoryData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: WorkflowTriggerHistoryListResult.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> The URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

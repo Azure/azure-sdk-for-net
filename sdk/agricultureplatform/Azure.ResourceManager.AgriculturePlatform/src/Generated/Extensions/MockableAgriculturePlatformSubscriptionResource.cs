@@ -38,23 +38,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
 
         private AgriService AgriServiceRestClient => _agriServiceRestClient ??= new AgriService(AgriServiceClientDiagnostics, Pipeline, Endpoint, "2024-06-01-preview");
 
-        /// <summary>
-        /// List AgriServiceResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AgriculturePlatform/agriServices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List AgriServiceResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AgricultureServiceResource> GetAgricultureServicesAsync(CancellationToken cancellationToken = default)
@@ -63,26 +47,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetBySubscriptionAsyncCollectionResultOfT(AgriServiceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAgriculturePlatformSubscriptionResource.GetAgricultureServices"), data => new AgricultureServiceResource(Client, data));
+            return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetBySubscriptionAsyncCollectionResultOfT(AgriServiceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AgricultureServiceResource(Client, data));
         }
 
-        /// <summary>
-        /// List AgriServiceResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.AgriculturePlatform/agriServices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List AgriServiceResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AgricultureServiceResource> GetAgricultureServices(CancellationToken cancellationToken = default)
@@ -91,7 +59,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetBySubscriptionCollectionResultOfT(AgriServiceRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAgriculturePlatformSubscriptionResource.GetAgricultureServices"), data => new AgricultureServiceResource(Client, data));
+            return new PageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetBySubscriptionCollectionResultOfT(AgriServiceRestClient, Guid.Parse(Id.SubscriptionId), context), data => new AgricultureServiceResource(Client, data));
         }
     }
 }

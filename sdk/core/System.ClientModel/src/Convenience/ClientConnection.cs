@@ -69,9 +69,7 @@ public readonly struct ClientConnection
             Metadata = new Dictionary<string, string>();
         }
         else
-        {
             Metadata = metadata;
-        }
         Id = id;
         Locator = locator;
         Credential = credential;

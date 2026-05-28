@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct DataflowEndpointFabricPathType : IEquatable<DataflowEndpointFabricPathType>
     {
         private readonly string _value;
-        /// <summary> FILES Type. </summary>
-        private const string FilesValue = "Files";
-        /// <summary> TABLES Type. </summary>
-        private const string TablesValue = "Tables";
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointFabricPathType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataflowEndpointFabricPathType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string FilesValue = "Files";
+        private const string TablesValue = "Tables";
 
         /// <summary> FILES Type. </summary>
         public static DataflowEndpointFabricPathType Files { get; } = new DataflowEndpointFabricPathType(FilesValue);
-
         /// <summary> TABLES Type. </summary>
         public static DataflowEndpointFabricPathType Tables { get; } = new DataflowEndpointFabricPathType(TablesValue);
-
         /// <summary> Determines if two <see cref="DataflowEndpointFabricPathType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataflowEndpointFabricPathType left, DataflowEndpointFabricPathType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataflowEndpointFabricPathType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataflowEndpointFabricPathType left, DataflowEndpointFabricPathType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataflowEndpointFabricPathType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataflowEndpointFabricPathType"/>. </summary>
         public static implicit operator DataflowEndpointFabricPathType(string value) => new DataflowEndpointFabricPathType(value);
 
-        /// <summary> Converts a string to a <see cref="DataflowEndpointFabricPathType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataflowEndpointFabricPathType?(string value) => value == null ? null : new DataflowEndpointFabricPathType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataflowEndpointFabricPathType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataflowEndpointFabricPathType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

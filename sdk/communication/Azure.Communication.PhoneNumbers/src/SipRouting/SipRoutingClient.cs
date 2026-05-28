@@ -414,8 +414,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 
                 return await _restClient.UpdateAsync(new SipConfiguration(newTrunks), cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 scope.Failed(ex);
                 throw;
             }

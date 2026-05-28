@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.MySql.csproj" />
-  <Project Path="tests/Azure.Provisioning.MySql.Tests.csproj" />
-</Solution>

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
-    /// <summary></summary>
-    internal partial class GroupQuotasEnforcementStatusOperationSource : IOperationSource<GroupQuotasEnforcementStatusResource>
+    internal class GroupQuotasEnforcementStatusOperationSource : IOperationSource<GroupQuotasEnforcementStatusResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal GroupQuotasEnforcementStatusOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         GroupQuotasEnforcementStatusResource IOperationSource<GroupQuotasEnforcementStatusResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GroupQuotasEnforcementStatusData data = GroupQuotasEnforcementStatusData.DeserializeGroupQuotasEnforcementStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<GroupQuotasEnforcementStatusData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return new GroupQuotasEnforcementStatusResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<GroupQuotasEnforcementStatusResource> IOperationSource<GroupQuotasEnforcementStatusResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GroupQuotasEnforcementStatusData data = GroupQuotasEnforcementStatusData.DeserializeGroupQuotasEnforcementStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GroupQuotasEnforcementStatusResource(_client, data);
+            var data = ModelReaderWriter.Read<GroupQuotasEnforcementStatusData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
+            return await Task.FromResult(new GroupQuotasEnforcementStatusResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

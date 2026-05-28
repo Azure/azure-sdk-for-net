@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DnsResolver
@@ -26,85 +25,75 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsResolverPolicyCollection : ArmCollection, IEnumerable<DnsResolverPolicyResource>, IAsyncEnumerable<DnsResolverPolicyResource>
     {
-        private readonly ClientDiagnostics _dnsResolverPoliciesClientDiagnostics;
-        private readonly DnsResolverPolicies _dnsResolverPoliciesRestClient;
+        private readonly ClientDiagnostics _dnsResolverPolicyClientDiagnostics;
+        private readonly DnsResolverPoliciesRestOperations _dnsResolverPolicyRestClient;
 
-        /// <summary> Initializes a new instance of DnsResolverPolicyCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsResolverPolicyCollection"/> class for mocking. </summary>
         protected DnsResolverPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsResolverPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DnsResolverPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DnsResolverPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _dnsResolverPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DnsResolverPolicyResource.ResourceType, out string dnsResolverPolicyApiVersion);
-            _dnsResolverPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverPolicyResource.ResourceType.Namespace, Diagnostics);
-            _dnsResolverPoliciesRestClient = new DnsResolverPolicies(_dnsResolverPoliciesClientDiagnostics, Pipeline, Endpoint, dnsResolverPolicyApiVersion ?? "2025-10-01-preview");
-            ValidateResourceId(id);
+            _dnsResolverPolicyRestClient = new DnsResolverPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverPolicyApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates a DNS resolver policy.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsResolverPolicies_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DnsResolverPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dnsResolverPolicyName, DnsResolverPolicyData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DnsResolverPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dnsResolverPolicyName, DnsResolverPolicyData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsResolverPolicyName, nameof(dnsResolverPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _dnsResolverPoliciesClientDiagnostics.CreateScope("DnsResolverPolicyCollection.CreateOrUpdate");
+            using var scope = _dnsResolverPolicyClientDiagnostics.CreateScope("DnsResolverPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsResolverPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverPolicyName, DnsResolverPolicyData.ToRequestContent(data), matchConditions, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DnsResolverArmOperation<DnsResolverPolicyResource> operation = new DnsResolverArmOperation<DnsResolverPolicyResource>(
-                    new DnsResolverPolicyOperationSource(Client),
-                    _dnsResolverPoliciesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _dnsResolverPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverPolicyName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new DnsResolverArmOperation<DnsResolverPolicyResource>(new DnsResolverPolicyOperationSource(Client), _dnsResolverPolicyClientDiagnostics, Pipeline, _dnsResolverPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverPolicyName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -118,52 +107,44 @@ namespace Azure.ResourceManager.DnsResolver
         /// Creates or updates a DNS resolver policy.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsResolverPolicies_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DnsResolverPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string dnsResolverPolicyName, DnsResolverPolicyData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DnsResolverPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string dnsResolverPolicyName, DnsResolverPolicyData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsResolverPolicyName, nameof(dnsResolverPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _dnsResolverPoliciesClientDiagnostics.CreateScope("DnsResolverPolicyCollection.CreateOrUpdate");
+            using var scope = _dnsResolverPolicyClientDiagnostics.CreateScope("DnsResolverPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsResolverPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverPolicyName, DnsResolverPolicyData.ToRequestContent(data), matchConditions, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DnsResolverArmOperation<DnsResolverPolicyResource> operation = new DnsResolverArmOperation<DnsResolverPolicyResource>(
-                    new DnsResolverPolicyOperationSource(Client),
-                    _dnsResolverPoliciesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _dnsResolverPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverPolicyName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new DnsResolverArmOperation<DnsResolverPolicyResource>(new DnsResolverPolicyOperationSource(Client), _dnsResolverPolicyClientDiagnostics, Pipeline, _dnsResolverPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverPolicyName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -177,42 +158,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// Gets properties of a DNS resolver policy.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsResolverPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         public virtual async Task<Response<DnsResolverPolicyResource>> GetAsync(string dnsResolverPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsResolverPolicyName, nameof(dnsResolverPolicyName));
 
-            using DiagnosticScope scope = _dnsResolverPoliciesClientDiagnostics.CreateScope("DnsResolverPolicyCollection.Get");
+            using var scope = _dnsResolverPolicyClientDiagnostics.CreateScope("DnsResolverPolicyCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsResolverPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverPolicyName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DnsResolverPolicyData> response = Response.FromValue(DnsResolverPolicyData.FromResponse(result), result);
+                var response = await _dnsResolverPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DnsResolverPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -226,42 +203,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// Gets properties of a DNS resolver policy.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsResolverPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         public virtual Response<DnsResolverPolicyResource> Get(string dnsResolverPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsResolverPolicyName, nameof(dnsResolverPolicyName));
 
-            using DiagnosticScope scope = _dnsResolverPoliciesClientDiagnostics.CreateScope("DnsResolverPolicyCollection.Get");
+            using var scope = _dnsResolverPolicyClientDiagnostics.CreateScope("DnsResolverPolicyCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsResolverPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverPolicyName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DnsResolverPolicyData> response = Response.FromValue(DnsResolverPolicyData.FromResponse(result), result);
+                var response = _dnsResolverPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverPolicyName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DnsResolverPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -275,120 +248,98 @@ namespace Azure.ResourceManager.DnsResolver
         /// Lists DNS resolver policies within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsResolverPolicies_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsResolverPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DnsResolverPolicyResource> GetAllAsync(int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DnsResolverPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsResolverPolicyResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DnsResolverPolicyData, DnsResolverPolicyResource>(new DnsResolverPoliciesGetByResourceGroupAsyncCollectionResultOfT(
-                _dnsResolverPoliciesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                top,
-                context,
-                "DnsResolverPolicyCollection.GetAll"), data => new DnsResolverPolicyResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverPolicyResource(Client, DnsResolverPolicyData.DeserializeDnsResolverPolicyData(e)), _dnsResolverPolicyClientDiagnostics, Pipeline, "DnsResolverPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists DNS resolver policies within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsResolverPolicies_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DnsResolverPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DnsResolverPolicyResource> GetAll(int? top = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DnsResolverPolicyResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DnsResolverPolicyData, DnsResolverPolicyResource>(new DnsResolverPoliciesGetByResourceGroupCollectionResultOfT(
-                _dnsResolverPoliciesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                top,
-                context,
-                "DnsResolverPolicyCollection.GetAll"), data => new DnsResolverPolicyResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverPolicyResource(Client, DnsResolverPolicyData.DeserializeDnsResolverPolicyData(e)), _dnsResolverPolicyClientDiagnostics, Pipeline, "DnsResolverPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsResolverPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dnsResolverPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsResolverPolicyName, nameof(dnsResolverPolicyName));
 
-            using DiagnosticScope scope = _dnsResolverPoliciesClientDiagnostics.CreateScope("DnsResolverPolicyCollection.Exists");
+            using var scope = _dnsResolverPolicyClientDiagnostics.CreateScope("DnsResolverPolicyCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsResolverPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverPolicyName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DnsResolverPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DnsResolverPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DnsResolverPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dnsResolverPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,50 +353,36 @@ namespace Azure.ResourceManager.DnsResolver
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsResolverPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string dnsResolverPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsResolverPolicyName, nameof(dnsResolverPolicyName));
 
-            using DiagnosticScope scope = _dnsResolverPoliciesClientDiagnostics.CreateScope("DnsResolverPolicyCollection.Exists");
+            using var scope = _dnsResolverPolicyClientDiagnostics.CreateScope("DnsResolverPolicyCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsResolverPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverPolicyName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DnsResolverPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DnsResolverPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DnsResolverPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dnsResolverPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -459,54 +396,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsResolverPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<DnsResolverPolicyResource>> GetIfExistsAsync(string dnsResolverPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsResolverPolicyName, nameof(dnsResolverPolicyName));
 
-            using DiagnosticScope scope = _dnsResolverPoliciesClientDiagnostics.CreateScope("DnsResolverPolicyCollection.GetIfExists");
+            using var scope = _dnsResolverPolicyClientDiagnostics.CreateScope("DnsResolverPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsResolverPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverPolicyName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DnsResolverPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DnsResolverPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DnsResolverPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dnsResolverPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DnsResolverPolicyResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DnsResolverPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -520,54 +441,38 @@ namespace Azure.ResourceManager.DnsResolver
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DnsResolverPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DnsResolverPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
         public virtual NullableResponse<DnsResolverPolicyResource> GetIfExists(string dnsResolverPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsResolverPolicyName, nameof(dnsResolverPolicyName));
 
-            using DiagnosticScope scope = _dnsResolverPoliciesClientDiagnostics.CreateScope("DnsResolverPolicyCollection.GetIfExists");
+            using var scope = _dnsResolverPolicyClientDiagnostics.CreateScope("DnsResolverPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dnsResolverPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverPolicyName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DnsResolverPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DnsResolverPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DnsResolverPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dnsResolverPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dnsResolverPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DnsResolverPolicyResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DnsResolverPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -587,7 +492,6 @@ namespace Azure.ResourceManager.DnsResolver
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DnsResolverPolicyResource> IAsyncEnumerable<DnsResolverPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

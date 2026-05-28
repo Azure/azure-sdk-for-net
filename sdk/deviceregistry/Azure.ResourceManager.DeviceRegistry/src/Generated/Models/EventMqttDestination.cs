@@ -22,7 +22,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             Argument.AssertNotNull(configuration, nameof(configuration));
 
             Configuration = configuration;
-            Target = EventDestinationTarget.Mqtt;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventMqttDestination"/>. </summary>

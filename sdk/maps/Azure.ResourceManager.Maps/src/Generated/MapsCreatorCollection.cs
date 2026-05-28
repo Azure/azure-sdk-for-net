@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Maps
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.Maps
     /// </summary>
     public partial class MapsCreatorCollection : ArmCollection, IEnumerable<MapsCreatorResource>, IAsyncEnumerable<MapsCreatorResource>
     {
-        private readonly ClientDiagnostics _creatorsClientDiagnostics;
-        private readonly Creators _creatorsRestClient;
+        private readonly ClientDiagnostics _mapsCreatorCreatorsClientDiagnostics;
+        private readonly CreatorsRestOperations _mapsCreatorCreatorsRestClient;
 
-        /// <summary> Initializes a new instance of MapsCreatorCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MapsCreatorCollection"/> class for mocking. </summary>
         protected MapsCreatorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MapsCreatorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MapsCreatorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MapsCreatorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MapsCreatorResource.ResourceType, out string mapsCreatorApiVersion);
-            _creatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maps", MapsCreatorResource.ResourceType.Namespace, Diagnostics);
-            _creatorsRestClient = new Creators(_creatorsClientDiagnostics, Pipeline, Endpoint, mapsCreatorApiVersion ?? "2025-10-01-preview");
-            ValidateResourceId(id);
+            _mapsCreatorCreatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maps", MapsCreatorResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MapsCreatorResource.ResourceType, out string mapsCreatorCreatorsApiVersion);
+            _mapsCreatorCreatorsRestClient = new CreatorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mapsCreatorCreatorsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != MapsAccountResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MapsAccountResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MapsAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a Maps Creator resource. Creator resource will manage Azure resources required to populate a custom set of mapping data. It requires an account to exist before it can be created.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Creators_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Creators_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.Maps
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="data"> The new or updated parameters for the Creator resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MapsCreatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string creatorName, MapsCreatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _creatorsClientDiagnostics.CreateScope("MapsCreatorCollection.CreateOrUpdate");
+            using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _creatorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, creatorName, MapsCreatorData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MapsCreatorData> response = Response.FromValue(MapsCreatorData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MapsArmOperation<MapsCreatorResource> operation = new MapsArmOperation<MapsCreatorResource>(Response.FromValue(new MapsCreatorResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _mapsCreatorCreatorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _mapsCreatorCreatorsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MapsArmOperation<MapsCreatorResource>(Response.FromValue(new MapsCreatorResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.Maps
         /// Create or update a Maps Creator resource. Creator resource will manage Azure resources required to populate a custom set of mapping data. It requires an account to exist before it can be created.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Creators_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Creators_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.Maps
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="data"> The new or updated parameters for the Creator resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MapsCreatorResource> CreateOrUpdate(WaitUntil waitUntil, string creatorName, MapsCreatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _creatorsClientDiagnostics.CreateScope("MapsCreatorCollection.CreateOrUpdate");
+            using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _creatorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, creatorName, MapsCreatorData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MapsCreatorData> response = Response.FromValue(MapsCreatorData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MapsArmOperation<MapsCreatorResource> operation = new MapsArmOperation<MapsCreatorResource>(Response.FromValue(new MapsCreatorResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _mapsCreatorCreatorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, data, cancellationToken);
+                var uri = _mapsCreatorCreatorsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MapsArmOperation<MapsCreatorResource>(Response.FromValue(new MapsCreatorResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.Maps
         /// Get a Maps Creator resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Creators_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Creators_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual async Task<Response<MapsCreatorResource>> GetAsync(string creatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
 
-            using DiagnosticScope scope = _creatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Get");
+            using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _creatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, creatorName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MapsCreatorData> response = Response.FromValue(MapsCreatorData.FromResponse(result), result);
+                var response = await _mapsCreatorCreatorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MapsCreatorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.Maps
         /// Get a Maps Creator resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Creators_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Creators_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual Response<MapsCreatorResource> Get(string creatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
 
-            using DiagnosticScope scope = _creatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Get");
+            using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _creatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, creatorName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MapsCreatorData> response = Response.FromValue(MapsCreatorData.FromResponse(result), result);
+                var response = _mapsCreatorCreatorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MapsCreatorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,50 +247,50 @@ namespace Azure.ResourceManager.Maps
         /// Get all Creator instances for an Azure Maps Account
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Creators_ListByAccount. </description>
+        /// <term>Operation Id</term>
+        /// <description>Creators_ListByAccount</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MapsCreatorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MapsCreatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MapsCreatorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MapsCreatorData, MapsCreatorResource>(new CreatorsGetByAccountAsyncCollectionResultOfT(
-                _creatorsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "MapsCreatorCollection.GetAll"), data => new MapsCreatorResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mapsCreatorCreatorsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mapsCreatorCreatorsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MapsCreatorResource(Client, MapsCreatorData.DeserializeMapsCreatorData(e)), _mapsCreatorCreatorsClientDiagnostics, Pipeline, "MapsCreatorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all Creator instances for an Azure Maps Account
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Creators_ListByAccount. </description>
+        /// <term>Operation Id</term>
+        /// <description>Creators_ListByAccount</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,67 +298,45 @@ namespace Azure.ResourceManager.Maps
         /// <returns> A collection of <see cref="MapsCreatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MapsCreatorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MapsCreatorData, MapsCreatorResource>(new CreatorsGetByAccountCollectionResultOfT(
-                _creatorsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "MapsCreatorCollection.GetAll"), data => new MapsCreatorResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mapsCreatorCreatorsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mapsCreatorCreatorsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MapsCreatorResource(Client, MapsCreatorData.DeserializeMapsCreatorData(e)), _mapsCreatorCreatorsClientDiagnostics, Pipeline, "MapsCreatorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Creators_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Creators_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string creatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
 
-            using DiagnosticScope scope = _creatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Exists");
+            using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _creatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, creatorName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MapsCreatorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MapsCreatorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MapsCreatorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _mapsCreatorCreatorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,50 +350,36 @@ namespace Azure.ResourceManager.Maps
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Creators_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Creators_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual Response<bool> Exists(string creatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
 
-            using DiagnosticScope scope = _creatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Exists");
+            using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _creatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, creatorName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MapsCreatorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MapsCreatorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MapsCreatorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _mapsCreatorCreatorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -448,54 +393,38 @@ namespace Azure.ResourceManager.Maps
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Creators_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Creators_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual async Task<NullableResponse<MapsCreatorResource>> GetIfExistsAsync(string creatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
 
-            using DiagnosticScope scope = _creatorsClientDiagnostics.CreateScope("MapsCreatorCollection.GetIfExists");
+            using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _creatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, creatorName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MapsCreatorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MapsCreatorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MapsCreatorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _mapsCreatorCreatorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MapsCreatorResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MapsCreatorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -509,54 +438,38 @@ namespace Azure.ResourceManager.Maps
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/creators/{creatorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Creators_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Creators_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual NullableResponse<MapsCreatorResource> GetIfExists(string creatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
 
-            using DiagnosticScope scope = _creatorsClientDiagnostics.CreateScope("MapsCreatorCollection.GetIfExists");
+            using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _creatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, creatorName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MapsCreatorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MapsCreatorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MapsCreatorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _mapsCreatorCreatorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, creatorName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MapsCreatorResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MapsCreatorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -576,7 +489,6 @@ namespace Azure.ResourceManager.Maps
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MapsCreatorResource> IAsyncEnumerable<MapsCreatorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

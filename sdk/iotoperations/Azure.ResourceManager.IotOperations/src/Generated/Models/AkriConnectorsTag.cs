@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -17,20 +16,27 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsTag"/>. </summary>
         /// <param name="tag"> The tag of the image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tag"/> is null. </exception>
-        public AkriConnectorsTag(string tag) : base(AkriConnectorsTagDigestType.Tag)
+        public AkriConnectorsTag(string tag)
         {
             Argument.AssertNotNull(tag, nameof(tag));
 
             Tag = tag;
+            TagDigestType = AkriConnectorsTagDigestType.Tag;
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsTag"/>. </summary>
         /// <param name="tagDigestType"> The tag or digest type. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tag"> The tag of the image. </param>
-        internal AkriConnectorsTag(AkriConnectorsTagDigestType tagDigestType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string tag) : base(tagDigestType, additionalBinaryDataProperties)
+        internal AkriConnectorsTag(AkriConnectorsTagDigestType tagDigestType, IDictionary<string, BinaryData> serializedAdditionalRawData, string tag) : base(tagDigestType, serializedAdditionalRawData)
         {
             Tag = tag;
+            TagDigestType = tagDigestType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AkriConnectorsTag"/> for deserialization. </summary>
+        internal AkriConnectorsTag()
+        {
         }
 
         /// <summary> The tag of the image. </summary>

@@ -7,67 +7,60 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Resource status of the custom domain. </summary>
+    /// <summary>
+    /// Resource status of the custom domain.
+    /// Serialized Name: CustomDomainResourceState
+    /// </summary>
     public readonly partial struct CustomDomainResourceState : IEquatable<CustomDomainResourceState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CustomDomainResourceState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CustomDomainResourceState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string CreatingValue = "Creating";
         private const string ActiveValue = "Active";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Initializes a new instance of <see cref="CustomDomainResourceState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CustomDomainResourceState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: CustomDomainResourceState.Creating
+        /// </summary>
         public static CustomDomainResourceState Creating { get; } = new CustomDomainResourceState(CreatingValue);
-
-        /// <summary> Gets the Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: CustomDomainResourceState.Active
+        /// </summary>
         public static CustomDomainResourceState Active { get; } = new CustomDomainResourceState(ActiveValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: CustomDomainResourceState.Deleting
+        /// </summary>
         public static CustomDomainResourceState Deleting { get; } = new CustomDomainResourceState(DeletingValue);
-
         /// <summary> Determines if two <see cref="CustomDomainResourceState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomDomainResourceState left, CustomDomainResourceState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CustomDomainResourceState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomDomainResourceState left, CustomDomainResourceState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CustomDomainResourceState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomDomainResourceState"/>. </summary>
         public static implicit operator CustomDomainResourceState(string value) => new CustomDomainResourceState(value);
 
-        /// <summary> Converts a string to a <see cref="CustomDomainResourceState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CustomDomainResourceState?(string value) => value == null ? null : new CustomDomainResourceState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomDomainResourceState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CustomDomainResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

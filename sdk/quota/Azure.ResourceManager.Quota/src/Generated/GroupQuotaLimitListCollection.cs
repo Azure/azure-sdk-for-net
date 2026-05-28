@@ -6,13 +6,11 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -23,76 +21,70 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class GroupQuotaLimitListCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _groupQuotaLimitListsClientDiagnostics;
-        private readonly GroupQuotaLimitLists _groupQuotaLimitListsRestClient;
+        private readonly ClientDiagnostics _groupQuotaLimitListClientDiagnostics;
+        private readonly GroupQuotaLimitListsRestOperations _groupQuotaLimitListRestClient;
 
-        /// <summary> Initializes a new instance of GroupQuotaLimitListCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GroupQuotaLimitListCollection"/> class for mocking. </summary>
         protected GroupQuotaLimitListCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitListCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GroupQuotaLimitListCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GroupQuotaLimitListCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _groupQuotaLimitListClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaLimitListResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GroupQuotaLimitListResource.ResourceType, out string groupQuotaLimitListApiVersion);
-            _groupQuotaLimitListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaLimitListResource.ResourceType.Namespace, Diagnostics);
-            _groupQuotaLimitListsRestClient = new GroupQuotaLimitLists(_groupQuotaLimitListsClientDiagnostics, Pipeline, Endpoint, groupQuotaLimitListApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _groupQuotaLimitListRestClient = new GroupQuotaLimitListsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaLimitListApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != GroupQuotaEntityResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GroupQuotaLimitLists_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaLimitListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         public virtual async Task<Response<GroupQuotaLimitListResource>> GetAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GroupQuotaLimitListData> response = Response.FromValue(GroupQuotaLimitListData.FromResponse(result), result);
+                var response = await _groupQuotaLimitListRestClient.ListAsync(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new GroupQuotaLimitListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -106,43 +98,39 @@ namespace Azure.ResourceManager.Quota
         /// Gets the GroupQuotaLimits for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GroupQuotaLimitLists_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaLimitListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         public virtual Response<GroupQuotaLimitListResource> Get(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<GroupQuotaLimitListData> response = Response.FromValue(GroupQuotaLimitListData.FromResponse(result), result);
+                var response = _groupQuotaLimitListRestClient.List(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new GroupQuotaLimitListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -156,51 +144,37 @@ namespace Azure.ResourceManager.Quota
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GroupQuotaLimitLists_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaLimitListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Exists");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<GroupQuotaLimitListData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GroupQuotaLimitListData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GroupQuotaLimitListData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _groupQuotaLimitListRestClient.ListAsync(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,51 +188,37 @@ namespace Azure.ResourceManager.Quota
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GroupQuotaLimitLists_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaLimitListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Exists");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<GroupQuotaLimitListData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GroupQuotaLimitListData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GroupQuotaLimitListData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _groupQuotaLimitListRestClient.List(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,55 +232,39 @@ namespace Azure.ResourceManager.Quota
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GroupQuotaLimitLists_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaLimitListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         public virtual async Task<NullableResponse<GroupQuotaLimitListResource>> GetIfExistsAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetIfExists");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<GroupQuotaLimitListData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GroupQuotaLimitListData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GroupQuotaLimitListData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _groupQuotaLimitListRestClient.ListAsync(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<GroupQuotaLimitListResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new GroupQuotaLimitListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -334,55 +278,39 @@ namespace Azure.ResourceManager.Quota
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/resourceProviders/{resourceProviderName}/groupQuotaLimits/{location}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> GroupQuotaLimitLists_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>GroupQuotaLimitList_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaLimitListResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         public virtual NullableResponse<GroupQuotaLimitListResource> GetIfExists(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetIfExists");
+            using var scope = _groupQuotaLimitListClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<GroupQuotaLimitListData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GroupQuotaLimitListData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GroupQuotaLimitListData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _groupQuotaLimitListRestClient.List(Id.Parent.Name, Id.Name, resourceProviderName, location, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<GroupQuotaLimitListResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new GroupQuotaLimitListResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Storage;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Settings properties for Active Directory (AD). </summary>
-    public partial class StorageActiveDirectoryProperties : IJsonModel<StorageActiveDirectoryProperties>
+    public partial class StorageActiveDirectoryProperties : IUtf8JsonSerializable, IJsonModel<StorageActiveDirectoryProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageActiveDirectoryProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStorageActiveDirectoryProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageActiveDirectoryProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageActiveDirectoryProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StorageActiveDirectoryProperties IPersistableModel<StorageActiveDirectoryProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageActiveDirectoryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageActiveDirectoryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
@@ -114,15 +75,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("accountType"u8);
                 writer.WriteStringValue(AccountType.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -131,27 +92,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StorageActiveDirectoryProperties IJsonModel<StorageActiveDirectoryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageActiveDirectoryProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageActiveDirectoryProperties IJsonModel<StorageActiveDirectoryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageActiveDirectoryProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageActiveDirectoryProperties DeserializeStorageActiveDirectoryProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageActiveDirectoryProperties DeserializeStorageActiveDirectoryProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -159,73 +115,295 @@ namespace Azure.ResourceManager.Storage.Models
             string domainName = default;
             string netBiosDomainName = default;
             string forestName = default;
-            Guid? activeDirectoryDomainGuid = default;
+            Guid? domainGuid = default;
             string domainSid = default;
             string azureStorageSid = default;
             string samAccountName = default;
             ActiveDirectoryAccountType? accountType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("domainName"u8))
+                if (property.NameEquals("domainName"u8))
                 {
-                    domainName = prop.Value.GetString();
+                    domainName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("netBiosDomainName"u8))
+                if (property.NameEquals("netBiosDomainName"u8))
                 {
-                    netBiosDomainName = prop.Value.GetString();
+                    netBiosDomainName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("forestName"u8))
+                if (property.NameEquals("forestName"u8))
                 {
-                    forestName = prop.Value.GetString();
+                    forestName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("domainGuid"u8))
+                if (property.NameEquals("domainGuid"u8))
                 {
-                    DeserializeNullableGuid(prop, ref activeDirectoryDomainGuid);
-                    continue;
-                }
-                if (prop.NameEquals("domainSid"u8))
-                {
-                    domainSid = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("azureStorageSid"u8))
-                {
-                    azureStorageSid = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("samAccountName"u8))
-                {
-                    samAccountName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("accountType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accountType = new ActiveDirectoryAccountType(prop.Value.GetString());
+                    domainGuid = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("domainSid"u8))
+                {
+                    domainSid = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("azureStorageSid"u8))
+                {
+                    azureStorageSid = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("samAccountName"u8))
+                {
+                    samAccountName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("accountType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accountType = new ActiveDirectoryAccountType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageActiveDirectoryProperties(
                 domainName,
                 netBiosDomainName,
                 forestName,
-                activeDirectoryDomainGuid,
+                domainGuid,
                 domainSid,
                 azureStorageSid,
                 samAccountName,
                 accountType,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  domainName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DomainName))
+                {
+                    builder.Append("  domainName: ");
+                    if (DomainName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DomainName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DomainName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetBiosDomainName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  netBiosDomainName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetBiosDomainName))
+                {
+                    builder.Append("  netBiosDomainName: ");
+                    if (NetBiosDomainName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NetBiosDomainName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NetBiosDomainName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForestName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  forestName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ForestName))
+                {
+                    builder.Append("  forestName: ");
+                    if (ForestName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ForestName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ForestName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveDirectoryDomainGuid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  domainGuid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActiveDirectoryDomainGuid))
+                {
+                    builder.Append("  domainGuid: ");
+                    builder.AppendLine($"'{ActiveDirectoryDomainGuid.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainSid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  domainSid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DomainSid))
+                {
+                    builder.Append("  domainSid: ");
+                    if (DomainSid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DomainSid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DomainSid}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStorageSid), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureStorageSid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureStorageSid))
+                {
+                    builder.Append("  azureStorageSid: ");
+                    if (AzureStorageSid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AzureStorageSid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AzureStorageSid}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamAccountName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  samAccountName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SamAccountName))
+                {
+                    builder.Append("  samAccountName: ");
+                    if (SamAccountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SamAccountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SamAccountName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accountType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccountType))
+                {
+                    builder.Append("  accountType: ");
+                    builder.AppendLine($"'{AccountType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<StorageActiveDirectoryProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageActiveDirectoryProperties IPersistableModel<StorageActiveDirectoryProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeStorageActiveDirectoryProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageActiveDirectoryProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

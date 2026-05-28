@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
-    /// A class representing a DataReplicationPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationPolicies method.
+    /// A Class representing a DataReplicationPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataReplicationPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationPolicy method.
     /// </summary>
     public partial class DataReplicationPolicyResource : ArmResource
     {
-        private readonly ClientDiagnostics _policyClientDiagnostics;
-        private readonly Policy _policyRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="DataReplicationPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="policyName"> The policyName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string policyName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _dataReplicationPolicyPolicyClientDiagnostics;
+        private readonly PolicyRestOperations _dataReplicationPolicyPolicyRestClient;
         private readonly DataReplicationPolicyData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/replicationPolicies";
 
-        /// <summary> Initializes a new instance of DataReplicationPolicyResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationPolicyResource"/> class for mocking. </summary>
         protected DataReplicationPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataReplicationPolicyResource(ArmClient client, DataReplicationPolicyData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataReplicationPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataReplicationPolicyApiVersion);
-            _policyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            _policyRestClient = new Policy(_policyClientDiagnostics, Pipeline, Endpoint, dataReplicationPolicyApiVersion ?? "2024-09-01");
-            ValidateResourceId(id);
+            _dataReplicationPolicyPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataReplicationPolicyPolicyApiVersion);
+            _dataReplicationPolicyPolicyRestClient = new PolicyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationPolicyPolicyApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DataReplicationPolicyData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="vaultName"> The vaultName. </param>
-        /// <param name="policyName"> The policyName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string policyName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets the details of the policy.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Policy_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PolicyModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataReplicationPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _policyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Get");
+            using var scope = _dataReplicationPolicyPolicyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _policyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataReplicationPolicyData> response = Response.FromValue(DataReplicationPolicyData.FromResponse(result), result);
+                var response = await _dataReplicationPolicyPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +132,33 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the details of the policy.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Policy_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PolicyModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataReplicationPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _policyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Get");
+            using var scope = _dataReplicationPolicyPolicyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _policyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataReplicationPolicyData> response = Response.FromValue(DataReplicationPolicyData.FromResponse(result), result);
+                var response = _dataReplicationPolicyPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +172,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Removes the policy.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Policy_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>PolicyModel_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,21 +193,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _policyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Delete");
+            using var scope = _dataReplicationPolicyPolicyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _policyRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesDataReplicationArmOperation operation = new RecoveryServicesDataReplicationArmOperation(_policyClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _dataReplicationPolicyPolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesDataReplicationArmOperation(_dataReplicationPolicyPolicyClientDiagnostics, Pipeline, _dataReplicationPolicyPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +214,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Removes the policy.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Policy_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>PolicyModel_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,21 +235,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _policyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Delete");
+            using var scope = _dataReplicationPolicyPolicyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _policyRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesDataReplicationArmOperation operation = new RecoveryServicesDataReplicationArmOperation(_policyClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _dataReplicationPolicyPolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new RecoveryServicesDataReplicationArmOperation(_dataReplicationPolicyPolicyClientDiagnostics, Pipeline, _dataReplicationPolicyPolicyRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -286,23 +253,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         }
 
         /// <summary>
-        /// Update a DataReplicationPolicy.
+        /// Creates the policy.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Policy_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>PolicyModel_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,27 +281,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _policyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Update");
+            using var scope = _dataReplicationPolicyPolicyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _policyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationPolicyData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource>(
-                    new DataReplicationPolicyOperationSource(Client),
-                    _policyClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _dataReplicationPolicyPolicyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource>(new DataReplicationPolicyOperationSource(Client), _dataReplicationPolicyPolicyClientDiagnostics, Pipeline, _dataReplicationPolicyPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -345,23 +299,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         }
 
         /// <summary>
-        /// Update a DataReplicationPolicy.
+        /// Creates the policy.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/replicationPolicies/{policyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Policy_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>PolicyModel_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,27 +327,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _policyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Update");
+            using var scope = _dataReplicationPolicyPolicyClientDiagnostics.CreateScope("DataReplicationPolicyResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _policyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationPolicyData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource>(
-                    new DataReplicationPolicyOperationSource(Client),
-                    _policyClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _dataReplicationPolicyPolicyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource>(new DataReplicationPolicyOperationSource(Client), _dataReplicationPolicyPolicyClientDiagnostics, Pipeline, _dataReplicationPolicyPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

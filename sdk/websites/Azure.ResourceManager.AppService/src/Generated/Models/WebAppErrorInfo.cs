@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The error info.
-    /// Serialized Name: ErrorInfo
-    /// </summary>
+    /// <summary> The error info. </summary>
     public partial class WebAppErrorInfo
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WebAppErrorInfo"/>. </summary>
-        /// <param name="code">
-        /// The error code.
-        /// Serialized Name: ErrorInfo.code
-        /// </param>
+        /// <param name="code"> The error code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal WebAppErrorInfo(string code)
         {
@@ -62,10 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppErrorInfo"/>. </summary>
-        /// <param name="code">
-        /// The error code.
-        /// Serialized Name: ErrorInfo.code
-        /// </param>
+        /// <param name="code"> The error code. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppErrorInfo(string code, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,10 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The error code.
-        /// Serialized Name: ErrorInfo.code
-        /// </summary>
+        /// <summary> The error code. </summary>
         [WirePath("code")]
         public string Code { get; }
     }

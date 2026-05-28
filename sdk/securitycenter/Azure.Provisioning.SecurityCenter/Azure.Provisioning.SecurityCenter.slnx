@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.SecurityCenter.csproj" />
-  <Project Path="tests/Azure.Provisioning.SecurityCenter.Tests.csproj" />
-</Solution>

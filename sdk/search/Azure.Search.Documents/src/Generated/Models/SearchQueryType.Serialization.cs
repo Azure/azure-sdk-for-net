@@ -11,7 +11,6 @@ namespace Azure.Search.Documents.Models
 {
     internal static partial class SearchQueryTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchQueryType value) => value switch
         {
             SearchQueryType.Simple => "simple",
@@ -20,21 +19,11 @@ namespace Azure.Search.Documents.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static SearchQueryType ToSearchQueryType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "simple"))
-            {
-                return SearchQueryType.Simple;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "full"))
-            {
-                return SearchQueryType.Full;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "semantic"))
-            {
-                return SearchQueryType.Semantic;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "simple")) return SearchQueryType.Simple;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "full")) return SearchQueryType.Full;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "semantic")) return SearchQueryType.Semantic;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.");
         }
     }

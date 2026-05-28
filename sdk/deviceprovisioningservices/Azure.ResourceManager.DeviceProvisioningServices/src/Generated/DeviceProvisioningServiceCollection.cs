@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServiceCollection : ArmCollection, IEnumerable<DeviceProvisioningServiceResource>, IAsyncEnumerable<DeviceProvisioningServiceResource>
     {
-        private readonly ClientDiagnostics _provisioningServiceDescriptionsClientDiagnostics;
-        private readonly ProvisioningServiceDescriptions _provisioningServiceDescriptionsRestClient;
+        private readonly ClientDiagnostics _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics;
+        private readonly ProvisioningServiceDescriptionsRestOperations _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient;
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServiceCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServiceCollection"/> class for mocking. </summary>
         protected DeviceProvisioningServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServiceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DeviceProvisioningServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DeviceProvisioningServiceResource.ResourceType, out string deviceProvisioningServiceApiVersion);
-            _provisioningServiceDescriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
-            _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(_provisioningServiceDescriptionsClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServiceApiVersion ?? "2025-02-01-preview");
-            ValidateResourceId(id);
+            _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServiceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DeviceProvisioningServiceResource.ResourceType, out string deviceProvisioningServiceProvisioningServiceDescriptionsApiVersion);
+            _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServiceProvisioningServiceDescriptionsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update the metadata of the provisioning service. The usual pattern to modify a property is to retrieve the provisioning service metadata and security metadata, and then combine them with the modified values in a new body to update the provisioning service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProvisioningServiceDescriptions_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProvisioningServiceDescription_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="data"> Description of the provisioning service to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceProvisioningServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string provisioningServiceName, DeviceProvisioningServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _provisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.CreateOrUpdate");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, DeviceProvisioningServiceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(
-                    new DeviceProvisioningServiceOperationSource(Client),
-                    _provisioningServiceDescriptionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Create or update the metadata of the provisioning service. The usual pattern to modify a property is to retrieve the provisioning service metadata and security metadata, and then combine them with the modified values in a new body to update the provisioning service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProvisioningServiceDescriptions_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProvisioningServiceDescription_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="data"> Description of the provisioning service to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeviceProvisioningServiceResource> CreateOrUpdate(WaitUntil waitUntil, string provisioningServiceName, DeviceProvisioningServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _provisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.CreateOrUpdate");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, DeviceProvisioningServiceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(
-                    new DeviceProvisioningServiceOperationSource(Client),
-                    _provisioningServiceDescriptionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data, cancellationToken);
+                var operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(new DeviceProvisioningServiceOperationSource(Client), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Get the metadata of the provisioning service without SAS keys.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProvisioningServiceDescriptions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual async Task<Response<DeviceProvisioningServiceResource>> GetAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using DiagnosticScope scope = _provisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Get");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeviceProvisioningServiceData> response = Response.FromValue(DeviceProvisioningServiceData.FromResponse(result), result);
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DeviceProvisioningServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Get the metadata of the provisioning service without SAS keys.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProvisioningServiceDescriptions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual Response<DeviceProvisioningServiceResource> Get(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using DiagnosticScope scope = _provisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Get");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeviceProvisioningServiceData> response = Response.FromValue(DeviceProvisioningServiceData.FromResponse(result), result);
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DeviceProvisioningServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Get a list of all provisioning services in the given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProvisioningServiceDescriptions_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProvisioningServiceDescription_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetByResourceGroupAsyncCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DeviceProvisioningServiceCollection.GetAll"), data => new DeviceProvisioningServiceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, "DeviceProvisioningServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all provisioning services in the given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProvisioningServiceDescriptions_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProvisioningServiceDescription_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetByResourceGroupCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DeviceProvisioningServiceCollection.GetAll"), data => new DeviceProvisioningServiceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceProvisioningServiceResource(Client, DeviceProvisioningServiceData.DeserializeDeviceProvisioningServiceData(e)), _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics, Pipeline, "DeviceProvisioningServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProvisioningServiceDescriptions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using DiagnosticScope scope = _provisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Exists");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DeviceProvisioningServiceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DeviceProvisioningServiceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DeviceProvisioningServiceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProvisioningServiceDescriptions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using DiagnosticScope scope = _provisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Exists");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DeviceProvisioningServiceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DeviceProvisioningServiceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DeviceProvisioningServiceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProvisioningServiceDescriptions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<DeviceProvisioningServiceResource>> GetIfExistsAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using DiagnosticScope scope = _provisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetIfExists");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DeviceProvisioningServiceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DeviceProvisioningServiceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DeviceProvisioningServiceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DeviceProvisioningServiceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DeviceProvisioningServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProvisioningServiceDescriptions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProvisioningServiceDescription_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="provisioningServiceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="provisioningServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual NullableResponse<DeviceProvisioningServiceResource> GetIfExists(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
-            using DiagnosticScope scope = _provisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetIfExists");
+            using var scope = _deviceProvisioningServiceProvisioningServiceDescriptionsClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DeviceProvisioningServiceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DeviceProvisioningServiceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DeviceProvisioningServiceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _deviceProvisioningServiceProvisioningServiceDescriptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DeviceProvisioningServiceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DeviceProvisioningServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DeviceProvisioningServiceResource> IAsyncEnumerable<DeviceProvisioningServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

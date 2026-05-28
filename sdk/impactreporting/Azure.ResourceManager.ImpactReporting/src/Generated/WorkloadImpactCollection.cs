@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ImpactReporting
@@ -26,84 +25,73 @@ namespace Azure.ResourceManager.ImpactReporting
     /// </summary>
     public partial class WorkloadImpactCollection : ArmCollection, IEnumerable<WorkloadImpactResource>, IAsyncEnumerable<WorkloadImpactResource>
     {
-        private readonly ClientDiagnostics _workloadImpactsClientDiagnostics;
-        private readonly WorkloadImpacts _workloadImpactsRestClient;
+        private readonly ClientDiagnostics _workloadImpactClientDiagnostics;
+        private readonly WorkloadImpactsRestOperations _workloadImpactRestClient;
 
-        /// <summary> Initializes a new instance of WorkloadImpactCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadImpactCollection"/> class for mocking. </summary>
         protected WorkloadImpactCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadImpactCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadImpactCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal WorkloadImpactCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _workloadImpactClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", WorkloadImpactResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WorkloadImpactResource.ResourceType, out string workloadImpactApiVersion);
-            _workloadImpactsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", WorkloadImpactResource.ResourceType.Namespace, Diagnostics);
-            _workloadImpactsRestClient = new WorkloadImpacts(_workloadImpactsClientDiagnostics, Pipeline, Endpoint, workloadImpactApiVersion ?? "2024-05-01-preview");
-            ValidateResourceId(id);
+            _workloadImpactRestClient = new WorkloadImpactsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workloadImpactApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a WorkloadImpact
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="workloadImpactName"> workloadImpact resource . </param>
+        /// <param name="workloadImpactName"> workloadImpact resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadImpactResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workloadImpactName, WorkloadImpactData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadImpactName, nameof(workloadImpactName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadImpactsClientDiagnostics.CreateScope("WorkloadImpactCollection.CreateOrUpdate");
+            using var scope = _workloadImpactClientDiagnostics.CreateScope("WorkloadImpactCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, workloadImpactName, WorkloadImpactData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
-                    new WorkloadImpactOperationSource(Client),
-                    _workloadImpactsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _workloadImpactRestClient.CreateAsync(Id.SubscriptionId, workloadImpactName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ImpactReportingArmOperation<WorkloadImpactResource>(new WorkloadImpactOperationSource(Client), _workloadImpactClientDiagnostics, Pipeline, _workloadImpactRestClient.CreateCreateRequest(Id.SubscriptionId, workloadImpactName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,51 +105,42 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Create a WorkloadImpact
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="workloadImpactName"> workloadImpact resource . </param>
+        /// <param name="workloadImpactName"> workloadImpact resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadImpactResource> CreateOrUpdate(WaitUntil waitUntil, string workloadImpactName, WorkloadImpactData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadImpactName, nameof(workloadImpactName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadImpactsClientDiagnostics.CreateScope("WorkloadImpactCollection.CreateOrUpdate");
+            using var scope = _workloadImpactClientDiagnostics.CreateScope("WorkloadImpactCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadImpactsRestClient.CreateCreateRequest(Id.SubscriptionId, workloadImpactName, WorkloadImpactData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ImpactReportingArmOperation<WorkloadImpactResource> operation = new ImpactReportingArmOperation<WorkloadImpactResource>(
-                    new WorkloadImpactOperationSource(Client),
-                    _workloadImpactsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _workloadImpactRestClient.Create(Id.SubscriptionId, workloadImpactName, data, cancellationToken);
+                var operation = new ImpactReportingArmOperation<WorkloadImpactResource>(new WorkloadImpactOperationSource(Client), _workloadImpactClientDiagnostics, Pipeline, _workloadImpactRestClient.CreateCreateRequest(Id.SubscriptionId, workloadImpactName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Get a WorkloadImpact
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workloadImpactName"> workloadImpact resource . </param>
+        /// <param name="workloadImpactName"> workloadImpact resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         public virtual async Task<Response<WorkloadImpactResource>> GetAsync(string workloadImpactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadImpactName, nameof(workloadImpactName));
 
-            using DiagnosticScope scope = _workloadImpactsClientDiagnostics.CreateScope("WorkloadImpactCollection.Get");
+            using var scope = _workloadImpactClientDiagnostics.CreateScope("WorkloadImpactCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<WorkloadImpactData> response = Response.FromValue(WorkloadImpactData.FromResponse(result), result);
+                var response = await _workloadImpactRestClient.GetAsync(Id.SubscriptionId, workloadImpactName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new WorkloadImpactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Get a WorkloadImpact
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workloadImpactName"> workloadImpact resource . </param>
+        /// <param name="workloadImpactName"> workloadImpact resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         public virtual Response<WorkloadImpactResource> Get(string workloadImpactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadImpactName, nameof(workloadImpactName));
 
-            using DiagnosticScope scope = _workloadImpactsClientDiagnostics.CreateScope("WorkloadImpactCollection.Get");
+            using var scope = _workloadImpactClientDiagnostics.CreateScope("WorkloadImpactCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<WorkloadImpactData> response = Response.FromValue(WorkloadImpactData.FromResponse(result), result);
+                var response = _workloadImpactRestClient.Get(Id.SubscriptionId, workloadImpactName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new WorkloadImpactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.ImpactReporting
         /// List WorkloadImpact resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_ListBySubscription. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_ListBySubscription</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadImpactResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadImpactResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadImpactResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<WorkloadImpactData, WorkloadImpactResource>(new WorkloadImpactsGetBySubscriptionAsyncCollectionResultOfT(_workloadImpactsRestClient, Id.SubscriptionId, context, "WorkloadImpactCollection.GetAll"), data => new WorkloadImpactResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadImpactRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadImpactRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadImpactResource(Client, WorkloadImpactData.DeserializeWorkloadImpactData(e)), _workloadImpactClientDiagnostics, Pipeline, "WorkloadImpactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List WorkloadImpact resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_ListBySubscription. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_ListBySubscription</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <returns> A collection of <see cref="WorkloadImpactResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadImpactResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<WorkloadImpactData, WorkloadImpactResource>(new WorkloadImpactsGetBySubscriptionCollectionResultOfT(_workloadImpactsRestClient, Id.SubscriptionId, context, "WorkloadImpactCollection.GetAll"), data => new WorkloadImpactResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadImpactRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadImpactRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadImpactResource(Client, WorkloadImpactData.DeserializeWorkloadImpactData(e)), _workloadImpactClientDiagnostics, Pipeline, "WorkloadImpactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workloadImpactName"> workloadImpact resource . </param>
+        /// <param name="workloadImpactName"> workloadImpact resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workloadImpactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadImpactName, nameof(workloadImpactName));
 
-            using DiagnosticScope scope = _workloadImpactsClientDiagnostics.CreateScope("WorkloadImpactCollection.Exists");
+            using var scope = _workloadImpactClientDiagnostics.CreateScope("WorkloadImpactCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<WorkloadImpactData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(WorkloadImpactData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((WorkloadImpactData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _workloadImpactRestClient.GetAsync(Id.SubscriptionId, workloadImpactName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workloadImpactName"> workloadImpact resource . </param>
+        /// <param name="workloadImpactName"> workloadImpact resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         public virtual Response<bool> Exists(string workloadImpactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadImpactName, nameof(workloadImpactName));
 
-            using DiagnosticScope scope = _workloadImpactsClientDiagnostics.CreateScope("WorkloadImpactCollection.Exists");
+            using var scope = _workloadImpactClientDiagnostics.CreateScope("WorkloadImpactCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<WorkloadImpactData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(WorkloadImpactData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((WorkloadImpactData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _workloadImpactRestClient.Get(Id.SubscriptionId, workloadImpactName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workloadImpactName"> workloadImpact resource . </param>
+        /// <param name="workloadImpactName"> workloadImpact resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadImpactResource>> GetIfExistsAsync(string workloadImpactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadImpactName, nameof(workloadImpactName));
 
-            using DiagnosticScope scope = _workloadImpactsClientDiagnostics.CreateScope("WorkloadImpactCollection.GetIfExists");
+            using var scope = _workloadImpactClientDiagnostics.CreateScope("WorkloadImpactCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<WorkloadImpactData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(WorkloadImpactData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((WorkloadImpactData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _workloadImpactRestClient.GetAsync(Id.SubscriptionId, workloadImpactName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<WorkloadImpactResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new WorkloadImpactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workloadImpactName"> workloadImpact resource . </param>
+        /// <param name="workloadImpactName"> workloadImpact resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         public virtual NullableResponse<WorkloadImpactResource> GetIfExists(string workloadImpactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workloadImpactName, nameof(workloadImpactName));
 
-            using DiagnosticScope scope = _workloadImpactsClientDiagnostics.CreateScope("WorkloadImpactCollection.GetIfExists");
+            using var scope = _workloadImpactClientDiagnostics.CreateScope("WorkloadImpactCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadImpactsRestClient.CreateGetRequest(Id.SubscriptionId, workloadImpactName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<WorkloadImpactData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(WorkloadImpactData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((WorkloadImpactData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _workloadImpactRestClient.Get(Id.SubscriptionId, workloadImpactName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<WorkloadImpactResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new WorkloadImpactResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.ImpactReporting
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<WorkloadImpactResource> IAsyncEnumerable<WorkloadImpactResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

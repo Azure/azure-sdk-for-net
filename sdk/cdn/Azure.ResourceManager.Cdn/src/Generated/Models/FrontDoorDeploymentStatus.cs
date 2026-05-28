@@ -7,71 +7,66 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary></summary>
+    /// <summary>
+    /// The FrontDoorDeploymentStatus.
+    /// Serialized Name: DeploymentStatus
+    /// </summary>
     public readonly partial struct FrontDoorDeploymentStatus : IEquatable<FrontDoorDeploymentStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorDeploymentStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FrontDoorDeploymentStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NotStartedValue = "NotStarted";
         private const string InProgressValue = "InProgress";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorDeploymentStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FrontDoorDeploymentStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NotStarted. </summary>
+        /// <summary>
+        /// NotStarted
+        /// Serialized Name: DeploymentStatus.NotStarted
+        /// </summary>
         public static FrontDoorDeploymentStatus NotStarted { get; } = new FrontDoorDeploymentStatus(NotStartedValue);
-
-        /// <summary> Gets the InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: DeploymentStatus.InProgress
+        /// </summary>
         public static FrontDoorDeploymentStatus InProgress { get; } = new FrontDoorDeploymentStatus(InProgressValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: DeploymentStatus.Succeeded
+        /// </summary>
         public static FrontDoorDeploymentStatus Succeeded { get; } = new FrontDoorDeploymentStatus(SucceededValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: DeploymentStatus.Failed
+        /// </summary>
         public static FrontDoorDeploymentStatus Failed { get; } = new FrontDoorDeploymentStatus(FailedValue);
-
         /// <summary> Determines if two <see cref="FrontDoorDeploymentStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorDeploymentStatus left, FrontDoorDeploymentStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="FrontDoorDeploymentStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorDeploymentStatus left, FrontDoorDeploymentStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="FrontDoorDeploymentStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorDeploymentStatus"/>. </summary>
         public static implicit operator FrontDoorDeploymentStatus(string value) => new FrontDoorDeploymentStatus(value);
 
-        /// <summary> Converts a string to a <see cref="FrontDoorDeploymentStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator FrontDoorDeploymentStatus?(string value) => value == null ? null : new FrontDoorDeploymentStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorDeploymentStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(FrontDoorDeploymentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

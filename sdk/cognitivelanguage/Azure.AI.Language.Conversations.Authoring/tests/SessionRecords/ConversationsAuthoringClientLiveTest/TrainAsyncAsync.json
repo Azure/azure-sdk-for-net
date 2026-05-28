@@ -1,0 +1,381 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/:train?api-version=2025-05-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "186",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "modelLabel": "MyModel",
+        "trainingConfigVersion": "2023-04-15",
+        "trainingMode": "standard",
+        "evaluationOptions": {
+          "kind": "percentage",
+          "trainingSplitPercentage": 80,
+          "testingSplitPercentage": 20
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "db7bbf5c-9f82-4068-a324-e5bb53b6e642",
+        "Content-Length": "0",
+        "Date": "Wed, 25 Jun 2025 00:00:09 GMT",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000?api-version=2025-05-15-preview",
+        "request-id": "db7bbf5c-9f82-4068-a324-e5bb53b6e642",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "102",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "d1197c87-6595-4aec-91f8-a31279495d7e",
+        "Content-Length": "507",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Jun 2025 00:00:09 GMT",
+        "request-id": "d1197c87-6595-4aec-91f8-a31279495d7e",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "31",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "MyModel",
+          "trainingConfigVersion": "2023-04-15",
+          "trainingMode": "standard",
+          "dataGenerationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "trainingStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          }
+        },
+        "jobId": "e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000",
+        "createdDateTime": "2025-06-25T00:00:09Z",
+        "lastUpdatedDateTime": "2025-06-25T00:00:09Z",
+        "expirationDateTime": "2025-07-02T00:00:09Z",
+        "status": "notStarted"
+      }
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "67e17623-431e-46e0-afd5-389c9826880c",
+        "Content-Length": "504",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Jun 2025 00:00:10 GMT",
+        "request-id": "67e17623-431e-46e0-afd5-389c9826880c",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "31",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "MyModel",
+          "trainingConfigVersion": "2023-04-15",
+          "trainingMode": "standard",
+          "dataGenerationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "trainingStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          }
+        },
+        "jobId": "e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000",
+        "createdDateTime": "2025-06-25T00:00:09Z",
+        "lastUpdatedDateTime": "2025-06-25T00:00:10Z",
+        "expirationDateTime": "2025-07-02T00:00:09Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "50b66da0-7f70-410d-a87a-f0292bc665b5",
+        "Content-Length": "919",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Jun 2025 00:00:11 GMT",
+        "request-id": "50b66da0-7f70-410d-a87a-f0292bc665b5",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "30",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "MyModel",
+          "trainingConfigVersion": "2023-04-15",
+          "trainingMode": "standard",
+          "dataGenerationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "trainingStatus": {
+            "percentComplete": 0,
+            "startDateTime": "2025-06-25T00:00:11.2074929Z",
+            "status": "running"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "estimatedEndDateTime": "2025-06-25T00:00:11.2074929Z"
+        },
+        "jobId": "e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000",
+        "createdDateTime": "2025-06-25T00:00:09Z",
+        "lastUpdatedDateTime": "2025-06-25T00:00:11Z",
+        "expirationDateTime": "2025-07-02T00:00:09Z",
+        "status": "running",
+        "warnings": [
+          {
+            "code": "Warning",
+            "message": "Intent `Buy` is tagged in `3` training dataset examples, it is recommended to have `10` tags for better model quality."
+          },
+          {
+            "code": "Warning",
+            "message": "Entity `product` is tagged in `3` training dataset examples, it is recommended to have `10` tags for better model quality."
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "db782083-cc16-4ec3-970f-6055dae831a9",
+        "Content-Length": "919",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Jun 2025 00:00:13 GMT",
+        "request-id": "db782083-cc16-4ec3-970f-6055dae831a9",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "31",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "MyModel",
+          "trainingConfigVersion": "2023-04-15",
+          "trainingMode": "standard",
+          "dataGenerationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "trainingStatus": {
+            "percentComplete": 0,
+            "startDateTime": "2025-06-25T00:00:11.2074929Z",
+            "status": "running"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "estimatedEndDateTime": "2025-06-25T00:00:11.2074929Z"
+        },
+        "jobId": "e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000",
+        "createdDateTime": "2025-06-25T00:00:09Z",
+        "lastUpdatedDateTime": "2025-06-25T00:00:11Z",
+        "expirationDateTime": "2025-07-02T00:00:09Z",
+        "status": "running",
+        "warnings": [
+          {
+            "code": "Warning",
+            "message": "Intent `Buy` is tagged in `3` training dataset examples, it is recommended to have `10` tags for better model quality."
+          },
+          {
+            "code": "Warning",
+            "message": "Entity `product` is tagged in `3` training dataset examples, it is recommended to have `10` tags for better model quality."
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "465c2340-c4a3-4005-9c38-d2fa68374ecb",
+        "Content-Length": "919",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Jun 2025 00:00:14 GMT",
+        "request-id": "465c2340-c4a3-4005-9c38-d2fa68374ecb",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "31",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "MyModel",
+          "trainingConfigVersion": "2023-04-15",
+          "trainingMode": "standard",
+          "dataGenerationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "trainingStatus": {
+            "percentComplete": 0,
+            "startDateTime": "2025-06-25T00:00:11.2074929Z",
+            "status": "running"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "estimatedEndDateTime": "2025-06-25T00:00:11.2074929Z"
+        },
+        "jobId": "e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000",
+        "createdDateTime": "2025-06-25T00:00:09Z",
+        "lastUpdatedDateTime": "2025-06-25T00:00:11Z",
+        "expirationDateTime": "2025-07-02T00:00:09Z",
+        "status": "running",
+        "warnings": [
+          {
+            "code": "Warning",
+            "message": "Intent `Buy` is tagged in `3` training dataset examples, it is recommended to have `10` tags for better model quality."
+          },
+          {
+            "code": "Warning",
+            "message": "Entity `product` is tagged in `3` training dataset examples, it is recommended to have `10` tags for better model quality."
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "7e38a6a7-736f-428e-8965-13b79594a56f",
+        "Content-Length": "916",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 25 Jun 2025 00:00:15 GMT",
+        "request-id": "7e38a6a7-736f-428e-8965-13b79594a56f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "28",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "result": {
+          "modelLabel": "MyModel",
+          "trainingConfigVersion": "2023-04-15",
+          "trainingMode": "standard",
+          "dataGenerationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          },
+          "trainingStatus": {
+            "percentComplete": 100,
+            "startDateTime": "2025-06-25T00:00:11.2074929Z",
+            "endDateTime": "2025-06-25T00:00:13.1796687Z",
+            "status": "succeeded"
+          },
+          "evaluationStatus": {
+            "percentComplete": 0,
+            "status": "notStarted"
+          }
+        },
+        "jobId": "e06498ad-5cb0-4ba3-bde5-1365bc6f1bb6_638864064000000000",
+        "createdDateTime": "2025-06-25T00:00:09Z",
+        "lastUpdatedDateTime": "2025-06-25T00:00:15Z",
+        "expirationDateTime": "2025-07-02T00:00:09Z",
+        "status": "succeeded",
+        "warnings": [
+          {
+            "code": "Warning",
+            "message": "Intent `Buy` is tagged in `3` training dataset examples, it is recommended to have `10` tags for better model quality."
+          },
+          {
+            "code": "Warning",
+            "message": "Entity `product` is tagged in `3` training dataset examples, it is recommended to have `10` tags for better model quality."
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1740345340"
+  }
+}

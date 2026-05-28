@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct InitialDownloadPolicy : IEquatable<InitialDownloadPolicy>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="InitialDownloadPolicy"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public InitialDownloadPolicy(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NamespaceOnlyValue = "NamespaceOnly";
         private const string NamespaceThenModifiedFilesValue = "NamespaceThenModifiedFiles";
         private const string AvoidTieredFilesValue = "AvoidTieredFiles";
 
-        /// <summary> Initializes a new instance of <see cref="InitialDownloadPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InitialDownloadPolicy(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NamespaceOnly. </summary>
+        /// <summary> NamespaceOnly. </summary>
         public static InitialDownloadPolicy NamespaceOnly { get; } = new InitialDownloadPolicy(NamespaceOnlyValue);
-
-        /// <summary> Gets the NamespaceThenModifiedFiles. </summary>
+        /// <summary> NamespaceThenModifiedFiles. </summary>
         public static InitialDownloadPolicy NamespaceThenModifiedFiles { get; } = new InitialDownloadPolicy(NamespaceThenModifiedFilesValue);
-
-        /// <summary> Gets the AvoidTieredFiles. </summary>
+        /// <summary> AvoidTieredFiles. </summary>
         public static InitialDownloadPolicy AvoidTieredFiles { get; } = new InitialDownloadPolicy(AvoidTieredFilesValue);
-
         /// <summary> Determines if two <see cref="InitialDownloadPolicy"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InitialDownloadPolicy left, InitialDownloadPolicy right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="InitialDownloadPolicy"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InitialDownloadPolicy left, InitialDownloadPolicy right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="InitialDownloadPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InitialDownloadPolicy"/>. </summary>
         public static implicit operator InitialDownloadPolicy(string value) => new InitialDownloadPolicy(value);
 
-        /// <summary> Converts a string to a <see cref="InitialDownloadPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator InitialDownloadPolicy?(string value) => value == null ? null : new InitialDownloadPolicy(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InitialDownloadPolicy other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(InitialDownloadPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

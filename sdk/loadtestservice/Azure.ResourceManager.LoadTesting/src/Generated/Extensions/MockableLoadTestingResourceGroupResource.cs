@@ -8,30 +8,32 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.LoadTesting;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LoadTesting.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableLoadTestingResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableLoadTestingResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableLoadTestingResourceGroupResource"/> class for mocking. </summary>
         protected MockableLoadTestingResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableLoadTestingResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableLoadTestingResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableLoadTestingResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of LoadTestingResources in the <see cref="ResourceGroupResource"/>. </summary>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of LoadTestingResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of LoadTestingResources and their operations over a LoadTestingResource. </returns>
         public virtual LoadTestingResourceCollection GetLoadTestingResources()
         {
@@ -39,19 +41,23 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         }
 
         /// <summary>
-        /// Get a LoadTestResource
+        /// Get a LoadTest resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,25 +68,27 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<LoadTestingResource>> GetLoadTestingResourceAsync(string loadTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
-
             return await GetLoadTestingResources().GetAsync(loadTestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a LoadTestResource
+        /// Get a LoadTest resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         [ForwardsClientCalls]
         public virtual Response<LoadTestingResource> GetLoadTestingResource(string loadTestName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
-
             return GetLoadTestingResources().Get(loadTestName, cancellationToken);
         }
     }

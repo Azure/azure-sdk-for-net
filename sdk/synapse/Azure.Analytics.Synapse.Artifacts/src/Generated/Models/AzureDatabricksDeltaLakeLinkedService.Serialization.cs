@@ -66,11 +66,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
             writer.WriteObjectValue<object>(Domain);
-            if (Optional.IsDefined(AccessToken))
-            {
-                writer.WritePropertyName("accessToken"u8);
-                writer.WriteObjectValue(AccessToken);
-            }
+            writer.WritePropertyName("accessToken"u8);
+            writer.WriteObjectValue(AccessToken);
             if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
@@ -85,11 +82,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
-            }
-            if (Optional.IsDefined(WorkspaceResourceId))
-            {
-                writer.WritePropertyName("workspaceResourceId"u8);
-                writer.WriteObjectValue<object>(WorkspaceResourceId);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -117,7 +109,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object clusterId = default;
             object encryptedCredential = default;
             CredentialReference credential = default;
-            object workspaceResourceId = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -197,10 +188,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("accessToken"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             accessToken = SecretBase.DeserializeSecretBase(property0.Value);
                             continue;
                         }
@@ -231,15 +218,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             credential = CredentialReference.DeserializeCredentialReference(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("workspaceResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            workspaceResourceId = property0.Value.GetObject();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -258,8 +236,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 accessToken,
                 clusterId,
                 encryptedCredential,
-                credential,
-                workspaceResourceId);
+                credential);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

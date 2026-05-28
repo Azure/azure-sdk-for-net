@@ -10,70 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Validate for modify backup request. </summary>
-    public partial class ValidateForModifyBackupContent : IJsonModel<ValidateForModifyBackupContent>
+    public partial class ValidateForModifyBackupContent : IUtf8JsonSerializable, IJsonModel<ValidateForModifyBackupContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ValidateForModifyBackupContent"/> for deserialization. </summary>
-        internal ValidateForModifyBackupContent()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateForModifyBackupContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ValidateForModifyBackupContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ValidateForModifyBackupContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeValidateForModifyBackupContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ValidateForModifyBackupContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ValidateForModifyBackupContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ValidateForModifyBackupContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ValidateForModifyBackupContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ValidateForModifyBackupContent IPersistableModel<ValidateForModifyBackupContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ValidateForModifyBackupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="validateForModifyBackupContent"> The <see cref="ValidateForModifyBackupContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ValidateForModifyBackupContent validateForModifyBackupContent)
-        {
-            if (validateForModifyBackupContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(validateForModifyBackupContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ValidateForModifyBackupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -85,22 +28,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ValidateForModifyBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateForModifyBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ValidateForModifyBackupContent)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("backupInstance"u8);
             writer.WriteObjectValue(BackupInstance, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -109,46 +53,74 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ValidateForModifyBackupContent IJsonModel<ValidateForModifyBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ValidateForModifyBackupContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ValidateForModifyBackupContent IJsonModel<ValidateForModifyBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ValidateForModifyBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateForModifyBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ValidateForModifyBackupContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeValidateForModifyBackupContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ValidateForModifyBackupContent DeserializeValidateForModifyBackupContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ValidateForModifyBackupContent DeserializeValidateForModifyBackupContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataProtectionBackupInstanceProperties backupInstance = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("backupInstance"u8))
+                if (property.NameEquals("backupInstance"u8))
                 {
-                    backupInstance = DataProtectionBackupInstanceProperties.DeserializeDataProtectionBackupInstanceProperties(prop.Value, options);
+                    backupInstance = DataProtectionBackupInstanceProperties.DeserializeDataProtectionBackupInstanceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ValidateForModifyBackupContent(backupInstance, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ValidateForModifyBackupContent(backupInstance, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ValidateForModifyBackupContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateForModifyBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ValidateForModifyBackupContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ValidateForModifyBackupContent IPersistableModel<ValidateForModifyBackupContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateForModifyBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeValidateForModifyBackupContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ValidateForModifyBackupContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ValidateForModifyBackupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

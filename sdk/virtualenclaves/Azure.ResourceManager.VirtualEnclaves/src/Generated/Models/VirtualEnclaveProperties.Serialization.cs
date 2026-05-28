@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary> Virtual Enclave Resource properties. </summary>
-    public partial class VirtualEnclaveProperties : IJsonModel<VirtualEnclaveProperties>
+    public partial class VirtualEnclaveProperties : IUtf8JsonSerializable, IJsonModel<VirtualEnclaveProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveProperties"/> for deserialization. </summary>
-        internal VirtualEnclaveProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualEnclaveProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualEnclaveProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVirtualEnclaveProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualEnclaveProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerVirtualEnclavesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualEnclaveProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualEnclaveProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualEnclaveProperties IPersistableModel<VirtualEnclaveProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualEnclaveProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualEnclaveProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualEnclaveProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -98,7 +52,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 writer.WritePropertyName("resourceCollection"u8);
                 writer.WriteStartArray();
-                foreach (ResourceIdentifier item in ResourceCollection)
+                foreach (var item in ResourceCollection)
                 {
                     if (item == null)
                     {
@@ -128,7 +82,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 writer.WritePropertyName("enclaveRoleAssignments"u8);
                 writer.WriteStartArray();
-                foreach (VirtualEnclaveRoleAssignmentItem item in EnclaveRoleAssignments)
+                foreach (var item in EnclaveRoleAssignments)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -138,7 +92,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 writer.WritePropertyName("workloadRoleAssignments"u8);
                 writer.WriteStartArray();
-                foreach (VirtualEnclaveRoleAssignmentItem item in WorkloadRoleAssignments)
+                foreach (var item in WorkloadRoleAssignments)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -148,7 +102,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 writer.WritePropertyName("governedServiceList"u8);
                 writer.WriteStartArray();
-                foreach (VirtualEnclaveGovernedService item in GovernedServiceList)
+                foreach (var item in GovernedServiceList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -164,15 +118,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("maintenanceModeConfiguration"u8);
                 writer.WriteObjectValue(MaintenanceModeConfiguration, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -181,27 +135,22 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualEnclaveProperties IJsonModel<VirtualEnclaveProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualEnclaveProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VirtualEnclaveProperties IJsonModel<VirtualEnclaveProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualEnclaveProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualEnclaveProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualEnclaveProperties DeserializeVirtualEnclaveProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualEnclaveProperties DeserializeVirtualEnclaveProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -213,51 +162,52 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             IReadOnlyList<ResourceIdentifier> resourceCollection = default;
             string managedResourceGroupName = default;
             ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration = default;
-            bool? isBastionEnabled = default;
+            bool? bastionEnabled = default;
             IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments = default;
             IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments = default;
             IList<VirtualEnclaveGovernedService> governedServiceList = default;
             EnclaveDefaultSettings enclaveDefaultSettings = default;
             VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new VirtualEnclaveProvisioningState(prop.Value.GetString());
+                    provisioningState = new VirtualEnclaveProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("enclaveVirtualNetwork"u8))
+                if (property.NameEquals("enclaveVirtualNetwork"u8))
                 {
-                    enclaveVirtualNetwork = EnclaveVirtualNetwork.DeserializeEnclaveVirtualNetwork(prop.Value, options);
+                    enclaveVirtualNetwork = EnclaveVirtualNetwork.DeserializeEnclaveVirtualNetwork(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("enclaveAddressSpaces"u8))
+                if (property.NameEquals("enclaveAddressSpaces"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enclaveAddressSpaces = EnclaveAddressSpaces.DeserializeEnclaveAddressSpaces(prop.Value, options);
+                    enclaveAddressSpaces = EnclaveAddressSpaces.DeserializeEnclaveAddressSpaces(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("communityResourceId"u8))
+                if (property.NameEquals("communityResourceId"u8))
                 {
-                    communityResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    communityResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("resourceCollection"u8))
+                if (property.NameEquals("resourceCollection"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -271,94 +221,95 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                     resourceCollection = array;
                     continue;
                 }
-                if (prop.NameEquals("managedResourceGroupName"u8))
+                if (property.NameEquals("managedResourceGroupName"u8))
                 {
-                    managedResourceGroupName = prop.Value.GetString();
+                    managedResourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("managedOnBehalfOfConfiguration"u8))
+                if (property.NameEquals("managedOnBehalfOfConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    managedOnBehalfOfConfiguration = ManagedOnBehalfOfConfiguration.DeserializeManagedOnBehalfOfConfiguration(prop.Value, options);
+                    managedOnBehalfOfConfiguration = ManagedOnBehalfOfConfiguration.DeserializeManagedOnBehalfOfConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("bastionEnabled"u8))
+                if (property.NameEquals("bastionEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isBastionEnabled = prop.Value.GetBoolean();
+                    bastionEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("enclaveRoleAssignments"u8))
+                if (property.NameEquals("enclaveRoleAssignments"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VirtualEnclaveRoleAssignmentItem> array = new List<VirtualEnclaveRoleAssignmentItem>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(VirtualEnclaveRoleAssignmentItem.DeserializeVirtualEnclaveRoleAssignmentItem(item, options));
                     }
                     enclaveRoleAssignments = array;
                     continue;
                 }
-                if (prop.NameEquals("workloadRoleAssignments"u8))
+                if (property.NameEquals("workloadRoleAssignments"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VirtualEnclaveRoleAssignmentItem> array = new List<VirtualEnclaveRoleAssignmentItem>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(VirtualEnclaveRoleAssignmentItem.DeserializeVirtualEnclaveRoleAssignmentItem(item, options));
                     }
                     workloadRoleAssignments = array;
                     continue;
                 }
-                if (prop.NameEquals("governedServiceList"u8))
+                if (property.NameEquals("governedServiceList"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VirtualEnclaveGovernedService> array = new List<VirtualEnclaveGovernedService>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(VirtualEnclaveGovernedService.DeserializeVirtualEnclaveGovernedService(item, options));
                     }
                     governedServiceList = array;
                     continue;
                 }
-                if (prop.NameEquals("enclaveDefaultSettings"u8))
+                if (property.NameEquals("enclaveDefaultSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enclaveDefaultSettings = EnclaveDefaultSettings.DeserializeEnclaveDefaultSettings(prop.Value, options);
+                    enclaveDefaultSettings = EnclaveDefaultSettings.DeserializeEnclaveDefaultSettings(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("maintenanceModeConfiguration"u8))
+                if (property.NameEquals("maintenanceModeConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maintenanceModeConfiguration = VirtualEnclaveMaintenanceModeConfiguration.DeserializeVirtualEnclaveMaintenanceModeConfiguration(prop.Value, options);
+                    maintenanceModeConfiguration = VirtualEnclaveMaintenanceModeConfiguration.DeserializeVirtualEnclaveMaintenanceModeConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualEnclaveProperties(
                 provisioningState,
                 enclaveVirtualNetwork,
@@ -367,13 +318,44 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>(),
                 managedResourceGroupName,
                 managedOnBehalfOfConfiguration,
-                isBastionEnabled,
+                bastionEnabled,
                 enclaveRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 workloadRoleAssignments ?? new ChangeTrackingList<VirtualEnclaveRoleAssignmentItem>(),
                 governedServiceList ?? new ChangeTrackingList<VirtualEnclaveGovernedService>(),
                 enclaveDefaultSettings,
                 maintenanceModeConfiguration,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualEnclaveProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerVirtualEnclavesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualEnclaveProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualEnclaveProperties IPersistableModel<VirtualEnclaveProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVirtualEnclaveProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualEnclaveProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualEnclaveProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

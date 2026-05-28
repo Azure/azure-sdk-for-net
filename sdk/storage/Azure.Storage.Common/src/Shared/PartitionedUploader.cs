@@ -203,11 +203,6 @@ namespace Azure.Storage
         /// </summary>
         private readonly string _operationName;
 
-        /// <summary>
-        /// The default conconcurrency transfer count.
-        /// </summary>
-        private readonly int DefaultConcurrentTransfersCount = Math.Min(Math.Max(Environment.ProcessorCount * 2, 8), 32);
-
         public PartitionedUploader(
             Behaviors behaviors,
             StorageTransferOptions transferOptions,
@@ -240,9 +235,7 @@ namespace Azure.Storage
             }
             else
             {
-                _maxWorkerCount = CompatSwitches.UseLegacyDefaultConcurrency
-                    ? Constants.Blob.Block.LegacyDefaultConcurrentTransfersCount
-                    : DefaultConcurrentTransfersCount;
+                _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
             }
 
             // Set _singleUploadThreshold

@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
-    /// A class representing a HciClusterSecuritySetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciClusterSecuritySettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetHciClusterSecuritySettings method.
+    /// A Class representing a HciClusterSecuritySetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciClusterSecuritySettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHciClusterSecuritySettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HciClusterResource"/> using the GetHciClusterSecuritySetting method.
     /// </summary>
     public partial class HciClusterSecuritySettingResource : ArmResource
     {
-        private readonly ClientDiagnostics _securitySettingsClientDiagnostics;
-        private readonly SecuritySettings _securitySettingsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="HciClusterSecuritySettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="securitySettingsName"> The securitySettingsName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string securitySettingsName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _hciClusterSecuritySettingSecuritySettingsClientDiagnostics;
+        private readonly SecuritySettingsRestOperations _hciClusterSecuritySettingSecuritySettingsRestClient;
         private readonly HciClusterSecuritySettingData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/securitySettings";
 
-        /// <summary> Initializes a new instance of HciClusterSecuritySettingResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciClusterSecuritySettingResource"/> class for mocking. </summary>
         protected HciClusterSecuritySettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciClusterSecuritySettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciClusterSecuritySettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HciClusterSecuritySettingResource(ArmClient client, HciClusterSecuritySettingData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.Hci
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciClusterSecuritySettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciClusterSecuritySettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciClusterSecuritySettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string hciClusterSecuritySettingApiVersion);
-            _securitySettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
-            _securitySettingsRestClient = new SecuritySettings(_securitySettingsClientDiagnostics, Pipeline, Endpoint, hciClusterSecuritySettingApiVersion ?? "2026-04-01-preview");
-            ValidateResourceId(id);
+            _hciClusterSecuritySettingSecuritySettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hciClusterSecuritySettingSecuritySettingsApiVersion);
+            _hciClusterSecuritySettingSecuritySettingsRestClient = new SecuritySettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterSecuritySettingSecuritySettingsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HciClusterSecuritySettingData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="clusterName"> The clusterName. </param>
-        /// <param name="securitySettingsName"> The securitySettingsName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string securitySettingsName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a SecuritySetting
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciClusterSecuritySettingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HciClusterSecuritySettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Get");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HciClusterSecuritySettingData> response = Response.FromValue(HciClusterSecuritySettingData.FromResponse(result), result);
+                var response = await _hciClusterSecuritySettingSecuritySettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciClusterSecuritySettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +132,33 @@ namespace Azure.ResourceManager.Hci
         /// Get a SecuritySetting
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciClusterSecuritySettingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HciClusterSecuritySettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Get");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HciClusterSecuritySettingData> response = Response.FromValue(HciClusterSecuritySettingData.FromResponse(result), result);
+                var response = _hciClusterSecuritySettingSecuritySettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciClusterSecuritySettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +172,20 @@ namespace Azure.ResourceManager.Hci
         /// Delete a SecuritySetting
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciClusterSecuritySettingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,21 +193,14 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Delete");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HciArmOperation operation = new HciArmOperation(_securitySettingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _hciClusterSecuritySettingSecuritySettingsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation(_hciClusterSecuritySettingSecuritySettingsClientDiagnostics, Pipeline, _hciClusterSecuritySettingSecuritySettingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +214,20 @@ namespace Azure.ResourceManager.Hci
         /// Delete a SecuritySetting
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciClusterSecuritySettingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,21 +235,14 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Delete");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HciArmOperation operation = new HciArmOperation(_securitySettingsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _hciClusterSecuritySettingSecuritySettingsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new HciArmOperation(_hciClusterSecuritySettingSecuritySettingsClientDiagnostics, Pipeline, _hciClusterSecuritySettingSecuritySettingsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -286,23 +253,23 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// Update a HciClusterSecuritySetting.
+        /// Create a security setting
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciClusterSecuritySettingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,27 +281,14 @@ namespace Azure.ResourceManager.Hci
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Update");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciClusterSecuritySettingData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HciArmOperation<HciClusterSecuritySettingResource> operation = new HciArmOperation<HciClusterSecuritySettingResource>(
-                    new HciClusterSecuritySettingOperationSource(Client),
-                    _securitySettingsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _hciClusterSecuritySettingSecuritySettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation<HciClusterSecuritySettingResource>(new HciClusterSecuritySettingOperationSource(Client), _hciClusterSecuritySettingSecuritySettingsClientDiagnostics, Pipeline, _hciClusterSecuritySettingSecuritySettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -345,23 +299,23 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
-        /// Update a HciClusterSecuritySetting.
+        /// Create a security setting
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciClusterSecuritySettingResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,27 +327,14 @@ namespace Azure.ResourceManager.Hci
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Update");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciClusterSecuritySettingData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HciArmOperation<HciClusterSecuritySettingResource> operation = new HciArmOperation<HciClusterSecuritySettingResource>(
-                    new HciClusterSecuritySettingOperationSource(Client),
-                    _securitySettingsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _hciClusterSecuritySettingSecuritySettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new HciArmOperation<HciClusterSecuritySettingResource>(new HciClusterSecuritySettingOperationSource(Client), _hciClusterSecuritySettingSecuritySettingsClientDiagnostics, Pipeline, _hciClusterSecuritySettingSecuritySettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

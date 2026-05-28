@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.HardwareSecurityModules;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Connect information from the dedicated hsm service to a single endpoint. </summary>
-    public partial class DedicatedHsmEndpointDetail : IJsonModel<DedicatedHsmEndpointDetail>
+    public partial class DedicatedHsmEndpointDetail : IUtf8JsonSerializable, IJsonModel<DedicatedHsmEndpointDetail>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DedicatedHsmEndpointDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDedicatedHsmEndpointDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHsmEndpointDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DedicatedHsmEndpointDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHsmEndpointDetail IPersistableModel<DedicatedHsmEndpointDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DedicatedHsmEndpointDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DedicatedHsmEndpointDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
@@ -94,15 +54,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,27 +71,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DedicatedHsmEndpointDetail IJsonModel<DedicatedHsmEndpointDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DedicatedHsmEndpointDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DedicatedHsmEndpointDetail IJsonModel<DedicatedHsmEndpointDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDedicatedHsmEndpointDetail(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DedicatedHsmEndpointDetail DeserializeDedicatedHsmEndpointDetail(JsonElement element, ModelReaderWriterOptions options)
+        internal static DedicatedHsmEndpointDetail DeserializeDedicatedHsmEndpointDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,39 +95,72 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             int? port = default;
             string protocol = default;
             string description = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("ipAddress"u8))
+                if (property.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = prop.Value.GetString();
+                    ipAddress = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("port"u8))
+                if (property.NameEquals("port"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    port = prop.Value.GetInt32();
+                    port = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("protocol"u8))
+                if (property.NameEquals("protocol"u8))
                 {
-                    protocol = prop.Value.GetString();
+                    protocol = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("description"u8))
+                if (property.NameEquals("description"u8))
                 {
-                    description = prop.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DedicatedHsmEndpointDetail(ipAddress, port, protocol, description, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DedicatedHsmEndpointDetail(ipAddress, port, protocol, description, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DedicatedHsmEndpointDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DedicatedHsmEndpointDetail IPersistableModel<DedicatedHsmEndpointDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDedicatedHsmEndpointDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHsmEndpointDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DedicatedHsmEndpointDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

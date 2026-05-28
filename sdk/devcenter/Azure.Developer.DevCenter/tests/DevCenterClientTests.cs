@@ -37,7 +37,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             List<DevCenterProject> projects = await _devCenterClient.GetProjectsAsync().ToEnumerableAsync();
 
-            Assert.That(projects.Count, Is.EqualTo(1));
+            Assert.AreEqual(1, projects.Count);
 
             string projectName = projects[0].Name;
             if (string.IsNullOrWhiteSpace(projectName))
@@ -45,7 +45,7 @@ namespace Azure.Developer.DevCenter.Tests
                 Assert.Fail($"The response received from the service does not include the necessary property: {"name"}");
             }
 
-            Assert.That(projectName, Is.EqualTo(TestEnvironment.ProjectName));
+            Assert.AreEqual(TestEnvironment.ProjectName, projectName);
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.Developer.DevCenter.Tests
                 Assert.Fail($"The response received from the service does not include the necessary property: {"name"}");
             }
 
-            Assert.That(projectName, Is.EqualTo(TestEnvironment.ProjectName));
+            Assert.AreEqual(TestEnvironment.ProjectName, projectName);
         }
     }
 }

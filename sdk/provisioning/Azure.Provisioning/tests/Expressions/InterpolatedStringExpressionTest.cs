@@ -30,7 +30,7 @@ namespace Azure.Provisioning.Tests.Expressions
                 );
 
             static void AssertExpression(string expected, BicepValue<string> expression)
-                => Assert.That(expression.ToString(), Is.EqualTo(expected));
+                => Assert.AreEqual(expected, expression.ToString());
         }
     }
 }

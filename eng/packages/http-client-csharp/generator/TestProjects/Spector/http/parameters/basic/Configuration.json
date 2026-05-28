@@ -1,5 +1,7 @@
 {
   "package-name": "Parameters.Basic",
+  "model-namespace": true,
+  "namespace": "Parameters.Basic",
   "license": {
     "name": "MIT License",
     "company": "Microsoft Corporation",

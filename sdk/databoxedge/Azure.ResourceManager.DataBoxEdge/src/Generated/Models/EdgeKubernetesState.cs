@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct EdgeKubernetesState : IEquatable<EdgeKubernetesState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EdgeKubernetesState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string CreatingValue = "Creating";
         private const string CreatedValue = "Created";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string FailedValue = "Failed";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EdgeKubernetesState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static EdgeKubernetesState Invalid { get; } = new EdgeKubernetesState(InvalidValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static EdgeKubernetesState Creating { get; } = new EdgeKubernetesState(CreatingValue);
-
-        /// <summary> Gets the Created. </summary>
+        /// <summary> Created. </summary>
         public static EdgeKubernetesState Created { get; } = new EdgeKubernetesState(CreatedValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static EdgeKubernetesState Updating { get; } = new EdgeKubernetesState(UpdatingValue);
-
-        /// <summary> Gets the Reconfiguring. </summary>
+        /// <summary> Reconfiguring. </summary>
         public static EdgeKubernetesState Reconfiguring { get; } = new EdgeKubernetesState(ReconfiguringValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static EdgeKubernetesState Failed { get; } = new EdgeKubernetesState(FailedValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static EdgeKubernetesState Deleting { get; } = new EdgeKubernetesState(DeletingValue);
-
         /// <summary> Determines if two <see cref="EdgeKubernetesState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeKubernetesState left, EdgeKubernetesState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="EdgeKubernetesState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeKubernetesState left, EdgeKubernetesState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="EdgeKubernetesState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeKubernetesState"/>. </summary>
         public static implicit operator EdgeKubernetesState(string value) => new EdgeKubernetesState(value);
 
-        /// <summary> Converts a string to a <see cref="EdgeKubernetesState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator EdgeKubernetesState?(string value) => value == null ? null : new EdgeKubernetesState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeKubernetesState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(EdgeKubernetesState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

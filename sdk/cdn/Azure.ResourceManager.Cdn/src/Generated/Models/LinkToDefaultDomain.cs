@@ -7,63 +7,54 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> whether this route will be linked to the default endpoint domain. </summary>
+    /// <summary>
+    /// whether this route will be linked to the default endpoint domain.
+    /// Serialized Name: LinkToDefaultDomain
+    /// </summary>
     public readonly partial struct LinkToDefaultDomain : IEquatable<LinkToDefaultDomain>
     {
         private readonly string _value;
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="LinkToDefaultDomain"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LinkToDefaultDomain(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
+
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: LinkToDefaultDomain.Enabled
+        /// </summary>
         public static LinkToDefaultDomain Enabled { get; } = new LinkToDefaultDomain(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: LinkToDefaultDomain.Disabled
+        /// </summary>
         public static LinkToDefaultDomain Disabled { get; } = new LinkToDefaultDomain(DisabledValue);
-
         /// <summary> Determines if two <see cref="LinkToDefaultDomain"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LinkToDefaultDomain left, LinkToDefaultDomain right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="LinkToDefaultDomain"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LinkToDefaultDomain left, LinkToDefaultDomain right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="LinkToDefaultDomain"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LinkToDefaultDomain"/>. </summary>
         public static implicit operator LinkToDefaultDomain(string value) => new LinkToDefaultDomain(value);
 
-        /// <summary> Converts a string to a <see cref="LinkToDefaultDomain"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator LinkToDefaultDomain?(string value) => value == null ? null : new LinkToDefaultDomain(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LinkToDefaultDomain other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(LinkToDefaultDomain other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

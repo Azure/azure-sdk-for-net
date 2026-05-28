@@ -5,9 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupProtectedItemResource
@@ -25,6 +23,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <description>ProtectedItems_CreateOrUpdate</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="BackupProtectedItemResource"/></description>
         /// </item>
@@ -36,7 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BackupProtectedItemResource> Update(WaitUntil waitUntil, BackupProtectedItemData data, CancellationToken cancellationToken)
-            => Update(waitUntil, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+        {
+            return Update(waitUntil, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+        }
 
         /// <summary>
         /// Enables backup of an item or to modifies the backup policy information of an already backed up item. This is an
@@ -51,6 +55,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <description>ProtectedItems_CreateOrUpdate</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="BackupProtectedItemResource"/></description>
         /// </item>
@@ -61,7 +69,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<BackupProtectedItemResource>> UpdateAsync(WaitUntil waitUntil, BackupProtectedItemData data, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual Task<ArmOperation<BackupProtectedItemResource>> UpdateAsync(WaitUntil waitUntil, BackupProtectedItemData data, CancellationToken cancellationToken)
+        {
+            return UpdateAsync(waitUntil, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+        }
     }
 }

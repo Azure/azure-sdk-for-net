@@ -7,75 +7,72 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Provisioning status of the origin. </summary>
+    /// <summary>
+    /// Provisioning status of the origin.
+    /// Serialized Name: OriginProvisioningState
+    /// </summary>
     public readonly partial struct OriginProvisioningState : IEquatable<OriginProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="OriginProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public OriginProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string CreatingValue = "Creating";
 
-        /// <summary> Initializes a new instance of <see cref="OriginProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OriginProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: OriginProvisioningState.Succeeded
+        /// </summary>
         public static OriginProvisioningState Succeeded { get; } = new OriginProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: OriginProvisioningState.Failed
+        /// </summary>
         public static OriginProvisioningState Failed { get; } = new OriginProvisioningState(FailedValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: OriginProvisioningState.Updating
+        /// </summary>
         public static OriginProvisioningState Updating { get; } = new OriginProvisioningState(UpdatingValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: OriginProvisioningState.Deleting
+        /// </summary>
         public static OriginProvisioningState Deleting { get; } = new OriginProvisioningState(DeletingValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: OriginProvisioningState.Creating
+        /// </summary>
         public static OriginProvisioningState Creating { get; } = new OriginProvisioningState(CreatingValue);
-
         /// <summary> Determines if two <see cref="OriginProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OriginProvisioningState left, OriginProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="OriginProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OriginProvisioningState left, OriginProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="OriginProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OriginProvisioningState"/>. </summary>
         public static implicit operator OriginProvisioningState(string value) => new OriginProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="OriginProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator OriginProvisioningState?(string value) => value == null ? null : new OriginProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OriginProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(OriginProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

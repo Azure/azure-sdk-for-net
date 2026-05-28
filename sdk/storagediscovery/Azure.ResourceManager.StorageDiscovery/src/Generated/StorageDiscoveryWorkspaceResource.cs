@@ -89,31 +89,11 @@ namespace Azure.ResourceManager.StorageDiscovery
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Get a StorageDiscoveryWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="StorageDiscoveryWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a StorageDiscoveryWorkspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StorageDiscoveryWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -141,27 +121,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Get a StorageDiscoveryWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="StorageDiscoveryWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a StorageDiscoveryWorkspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StorageDiscoveryWorkspaceResource> Get(CancellationToken cancellationToken = default)
         {
@@ -189,27 +149,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Update a StorageDiscoveryWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="StorageDiscoveryWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a StorageDiscoveryWorkspace. </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -241,27 +181,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Update a StorageDiscoveryWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="StorageDiscoveryWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a StorageDiscoveryWorkspace. </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
@@ -293,27 +213,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Delete a StorageDiscoveryWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="StorageDiscoveryWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Delete a StorageDiscoveryWorkspace. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -344,27 +244,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Delete a StorageDiscoveryWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="StorageDiscoveryWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Delete a StorageDiscoveryWorkspace. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
@@ -432,7 +312,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -480,7 +360,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -523,7 +403,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                     StorageDiscoveryWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     StorageDiscoveryWorkspacePatch patch = new StorageDiscoveryWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -566,7 +446,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                     StorageDiscoveryWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     StorageDiscoveryWorkspacePatch patch = new StorageDiscoveryWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -612,7 +492,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<StorageDiscoveryWorkspaceResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -658,7 +538,7 @@ namespace Azure.ResourceManager.StorageDiscovery
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<StorageDiscoveryWorkspaceResource> result = Update(patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

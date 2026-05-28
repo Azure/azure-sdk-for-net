@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary></summary>
+    /// <summary> The DataBoxEdgeRoleType. </summary>
     public readonly partial struct DataBoxEdgeRoleType : IEquatable<DataBoxEdgeRoleType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeRoleType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string IoTValue = "IOT";
         private const string AsaValue = "ASA";
         private const string FunctionsValue = "Functions";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string CloudEdgeManagementValue = "CloudEdgeManagement";
         private const string KubernetesValue = "Kubernetes";
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeRoleType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeRoleType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the IoT. </summary>
+        /// <summary> IOT. </summary>
         public static DataBoxEdgeRoleType IoT { get; } = new DataBoxEdgeRoleType(IoTValue);
-
-        /// <summary> Gets the Asa. </summary>
+        /// <summary> ASA. </summary>
         public static DataBoxEdgeRoleType Asa { get; } = new DataBoxEdgeRoleType(AsaValue);
-
-        /// <summary> Gets the Functions. </summary>
+        /// <summary> Functions. </summary>
         public static DataBoxEdgeRoleType Functions { get; } = new DataBoxEdgeRoleType(FunctionsValue);
-
-        /// <summary> Gets the Cognitive. </summary>
+        /// <summary> Cognitive. </summary>
         public static DataBoxEdgeRoleType Cognitive { get; } = new DataBoxEdgeRoleType(CognitiveValue);
-
-        /// <summary> Gets the Mec. </summary>
+        /// <summary> MEC. </summary>
         public static DataBoxEdgeRoleType Mec { get; } = new DataBoxEdgeRoleType(MecValue);
-
-        /// <summary> Gets the CloudEdgeManagement. </summary>
+        /// <summary> CloudEdgeManagement. </summary>
         public static DataBoxEdgeRoleType CloudEdgeManagement { get; } = new DataBoxEdgeRoleType(CloudEdgeManagementValue);
-
-        /// <summary> Gets the Kubernetes. </summary>
+        /// <summary> Kubernetes. </summary>
         public static DataBoxEdgeRoleType Kubernetes { get; } = new DataBoxEdgeRoleType(KubernetesValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeRoleType left, DataBoxEdgeRoleType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeRoleType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeRoleType left, DataBoxEdgeRoleType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeRoleType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeRoleType"/>. </summary>
         public static implicit operator DataBoxEdgeRoleType(string value) => new DataBoxEdgeRoleType(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeRoleType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeRoleType?(string value) => value == null ? null : new DataBoxEdgeRoleType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeRoleType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeRoleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

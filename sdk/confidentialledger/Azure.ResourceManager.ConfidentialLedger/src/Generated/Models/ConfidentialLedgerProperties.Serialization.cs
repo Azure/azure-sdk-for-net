@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ConfidentialLedger;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    /// <summary> Additional Confidential Ledger properties. </summary>
-    public partial class ConfidentialLedgerProperties : IJsonModel<ConfidentialLedgerProperties>
+    public partial class ConfidentialLedgerProperties : IUtf8JsonSerializable, IJsonModel<ConfidentialLedgerProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfidentialLedgerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeConfidentialLedgerProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialLedgerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfidentialLedgerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfidentialLedgerProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConfidentialLedgerProperties IPersistableModel<ConfidentialLedgerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfidentialLedgerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConfidentialLedgerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(LedgerName))
             {
                 writer.WritePropertyName("ledgerName"u8);
@@ -118,7 +78,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 writer.WritePropertyName("aadBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();
-                foreach (AadBasedSecurityPrincipal item in AadBasedSecurityPrincipals)
+                foreach (var item in AadBasedSecurityPrincipals)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -128,7 +88,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 writer.WritePropertyName("certBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();
-                foreach (CertBasedSecurityPrincipal item in CertBasedSecurityPrincipals)
+                foreach (var item in CertBasedSecurityPrincipals)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -164,7 +124,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("workerThreads"u8);
                 writer.WriteNumberValue(WorkerThreads.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EnclavePlatform))
+            if (Optional.IsDefined(EnclavePlatform))
             {
                 writer.WritePropertyName("enclavePlatform"u8);
                 writer.WriteStringValue(EnclavePlatform.Value.ToString());
@@ -174,20 +134,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (Optional.IsDefined(ScittConfiguration))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("scittConfiguration"u8);
-                writer.WriteStringValue(ScittConfiguration);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -196,27 +151,22 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConfidentialLedgerProperties IJsonModel<ConfidentialLedgerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfidentialLedgerProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConfidentialLedgerProperties IJsonModel<ConfidentialLedgerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConfidentialLedgerProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConfidentialLedgerProperties DeserializeConfidentialLedgerProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConfidentialLedgerProperties DeserializeConfidentialLedgerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -239,172 +189,168 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             int? workerThreads = default;
             ConfidentialLedgerEnclavePlatform? enclavePlatform = default;
             ConfidentialLedgerApplicationType? applicationType = default;
-            string scittConfiguration = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("ledgerName"u8))
+                if (property.NameEquals("ledgerName"u8))
                 {
-                    ledgerName = prop.Value.GetString();
+                    ledgerName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ledgerUri"u8))
+                if (property.NameEquals("ledgerUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ledgerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    ledgerUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("identityServiceUri"u8))
+                if (property.NameEquals("identityServiceUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identityServiceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    identityServiceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("ledgerInternalNamespace"u8))
+                if (property.NameEquals("ledgerInternalNamespace"u8))
                 {
-                    ledgerInternalNamespace = prop.Value.GetString();
+                    ledgerInternalNamespace = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("runningState"u8))
+                if (property.NameEquals("runningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runningState = new ConfidentialLedgerRunningState(prop.Value.GetString());
+                    runningState = new ConfidentialLedgerRunningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("ledgerType"u8))
+                if (property.NameEquals("ledgerType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ledgerType = new ConfidentialLedgerType(prop.Value.GetString());
+                    ledgerType = new ConfidentialLedgerType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new ConfidentialLedgerProvisioningState(prop.Value.GetString());
+                    provisioningState = new ConfidentialLedgerProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("ledgerSku"u8))
+                if (property.NameEquals("ledgerSku"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ledgerSku = new ConfidentialLedgerSku(prop.Value.GetString());
+                    ledgerSku = new ConfidentialLedgerSku(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("aadBasedSecurityPrincipals"u8))
+                if (property.NameEquals("aadBasedSecurityPrincipals"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AadBasedSecurityPrincipal> array = new List<AadBasedSecurityPrincipal>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(AadBasedSecurityPrincipal.DeserializeAadBasedSecurityPrincipal(item, options));
                     }
                     aadBasedSecurityPrincipals = array;
                     continue;
                 }
-                if (prop.NameEquals("certBasedSecurityPrincipals"u8))
+                if (property.NameEquals("certBasedSecurityPrincipals"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CertBasedSecurityPrincipal> array = new List<CertBasedSecurityPrincipal>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(CertBasedSecurityPrincipal.DeserializeCertBasedSecurityPrincipal(item, options));
                     }
                     certBasedSecurityPrincipals = array;
                     continue;
                 }
-                if (prop.NameEquals("hostLevel"u8))
+                if (property.NameEquals("hostLevel"u8))
                 {
-                    hostLevel = prop.Value.GetString();
+                    hostLevel = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("maxBodySizeInMb"u8))
+                if (property.NameEquals("maxBodySizeInMb"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxBodySizeInMb = prop.Value.GetInt32();
+                    maxBodySizeInMb = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("subjectName"u8))
+                if (property.NameEquals("subjectName"u8))
                 {
-                    subjectName = prop.Value.GetString();
+                    subjectName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("nodeCount"u8))
+                if (property.NameEquals("nodeCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodeCount = prop.Value.GetInt32();
+                    nodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("writeLBAddressPrefix"u8))
+                if (property.NameEquals("writeLBAddressPrefix"u8))
                 {
-                    writeLBAddressPrefix = prop.Value.GetString();
+                    writeLBAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("workerThreads"u8))
+                if (property.NameEquals("workerThreads"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    workerThreads = prop.Value.GetInt32();
+                    workerThreads = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("enclavePlatform"u8))
+                if (property.NameEquals("enclavePlatform"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enclavePlatform = new ConfidentialLedgerEnclavePlatform(prop.Value.GetString());
+                    enclavePlatform = new ConfidentialLedgerEnclavePlatform(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("applicationType"u8))
+                if (property.NameEquals("applicationType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    applicationType = new ConfidentialLedgerApplicationType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("scittConfiguration"u8))
-                {
-                    scittConfiguration = prop.Value.GetString();
+                    applicationType = new ConfidentialLedgerApplicationType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConfidentialLedgerProperties(
                 ledgerName,
                 ledgerUri,
@@ -424,8 +370,38 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 workerThreads,
                 enclavePlatform,
                 applicationType,
-                scittConfiguration,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfidentialLedgerProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfidentialLedgerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConfidentialLedgerProperties IPersistableModel<ConfidentialLedgerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeConfidentialLedgerProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConfidentialLedgerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

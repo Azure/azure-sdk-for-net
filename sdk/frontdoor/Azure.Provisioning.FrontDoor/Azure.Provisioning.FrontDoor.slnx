@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.FrontDoor.csproj" />
-  <Project Path="tests/Azure.Provisioning.FrontDoor.Tests.csproj" />
-</Solution>

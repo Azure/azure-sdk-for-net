@@ -7,37 +7,47 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Communication
 {
     /// <summary>
-    /// A class representing a CommunicationServiceResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommunicationServiceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCommunicationServiceResources method.
+    /// A Class representing a CommunicationServiceResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CommunicationServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCommunicationServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetCommunicationServiceResource method.
     /// </summary>
     public partial class CommunicationServiceResource : ArmResource
     {
-        private readonly ClientDiagnostics _communicationServicesClientDiagnostics;
-        private readonly CommunicationServices _communicationServicesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="CommunicationServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="communicationServiceName"> The communicationServiceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationServiceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _communicationServiceResourceCommunicationServicesClientDiagnostics;
+        private readonly CommunicationServicesRestOperations _communicationServiceResourceCommunicationServicesRestClient;
         private readonly CommunicationServiceResourceData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Communication/communicationServices";
 
-        /// <summary> Initializes a new instance of CommunicationServiceResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationServiceResource"/> class for mocking. </summary>
         protected CommunicationServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CommunicationServiceResource(ArmClient client, CommunicationServiceResourceData data) : this(client, data.Id)
@@ -46,92 +56,71 @@ namespace Azure.ResourceManager.Communication
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CommunicationServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CommunicationServiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string communicationServiceResourceApiVersion);
-            _communicationServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, Diagnostics);
-            _communicationServicesRestClient = new CommunicationServices(_communicationServicesClientDiagnostics, Pipeline, Endpoint, communicationServiceResourceApiVersion ?? "2026-03-18");
-            ValidateResourceId(id);
+            _communicationServiceResourceCommunicationServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Communication", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string communicationServiceResourceCommunicationServicesApiVersion);
+            _communicationServiceResourceCommunicationServicesRestClient = new CommunicationServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communicationServiceResourceCommunicationServicesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CommunicationServiceResourceData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="communicationServiceName"> The communicationServiceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationServiceName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get the CommunicationService and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CommunicationServiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Get");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CommunicationServiceResourceData> response = Response.FromValue(CommunicationServiceResourceData.FromResponse(result), result);
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,42 +134,118 @@ namespace Azure.ResourceManager.Communication
         /// Get the CommunicationService and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CommunicationServiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Get");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CommunicationServiceResourceData> response = Response.FromValue(CommunicationServiceResourceData.FromResponse(result), result);
+                var response = _communicationServiceResourceCommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to delete a CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CommunicationArmOperation(_communicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, _communicationServiceResourceCommunicationServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Operation to delete a CommunicationService.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _communicationServiceResourceCommunicationServicesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new CommunicationArmOperation(_communicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, _communicationServiceResourceCommunicationServicesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -193,20 +258,20 @@ namespace Azure.ResourceManager.Communication
         /// Operation to update an existing CommunicationService.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,21 +282,11 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Update");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommunicationServiceResourcePatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CommunicationServiceResourceData> response = Response.FromValue(CommunicationServiceResourceData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,20 +300,20 @@ namespace Azure.ResourceManager.Communication
         /// Operation to update an existing CommunicationService.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,21 +324,11 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Update");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CommunicationServiceResourcePatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CommunicationServiceResourceData> response = Response.FromValue(CommunicationServiceResourceData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _communicationServiceResourceCommunicationServicesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,143 +339,35 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary>
-        /// Operation to delete a CommunicationService.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CommunicationArmOperation operation = new CommunicationArmOperation(_communicationServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Operation to delete a CommunicationService.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                CommunicationArmOperation operation = new CommunicationArmOperation(_communicationServicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Links an Azure Notification Hub to this communication service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_LinkNotificationHub. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_LinkNotificationHub</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(LinkNotificationHubContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LinkedNotificationHub>> LinkNotificationHubAsync(LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.LinkNotificationHub");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.LinkNotificationHub");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateLinkNotificationHubRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LinkNotificationHubContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LinkedNotificationHub> response = Response.FromValue(LinkedNotificationHub.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.LinkNotificationHubAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -444,42 +381,32 @@ namespace Azure.ResourceManager.Communication
         /// Links an Azure Notification Hub to this communication service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/linkNotificationHub</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_LinkNotificationHub. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_LinkNotificationHub</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LinkedNotificationHub> LinkNotificationHub(LinkNotificationHubContent content = default, CancellationToken cancellationToken = default)
+        public virtual Response<LinkedNotificationHub> LinkNotificationHub(LinkNotificationHubContent content = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.LinkNotificationHub");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.LinkNotificationHub");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateLinkNotificationHubRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LinkNotificationHubContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LinkedNotificationHub> response = Response.FromValue(LinkedNotificationHub.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _communicationServiceResourceCommunicationServicesRestClient.LinkNotificationHub(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -493,41 +420,31 @@ namespace Azure.ResourceManager.Communication
         /// Get the access keys of the CommunicationService resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_ListKeys. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_ListKeys</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CommunicationServiceKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.GetKeys");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.GetKeys");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CommunicationServiceKeys> response = Response.FromValue(CommunicationServiceKeys.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -541,41 +458,31 @@ namespace Azure.ResourceManager.Communication
         /// Get the access keys of the CommunicationService resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/listKeys</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_ListKeys. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_ListKeys</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CommunicationServiceKeys> GetKeys(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.GetKeys");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.GetKeys");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CommunicationServiceKeys> response = Response.FromValue(CommunicationServiceKeys.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _communicationServiceResourceCommunicationServicesRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -589,20 +496,20 @@ namespace Azure.ResourceManager.Communication
         /// Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_RegenerateKey. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_RegenerateKey</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -613,21 +520,11 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RegenerateKey");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RegenerateKey");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RegenerateCommunicationServiceKeyContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CommunicationServiceKeys> response = Response.FromValue(CommunicationServiceKeys.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _communicationServiceResourceCommunicationServicesRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -641,20 +538,20 @@ namespace Azure.ResourceManager.Communication
         /// Regenerate CommunicationService access key. PrimaryKey and SecondaryKey cannot be regenerated at the same time.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/regenerateKey</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CommunicationServices_RegenerateKey. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_RegenerateKey</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-18. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CommunicationServiceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -665,21 +562,11 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RegenerateKey");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RegenerateKey");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communicationServicesRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RegenerateCommunicationServiceKeyContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CommunicationServiceKeys> response = Response.FromValue(CommunicationServiceKeys.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _communicationServiceResourceCommunicationServicesRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -689,7 +576,27 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -699,35 +606,29 @@ namespace Azure.ResourceManager.Communication
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.AddTag");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _communicationServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CommunicationServiceResourceData> response = Response.FromValue(CommunicationServiceResourceData.FromResponse(result), result);
-                    return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    CommunicationServiceResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new CommunicationServiceResourcePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<CommunicationServiceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -737,7 +638,27 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -747,35 +668,29 @@ namespace Azure.ResourceManager.Communication
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.AddTag");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _communicationServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CommunicationServiceResourceData> response = Response.FromValue(CommunicationServiceResourceData.FromResponse(result), result);
-                    return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _communicationServiceResourceCommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    CommunicationServiceResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new CommunicationServiceResourcePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<CommunicationServiceResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -785,40 +700,54 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<CommunicationServiceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.SetTags");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _communicationServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CommunicationServiceResourceData> response = Response.FromValue(CommunicationServiceResourceData.FromResponse(result), result);
-                    return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    CommunicationServiceResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch();
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new CommunicationServiceResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<CommunicationServiceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -828,40 +757,54 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<CommunicationServiceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.SetTags");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _communicationServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CommunicationServiceResourceData> response = Response.FromValue(CommunicationServiceResourceData.FromResponse(result), result);
-                    return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _communicationServiceResourceCommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    CommunicationServiceResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch();
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new CommunicationServiceResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<CommunicationServiceResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -871,7 +814,27 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -879,35 +842,29 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RemoveTag");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _communicationServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CommunicationServiceResourceData> response = Response.FromValue(CommunicationServiceResourceData.FromResponse(result), result);
-                    return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _communicationServiceResourceCommunicationServicesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    CommunicationServiceResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new CommunicationServiceResourcePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<CommunicationServiceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -917,7 +874,27 @@ namespace Azure.ResourceManager.Communication
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -925,35 +902,29 @@ namespace Azure.ResourceManager.Communication
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _communicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RemoveTag");
+            using var scope = _communicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("CommunicationServiceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _communicationServicesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CommunicationServiceResourceData> response = Response.FromValue(CommunicationServiceResourceData.FromResponse(result), result);
-                    return Response.FromValue(new CommunicationServiceResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _communicationServiceResourceCommunicationServicesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new CommunicationServiceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    CommunicationServiceResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new CommunicationServiceResourcePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<CommunicationServiceResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -961,39 +932,6 @@ namespace Azure.ResourceManager.Communication
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of CommunicationSmtpUsernames in the <see cref="CommunicationServiceResource"/>. </summary>
-        /// <returns> An object representing collection of CommunicationSmtpUsernames and their operations over a CommunicationSmtpUsernameResource. </returns>
-        public virtual CommunicationSmtpUsernameCollection GetCommunicationSmtpUsernames()
-        {
-            return GetCachedClient(client => new CommunicationSmtpUsernameCollection(client, Id));
-        }
-
-        /// <summary> Get a SmtpUsernameResource. </summary>
-        /// <param name="smtpUsername"> The name of the SmtpUsernameResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="smtpUsername"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CommunicationSmtpUsernameResource>> GetCommunicationSmtpUsernameAsync(string smtpUsername, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(smtpUsername, nameof(smtpUsername));
-
-            return await GetCommunicationSmtpUsernames().GetAsync(smtpUsername, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a SmtpUsernameResource. </summary>
-        /// <param name="smtpUsername"> The name of the SmtpUsernameResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="smtpUsername"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CommunicationSmtpUsernameResource> GetCommunicationSmtpUsername(string smtpUsername, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(smtpUsername, nameof(smtpUsername));
-
-            return GetCommunicationSmtpUsernames().Get(smtpUsername, cancellationToken);
         }
     }
 }

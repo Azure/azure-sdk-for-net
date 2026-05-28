@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerService;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Kubelet configurations of agent nodes. See [AKS custom node configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration) for more details. </summary>
-    public partial class KubeletConfig : IJsonModel<KubeletConfig>
+    public partial class KubeletConfig : IUtf8JsonSerializable, IJsonModel<KubeletConfig>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KubeletConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKubeletConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubeletConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KubeletConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KubeletConfig IPersistableModel<KubeletConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KubeletConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubeletConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +30,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubeletConfig)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(CpuManagerPolicy))
             {
                 writer.WritePropertyName("cpuManagerPolicy"u8);
@@ -108,21 +70,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("allowedUnsafeSysctls"u8);
                 writer.WriteStartArray();
-                foreach (string item in AllowedUnsafeSysctls)
+                foreach (var item in AllowedUnsafeSysctls)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ShouldFailStartWithSwapOn))
+            if (Optional.IsDefined(FailStartWithSwapOn))
             {
                 writer.WritePropertyName("failSwapOn"u8);
-                writer.WriteBooleanValue(ShouldFailStartWithSwapOn.Value);
+                writer.WriteBooleanValue(FailStartWithSwapOn.Value);
             }
             if (Optional.IsDefined(ContainerLogMaxSizeInMB))
             {
@@ -139,20 +96,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("podMaxPids"u8);
                 writer.WriteNumberValue(PodMaxPids.Value);
             }
-            if (Optional.IsDefined(SeccompDefault))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("seccompDefault"u8);
-                writer.WriteStringValue(SeccompDefault.Value.ToString());
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -161,173 +113,412 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KubeletConfig IJsonModel<KubeletConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KubeletConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KubeletConfig IJsonModel<KubeletConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubeletConfig)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKubeletConfig(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KubeletConfig DeserializeKubeletConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static KubeletConfig DeserializeKubeletConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string cpuManagerPolicy = default;
-            bool? isCpuCfsQuotaEnabled = default;
+            bool? cpuCfsQuota = default;
             string cpuCfsQuotaPeriod = default;
             int? imageGcHighThreshold = default;
             int? imageGcLowThreshold = default;
             string topologyManagerPolicy = default;
             IList<string> allowedUnsafeSysctls = default;
-            bool? shouldFailStartWithSwapOn = default;
-            int? containerLogMaxSizeInMB = default;
+            bool? failSwapOn = default;
+            int? containerLogMaxSizeMB = default;
             int? containerLogMaxFiles = default;
             int? podMaxPids = default;
-            SeccompDefault? seccompDefault = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("cpuManagerPolicy"u8))
+                if (property.NameEquals("cpuManagerPolicy"u8))
                 {
-                    cpuManagerPolicy = prop.Value.GetString();
+                    cpuManagerPolicy = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("cpuCfsQuota"u8))
+                if (property.NameEquals("cpuCfsQuota"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isCpuCfsQuotaEnabled = prop.Value.GetBoolean();
+                    cpuCfsQuota = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("cpuCfsQuotaPeriod"u8))
+                if (property.NameEquals("cpuCfsQuotaPeriod"u8))
                 {
-                    cpuCfsQuotaPeriod = prop.Value.GetString();
+                    cpuCfsQuotaPeriod = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("imageGcHighThreshold"u8))
+                if (property.NameEquals("imageGcHighThreshold"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    imageGcHighThreshold = prop.Value.GetInt32();
+                    imageGcHighThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("imageGcLowThreshold"u8))
+                if (property.NameEquals("imageGcLowThreshold"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    imageGcLowThreshold = prop.Value.GetInt32();
+                    imageGcLowThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("topologyManagerPolicy"u8))
+                if (property.NameEquals("topologyManagerPolicy"u8))
                 {
-                    topologyManagerPolicy = prop.Value.GetString();
+                    topologyManagerPolicy = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("allowedUnsafeSysctls"u8))
+                if (property.NameEquals("allowedUnsafeSysctls"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     allowedUnsafeSysctls = array;
                     continue;
                 }
-                if (prop.NameEquals("failSwapOn"u8))
+                if (property.NameEquals("failSwapOn"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    shouldFailStartWithSwapOn = prop.Value.GetBoolean();
+                    failSwapOn = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("containerLogMaxSizeMB"u8))
+                if (property.NameEquals("containerLogMaxSizeMB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerLogMaxSizeInMB = prop.Value.GetInt32();
+                    containerLogMaxSizeMB = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("containerLogMaxFiles"u8))
+                if (property.NameEquals("containerLogMaxFiles"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerLogMaxFiles = prop.Value.GetInt32();
+                    containerLogMaxFiles = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("podMaxPids"u8))
+                if (property.NameEquals("podMaxPids"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    podMaxPids = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("seccompDefault"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    seccompDefault = new SeccompDefault(prop.Value.GetString());
+                    podMaxPids = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubeletConfig(
                 cpuManagerPolicy,
-                isCpuCfsQuotaEnabled,
+                cpuCfsQuota,
                 cpuCfsQuotaPeriod,
                 imageGcHighThreshold,
                 imageGcLowThreshold,
                 topologyManagerPolicy,
                 allowedUnsafeSysctls ?? new ChangeTrackingList<string>(),
-                shouldFailStartWithSwapOn,
-                containerLogMaxSizeInMB,
+                failSwapOn,
+                containerLogMaxSizeMB,
                 containerLogMaxFiles,
                 podMaxPids,
-                seccompDefault,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuManagerPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cpuManagerPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CpuManagerPolicy))
+                {
+                    builder.Append("  cpuManagerPolicy: ");
+                    if (CpuManagerPolicy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CpuManagerPolicy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CpuManagerPolicy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsCpuCfsQuotaEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cpuCfsQuota: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsCpuCfsQuotaEnabled))
+                {
+                    builder.Append("  cpuCfsQuota: ");
+                    var boolValue = IsCpuCfsQuotaEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuCfsQuotaPeriod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cpuCfsQuotaPeriod: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CpuCfsQuotaPeriod))
+                {
+                    builder.Append("  cpuCfsQuotaPeriod: ");
+                    if (CpuCfsQuotaPeriod.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CpuCfsQuotaPeriod}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CpuCfsQuotaPeriod}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageGcHighThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imageGcHighThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageGcHighThreshold))
+                {
+                    builder.Append("  imageGcHighThreshold: ");
+                    builder.AppendLine($"{ImageGcHighThreshold.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageGcLowThreshold), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  imageGcLowThreshold: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageGcLowThreshold))
+                {
+                    builder.Append("  imageGcLowThreshold: ");
+                    builder.AppendLine($"{ImageGcLowThreshold.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TopologyManagerPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  topologyManagerPolicy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TopologyManagerPolicy))
+                {
+                    builder.Append("  topologyManagerPolicy: ");
+                    if (TopologyManagerPolicy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TopologyManagerPolicy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TopologyManagerPolicy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedUnsafeSysctls), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allowedUnsafeSysctls: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedUnsafeSysctls))
+                {
+                    if (AllowedUnsafeSysctls.Any())
+                    {
+                        builder.Append("  allowedUnsafeSysctls: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedUnsafeSysctls)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailStartWithSwapOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failSwapOn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailStartWithSwapOn))
+                {
+                    builder.Append("  failSwapOn: ");
+                    var boolValue = FailStartWithSwapOn.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerLogMaxSizeInMB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  containerLogMaxSizeMB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerLogMaxSizeInMB))
+                {
+                    builder.Append("  containerLogMaxSizeMB: ");
+                    builder.AppendLine($"{ContainerLogMaxSizeInMB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerLogMaxFiles), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  containerLogMaxFiles: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerLogMaxFiles))
+                {
+                    builder.Append("  containerLogMaxFiles: ");
+                    builder.AppendLine($"{ContainerLogMaxFiles.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PodMaxPids), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  podMaxPids: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PodMaxPids))
+                {
+                    builder.Append("  podMaxPids: ");
+                    builder.AppendLine($"{PodMaxPids.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<KubeletConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KubeletConfig IPersistableModel<KubeletConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeKubeletConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubeletConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

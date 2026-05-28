@@ -13,120 +13,90 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary> Edge device resource. </summary>
+    /// <summary>
+    /// A class representing the HciClusterDeploymentSetting data model.
+    /// Edge device resource
+    /// </summary>
     public partial class HciClusterDeploymentSettingData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentSettingData"/>. </summary>
         public HciClusterDeploymentSettingData()
         {
+            ArcNodeResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentSettingData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal HciClusterDeploymentSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeploymentSettingsProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> DeploymentSetting provisioning state. </param>
+        /// <param name="arcNodeResourceIds"> Azure resource ids of Arc machines to be part of cluster. </param>
+        /// <param name="deploymentMode"> The deployment mode for cluster deployment. </param>
+        /// <param name="operationType"> The intended operation for a cluster. </param>
+        /// <param name="deploymentConfiguration"> Scale units will contains list of deployment data. </param>
+        /// <param name="reportedProperties"> Deployment Status reported from cluster. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterDeploymentSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, IList<ResourceIdentifier> arcNodeResourceIds, EceDeploymentMode? deploymentMode, HciClusterOperationType? operationType, HciClusterDeploymentConfiguration deploymentConfiguration, EceReportedProperties reportedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            ArcNodeResourceIds = arcNodeResourceIds;
+            DeploymentMode = deploymentMode;
+            OperationType = operationType;
+            DeploymentConfiguration = deploymentConfiguration;
+            ReportedProperties = reportedProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> The resource-specific properties for this resource. </summary>
-        [WirePath("properties")]
-        internal DeploymentSettingsProperties Properties { get; set; }
 
         /// <summary> DeploymentSetting provisioning state. </summary>
         [WirePath("properties.provisioningState")]
-        public HciProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
+        public HciProvisioningState? ProvisioningState { get; }
         /// <summary> Azure resource ids of Arc machines to be part of cluster. </summary>
         [WirePath("properties.arcNodeResourceIds")]
-        public IList<ResourceIdentifier> ArcNodeResourceIds
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DeploymentSettingsProperties();
-                }
-                return Properties.ArcNodeResourceIds;
-            }
-        }
-
+        public IList<ResourceIdentifier> ArcNodeResourceIds { get; }
         /// <summary> The deployment mode for cluster deployment. </summary>
         [WirePath("properties.deploymentMode")]
-        public EceDeploymentMode? DeploymentMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeploymentMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DeploymentSettingsProperties();
-                }
-                Properties.DeploymentMode = value;
-            }
-        }
-
+        public EceDeploymentMode? DeploymentMode { get; set; }
         /// <summary> The intended operation for a cluster. </summary>
         [WirePath("properties.operationType")]
-        public HciClusterOperationType? OperationType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OperationType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DeploymentSettingsProperties();
-                }
-                Properties.OperationType = value;
-            }
-        }
-
+        public HciClusterOperationType? OperationType { get; set; }
         /// <summary> Scale units will contains list of deployment data. </summary>
         [WirePath("properties.deploymentConfiguration")]
-        public HciClusterDeploymentConfiguration DeploymentConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeploymentConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DeploymentSettingsProperties();
-                }
-                Properties.DeploymentConfiguration = value;
-            }
-        }
-
+        public HciClusterDeploymentConfiguration DeploymentConfiguration { get; set; }
         /// <summary> Deployment Status reported from cluster. </summary>
         [WirePath("properties.reportedProperties")]
-        public EceReportedProperties ReportedProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ReportedProperties;
-            }
-        }
+        public EceReportedProperties ReportedProperties { get; }
     }
 }

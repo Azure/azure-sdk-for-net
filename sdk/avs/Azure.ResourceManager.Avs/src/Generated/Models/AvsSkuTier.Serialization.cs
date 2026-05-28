@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Avs.Models
 {
     internal static partial class AvsSkuTierExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AvsSkuTier value) => value switch
         {
             AvsSkuTier.Free => "Free",
@@ -21,25 +20,12 @@ namespace Azure.ResourceManager.Avs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AvsSkuTier value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static AvsSkuTier ToAvsSkuTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free"))
-            {
-                return AvsSkuTier.Free;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic"))
-            {
-                return AvsSkuTier.Basic;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
-            {
-                return AvsSkuTier.Standard;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium"))
-            {
-                return AvsSkuTier.Premium;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return AvsSkuTier.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return AvsSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return AvsSkuTier.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return AvsSkuTier.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AvsSkuTier value.");
         }
     }

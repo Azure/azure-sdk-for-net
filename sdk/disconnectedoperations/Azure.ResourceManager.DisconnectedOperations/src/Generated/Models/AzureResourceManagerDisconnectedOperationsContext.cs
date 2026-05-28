@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DisconnectedOperations.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +13,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ArtifactListResult))]
     [ModelReaderWriterBuildable(typeof(DisconnectedOperationData))]
@@ -27,19 +26,11 @@ namespace Azure.ResourceManager.DisconnectedOperations
     [ModelReaderWriterBuildable(typeof(DisconnectedOperationsArtifactDownloadResult))]
     [ModelReaderWriterBuildable(typeof(DisconnectedOperationsArtifactProperties))]
     [ModelReaderWriterBuildable(typeof(DisconnectedOperationsArtifactResource))]
-    [ModelReaderWriterBuildable(typeof(DisconnectedOperationsBenefitPlans))]
-    [ModelReaderWriterBuildable(typeof(DisconnectedOperationsBillingConfiguration))]
-    [ModelReaderWriterBuildable(typeof(DisconnectedOperationsBillingPeriod))]
-    [ModelReaderWriterBuildable(typeof(DisconnectedOperationsHardwareSettingData))]
-    [ModelReaderWriterBuildable(typeof(DisconnectedOperationsHardwareSettingProperties))]
-    [ModelReaderWriterBuildable(typeof(DisconnectedOperationsHardwareSettingResource))]
     [ModelReaderWriterBuildable(typeof(DisconnectedOperationsImageData))]
     [ModelReaderWriterBuildable(typeof(DisconnectedOperationsImageDownloadResult))]
     [ModelReaderWriterBuildable(typeof(DisconnectedOperationsImageProperties))]
     [ModelReaderWriterBuildable(typeof(DisconnectedOperationsImageResource))]
-    [ModelReaderWriterBuildable(typeof(DisconnectedOperationsImageUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(DisconnectedOperationUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(HardwareSettingListResult))]
     [ModelReaderWriterBuildable(typeof(ImageListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

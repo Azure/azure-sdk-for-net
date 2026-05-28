@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,67 +14,47 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeNodeStatus : IEquatable<DataBoxEdgeNodeStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNodeStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeNodeStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UnknownValue = "Unknown";
         private const string UpValue = "Up";
         private const string DownValue = "Down";
         private const string RebootingValue = "Rebooting";
         private const string ShuttingDownValue = "ShuttingDown";
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNodeStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeNodeStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static DataBoxEdgeNodeStatus Unknown { get; } = new DataBoxEdgeNodeStatus(UnknownValue);
-
-        /// <summary> Gets the Up. </summary>
+        /// <summary> Up. </summary>
         public static DataBoxEdgeNodeStatus Up { get; } = new DataBoxEdgeNodeStatus(UpValue);
-
-        /// <summary> Gets the Down. </summary>
+        /// <summary> Down. </summary>
         public static DataBoxEdgeNodeStatus Down { get; } = new DataBoxEdgeNodeStatus(DownValue);
-
-        /// <summary> Gets the Rebooting. </summary>
+        /// <summary> Rebooting. </summary>
         public static DataBoxEdgeNodeStatus Rebooting { get; } = new DataBoxEdgeNodeStatus(RebootingValue);
-
-        /// <summary> Gets the ShuttingDown. </summary>
+        /// <summary> ShuttingDown. </summary>
         public static DataBoxEdgeNodeStatus ShuttingDown { get; } = new DataBoxEdgeNodeStatus(ShuttingDownValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeNodeStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeNodeStatus left, DataBoxEdgeNodeStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeNodeStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeNodeStatus left, DataBoxEdgeNodeStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeNodeStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeNodeStatus"/>. </summary>
         public static implicit operator DataBoxEdgeNodeStatus(string value) => new DataBoxEdgeNodeStatus(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeNodeStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeNodeStatus?(string value) => value == null ? null : new DataBoxEdgeNodeStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeNodeStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeNodeStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

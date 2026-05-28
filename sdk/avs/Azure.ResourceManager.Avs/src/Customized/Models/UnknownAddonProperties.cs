@@ -3,10 +3,10 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    [CodeGenType("UnknownAvsPrivateCloudAddonProperties")]
+    [CodeGenModel("UnknownAvsPrivateCloudAddonProperties")]
     internal partial class UnknownAddonProperties { }
 }

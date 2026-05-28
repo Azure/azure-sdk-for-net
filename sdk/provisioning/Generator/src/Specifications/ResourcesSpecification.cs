@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Generator.Specifications;
 public class ResourcesSpecification : Specification
 {
     public ResourcesSpecification() :
-        base("Resources", typeof(ResourcesExtensions), serviceDirectory: "provisioning")
+        base("Resources", typeof(ResourcesExtensions))
     {
         SkipCleaning = true;
     }
@@ -70,11 +70,6 @@ public class ResourcesSpecification : Specification
         {
             p.HideLevel = PropertyHideLevel.HideProperty;
         });
-
-        // Re-introduce enum types that are no longer auto-discovered and
-        // restore the original Name property type to avoid breaking changes.
-        IncludeEnum<DataBoundaryName>();
-        CustomizeProperty<TenantDataBoundaryResource>("Name", p => p.PropertyType = GetEnum<DataBoundaryName>());
 
         // Naming requirements
         AddNameRequirements<ArmDeploymentResource>(min: 1, max: 64, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true, parens: true);

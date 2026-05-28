@@ -1,0 +1,554 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/EmailApp/models/Model1/evaluation/summary-result?api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250624.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "ea762a87-828f-44bb-83d9-27e5ebc9edcf",
+        "Content-Length": "7525",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 24 Jun 2025 23:48:03 GMT",
+        "request-id": "ea762a87-828f-44bb-83d9-27e5ebc9edcf",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "166",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "entitiesEvaluation": {
+          "confusionMatrix": {
+            "Attachment": {
+              "$none": {
+                "normalizedValue": 66.666664,
+                "rawValue": 2.0
+              },
+              "Attachment": {
+                "normalizedValue": 33.333332,
+                "rawValue": 1.0
+              }
+            },
+            "Category": {
+              "Category": {
+                "normalizedValue": 75.0,
+                "rawValue": 9.0
+              },
+              "$none": {
+                "normalizedValue": 25.0,
+                "rawValue": 3.0
+              }
+            },
+            "ContactName": {
+              "ContactName": {
+                "normalizedValue": 95.833336,
+                "rawValue": 23.0
+              },
+              "$none": {
+                "normalizedValue": 4.1666665,
+                "rawValue": 1.0
+              }
+            },
+            "Date": {
+              "Date": {
+                "normalizedValue": 100.0,
+                "rawValue": 2.0
+              }
+            },
+            "EmailSubject": {
+              "EmailSubject": {
+                "normalizedValue": 70.0,
+                "rawValue": 7.0
+              },
+              "$none": {
+                "normalizedValue": 30.0,
+                "rawValue": 3.0
+              }
+            },
+            "FromRelationshipName": {
+              "FromRelationshipName": {
+                "normalizedValue": 100.0,
+                "rawValue": 1.0
+              }
+            },
+            "Line": {
+              "Line": {
+                "normalizedValue": 100.0,
+                "rawValue": 2.0
+              }
+            },
+            "Message": {
+              "$none": {
+                "normalizedValue": 82.954544,
+                "rawValue": 6.6363635
+              },
+              "EmailSubject": {
+                "normalizedValue": 4.5454545,
+                "rawValue": 0.36363637
+              },
+              "Message": {
+                "normalizedValue": 12.5,
+                "rawValue": 1.0
+              }
+            },
+            "OrderReference": {
+              "OrderReference": {
+                "normalizedValue": 100.0,
+                "rawValue": 17.0
+              }
+            },
+            "PositionReference": {
+              "PositionReference": {
+                "normalizedValue": 100.0,
+                "rawValue": 1.0
+              }
+            },
+            "RelationshipName": {
+              "RelationshipName": {
+                "normalizedValue": 100.0,
+                "rawValue": 3.0
+              }
+            },
+            "SearchTexts": {
+              "$none": {
+                "normalizedValue": 50.0,
+                "rawValue": 2.0
+              },
+              "SearchTexts": {
+                "normalizedValue": 50.0,
+                "rawValue": 2.0
+              }
+            },
+            "SenderName": {
+              "SenderName": {
+                "normalizedValue": 88.888885,
+                "rawValue": 8.0
+              },
+              "$none": {
+                "normalizedValue": 11.111111,
+                "rawValue": 1.0
+              }
+            },
+            "Time": {
+              "Time": {
+                "normalizedValue": 50.0,
+                "rawValue": 1.0
+              },
+              "$none": {
+                "normalizedValue": 50.0,
+                "rawValue": 1.0
+              }
+            },
+            "$none": {
+              "$none": {
+                "normalizedValue": 98.14795,
+                "rawValue": 159.98116
+              },
+              "Category": {
+                "normalizedValue": 0.9368082,
+                "rawValue": 1.5269973
+              },
+              "ContactName": {
+                "normalizedValue": 0.61349696,
+                "rawValue": 1.0
+              },
+              "Time": {
+                "normalizedValue": 0.3017471,
+                "rawValue": 0.4918478
+              }
+            }
+          },
+          "entities": {
+            "ContactName": {
+              "f1": 0.9130433797836304,
+              "precision": 0.9545454382896423,
+              "recall": 0.875,
+              "truePositiveCount": 21,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 1,
+              "falseNegativeCount": 3
+            },
+            "Category": {
+              "f1": 0.6428571343421936,
+              "precision": 0.5625,
+              "recall": 0.75,
+              "truePositiveCount": 9,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 7,
+              "falseNegativeCount": 3
+            },
+            "EmailSubject": {
+              "f1": 0.7777777314186096,
+              "precision": 0.875,
+              "recall": 0.699999988079071,
+              "truePositiveCount": 7,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 1,
+              "falseNegativeCount": 3
+            },
+            "Message": {
+              "f1": 0.2222222238779068,
+              "precision": 1.0,
+              "recall": 0.125,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 7
+            },
+            "OrderReference": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 17,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Time": {
+              "f1": 0.4000000059604645,
+              "precision": 0.3333333432674408,
+              "recall": 0.5,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 2,
+              "falseNegativeCount": 1
+            },
+            "SenderName": {
+              "f1": 0.9411764740943909,
+              "precision": 1.0,
+              "recall": 0.8888888955116272,
+              "truePositiveCount": 8,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 1
+            },
+            "SearchTexts": {
+              "f1": 0.6666666865348816,
+              "precision": 1.0,
+              "recall": 0.5,
+              "truePositiveCount": 2,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 2
+            },
+            "RelationshipName": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 3,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Attachment": {
+              "f1": 0.5,
+              "precision": 1.0,
+              "recall": 0.3333333432674408,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 2
+            },
+            "Line": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 2,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Date": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 2,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "FromRelationshipName": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "PositionReference": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 0,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            }
+          },
+          "microF1": 0.8216216,
+          "microPrecision": 0.87356323,
+          "microRecall": 0.7755102,
+          "macroF1": 0.7902674,
+          "macroPrecision": 0.90895563,
+          "macroRecall": 0.76230156
+        },
+        "intentsEvaluation": {
+          "confusionMatrix": {
+            "AddFlag": {
+              "AddFlag": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
+            "AddMore": {
+              "AddMore": {
+                "normalizedValue": 100.0,
+                "rawValue": 17.0
+              }
+            },
+            "Cancel": {
+              "Cancel": {
+                "normalizedValue": 100.0,
+                "rawValue": 9.0
+              }
+            },
+            "CheckMessages": {
+              "CheckMessages": {
+                "normalizedValue": 100.0,
+                "rawValue": 9.0
+              }
+            },
+            "Confirm": {
+              "Confirm": {
+                "normalizedValue": 100.0,
+                "rawValue": 4.0
+              }
+            },
+            "Delete": {
+              "Delete": {
+                "normalizedValue": 100.0,
+                "rawValue": 5.0
+              }
+            },
+            "Forward": {
+              "Forward": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
+            "QueryLastText": {
+              "QueryLastText": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
+            "ReadAloud": {
+              "ReadAloud": {
+                "normalizedValue": 100.0,
+                "rawValue": 16.0
+              }
+            },
+            "Reply": {
+              "Reply": {
+                "normalizedValue": 100.0,
+                "rawValue": 6.0
+              }
+            },
+            "SearchMessages": {
+              "SearchMessages": {
+                "normalizedValue": 100.0,
+                "rawValue": 9.0
+              }
+            },
+            "SendEmail": {
+              "SendEmail": {
+                "normalizedValue": 100.0,
+                "rawValue": 20.0
+              }
+            },
+            "ShowNext": {
+              "ShowNext": {
+                "normalizedValue": 100.0,
+                "rawValue": 4.0
+              }
+            },
+            "ShowPrevious": {
+              "ShowPrevious": {
+                "normalizedValue": 100.0,
+                "rawValue": 3.0
+              }
+            },
+            "None": {
+              "None": {
+                "normalizedValue": 100.0,
+                "rawValue": 1.0
+              }
+            }
+          },
+          "intents": {
+            "AddMore": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 17,
+              "trueNegativeCount": 104,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Cancel": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 9,
+              "trueNegativeCount": 112,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "SendEmail": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 20,
+              "trueNegativeCount": 101,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "CheckMessages": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 9,
+              "trueNegativeCount": 112,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "AddFlag": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 115,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Reply": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 115,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "ReadAloud": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 16,
+              "trueNegativeCount": 105,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "QueryLastText": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 115,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "SearchMessages": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 9,
+              "trueNegativeCount": 112,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Delete": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 5,
+              "trueNegativeCount": 116,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Forward": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 6,
+              "trueNegativeCount": 115,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "Confirm": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 4,
+              "trueNegativeCount": 117,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "ShowNext": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 4,
+              "trueNegativeCount": 117,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "ShowPrevious": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 3,
+              "trueNegativeCount": 118,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            },
+            "None": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "truePositiveCount": 1,
+              "trueNegativeCount": 120,
+              "falsePositiveCount": 0,
+              "falseNegativeCount": 0
+            }
+          },
+          "microF1": 1.0,
+          "microPrecision": 1.0,
+          "microRecall": 1.0,
+          "macroF1": 1.0,
+          "macroPrecision": 1.0,
+          "macroRecall": 1.0
+        },
+        "evaluationOptions": {
+          "kind": "percentage",
+          "trainingSplitPercentage": 80,
+          "testingSplitPercentage": 20
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1939695324"
+  }
+}

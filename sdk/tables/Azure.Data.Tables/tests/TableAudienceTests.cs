@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.Data.Tables.Tests
 {
@@ -17,7 +17,7 @@ namespace Azure.Data.Tables.Tests
         {
             audience ??= TableAudience.AzurePublicCloud;
             var defaultScope = audience.Value.GetDefaultScope(isCosmosEndpoint);
-            Assert.That(defaultScope, Is.EqualTo(expectedScope));
+            Assert.AreEqual(expectedScope, defaultScope);
         }
 
         public static IEnumerable<TestCaseData> GetDefaultScopeTestCases

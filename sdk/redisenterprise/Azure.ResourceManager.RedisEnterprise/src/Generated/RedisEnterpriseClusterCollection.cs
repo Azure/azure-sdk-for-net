@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RedisEnterprise
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.RedisEnterprise
     /// </summary>
     public partial class RedisEnterpriseClusterCollection : ArmCollection, IEnumerable<RedisEnterpriseClusterResource>, IAsyncEnumerable<RedisEnterpriseClusterResource>
     {
-        private readonly ClientDiagnostics _redisEnterpriseClusterClientDiagnostics;
-        private readonly RedisEnterpriseCluster _redisEnterpriseClusterRestClient;
+        private readonly ClientDiagnostics _redisEnterpriseClusterRedisEnterpriseClientDiagnostics;
+        private readonly RedisEnterpriseRestOperations _redisEnterpriseClusterRedisEnterpriseRestClient;
 
-        /// <summary> Initializes a new instance of RedisEnterpriseClusterCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisEnterpriseClusterCollection"/> class for mocking. </summary>
         protected RedisEnterpriseClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisEnterpriseClusterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RedisEnterpriseClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(RedisEnterpriseClusterResource.ResourceType, out string redisEnterpriseClusterApiVersion);
-            _redisEnterpriseClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", RedisEnterpriseClusterResource.ResourceType.Namespace, Diagnostics);
-            _redisEnterpriseClusterRestClient = new RedisEnterpriseCluster(_redisEnterpriseClusterClientDiagnostics, Pipeline, Endpoint, redisEnterpriseClusterApiVersion ?? "2025-08-01-preview");
-            ValidateResourceId(id);
+            _redisEnterpriseClusterRedisEnterpriseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", RedisEnterpriseClusterResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RedisEnterpriseClusterResource.ResourceType, out string redisEnterpriseClusterRedisEnterpriseApiVersion);
+            _redisEnterpriseClusterRedisEnterpriseRestClient = new RedisEnterpriseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseClusterRedisEnterpriseApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates an existing (overwrite/recreate, with potential downtime) cache cluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="data"> Parameters supplied to the Create Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisEnterpriseClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, RedisEnterpriseClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _redisEnterpriseClusterClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.CreateOrUpdate");
+            using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, RedisEnterpriseClusterData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RedisEnterpriseArmOperation<RedisEnterpriseClusterResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(
-                    new RedisEnterpriseClusterOperationSource(Client),
-                    _redisEnterpriseClusterClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.OriginalUri);
+                var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(new RedisEnterpriseClusterOperationSource(Client), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, _redisEnterpriseClusterRedisEnterpriseRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Creates or updates an existing (overwrite/recreate, with potential downtime) cache cluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="data"> Parameters supplied to the Create Redis Enterprise operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RedisEnterpriseClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, RedisEnterpriseClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _redisEnterpriseClusterClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.CreateOrUpdate");
+            using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, RedisEnterpriseClusterData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RedisEnterpriseArmOperation<RedisEnterpriseClusterResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(
-                    new RedisEnterpriseClusterOperationSource(Client),
-                    _redisEnterpriseClusterClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.OriginalUri);
+                var response = _redisEnterpriseClusterRedisEnterpriseRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data, cancellationToken);
+                var operation = new RedisEnterpriseArmOperation<RedisEnterpriseClusterResource>(new RedisEnterpriseClusterOperationSource(Client), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, _redisEnterpriseClusterRedisEnterpriseRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Gets information about a Redis Enterprise cluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<Response<RedisEnterpriseClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _redisEnterpriseClusterClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.Get");
+            using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RedisEnterpriseClusterData> response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
+                var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new RedisEnterpriseClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Gets information about a Redis Enterprise cluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<RedisEnterpriseClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _redisEnterpriseClusterClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.Get");
+            using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<RedisEnterpriseClusterData> response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
+                var response = _redisEnterpriseClusterRedisEnterpriseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new RedisEnterpriseClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Lists all Redis Enterprise clusters in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisEnterpriseClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisEnterpriseClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisEnterpriseClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<RedisEnterpriseClusterData, RedisEnterpriseClusterResource>(new RedisEnterpriseClusterGetByResourceGroupAsyncCollectionResultOfT(_redisEnterpriseClusterRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RedisEnterpriseClusterCollection.GetAll"), data => new RedisEnterpriseClusterResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "RedisEnterpriseClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all Redis Enterprise clusters in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> A collection of <see cref="RedisEnterpriseClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisEnterpriseClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<RedisEnterpriseClusterData, RedisEnterpriseClusterResource>(new RedisEnterpriseClusterGetByResourceGroupCollectionResultOfT(_redisEnterpriseClusterRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "RedisEnterpriseClusterCollection.GetAll"), data => new RedisEnterpriseClusterResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisEnterpriseClusterRedisEnterpriseRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisEnterpriseClusterResource(Client, RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(e)), _redisEnterpriseClusterRedisEnterpriseClientDiagnostics, Pipeline, "RedisEnterpriseClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _redisEnterpriseClusterClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.Exists");
+            using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<RedisEnterpriseClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RedisEnterpriseClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _redisEnterpriseClusterClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.Exists");
+            using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<RedisEnterpriseClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RedisEnterpriseClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _redisEnterpriseClusterRedisEnterpriseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<NullableResponse<RedisEnterpriseClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _redisEnterpriseClusterClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetIfExists");
+            using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<RedisEnterpriseClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RedisEnterpriseClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _redisEnterpriseClusterRedisEnterpriseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<RedisEnterpriseClusterResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new RedisEnterpriseClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RedisEnterprise_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisEnterpriseClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the Redis Enterprise cluster. Name must be 1-60 characters long. Allowed characters(A-Z, a-z, 0-9) and hyphen(-). There can be no leading nor trailing nor consecutive hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual NullableResponse<RedisEnterpriseClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            using DiagnosticScope scope = _redisEnterpriseClusterClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetIfExists");
+            using var scope = _redisEnterpriseClusterRedisEnterpriseClientDiagnostics.CreateScope("RedisEnterpriseClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisEnterpriseClusterRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<RedisEnterpriseClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RedisEnterpriseClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RedisEnterpriseClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _redisEnterpriseClusterRedisEnterpriseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<RedisEnterpriseClusterResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new RedisEnterpriseClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.RedisEnterprise
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<RedisEnterpriseClusterResource> IAsyncEnumerable<RedisEnterpriseClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

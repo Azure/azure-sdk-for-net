@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             for (int i = 0; i < length; i++)
             {
-                if (string.Equals(list[i].Key, tagName, StringComparison.Ordinal))
+                if (ReferenceEquals(list[i].Key, tagName))
                 {
                     return list[i].Value;
                 }

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.SelfHelp;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Solutions metrics based chart. </summary>
-    public partial class MetricsBasedChart : IJsonModel<MetricsBasedChart>
+    public partial class MetricsBasedChart : IUtf8JsonSerializable, IJsonModel<MetricsBasedChart>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MetricsBasedChart PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMetricsBasedChart(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsBasedChart>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MetricsBasedChart>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MetricsBasedChart IPersistableModel<MetricsBasedChart>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MetricsBasedChart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MetricsBasedChart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -104,15 +64,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +81,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MetricsBasedChart IJsonModel<MetricsBasedChart>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MetricsBasedChart JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MetricsBasedChart IJsonModel<MetricsBasedChart>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMetricsBasedChart(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MetricsBasedChart DeserializeMetricsBasedChart(JsonElement element, ModelReaderWriterOptions options)
+        internal static MetricsBasedChart DeserializeMetricsBasedChart(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -152,56 +107,58 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string title = default;
             ChartFilterGroup filterGroup = default;
             string replacementKey = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("aggregationType"u8))
+                if (property.NameEquals("aggregationType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    aggregationType = new ChartAggregationType(prop.Value.GetString());
+                    aggregationType = new ChartAggregationType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("timeSpanDuration"u8))
+                if (property.NameEquals("timeSpanDuration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeSpanDuration = prop.Value.GetTimeSpan("P");
+                    timeSpanDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (prop.NameEquals("title"u8))
+                if (property.NameEquals("title"u8))
                 {
-                    title = prop.Value.GetString();
+                    title = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("filterGroup"u8))
+                if (property.NameEquals("filterGroup"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    filterGroup = ChartFilterGroup.DeserializeChartFilterGroup(prop.Value, options);
+                    filterGroup = ChartFilterGroup.DeserializeChartFilterGroup(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("replacementKey"u8))
+                if (property.NameEquals("replacementKey"u8))
                 {
-                    replacementKey = prop.Value.GetString();
+                    replacementKey = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new MetricsBasedChart(
                 name,
                 aggregationType,
@@ -209,7 +166,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 title,
                 filterGroup,
                 replacementKey,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MetricsBasedChart>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MetricsBasedChart IPersistableModel<MetricsBasedChart>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMetricsBasedChart(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MetricsBasedChart>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

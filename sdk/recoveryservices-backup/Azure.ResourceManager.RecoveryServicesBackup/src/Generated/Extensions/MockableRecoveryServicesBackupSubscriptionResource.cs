@@ -8,65 +8,68 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesBackup;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableRecoveryServicesBackupSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _protectionIntentOperationGroupClientDiagnostics;
-        private ProtectionIntentOperationGroup _protectionIntentOperationGroupRestClient;
+        private ClientDiagnostics _backupProtectionIntentProtectionIntentClientDiagnostics;
+        private ProtectionIntentRestOperations _backupProtectionIntentProtectionIntentRestClient;
         private ClientDiagnostics _backupStatusClientDiagnostics;
-        private BackupStatus _backupStatusRestClient;
+        private BackupStatusRestOperations _backupStatusRestClient;
         private ClientDiagnostics _featureSupportClientDiagnostics;
-        private FeatureSupport _featureSupportRestClient;
+        private FeatureSupportRestOperations _featureSupportRestClient;
 
-        /// <summary> Initializes a new instance of MockableRecoveryServicesBackupSubscriptionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesBackupSubscriptionResource"/> class for mocking. </summary>
         protected MockableRecoveryServicesBackupSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableRecoveryServicesBackupSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesBackupSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRecoveryServicesBackupSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ProtectionIntentOperationGroupClientDiagnostics => _protectionIntentOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics BackupProtectionIntentProtectionIntentClientDiagnostics => _backupProtectionIntentProtectionIntentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionIntentResource.ResourceType.Namespace, Diagnostics);
+        private ProtectionIntentRestOperations BackupProtectionIntentProtectionIntentRestClient => _backupProtectionIntentProtectionIntentRestClient ??= new ProtectionIntentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BackupProtectionIntentResource.ResourceType));
+        private ClientDiagnostics BackupStatusClientDiagnostics => _backupStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BackupStatusRestOperations BackupStatusRestClient => _backupStatusRestClient ??= new BackupStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics FeatureSupportClientDiagnostics => _featureSupportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private FeatureSupportRestOperations FeatureSupportRestClient => _featureSupportRestClient ??= new FeatureSupportRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private ProtectionIntentOperationGroup ProtectionIntentOperationGroupRestClient => _protectionIntentOperationGroupRestClient ??= new ProtectionIntentOperationGroup(ProtectionIntentOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
-
-        private ClientDiagnostics BackupStatusClientDiagnostics => _backupStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private BackupStatus BackupStatusRestClient => _backupStatusRestClient ??= new BackupStatus(BackupStatusClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
-
-        private ClientDiagnostics FeatureSupportClientDiagnostics => _featureSupportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private FeatureSupport FeatureSupportRestClient => _featureSupportRestClient ??= new FeatureSupport(FeatureSupportClientDiagnostics, Pipeline, Endpoint, "2026-01-31-preview");
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
 
         /// <summary>
         /// It will validate followings
-        /// <list type="number"><item><description>Vault capacity</description></item><item><description>VM is already protected</description></item><item><description>Any VM related configuration passed in properties.</description></item></list>
+        /// 1. Vault capacity
+        /// 2. VM is already protected
+        /// 3. Any VM related configuration passed in properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupPreValidateProtection. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupPreValidateProtection</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionIntentOperationGroup_Validate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionIntent_Validate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,21 +81,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProtectionIntentOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.ValidateProtectionIntent");
+            using var scope = BackupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.ValidateProtectionIntent");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProtectionIntentOperationGroupRestClient.CreateValidateProtectionIntentRequest(location, Id.SubscriptionId, PreValidateEnableBackupContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PreValidateEnableBackupResult> response = Response.FromValue(PreValidateEnableBackupResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await BackupProtectionIntentProtectionIntentRestClient.ValidateAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -104,19 +97,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 
         /// <summary>
         /// It will validate followings
-        /// <list type="number"><item><description>Vault capacity</description></item><item><description>VM is already protected</description></item><item><description>Any VM related configuration passed in properties.</description></item></list>
+        /// 1. Vault capacity
+        /// 2. VM is already protected
+        /// 3. Any VM related configuration passed in properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupPreValidateProtection. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupPreValidateProtection</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionIntentOperationGroup_Validate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionIntent_Validate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,21 +127,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProtectionIntentOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.ValidateProtectionIntent");
+            using var scope = BackupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.ValidateProtectionIntent");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProtectionIntentOperationGroupRestClient.CreateValidateProtectionIntentRequest(location, Id.SubscriptionId, PreValidateEnableBackupContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PreValidateEnableBackupResult> response = Response.FromValue(PreValidateEnableBackupResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = BackupProtectionIntentProtectionIntentRestClient.Validate(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -156,16 +145,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Get the container backup status
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupStatus. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupStatus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BackupStatus_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupStatus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,21 +166,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = BackupStatusClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.GetBackupStatus");
+            using var scope = BackupStatusClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.GetBackupStatus");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = BackupStatusRestClient.CreateGetBackupStatusRequest(location, Id.SubscriptionId, BackupStatusContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BackupStatusResult> response = Response.FromValue(BackupStatusResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await BackupStatusRestClient.GetAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -205,16 +184,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// Get the container backup status
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupStatus. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupStatus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BackupStatus_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BackupStatus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,21 +205,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = BackupStatusClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.GetBackupStatus");
+            using var scope = BackupStatusClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.GetBackupStatus");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = BackupStatusRestClient.CreateGetBackupStatusRequest(location, Id.SubscriptionId, BackupStatusContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BackupStatusResult> response = Response.FromValue(BackupStatusResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = BackupStatusRestClient.Get(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -254,16 +223,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// It will validate if given feature with resource properties is supported in service
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupValidateFeatures. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupValidateFeatures</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FeatureSupport_Validate. </description>
+        /// <term>Operation Id</term>
+        /// <description>FeatureSupport_Validate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,21 +244,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FeatureSupportClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.ValidateFeatureSupport");
+            using var scope = FeatureSupportClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.ValidateFeatureSupport");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = FeatureSupportRestClient.CreateValidateFeatureSupportRequest(location, Id.SubscriptionId, FeatureSupportContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VmResourceFeatureSupportResult> response = Response.FromValue(VmResourceFeatureSupportResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await FeatureSupportRestClient.ValidateAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -303,16 +262,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// It will validate if given feature with resource properties is supported in service
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupValidateFeatures. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupValidateFeatures</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FeatureSupport_Validate. </description>
+        /// <term>Operation Id</term>
+        /// <description>FeatureSupport_Validate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,21 +283,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = FeatureSupportClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.ValidateFeatureSupport");
+            using var scope = FeatureSupportClientDiagnostics.CreateScope("MockableRecoveryServicesBackupSubscriptionResource.ValidateFeatureSupport");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = FeatureSupportRestClient.CreateValidateFeatureSupportRequest(location, Id.SubscriptionId, FeatureSupportContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<VmResourceFeatureSupportResult> response = Response.FromValue(VmResourceFeatureSupportResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = FeatureSupportRestClient.Validate(Id.SubscriptionId, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

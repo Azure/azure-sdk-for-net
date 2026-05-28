@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Deployment What-if properties. </summary>
-    public partial class ArmDeploymentWhatIfProperties : ArmDeploymentProperties, IJsonModel<ArmDeploymentWhatIfProperties>
+    public partial class ArmDeploymentWhatIfProperties : IUtf8JsonSerializable, IJsonModel<ArmDeploymentWhatIfProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ArmDeploymentWhatIfProperties"/> for deserialization. </summary>
-        internal ArmDeploymentWhatIfProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentWhatIfProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ArmDeploymentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeArmDeploymentWhatIfProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArmDeploymentWhatIfProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ArmDeploymentWhatIfProperties IPersistableModel<ArmDeploymentWhatIfProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ArmDeploymentWhatIfProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ArmDeploymentWhatIfProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArmDeploymentWhatIfProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(WhatIfSettings))
             {
@@ -87,212 +42,235 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ArmDeploymentWhatIfProperties IJsonModel<ArmDeploymentWhatIfProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ArmDeploymentWhatIfProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ArmDeploymentProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArmDeploymentWhatIfProperties IJsonModel<ArmDeploymentWhatIfProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeArmDeploymentWhatIfProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ArmDeploymentWhatIfProperties DeserializeArmDeploymentWhatIfProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ArmDeploymentWhatIfProperties DeserializeArmDeploymentWhatIfProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ArmDeploymentWhatIfSettings whatIfSettings = default;
             BinaryData template = default;
             ArmDeploymentTemplateLink templateLink = default;
-            IDictionary<string, ArmDeploymentParameterValue> deploymentParameters = default;
+            BinaryData parameters = default;
             IDictionary<string, ArmDeploymentExternalInput> externalInputs = default;
             IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions = default;
             ArmDeploymentParametersLink parametersLink = default;
             IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs = default;
             ArmDeploymentMode mode = default;
             DebugSetting debugSetting = default;
-            ErrorDeployment errorDeployment = default;
+            ErrorDeployment onErrorDeployment = default;
             ExpressionEvaluationOptions expressionEvaluationOptions = default;
             ValidationLevel? validationLevel = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ArmDeploymentWhatIfSettings whatIfSettings = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("template"u8))
+                if (property.NameEquals("whatIfSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    template = BinaryData.FromString(prop.Value.GetRawText());
+                    whatIfSettings = ArmDeploymentWhatIfSettings.DeserializeArmDeploymentWhatIfSettings(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("templateLink"u8))
+                if (property.NameEquals("template"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(prop.Value, options);
+                    template = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (prop.NameEquals("parameters"u8))
+                if (property.NameEquals("templateLink"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, ArmDeploymentParameterValue> dictionary = new Dictionary<string, ArmDeploymentParameterValue>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        dictionary.Add(prop0.Name, ArmDeploymentParameterValue.DeserializeArmDeploymentParameterValue(prop0.Value, options));
-                    }
-                    deploymentParameters = dictionary;
+                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("externalInputs"u8))
+                if (property.NameEquals("parameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("externalInputs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, ArmDeploymentExternalInput> dictionary = new Dictionary<string, ArmDeploymentExternalInput>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ArmDeploymentExternalInput.DeserializeArmDeploymentExternalInput(prop0.Value, options));
+                        dictionary.Add(property0.Name, ArmDeploymentExternalInput.DeserializeArmDeploymentExternalInput(property0.Value, options));
                     }
                     externalInputs = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("externalInputDefinitions"u8))
+                if (property.NameEquals("externalInputDefinitions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, ArmDeploymentExternalInputDefinition> dictionary = new Dictionary<string, ArmDeploymentExternalInputDefinition>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ArmDeploymentExternalInputDefinition.DeserializeArmDeploymentExternalInputDefinition(prop0.Value, options));
+                        dictionary.Add(property0.Name, ArmDeploymentExternalInputDefinition.DeserializeArmDeploymentExternalInputDefinition(property0.Value, options));
                     }
                     externalInputDefinitions = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("parametersLink"u8))
+                if (property.NameEquals("parametersLink"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(prop.Value, options);
+                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("extensionConfigs"u8))
+                if (property.NameEquals("extensionConfigs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> dictionary = new Dictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(prop0.Name, null);
+                            dictionary.Add(property0.Name, null);
                         }
                         else
                         {
                             Dictionary<string, ArmDeploymentExtensionConfigItem> dictionary0 = new Dictionary<string, ArmDeploymentExtensionConfigItem>();
-                            foreach (var prop1 in prop0.Value.EnumerateObject())
+                            foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary0.Add(prop1.Name, ArmDeploymentExtensionConfigItem.DeserializeArmDeploymentExtensionConfigItem(prop1.Value, options));
+                                dictionary0.Add(property1.Name, ArmDeploymentExtensionConfigItem.DeserializeArmDeploymentExtensionConfigItem(property1.Value, options));
                             }
-                            dictionary.Add(prop0.Name, dictionary0);
+                            dictionary.Add(property0.Name, dictionary0);
                         }
                     }
                     extensionConfigs = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("mode"u8))
+                if (property.NameEquals("mode"u8))
                 {
-                    mode = prop.Value.GetString().ToArmDeploymentMode();
+                    mode = property.Value.GetString().ToArmDeploymentMode();
                     continue;
                 }
-                if (prop.NameEquals("debugSetting"u8))
+                if (property.NameEquals("debugSetting"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(prop.Value, options);
+                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("onErrorDeployment"u8))
+                if (property.NameEquals("onErrorDeployment"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    errorDeployment = ErrorDeployment.DeserializeErrorDeployment(prop.Value, options);
+                    onErrorDeployment = ErrorDeployment.DeserializeErrorDeployment(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("expressionEvaluationOptions"u8))
+                if (property.NameEquals("expressionEvaluationOptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(prop.Value, options);
+                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("validationLevel"u8))
+                if (property.NameEquals("validationLevel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    validationLevel = new ValidationLevel(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("whatIfSettings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    whatIfSettings = ArmDeploymentWhatIfSettings.DeserializeArmDeploymentWhatIfSettings(prop.Value, options);
+                    validationLevel = new ValidationLevel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ArmDeploymentWhatIfProperties(
                 template,
                 templateLink,
-                deploymentParameters ?? new ChangeTrackingDictionary<string, ArmDeploymentParameterValue>(),
+                parameters,
                 externalInputs ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInput>(),
                 externalInputDefinitions ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInputDefinition>(),
                 parametersLink,
                 extensionConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>(),
                 mode,
                 debugSetting,
-                errorDeployment,
+                onErrorDeployment,
                 expressionEvaluationOptions,
                 validationLevel,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 whatIfSettings);
         }
+
+        BinaryData IPersistableModel<ArmDeploymentWhatIfProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ArmDeploymentWhatIfProperties IPersistableModel<ArmDeploymentWhatIfProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentWhatIfProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeArmDeploymentWhatIfProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentWhatIfProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArmDeploymentWhatIfProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

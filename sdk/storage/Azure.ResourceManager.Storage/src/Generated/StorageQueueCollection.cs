@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
@@ -25,53 +24,51 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class StorageQueueCollection : ArmCollection, IEnumerable<StorageQueueResource>, IAsyncEnumerable<StorageQueueResource>
     {
-        private readonly ClientDiagnostics _queueClientDiagnostics;
-        private readonly Queue _queueRestClient;
-        private readonly ClientDiagnostics _queueServicesClientDiagnostics;
-        private readonly QueueServices _queueServicesRestClient;
+        private readonly ClientDiagnostics _storageQueueQueueClientDiagnostics;
+        private readonly QueueRestOperations _storageQueueQueueRestClient;
 
-        /// <summary> Initializes a new instance of StorageQueueCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageQueueCollection"/> class for mocking. </summary>
         protected StorageQueueCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageQueueCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageQueueCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal StorageQueueCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(StorageQueueResource.ResourceType, out string storageQueueApiVersion);
-            _queueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageQueueResource.ResourceType.Namespace, Diagnostics);
-            _queueRestClient = new Queue(_queueClientDiagnostics, Pipeline, Endpoint, storageQueueApiVersion ?? "2025-08-01");
-            _queueServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageQueueResource.ResourceType.Namespace, Diagnostics);
-            _queueServicesRestClient = new QueueServices(_queueServicesClientDiagnostics, Pipeline, Endpoint, storageQueueApiVersion ?? "2025-08-01");
-            ValidateResourceId(id);
+            _storageQueueQueueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageQueueResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StorageQueueResource.ResourceType, out string storageQueueQueueApiVersion);
+            _storageQueueQueueRestClient = new QueueRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageQueueQueueApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != QueueServiceResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, QueueServiceResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, QueueServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates a new queue with the specified queue name, under the specified account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageQueues_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>Queue_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,31 +76,23 @@ namespace Azure.ResourceManager.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="data"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageQueueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string queueName, StorageQueueData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _queueClientDiagnostics.CreateScope("StorageQueueCollection.CreateOrUpdate");
+            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queueRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, queueName, StorageQueueData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StorageQueueData> response = Response.FromValue(StorageQueueData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageArmOperation<StorageQueueResource> operation = new StorageArmOperation<StorageQueueResource>(Response.FromValue(new StorageQueueResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _storageQueueQueueRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _storageQueueQueueRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<StorageQueueResource>(Response.FromValue(new StorageQueueResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +106,20 @@ namespace Azure.ResourceManager.Storage
         /// Creates a new queue with the specified queue name, under the specified account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageQueues_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>Queue_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,31 +127,23 @@ namespace Azure.ResourceManager.Storage
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="data"> Queue properties and metadata to be created with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StorageQueueResource> CreateOrUpdate(WaitUntil waitUntil, string queueName, StorageQueueData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _queueClientDiagnostics.CreateScope("StorageQueueCollection.CreateOrUpdate");
+            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queueRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, queueName, StorageQueueData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StorageQueueData> response = Response.FromValue(StorageQueueData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageArmOperation<StorageQueueResource> operation = new StorageArmOperation<StorageQueueResource>(Response.FromValue(new StorageQueueResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _storageQueueQueueRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, data, cancellationToken);
+                var uri = _storageQueueQueueRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<StorageQueueResource>(Response.FromValue(new StorageQueueResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -172,42 +157,38 @@ namespace Azure.ResourceManager.Storage
         /// Gets the queue with the specified queue name, under the specified account if it exists.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageQueues_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Queue_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual async Task<Response<StorageQueueResource>> GetAsync(string queueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
-            using DiagnosticScope scope = _queueClientDiagnostics.CreateScope("StorageQueueCollection.Get");
+            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, queueName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StorageQueueData> response = Response.FromValue(StorageQueueData.FromResponse(result), result);
+                var response = await _storageQueueQueueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new StorageQueueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -221,42 +202,38 @@ namespace Azure.ResourceManager.Storage
         /// Gets the queue with the specified queue name, under the specified account if it exists.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageQueues_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Queue_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual Response<StorageQueueResource> Get(string queueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
-            using DiagnosticScope scope = _queueClientDiagnostics.CreateScope("StorageQueueCollection.Get");
+            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, queueName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StorageQueueData> response = Response.FromValue(StorageQueueData.FromResponse(result), result);
+                var response = _storageQueueQueueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new StorageQueueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -270,54 +247,52 @@ namespace Azure.ResourceManager.Storage
         /// Gets a list of all the queues under the specified storage account
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> QueueServices_QueueList. </description>
+        /// <term>Operation Id</term>
+        /// <description>Queue_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="maxpagesize"> Optional, a maximum number of queues that should be included in a list queue response. </param>
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageQueueResource> GetAllAsync(string maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StorageQueueResource> GetAllAsync(int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<StorageQueueData, StorageQueueResource>(new QueueServicesListAsyncCollectionResultOfT(
-                _queueServicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                maxpagesize,
-                filter,
-                context,
-                "StorageQueueCollection.GetAll"), data => new StorageQueueResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageQueueQueueRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of all the queues under the specified storage account
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> QueueServices_QueueList. </description>
+        /// <term>Operation Id</term>
+        /// <description>Queue_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,71 +300,47 @@ namespace Azure.ResourceManager.Storage
         /// <param name="filter"> Optional, When specified, only the queues with a name starting with the given filter will be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageQueueResource> GetAll(string maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<StorageQueueResource> GetAll(int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<StorageQueueData, StorageQueueResource>(new QueueServicesListCollectionResultOfT(
-                _queueServicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                maxpagesize,
-                filter,
-                context,
-                "StorageQueueCollection.GetAll"), data => new StorageQueueResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageQueueQueueRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageQueues_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Queue_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
-            using DiagnosticScope scope = _queueClientDiagnostics.CreateScope("StorageQueueCollection.Exists");
+            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, queueName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<StorageQueueData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StorageQueueData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StorageQueueData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _storageQueueQueueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -403,50 +354,36 @@ namespace Azure.ResourceManager.Storage
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageQueues_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Queue_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual Response<bool> Exists(string queueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
-            using DiagnosticScope scope = _queueClientDiagnostics.CreateScope("StorageQueueCollection.Exists");
+            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, queueName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<StorageQueueData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StorageQueueData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StorageQueueData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _storageQueueQueueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -460,54 +397,38 @@ namespace Azure.ResourceManager.Storage
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageQueues_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Queue_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageQueueResource>> GetIfExistsAsync(string queueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
-            using DiagnosticScope scope = _queueClientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
+            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, queueName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<StorageQueueData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StorageQueueData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StorageQueueData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _storageQueueQueueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<StorageQueueResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new StorageQueueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -521,54 +442,38 @@ namespace Azure.ResourceManager.Storage
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default/queues/{queueName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageQueues_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Queue_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageQueueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="queueName"> A queue name must be unique within a storage account and must be between 3 and 63 characters.The name must comprise of lowercase alphanumeric and dash(-) characters only, it should begin and end with an alphanumeric character and it cannot have two consecutive dash(-) characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueName"/> is null. </exception>
         public virtual NullableResponse<StorageQueueResource> GetIfExists(string queueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
 
-            using DiagnosticScope scope = _queueClientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
+            using var scope = _storageQueueQueueClientDiagnostics.CreateScope("StorageQueueCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _queueRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, queueName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<StorageQueueData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StorageQueueData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StorageQueueData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _storageQueueQueueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, queueName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<StorageQueueResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new StorageQueueResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -588,7 +493,6 @@ namespace Azure.ResourceManager.Storage
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StorageQueueResource> IAsyncEnumerable<StorageQueueResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

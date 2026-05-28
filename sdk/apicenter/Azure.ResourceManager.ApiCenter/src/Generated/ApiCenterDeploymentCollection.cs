@@ -8,66 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApiCenterDeploymentResource"/> and their operations.
     /// Each <see cref="ApiCenterDeploymentResource"/> in the collection will belong to the same instance of <see cref="ApiCenterApiResource"/>.
-    /// To get a <see cref="ApiCenterDeploymentCollection"/> instance call the GetApiCenterDeployments method from an instance of <see cref="ApiCenterApiResource"/>.
+    /// To get an <see cref="ApiCenterDeploymentCollection"/> instance call the GetApiCenterDeployments method from an instance of <see cref="ApiCenterApiResource"/>.
     /// </summary>
     public partial class ApiCenterDeploymentCollection : ArmCollection, IEnumerable<ApiCenterDeploymentResource>, IAsyncEnumerable<ApiCenterDeploymentResource>
     {
-        private readonly ClientDiagnostics _deploymentsClientDiagnostics;
-        private readonly Deployments _deploymentsRestClient;
+        private readonly ClientDiagnostics _apiCenterDeploymentDeploymentsClientDiagnostics;
+        private readonly DeploymentsRestOperations _apiCenterDeploymentDeploymentsRestClient;
 
-        /// <summary> Initializes a new instance of ApiCenterDeploymentCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiCenterDeploymentCollection"/> class for mocking. </summary>
         protected ApiCenterDeploymentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterDeploymentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiCenterDeploymentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ApiCenterDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ApiCenterDeploymentResource.ResourceType, out string apiCenterDeploymentApiVersion);
-            _deploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Endpoint, apiCenterDeploymentApiVersion ?? "2024-06-01-preview");
-            ValidateResourceId(id);
+            _apiCenterDeploymentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterDeploymentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiCenterDeploymentResource.ResourceType, out string apiCenterDeploymentDeploymentsApiVersion);
+            _apiCenterDeploymentDeploymentsRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterDeploymentDeploymentsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ApiCenterApiResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiCenterApiResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiCenterApiResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates new or updates existing API deployment.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Deployments_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="deploymentName"> The name of the API deployment. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiCenterDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, ApiCenterDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.CreateOrUpdate");
+            using var scope = _apiCenterDeploymentDeploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, ApiCenterDeploymentData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiCenterDeploymentData> response = Response.FromValue(ApiCenterDeploymentData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ApiCenterArmOperation<ApiCenterDeploymentResource> operation = new ApiCenterArmOperation<ApiCenterDeploymentResource>(Response.FromValue(new ApiCenterDeploymentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _apiCenterDeploymentDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _apiCenterDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiCenterArmOperation<ApiCenterDeploymentResource>(Response.FromValue(new ApiCenterDeploymentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.ApiCenter
         /// Creates new or updates existing API deployment.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Deployments_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="deploymentName"> The name of the API deployment. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiCenterDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, ApiCenterDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.CreateOrUpdate");
+            using var scope = _apiCenterDeploymentDeploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, ApiCenterDeploymentData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiCenterDeploymentData> response = Response.FromValue(ApiCenterDeploymentData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ApiCenterArmOperation<ApiCenterDeploymentResource> operation = new ApiCenterArmOperation<ApiCenterDeploymentResource>(Response.FromValue(new ApiCenterDeploymentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _apiCenterDeploymentDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken);
+                var uri = _apiCenterDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiCenterArmOperation<ApiCenterDeploymentResource>(Response.FromValue(new ApiCenterDeploymentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.ApiCenter
         /// Returns details of the API deployment.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Deployments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the API deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual async Task<Response<ApiCenterDeploymentResource>> GetAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.Get");
+            using var scope = _apiCenterDeploymentDeploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ApiCenterDeploymentData> response = Response.FromValue(ApiCenterDeploymentData.FromResponse(result), result);
+                var response = await _apiCenterDeploymentDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ApiCenterDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.ApiCenter
         /// Returns details of the API deployment.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Deployments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the API deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<ApiCenterDeploymentResource> Get(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.Get");
+            using var scope = _apiCenterDeploymentDeploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ApiCenterDeploymentData> response = Response.FromValue(ApiCenterDeploymentData.FromResponse(result), result);
+                var response = _apiCenterDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ApiCenterDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,126 +247,98 @@ namespace Azure.ResourceManager.ApiCenter
         /// Returns a collection of API deployments.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Deployments_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiCenterDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiCenterDeploymentResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiCenterDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiCenterDeploymentResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ApiCenterDeploymentData, ApiCenterDeploymentResource>(new DeploymentsGetAllAsyncCollectionResultOfT(
-                _deploymentsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Parent.Name,
-                Id.Parent.Name,
-                Id.Name,
-                filter,
-                context,
-                "ApiCenterDeploymentCollection.GetAll"), data => new ApiCenterDeploymentResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiCenterDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiCenterDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCenterDeploymentResource(Client, ApiCenterDeploymentData.DeserializeApiCenterDeploymentData(e)), _apiCenterDeploymentDeploymentsClientDiagnostics, Pipeline, "ApiCenterDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Returns a collection of API deployments.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Deployments_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiCenterDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiCenterDeploymentResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiCenterDeploymentResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ApiCenterDeploymentData, ApiCenterDeploymentResource>(new DeploymentsGetAllCollectionResultOfT(
-                _deploymentsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Parent.Name,
-                Id.Parent.Name,
-                Id.Name,
-                filter,
-                context,
-                "ApiCenterDeploymentCollection.GetAll"), data => new ApiCenterDeploymentResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiCenterDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiCenterDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCenterDeploymentResource(Client, ApiCenterDeploymentData.DeserializeApiCenterDeploymentData(e)), _apiCenterDeploymentDeploymentsClientDiagnostics, Pipeline, "ApiCenterDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Deployments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the API deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.Exists");
+            using var scope = _apiCenterDeploymentDeploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ApiCenterDeploymentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ApiCenterDeploymentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiCenterDeploymentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _apiCenterDeploymentDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,50 +352,36 @@ namespace Azure.ResourceManager.ApiCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Deployments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the API deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual Response<bool> Exists(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.Exists");
+            using var scope = _apiCenterDeploymentDeploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ApiCenterDeploymentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ApiCenterDeploymentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiCenterDeploymentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _apiCenterDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -456,54 +395,38 @@ namespace Azure.ResourceManager.ApiCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Deployments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the API deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiCenterDeploymentResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.GetIfExists");
+            using var scope = _apiCenterDeploymentDeploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ApiCenterDeploymentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ApiCenterDeploymentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiCenterDeploymentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _apiCenterDeploymentDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ApiCenterDeploymentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ApiCenterDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -517,54 +440,38 @@ namespace Azure.ResourceManager.ApiCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/deployments/{deploymentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Deployments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the API deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         public virtual NullableResponse<ApiCenterDeploymentResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using DiagnosticScope scope = _deploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.GetIfExists");
+            using var scope = _apiCenterDeploymentDeploymentsClientDiagnostics.CreateScope("ApiCenterDeploymentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _deploymentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ApiCenterDeploymentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ApiCenterDeploymentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ApiCenterDeploymentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _apiCenterDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ApiCenterDeploymentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ApiCenterDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -584,7 +491,6 @@ namespace Azure.ResourceManager.ApiCenter
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApiCenterDeploymentResource> IAsyncEnumerable<ApiCenterDeploymentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

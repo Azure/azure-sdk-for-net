@@ -276,7 +276,7 @@ namespace Azure.Communication.Email.Tests
             {
                 exception = Assert.Throws<RequestFailedException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
             }
-            Assert.That(exception?.Status, Is.EqualTo((int)HttpStatusCode.BadRequest));
+            Assert.AreEqual((int)HttpStatusCode.BadRequest, exception?.Status);
         }
 
         [Test]
@@ -294,7 +294,7 @@ namespace Azure.Communication.Email.Tests
             {
                 exception = Assert.Throws<ArgumentException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
             }
-            Assert.That(exception?.Message.Contains(errorMessage), Is.True);
+            Assert.IsTrue(exception?.Message.Contains(errorMessage));
         }
 
         [Test]
@@ -312,7 +312,7 @@ namespace Azure.Communication.Email.Tests
             {
                 exception = Assert.Throws<RequestFailedException>(() => emailClient.Send(WaitUntil.Started, emailMessage));
             }
-            Assert.That(exception?.Status, Is.EqualTo((int)HttpStatusCode.BadRequest));
+            Assert.AreEqual((int)HttpStatusCode.BadRequest, exception?.Status);
         }
 
         [Test]
@@ -334,10 +334,10 @@ namespace Azure.Communication.Email.Tests
                 Thread.Sleep(1000);
             }
 
-            Assert.That(emailSendOperation.HasCompleted, Is.True);
-            Assert.That(emailSendOperation.HasValue, Is.True);
-            Assert.That(emailSendOperation.Id, Is.Not.Null);
-            Assert.That(emailSendOperation.Value.Status, Is.EqualTo(EmailSendStatus.Succeeded));
+            Assert.IsTrue(emailSendOperation.HasCompleted);
+            Assert.IsTrue(emailSendOperation.HasValue);
+            Assert.IsNotNull(emailSendOperation.Id);
+            Assert.AreEqual(EmailSendStatus.Succeeded, emailSendOperation.Value.Status);
         }
 
         [Test]
@@ -359,10 +359,10 @@ namespace Azure.Communication.Email.Tests
                 Thread.Sleep(1000);
             }
 
-            Assert.That(emailSendOperation.HasCompleted, Is.True);
-            Assert.That(emailSendOperation.HasValue, Is.True);
-            Assert.That(emailSendOperation.Id, Is.Not.Null);
-            Assert.That(emailSendOperation.Value.Status, Is.EqualTo(EmailSendStatus.Succeeded));
+            Assert.IsTrue(emailSendOperation.HasCompleted);
+            Assert.IsTrue(emailSendOperation.HasValue);
+            Assert.IsNotNull(emailSendOperation.Id);
+            Assert.AreEqual(EmailSendStatus.Succeeded, emailSendOperation.Value.Status);
         }
 
         [Test]
@@ -387,10 +387,10 @@ namespace Azure.Communication.Email.Tests
                 }
             });
 
-            Assert.That(exception?.Status, Is.EqualTo((int)HttpStatusCode.OK));
-            Assert.That(emailSendOperation.HasCompleted, Is.True);
-            Assert.That(emailSendOperation.HasValue, Is.False);
-            Assert.That(emailSendOperation.Id, Is.Not.Null);
+            Assert.AreEqual((int)HttpStatusCode.OK, exception?.Status);
+            Assert.IsTrue(emailSendOperation.HasCompleted);
+            Assert.IsFalse(emailSendOperation.HasValue);
+            Assert.IsNotNull(emailSendOperation.Id);
         }
 
         [Test]
@@ -415,10 +415,10 @@ namespace Azure.Communication.Email.Tests
                 }
             });
 
-            Assert.That(exception?.Status, Is.EqualTo((int)HttpStatusCode.OK));
-            Assert.That(emailSendOperation.HasCompleted, Is.True);
-            Assert.That(emailSendOperation.HasValue, Is.False);
-            Assert.That(emailSendOperation.Id, Is.Not.Null);
+            Assert.AreEqual((int)HttpStatusCode.OK, exception?.Status);
+            Assert.IsTrue(emailSendOperation.HasCompleted);
+            Assert.IsFalse(emailSendOperation.HasValue);
+            Assert.IsNotNull(emailSendOperation.Id);
         }
 
         private EmailClient CreateEmailClient(HttpStatusCode statusCode = HttpStatusCode.OK)

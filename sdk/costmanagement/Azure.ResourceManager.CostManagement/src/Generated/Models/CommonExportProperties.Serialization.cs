@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.CostManagement;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The common properties of the export. </summary>
-    public partial class CommonExportProperties : IJsonModel<CommonExportProperties>
+    public partial class CommonExportProperties : IUtf8JsonSerializable, IJsonModel<CommonExportProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/> for deserialization. </summary>
-        internal CommonExportProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonExportProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommonExportProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCommonExportProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CommonExportProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CommonExportProperties IPersistableModel<CommonExportProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CommonExportProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CommonExportProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CommonExportProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
@@ -98,40 +53,20 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
-            if (Optional.IsDefined(DataOverwriteBehavior))
-            {
-                writer.WritePropertyName("dataOverwriteBehavior"u8);
-                writer.WriteStringValue(DataOverwriteBehavior.Value.ToString());
-            }
-            if (Optional.IsDefined(CompressionMode))
-            {
-                writer.WritePropertyName("compressionMode"u8);
-                writer.WriteStringValue(CompressionMode.Value.ToString());
-            }
-            if (Optional.IsDefined(ExportDescription))
-            {
-                writer.WritePropertyName("exportDescription"u8);
-                writer.WriteStringValue(ExportDescription);
-            }
             if (options.Format != "W" && Optional.IsDefined(NextRunTimeEstimate))
             {
                 writer.WritePropertyName("nextRunTimeEstimate"u8);
                 writer.WriteStringValue(NextRunTimeEstimate.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemSuspensionContext))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("systemSuspensionContext"u8);
-                writer.WriteObjectValue(SystemSuspensionContext, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -140,27 +75,22 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CommonExportProperties IJsonModel<CommonExportProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommonExportProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CommonExportProperties IJsonModel<CommonExportProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CommonExportProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCommonExportProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CommonExportProperties DeserializeCommonExportProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommonExportProperties DeserializeCommonExportProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -170,109 +100,102 @@ namespace Azure.ResourceManager.CostManagement.Models
             ExportDefinition definition = default;
             ExportExecutionListResult runHistory = default;
             bool? partitionData = default;
-            DataOverwriteBehaviorType? dataOverwriteBehavior = default;
-            CompressionModeType? compressionMode = default;
-            string exportDescription = default;
             DateTimeOffset? nextRunTimeEstimate = default;
-            ExportSuspensionContext systemSuspensionContext = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("format"u8))
+                if (property.NameEquals("format"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    format = new ExportFormatType(prop.Value.GetString());
+                    format = new ExportFormatType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("deliveryInfo"u8))
+                if (property.NameEquals("deliveryInfo"u8))
                 {
-                    deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(prop.Value, options);
+                    deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("definition"u8))
+                if (property.NameEquals("definition"u8))
                 {
-                    definition = ExportDefinition.DeserializeExportDefinition(prop.Value, options);
+                    definition = ExportDefinition.DeserializeExportDefinition(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("runHistory"u8))
+                if (property.NameEquals("runHistory"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(prop.Value, options);
+                    runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("partitionData"u8))
+                if (property.NameEquals("partitionData"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    partitionData = prop.Value.GetBoolean();
+                    partitionData = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("dataOverwriteBehavior"u8))
+                if (property.NameEquals("nextRunTimeEstimate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataOverwriteBehavior = new DataOverwriteBehaviorType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("compressionMode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    compressionMode = new CompressionModeType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("exportDescription"u8))
-                {
-                    exportDescription = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("nextRunTimeEstimate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextRunTimeEstimate = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("systemSuspensionContext"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemSuspensionContext = ExportSuspensionContext.DeserializeExportSuspensionContext(prop.Value, options);
+                    nextRunTimeEstimate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new CommonExportProperties(
                 format,
                 deliveryInfo,
                 definition,
                 runHistory,
                 partitionData,
-                dataOverwriteBehavior,
-                compressionMode,
-                exportDescription,
                 nextRunTimeEstimate,
-                systemSuspensionContext,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CommonExportProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CommonExportProperties IPersistableModel<CommonExportProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCommonExportProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CommonExportProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

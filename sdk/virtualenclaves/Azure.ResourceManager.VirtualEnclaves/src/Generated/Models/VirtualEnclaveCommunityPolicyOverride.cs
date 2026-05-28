@@ -7,63 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary></summary>
+    /// <summary> The CommunityPropertiesPolicyOverride. </summary>
     public readonly partial struct VirtualEnclaveCommunityPolicyOverride : IEquatable<VirtualEnclaveCommunityPolicyOverride>
     {
         private readonly string _value;
-        private const string EnclaveValue = "Enclave";
-        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityPolicyOverride"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualEnclaveCommunityPolicyOverride(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Enclave. </summary>
+        private const string EnclaveValue = "Enclave";
+        private const string NoneValue = "None";
+
+        /// <summary> Enclave. </summary>
         public static VirtualEnclaveCommunityPolicyOverride Enclave { get; } = new VirtualEnclaveCommunityPolicyOverride(EnclaveValue);
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static VirtualEnclaveCommunityPolicyOverride None { get; } = new VirtualEnclaveCommunityPolicyOverride(NoneValue);
-
         /// <summary> Determines if two <see cref="VirtualEnclaveCommunityPolicyOverride"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualEnclaveCommunityPolicyOverride left, VirtualEnclaveCommunityPolicyOverride right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="VirtualEnclaveCommunityPolicyOverride"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualEnclaveCommunityPolicyOverride left, VirtualEnclaveCommunityPolicyOverride right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="VirtualEnclaveCommunityPolicyOverride"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualEnclaveCommunityPolicyOverride"/>. </summary>
         public static implicit operator VirtualEnclaveCommunityPolicyOverride(string value) => new VirtualEnclaveCommunityPolicyOverride(value);
 
-        /// <summary> Converts a string to a <see cref="VirtualEnclaveCommunityPolicyOverride"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator VirtualEnclaveCommunityPolicyOverride?(string value) => value == null ? null : new VirtualEnclaveCommunityPolicyOverride(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualEnclaveCommunityPolicyOverride other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(VirtualEnclaveCommunityPolicyOverride other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

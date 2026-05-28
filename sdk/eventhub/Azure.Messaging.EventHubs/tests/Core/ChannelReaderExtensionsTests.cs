@@ -367,8 +367,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     if (channelIndex < maxReadItems)
                     {
                         return true;
-                    }
-                    ;
+                    };
 
                     throw (Exception)Activator.CreateInstance(exceptionType);
                 });

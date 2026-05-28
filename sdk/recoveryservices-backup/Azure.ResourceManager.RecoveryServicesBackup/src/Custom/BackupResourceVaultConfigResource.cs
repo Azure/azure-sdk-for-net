@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupResourceVaultConfigResource
@@ -23,6 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <description>BackupResourceVaultConfigs_Update</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="BackupResourceVaultConfigResource"/></description>
         /// </item>
@@ -32,8 +35,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BackupResourceVaultConfigResource>> UpdateAsync(BackupResourceVaultConfigData data, CancellationToken cancellationToken)
-            => await UpdateAsync(data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual Task<Response<BackupResourceVaultConfigResource>> UpdateAsync(BackupResourceVaultConfigData data, CancellationToken cancellationToken)
+        {
+            return UpdateAsync(data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+        }
 
         /// <summary>
         /// Updates vault security config.
@@ -47,6 +52,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <description>BackupResourceVaultConfigs_Update</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="BackupResourceVaultConfigResource"/></description>
         /// </item>
@@ -57,6 +66,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BackupResourceVaultConfigResource> Update(BackupResourceVaultConfigData data, CancellationToken cancellationToken)
-            => Update(data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+        {
+            return Update(data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+        }
     }
 }

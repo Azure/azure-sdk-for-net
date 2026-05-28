@@ -28,7 +28,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             activity.Stop();
 
-            Assert.That(mockTransport.SingleRequest.ClientRequestId, Is.EqualTo("CustomRequestId"));
+            Assert.AreEqual(mockTransport.SingleRequest.ClientRequestId, "CustomRequestId");
         }
 
         [Test]
@@ -45,8 +45,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
             activity.Stop();
 
-            Assert.That(mockTransport.SingleRequest.Headers.TryGetValue("x-ms-correlation-request-id", out string value), Is.True);
-            Assert.That(value, Is.EqualTo("CorrelationRequestId"));
+            Assert.True(mockTransport.SingleRequest.Headers.TryGetValue("x-ms-correlation-request-id", out string value));
+            Assert.AreEqual(value, "CorrelationRequestId");
         }
 
         [Test]
@@ -63,8 +63,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
             activity.Stop();
 
-            Assert.That(mockTransport.SingleRequest.Headers.TryGetValue("correlation-context", out string value), Is.True);
-            Assert.That(value, Is.EqualTo("CorrelationContextValue"));
+            Assert.True(mockTransport.SingleRequest.Headers.TryGetValue("correlation-context", out string value));
+            Assert.AreEqual(value, "CorrelationContextValue");
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             activity.Stop();
 
-            Assert.That(mockTransport.SingleRequest.Headers.TryGetValue("X-MS-RANDOM-ID", out string value), Is.False);
+            Assert.False(mockTransport.SingleRequest.Headers.TryGetValue("X-MS-RANDOM-ID", out string value));
         }
     }
 }

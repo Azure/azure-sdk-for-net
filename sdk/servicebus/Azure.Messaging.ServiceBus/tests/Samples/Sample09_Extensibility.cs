@@ -11,7 +11,7 @@ using Plugins;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
-    public class Sample09_Extensibility : ServiceBusLiveTestBase
+    public class Sample09_Extensibility: ServiceBusLiveTestBase
     {
         [Test]
         public async Task Plugins()
@@ -84,8 +84,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 Assert.AreEqual("Last subject", message.Subject);
 #endif
                 #endregion
-            }
-            ;
+            };
         }
 
         [Test]
@@ -158,8 +157,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #else
                 Assert.AreEqual("Last subject", message.Subject);
 #endif
-            }
-            ;
+            };
         }
 
         [Test]
@@ -257,8 +255,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await tcs.Task;
 #endif
                 #endregion
-            }
-            ;
+            };
         }
 
         [Test]
@@ -360,8 +357,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await tcs.Task;
 #endif
                 #endregion
-            }
-            ;
+            };
         }
     }
 }

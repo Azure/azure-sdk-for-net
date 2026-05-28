@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.StorageMover.Models
     public readonly partial struct StorageMoverCopyMode : IEquatable<StorageMoverCopyMode>
     {
         private readonly string _value;
-        private const string AdditiveValue = "Additive";
-        private const string MirrorValue = "Mirror";
 
         /// <summary> Initializes a new instance of <see cref="StorageMoverCopyMode"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageMoverCopyMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Additive. </summary>
+        private const string AdditiveValue = "Additive";
+        private const string MirrorValue = "Mirror";
+
+        /// <summary> Additive. </summary>
         public static StorageMoverCopyMode Additive { get; } = new StorageMoverCopyMode(AdditiveValue);
-
-        /// <summary> Gets the Mirror. </summary>
+        /// <summary> Mirror. </summary>
         public static StorageMoverCopyMode Mirror { get; } = new StorageMoverCopyMode(MirrorValue);
-
         /// <summary> Determines if two <see cref="StorageMoverCopyMode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageMoverCopyMode left, StorageMoverCopyMode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageMoverCopyMode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageMoverCopyMode left, StorageMoverCopyMode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageMoverCopyMode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageMoverCopyMode"/>. </summary>
         public static implicit operator StorageMoverCopyMode(string value) => new StorageMoverCopyMode(value);
 
-        /// <summary> Converts a string to a <see cref="StorageMoverCopyMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageMoverCopyMode?(string value) => value == null ? null : new StorageMoverCopyMode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageMoverCopyMode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StorageMoverCopyMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

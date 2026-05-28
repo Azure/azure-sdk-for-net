@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct ShareAccessType : IEquatable<ShareAccessType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ShareAccessType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ShareAccessType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string ChangeValue = "Change";
         private const string ReadValue = "Read";
         private const string CustomValue = "Custom";
 
-        /// <summary> Initializes a new instance of <see cref="ShareAccessType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ShareAccessType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Change. </summary>
+        /// <summary> Change. </summary>
         public static ShareAccessType Change { get; } = new ShareAccessType(ChangeValue);
-
-        /// <summary> Gets the Read. </summary>
+        /// <summary> Read. </summary>
         public static ShareAccessType Read { get; } = new ShareAccessType(ReadValue);
-
-        /// <summary> Gets the Custom. </summary>
+        /// <summary> Custom. </summary>
         public static ShareAccessType Custom { get; } = new ShareAccessType(CustomValue);
-
         /// <summary> Determines if two <see cref="ShareAccessType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ShareAccessType left, ShareAccessType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ShareAccessType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ShareAccessType left, ShareAccessType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ShareAccessType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ShareAccessType"/>. </summary>
         public static implicit operator ShareAccessType(string value) => new ShareAccessType(value);
 
-        /// <summary> Converts a string to a <see cref="ShareAccessType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ShareAccessType?(string value) => value == null ? null : new ShareAccessType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ShareAccessType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ShareAccessType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -59,28 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // Others
             SemanticConventions.AttributeEnduserId,
             SemanticConventions.AttributeEnduserPseudoId,
-            SemanticConventions.AttributeMicrosoftClientIp,
-
-            // Microsoft Application Insights Override Attributes
-            SemanticConventions.AttributeMicrosoftDependencyData,
-            SemanticConventions.AttributeMicrosoftDependencyName,
-            SemanticConventions.AttributeMicrosoftOperationName,
-            SemanticConventions.AttributeMicrosoftDependencyResultCode,
-            SemanticConventions.AttributeMicrosoftDependencyTarget,
-            SemanticConventions.AttributeMicrosoftDependencyType,
-            SemanticConventions.AttributeMicrosoftRequestName,
-            SemanticConventions.AttributeMicrosoftRequestUrl,
-            SemanticConventions.AttributeMicrosoftRequestSource,
-            SemanticConventions.AttributeMicrosoftRequestResultCode,
-
-            // Context tag attributes from Application Insights shim
-            SemanticConventions.AttributeMicrosoftSessionId,
-            SemanticConventions.AttributeAiDeviceId,
-            SemanticConventions.AttributeAiDeviceModel,
-            SemanticConventions.AttributeAiDeviceType,
-            SemanticConventions.AttributeAiDeviceOsVersion,
-            SemanticConventions.AttributeMicrosoftSyntheticSource,
-            SemanticConventions.AttributeMicrosoftUserAccountId,
+            "microsoft.client.ip"
         };
 
         internal static readonly HashSet<string> s_semanticsSet = new(s_semantics);
@@ -95,8 +74,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public string? EndUserId { get; private set; } = null;
 
         public string? EndUserPseudoId { get; private set; } = null;
-
-        public bool HasOverrideAttributes { get; private set; } = false;
 
         public ActivityTagsProcessor()
         {
@@ -141,25 +118,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         case SemanticConventions.AttributeEnduserPseudoId:
                             EndUserPseudoId = tag.Value.ToString();
                             continue;
-                        case SemanticConventions.AttributeMicrosoftSessionId:
-                        case SemanticConventions.AttributeAiDeviceId:
-                        case SemanticConventions.AttributeAiDeviceModel:
-                        case SemanticConventions.AttributeAiDeviceType:
-                        case SemanticConventions.AttributeAiDeviceOsVersion:
-                        case SemanticConventions.AttributeMicrosoftSyntheticSource:
-                        case SemanticConventions.AttributeMicrosoftUserAccountId:
-                        case SemanticConventions.AttributeMicrosoftDependencyData:
-                        case SemanticConventions.AttributeMicrosoftDependencyName:
-                        case SemanticConventions.AttributeMicrosoftDependencyTarget:
-                        case SemanticConventions.AttributeMicrosoftDependencyType:
-                        case SemanticConventions.AttributeMicrosoftDependencyResultCode:
-                        case SemanticConventions.AttributeMicrosoftOperationName:
-                        case SemanticConventions.AttributeMicrosoftRequestName:
-                        case SemanticConventions.AttributeMicrosoftRequestUrl:
-                        case SemanticConventions.AttributeMicrosoftRequestSource:
-                        case SemanticConventions.AttributeMicrosoftRequestResultCode:
-                            HasOverrideAttributes = true;
-                            break;
                     }
 
                     AzMonList.Add(ref MappedTags, tag);

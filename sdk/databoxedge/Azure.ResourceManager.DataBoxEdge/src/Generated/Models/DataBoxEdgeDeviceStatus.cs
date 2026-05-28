@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeDeviceStatus : IEquatable<DataBoxEdgeDeviceStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeDeviceStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string ReadyToSetupValue = "ReadyToSetup";
         private const string OnlineValue = "Online";
         private const string OfflineValue = "Offline";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string PartiallyDisconnectedValue = "PartiallyDisconnected";
         private const string MaintenanceValue = "Maintenance";
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeDeviceStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the ReadyToSetup. </summary>
+        /// <summary> ReadyToSetup. </summary>
         public static DataBoxEdgeDeviceStatus ReadyToSetup { get; } = new DataBoxEdgeDeviceStatus(ReadyToSetupValue);
-
-        /// <summary> Gets the Online. </summary>
+        /// <summary> Online. </summary>
         public static DataBoxEdgeDeviceStatus Online { get; } = new DataBoxEdgeDeviceStatus(OnlineValue);
-
-        /// <summary> Gets the Offline. </summary>
+        /// <summary> Offline. </summary>
         public static DataBoxEdgeDeviceStatus Offline { get; } = new DataBoxEdgeDeviceStatus(OfflineValue);
-
-        /// <summary> Gets the NeedsAttention. </summary>
+        /// <summary> NeedsAttention. </summary>
         public static DataBoxEdgeDeviceStatus NeedsAttention { get; } = new DataBoxEdgeDeviceStatus(NeedsAttentionValue);
-
-        /// <summary> Gets the Disconnected. </summary>
+        /// <summary> Disconnected. </summary>
         public static DataBoxEdgeDeviceStatus Disconnected { get; } = new DataBoxEdgeDeviceStatus(DisconnectedValue);
-
-        /// <summary> Gets the PartiallyDisconnected. </summary>
+        /// <summary> PartiallyDisconnected. </summary>
         public static DataBoxEdgeDeviceStatus PartiallyDisconnected { get; } = new DataBoxEdgeDeviceStatus(PartiallyDisconnectedValue);
-
-        /// <summary> Gets the Maintenance. </summary>
+        /// <summary> Maintenance. </summary>
         public static DataBoxEdgeDeviceStatus Maintenance { get; } = new DataBoxEdgeDeviceStatus(MaintenanceValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeDeviceStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeDeviceStatus left, DataBoxEdgeDeviceStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeDeviceStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeDeviceStatus left, DataBoxEdgeDeviceStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeDeviceStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeDeviceStatus"/>. </summary>
         public static implicit operator DataBoxEdgeDeviceStatus(string value) => new DataBoxEdgeDeviceStatus(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeDeviceStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeDeviceStatus?(string value) => value == null ? null : new DataBoxEdgeDeviceStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeDeviceStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeDeviceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

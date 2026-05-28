@@ -27,12 +27,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
         public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
-            lock (this.TelemetryItems)
+            foreach (var telemetryItem in telemetryItems)
             {
-                foreach (var telemetryItem in telemetryItems)
-                {
-                    this.TelemetryItems.Add(telemetryItem);
-                }
+                this.TelemetryItems.Add(telemetryItem);
             }
 
             return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));

@@ -7,15 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed bug where `StorageResourceCreationMode.SkipIfExists` failed on existing destination directories during container transfers. Existing directories are now skipped without error.
-- Fixed file handle leaks in local checkpointer that prevented checkpoint files from being accessed after transfer pause or completion by replacing MemoryMappedFiles with direct file access.
-- Fixed an issue where corrupted or truncated checkpoint files could cause unexpected errors during transfer resume.
-- Fixed known issue where passing a `AzureSasCredential` to authenticate the source resource will not properly pass the credential for service to service copy operations.
-- Fixed bug where an exception thrown during the completion phase of a transfer could go unhandled instead of being reported as a failed transfer item.
-- Fixed bug where pausing and resuming a transfer multiple times could cause a transfer item to be reported as completed successfully before it had finished transferring.
 
 ### Other Changes
-- Made TransferManager.DisposeAsync public
 
 ## 12.3.0 (2025-10-21)
 

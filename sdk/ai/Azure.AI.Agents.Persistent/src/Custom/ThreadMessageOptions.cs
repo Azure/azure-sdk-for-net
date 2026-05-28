@@ -1,8 +1,7 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -97,8 +96,16 @@ namespace Azure.AI.Agents.Persistent
 
             foreach (MessageInputContentBlock block in contentBlocks)
             {
-                BinaryData blockData = ((IPersistableModel<MessageInputContentBlock>)block).Write(new ModelReaderWriterOptions("W"));
-                using var tempDoc = JsonDocument.Parse(blockData);
+                using var memStream = new MemoryStream();
+
+                // Convert the block into a JSON payload by writing to a MemoryStream.
+                block.ToRequestContent().WriteTo(memStream, default);
+
+                // Reset stream position to the beginning.
+                memStream.Position = 0;
+
+                // Parse to a JsonDocument, then clone the root element for safe reuse.
+                using var tempDoc = JsonDocument.Parse(memStream);
                 jsonElements.Add(tempDoc.RootElement.Clone());
             }
 
@@ -141,7 +148,7 @@ namespace Azure.AI.Agents.Persistent
             List<JsonElement> elements = JsonSerializer.Deserialize(Content.ToString(), JsonElementSerializer.Default.ListJsonElement);
             foreach (JsonElement element in elements)
             {
-                results.Add(MessageInputContentBlock.DeserializeMessageInputContentBlock(element, new ModelReaderWriterOptions("W")));
+                results.Add(MessageInputContentBlock.DeserializeMessageInputContentBlock(element));
             }
             return results;
         }

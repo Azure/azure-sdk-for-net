@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Elastic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
-    public partial class ElasticLogRules : IJsonModel<ElasticLogRules>
+    public partial class ElasticLogRules : IUtf8JsonSerializable, IJsonModel<ElasticLogRules>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticLogRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticLogRules>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticLogRules(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticLogRules)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticLogRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticLogRules>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ElasticLogRules)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ElasticLogRules>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticLogRules IPersistableModel<ElasticLogRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ElasticLogRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticLogRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticLogRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticLogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticLogRules)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ShouldAadLogsBeSent))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
@@ -93,21 +53,21 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
-                foreach (ElasticFilteringTag item in FilteringTags)
+                foreach (var item in FilteringTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,73 +76,69 @@ namespace Azure.ResourceManager.Elastic.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticLogRules IJsonModel<ElasticLogRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticLogRules JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ElasticLogRules IJsonModel<ElasticLogRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticLogRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticLogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticLogRules)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeElasticLogRules(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ElasticLogRules DeserializeElasticLogRules(JsonElement element, ModelReaderWriterOptions options)
+        internal static ElasticLogRules DeserializeElasticLogRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? shouldAadLogsBeSent = default;
-            bool? shouldSubscriptionLogsBeSent = default;
-            bool? shouldActivityLogsBeSent = default;
+            bool? sendAadLogs = default;
+            bool? sendSubscriptionLogs = default;
+            bool? sendActivityLogs = default;
             IList<ElasticFilteringTag> filteringTags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("sendAadLogs"u8))
+                if (property.NameEquals("sendAadLogs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    shouldAadLogsBeSent = prop.Value.GetBoolean();
+                    sendAadLogs = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("sendSubscriptionLogs"u8))
+                if (property.NameEquals("sendSubscriptionLogs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    shouldSubscriptionLogsBeSent = prop.Value.GetBoolean();
+                    sendSubscriptionLogs = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("sendActivityLogs"u8))
+                if (property.NameEquals("sendActivityLogs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    shouldActivityLogsBeSent = prop.Value.GetBoolean();
+                    sendActivityLogs = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("filteringTags"u8))
+                if (property.NameEquals("filteringTags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ElasticFilteringTag> array = new List<ElasticFilteringTag>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ElasticFilteringTag.DeserializeElasticFilteringTag(item, options));
                     }
@@ -191,10 +147,42 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ElasticLogRules(shouldAadLogsBeSent, shouldSubscriptionLogsBeSent, shouldActivityLogsBeSent, filteringTags ?? new ChangeTrackingList<ElasticFilteringTag>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ElasticLogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, filteringTags ?? new ChangeTrackingList<ElasticFilteringTag>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticLogRules>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticLogRules>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticLogRules)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ElasticLogRules IPersistableModel<ElasticLogRules>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticLogRules>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeElasticLogRules(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticLogRules)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticLogRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

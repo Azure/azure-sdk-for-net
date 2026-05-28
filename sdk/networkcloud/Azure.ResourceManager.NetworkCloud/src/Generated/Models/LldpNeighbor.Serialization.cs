@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.NetworkCloud;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> Type Deprecated. Will be removed in an upcoming version. LldpNeighbor represents the details about the device connected to the NIC. </summary>
-    public partial class LldpNeighbor : IJsonModel<LldpNeighbor>
+    public partial class LldpNeighbor : IUtf8JsonSerializable, IJsonModel<LldpNeighbor>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LldpNeighbor PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLldpNeighbor(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LldpNeighbor)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LldpNeighbor>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LldpNeighbor)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LldpNeighbor>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LldpNeighbor IPersistableModel<LldpNeighbor>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LldpNeighbor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LldpNeighbor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LldpNeighbor)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(PortDescription))
             {
                 writer.WritePropertyName("portDescription"u8);
@@ -94,15 +54,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("systemName"u8);
                 writer.WriteStringValue(SystemName);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,27 +71,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LldpNeighbor IJsonModel<LldpNeighbor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LldpNeighbor JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LldpNeighbor IJsonModel<LldpNeighbor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LldpNeighbor)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLldpNeighbor(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LldpNeighbor DeserializeLldpNeighbor(JsonElement element, ModelReaderWriterOptions options)
+        internal static LldpNeighbor DeserializeLldpNeighbor(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,35 +95,68 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string portName = default;
             string systemDescription = default;
             string systemName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("portDescription"u8))
+                if (property.NameEquals("portDescription"u8))
                 {
-                    portDescription = prop.Value.GetString();
+                    portDescription = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("portName"u8))
+                if (property.NameEquals("portName"u8))
                 {
-                    portName = prop.Value.GetString();
+                    portName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("systemDescription"u8))
+                if (property.NameEquals("systemDescription"u8))
                 {
-                    systemDescription = prop.Value.GetString();
+                    systemDescription = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("systemName"u8))
+                if (property.NameEquals("systemName"u8))
                 {
-                    systemName = prop.Value.GetString();
+                    systemName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new LldpNeighbor(portDescription, portName, systemDescription, systemName, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LldpNeighbor(portDescription, portName, systemDescription, systemName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LldpNeighbor>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LldpNeighbor)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LldpNeighbor IPersistableModel<LldpNeighbor>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeLldpNeighbor(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LldpNeighbor)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LldpNeighbor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

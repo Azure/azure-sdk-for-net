@@ -8,36 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary></summary>
-    internal partial class WhatIfOperationResultOperationSource : IOperationSource<WhatIfOperationResult>
+    internal class WhatIfOperationResultOperationSource : IOperationSource<WhatIfOperationResult>
     {
-        /// <summary></summary>
-        internal WhatIfOperationResultOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         WhatIfOperationResult IOperationSource<WhatIfOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<WhatIfOperationResult> IOperationSource<WhatIfOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return WhatIfOperationResult.DeserializeWhatIfOperationResult(document.RootElement);
         }
     }
 }

@@ -15,34 +15,33 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class DataBoxDiskGranularCopyLogDetails : GranularCopyLogDetails
     {
         /// <summary> Initializes a new instance of <see cref="DataBoxDiskGranularCopyLogDetails"/>. </summary>
-        internal DataBoxDiskGranularCopyLogDetails() : base(DataBoxOrderType.DataBoxCustomerDisk)
+        internal DataBoxDiskGranularCopyLogDetails()
         {
+            CopyLogDetailsType = DataBoxOrderType.DataBoxCustomerDisk;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxDiskGranularCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="accountId"> Account id. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
-        internal DataBoxDiskGranularCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serialNumber, ResourceIdentifier accountId, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType, additionalBinaryDataProperties)
+        internal DataBoxDiskGranularCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string serialNumber, ResourceIdentifier accountId, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType, serializedAdditionalRawData)
         {
             SerialNumber = serialNumber;
             AccountId = accountId;
             ErrorLogLink = errorLogLink;
             VerboseLogLink = verboseLogLink;
+            CopyLogDetailsType = copyLogDetailsType;
         }
 
         /// <summary> Disk Serial Number. </summary>
         public string SerialNumber { get; }
-
         /// <summary> Account id. </summary>
         public ResourceIdentifier AccountId { get; }
-
         /// <summary> Link for copy error logs. </summary>
         public string ErrorLogLink { get; }
-
         /// <summary> Link for copy verbose logs. </summary>
         public string VerboseLogLink { get; }
     }

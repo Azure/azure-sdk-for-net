@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 
-namespace Specs.Azure.Core.Basic
+namespace _Specs_.Azure.Core.Basic
 {
     public static partial class _Specs_AzureCoreBasicModelFactory
     {

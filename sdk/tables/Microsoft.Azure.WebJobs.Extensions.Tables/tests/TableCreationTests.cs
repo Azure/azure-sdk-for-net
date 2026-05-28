@@ -28,14 +28,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             await CallAsync<BindEntity<T>>();
             // Assert
-            Assert.That(await TableExistsAsync(TableName), Is.False);
+            Assert.False(await TableExistsAsync(TableName));
         }
 
         private class BindEntity<T>
         {
             public static void Call([Table(TableNameExpression, "PK", "RK")] T entity)
             {
-                Assert.That(entity, Is.EqualTo(default(T)));
+                Assert.AreEqual(default(T), entity);
             }
         }
 
@@ -50,14 +50,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             await CallAsync<BindCollector<T>>();
             // Assert
-            Assert.That(await TableExistsAsync(TableName), Is.False);
+            Assert.False(await TableExistsAsync(TableName));
         }
 
         private class BindCollector<T>
         {
             public static void Call([Table(TableNameExpression)] ICollector<T> entities)
             {
-                Assert.That(entities, Is.Not.Null);
+                Assert.NotNull(entities);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await CallAsync<BindCollectorAndAdd<T>>();
             // Assert
             var entity = TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.That(entity.Result.Value["Value"], Is.EqualTo("test value"));
+            Assert.AreEqual("test value", entity.Result.Value["Value"]);
         }
 
         private class BindCollectorAndAdd<T>
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await CallAsync<BindOut<T>>();
             // Assert
             var entity = TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.That(entity.Result.Value["Value"], Is.EqualTo("test value"));
+            Assert.AreEqual("test value", entity.Result.Value["Value"]);
         }
 
         private class BindOut<T>
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             await CallAsync<BindReturn<T>>();
             // Assert
             var entity = TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
-            Assert.That(entity.Result.Value["Value"], Is.EqualTo("test value"));
+            Assert.AreEqual("test value", entity.Result.Value["Value"]);
         }
 
         private class BindReturn<T>
@@ -138,10 +138,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             TableClient result = (await CallAsync<BindToTableClientProgram>()).Table;
 
             // Assert
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result.Name, Is.EqualTo(TableName));
+            Assert.NotNull(result);
+            Assert.AreEqual(TableName, result.Name);
 
-            Assert.That(await TableExistsAsync(TableName).ConfigureAwait(false), Is.True);
+            Assert.True(await TableExistsAsync(TableName).ConfigureAwait(false));
         }
 
         private class BindToTableClientProgram

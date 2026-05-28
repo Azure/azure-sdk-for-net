@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ConnectedCache;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     public readonly partial struct MccCacheNodeProxyRequired : IEquatable<MccCacheNodeProxyRequired>
     {
         private readonly string _value;
-        /// <summary> Proxy is not required in setup. </summary>
-        private const string NoneValue = "None";
-        /// <summary> proxy is required in setup. </summary>
-        private const string RequiredValue = "Required";
 
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeProxyRequired"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MccCacheNodeProxyRequired(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string NoneValue = "None";
+        private const string RequiredValue = "Required";
 
         /// <summary> Proxy is not required in setup. </summary>
         public static MccCacheNodeProxyRequired None { get; } = new MccCacheNodeProxyRequired(NoneValue);
-
         /// <summary> proxy is required in setup. </summary>
         public static MccCacheNodeProxyRequired Required { get; } = new MccCacheNodeProxyRequired(RequiredValue);
-
         /// <summary> Determines if two <see cref="MccCacheNodeProxyRequired"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MccCacheNodeProxyRequired left, MccCacheNodeProxyRequired right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="MccCacheNodeProxyRequired"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MccCacheNodeProxyRequired left, MccCacheNodeProxyRequired right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="MccCacheNodeProxyRequired"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MccCacheNodeProxyRequired"/>. </summary>
         public static implicit operator MccCacheNodeProxyRequired(string value) => new MccCacheNodeProxyRequired(value);
 
-        /// <summary> Converts a string to a <see cref="MccCacheNodeProxyRequired"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator MccCacheNodeProxyRequired?(string value) => value == null ? null : new MccCacheNodeProxyRequired(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MccCacheNodeProxyRequired other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(MccCacheNodeProxyRequired other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

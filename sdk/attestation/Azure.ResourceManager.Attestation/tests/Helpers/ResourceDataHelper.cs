@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
         {
             return new AttestationPrivateEndpointConnectionData()
             {
-                PrivateLinkServiceConnectionState = new AttestationPrivateLinkServiceConnectionState()
+                ConnectionState = new AttestationPrivateLinkServiceConnectionState()
                 {
                     Status = AttestationPrivateEndpointServiceConnectionStatus.Approved,
                     Description = "Auto-Approved",
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
         public static void AssetPrivateEndpointConnection(AttestationPrivateEndpointConnectionData data1, AttestationPrivateEndpointConnectionData data2)
         {
             AssertResource(data1, data2);
-            AssetConnectionState(data1.PrivateLinkServiceConnectionState, data2.PrivateLinkServiceConnectionState);
+            AssetConnectionState(data1.ConnectionState, data2.ConnectionState);
             Assert.AreEqual(data1.ProvisioningState, data2.ProvisioningState);
         }
         #endregion
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Attestation.Tests.Helpers
         {
             return new AttestationProviderCreateOrUpdateContent(location, new AttestationServiceCreationSpecificParams()
             {
-                PublicNetworkAccess = AttestationPublicNetworkAccessType.Enabled,
+                PublicNetworkAccess = PublicNetworkAccessType.Enabled,
             })
             {
                 Tags =

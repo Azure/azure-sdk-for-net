@@ -9,15 +9,43 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Change key vault request. </summary>
     public partial class NetAppChangeKeyVault
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppChangeKeyVault"/>. </summary>
         /// <param name="keyVaultUri"> The URI of the key vault/managed HSM that should be used for encryption. </param>
@@ -40,25 +68,27 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyName"> The name of the key that should be used for encryption. </param>
         /// <param name="keyVaultResourceId"> Azure resource ID of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyVaultPrivateEndpoints"> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppChangeKeyVault(Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultResourceId, IList<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppChangeKeyVault(Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultResourceId, IList<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
             KeyVaultResourceId = keyVaultResourceId;
             KeyVaultPrivateEndpoints = keyVaultPrivateEndpoints;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppChangeKeyVault"/> for deserialization. </summary>
+        internal NetAppChangeKeyVault()
+        {
         }
 
         /// <summary> The URI of the key vault/managed HSM that should be used for encryption. </summary>
         public Uri KeyVaultUri { get; }
-
         /// <summary> The name of the key that should be used for encryption. </summary>
         public string KeyName { get; }
-
         /// <summary> Azure resource ID of the key vault/managed HSM that should be used for encryption. </summary>
         public ResourceIdentifier KeyVaultResourceId { get; set; }
-
         /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
         public IList<NetAppKeyVaultPrivateEndpoint> KeyVaultPrivateEndpoints { get; }
     }

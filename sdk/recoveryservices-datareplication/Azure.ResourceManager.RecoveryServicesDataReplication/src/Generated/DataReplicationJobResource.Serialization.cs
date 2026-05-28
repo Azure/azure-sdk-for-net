@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
-    /// <summary></summary>
     public partial class DataReplicationJobResource : IJsonModel<DataReplicationJobData>
     {
-        private static IJsonModel<DataReplicationJobData> s_dataDeserializationInstance;
+        private static DataReplicationJobData s_dataDeserializationInstance;
+        private static DataReplicationJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<DataReplicationJobData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataReplicationJobData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationJobData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataReplicationJobData IJsonModel<DataReplicationJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DataReplicationJobData IJsonModel<DataReplicationJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationJobData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataReplicationJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationJobData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         DataReplicationJobData IPersistableModel<DataReplicationJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationJobData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataReplicationJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DataReplicationJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

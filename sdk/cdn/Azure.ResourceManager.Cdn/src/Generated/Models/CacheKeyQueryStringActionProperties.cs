@@ -7,37 +7,58 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the cache-key query string action. </summary>
+    /// <summary>
+    /// Defines the parameters for the cache-key query string action.
+    /// Serialized Name: CacheKeyQueryStringActionParameters
+    /// </summary>
     public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
-        /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
-        public CacheKeyQueryStringActionProperties(QueryStringBehavior queryStringBehavior) : base(DeliveryRuleActionParametersType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters)
+        /// <param name="queryStringBehavior">
+        /// Caching behavior for the requests
+        /// Serialized Name: CacheKeyQueryStringActionParameters.queryStringBehavior
+        /// </param>
+        public CacheKeyQueryStringActionProperties(QueryStringBehavior queryStringBehavior)
         {
             QueryStringBehavior = queryStringBehavior;
+            TypeName = DeliveryRuleActionParametersType.DeliveryRuleCacheKeyQueryStringBehaviorActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
-        /// <param name="typeName"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
-        /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
-        internal CacheKeyQueryStringActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, QueryStringBehavior queryStringBehavior, string queryParameters) : base(typeName, additionalBinaryDataProperties)
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="queryStringBehavior">
+        /// Caching behavior for the requests
+        /// Serialized Name: CacheKeyQueryStringActionParameters.queryStringBehavior
+        /// </param>
+        /// <param name="queryParameters">
+        /// query parameters to include or exclude (comma separated).
+        /// Serialized Name: CacheKeyQueryStringActionParameters.queryParameters
+        /// </param>
+        internal CacheKeyQueryStringActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, QueryStringBehavior queryStringBehavior, string queryParameters) : base(typeName, serializedAdditionalRawData)
         {
             QueryStringBehavior = queryStringBehavior;
             QueryParameters = queryParameters;
+            TypeName = typeName;
         }
 
-        /// <summary> Caching behavior for the requests. </summary>
-        [WirePath("queryStringBehavior")]
-        public QueryStringBehavior QueryStringBehavior { get; set; }
+        /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/> for deserialization. </summary>
+        internal CacheKeyQueryStringActionProperties()
+        {
+        }
 
-        /// <summary> query parameters to include or exclude (comma separated). </summary>
-        [WirePath("queryParameters")]
+        /// <summary>
+        /// Caching behavior for the requests
+        /// Serialized Name: CacheKeyQueryStringActionParameters.queryStringBehavior
+        /// </summary>
+        public QueryStringBehavior QueryStringBehavior { get; set; }
+        /// <summary>
+        /// query parameters to include or exclude (comma separated).
+        /// Serialized Name: CacheKeyQueryStringActionParameters.queryParameters
+        /// </summary>
         public string QueryParameters { get; set; }
     }
 }

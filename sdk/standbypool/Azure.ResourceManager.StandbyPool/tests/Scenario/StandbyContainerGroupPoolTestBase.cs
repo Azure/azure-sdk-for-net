@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure.Core;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using System.Collections.Generic;
+using System;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StandbyPool.Models;
 
@@ -22,13 +22,12 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         {
         }
 
-        protected async Task<StandbyContainerGroupPoolResource> CreateContainerGroupPoolResource(ResourceGroupResource resourceGroup, string standbyContainerGroupPoolName, long maxReadyCapacity, AzureLocation location, GenericResource containerGroupProfile, ResourceIdentifier subnetId, bool? dynamicSizingEnabled = null)
+        protected async Task<StandbyContainerGroupPoolResource> CreateContainerGroupPoolResource(ResourceGroupResource resourceGroup, string standbyContainerGroupPoolName, long maxReadyCapacity, AzureLocation location, GenericResource containerGroupProfile, ResourceIdentifier subnetId)
         {
             var ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile()
             {
                 MaxReadyCapacity = maxReadyCapacity,
                 RefillPolicy = StandbyRefillPolicy.Always,
-                DynamicSizingEnabled = dynamicSizingEnabled,
             };
             var ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(containerGroupProfile.Id))
             {

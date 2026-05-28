@@ -8,8 +8,8 @@ using System.Text;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
-using Azure.Identity;
 using NUnit.Framework;
+using Azure.Identity;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {

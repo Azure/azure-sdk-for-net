@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
-    /// <summary></summary>
     public partial class PublicCloudConnectorSolutionTypeResource : IJsonModel<PublicCloudConnectorSolutionTypeData>
     {
-        private static IJsonModel<PublicCloudConnectorSolutionTypeData> s_dataDeserializationInstance;
+        private static PublicCloudConnectorSolutionTypeData s_dataDeserializationInstance;
+        private static PublicCloudConnectorSolutionTypeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<PublicCloudConnectorSolutionTypeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PublicCloudConnectorSolutionTypeData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PublicCloudConnectorSolutionTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudConnectorSolutionTypeData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PublicCloudConnectorSolutionTypeData IJsonModel<PublicCloudConnectorSolutionTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        PublicCloudConnectorSolutionTypeData IJsonModel<PublicCloudConnectorSolutionTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudConnectorSolutionTypeData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PublicCloudConnectorSolutionTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicCloudConnectorSolutionTypeData>(Data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         PublicCloudConnectorSolutionTypeData IPersistableModel<PublicCloudConnectorSolutionTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicCloudConnectorSolutionTypeData>(data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PublicCloudConnectorSolutionTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<PublicCloudConnectorSolutionTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicCloudConnectorSolutionTypeData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

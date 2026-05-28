@@ -201,11 +201,13 @@ public class LiveOnlyAttributeTests
         [LiveOnly]
         public void LiveOnlyMethod()
         {
+            // Live only test method
         }
 
         [LiveOnly(Reason = "Requires live service authentication")]
         public void LiveOnlyMethodWithReason()
         {
+            // Live only test method with reason
         }
     }
 
@@ -214,6 +216,7 @@ public class LiveOnlyAttributeTests
     {
         public void TestMethod()
         {
+            // Method in live-only class
         }
     }
 }

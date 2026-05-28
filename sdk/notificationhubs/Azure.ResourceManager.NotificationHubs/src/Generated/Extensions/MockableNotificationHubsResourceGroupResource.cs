@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NotificationHubs;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NotificationHubs.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableNotificationHubsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableNotificationHubsResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableNotificationHubsResourceGroupResource"/> class for mocking. </summary>
         protected MockableNotificationHubsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableNotificationHubsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableNotificationHubsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNotificationHubsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of NotificationHubNamespaces in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of NotificationHubNamespaces and their operations over a NotificationHubNamespaceResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of NotificationHubNamespaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NotificationHubNamespaceResources and their operations over a NotificationHubNamespaceResource. </returns>
         public virtual NotificationHubNamespaceCollection GetNotificationHubNamespaces()
         {
             return GetCachedClient(client => new NotificationHubNamespaceCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// Returns the given namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NotificationHubNamespaceResource>> GetNotificationHubNamespaceAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-
             return await GetNotificationHubNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// Returns the given namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationHubNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         [ForwardsClientCalls]
         public virtual Response<NotificationHubNamespaceResource> GetNotificationHubNamespace(string namespaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-
             return GetNotificationHubNamespaces().Get(namespaceName, cancellationToken);
         }
     }

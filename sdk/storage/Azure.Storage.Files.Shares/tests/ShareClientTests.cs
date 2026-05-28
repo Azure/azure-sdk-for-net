@@ -11,8 +11,8 @@ using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
-using Moq;
 using NUnit.Framework;
+using Moq;
 
 namespace Azure.Storage.Files.Shares.Tests
 {

@@ -7,14 +7,24 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </summary>
+    /// <summary>
+    /// Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation.
+    /// Serialized Name: DomainValidationState
+    /// </summary>
     public readonly partial struct DomainValidationState : IEquatable<DomainValidationState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DomainValidationState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DomainValidationState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UnknownValue = "Unknown";
         private const string SubmittingValue = "Submitting";
         private const string PendingValue = "Pending";
@@ -25,73 +35,68 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RefreshingValidationTokenValue = "RefreshingValidationToken";
         private const string InternalErrorValue = "InternalError";
 
-        /// <summary> Initializes a new instance of <see cref="DomainValidationState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DomainValidationState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: DomainValidationState.Unknown
+        /// </summary>
         public static DomainValidationState Unknown { get; } = new DomainValidationState(UnknownValue);
-
-        /// <summary> Gets the Submitting. </summary>
+        /// <summary>
+        /// Submitting
+        /// Serialized Name: DomainValidationState.Submitting
+        /// </summary>
         public static DomainValidationState Submitting { get; } = new DomainValidationState(SubmittingValue);
-
-        /// <summary> Gets the Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: DomainValidationState.Pending
+        /// </summary>
         public static DomainValidationState Pending { get; } = new DomainValidationState(PendingValue);
-
-        /// <summary> Gets the Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: DomainValidationState.Rejected
+        /// </summary>
         public static DomainValidationState Rejected { get; } = new DomainValidationState(RejectedValue);
-
-        /// <summary> Gets the TimedOut. </summary>
+        /// <summary>
+        /// TimedOut
+        /// Serialized Name: DomainValidationState.TimedOut
+        /// </summary>
         public static DomainValidationState TimedOut { get; } = new DomainValidationState(TimedOutValue);
-
-        /// <summary> Gets the PendingRevalidation. </summary>
+        /// <summary>
+        /// PendingRevalidation
+        /// Serialized Name: DomainValidationState.PendingRevalidation
+        /// </summary>
         public static DomainValidationState PendingRevalidation { get; } = new DomainValidationState(PendingRevalidationValue);
-
-        /// <summary> Gets the Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: DomainValidationState.Approved
+        /// </summary>
         public static DomainValidationState Approved { get; } = new DomainValidationState(ApprovedValue);
-
-        /// <summary> Gets the RefreshingValidationToken. </summary>
+        /// <summary>
+        /// RefreshingValidationToken
+        /// Serialized Name: DomainValidationState.RefreshingValidationToken
+        /// </summary>
         public static DomainValidationState RefreshingValidationToken { get; } = new DomainValidationState(RefreshingValidationTokenValue);
-
-        /// <summary> Gets the InternalError. </summary>
+        /// <summary>
+        /// InternalError
+        /// Serialized Name: DomainValidationState.InternalError
+        /// </summary>
         public static DomainValidationState InternalError { get; } = new DomainValidationState(InternalErrorValue);
-
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DomainValidationState left, DomainValidationState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DomainValidationState left, DomainValidationState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DomainValidationState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainValidationState"/>. </summary>
         public static implicit operator DomainValidationState(string value) => new DomainValidationState(value);
 
-        /// <summary> Converts a string to a <see cref="DomainValidationState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DomainValidationState?(string value) => value == null ? null : new DomainValidationState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DomainValidationState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DomainValidationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

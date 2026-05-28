@@ -108,9 +108,7 @@ namespace Azure.Messaging.WebPubSub.Tests
 
             var expireTime = jwt.Claims.FirstOrDefault(s => s.Type == "exp")?.Value;
             Assert.IsTrue(long.TryParse(expireTime, out var expireTimestamp));
-            var expectedExp = utcnow.Add(TimeSpan.FromMinutes(expectedMinutesAfter)).ToUnixTimeSeconds();
-            // Allow a small tolerance around the expected Exp value (±1 second), which covers timer resolution/scheduling effects without depending on monotonicity:
-            Assert.That(expireTimestamp, Is.InRange(expectedExp - 1, expectedExp + 1));
+            Assert.AreEqual(utcnow.Add(TimeSpan.FromMinutes(expectedMinutesAfter)).ToUnixTimeSeconds(), expireTimestamp);
         }
 
         [TestCase(1)]

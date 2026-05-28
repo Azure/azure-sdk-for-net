@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary></summary>
-    internal partial class WorkloadNetworkPublicIPOperationSource : IOperationSource<WorkloadNetworkPublicIPResource>
+    internal class WorkloadNetworkPublicIPOperationSource : IOperationSource<WorkloadNetworkPublicIPResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal WorkloadNetworkPublicIPOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         WorkloadNetworkPublicIPResource IOperationSource<WorkloadNetworkPublicIPResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            WorkloadNetworkPublicIPData data = WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<WorkloadNetworkPublicIPData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new WorkloadNetworkPublicIPResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<WorkloadNetworkPublicIPResource> IOperationSource<WorkloadNetworkPublicIPResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            WorkloadNetworkPublicIPData data = WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WorkloadNetworkPublicIPResource(_client, data);
+            var data = ModelReaderWriter.Read<WorkloadNetworkPublicIPData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            return await Task.FromResult(new WorkloadNetworkPublicIPResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

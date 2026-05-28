@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ProviderHub.Models;
 
@@ -14,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AllowedResourceName))]
     [ModelReaderWriterBuildable(typeof(AllowedUnauthorizedActionsExtension))]
@@ -42,6 +41,7 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(DefaultRolloutProperties))]
     [ModelReaderWriterBuildable(typeof(DefaultRolloutResource))]
     [ModelReaderWriterBuildable(typeof(DefaultRolloutSpecification))]
+    [ModelReaderWriterBuildable(typeof(DefaultRolloutSpecificationExpeditedRollout))]
     [ModelReaderWriterBuildable(typeof(DefaultRolloutStatus))]
     [ModelReaderWriterBuildable(typeof(ExpeditedRolloutDefinition))]
     [ModelReaderWriterBuildable(typeof(ExpeditedRolloutMetadata))]
@@ -55,8 +55,6 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(LinkedAccessCheck))]
     [ModelReaderWriterBuildable(typeof(LinkedNotificationRule))]
     [ModelReaderWriterBuildable(typeof(LinkedOperationRule))]
-    [ModelReaderWriterBuildable(typeof(LocalizedOperationDefinition))]
-    [ModelReaderWriterBuildable(typeof(LocalizedOperationDisplayDefinition))]
     [ModelReaderWriterBuildable(typeof(LoggingHiddenPropertyPaths))]
     [ModelReaderWriterBuildable(typeof(LoggingRule))]
     [ModelReaderWriterBuildable(typeof(ManifestLevelPropertyBag))]
@@ -71,10 +69,6 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(NotificationRegistrationResource))]
     [ModelReaderWriterBuildable(typeof(OpenApiConfiguration))]
     [ModelReaderWriterBuildable(typeof(OpenApiValidation))]
-    [ModelReaderWriterBuildable(typeof(OperationsContentProperties))]
-    [ModelReaderWriterBuildable(typeof(OperationsDefinition))]
-    [ModelReaderWriterBuildable(typeof(OperationsDisplayDefinition))]
-    [ModelReaderWriterBuildable(typeof(OperationsPutContent))]
     [ModelReaderWriterBuildable(typeof(PrivateResourceProviderConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProviderAdditionalAuthorization))]
     [ModelReaderWriterBuildable(typeof(ProviderAuthorizedApplicationData))]
@@ -98,6 +92,7 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(ProviderRegistrationData))]
     [ModelReaderWriterBuildable(typeof(ProviderRegistrationListResult))]
     [ModelReaderWriterBuildable(typeof(ProviderRegistrationProperties))]
+    [ModelReaderWriterBuildable(typeof(ProviderRegistrationPropertiesPrivateResourceProviderConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProviderRegistrationResource))]
     [ModelReaderWriterBuildable(typeof(ProviderRequestHeaderOptions))]
     [ModelReaderWriterBuildable(typeof(ProviderResourceQueryManagement))]

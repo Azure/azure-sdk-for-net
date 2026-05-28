@@ -8,15 +8,43 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
     /// <summary> The generic properties of the alert rule proxy resource. </summary>
     public partial class DatabaseWatcherAlertRuleProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseWatcherAlertRuleProperties"/>. </summary>
         /// <param name="alertRuleResourceId"> The resource ID of the alert rule resource. </param>
@@ -45,8 +73,8 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="provisioningState"> The provisioning state of the alert rule resource. </param>
         /// <param name="alertRuleTemplateId"> The template ID associated with alert rule resource. </param>
         /// <param name="alertRuleTemplateVersion"> The alert rule template version. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseWatcherAlertRuleProperties(ResourceIdentifier alertRuleResourceId, AlertRuleCreationProperty createdWithProperties, DateTimeOffset createdOn, DatabaseWatcherResourceProvisioningState? provisioningState, string alertRuleTemplateId, string alertRuleTemplateVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseWatcherAlertRuleProperties(ResourceIdentifier alertRuleResourceId, AlertRuleCreationProperty createdWithProperties, DateTimeOffset createdOn, DatabaseWatcherResourceProvisioningState? provisioningState, string alertRuleTemplateId, string alertRuleTemplateVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertRuleResourceId = alertRuleResourceId;
             CreatedWithProperties = createdWithProperties;
@@ -54,24 +82,24 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             ProvisioningState = provisioningState;
             AlertRuleTemplateId = alertRuleTemplateId;
             AlertRuleTemplateVersion = alertRuleTemplateVersion;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherAlertRuleProperties"/> for deserialization. </summary>
+        internal DatabaseWatcherAlertRuleProperties()
+        {
         }
 
         /// <summary> The resource ID of the alert rule resource. </summary>
         public ResourceIdentifier AlertRuleResourceId { get; set; }
-
         /// <summary> The properties with which the alert rule resource was created. </summary>
         public AlertRuleCreationProperty CreatedWithProperties { get; set; }
-
         /// <summary> The creation time of the alert rule resource. </summary>
         public DateTimeOffset CreatedOn { get; set; }
-
         /// <summary> The provisioning state of the alert rule resource. </summary>
         public DatabaseWatcherResourceProvisioningState? ProvisioningState { get; }
-
         /// <summary> The template ID associated with alert rule resource. </summary>
         public string AlertRuleTemplateId { get; set; }
-
         /// <summary> The alert rule template version. </summary>
         public string AlertRuleTemplateVersion { get; set; }
     }

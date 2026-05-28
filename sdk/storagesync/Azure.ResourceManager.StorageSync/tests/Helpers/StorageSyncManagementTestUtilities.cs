@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using NUnit.Framework;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
-using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Tests
 {

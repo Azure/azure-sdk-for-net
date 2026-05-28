@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class SessionPoolCollection : ArmCollection, IEnumerable<SessionPoolResource>, IAsyncEnumerable<SessionPoolResource>
     {
-        private readonly ClientDiagnostics _containerAppsSessionPoolsClientDiagnostics;
-        private readonly ContainerAppsSessionPools _containerAppsSessionPoolsRestClient;
+        private readonly ClientDiagnostics _sessionPoolContainerAppsSessionPoolsClientDiagnostics;
+        private readonly ContainerAppsSessionPoolsRestOperations _sessionPoolContainerAppsSessionPoolsRestClient;
 
-        /// <summary> Initializes a new instance of SessionPoolCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SessionPoolCollection"/> class for mocking. </summary>
         protected SessionPoolCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionPoolCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SessionPoolCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SessionPoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SessionPoolResource.ResourceType, out string sessionPoolApiVersion);
-            _containerAppsSessionPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", SessionPoolResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsSessionPoolsRestClient = new ContainerAppsSessionPools(_containerAppsSessionPoolsClientDiagnostics, Pipeline, Endpoint, sessionPoolApiVersion ?? "2025-10-02-preview");
-            ValidateResourceId(id);
+            _sessionPoolContainerAppsSessionPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", SessionPoolResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SessionPoolResource.ResourceType, out string sessionPoolContainerAppsSessionPoolsApiVersion);
+            _sessionPoolContainerAppsSessionPoolsRestClient = new ContainerAppsSessionPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sessionPoolContainerAppsSessionPoolsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a session pool with the given properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppsSessionPools_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="sessionPoolName"> Name of the session pool. </param>
         /// <param name="data"> Properties used to create a session pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SessionPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sessionPoolName, SessionPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionPoolName, nameof(sessionPoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.CreateOrUpdate");
+            using var scope = _sessionPoolContainerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsSessionPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sessionPoolName, SessionPoolData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppContainersArmOperation<SessionPoolResource> operation = new AppContainersArmOperation<SessionPoolResource>(
-                    new SessionPoolOperationSource(Client),
-                    _containerAppsSessionPoolsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _sessionPoolContainerAppsSessionPoolsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, sessionPoolName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<SessionPoolResource>(new SessionPoolOperationSource(Client), _sessionPoolContainerAppsSessionPoolsClientDiagnostics, Pipeline, _sessionPoolContainerAppsSessionPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sessionPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Create or update a session pool with the given properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppsSessionPools_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="sessionPoolName"> Name of the session pool. </param>
         /// <param name="data"> Properties used to create a session pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SessionPoolResource> CreateOrUpdate(WaitUntil waitUntil, string sessionPoolName, SessionPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionPoolName, nameof(sessionPoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.CreateOrUpdate");
+            using var scope = _sessionPoolContainerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsSessionPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sessionPoolName, SessionPoolData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppContainersArmOperation<SessionPoolResource> operation = new AppContainersArmOperation<SessionPoolResource>(
-                    new SessionPoolOperationSource(Client),
-                    _containerAppsSessionPoolsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _sessionPoolContainerAppsSessionPoolsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, sessionPoolName, data, cancellationToken);
+                var operation = new AppContainersArmOperation<SessionPoolResource>(new SessionPoolOperationSource(Client), _sessionPoolContainerAppsSessionPoolsClientDiagnostics, Pipeline, _sessionPoolContainerAppsSessionPoolsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sessionPoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the properties of a session pool.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppsSessionPools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionPoolName"> Name of the session pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         public virtual async Task<Response<SessionPoolResource>> GetAsync(string sessionPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionPoolName, nameof(sessionPoolName));
 
-            using DiagnosticScope scope = _containerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.Get");
+            using var scope = _sessionPoolContainerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsSessionPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sessionPoolName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SessionPoolData> response = Response.FromValue(SessionPoolData.FromResponse(result), result);
+                var response = await _sessionPoolContainerAppsSessionPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sessionPoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new SessionPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the properties of a session pool.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppsSessionPools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionPoolName"> Name of the session pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         public virtual Response<SessionPoolResource> Get(string sessionPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionPoolName, nameof(sessionPoolName));
 
-            using DiagnosticScope scope = _containerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.Get");
+            using var scope = _sessionPoolContainerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsSessionPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sessionPoolName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SessionPoolData> response = Response.FromValue(SessionPoolData.FromResponse(result), result);
+                var response = _sessionPoolContainerAppsSessionPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sessionPoolName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new SessionPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the session pools in a given resource group of a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppsSessionPools_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SessionPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SessionPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SessionPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SessionPoolData, SessionPoolResource>(new ContainerAppsSessionPoolsGetByResourceGroupAsyncCollectionResultOfT(_containerAppsSessionPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SessionPoolCollection.GetAll"), data => new SessionPoolResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sessionPoolContainerAppsSessionPoolsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sessionPoolContainerAppsSessionPoolsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SessionPoolResource(Client, SessionPoolData.DeserializeSessionPoolData(e)), _sessionPoolContainerAppsSessionPoolsClientDiagnostics, Pipeline, "SessionPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the session pools in a given resource group of a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppsSessionPools_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="SessionPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SessionPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SessionPoolData, SessionPoolResource>(new ContainerAppsSessionPoolsGetByResourceGroupCollectionResultOfT(_containerAppsSessionPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SessionPoolCollection.GetAll"), data => new SessionPoolResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sessionPoolContainerAppsSessionPoolsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sessionPoolContainerAppsSessionPoolsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SessionPoolResource(Client, SessionPoolData.DeserializeSessionPoolData(e)), _sessionPoolContainerAppsSessionPoolsClientDiagnostics, Pipeline, "SessionPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppsSessionPools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionPoolName"> Name of the session pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sessionPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionPoolName, nameof(sessionPoolName));
 
-            using DiagnosticScope scope = _containerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.Exists");
+            using var scope = _sessionPoolContainerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsSessionPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sessionPoolName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<SessionPoolData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SessionPoolData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SessionPoolData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _sessionPoolContainerAppsSessionPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sessionPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppsSessionPools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionPoolName"> Name of the session pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string sessionPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionPoolName, nameof(sessionPoolName));
 
-            using DiagnosticScope scope = _containerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.Exists");
+            using var scope = _sessionPoolContainerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsSessionPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sessionPoolName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<SessionPoolData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SessionPoolData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SessionPoolData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _sessionPoolContainerAppsSessionPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sessionPoolName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppsSessionPools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionPoolName"> Name of the session pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<SessionPoolResource>> GetIfExistsAsync(string sessionPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionPoolName, nameof(sessionPoolName));
 
-            using DiagnosticScope scope = _containerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.GetIfExists");
+            using var scope = _sessionPoolContainerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsSessionPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sessionPoolName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<SessionPoolData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SessionPoolData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SessionPoolData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _sessionPoolContainerAppsSessionPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sessionPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<SessionPoolResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new SessionPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/sessionPools/{sessionPoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainerAppsSessionPools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsSessionPools_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionPoolName"> Name of the session pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionPoolName"/> is null. </exception>
         public virtual NullableResponse<SessionPoolResource> GetIfExists(string sessionPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sessionPoolName, nameof(sessionPoolName));
 
-            using DiagnosticScope scope = _containerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.GetIfExists");
+            using var scope = _sessionPoolContainerAppsSessionPoolsClientDiagnostics.CreateScope("SessionPoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppsSessionPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sessionPoolName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<SessionPoolData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SessionPoolData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SessionPoolData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _sessionPoolContainerAppsSessionPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sessionPoolName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<SessionPoolResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new SessionPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.AppContainers
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SessionPoolResource> IAsyncEnumerable<SessionPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
-    public class NetAppResource_Tests : NetAppTestBase
+    public class NetAppResource_Tests: NetAppTestBase
     {
         public NetAppResource_Tests(bool isAsync) : base(isAsync)
         {
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task GetQuotaLimit()
         {
-            Response<NetAppSubscriptionQuotaItemResource> quotaLimitsResponse = await DefaultSubscription.GetNetAppSubscriptionQuotaItemAsync(DefaultLocation, "totalVolumesPerSubscription");
+            Response<NetAppSubscriptionQuotaItem> quotaLimitsResponse = await DefaultSubscription.GetNetAppQuotaLimitAsync(DefaultLocation, "totalVolumesPerSubscription");
             Assert.IsNotNull(quotaLimitsResponse);
         }
 
         [RecordedTest]
         public async Task ListQuotaLimits()
         {
-            AsyncPageable<NetAppSubscriptionQuotaItemResource> quotaLimitsResponse = DefaultSubscription.GetNetAppSubscriptionQuotaItems(DefaultLocation).GetAllAsync();
+            AsyncPageable<NetAppSubscriptionQuotaItem> quotaLimitsResponse = DefaultSubscription.GetNetAppQuotaLimitsAsync(DefaultLocation);
             Assert.IsNotNull(quotaLimitsResponse);
-            List<NetAppSubscriptionQuotaItemResource> qutoaItemlist = await quotaLimitsResponse.ToListAsync();
+            List<NetAppSubscriptionQuotaItem> qutoaItemlist = await quotaLimitsResponse.ToListAsync();
             Assert.IsNotEmpty(qutoaItemlist);
         }
 

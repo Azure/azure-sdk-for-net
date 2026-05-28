@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct SapEnvironmentType : IEquatable<SapEnvironmentType>
     {
         private readonly string _value;
-        /// <summary> Non Production SAP system. </summary>
-        private const string NonProdValue = "NonProd";
-        /// <summary> Production SAP system. </summary>
-        private const string ProdValue = "Prod";
 
         /// <summary> Initializes a new instance of <see cref="SapEnvironmentType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapEnvironmentType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string NonProdValue = "NonProd";
+        private const string ProdValue = "Prod";
 
         /// <summary> Non Production SAP system. </summary>
         public static SapEnvironmentType NonProd { get; } = new SapEnvironmentType(NonProdValue);
-
         /// <summary> Production SAP system. </summary>
         public static SapEnvironmentType Prod { get; } = new SapEnvironmentType(ProdValue);
-
         /// <summary> Determines if two <see cref="SapEnvironmentType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapEnvironmentType left, SapEnvironmentType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SapEnvironmentType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapEnvironmentType left, SapEnvironmentType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SapEnvironmentType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapEnvironmentType"/>. </summary>
         public static implicit operator SapEnvironmentType(string value) => new SapEnvironmentType(value);
 
-        /// <summary> Converts a string to a <see cref="SapEnvironmentType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SapEnvironmentType?(string value) => value == null ? null : new SapEnvironmentType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapEnvironmentType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SapEnvironmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

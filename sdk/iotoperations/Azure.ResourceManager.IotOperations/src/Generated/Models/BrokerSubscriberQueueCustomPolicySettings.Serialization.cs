@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Broker Subscriber Queue Custom Policy properties. </summary>
-    public partial class BrokerSubscriberQueueCustomPolicySettings : IJsonModel<BrokerSubscriberQueueCustomPolicySettings>
+    public partial class BrokerSubscriberQueueCustomPolicySettings : IUtf8JsonSerializable, IJsonModel<BrokerSubscriberQueueCustomPolicySettings>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerSubscriberQueueCustomPolicySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerSubscriberQueueCustomPolicySettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerSubscriberQueueCustomPolicySettings)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BrokerSubscriberQueueCustomPolicySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BrokerSubscriberQueueCustomPolicySettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerSubscriberQueueCustomPolicySettings IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerSubscriberQueueCustomPolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,22 +28,18 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerSubscriberQueueCustomPolicySettings)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(SubscriberClientIds))
             {
                 writer.WritePropertyName("subscriberClientIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in SubscriberClientIds)
+                foreach (var item in SubscriberClientIds)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -94,15 +49,25 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("dynamic"u8);
                 writer.WriteObjectValue(Dynamic, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (Optional.IsCollectionDefined(Topics))
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                writer.WritePropertyName("topics"u8);
+                writer.WriteStartArray();
+                foreach (var item in Topics)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,72 +76,108 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerSubscriberQueueCustomPolicySettings IJsonModel<BrokerSubscriberQueueCustomPolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerSubscriberQueueCustomPolicySettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BrokerSubscriberQueueCustomPolicySettings IJsonModel<BrokerSubscriberQueueCustomPolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerSubscriberQueueCustomPolicySettings)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBrokerSubscriberQueueCustomPolicySettings(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BrokerSubscriberQueueCustomPolicySettings DeserializeBrokerSubscriberQueueCustomPolicySettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static BrokerSubscriberQueueCustomPolicySettings DeserializeBrokerSubscriberQueueCustomPolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<string> subscriberClientIds = default;
-            BrokerSubscriberQueueDynamic dynamic = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            BrokerSubscriberQueueDynamic @dynamic = default;
+            IList<string> topics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("subscriberClientIds"u8))
+                if (property.NameEquals("subscriberClientIds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     subscriberClientIds = array;
                     continue;
                 }
-                if (prop.NameEquals("dynamic"u8))
+                if (property.NameEquals("dynamic"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dynamic = BrokerSubscriberQueueDynamic.DeserializeBrokerSubscriberQueueDynamic(prop.Value, options);
+                    @dynamic = BrokerSubscriberQueueDynamic.DeserializeBrokerSubscriberQueueDynamic(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("topics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    topics = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new BrokerSubscriberQueueCustomPolicySettings(subscriberClientIds ?? new ChangeTrackingList<string>(), dynamic, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BrokerSubscriberQueueCustomPolicySettings(subscriberClientIds ?? new ChangeTrackingList<string>(), @dynamic, topics ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BrokerSubscriberQueueCustomPolicySettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BrokerSubscriberQueueCustomPolicySettings IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBrokerSubscriberQueueCustomPolicySettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerSubscriberQueueCustomPolicySettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BrokerSubscriberQueueCustomPolicySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

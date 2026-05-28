@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Microsoft.Extensions.Azure
 {
-    [CodeGenType("DeveloperDevCenterClientBuilderExtensions")]
+    [CodeGenClient("DeveloperDevCenterClientBuilderExtensions")]
     public static partial class DevCenterClientBuilderExtensions
     {
     }

@@ -7,34 +7,54 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the RequestUri condition for the delivery rule. </summary>
+    /// <summary>
+    /// Defines the RequestUri condition for the delivery rule.
+    /// Serialized Name: DeliveryRuleRequestUriCondition
+    /// </summary>
     public partial class DeliveryRuleRequestUriCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestUriCondition"/>. </summary>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleRequestUriCondition.parameters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DeliveryRuleRequestUriCondition(RequestUriMatchCondition properties) : base(DeliveryRuleMatchVariable.RequestUri)
+        public DeliveryRuleRequestUriCondition(RequestUriMatchCondition properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+            Name = MatchVariable.RequestUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestUriCondition"/>. </summary>
-        /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleRequestUriCondition(DeliveryRuleMatchVariable name, IDictionary<string, BinaryData> additionalBinaryDataProperties, RequestUriMatchCondition properties) : base(name, additionalBinaryDataProperties)
+        /// <param name="name">
+        /// The name of the condition for the delivery rule.
+        /// Serialized Name: DeliveryRuleCondition.name
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleRequestUriCondition.parameters
+        /// </param>
+        internal DeliveryRuleRequestUriCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestUriMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
+            Name = name;
         }
 
-        /// <summary> Defines the parameters for the condition. </summary>
-        [WirePath("parameters")]
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleRequestUriCondition"/> for deserialization. </summary>
+        internal DeliveryRuleRequestUriCondition()
+        {
+        }
+
+        /// <summary>
+        /// Defines the parameters for the condition.
+        /// Serialized Name: DeliveryRuleRequestUriCondition.parameters
+        /// </summary>
         public RequestUriMatchCondition Properties { get; set; }
     }
 }

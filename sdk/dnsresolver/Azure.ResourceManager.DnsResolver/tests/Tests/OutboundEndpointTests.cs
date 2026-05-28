@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.DnsResolver.Models;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
+using Azure.ResourceManager.DnsResolver.Models;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {
@@ -33,9 +33,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             //_vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             //_subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
-            var dnsResolverData = ArmDnsResolverModelFactory.DnsResolverData(
-                location: this.DefaultLocation,
-                virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(DefaultVnetID) });
+            var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
+            {
+                Id = new ResourceIdentifier(DefaultVnetID)
+            });
 
             _dnsResolver = (await resourceGroup.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
         }
@@ -47,9 +48,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
             await CreateDnsResolverCollection();
-            var outboundEndpointData = ArmDnsResolverModelFactory.DnsResolverOutboundEndpointData(
-                location: this.DefaultLocation,
-                subnet: new WritableSubResource { Id = new ResourceIdentifier(DefaultSubnetID) });
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
+            {
+                Id = new ResourceIdentifier(DefaultSubnetID),
+            });
 
             // ACT
             var outboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
@@ -65,9 +67,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
             await CreateDnsResolverCollection();
-            var outboundEndpointData = ArmDnsResolverModelFactory.DnsResolverOutboundEndpointData(
-                location: this.DefaultLocation,
-                subnet: new WritableSubResource { Id = new ResourceIdentifier(DefaultSubnetID) });
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
+            {
+                Id = new ResourceIdentifier(DefaultSubnetID),
+            });
 
             await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
@@ -88,9 +91,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
             await CreateDnsResolverCollection();
-            var outboundEndpointData = ArmDnsResolverModelFactory.DnsResolverOutboundEndpointData(
-                location: this.DefaultLocation,
-                subnet: new WritableSubResource { Id = new ResourceIdentifier(DefaultSubnetID) });
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
+            {
+                Id = new ResourceIdentifier(DefaultSubnetID),
+            });
 
             var createdOutboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
@@ -108,9 +112,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
             await CreateDnsResolverCollection();
-            var outboundEndpointData = ArmDnsResolverModelFactory.DnsResolverOutboundEndpointData(
-                location: this.DefaultLocation,
-                subnet: new WritableSubResource { Id = new ResourceIdentifier(DefaultSubnetID) });
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
+            {
+                Id = new ResourceIdentifier(DefaultSubnetID),
+            });
 
             var createdOutboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 

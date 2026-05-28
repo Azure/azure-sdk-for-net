@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.StorageDiscovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageDiscoveryWorkspaceResource"/> and their operations.
-    /// Each <see cref="StorageDiscoveryWorkspaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="StorageDiscoveryWorkspaceCollection"/> instance call the GetStorageDiscoveryWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="StorageDiscoveryWorkspaceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="StorageDiscoveryWorkspaceCollection"/> instance call the GetStorageDiscoveryWorkspaces method from an instance of the parent resource.
     /// </summary>
     public partial class StorageDiscoveryWorkspaceCollection : ArmCollection, IEnumerable<StorageDiscoveryWorkspaceResource>, IAsyncEnumerable<StorageDiscoveryWorkspaceResource>
     {
@@ -51,27 +51,11 @@ namespace Azure.ResourceManager.StorageDiscovery
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Create a StorageDiscoveryWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a StorageDiscoveryWorkspace. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -110,23 +94,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Create a StorageDiscoveryWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a StorageDiscoveryWorkspace. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -165,23 +133,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Get a StorageDiscoveryWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a StorageDiscoveryWorkspace. </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
@@ -214,23 +166,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Get a StorageDiscoveryWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a StorageDiscoveryWorkspace. </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
@@ -263,23 +199,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// List StorageDiscoveryWorkspace resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List StorageDiscoveryWorkspace resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageDiscoveryWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -288,26 +208,10 @@ namespace Azure.ResourceManager.StorageDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_storageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageDiscoveryWorkspaceCollection.GetAll"), data => new StorageDiscoveryWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_storageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageDiscoveryWorkspaceResource(Client, data));
         }
 
-        /// <summary>
-        /// List StorageDiscoveryWorkspace resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List StorageDiscoveryWorkspace resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageDiscoveryWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
@@ -316,26 +220,10 @@ namespace Azure.ResourceManager.StorageDiscovery
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetByResourceGroupCollectionResultOfT(_storageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StorageDiscoveryWorkspaceCollection.GetAll"), data => new StorageDiscoveryWorkspaceResource(Client, data));
+            return new PageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetByResourceGroupCollectionResultOfT(_storageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new StorageDiscoveryWorkspaceResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
@@ -376,23 +264,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
@@ -433,23 +305,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>
@@ -494,23 +350,7 @@ namespace Azure.ResourceManager.StorageDiscovery
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces/{storageDiscoveryWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageDiscoveryWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="storageDiscoveryWorkspaceName"> The name of the StorageDiscoveryWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiscoveryWorkspaceName"/> is null. </exception>

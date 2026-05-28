@@ -17,6 +17,7 @@ namespace Azure.Communication.PhoneNumbers
     public partial class AzureCommunicationPhoneNumbersContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         public AzureCommunicationPhoneNumbersContext() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Communication.PhoneNumbers.AzureCommunicationPhoneNumbersContext Default { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -27,7 +28,9 @@ namespace Azure.Communication.PhoneNumbers
         public BillingFrequency(string value) { throw null; }
         public static Azure.Communication.PhoneNumbers.BillingFrequency Monthly { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.BillingFrequency other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.PhoneNumbers.BillingFrequency left, Azure.Communication.PhoneNumbers.BillingFrequency right) { throw null; }
         public static implicit operator Azure.Communication.PhoneNumbers.BillingFrequency (string value) { throw null; }
@@ -79,7 +82,9 @@ namespace Azure.Communication.PhoneNumbers
         public static Azure.Communication.PhoneNumbers.OperatorNumberType Other { get { throw null; } }
         public static Azure.Communication.PhoneNumbers.OperatorNumberType Unknown { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.OperatorNumberType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.PhoneNumbers.OperatorNumberType left, Azure.Communication.PhoneNumbers.OperatorNumberType right) { throw null; }
         public static implicit operator Azure.Communication.PhoneNumbers.OperatorNumberType (string value) { throw null; }
@@ -106,7 +111,9 @@ namespace Azure.Communication.PhoneNumbers
         public static Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType Application { get { throw null; } }
         public static Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType Person { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType left, Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType right) { throw null; }
         public static implicit operator Azure.Communication.PhoneNumbers.PhoneNumberAssignmentType (string value) { throw null; }
@@ -125,7 +132,9 @@ namespace Azure.Communication.PhoneNumbers
         public static Azure.Communication.PhoneNumbers.PhoneNumberAvailabilityStatus Purchased { get { throw null; } }
         public static Azure.Communication.PhoneNumbers.PhoneNumberAvailabilityStatus Reserved { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.PhoneNumberAvailabilityStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.PhoneNumbers.PhoneNumberAvailabilityStatus left, Azure.Communication.PhoneNumbers.PhoneNumberAvailabilityStatus right) { throw null; }
         public static implicit operator Azure.Communication.PhoneNumbers.PhoneNumberAvailabilityStatus (string value) { throw null; }
@@ -149,7 +158,9 @@ namespace Azure.Communication.PhoneNumbers
         public static Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType None { get { throw null; } }
         public static Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType Outbound { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType left, Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType right) { throw null; }
         public static implicit operator Azure.Communication.PhoneNumbers.PhoneNumberCapabilityType (string value) { throw null; }
@@ -256,6 +267,7 @@ namespace Azure.Communication.PhoneNumbers
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             V2022_01_11_Preview_2 = 2,
             V2022_12_01 = 3,
             V2025_02_11 = 4,
@@ -309,7 +321,9 @@ namespace Azure.Communication.PhoneNumbers
         public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError UnknownErrorCode { get { throw null; } }
         public static Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError UnknownSearchError { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError left, Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError right) { throw null; }
         public static implicit operator Azure.Communication.PhoneNumbers.PhoneNumberSearchResultError (string value) { throw null; }
@@ -325,6 +339,7 @@ namespace Azure.Communication.PhoneNumbers
         public static Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision PhoneNumberAdministrativeDivision(string localizedName = null, string abbreviatedName = null) { throw null; }
         public static Azure.Communication.PhoneNumbers.PhoneNumberAreaCode PhoneNumberAreaCode(string areaCode = null) { throw null; }
         public static Azure.Communication.PhoneNumbers.PhoneNumberCost PhoneNumberCost(double amount = 0, string isoCurrencySymbol = null, Azure.Communication.PhoneNumbers.BillingFrequency billingFrequency = default(Azure.Communication.PhoneNumbers.BillingFrequency)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.PhoneNumbers.PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency) { throw null; }
         public static Azure.Communication.PhoneNumbers.PhoneNumberCountry PhoneNumberCountry(string localizedName = null, string countryCode = null) { throw null; }
         public static Azure.Communication.PhoneNumbers.PhoneNumberLocality PhoneNumberLocality(string localizedName = null, Azure.Communication.PhoneNumbers.PhoneNumberAdministrativeDivision administrativeDivision = null) { throw null; }
@@ -354,7 +369,9 @@ namespace Azure.Communication.PhoneNumbers
         public static Azure.Communication.PhoneNumbers.PhoneNumberType Mobile { get { throw null; } }
         public static Azure.Communication.PhoneNumbers.PhoneNumberType TollFree { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.PhoneNumberType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.PhoneNumbers.PhoneNumberType left, Azure.Communication.PhoneNumbers.PhoneNumberType right) { throw null; }
         public static implicit operator Azure.Communication.PhoneNumbers.PhoneNumberType (string value) { throw null; }
@@ -417,7 +434,9 @@ namespace Azure.Communication.PhoneNumbers
         public static Azure.Communication.PhoneNumbers.ReservationStatus Expired { get { throw null; } }
         public static Azure.Communication.PhoneNumbers.ReservationStatus Submitted { get { throw null; } }
         public bool Equals(Azure.Communication.PhoneNumbers.ReservationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.PhoneNumbers.ReservationStatus left, Azure.Communication.PhoneNumbers.ReservationStatus right) { throw null; }
         public static implicit operator Azure.Communication.PhoneNumbers.ReservationStatus (string value) { throw null; }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerNetworkInterfaceStatistics.
-    /// Serialized Name: ContainerNetworkInterfaceStatistics
-    /// </summary>
+    /// <summary> The ContainerNetworkInterfaceStatistics. </summary>
     public partial class ContainerNetworkInterfaceStatistics
     {
         /// <summary>
@@ -54,14 +51,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceStatistics"/>. </summary>
-        /// <param name="rxBytes"> Serialized Name: ContainerNetworkInterfaceStatistics.rxBytes. </param>
-        /// <param name="rxPackets"> Serialized Name: ContainerNetworkInterfaceStatistics.rxPackets. </param>
-        /// <param name="rxErrors"> Serialized Name: ContainerNetworkInterfaceStatistics.rxErrors. </param>
-        /// <param name="rxDropped"> Serialized Name: ContainerNetworkInterfaceStatistics.rxDropped. </param>
-        /// <param name="txBytes"> Serialized Name: ContainerNetworkInterfaceStatistics.txBytes. </param>
-        /// <param name="txPackets"> Serialized Name: ContainerNetworkInterfaceStatistics.txPackets. </param>
-        /// <param name="txErrors"> Serialized Name: ContainerNetworkInterfaceStatistics.txErrors. </param>
-        /// <param name="txDropped"> Serialized Name: ContainerNetworkInterfaceStatistics.txDropped. </param>
+        /// <param name="rxBytes"></param>
+        /// <param name="rxPackets"></param>
+        /// <param name="rxErrors"></param>
+        /// <param name="rxDropped"></param>
+        /// <param name="txBytes"></param>
+        /// <param name="txPackets"></param>
+        /// <param name="txErrors"></param>
+        /// <param name="txDropped"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerNetworkInterfaceStatistics(long? rxBytes, long? rxPackets, long? rxErrors, long? rxDropped, long? txBytes, long? txPackets, long? txErrors, long? txDropped, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,28 +73,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxBytes. </summary>
+        /// <summary> Gets or sets the rx bytes. </summary>
         [WirePath("rxBytes")]
         public long? RxBytes { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxPackets. </summary>
+        /// <summary> Gets or sets the rx packets. </summary>
         [WirePath("rxPackets")]
         public long? RxPackets { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxErrors. </summary>
+        /// <summary> Gets or sets the rx errors. </summary>
         [WirePath("rxErrors")]
         public long? RxErrors { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxDropped. </summary>
+        /// <summary> Gets or sets the rx dropped. </summary>
         [WirePath("rxDropped")]
         public long? RxDropped { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txBytes. </summary>
+        /// <summary> Gets or sets the tx bytes. </summary>
         [WirePath("txBytes")]
         public long? TxBytes { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txPackets. </summary>
+        /// <summary> Gets or sets the tx packets. </summary>
         [WirePath("txPackets")]
         public long? TxPackets { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txErrors. </summary>
+        /// <summary> Gets or sets the tx errors. </summary>
         [WirePath("txErrors")]
         public long? TxErrors { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txDropped. </summary>
+        /// <summary> Gets or sets the tx dropped. </summary>
         [WirePath("txDropped")]
         public long? TxDropped { get; set; }
     }

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ServiceFabric;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> Defines a health policy used to evaluate the health of the cluster or of a cluster node. </summary>
-    public partial class ClusterHealthPolicy : IJsonModel<ClusterHealthPolicy>
+    public partial class ClusterHealthPolicy : IUtf8JsonSerializable, IJsonModel<ClusterHealthPolicy>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterHealthPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeClusterHealthPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterHealthPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterHealthPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterHealthPolicy IPersistableModel<ClusterHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClusterHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(MaxPercentUnhealthyNodes))
             {
                 writer.WritePropertyName("maxPercentUnhealthyNodes"u8);
@@ -95,15 +55,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -112,27 +72,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterHealthPolicy IJsonModel<ClusterHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterHealthPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterHealthPolicy IJsonModel<ClusterHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClusterHealthPolicy(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterHealthPolicy DeserializeClusterHealthPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static ClusterHealthPolicy DeserializeClusterHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,47 +95,80 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             int? maxPercentUnhealthyNodes = default;
             int? maxPercentUnhealthyApplications = default;
             IDictionary<string, ApplicationHealthPolicy> applicationHealthPolicies = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("maxPercentUnhealthyNodes"u8))
+                if (property.NameEquals("maxPercentUnhealthyNodes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxPercentUnhealthyNodes = prop.Value.GetInt32();
+                    maxPercentUnhealthyNodes = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("maxPercentUnhealthyApplications"u8))
+                if (property.NameEquals("maxPercentUnhealthyApplications"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxPercentUnhealthyApplications = prop.Value.GetInt32();
+                    maxPercentUnhealthyApplications = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("applicationHealthPolicies"u8))
+                if (property.NameEquals("applicationHealthPolicies"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, ApplicationHealthPolicy> dictionary = new Dictionary<string, ApplicationHealthPolicy>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(prop0.Value, options));
+                        dictionary.Add(property0.Name, ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property0.Value, options));
                     }
                     applicationHealthPolicies = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ClusterHealthPolicy(maxPercentUnhealthyNodes, maxPercentUnhealthyApplications, applicationHealthPolicies ?? new ChangeTrackingDictionary<string, ApplicationHealthPolicy>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ClusterHealthPolicy(maxPercentUnhealthyNodes, maxPercentUnhealthyApplications, applicationHealthPolicies ?? new ChangeTrackingDictionary<string, ApplicationHealthPolicy>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterHealthPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ClusterHealthPolicy IPersistableModel<ClusterHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeClusterHealthPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClusterHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

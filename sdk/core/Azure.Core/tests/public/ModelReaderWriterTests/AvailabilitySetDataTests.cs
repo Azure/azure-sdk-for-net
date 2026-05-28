@@ -27,8 +27,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
             //if (!ignoreAdditionalProperties)
             //    expectedSerializedString += ",\"extraRoot\":\"extraRoot\"";
             expectedSerializedString += "}";
-            return expectedSerializedString;
-            ;
+            return expectedSerializedString; ;
         }
 
         protected override void VerifyModel(AvailabilitySetData model, string format)

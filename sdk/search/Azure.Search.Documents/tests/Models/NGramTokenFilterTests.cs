@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
@@ -16,8 +15,7 @@ namespace Azure.Search.Documents.Tests.Models
         public void CreatesNGramTokenFilterV2()
         {
             NGramTokenFilter sut = new NGramTokenFilter("test");
-            // ODataType is now internal, verify the filter was created
-            Assert.AreEqual("test", sut.Name);
+            Assert.AreEqual(@"#Microsoft.Azure.Search.NGramTokenFilterV2", sut.ODataType);
         }
 
         [TestCase(@"#Microsoft.Azure.Search.NGramTokenFilter")]
@@ -32,10 +30,10 @@ namespace Azure.Search.Documents.Tests.Models
 }}";
 
             JsonDocument jsonDoc = JsonDocument.Parse(jsonContent);
-            NGramTokenFilter sut = TokenFilter.DeserializeTokenFilter(jsonDoc.RootElement, ModelReaderWriterOptions.Json) as NGramTokenFilter;
+            NGramTokenFilter sut = TokenFilter.DeserializeTokenFilter(jsonDoc.RootElement) as NGramTokenFilter;
 
             Assert.NotNull(sut);
-            // ODataType is now internal
+            Assert.AreEqual(odataType, sut.ODataType);
             Assert.AreEqual("test", sut.Name);
             Assert.AreEqual(0, sut.MinGram);
             Assert.AreEqual(1, sut.MaxGram);

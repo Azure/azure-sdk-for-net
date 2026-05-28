@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Microsoft.TypeSpec.Generator.Customizations
+namespace Microsoft.ClientModel.TestFramework
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute

@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
@@ -25,86 +24,75 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// </summary>
     public partial class ContainerServiceFleetUpdateRunCollection : ArmCollection, IEnumerable<ContainerServiceFleetUpdateRunResource>, IAsyncEnumerable<ContainerServiceFleetUpdateRunResource>
     {
-        private readonly ClientDiagnostics _updateRunsClientDiagnostics;
-        private readonly UpdateRuns _updateRunsRestClient;
+        private readonly ClientDiagnostics _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics;
+        private readonly UpdateRunsRestOperations _containerServiceFleetUpdateRunUpdateRunsRestClient;
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetUpdateRunCollection"/> class for mocking. </summary>
         protected ContainerServiceFleetUpdateRunCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetUpdateRunCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ContainerServiceFleetUpdateRunCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerServiceFleetUpdateRunResource.ResourceType, out string containerServiceFleetUpdateRunApiVersion);
-            _updateRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetUpdateRunResource.ResourceType.Namespace, Diagnostics);
-            _updateRunsRestClient = new UpdateRuns(_updateRunsClientDiagnostics, Pipeline, Endpoint, containerServiceFleetUpdateRunApiVersion ?? "2026-02-01-preview");
-            ValidateResourceId(id);
+            _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetUpdateRunResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ContainerServiceFleetUpdateRunResource.ResourceType, out string containerServiceFleetUpdateRunUpdateRunsApiVersion);
+            _containerServiceFleetUpdateRunUpdateRunsRestClient = new UpdateRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetUpdateRunUpdateRunsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerServiceFleetResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a UpdateRun
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetUpdateRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
         /// <param name="data"> Resource create parameters. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateRunName, ContainerServiceFleetUpdateRunData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ContainerServiceFleetUpdateRunResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateRunName, ContainerServiceFleetUpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.CreateOrUpdate");
+            using var scope = _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, ContainerServiceFleetUpdateRunData.ToRequestContent(data), matchConditions, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
-                    _updateRunsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation,
-                    true);
+                var response = await _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateRunName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(new ContainerServiceFleetUpdateRunOperationSource(Client), _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateRunName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation, apiVersionOverrideValue: "2016-03-30");
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -118,53 +106,44 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Create a UpdateRun
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetUpdateRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
         /// <param name="data"> Resource create parameters. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> CreateOrUpdate(WaitUntil waitUntil, string updateRunName, ContainerServiceFleetUpdateRunData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ContainerServiceFleetUpdateRunResource> CreateOrUpdate(WaitUntil waitUntil, string updateRunName, ContainerServiceFleetUpdateRunData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.CreateOrUpdate");
+            using var scope = _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, ContainerServiceFleetUpdateRunData.ToRequestContent(data), matchConditions, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
-                    _updateRunsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation,
-                    true);
+                var response = _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateRunName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(new ContainerServiceFleetUpdateRunOperationSource(Client), _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateRunName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation, apiVersionOverrideValue: "2016-03-30");
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -178,42 +157,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Get a UpdateRun
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetUpdateRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual async Task<Response<ContainerServiceFleetUpdateRunResource>> GetAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.Get");
+            using var scope = _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerServiceFleetUpdateRunData> response = Response.FromValue(ContainerServiceFleetUpdateRunData.FromResponse(result), result);
+                var response = await _containerServiceFleetUpdateRunUpdateRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateRunName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetUpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -227,42 +202,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Get a UpdateRun
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetUpdateRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual Response<ContainerServiceFleetUpdateRunResource> Get(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.Get");
+            using var scope = _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerServiceFleetUpdateRunData> response = Response.FromValue(ContainerServiceFleetUpdateRunData.FromResponse(result), result);
+                var response = _containerServiceFleetUpdateRunUpdateRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateRunName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetUpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,126 +247,96 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// List UpdateRun resources by Fleet
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_ListByFleet. </description>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_ListByFleet</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetUpdateRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceFleetUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServiceFleetUpdateRunResource> GetAllAsync(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerServiceFleetUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceFleetUpdateRunResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ContainerServiceFleetUpdateRunData, ContainerServiceFleetUpdateRunResource>(new UpdateRunsGetByFleetAsyncCollectionResultOfT(
-                _updateRunsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxCount,
-                skipToken,
-                context,
-                "ContainerServiceFleetUpdateRunCollection.GetAll"), data => new ContainerServiceFleetUpdateRunResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetUpdateRunResource(Client, ContainerServiceFleetUpdateRunData.DeserializeContainerServiceFleetUpdateRunData(e)), _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, "ContainerServiceFleetUpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List UpdateRun resources by Fleet
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_ListByFleet. </description>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_ListByFleet</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetUpdateRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetUpdateRunResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServiceFleetUpdateRunResource> GetAll(int? maxCount = default, string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerServiceFleetUpdateRunResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ContainerServiceFleetUpdateRunData, ContainerServiceFleetUpdateRunResource>(new UpdateRunsGetByFleetCollectionResultOfT(
-                _updateRunsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxCount,
-                skipToken,
-                context,
-                "ContainerServiceFleetUpdateRunCollection.GetAll"), data => new ContainerServiceFleetUpdateRunResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetUpdateRunUpdateRunsRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetUpdateRunResource(Client, ContainerServiceFleetUpdateRunData.DeserializeContainerServiceFleetUpdateRunData(e)), _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics, Pipeline, "ContainerServiceFleetUpdateRunCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetUpdateRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.Exists");
+            using var scope = _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerServiceFleetUpdateRunData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetUpdateRunData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetUpdateRunData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerServiceFleetUpdateRunUpdateRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateRunName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -409,50 +350,36 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetUpdateRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual Response<bool> Exists(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.Exists");
+            using var scope = _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerServiceFleetUpdateRunData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetUpdateRunData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetUpdateRunData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerServiceFleetUpdateRunUpdateRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateRunName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -466,54 +393,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetUpdateRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerServiceFleetUpdateRunResource>> GetIfExistsAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.GetIfExists");
+            using var scope = _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerServiceFleetUpdateRunData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetUpdateRunData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetUpdateRunData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerServiceFleetUpdateRunUpdateRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateRunName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerServiceFleetUpdateRunResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetUpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -527,54 +438,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/updateRuns/{updateRunName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> UpdateRuns_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UpdateRuns_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetUpdateRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
         public virtual NullableResponse<ContainerServiceFleetUpdateRunResource> GetIfExists(string updateRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(updateRunName, nameof(updateRunName));
 
-            using DiagnosticScope scope = _updateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.GetIfExists");
+            using var scope = _containerServiceFleetUpdateRunUpdateRunsClientDiagnostics.CreateScope("ContainerServiceFleetUpdateRunCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _updateRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerServiceFleetUpdateRunData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetUpdateRunData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetUpdateRunData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerServiceFleetUpdateRunUpdateRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateRunName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerServiceFleetUpdateRunResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetUpdateRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -594,7 +489,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerServiceFleetUpdateRunResource> IAsyncEnumerable<ContainerServiceFleetUpdateRunResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -7,75 +7,54 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary></summary>
+    /// <summary> The RecoveryPointDataStoreRehydrationStatus. </summary>
     public readonly partial struct RecoveryPointDataStoreRehydrationStatus : IEquatable<RecoveryPointDataStoreRehydrationStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreRehydrationStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecoveryPointDataStoreRehydrationStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string CreateInProgressValue = "CREATE_IN_PROGRESS";
         private const string CompletedValue = "COMPLETED";
         private const string DeleteInProgressValue = "DELETE_IN_PROGRESS";
         private const string DeletedValue = "DELETED";
         private const string FailedValue = "FAILED";
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreRehydrationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RecoveryPointDataStoreRehydrationStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the CreateInProgress. </summary>
+        /// <summary> CREATE_IN_PROGRESS. </summary>
         public static RecoveryPointDataStoreRehydrationStatus CreateInProgress { get; } = new RecoveryPointDataStoreRehydrationStatus(CreateInProgressValue);
-
-        /// <summary> Gets the Completed. </summary>
+        /// <summary> COMPLETED. </summary>
         public static RecoveryPointDataStoreRehydrationStatus Completed { get; } = new RecoveryPointDataStoreRehydrationStatus(CompletedValue);
-
-        /// <summary> Gets the DeleteInProgress. </summary>
+        /// <summary> DELETE_IN_PROGRESS. </summary>
         public static RecoveryPointDataStoreRehydrationStatus DeleteInProgress { get; } = new RecoveryPointDataStoreRehydrationStatus(DeleteInProgressValue);
-
-        /// <summary> Gets the Deleted. </summary>
+        /// <summary> DELETED. </summary>
         public static RecoveryPointDataStoreRehydrationStatus Deleted { get; } = new RecoveryPointDataStoreRehydrationStatus(DeletedValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> FAILED. </summary>
         public static RecoveryPointDataStoreRehydrationStatus Failed { get; } = new RecoveryPointDataStoreRehydrationStatus(FailedValue);
-
         /// <summary> Determines if two <see cref="RecoveryPointDataStoreRehydrationStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryPointDataStoreRehydrationStatus left, RecoveryPointDataStoreRehydrationStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RecoveryPointDataStoreRehydrationStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryPointDataStoreRehydrationStatus left, RecoveryPointDataStoreRehydrationStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RecoveryPointDataStoreRehydrationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryPointDataStoreRehydrationStatus"/>. </summary>
         public static implicit operator RecoveryPointDataStoreRehydrationStatus(string value) => new RecoveryPointDataStoreRehydrationStatus(value);
 
-        /// <summary> Converts a string to a <see cref="RecoveryPointDataStoreRehydrationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryPointDataStoreRehydrationStatus?(string value) => value == null ? null : new RecoveryPointDataStoreRehydrationStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryPointDataStoreRehydrationStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RecoveryPointDataStoreRehydrationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

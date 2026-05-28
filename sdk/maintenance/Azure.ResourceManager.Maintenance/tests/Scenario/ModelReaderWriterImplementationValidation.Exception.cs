@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.TestFramework
                 "Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions",
                 "Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions",
                 "Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceGetApplyUpdatesByParentOptions",
+                "Azure.ResourceManager.Maintenance.Models.ResourceGroupResourceGetConfigurationAssignmentByParentOptions",
             };
         }
     }

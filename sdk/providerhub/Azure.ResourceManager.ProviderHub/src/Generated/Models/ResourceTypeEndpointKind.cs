@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ResourceTypeEndpointKind : IEquatable<ResourceTypeEndpointKind>
     {
         private readonly string _value;
-        /// <summary> Endpoint served by ProviderHub service. </summary>
-        private const string ManagedValue = "Managed";
-        /// <summary> Endpoint served by the onboarded Resource Provider Service. </summary>
-        private const string DirectValue = "Direct";
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeEndpointKind"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceTypeEndpointKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string ManagedValue = "Managed";
+        private const string DirectValue = "Direct";
 
         /// <summary> Endpoint served by ProviderHub service. </summary>
         public static ResourceTypeEndpointKind Managed { get; } = new ResourceTypeEndpointKind(ManagedValue);
-
         /// <summary> Endpoint served by the onboarded Resource Provider Service. </summary>
         public static ResourceTypeEndpointKind Direct { get; } = new ResourceTypeEndpointKind(DirectValue);
-
         /// <summary> Determines if two <see cref="ResourceTypeEndpointKind"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceTypeEndpointKind left, ResourceTypeEndpointKind right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ResourceTypeEndpointKind"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceTypeEndpointKind left, ResourceTypeEndpointKind right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ResourceTypeEndpointKind"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceTypeEndpointKind"/>. </summary>
         public static implicit operator ResourceTypeEndpointKind(string value) => new ResourceTypeEndpointKind(value);
 
-        /// <summary> Converts a string to a <see cref="ResourceTypeEndpointKind"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ResourceTypeEndpointKind?(string value) => value == null ? null : new ResourceTypeEndpointKind(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceTypeEndpointKind other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ResourceTypeEndpointKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

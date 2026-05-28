@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public readonly partial struct NotificationHubPublicNetworkAccess : IEquatable<NotificationHubPublicNetworkAccess>
     {
         private readonly string _value;
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubPublicNetworkAccess"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotificationHubPublicNetworkAccess(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
+
+        /// <summary> Enabled. </summary>
         public static NotificationHubPublicNetworkAccess Enabled { get; } = new NotificationHubPublicNetworkAccess(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static NotificationHubPublicNetworkAccess Disabled { get; } = new NotificationHubPublicNetworkAccess(DisabledValue);
-
         /// <summary> Determines if two <see cref="NotificationHubPublicNetworkAccess"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationHubPublicNetworkAccess left, NotificationHubPublicNetworkAccess right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NotificationHubPublicNetworkAccess"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationHubPublicNetworkAccess left, NotificationHubPublicNetworkAccess right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NotificationHubPublicNetworkAccess"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationHubPublicNetworkAccess"/>. </summary>
         public static implicit operator NotificationHubPublicNetworkAccess(string value) => new NotificationHubPublicNetworkAccess(value);
 
-        /// <summary> Converts a string to a <see cref="NotificationHubPublicNetworkAccess"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NotificationHubPublicNetworkAccess?(string value) => value == null ? null : new NotificationHubPublicNetworkAccess(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationHubPublicNetworkAccess other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NotificationHubPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

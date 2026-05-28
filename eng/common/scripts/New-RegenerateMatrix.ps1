@@ -14,12 +14,7 @@ param (
   [int]$MinimumPerJob = 10,
 
   [Parameter()]
-  [string]$OnlyTypeSpec,
-
-  # Optional comma-separated filter patterns applied to package directory names
-  # (e.g., 'Azure.ResourceManager*,Azure.Provisioning*')
-  [Parameter()]
-  [string]$DirectoryFilterPattern
+  [string]$OnlyTypeSpec
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -69,23 +64,6 @@ else {
   if ($OnlyTypespec) {
     $directoriesForGeneration = $directoriesForGeneration | Where-Object { Test-Path "$_/tsp-location.yaml" }
   }
-}
-
-if ($DirectoryFilterPattern) {
-  $patterns = $DirectoryFilterPattern -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ }
-  $directoriesForGeneration = @($directoriesForGeneration | Where-Object {
-    $name = $_.Name
-    $patterns | Where-Object { $name -like $_ }
-  })
-  Write-Host "Filtered directories to pattern(s) '$DirectoryFilterPattern': $($directoriesForGeneration.Count) matches"
-}
-else {
-  $directoriesForGeneration = @($directoriesForGeneration)
-}
-
-if ($directoriesForGeneration.Count -eq 0) {
-  Write-Error "No directories found for generation after applying filters. DirectoryFilterPattern='$DirectoryFilterPattern', OnlyTypeSpec='$OnlyTypespec'."
-  return
 }
 
 [array]$packageDirectories = $directoriesForGeneration

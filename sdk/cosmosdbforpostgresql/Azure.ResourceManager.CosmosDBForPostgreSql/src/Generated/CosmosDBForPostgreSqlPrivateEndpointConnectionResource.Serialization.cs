@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    /// <summary></summary>
     public partial class CosmosDBForPostgreSqlPrivateEndpointConnectionResource : IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>
     {
-        private static IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData> s_dataDeserializationInstance;
+        private static CosmosDBForPostgreSqlPrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static CosmosDBForPostgreSqlPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CosmosDBForPostgreSqlPrivateEndpointConnectionData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CosmosDBForPostgreSqlPrivateEndpointConnectionData IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        CosmosDBForPostgreSqlPrivateEndpointConnectionData IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBForPostgreSqlPrivateEndpointConnectionData>(Data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         CosmosDBForPostgreSqlPrivateEndpointConnectionData IPersistableModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlPrivateEndpointConnectionData>(data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBForPostgreSqlPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

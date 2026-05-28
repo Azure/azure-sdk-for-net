@@ -10,18 +10,6 @@
 
 ### Other Changes
 
-## 1.5.3 (2026-05-08)
-
-### Bugs Fixed
-
-- Fixed a misalignment between the explicit `net8.0` target of this package and its `Microsoft.AspNetCore.DataProtection` dependency, which does not offer a `net8.0` asset in the 10.x version. The dependency now resolves to version 8.0.26 when targeting `net8.0`, ensuring consumers receive a framework-compatible asset and eliminating the associated dependency warnings.
-
-## 1.5.2 (2026-04-28)
-
-### Other Changes
-
-- Updated `Microsoft.AspNetCore.DataProtection` dependency to 10.0.7 to mitigate [GHSA-37gx-xxp4-5rgx](https://github.com/advisories/GHSA-37gx-xxp4-5rgx) and [GHSA-w3x6-4m5h-cxqf](https://github.com/advisories/GHSA-w3x6-4m5h-cxqf).
-
 ## 1.5.1 (2025-06-23)
 
 ### Acknowledgments

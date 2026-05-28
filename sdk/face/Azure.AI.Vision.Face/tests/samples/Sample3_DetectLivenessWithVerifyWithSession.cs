@@ -20,8 +20,7 @@ namespace Azure.AI.Vision.Face.Samples
             var sessionClient = CreateSessionClient();
 
             #region Snippet:CreateLivenessWithVerifySession
-            var parameters = new CreateLivenessWithVerifySessionContent(LivenessOperationMode.Passive)
-            {
+            var parameters = new CreateLivenessWithVerifySessionContent(LivenessOperationMode.Passive) {
                 SendResultsToClient = true,
                 DeviceCorrelationId = Guid.NewGuid().ToString(),
             };
@@ -61,8 +60,7 @@ namespace Azure.AI.Vision.Face.Samples
             Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
             Console.WriteLine($"Status: {sessionResult.Status}");
             Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
-            if (sessionResult.Result != null)
-            {
+            if (sessionResult.Result != null) {
                 WriteLivenessWithVerifySessionAuditEntry(sessionResult.Result);
             }
             #endregion

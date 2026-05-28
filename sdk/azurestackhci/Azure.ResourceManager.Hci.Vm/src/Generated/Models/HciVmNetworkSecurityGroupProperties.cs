@@ -7,21 +7,50 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Hci.Vm;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Network Security Group resource. </summary>
     public partial class HciVmNetworkSecurityGroupProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HciVmNetworkSecurityGroupProperties"/>. </summary>
         public HciVmNetworkSecurityGroupProperties()
         {
-            NetworkInterfaces = new ChangeTrackingList<HciVmNetworkInterfaceArmReference>();
-            Subnets = new ChangeTrackingList<HciVmLogicalNetworkArmReference>();
+            NetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
+            Subnets = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciVmNetworkSecurityGroupProperties"/>. </summary>
@@ -29,25 +58,22 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="subnets"> A collection of references to logical networks that are currently using this NSG. </param>
         /// <param name="provisioningState"> The provisioning state of the network security group resource. </param>
         /// <param name="status"> The observed state of Network Security Group. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkSecurityGroupProperties(IReadOnlyList<HciVmNetworkInterfaceArmReference> networkInterfaces, IReadOnlyList<HciVmLogicalNetworkArmReference> subnets, HciVmProvisioningState? provisioningState, HciVmNetworkSecurityGroupStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmNetworkSecurityGroupProperties(IReadOnlyList<WritableSubResource> networkInterfaces, IReadOnlyList<WritableSubResource> subnets, HciVmProvisioningState? provisioningState, HciVmNetworkSecurityGroupStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkInterfaces = networkInterfaces;
             Subnets = subnets;
             ProvisioningState = provisioningState;
             Status = status;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A collection of references to network interfaces that are currently using this NSG. </summary>
-        public IReadOnlyList<HciVmNetworkInterfaceArmReference> NetworkInterfaces { get; }
-
+        public IReadOnlyList<WritableSubResource> NetworkInterfaces { get; }
         /// <summary> A collection of references to logical networks that are currently using this NSG. </summary>
-        public IReadOnlyList<HciVmLogicalNetworkArmReference> Subnets { get; }
-
+        public IReadOnlyList<WritableSubResource> Subnets { get; }
         /// <summary> The provisioning state of the network security group resource. </summary>
         public HciVmProvisioningState? ProvisioningState { get; }
-
         /// <summary> The observed state of Network Security Group. </summary>
         public HciVmNetworkSecurityGroupStatus Status { get; }
     }

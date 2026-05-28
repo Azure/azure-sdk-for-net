@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Metric limits set on an app.
-    /// Serialized Name: SiteLimits
-    /// </summary>
+    /// <summary> Metric limits set on an app. </summary>
     public partial class SiteLimits
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteLimits"/>. </summary>
-        /// <param name="maxPercentageCpu">
-        /// Maximum allowed CPU usage percentage.
-        /// Serialized Name: SiteLimits.maxPercentageCpu
-        /// </param>
-        /// <param name="maxMemoryInMb">
-        /// Maximum allowed memory usage in MB.
-        /// Serialized Name: SiteLimits.maxMemoryInMb
-        /// </param>
-        /// <param name="maxDiskSizeInMb">
-        /// Maximum allowed disk size usage in MB.
-        /// Serialized Name: SiteLimits.maxDiskSizeInMb
-        /// </param>
+        /// <param name="maxPercentageCpu"> Maximum allowed CPU usage percentage. </param>
+        /// <param name="maxMemoryInMb"> Maximum allowed memory usage in MB. </param>
+        /// <param name="maxDiskSizeInMb"> Maximum allowed disk size usage in MB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteLimits(double? maxPercentageCpu, long? maxMemoryInMb, long? maxDiskSizeInMb, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Maximum allowed CPU usage percentage.
-        /// Serialized Name: SiteLimits.maxPercentageCpu
-        /// </summary>
+        /// <summary> Maximum allowed CPU usage percentage. </summary>
         [WirePath("maxPercentageCpu")]
         public double? MaxPercentageCpu { get; set; }
-        /// <summary>
-        /// Maximum allowed memory usage in MB.
-        /// Serialized Name: SiteLimits.maxMemoryInMb
-        /// </summary>
+        /// <summary> Maximum allowed memory usage in MB. </summary>
         [WirePath("maxMemoryInMb")]
         public long? MaxMemoryInMb { get; set; }
-        /// <summary>
-        /// Maximum allowed disk size usage in MB.
-        /// Serialized Name: SiteLimits.maxDiskSizeInMb
-        /// </summary>
+        /// <summary> Maximum allowed disk size usage in MB. </summary>
         [WirePath("maxDiskSizeInMb")]
         public long? MaxDiskSizeInMb { get; set; }
     }

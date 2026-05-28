@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Qumulo
 {
-    /// <summary></summary>
-    internal partial class QumuloFileSystemResourceOperationSource : IOperationSource<QumuloFileSystemResource>
+    internal class QumuloFileSystemResourceOperationSource : IOperationSource<QumuloFileSystemResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal QumuloFileSystemResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         QumuloFileSystemResource IOperationSource<QumuloFileSystemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            QumuloFileSystemResourceData data = QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<QumuloFileSystemResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQumuloContext.Default);
             return new QumuloFileSystemResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<QumuloFileSystemResource> IOperationSource<QumuloFileSystemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            QumuloFileSystemResourceData data = QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new QumuloFileSystemResource(_client, data);
+            var data = ModelReaderWriter.Read<QumuloFileSystemResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQumuloContext.Default);
+            return await Task.FromResult(new QumuloFileSystemResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

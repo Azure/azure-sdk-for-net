@@ -13,13 +13,46 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     /// <summary> The disconnected operation properties. </summary>
     public partial class DisconnectedOperationProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationProperties"/>. </summary>
+        /// <param name="stampId"> The unique GUID of the stamp. </param>
+        /// <param name="billingModel"> The billing model. </param>
         /// <param name="connectionIntent"> The connection intent. </param>
-        public DisconnectedOperationProperties(DisconnectedOperationsConnectionIntent connectionIntent)
+        public DisconnectedOperationProperties(string stampId, DisconnectedOperationsBillingModel billingModel, DisconnectedOperationsConnectionIntent connectionIntent)
         {
+            StampId = stampId;
+            BillingModel = billingModel;
             ConnectionIntent = connectionIntent;
         }
 
@@ -31,10 +64,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <param name="connectionStatus"> The connection status. </param>
         /// <param name="registrationStatus"> The registration intent. </param>
         /// <param name="deviceVersion"> The device version. </param>
-        /// <param name="billingConfiguration"> The billing configuration. </param>
-        /// <param name="benefitPlans"> The benefit plans. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DisconnectedOperationProperties(DisconnectedOperationsResourceProvisioningState? provisioningState, string stampId, DisconnectedOperationsBillingModel billingModel, DisconnectedOperationsConnectionIntent connectionIntent, DisconnectedOperationsConnectionStatus? connectionStatus, DisconnectedOperationsRegistrationStatus? registrationStatus, string deviceVersion, DisconnectedOperationsBillingConfiguration billingConfiguration, DisconnectedOperationsBenefitPlans benefitPlans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DisconnectedOperationProperties(DisconnectedOperationsResourceProvisioningState? provisioningState, string stampId, DisconnectedOperationsBillingModel billingModel, DisconnectedOperationsConnectionIntent connectionIntent, DisconnectedOperationsConnectionStatus? connectionStatus, DisconnectedOperationsRegistrationStatus? registrationStatus, string deviceVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             StampId = stampId;
@@ -43,36 +74,27 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             ConnectionStatus = connectionStatus;
             RegistrationStatus = registrationStatus;
             DeviceVersion = deviceVersion;
-            BillingConfiguration = billingConfiguration;
-            BenefitPlans = benefitPlans;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DisconnectedOperationProperties"/> for deserialization. </summary>
+        internal DisconnectedOperationProperties()
+        {
         }
 
         /// <summary> The resource provisioning state. </summary>
         public DisconnectedOperationsResourceProvisioningState? ProvisioningState { get; }
-
         /// <summary> The unique GUID of the stamp. </summary>
         public string StampId { get; }
-
         /// <summary> The billing model. </summary>
         public DisconnectedOperationsBillingModel BillingModel { get; }
-
         /// <summary> The connection intent. </summary>
         public DisconnectedOperationsConnectionIntent ConnectionIntent { get; set; }
-
         /// <summary> The connection status. </summary>
         public DisconnectedOperationsConnectionStatus? ConnectionStatus { get; }
-
         /// <summary> The registration intent. </summary>
         public DisconnectedOperationsRegistrationStatus? RegistrationStatus { get; set; }
-
         /// <summary> The device version. </summary>
         public string DeviceVersion { get; set; }
-
-        /// <summary> The billing configuration. </summary>
-        public DisconnectedOperationsBillingConfiguration BillingConfiguration { get; set; }
-
-        /// <summary> The benefit plans. </summary>
-        public DisconnectedOperationsBenefitPlans BenefitPlans { get; set; }
     }
 }

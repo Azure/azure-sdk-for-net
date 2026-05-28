@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachineSchedulingExecution : IEquatable<VirtualMachineSchedulingExecution>
     {
         private readonly string _value;
-        /// <summary> The hint is a requirement during scheduling. </summary>
-        private const string HardValue = "Hard";
-        /// <summary> The hint is applied using a best-effort approach during scheduling. </summary>
-        private const string SoftValue = "Soft";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineSchedulingExecution"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineSchedulingExecution(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The hint is a requirement during scheduling. </summary>
+        private const string HardValue = "Hard";
+        private const string SoftValue = "Soft";
+
+        /// <summary> Hard. </summary>
         public static VirtualMachineSchedulingExecution Hard { get; } = new VirtualMachineSchedulingExecution(HardValue);
-
-        /// <summary> The hint is applied using a best-effort approach during scheduling. </summary>
+        /// <summary> Soft. </summary>
         public static VirtualMachineSchedulingExecution Soft { get; } = new VirtualMachineSchedulingExecution(SoftValue);
-
         /// <summary> Determines if two <see cref="VirtualMachineSchedulingExecution"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineSchedulingExecution left, VirtualMachineSchedulingExecution right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="VirtualMachineSchedulingExecution"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineSchedulingExecution left, VirtualMachineSchedulingExecution right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="VirtualMachineSchedulingExecution"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineSchedulingExecution"/>. </summary>
         public static implicit operator VirtualMachineSchedulingExecution(string value) => new VirtualMachineSchedulingExecution(value);
 
-        /// <summary> Converts a string to a <see cref="VirtualMachineSchedulingExecution"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineSchedulingExecution?(string value) => value == null ? null : new VirtualMachineSchedulingExecution(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachineSchedulingExecution other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(VirtualMachineSchedulingExecution other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

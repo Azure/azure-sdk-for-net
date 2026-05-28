@@ -44,11 +44,6 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hibernationEnabled"u8);
                 writer.WriteBooleanValue(HibernationEnabled.Value);
             }
-            if (Optional.IsDefined(EnableFips1403Encryption))
-            {
-                writer.WritePropertyName("enableFips1403Encryption"u8);
-                writer.WriteBooleanValue(EnableFips1403Encryption.Value);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +83,6 @@ namespace Azure.ResourceManager.Compute.Models
             }
             bool? ultraSsdEnabled = default;
             bool? hibernationEnabled = default;
-            bool? enableFips1403Encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,22 +105,13 @@ namespace Azure.ResourceManager.Compute.Models
                     hibernationEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableFips1403Encryption"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableFips1403Encryption = property.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AdditionalCapabilities(ultraSsdEnabled, hibernationEnabled, enableFips1403Encryption, serializedAdditionalRawData);
+            return new AdditionalCapabilities(ultraSsdEnabled, hibernationEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalCapabilities>.Write(ModelReaderWriterOptions options)

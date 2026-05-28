@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ProviderHub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The DefaultRolloutSpecification. </summary>
-    public partial class DefaultRolloutSpecification : IJsonModel<DefaultRolloutSpecification>
+    public partial class DefaultRolloutSpecification : IUtf8JsonSerializable, IJsonModel<DefaultRolloutSpecification>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DefaultRolloutSpecification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDefaultRolloutSpecification(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefaultRolloutSpecification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DefaultRolloutSpecification>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DefaultRolloutSpecification IPersistableModel<DefaultRolloutSpecification>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DefaultRolloutSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DefaultRolloutSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ExpeditedRollout))
             {
                 writer.WritePropertyName("expeditedRollout"u8);
@@ -118,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();
-                foreach (ResourceTypeRegistrationData item in ResourceTypeRegistrations)
+                foreach (var item in ResourceTypeRegistrations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -129,15 +89,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("autoProvisionConfig"u8);
                 writer.WriteObjectValue(AutoProvisionConfig, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -146,32 +106,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DefaultRolloutSpecification IJsonModel<DefaultRolloutSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DefaultRolloutSpecification JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DefaultRolloutSpecification IJsonModel<DefaultRolloutSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDefaultRolloutSpecification(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DefaultRolloutSpecification DeserializeDefaultRolloutSpecification(JsonElement element, ModelReaderWriterOptions options)
+        internal static DefaultRolloutSpecification DeserializeDefaultRolloutSpecification(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ExpeditedRolloutDefinition expeditedRollout = default;
+            DefaultRolloutSpecificationExpeditedRollout expeditedRollout = default;
             CanaryTrafficRegionRolloutConfiguration canary = default;
             TrafficRegionRolloutConfiguration lowTraffic = default;
             TrafficRegionRolloutConfiguration mediumTraffic = default;
@@ -181,109 +136,111 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ProviderRegistrationData providerRegistration = default;
             IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             DefaultRolloutAutoProvisionConfig autoProvisionConfig = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("expeditedRollout"u8))
+                if (property.NameEquals("expeditedRollout"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expeditedRollout = ExpeditedRolloutDefinition.DeserializeExpeditedRolloutDefinition(prop.Value, options);
+                    expeditedRollout = DefaultRolloutSpecificationExpeditedRollout.DeserializeDefaultRolloutSpecificationExpeditedRollout(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("canary"u8))
+                if (property.NameEquals("canary"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    canary = CanaryTrafficRegionRolloutConfiguration.DeserializeCanaryTrafficRegionRolloutConfiguration(prop.Value, options);
+                    canary = CanaryTrafficRegionRolloutConfiguration.DeserializeCanaryTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("lowTraffic"u8))
+                if (property.NameEquals("lowTraffic"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lowTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(prop.Value, options);
+                    lowTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("mediumTraffic"u8))
+                if (property.NameEquals("mediumTraffic"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mediumTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(prop.Value, options);
+                    mediumTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("highTraffic"u8))
+                if (property.NameEquals("highTraffic"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    highTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(prop.Value, options);
+                    highTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("restOfTheWorldGroupOne"u8))
+                if (property.NameEquals("restOfTheWorldGroupOne"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restOfTheWorldGroupOne = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(prop.Value, options);
+                    restOfTheWorldGroupOne = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("restOfTheWorldGroupTwo"u8))
+                if (property.NameEquals("restOfTheWorldGroupTwo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restOfTheWorldGroupTwo = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(prop.Value, options);
+                    restOfTheWorldGroupTwo = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("providerRegistration"u8))
+                if (property.NameEquals("providerRegistration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(prop.Value, options);
+                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("resourceTypeRegistrations"u8))
+                if (property.NameEquals("resourceTypeRegistrations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item, options));
                     }
                     resourceTypeRegistrations = array;
                     continue;
                 }
-                if (prop.NameEquals("autoProvisionConfig"u8))
+                if (property.NameEquals("autoProvisionConfig"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoProvisionConfig = DefaultRolloutAutoProvisionConfig.DeserializeDefaultRolloutAutoProvisionConfig(prop.Value, options);
+                    autoProvisionConfig = DefaultRolloutAutoProvisionConfig.DeserializeDefaultRolloutAutoProvisionConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DefaultRolloutSpecification(
                 expeditedRollout,
                 canary,
@@ -295,7 +252,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 providerRegistration,
                 resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
                 autoProvisionConfig,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DefaultRolloutSpecification>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DefaultRolloutSpecification IPersistableModel<DefaultRolloutSpecification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDefaultRolloutSpecification(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefaultRolloutSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

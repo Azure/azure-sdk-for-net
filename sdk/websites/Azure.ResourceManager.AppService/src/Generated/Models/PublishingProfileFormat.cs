@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.AppService.Models
     /// FileZilla3
     /// WebDeploy -- default
     /// Ftp
-    /// Serialized Name: PublishingProfileFormat
     /// </summary>
     public readonly partial struct PublishingProfileFormat : IEquatable<PublishingProfileFormat>
     {
@@ -32,20 +31,11 @@ namespace Azure.ResourceManager.AppService.Models
         private const string WebDeployValue = "WebDeploy";
         private const string FtpValue = "Ftp";
 
-        /// <summary>
-        /// FileZilla3
-        /// Serialized Name: PublishingProfileFormat.FileZilla3
-        /// </summary>
+        /// <summary> FileZilla3. </summary>
         public static PublishingProfileFormat FileZilla3 { get; } = new PublishingProfileFormat(FileZilla3Value);
-        /// <summary>
-        /// WebDeploy
-        /// Serialized Name: PublishingProfileFormat.WebDeploy
-        /// </summary>
+        /// <summary> WebDeploy. </summary>
         public static PublishingProfileFormat WebDeploy { get; } = new PublishingProfileFormat(WebDeployValue);
-        /// <summary>
-        /// Ftp
-        /// Serialized Name: PublishingProfileFormat.Ftp
-        /// </summary>
+        /// <summary> Ftp. </summary>
         public static PublishingProfileFormat Ftp { get; } = new PublishingProfileFormat(FtpValue);
         /// <summary> Determines if two <see cref="PublishingProfileFormat"/> values are the same. </summary>
         public static bool operator ==(PublishingProfileFormat left, PublishingProfileFormat right) => left.Equals(right);

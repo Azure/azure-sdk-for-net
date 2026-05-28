@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct IncomingTrafficPolicy : IEquatable<IncomingTrafficPolicy>
     {
         private readonly string _value;
-        private const string AllowAllTrafficValue = "AllowAllTraffic";
-        private const string AllowVirtualNetworksOnlyValue = "AllowVirtualNetworksOnly";
 
         /// <summary> Initializes a new instance of <see cref="IncomingTrafficPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IncomingTrafficPolicy(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the AllowAllTraffic. </summary>
+        private const string AllowAllTrafficValue = "AllowAllTraffic";
+        private const string AllowVirtualNetworksOnlyValue = "AllowVirtualNetworksOnly";
+
+        /// <summary> AllowAllTraffic. </summary>
         public static IncomingTrafficPolicy AllowAllTraffic { get; } = new IncomingTrafficPolicy(AllowAllTrafficValue);
-
-        /// <summary> Gets the AllowVirtualNetworksOnly. </summary>
+        /// <summary> AllowVirtualNetworksOnly. </summary>
         public static IncomingTrafficPolicy AllowVirtualNetworksOnly { get; } = new IncomingTrafficPolicy(AllowVirtualNetworksOnlyValue);
-
         /// <summary> Determines if two <see cref="IncomingTrafficPolicy"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IncomingTrafficPolicy left, IncomingTrafficPolicy right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="IncomingTrafficPolicy"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IncomingTrafficPolicy left, IncomingTrafficPolicy right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="IncomingTrafficPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IncomingTrafficPolicy"/>. </summary>
         public static implicit operator IncomingTrafficPolicy(string value) => new IncomingTrafficPolicy(value);
 
-        /// <summary> Converts a string to a <see cref="IncomingTrafficPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator IncomingTrafficPolicy?(string value) => value == null ? null : new IncomingTrafficPolicy(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IncomingTrafficPolicy other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(IncomingTrafficPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

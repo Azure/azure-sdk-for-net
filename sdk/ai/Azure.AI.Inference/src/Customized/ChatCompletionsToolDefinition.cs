@@ -4,8 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Inference
-{
+namespace Azure.AI.Inference {
     public partial class ChatCompletionsToolDefinition
     {
         // CUSTOM CODE NOTE:

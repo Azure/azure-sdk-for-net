@@ -31,14 +31,7 @@ namespace Azure
 
             public override void Write(Utf8JsonWriter writer, ResponseError? value, JsonSerializerOptions options)
             {
-                if (value == null)
-                {
-                    writer.WriteNullValue();
-                }
-                else
-                {
-                    value.Write(writer);
-                }
+                throw new NotImplementedException();
             }
         }
 

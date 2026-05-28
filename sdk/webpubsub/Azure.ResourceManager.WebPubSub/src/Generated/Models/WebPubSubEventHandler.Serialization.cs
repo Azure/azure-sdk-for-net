@@ -8,61 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.WebPubSub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Properties of event handler. </summary>
-    public partial class WebPubSubEventHandler : IJsonModel<WebPubSubEventHandler>
+    public partial class WebPubSubEventHandler : IUtf8JsonSerializable, IJsonModel<WebPubSubEventHandler>
     {
-        /// <summary> Initializes a new instance of <see cref="WebPubSubEventHandler"/> for deserialization. </summary>
-        internal WebPubSubEventHandler()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubEventHandler>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebPubSubEventHandler PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebPubSubEventHandler(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWebPubSubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebPubSubEventHandler>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebPubSubEventHandler IPersistableModel<WebPubSubEventHandler>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebPubSubEventHandler>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebPubSubEventHandler>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +30,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
             if (Optional.IsDefined(UserEventPattern))
@@ -90,13 +47,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 writer.WritePropertyName("systemEvents"u8);
                 writer.WriteStartArray();
-                foreach (string item in SystemEvents)
+                foreach (var item in SystemEvents)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -106,20 +58,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth, options);
             }
-            if (Optional.IsDefined(GroupPresenceEvents))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("groupPresenceEvents"u8);
-                writer.WriteObjectValue(GroupPresenceEvents, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -128,27 +75,22 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebPubSubEventHandler IJsonModel<WebPubSubEventHandler>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebPubSubEventHandler JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebPubSubEventHandler IJsonModel<WebPubSubEventHandler>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebPubSubEventHandler(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WebPubSubEventHandler DeserializeWebPubSubEventHandler(JsonElement element, ModelReaderWriterOptions options)
+        internal static WebPubSubEventHandler DeserializeWebPubSubEventHandler(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,71 +99,195 @@ namespace Azure.ResourceManager.WebPubSub.Models
             string userEventPattern = default;
             IList<string> systemEvents = default;
             UpstreamAuthSettings auth = default;
-            WebPubSubGroupPresenceEventFilters groupPresenceEvents = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("urlTemplate"u8))
+                if (property.NameEquals("urlTemplate"u8))
                 {
-                    urlTemplate = prop.Value.GetString();
+                    urlTemplate = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("userEventPattern"u8))
+                if (property.NameEquals("userEventPattern"u8))
                 {
-                    userEventPattern = prop.Value.GetString();
+                    userEventPattern = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("systemEvents"u8))
+                if (property.NameEquals("systemEvents"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     systemEvents = array;
                     continue;
                 }
-                if (prop.NameEquals("auth"u8))
+                if (property.NameEquals("auth"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    auth = UpstreamAuthSettings.DeserializeUpstreamAuthSettings(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("groupPresenceEvents"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    groupPresenceEvents = WebPubSubGroupPresenceEventFilters.DeserializeWebPubSubGroupPresenceEventFilters(prop.Value, options);
+                    auth = UpstreamAuthSettings.DeserializeUpstreamAuthSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new WebPubSubEventHandler(
-                urlTemplate,
-                userEventPattern,
-                systemEvents ?? new ChangeTrackingList<string>(),
-                auth,
-                groupPresenceEvents,
-                additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WebPubSubEventHandler(urlTemplate, userEventPattern, systemEvents ?? new ChangeTrackingList<string>(), auth, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UrlTemplate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  urlTemplate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UrlTemplate))
+                {
+                    builder.Append("  urlTemplate: ");
+                    if (UrlTemplate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UrlTemplate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UrlTemplate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserEventPattern), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userEventPattern: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserEventPattern))
+                {
+                    builder.Append("  userEventPattern: ");
+                    if (UserEventPattern.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserEventPattern}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserEventPattern}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemEvents), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemEvents: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SystemEvents))
+                {
+                    if (SystemEvents.Any())
+                    {
+                        builder.Append("  systemEvents: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SystemEvents)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  auth: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Auth))
+                {
+                    builder.Append("  auth: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Auth, options, 2, false, "  auth: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<WebPubSubEventHandler>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWebPubSubContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebPubSubEventHandler IPersistableModel<WebPubSubEventHandler>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWebPubSubEventHandler(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebPubSubEventHandler>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

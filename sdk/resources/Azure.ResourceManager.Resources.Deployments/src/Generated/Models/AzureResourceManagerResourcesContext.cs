@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +13,7 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ApiProfile))]
     [ModelReaderWriterBuildable(typeof(ArmDependency))]
@@ -30,7 +29,6 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(ArmDeploymentOperationProperties))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentOperationsListResult))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentParametersLink))]
-    [ModelReaderWriterBuildable(typeof(ArmDeploymentParameterValue))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentProperties))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentPropertiesExtended))]
     [ModelReaderWriterBuildable(typeof(ArmDeploymentResource))]
@@ -49,21 +47,24 @@ namespace Azure.ResourceManager.Resources
     [ModelReaderWriterBuildable(typeof(ExpressionEvaluationOptions))]
     [ModelReaderWriterBuildable(typeof(HttpMessage))]
     [ModelReaderWriterBuildable(typeof(KeyVaultParameterReference))]
-    [ModelReaderWriterBuildable(typeof(KeyVaultReference))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ProviderExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(ProviderResourceType))]
+    [ModelReaderWriterBuildable(typeof(ResourceProviderData))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeAlias))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeAliasPath))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeAliasPathMetadata))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeAliasPattern))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StatusMessage))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TargetResource))]
     [ModelReaderWriterBuildable(typeof(TemplateHashResult))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WhatIfChange))]
-    [ModelReaderWriterBuildable(typeof(WhatIfOperationProperties))]
     [ModelReaderWriterBuildable(typeof(WhatIfOperationResult))]
     [ModelReaderWriterBuildable(typeof(WhatIfPropertyChange))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZoneMapping))]
     public partial class AzureResourceManagerResourcesContext : ModelReaderWriterContext
     {

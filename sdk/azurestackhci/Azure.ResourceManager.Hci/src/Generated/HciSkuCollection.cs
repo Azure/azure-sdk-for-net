@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -25,76 +24,70 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class HciSkuCollection : ArmCollection, IEnumerable<HciSkuResource>, IAsyncEnumerable<HciSkuResource>
     {
-        private readonly ClientDiagnostics _skusClientDiagnostics;
-        private readonly Skus _skusRestClient;
+        private readonly ClientDiagnostics _hciSkuSkusClientDiagnostics;
+        private readonly SkusRestOperations _hciSkuSkusRestClient;
 
-        /// <summary> Initializes a new instance of HciSkuCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciSkuCollection"/> class for mocking. </summary>
         protected HciSkuCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciSkuCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciSkuCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HciSkuCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HciSkuResource.ResourceType, out string hciSkuApiVersion);
-            _skusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciSkuResource.ResourceType.Namespace, Diagnostics);
-            _skusRestClient = new Skus(_skusClientDiagnostics, Pipeline, Endpoint, hciSkuApiVersion ?? "2026-04-01-preview");
-            ValidateResourceId(id);
+            _hciSkuSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciSkuResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HciSkuResource.ResourceType, out string hciSkuSkusApiVersion);
+            _hciSkuSkusRestClient = new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciSkuSkusApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HciClusterOfferResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciClusterOfferResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HciClusterOfferResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get SKU resource details within a offer of HCI Cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Skus_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HciSkuResource>> GetAsync(string skuName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        public virtual async Task<Response<HciSkuResource>> GetAsync(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("HciSkuCollection.Get");
+            using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HciSkuData> response = Response.FromValue(HciSkuData.FromResponse(result), result);
+                var response = await _hciSkuSkusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -108,43 +101,39 @@ namespace Azure.ResourceManager.Hci
         /// Get SKU resource details within a offer of HCI Cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Skus_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HciSkuResource> Get(string skuName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        public virtual Response<HciSkuResource> Get(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("HciSkuCollection.Get");
+            using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HciSkuData> response = Response.FromValue(HciSkuData.FromResponse(result), result);
+                var response = _hciSkuSkusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -158,127 +147,99 @@ namespace Azure.ResourceManager.Hci
         /// List Skus available for a offer within the HCI Cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Skus_ListByOffer. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_ListByOffer</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HciSkuResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HciSkuResource> GetAllAsync(string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HciSkuResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HciSkuResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<HciSkuData, HciSkuResource>(new SkusGetByOfferAsyncCollectionResultOfT(
-                _skusRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Parent.Name,
-                Id.Parent.Name,
-                Id.Name,
-                expand,
-                context,
-                "HciSkuCollection.GetAll"), data => new HciSkuResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciSkuSkusRestClient.CreateListByOfferRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciSkuSkusRestClient.CreateListByOfferNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Skus available for a offer within the HCI Cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Skus_ListByOffer. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_ListByOffer</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HciSkuResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HciSkuResource> GetAll(string expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<HciSkuResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<HciSkuData, HciSkuResource>(new SkusGetByOfferCollectionResultOfT(
-                _skusRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Parent.Name,
-                Id.Parent.Name,
-                Id.Name,
-                expand,
-                context,
-                "HciSkuCollection.GetAll"), data => new HciSkuResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciSkuSkusRestClient.CreateListByOfferRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciSkuSkusRestClient.CreateListByOfferNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciSkuResource(Client, HciSkuData.DeserializeHciSkuData(e)), _hciSkuSkusClientDiagnostics, Pipeline, "HciSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Skus_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string skuName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("HciSkuCollection.Exists");
+            using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<HciSkuData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HciSkuData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HciSkuData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _hciSkuSkusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,51 +253,37 @@ namespace Azure.ResourceManager.Hci
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Skus_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string skuName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        public virtual Response<bool> Exists(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("HciSkuCollection.Exists");
+            using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<HciSkuData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HciSkuData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HciSkuData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _hciSkuSkusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,55 +297,39 @@ namespace Azure.ResourceManager.Hci
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Skus_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<HciSkuResource>> GetIfExistsAsync(string skuName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HciSkuResource>> GetIfExistsAsync(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("HciSkuCollection.GetIfExists");
+            using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<HciSkuData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HciSkuData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HciSkuData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _hciSkuSkusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<HciSkuResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -412,55 +343,39 @@ namespace Azure.ResourceManager.Hci
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}/skus/{skuName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Skus_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<HciSkuResource> GetIfExists(string skuName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        public virtual NullableResponse<HciSkuResource> GetIfExists(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
-            using DiagnosticScope scope = _skusClientDiagnostics.CreateScope("HciSkuCollection.GetIfExists");
+            using var scope = _hciSkuSkusClientDiagnostics.CreateScope("HciSkuCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _skusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<HciSkuData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HciSkuData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HciSkuData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _hciSkuSkusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, skuName, expand, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<HciSkuResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -480,7 +395,6 @@ namespace Azure.ResourceManager.Hci
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HciSkuResource> IAsyncEnumerable<HciSkuResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

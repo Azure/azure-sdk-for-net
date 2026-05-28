@@ -7,68 +7,48 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary>
-    /// Specifies the protocol of WinRM listener. Possible values are: <b>http,</b>
-    /// <b>https.</b>
+    /// Specifies the protocol of WinRM listener. Possible values are: **http,**
+    /// **https.**
     /// </summary>
     public readonly partial struct ComputeFleetProtocolType : IEquatable<ComputeFleetProtocolType>
     {
         private readonly string _value;
-        /// <summary> Http protocol. </summary>
-        private const string HttpValue = "Http";
-        /// <summary> Https protocol. </summary>
-        private const string HttpsValue = "Https";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetProtocolType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetProtocolType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string HttpValue = "Http";
+        private const string HttpsValue = "Https";
 
         /// <summary> Http protocol. </summary>
         public static ComputeFleetProtocolType Http { get; } = new ComputeFleetProtocolType(HttpValue);
-
         /// <summary> Https protocol. </summary>
         public static ComputeFleetProtocolType Https { get; } = new ComputeFleetProtocolType(HttpsValue);
-
         /// <summary> Determines if two <see cref="ComputeFleetProtocolType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetProtocolType left, ComputeFleetProtocolType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ComputeFleetProtocolType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetProtocolType left, ComputeFleetProtocolType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ComputeFleetProtocolType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetProtocolType"/>. </summary>
         public static implicit operator ComputeFleetProtocolType(string value) => new ComputeFleetProtocolType(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetProtocolType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetProtocolType?(string value) => value == null ? null : new ComputeFleetProtocolType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetProtocolType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ComputeFleetProtocolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

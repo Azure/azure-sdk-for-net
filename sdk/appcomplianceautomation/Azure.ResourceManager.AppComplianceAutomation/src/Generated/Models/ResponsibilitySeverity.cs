@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct ResponsibilitySeverity : IEquatable<ResponsibilitySeverity>
     {
         private readonly string _value;
-        /// <summary> The responsibility is high severity. </summary>
-        private const string HighValue = "High";
-        /// <summary> The responsibility is medium severity. </summary>
-        private const string MediumValue = "Medium";
-        /// <summary> The responsibility is low severity. </summary>
-        private const string LowValue = "Low";
 
         /// <summary> Initializes a new instance of <see cref="ResponsibilitySeverity"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResponsibilitySeverity(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string HighValue = "High";
+        private const string MediumValue = "Medium";
+        private const string LowValue = "Low";
 
         /// <summary> The responsibility is high severity. </summary>
         public static ResponsibilitySeverity High { get; } = new ResponsibilitySeverity(HighValue);
-
         /// <summary> The responsibility is medium severity. </summary>
         public static ResponsibilitySeverity Medium { get; } = new ResponsibilitySeverity(MediumValue);
-
         /// <summary> The responsibility is low severity. </summary>
         public static ResponsibilitySeverity Low { get; } = new ResponsibilitySeverity(LowValue);
-
         /// <summary> Determines if two <see cref="ResponsibilitySeverity"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResponsibilitySeverity left, ResponsibilitySeverity right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ResponsibilitySeverity"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResponsibilitySeverity left, ResponsibilitySeverity right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ResponsibilitySeverity"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResponsibilitySeverity"/>. </summary>
         public static implicit operator ResponsibilitySeverity(string value) => new ResponsibilitySeverity(value);
 
-        /// <summary> Converts a string to a <see cref="ResponsibilitySeverity"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ResponsibilitySeverity?(string value) => value == null ? null : new ResponsibilitySeverity(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResponsibilitySeverity other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ResponsibilitySeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -44,30 +44,7 @@
                 "scope": "Method",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.get.clientRequestId",
-                "methodParameterSegments": [
-                  {
-                    "$id": "6",
-                    "kind": "method",
-                    "name": "clientRequestId",
-                    "serializedName": "x-ms-client-request-id",
-                    "type": {
-                      "$id": "7",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "location": "Header",
-                    "isApiVersion": false,
-                    "optional": true,
-                    "scope": "Method",
-                    "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.get.clientRequestId",
-                    "readOnly": false,
-                    "access": "public",
-                    "decorators": []
-                  }
-                ]
+                "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.get.clientRequestId"
               }
             ],
             "responses": [
@@ -76,8 +53,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -87,12 +63,29 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.get",
-            "decorators": [],
-            "namespace": "Azure.SpecialHeaders.XmsClientRequestId"
+            "decorators": []
           },
           "parameters": [
             {
-              "$ref": "6"
+              "$id": "6",
+              "kind": "method",
+              "name": "clientRequestId",
+              "serializedName": "x-ms-client-request-id",
+              "type": {
+                "$id": "7",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.get.clientRequestId",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {},
@@ -134,11 +127,9 @@
           "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.endpoint"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId",
-      "apiVersions": [],
-      "isMultiServiceClient": false
+      "apiVersions": []
     }
   ]
 }

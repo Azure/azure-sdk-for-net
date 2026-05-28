@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
-    /// <summary></summary>
-    internal partial class SapCentralServerInstanceOperationSource : IOperationSource<SapCentralServerInstanceResource>
+    internal class SapCentralServerInstanceOperationSource : IOperationSource<SapCentralServerInstanceResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal SapCentralServerInstanceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         SapCentralServerInstanceResource IOperationSource<SapCentralServerInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SapCentralServerInstanceData data = SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<SapCentralServerInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
             return new SapCentralServerInstanceResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<SapCentralServerInstanceResource> IOperationSource<SapCentralServerInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SapCentralServerInstanceData data = SapCentralServerInstanceData.DeserializeSapCentralServerInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SapCentralServerInstanceResource(_client, data);
+            var data = ModelReaderWriter.Read<SapCentralServerInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+            return await Task.FromResult(new SapCentralServerInstanceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

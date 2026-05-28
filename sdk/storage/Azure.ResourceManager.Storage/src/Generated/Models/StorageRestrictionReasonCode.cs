@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageRestrictionReasonCode : IEquatable<StorageRestrictionReasonCode>
     {
         private readonly string _value;
-        private const string QuotaIdValue = "QuotaId";
-        private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
 
         /// <summary> Initializes a new instance of <see cref="StorageRestrictionReasonCode"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageRestrictionReasonCode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the QuotaId. </summary>
+        private const string QuotaIdValue = "QuotaId";
+        private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
+
+        /// <summary> QuotaId. </summary>
         public static StorageRestrictionReasonCode QuotaId { get; } = new StorageRestrictionReasonCode(QuotaIdValue);
-
-        /// <summary> Gets the NotAvailableForSubscription. </summary>
+        /// <summary> NotAvailableForSubscription. </summary>
         public static StorageRestrictionReasonCode NotAvailableForSubscription { get; } = new StorageRestrictionReasonCode(NotAvailableForSubscriptionValue);
-
         /// <summary> Determines if two <see cref="StorageRestrictionReasonCode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageRestrictionReasonCode left, StorageRestrictionReasonCode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageRestrictionReasonCode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageRestrictionReasonCode left, StorageRestrictionReasonCode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageRestrictionReasonCode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageRestrictionReasonCode"/>. </summary>
         public static implicit operator StorageRestrictionReasonCode(string value) => new StorageRestrictionReasonCode(value);
 
-        /// <summary> Converts a string to a <see cref="StorageRestrictionReasonCode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageRestrictionReasonCode?(string value) => value == null ? null : new StorageRestrictionReasonCode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageRestrictionReasonCode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StorageRestrictionReasonCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

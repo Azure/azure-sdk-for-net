@@ -8,36 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    /// <summary></summary>
-    internal partial class BenefitUtilizationSummariesOperationStatusOperationSource : IOperationSource<BenefitUtilizationSummariesOperationStatus>
+    internal class BenefitUtilizationSummariesOperationStatusOperationSource : IOperationSource<BenefitUtilizationSummariesOperationStatus>
     {
-        /// <summary></summary>
-        internal BenefitUtilizationSummariesOperationStatusOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         BenefitUtilizationSummariesOperationStatus IOperationSource<BenefitUtilizationSummariesOperationStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<BenefitUtilizationSummariesOperationStatus> IOperationSource<BenefitUtilizationSummariesOperationStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return BenefitUtilizationSummariesOperationStatus.DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement);
         }
     }
 }

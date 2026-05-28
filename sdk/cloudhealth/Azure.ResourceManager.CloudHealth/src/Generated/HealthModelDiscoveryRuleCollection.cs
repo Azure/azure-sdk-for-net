@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CloudHealth
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.CloudHealth
     /// </summary>
     public partial class HealthModelDiscoveryRuleCollection : ArmCollection, IEnumerable<HealthModelDiscoveryRuleResource>, IAsyncEnumerable<HealthModelDiscoveryRuleResource>
     {
-        private readonly ClientDiagnostics _discoveryRulesClientDiagnostics;
-        private readonly DiscoveryRules _discoveryRulesRestClient;
+        private readonly ClientDiagnostics _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics;
+        private readonly DiscoveryRulesRestOperations _healthModelDiscoveryRuleDiscoveryRulesRestClient;
 
-        /// <summary> Initializes a new instance of HealthModelDiscoveryRuleCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthModelDiscoveryRuleCollection"/> class for mocking. </summary>
         protected HealthModelDiscoveryRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthModelDiscoveryRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HealthModelDiscoveryRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HealthModelDiscoveryRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HealthModelDiscoveryRuleResource.ResourceType, out string healthModelDiscoveryRuleApiVersion);
-            _discoveryRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelDiscoveryRuleResource.ResourceType.Namespace, Diagnostics);
-            _discoveryRulesRestClient = new DiscoveryRules(_discoveryRulesClientDiagnostics, Pipeline, Endpoint, healthModelDiscoveryRuleApiVersion ?? "2025-05-01-preview");
-            ValidateResourceId(id);
+            _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CloudHealth", HealthModelDiscoveryRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HealthModelDiscoveryRuleResource.ResourceType, out string healthModelDiscoveryRuleDiscoveryRulesApiVersion);
+            _healthModelDiscoveryRuleDiscoveryRulesRestClient = new DiscoveryRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, healthModelDiscoveryRuleDiscoveryRulesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HealthModelResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HealthModelResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a DiscoveryRule
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveryRules_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveryRule_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="discoveryRuleName"> Name of the discovery rule. Must be unique within a health model. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveryRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HealthModelDiscoveryRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string discoveryRuleName, HealthModelDiscoveryRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(discoveryRuleName, nameof(discoveryRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _discoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.CreateOrUpdate");
+            using var scope = _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _discoveryRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, HealthModelDiscoveryRuleData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HealthModelDiscoveryRuleData> response = Response.FromValue(HealthModelDiscoveryRuleData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CloudHealthArmOperation<HealthModelDiscoveryRuleResource> operation = new CloudHealthArmOperation<HealthModelDiscoveryRuleResource>(Response.FromValue(new HealthModelDiscoveryRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _healthModelDiscoveryRuleDiscoveryRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, discoveryRuleName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _healthModelDiscoveryRuleDiscoveryRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, discoveryRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CloudHealthArmOperation<HealthModelDiscoveryRuleResource>(Response.FromValue(new HealthModelDiscoveryRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.CloudHealth
         /// Create a DiscoveryRule
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveryRules_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveryRule_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="discoveryRuleName"> Name of the discovery rule. Must be unique within a health model. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveryRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HealthModelDiscoveryRuleResource> CreateOrUpdate(WaitUntil waitUntil, string discoveryRuleName, HealthModelDiscoveryRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(discoveryRuleName, nameof(discoveryRuleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _discoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.CreateOrUpdate");
+            using var scope = _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _discoveryRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, HealthModelDiscoveryRuleData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HealthModelDiscoveryRuleData> response = Response.FromValue(HealthModelDiscoveryRuleData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CloudHealthArmOperation<HealthModelDiscoveryRuleResource> operation = new CloudHealthArmOperation<HealthModelDiscoveryRuleResource>(Response.FromValue(new HealthModelDiscoveryRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _healthModelDiscoveryRuleDiscoveryRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, discoveryRuleName, data, cancellationToken);
+                var uri = _healthModelDiscoveryRuleDiscoveryRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, discoveryRuleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CloudHealthArmOperation<HealthModelDiscoveryRuleResource>(Response.FromValue(new HealthModelDiscoveryRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.CloudHealth
         /// Get a DiscoveryRule
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveryRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveryRule_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="discoveryRuleName"> Name of the discovery rule. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveryRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         public virtual async Task<Response<HealthModelDiscoveryRuleResource>> GetAsync(string discoveryRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(discoveryRuleName, nameof(discoveryRuleName));
 
-            using DiagnosticScope scope = _discoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.Get");
+            using var scope = _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HealthModelDiscoveryRuleData> response = Response.FromValue(HealthModelDiscoveryRuleData.FromResponse(result), result);
+                var response = await _healthModelDiscoveryRuleDiscoveryRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, discoveryRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HealthModelDiscoveryRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.CloudHealth
         /// Get a DiscoveryRule
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveryRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveryRule_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="discoveryRuleName"> Name of the discovery rule. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveryRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         public virtual Response<HealthModelDiscoveryRuleResource> Get(string discoveryRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(discoveryRuleName, nameof(discoveryRuleName));
 
-            using DiagnosticScope scope = _discoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.Get");
+            using var scope = _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HealthModelDiscoveryRuleData> response = Response.FromValue(HealthModelDiscoveryRuleData.FromResponse(result), result);
+                var response = _healthModelDiscoveryRuleDiscoveryRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, discoveryRuleName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HealthModelDiscoveryRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,122 +247,98 @@ namespace Azure.ResourceManager.CloudHealth
         /// List DiscoveryRule resources by HealthModel
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveryRules_ListByHealthModel. </description>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveryRule_ListByHealthModel</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthModelDiscoveryRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HealthModelDiscoveryRuleResource> GetAllAsync(DateTimeOffset? timestamp = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HealthModelDiscoveryRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HealthModelDiscoveryRuleResource> GetAllAsync(DateTimeOffset? timestamp = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<HealthModelDiscoveryRuleData, HealthModelDiscoveryRuleResource>(new DiscoveryRulesGetByHealthModelAsyncCollectionResultOfT(
-                _discoveryRulesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                timestamp,
-                context,
-                "HealthModelDiscoveryRuleCollection.GetAll"), data => new HealthModelDiscoveryRuleResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthModelDiscoveryRuleDiscoveryRulesRestClient.CreateListByHealthModelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthModelDiscoveryRuleDiscoveryRulesRestClient.CreateListByHealthModelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthModelDiscoveryRuleResource(Client, HealthModelDiscoveryRuleData.DeserializeHealthModelDiscoveryRuleData(e)), _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics, Pipeline, "HealthModelDiscoveryRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List DiscoveryRule resources by HealthModel
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveryRules_ListByHealthModel. </description>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveryRule_ListByHealthModel</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelDiscoveryRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HealthModelDiscoveryRuleResource> GetAll(DateTimeOffset? timestamp = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<HealthModelDiscoveryRuleResource> GetAll(DateTimeOffset? timestamp = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<HealthModelDiscoveryRuleData, HealthModelDiscoveryRuleResource>(new DiscoveryRulesGetByHealthModelCollectionResultOfT(
-                _discoveryRulesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                timestamp,
-                context,
-                "HealthModelDiscoveryRuleCollection.GetAll"), data => new HealthModelDiscoveryRuleResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _healthModelDiscoveryRuleDiscoveryRulesRestClient.CreateListByHealthModelRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthModelDiscoveryRuleDiscoveryRulesRestClient.CreateListByHealthModelNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, timestamp);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthModelDiscoveryRuleResource(Client, HealthModelDiscoveryRuleData.DeserializeHealthModelDiscoveryRuleData(e)), _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics, Pipeline, "HealthModelDiscoveryRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveryRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveryRule_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="discoveryRuleName"> Name of the discovery rule. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveryRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string discoveryRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(discoveryRuleName, nameof(discoveryRuleName));
 
-            using DiagnosticScope scope = _discoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.Exists");
+            using var scope = _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<HealthModelDiscoveryRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HealthModelDiscoveryRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HealthModelDiscoveryRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _healthModelDiscoveryRuleDiscoveryRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, discoveryRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,50 +352,36 @@ namespace Azure.ResourceManager.CloudHealth
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveryRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveryRule_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="discoveryRuleName"> Name of the discovery rule. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveryRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string discoveryRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(discoveryRuleName, nameof(discoveryRuleName));
 
-            using DiagnosticScope scope = _discoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.Exists");
+            using var scope = _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<HealthModelDiscoveryRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HealthModelDiscoveryRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HealthModelDiscoveryRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _healthModelDiscoveryRuleDiscoveryRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, discoveryRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -452,54 +395,38 @@ namespace Azure.ResourceManager.CloudHealth
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveryRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveryRule_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="discoveryRuleName"> Name of the discovery rule. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveryRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<HealthModelDiscoveryRuleResource>> GetIfExistsAsync(string discoveryRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(discoveryRuleName, nameof(discoveryRuleName));
 
-            using DiagnosticScope scope = _discoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.GetIfExists");
+            using var scope = _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<HealthModelDiscoveryRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HealthModelDiscoveryRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HealthModelDiscoveryRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _healthModelDiscoveryRuleDiscoveryRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, discoveryRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<HealthModelDiscoveryRuleResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new HealthModelDiscoveryRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -513,54 +440,38 @@ namespace Azure.ResourceManager.CloudHealth
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}/discoveryrules/{discoveryRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DiscoveryRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveryRule_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelDiscoveryRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="discoveryRuleName"> Name of the discovery rule. Must be unique within a health model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveryRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveryRuleName"/> is null. </exception>
         public virtual NullableResponse<HealthModelDiscoveryRuleResource> GetIfExists(string discoveryRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(discoveryRuleName, nameof(discoveryRuleName));
 
-            using DiagnosticScope scope = _discoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.GetIfExists");
+            using var scope = _healthModelDiscoveryRuleDiscoveryRulesClientDiagnostics.CreateScope("HealthModelDiscoveryRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _discoveryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, discoveryRuleName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<HealthModelDiscoveryRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HealthModelDiscoveryRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HealthModelDiscoveryRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _healthModelDiscoveryRuleDiscoveryRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, discoveryRuleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<HealthModelDiscoveryRuleResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new HealthModelDiscoveryRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -580,7 +491,6 @@ namespace Azure.ResourceManager.CloudHealth
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HealthModelDiscoveryRuleResource> IAsyncEnumerable<HealthModelDiscoveryRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

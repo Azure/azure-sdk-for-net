@@ -7,75 +7,72 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary></summary>
+    /// <summary>
+    /// The LogRanking.
+    /// Serialized Name: LogRanking
+    /// </summary>
     public readonly partial struct LogRanking : IEquatable<LogRanking>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="LogRanking"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LogRanking(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UriValue = "url";
         private const string ReferrerValue = "referrer";
         private const string BrowserValue = "browser";
         private const string UserAgentValue = "userAgent";
         private const string CountryOrRegionValue = "countryOrRegion";
 
-        /// <summary> Initializes a new instance of <see cref="LogRanking"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LogRanking(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Uri. </summary>
+        /// <summary>
+        /// url
+        /// Serialized Name: LogRanking.url
+        /// </summary>
         public static LogRanking Uri { get; } = new LogRanking(UriValue);
-
-        /// <summary> Gets the Referrer. </summary>
+        /// <summary>
+        /// referrer
+        /// Serialized Name: LogRanking.referrer
+        /// </summary>
         public static LogRanking Referrer { get; } = new LogRanking(ReferrerValue);
-
-        /// <summary> Gets the Browser. </summary>
+        /// <summary>
+        /// browser
+        /// Serialized Name: LogRanking.browser
+        /// </summary>
         public static LogRanking Browser { get; } = new LogRanking(BrowserValue);
-
-        /// <summary> Gets the UserAgent. </summary>
+        /// <summary>
+        /// userAgent
+        /// Serialized Name: LogRanking.userAgent
+        /// </summary>
         public static LogRanking UserAgent { get; } = new LogRanking(UserAgentValue);
-
-        /// <summary> Gets the CountryOrRegion. </summary>
+        /// <summary>
+        /// countryOrRegion
+        /// Serialized Name: LogRanking.countryOrRegion
+        /// </summary>
         public static LogRanking CountryOrRegion { get; } = new LogRanking(CountryOrRegionValue);
-
         /// <summary> Determines if two <see cref="LogRanking"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogRanking left, LogRanking right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="LogRanking"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogRanking left, LogRanking right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="LogRanking"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogRanking"/>. </summary>
         public static implicit operator LogRanking(string value) => new LogRanking(value);
 
-        /// <summary> Converts a string to a <see cref="LogRanking"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator LogRanking?(string value) => value == null ? null : new LogRanking(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogRanking other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(LogRanking other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

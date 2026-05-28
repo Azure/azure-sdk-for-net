@@ -6,7 +6,6 @@ using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -687,7 +686,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            Assert.Throws<KeyNotFoundException>(() => model.Patch.GetString("$.properties.unknownArray[0].id"u8));
+            Assert.Throws<InvalidOperationException>(() => model.Patch.GetString("$.properties.unknownArray[0].id"u8));
         }
 
         [Test]

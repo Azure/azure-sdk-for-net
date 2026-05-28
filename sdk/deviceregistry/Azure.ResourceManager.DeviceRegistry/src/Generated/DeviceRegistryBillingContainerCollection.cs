@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistryBillingContainerResource"/> and their operations.
-    /// Each <see cref="DeviceRegistryBillingContainerResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="DeviceRegistryBillingContainerCollection"/> instance call the GetDeviceRegistryBillingContainers method from an instance of <see cref="SubscriptionResource"/>.
+    /// Each <see cref="DeviceRegistryBillingContainerResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DeviceRegistryBillingContainerCollection"/> instance call the GetDeviceRegistryBillingContainers method from an instance of the parent resource.
     /// </summary>
     public partial class DeviceRegistryBillingContainerCollection : ArmCollection, IEnumerable<DeviceRegistryBillingContainerResource>, IAsyncEnumerable<DeviceRegistryBillingContainerResource>
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryBillingContainerResource.ResourceType, out string deviceRegistryBillingContainerApiVersion);
             _billingContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryBillingContainerResource.ResourceType.Namespace, Diagnostics);
-            _billingContainersRestClient = new BillingContainers(_billingContainersClientDiagnostics, Pipeline, Endpoint, deviceRegistryBillingContainerApiVersion ?? "2026-03-01-preview");
+            _billingContainersRestClient = new BillingContainers(_billingContainersClientDiagnostics, Pipeline, Endpoint, deviceRegistryBillingContainerApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -51,27 +51,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Get a BillingContainer
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BillingContainers_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a BillingContainer. </summary>
         /// <param name="billingContainerName"> Name of the billing container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingContainerName"/> is null. </exception>
@@ -104,23 +88,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Get a BillingContainer
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BillingContainers_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a BillingContainer. </summary>
         /// <param name="billingContainerName"> Name of the billing container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingContainerName"/> is null. </exception>
@@ -153,23 +121,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// List BillingContainer resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BillingContainers_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List BillingContainer resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryBillingContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistryBillingContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -178,26 +130,10 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryBillingContainerData, DeviceRegistryBillingContainerResource>(new BillingContainersGetBySubscriptionAsyncCollectionResultOfT(_billingContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "DeviceRegistryBillingContainerCollection.GetAll"), data => new DeviceRegistryBillingContainerResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryBillingContainerData, DeviceRegistryBillingContainerResource>(new BillingContainersGetBySubscriptionAsyncCollectionResultOfT(_billingContainersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistryBillingContainerResource(Client, data));
         }
 
-        /// <summary>
-        /// List BillingContainer resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BillingContainers_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List BillingContainer resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryBillingContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistryBillingContainerResource> GetAll(CancellationToken cancellationToken = default)
@@ -206,26 +142,10 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryBillingContainerData, DeviceRegistryBillingContainerResource>(new BillingContainersGetBySubscriptionCollectionResultOfT(_billingContainersRestClient, Guid.Parse(Id.SubscriptionId), context, "DeviceRegistryBillingContainerCollection.GetAll"), data => new DeviceRegistryBillingContainerResource(Client, data));
+            return new PageableWrapper<DeviceRegistryBillingContainerData, DeviceRegistryBillingContainerResource>(new BillingContainersGetBySubscriptionCollectionResultOfT(_billingContainersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeviceRegistryBillingContainerResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BillingContainers_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="billingContainerName"> Name of the billing container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingContainerName"/> is null. </exception>
@@ -266,23 +186,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BillingContainers_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="billingContainerName"> Name of the billing container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingContainerName"/> is null. </exception>
@@ -323,23 +227,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BillingContainers_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="billingContainerName"> Name of the billing container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingContainerName"/> is null. </exception>
@@ -384,23 +272,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/billingContainers/{billingContainerName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BillingContainers_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="billingContainerName"> Name of the billing container. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingContainerName"/> is null. </exception>

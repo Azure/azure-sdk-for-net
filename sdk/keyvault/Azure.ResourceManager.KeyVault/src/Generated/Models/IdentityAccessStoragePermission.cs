@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary></summary>
+    /// <summary> The IdentityAccessStoragePermission. </summary>
     public readonly partial struct IdentityAccessStoragePermission : IEquatable<IdentityAccessStoragePermission>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="IdentityAccessStoragePermission"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IdentityAccessStoragePermission(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AllValue = "all";
         private const string GetValue = "get";
         private const string ListValue = "list";
@@ -31,91 +38,53 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string GetSasValue = "getsas";
         private const string DeleteSasValue = "deletesas";
 
-        /// <summary> Initializes a new instance of <see cref="IdentityAccessStoragePermission"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IdentityAccessStoragePermission(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the All. </summary>
+        /// <summary> all. </summary>
         public static IdentityAccessStoragePermission All { get; } = new IdentityAccessStoragePermission(AllValue);
-
-        /// <summary> Gets the Get. </summary>
+        /// <summary> get. </summary>
         public static IdentityAccessStoragePermission Get { get; } = new IdentityAccessStoragePermission(GetValue);
-
-        /// <summary> Gets the List. </summary>
+        /// <summary> list. </summary>
         public static IdentityAccessStoragePermission List { get; } = new IdentityAccessStoragePermission(ListValue);
-
-        /// <summary> Gets the Delete. </summary>
+        /// <summary> delete. </summary>
         public static IdentityAccessStoragePermission Delete { get; } = new IdentityAccessStoragePermission(DeleteValue);
-
-        /// <summary> Gets the Set. </summary>
+        /// <summary> set. </summary>
         public static IdentityAccessStoragePermission Set { get; } = new IdentityAccessStoragePermission(SetValue);
-
-        /// <summary> Gets the Update. </summary>
+        /// <summary> update. </summary>
         public static IdentityAccessStoragePermission Update { get; } = new IdentityAccessStoragePermission(UpdateValue);
-
-        /// <summary> Gets the RegenerateKey. </summary>
+        /// <summary> regeneratekey. </summary>
         public static IdentityAccessStoragePermission RegenerateKey { get; } = new IdentityAccessStoragePermission(RegenerateKeyValue);
-
-        /// <summary> Gets the Recover. </summary>
+        /// <summary> recover. </summary>
         public static IdentityAccessStoragePermission Recover { get; } = new IdentityAccessStoragePermission(RecoverValue);
-
-        /// <summary> Gets the Purge. </summary>
+        /// <summary> purge. </summary>
         public static IdentityAccessStoragePermission Purge { get; } = new IdentityAccessStoragePermission(PurgeValue);
-
-        /// <summary> Gets the Backup. </summary>
+        /// <summary> backup. </summary>
         public static IdentityAccessStoragePermission Backup { get; } = new IdentityAccessStoragePermission(BackupValue);
-
-        /// <summary> Gets the Restore. </summary>
+        /// <summary> restore. </summary>
         public static IdentityAccessStoragePermission Restore { get; } = new IdentityAccessStoragePermission(RestoreValue);
-
-        /// <summary> Gets the SetSas. </summary>
+        /// <summary> setsas. </summary>
         public static IdentityAccessStoragePermission SetSas { get; } = new IdentityAccessStoragePermission(SetSasValue);
-
-        /// <summary> Gets the ListSas. </summary>
+        /// <summary> listsas. </summary>
         public static IdentityAccessStoragePermission ListSas { get; } = new IdentityAccessStoragePermission(ListSasValue);
-
-        /// <summary> Gets the GetSas. </summary>
+        /// <summary> getsas. </summary>
         public static IdentityAccessStoragePermission GetSas { get; } = new IdentityAccessStoragePermission(GetSasValue);
-
-        /// <summary> Gets the DeleteSas. </summary>
+        /// <summary> deletesas. </summary>
         public static IdentityAccessStoragePermission DeleteSas { get; } = new IdentityAccessStoragePermission(DeleteSasValue);
-
         /// <summary> Determines if two <see cref="IdentityAccessStoragePermission"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IdentityAccessStoragePermission left, IdentityAccessStoragePermission right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="IdentityAccessStoragePermission"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IdentityAccessStoragePermission left, IdentityAccessStoragePermission right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="IdentityAccessStoragePermission"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityAccessStoragePermission"/>. </summary>
         public static implicit operator IdentityAccessStoragePermission(string value) => new IdentityAccessStoragePermission(value);
 
-        /// <summary> Converts a string to a <see cref="IdentityAccessStoragePermission"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator IdentityAccessStoragePermission?(string value) => value == null ? null : new IdentityAccessStoragePermission(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IdentityAccessStoragePermission other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(IdentityAccessStoragePermission other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

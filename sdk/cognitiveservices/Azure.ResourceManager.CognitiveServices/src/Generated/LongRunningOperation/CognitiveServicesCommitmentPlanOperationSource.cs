@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    /// <summary></summary>
-    internal partial class CognitiveServicesCommitmentPlanOperationSource : IOperationSource<CognitiveServicesCommitmentPlanResource>
+    internal class CognitiveServicesCommitmentPlanOperationSource : IOperationSource<CognitiveServicesCommitmentPlanResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal CognitiveServicesCommitmentPlanOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         CognitiveServicesCommitmentPlanResource IOperationSource<CognitiveServicesCommitmentPlanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CommitmentPlanData data = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<CommitmentPlanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
             return new CognitiveServicesCommitmentPlanResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<CognitiveServicesCommitmentPlanResource> IOperationSource<CognitiveServicesCommitmentPlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CommitmentPlanData data = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CognitiveServicesCommitmentPlanResource(_client, data);
+            var data = ModelReaderWriter.Read<CommitmentPlanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
+            return await Task.FromResult(new CognitiveServicesCommitmentPlanResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

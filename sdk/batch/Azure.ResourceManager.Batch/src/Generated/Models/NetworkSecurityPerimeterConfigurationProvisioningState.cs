@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.Batch.Models
     public readonly partial struct NetworkSecurityPerimeterConfigurationProvisioningState : IEquatable<NetworkSecurityPerimeterConfigurationProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NetworkSecurityPerimeterConfigurationProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string SucceededValue = "Succeeded";
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.Batch.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NetworkSecurityPerimeterConfigurationProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static NetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get; } = new NetworkSecurityPerimeterConfigurationProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static NetworkSecurityPerimeterConfigurationProvisioningState Creating { get; } = new NetworkSecurityPerimeterConfigurationProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static NetworkSecurityPerimeterConfigurationProvisioningState Updating { get; } = new NetworkSecurityPerimeterConfigurationProvisioningState(UpdatingValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static NetworkSecurityPerimeterConfigurationProvisioningState Deleting { get; } = new NetworkSecurityPerimeterConfigurationProvisioningState(DeletingValue);
-
-        /// <summary> Gets the Accepted. </summary>
+        /// <summary> Accepted. </summary>
         public static NetworkSecurityPerimeterConfigurationProvisioningState Accepted { get; } = new NetworkSecurityPerimeterConfigurationProvisioningState(AcceptedValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static NetworkSecurityPerimeterConfigurationProvisioningState Failed { get; } = new NetworkSecurityPerimeterConfigurationProvisioningState(FailedValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static NetworkSecurityPerimeterConfigurationProvisioningState Canceled { get; } = new NetworkSecurityPerimeterConfigurationProvisioningState(CanceledValue);
-
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterConfigurationProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkSecurityPerimeterConfigurationProvisioningState left, NetworkSecurityPerimeterConfigurationProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterConfigurationProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkSecurityPerimeterConfigurationProvisioningState left, NetworkSecurityPerimeterConfigurationProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
         public static implicit operator NetworkSecurityPerimeterConfigurationProvisioningState(string value) => new NetworkSecurityPerimeterConfigurationProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? null : new NetworkSecurityPerimeterConfigurationProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkSecurityPerimeterConfigurationProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NetworkSecurityPerimeterConfigurationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

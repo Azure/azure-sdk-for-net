@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.IotOperations.Models
     internal readonly partial struct BrokerPersistencePolicyMode : IEquatable<BrokerPersistencePolicyMode>
     {
         private readonly string _value;
-        /// <summary> Policy mode for All. </summary>
-        private const string AllValue = "All";
-        /// <summary> Policy mode for None. </summary>
-        private const string NoneValue = "None";
-        /// <summary> Indicates that the policy is a custom policy. </summary>
-        private const string CustomValue = "Custom";
 
         /// <summary> Initializes a new instance of <see cref="BrokerPersistencePolicyMode"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BrokerPersistencePolicyMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string AllValue = "All";
+        private const string NoneValue = "None";
+        private const string CustomValue = "Custom";
 
         /// <summary> Policy mode for All. </summary>
         public static BrokerPersistencePolicyMode All { get; } = new BrokerPersistencePolicyMode(AllValue);
-
         /// <summary> Policy mode for None. </summary>
         public static BrokerPersistencePolicyMode None { get; } = new BrokerPersistencePolicyMode(NoneValue);
-
         /// <summary> Indicates that the policy is a custom policy. </summary>
         public static BrokerPersistencePolicyMode Custom { get; } = new BrokerPersistencePolicyMode(CustomValue);
-
         /// <summary> Determines if two <see cref="BrokerPersistencePolicyMode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BrokerPersistencePolicyMode left, BrokerPersistencePolicyMode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BrokerPersistencePolicyMode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BrokerPersistencePolicyMode left, BrokerPersistencePolicyMode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BrokerPersistencePolicyMode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BrokerPersistencePolicyMode"/>. </summary>
         public static implicit operator BrokerPersistencePolicyMode(string value) => new BrokerPersistencePolicyMode(value);
 
-        /// <summary> Converts a string to a <see cref="BrokerPersistencePolicyMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BrokerPersistencePolicyMode?(string value) => value == null ? null : new BrokerPersistencePolicyMode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BrokerPersistencePolicyMode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BrokerPersistencePolicyMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

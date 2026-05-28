@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    /// <summary></summary>
-    internal partial class BackupProtectedItemOperationSource : IOperationSource<BackupProtectedItemResource>
+    internal class BackupProtectedItemOperationSource : IOperationSource<BackupProtectedItemResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal BackupProtectedItemOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         BackupProtectedItemResource IOperationSource<BackupProtectedItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            BackupProtectedItemData data = BackupProtectedItemData.DeserializeBackupProtectedItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<BackupProtectedItemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesBackupContext.Default);
             return new BackupProtectedItemResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<BackupProtectedItemResource> IOperationSource<BackupProtectedItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            BackupProtectedItemData data = BackupProtectedItemData.DeserializeBackupProtectedItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new BackupProtectedItemResource(_client, data);
+            var data = ModelReaderWriter.Read<BackupProtectedItemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesBackupContext.Default);
+            return await Task.FromResult(new BackupProtectedItemResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

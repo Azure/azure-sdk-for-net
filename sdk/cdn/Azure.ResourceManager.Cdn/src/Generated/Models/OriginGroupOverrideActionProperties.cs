@@ -8,46 +8,61 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for the origin group override action. </summary>
+    /// <summary>
+    /// Defines the parameters for the origin group override action.
+    /// Serialized Name: OriginGroupOverrideActionParameters
+    /// </summary>
     public partial class OriginGroupOverrideActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
-        public OriginGroupOverrideActionProperties() : base(DeliveryRuleActionParametersType.DeliveryRuleOriginGroupOverrideActionParameters)
+        /// <param name="originGroup">
+        /// defines the OriginGroup that would override the DefaultOriginGroup.
+        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>
+        public OriginGroupOverrideActionProperties(WritableSubResource originGroup)
         {
+            Argument.AssertNotNull(originGroup, nameof(originGroup));
 
+            OriginGroup = originGroup;
+            TypeName = DeliveryRuleActionParametersType.DeliveryRuleOriginGroupOverrideActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
-        /// <param name="typeName"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
-        internal OriginGroupOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnResourceReference originGroup) : base(typeName, additionalBinaryDataProperties)
+        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="originGroup">
+        /// defines the OriginGroup that would override the DefaultOriginGroup.
+        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
+        /// </param>
+        internal OriginGroupOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource originGroup) : base(typeName, serializedAdditionalRawData)
         {
             OriginGroup = originGroup;
+            TypeName = typeName;
         }
 
-        /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
-        [WirePath("originGroup")]
-        internal CdnResourceReference OriginGroup { get; set; }
+        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/> for deserialization. </summary>
+        internal OriginGroupOverrideActionProperties()
+        {
+        }
 
-        /// <summary> Resource ID. </summary>
-        [WirePath("originGroup.id")]
+        /// <summary>
+        /// defines the OriginGroup that would override the DefaultOriginGroup.
+        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
+        /// </summary>
+        internal WritableSubResource OriginGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OriginGroupId
         {
-            get
-            {
-                return OriginGroup is null ? default : OriginGroup.Id;
-            }
+            get => OriginGroup is null ? default : OriginGroup.Id;
             set
             {
                 if (OriginGroup is null)
-                {
-                    OriginGroup = new CdnResourceReference();
-                }
+                    OriginGroup = new WritableSubResource();
                 OriginGroup.Id = value;
             }
         }

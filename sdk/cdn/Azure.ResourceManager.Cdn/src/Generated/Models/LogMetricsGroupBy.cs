@@ -7,75 +7,72 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary></summary>
+    /// <summary>
+    /// The LogMetricsGroupBy.
+    /// Serialized Name: LogMetricsGroupBy
+    /// </summary>
     public readonly partial struct LogMetricsGroupBy : IEquatable<LogMetricsGroupBy>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="LogMetricsGroupBy"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LogMetricsGroupBy(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string HttpStatusCodeValue = "httpStatusCode";
         private const string ProtocolValue = "protocol";
         private const string CacheStatusValue = "cacheStatus";
         private const string CountryOrRegionValue = "countryOrRegion";
         private const string CustomDomainValue = "customDomain";
 
-        /// <summary> Initializes a new instance of <see cref="LogMetricsGroupBy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LogMetricsGroupBy(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the HttpStatusCode. </summary>
+        /// <summary>
+        /// httpStatusCode
+        /// Serialized Name: LogMetricsGroupBy.httpStatusCode
+        /// </summary>
         public static LogMetricsGroupBy HttpStatusCode { get; } = new LogMetricsGroupBy(HttpStatusCodeValue);
-
-        /// <summary> Gets the Protocol. </summary>
+        /// <summary>
+        /// protocol
+        /// Serialized Name: LogMetricsGroupBy.protocol
+        /// </summary>
         public static LogMetricsGroupBy Protocol { get; } = new LogMetricsGroupBy(ProtocolValue);
-
-        /// <summary> Gets the CacheStatus. </summary>
+        /// <summary>
+        /// cacheStatus
+        /// Serialized Name: LogMetricsGroupBy.cacheStatus
+        /// </summary>
         public static LogMetricsGroupBy CacheStatus { get; } = new LogMetricsGroupBy(CacheStatusValue);
-
-        /// <summary> Gets the CountryOrRegion. </summary>
+        /// <summary>
+        /// countryOrRegion
+        /// Serialized Name: LogMetricsGroupBy.countryOrRegion
+        /// </summary>
         public static LogMetricsGroupBy CountryOrRegion { get; } = new LogMetricsGroupBy(CountryOrRegionValue);
-
-        /// <summary> Gets the CustomDomain. </summary>
+        /// <summary>
+        /// customDomain
+        /// Serialized Name: LogMetricsGroupBy.customDomain
+        /// </summary>
         public static LogMetricsGroupBy CustomDomain { get; } = new LogMetricsGroupBy(CustomDomainValue);
-
         /// <summary> Determines if two <see cref="LogMetricsGroupBy"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogMetricsGroupBy left, LogMetricsGroupBy right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="LogMetricsGroupBy"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogMetricsGroupBy left, LogMetricsGroupBy right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="LogMetricsGroupBy"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogMetricsGroupBy"/>. </summary>
         public static implicit operator LogMetricsGroupBy(string value) => new LogMetricsGroupBy(value);
 
-        /// <summary> Converts a string to a <see cref="LogMetricsGroupBy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator LogMetricsGroupBy?(string value) => value == null ? null : new LogMetricsGroupBy(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogMetricsGroupBy other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(LogMetricsGroupBy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

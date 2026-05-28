@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public readonly partial struct ManagedResourcesNetworkAccessType : IEquatable<ManagedResourcesNetworkAccessType>
     {
         private readonly string _value;
-        /// <summary> Managed resources will be deployed with public network access enabled. </summary>
-        private const string PublicValue = "Public";
-        /// <summary> Managed resources will be deployed with public network access disabled. </summary>
-        private const string PrivateValue = "Private";
 
         /// <summary> Initializes a new instance of <see cref="ManagedResourcesNetworkAccessType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedResourcesNetworkAccessType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string PublicValue = "Public";
+        private const string PrivateValue = "Private";
 
         /// <summary> Managed resources will be deployed with public network access enabled. </summary>
         public static ManagedResourcesNetworkAccessType Public { get; } = new ManagedResourcesNetworkAccessType(PublicValue);
-
         /// <summary> Managed resources will be deployed with public network access disabled. </summary>
         public static ManagedResourcesNetworkAccessType Private { get; } = new ManagedResourcesNetworkAccessType(PrivateValue);
-
         /// <summary> Determines if two <see cref="ManagedResourcesNetworkAccessType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedResourcesNetworkAccessType left, ManagedResourcesNetworkAccessType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ManagedResourcesNetworkAccessType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedResourcesNetworkAccessType left, ManagedResourcesNetworkAccessType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ManagedResourcesNetworkAccessType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedResourcesNetworkAccessType"/>. </summary>
         public static implicit operator ManagedResourcesNetworkAccessType(string value) => new ManagedResourcesNetworkAccessType(value);
 
-        /// <summary> Converts a string to a <see cref="ManagedResourcesNetworkAccessType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ManagedResourcesNetworkAccessType?(string value) => value == null ? null : new ManagedResourcesNetworkAccessType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedResourcesNetworkAccessType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ManagedResourcesNetworkAccessType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

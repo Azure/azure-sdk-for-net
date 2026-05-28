@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -15,67 +14,47 @@ namespace Azure.ResourceManager.BotService.Models
     public readonly partial struct BotServiceKind : IEquatable<BotServiceKind>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="BotServiceKind"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BotServiceKind(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string SdkValue = "sdk";
         private const string DesignerValue = "designer";
         private const string BotValue = "bot";
         private const string FunctionValue = "function";
         private const string AzurebotValue = "azurebot";
 
-        /// <summary> Initializes a new instance of <see cref="BotServiceKind"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BotServiceKind(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Sdk. </summary>
+        /// <summary> sdk. </summary>
         public static BotServiceKind Sdk { get; } = new BotServiceKind(SdkValue);
-
-        /// <summary> Gets the Designer. </summary>
+        /// <summary> designer. </summary>
         public static BotServiceKind Designer { get; } = new BotServiceKind(DesignerValue);
-
-        /// <summary> Gets the Bot. </summary>
+        /// <summary> bot. </summary>
         public static BotServiceKind Bot { get; } = new BotServiceKind(BotValue);
-
-        /// <summary> Gets the Function. </summary>
+        /// <summary> function. </summary>
         public static BotServiceKind Function { get; } = new BotServiceKind(FunctionValue);
-
-        /// <summary> Gets the Azurebot. </summary>
+        /// <summary> azurebot. </summary>
         public static BotServiceKind Azurebot { get; } = new BotServiceKind(AzurebotValue);
-
         /// <summary> Determines if two <see cref="BotServiceKind"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BotServiceKind left, BotServiceKind right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BotServiceKind"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BotServiceKind left, BotServiceKind right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BotServiceKind"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BotServiceKind"/>. </summary>
         public static implicit operator BotServiceKind(string value) => new BotServiceKind(value);
 
-        /// <summary> Converts a string to a <see cref="BotServiceKind"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BotServiceKind?(string value) => value == null ? null : new BotServiceKind(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BotServiceKind other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BotServiceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

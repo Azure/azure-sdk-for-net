@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary></summary>
-    internal partial class ServiceBusNamespaceOperationSource : IOperationSource<ServiceBusNamespaceResource>
+    internal class ServiceBusNamespaceOperationSource : IOperationSource<ServiceBusNamespaceResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ServiceBusNamespaceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ServiceBusNamespaceResource IOperationSource<ServiceBusNamespaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ServiceBusNamespaceData data = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ServiceBusNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceBusContext.Default);
             return new ServiceBusNamespaceResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ServiceBusNamespaceResource> IOperationSource<ServiceBusNamespaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ServiceBusNamespaceData data = ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ServiceBusNamespaceResource(_client, data);
+            var data = ModelReaderWriter.Read<ServiceBusNamespaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceBusContext.Default);
+            return await Task.FromResult(new ServiceBusNamespaceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

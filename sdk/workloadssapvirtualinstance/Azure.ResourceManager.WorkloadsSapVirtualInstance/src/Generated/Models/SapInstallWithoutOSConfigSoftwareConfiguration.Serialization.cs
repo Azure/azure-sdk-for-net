@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.WorkloadsSapVirtualInstance;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    /// <summary> The SAP Software configuration Input when the software is to be installed by service without OS Configurations. </summary>
-    public partial class SapInstallWithoutOSConfigSoftwareConfiguration : SapSoftwareConfiguration, IJsonModel<SapInstallWithoutOSConfigSoftwareConfiguration>
+    public partial class SapInstallWithoutOSConfigSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<SapInstallWithoutOSConfigSoftwareConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/> for deserialization. </summary>
-        internal SapInstallWithoutOSConfigSoftwareConfiguration()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SapSoftwareConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SapInstallWithoutOSConfigSoftwareConfiguration IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (SapInstallWithoutOSConfigSoftwareConfiguration)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("bomUrl"u8);
             writer.WriteStringValue(BomUri.AbsoluteUri);
@@ -93,80 +48,108 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SapInstallWithoutOSConfigSoftwareConfiguration IJsonModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SapInstallWithoutOSConfigSoftwareConfiguration)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SapSoftwareConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SapInstallWithoutOSConfigSoftwareConfiguration IJsonModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SapInstallWithoutOSConfigSoftwareConfiguration DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static SapInstallWithoutOSConfigSoftwareConfiguration DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SapSoftwareInstallationType softwareInstallationType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri bomUri = default;
+            Uri bomUrl = default;
             string sapBitsStorageAccountId = default;
             string softwareVersion = default;
             HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = default;
-            foreach (var prop in element.EnumerateObject())
+            SapSoftwareInstallationType softwareInstallationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("softwareInstallationType"u8))
+                if (property.NameEquals("bomUrl"u8))
                 {
-                    softwareInstallationType = new SapSoftwareInstallationType(prop.Value.GetString());
+                    bomUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("bomUrl"u8))
+                if (property.NameEquals("sapBitsStorageAccountId"u8))
                 {
-                    bomUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    sapBitsStorageAccountId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sapBitsStorageAccountId"u8))
+                if (property.NameEquals("softwareVersion"u8))
                 {
-                    sapBitsStorageAccountId = prop.Value.GetString();
+                    softwareVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("softwareVersion"u8))
+                if (property.NameEquals("highAvailabilitySoftwareConfiguration"u8))
                 {
-                    softwareVersion = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("highAvailabilitySoftwareConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    highAvailabilitySoftwareConfiguration = HighAvailabilitySoftwareConfiguration.DeserializeHighAvailabilitySoftwareConfiguration(prop.Value, options);
+                    highAvailabilitySoftwareConfiguration = HighAvailabilitySoftwareConfiguration.DeserializeHighAvailabilitySoftwareConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("softwareInstallationType"u8))
+                {
+                    softwareInstallationType = new SapSoftwareInstallationType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new SapInstallWithoutOSConfigSoftwareConfiguration(
                 softwareInstallationType,
-                additionalBinaryDataProperties,
-                bomUri,
+                serializedAdditionalRawData,
+                bomUrl,
                 sapBitsStorageAccountId,
                 softwareVersion,
                 highAvailabilitySoftwareConfiguration);
         }
+
+        BinaryData IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SapInstallWithoutOSConfigSoftwareConfiguration IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

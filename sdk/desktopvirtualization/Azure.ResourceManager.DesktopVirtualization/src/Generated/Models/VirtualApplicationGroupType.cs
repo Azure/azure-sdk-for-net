@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct VirtualApplicationGroupType : IEquatable<VirtualApplicationGroupType>
     {
         private readonly string _value;
-        /// <summary> Application group is Remote and can launch individual applications without a Desktop. </summary>
-        private const string RemoteAppValue = "RemoteApp";
-        /// <summary> Application Group delivers a full expected Desktop experience. </summary>
-        private const string DesktopValue = "Desktop";
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplicationGroupType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualApplicationGroupType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Application group is Remote and can launch individual applications without a Desktop. </summary>
+        private const string RemoteAppValue = "RemoteApp";
+        private const string DesktopValue = "Desktop";
+
+        /// <summary> RemoteApp. </summary>
         public static VirtualApplicationGroupType RemoteApp { get; } = new VirtualApplicationGroupType(RemoteAppValue);
-
-        /// <summary> Application Group delivers a full expected Desktop experience. </summary>
+        /// <summary> Desktop. </summary>
         public static VirtualApplicationGroupType Desktop { get; } = new VirtualApplicationGroupType(DesktopValue);
-
         /// <summary> Determines if two <see cref="VirtualApplicationGroupType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualApplicationGroupType left, VirtualApplicationGroupType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="VirtualApplicationGroupType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualApplicationGroupType left, VirtualApplicationGroupType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="VirtualApplicationGroupType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualApplicationGroupType"/>. </summary>
         public static implicit operator VirtualApplicationGroupType(string value) => new VirtualApplicationGroupType(value);
 
-        /// <summary> Converts a string to a <see cref="VirtualApplicationGroupType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator VirtualApplicationGroupType?(string value) => value == null ? null : new VirtualApplicationGroupType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualApplicationGroupType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(VirtualApplicationGroupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public readonly partial struct DataReplicationHealthStatus : IEquatable<DataReplicationHealthStatus>
     {
         private readonly string _value;
-        /// <summary> Healthy Status. </summary>
-        private const string NormalValue = "Normal";
-        /// <summary> Warning Status. </summary>
-        private const string WarningValue = "Warning";
-        /// <summary> Critical Status. </summary>
-        private const string CriticalValue = "Critical";
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationHealthStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataReplicationHealthStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string NormalValue = "Normal";
+        private const string WarningValue = "Warning";
+        private const string CriticalValue = "Critical";
 
         /// <summary> Healthy Status. </summary>
         public static DataReplicationHealthStatus Normal { get; } = new DataReplicationHealthStatus(NormalValue);
-
         /// <summary> Warning Status. </summary>
         public static DataReplicationHealthStatus Warning { get; } = new DataReplicationHealthStatus(WarningValue);
-
         /// <summary> Critical Status. </summary>
         public static DataReplicationHealthStatus Critical { get; } = new DataReplicationHealthStatus(CriticalValue);
-
         /// <summary> Determines if two <see cref="DataReplicationHealthStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataReplicationHealthStatus left, DataReplicationHealthStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataReplicationHealthStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataReplicationHealthStatus left, DataReplicationHealthStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataReplicationHealthStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationHealthStatus"/>. </summary>
         public static implicit operator DataReplicationHealthStatus(string value) => new DataReplicationHealthStatus(value);
 
-        /// <summary> Converts a string to a <see cref="DataReplicationHealthStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataReplicationHealthStatus?(string value) => value == null ? null : new DataReplicationHealthStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataReplicationHealthStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataReplicationHealthStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -10,55 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> HyperVToAzStackHCI protected disk properties. </summary>
-    public partial class HyperVToAzStackHciProtectedDiskProperties : IJsonModel<HyperVToAzStackHciProtectedDiskProperties>
+    public partial class HyperVToAzStackHciProtectedDiskProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciProtectedDiskProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HyperVToAzStackHciProtectedDiskProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHyperVToAzStackHciProtectedDiskProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedDiskProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciProtectedDiskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedDiskProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVToAzStackHciProtectedDiskProperties IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVToAzStackHciProtectedDiskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,11 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedDiskProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(StorageContainerId))
             {
                 writer.WritePropertyName("storageContainerId"u8);
@@ -145,15 +104,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("diskPhysicalSectorSize"u8);
                 writer.WriteNumberValue(DiskPhysicalSectorSize.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -162,27 +121,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVToAzStackHciProtectedDiskProperties IJsonModel<HyperVToAzStackHciProtectedDiskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HyperVToAzStackHciProtectedDiskProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HyperVToAzStackHciProtectedDiskProperties IJsonModel<HyperVToAzStackHciProtectedDiskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedDiskProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVToAzStackHciProtectedDiskProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HyperVToAzStackHciProtectedDiskProperties DeserializeHyperVToAzStackHciProtectedDiskProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HyperVToAzStackHciProtectedDiskProperties DeserializeHyperVToAzStackHciProtectedDiskProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -201,112 +155,114 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             long? diskBlockSize = default;
             long? diskLogicalSectorSize = default;
             long? diskPhysicalSectorSize = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("storageContainerId"u8))
+                if (property.NameEquals("storageContainerId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageContainerId = new ResourceIdentifier(prop.Value.GetString());
+                    storageContainerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("storageContainerLocalPath"u8))
+                if (property.NameEquals("storageContainerLocalPath"u8))
                 {
-                    storageContainerLocalPath = prop.Value.GetString();
+                    storageContainerLocalPath = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceDiskId"u8))
+                if (property.NameEquals("sourceDiskId"u8))
                 {
-                    sourceDiskId = prop.Value.GetString();
+                    sourceDiskId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceDiskName"u8))
+                if (property.NameEquals("sourceDiskName"u8))
                 {
-                    sourceDiskName = prop.Value.GetString();
+                    sourceDiskName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("seedDiskName"u8))
+                if (property.NameEquals("seedDiskName"u8))
                 {
-                    seedDiskName = prop.Value.GetString();
+                    seedDiskName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("testMigrateDiskName"u8))
+                if (property.NameEquals("testMigrateDiskName"u8))
                 {
-                    testMigrateDiskName = prop.Value.GetString();
+                    testMigrateDiskName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("migrateDiskName"u8))
+                if (property.NameEquals("migrateDiskName"u8))
                 {
-                    migrateDiskName = prop.Value.GetString();
+                    migrateDiskName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isOsDisk"u8))
+                if (property.NameEquals("isOsDisk"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isOSDisk = prop.Value.GetBoolean();
+                    isOSDisk = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("capacityInBytes"u8))
+                if (property.NameEquals("capacityInBytes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacityInBytes = prop.Value.GetInt64();
+                    capacityInBytes = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("isDynamic"u8))
+                if (property.NameEquals("isDynamic"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDynamic = prop.Value.GetBoolean();
+                    isDynamic = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("diskType"u8))
+                if (property.NameEquals("diskType"u8))
                 {
-                    diskType = prop.Value.GetString();
+                    diskType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("diskBlockSize"u8))
+                if (property.NameEquals("diskBlockSize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskBlockSize = prop.Value.GetInt64();
+                    diskBlockSize = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("diskLogicalSectorSize"u8))
+                if (property.NameEquals("diskLogicalSectorSize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskLogicalSectorSize = prop.Value.GetInt64();
+                    diskLogicalSectorSize = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("diskPhysicalSectorSize"u8))
+                if (property.NameEquals("diskPhysicalSectorSize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskPhysicalSectorSize = prop.Value.GetInt64();
+                    diskPhysicalSectorSize = property.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVToAzStackHciProtectedDiskProperties(
                 storageContainerId,
                 storageContainerLocalPath,
@@ -322,7 +278,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 diskBlockSize,
                 diskLogicalSectorSize,
                 diskPhysicalSectorSize,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedDiskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HyperVToAzStackHciProtectedDiskProperties IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHyperVToAzStackHciProtectedDiskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedDiskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVToAzStackHciProtectedDiskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

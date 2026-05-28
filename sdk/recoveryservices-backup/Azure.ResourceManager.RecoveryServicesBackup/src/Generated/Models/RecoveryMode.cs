@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct RecoveryMode : IEquatable<RecoveryMode>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryMode"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecoveryMode(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string FileRecoveryValue = "FileRecovery";
         private const string WorkloadRecoveryValue = "WorkloadRecovery";
@@ -22,64 +29,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string RecoveryUsingSnapshotValue = "RecoveryUsingSnapshot";
         private const string SnapshotAttachAndRecoverValue = "SnapshotAttachAndRecover";
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RecoveryMode(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static RecoveryMode Invalid { get; } = new RecoveryMode(InvalidValue);
-
-        /// <summary> Gets the FileRecovery. </summary>
+        /// <summary> FileRecovery. </summary>
         public static RecoveryMode FileRecovery { get; } = new RecoveryMode(FileRecoveryValue);
-
-        /// <summary> Gets the WorkloadRecovery. </summary>
+        /// <summary> WorkloadRecovery. </summary>
         public static RecoveryMode WorkloadRecovery { get; } = new RecoveryMode(WorkloadRecoveryValue);
-
-        /// <summary> Gets the SnapshotAttach. </summary>
+        /// <summary> SnapshotAttach. </summary>
         public static RecoveryMode SnapshotAttach { get; } = new RecoveryMode(SnapshotAttachValue);
-
-        /// <summary> Gets the RecoveryUsingSnapshot. </summary>
+        /// <summary> RecoveryUsingSnapshot. </summary>
         public static RecoveryMode RecoveryUsingSnapshot { get; } = new RecoveryMode(RecoveryUsingSnapshotValue);
-
-        /// <summary> Gets the SnapshotAttachAndRecover. </summary>
+        /// <summary> SnapshotAttachAndRecover. </summary>
         public static RecoveryMode SnapshotAttachAndRecover { get; } = new RecoveryMode(SnapshotAttachAndRecoverValue);
-
         /// <summary> Determines if two <see cref="RecoveryMode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryMode left, RecoveryMode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RecoveryMode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryMode left, RecoveryMode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RecoveryMode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryMode"/>. </summary>
         public static implicit operator RecoveryMode(string value) => new RecoveryMode(value);
 
-        /// <summary> Converts a string to a <see cref="RecoveryMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RecoveryMode?(string value) => value == null ? null : new RecoveryMode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryMode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RecoveryMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

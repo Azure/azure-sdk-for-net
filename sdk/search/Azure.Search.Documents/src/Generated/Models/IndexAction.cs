@@ -5,36 +5,31 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
+    /// <summary> Represents an index action that operates on a document. </summary>
     internal partial class IndexAction
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="IndexAction"/>. </summary>
         public IndexAction()
         {
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IndexAction"/>. </summary>
         /// <param name="actionType"> The operation to perform on a document in an indexing batch. </param>
-        /// <param name="additionalProperties"></param>
-        internal IndexAction(IndexActionType? actionType, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal IndexAction(IndexActionType? actionType, IDictionary<string, object> additionalProperties)
         {
             ActionType = actionType;
-            _additionalBinaryDataProperties = additionalProperties;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> The operation to perform on a document in an indexing batch. </summary>
         public IndexActionType? ActionType { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

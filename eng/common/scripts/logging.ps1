@@ -94,9 +94,6 @@ function LogGroupStart() {
   elseif (Test-SupportsGitHubLogging) {
     Write-Host "::group::$args"
   }
-  else {
-    Write-Host "> $args"
-  }
 }
 
 function LogGroupEnd() {

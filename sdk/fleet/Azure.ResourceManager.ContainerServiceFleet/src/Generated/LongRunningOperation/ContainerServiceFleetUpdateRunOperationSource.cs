@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    /// <summary></summary>
-    internal partial class ContainerServiceFleetUpdateRunOperationSource : IOperationSource<ContainerServiceFleetUpdateRunResource>
+    internal class ContainerServiceFleetUpdateRunOperationSource : IOperationSource<ContainerServiceFleetUpdateRunResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ContainerServiceFleetUpdateRunOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ContainerServiceFleetUpdateRunResource IOperationSource<ContainerServiceFleetUpdateRunResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ContainerServiceFleetUpdateRunData data = ContainerServiceFleetUpdateRunData.DeserializeContainerServiceFleetUpdateRunData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ContainerServiceFleetUpdateRunData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
             return new ContainerServiceFleetUpdateRunResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ContainerServiceFleetUpdateRunResource> IOperationSource<ContainerServiceFleetUpdateRunResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ContainerServiceFleetUpdateRunData data = ContainerServiceFleetUpdateRunData.DeserializeContainerServiceFleetUpdateRunData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ContainerServiceFleetUpdateRunResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerServiceFleetUpdateRunData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerServiceFleetContext.Default);
+            return await Task.FromResult(new ContainerServiceFleetUpdateRunResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

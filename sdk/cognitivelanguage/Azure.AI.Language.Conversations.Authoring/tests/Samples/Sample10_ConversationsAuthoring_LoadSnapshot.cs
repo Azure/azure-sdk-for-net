@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -19,16 +19,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshot
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
-
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            Operation operation = trainedModelClient.LoadSnapshot(WaitUntil.Completed, projectName, trainedModelLabel);
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-            // Extract the operation-location header
+            Operation operation = trainedModelClient.LoadSnapshot(
+                waitUntil: WaitUntil.Completed
+            );
+
+             // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
@@ -42,14 +44,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshotAsync
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
-
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            Operation operation = await trainedModelClient.LoadSnapshotAsync(WaitUntil.Completed, projectName, trainedModelLabel);
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+            Operation operation = await trainedModelClient.LoadSnapshotAsync(
+                waitUntil: WaitUntil.Completed);
 
             // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;

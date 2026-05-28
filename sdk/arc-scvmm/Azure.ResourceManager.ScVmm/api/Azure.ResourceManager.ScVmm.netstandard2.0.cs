@@ -581,7 +581,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.AllocationMethod Dynamic { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.AllocationMethod Static { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.AllocationMethod other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.AllocationMethod left, Azure.ResourceManager.ScVmm.Models.AllocationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.AllocationMethod (string value) { throw null; }
@@ -631,7 +633,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.CreateDiffDisk False { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.CreateDiffDisk True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.CreateDiffDisk other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.CreateDiffDisk left, Azure.ResourceManager.ScVmm.Models.CreateDiffDisk right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.CreateDiffDisk (string value) { throw null; }
@@ -647,7 +651,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.DeleteFromHost False { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.DeleteFromHost True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.DeleteFromHost other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.DeleteFromHost left, Azure.ResourceManager.ScVmm.Models.DeleteFromHost right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.DeleteFromHost (string value) { throw null; }
@@ -663,7 +669,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.DynamicMemoryEnabled False { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.DynamicMemoryEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.DynamicMemoryEnabled other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.DynamicMemoryEnabled left, Azure.ResourceManager.ScVmm.Models.DynamicMemoryEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.DynamicMemoryEnabled (string value) { throw null; }
@@ -679,7 +687,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.IsCustomizable False { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.IsCustomizable True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.IsCustomizable other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.IsCustomizable left, Azure.ResourceManager.ScVmm.Models.IsCustomizable right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.IsCustomizable (string value) { throw null; }
@@ -695,7 +705,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.IsHighlyAvailable False { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.IsHighlyAvailable True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.IsHighlyAvailable other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.IsHighlyAvailable left, Azure.ResourceManager.ScVmm.Models.IsHighlyAvailable right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.IsHighlyAvailable (string value) { throw null; }
@@ -711,7 +723,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.LimitCpuForMigration False { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.LimitCpuForMigration True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.LimitCpuForMigration other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.LimitCpuForMigration left, Azure.ResourceManager.ScVmm.Models.LimitCpuForMigration right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.LimitCpuForMigration (string value) { throw null; }
@@ -781,7 +795,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.ScVmmForceDeletion False { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.ScVmmForceDeletion True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.ScVmmForceDeletion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.ScVmmForceDeletion left, Azure.ResourceManager.ScVmm.Models.ScVmmForceDeletion right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.ScVmmForceDeletion (string value) { throw null; }
@@ -928,7 +944,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.ScVmmOSType Other { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.ScVmmOSType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.ScVmmOSType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.ScVmmOSType left, Azure.ResourceManager.ScVmm.Models.ScVmmOSType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.ScVmmOSType (string value) { throw null; }
@@ -945,7 +963,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningAction Repair { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningAction Uninstall { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningAction left, Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningAction (string value) { throw null; }
@@ -967,7 +987,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningState left, Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.ScVmmProvisioningState (string value) { throw null; }
@@ -1079,7 +1101,9 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static Azure.ResourceManager.ScVmm.Models.SkipShutdown False { get { throw null; } }
         public static Azure.ResourceManager.ScVmm.Models.SkipShutdown True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ScVmm.Models.SkipShutdown other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ScVmm.Models.SkipShutdown left, Azure.ResourceManager.ScVmm.Models.SkipShutdown right) { throw null; }
         public static implicit operator Azure.ResourceManager.ScVmm.Models.SkipShutdown (string value) { throw null; }

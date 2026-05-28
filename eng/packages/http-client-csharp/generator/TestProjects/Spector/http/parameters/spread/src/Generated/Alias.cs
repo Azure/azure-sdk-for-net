@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,13 +12,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Parameters.Spread._Alias
+namespace Parameters.Spread
 {
     public partial class Alias
     {
         protected Alias() => throw null;
-
-        internal Alias(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

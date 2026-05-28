@@ -74,7 +74,7 @@ namespace Azure.Generator.Management.Tests.Common
                 return;
 
             var model = (T?)strategy.Read(serviceResponse, ModelInstance, options);
-            Assert.That(model, Is.Not.Null);
+            Assert.NotNull(model);
             VerifyModel(model!, format);
             var data = strategy.Write(model!, options);
             string roundTrip = data.ToString();
@@ -83,7 +83,7 @@ namespace Azure.Generator.Management.Tests.Common
             AssertJsonEquivalency(expectedSerializedString, roundTrip);
 
             var model2 = (T?)strategy.Read(roundTrip, ModelInstance, options);
-            Assert.That(model2, Is.Not.Null);
+            Assert.NotNull(model2);
             CompareModels(model!, model2!, format);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Generator.Management.Tests.Common
                     AssertJsonArrayEquivalency(expected, result);
                     break;
                 default:
-                    Assert.That(result.ToString(), Is.EqualTo(expected.ToString()));
+                    Assert.AreEqual(expected.ToString(), result.ToString());
                     break;
             }
         }
@@ -228,7 +228,7 @@ namespace Azure.Generator.Management.Tests.Common
                 }
                 finally
                 {
-                    Assert.That(gotException, Is.True);
+                    Assert.IsTrue(gotException);
                 }
 
                 gotException = false;
@@ -243,7 +243,7 @@ namespace Azure.Generator.Management.Tests.Common
                 }
                 finally
                 {
-                    Assert.That(gotException, Is.True);
+                    Assert.IsTrue(gotException);
                 }
             }
         }
@@ -263,7 +263,7 @@ namespace Azure.Generator.Management.Tests.Common
                 {
                     exceptionCaught = true;
                 }
-                Assert.That(exceptionCaught, Is.True, "Expected FormatException to be thrown when deserializing wire format as json");
+                Assert.IsTrue(exceptionCaught, "Expected FormatException to be thrown when deserializing wire format as json");
             }
         }
     }

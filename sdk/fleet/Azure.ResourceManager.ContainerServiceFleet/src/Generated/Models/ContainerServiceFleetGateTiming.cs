@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public readonly partial struct ContainerServiceFleetGateTiming : IEquatable<ContainerServiceFleetGateTiming>
     {
         private readonly string _value;
-        /// <summary> The Gate is before the target. </summary>
-        private const string BeforeValue = "Before";
-        /// <summary> The Gate is after the target. </summary>
-        private const string AfterValue = "After";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateTiming"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceFleetGateTiming(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string BeforeValue = "Before";
+        private const string AfterValue = "After";
 
         /// <summary> The Gate is before the target. </summary>
         public static ContainerServiceFleetGateTiming Before { get; } = new ContainerServiceFleetGateTiming(BeforeValue);
-
         /// <summary> The Gate is after the target. </summary>
         public static ContainerServiceFleetGateTiming After { get; } = new ContainerServiceFleetGateTiming(AfterValue);
-
         /// <summary> Determines if two <see cref="ContainerServiceFleetGateTiming"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceFleetGateTiming left, ContainerServiceFleetGateTiming right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerServiceFleetGateTiming"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceFleetGateTiming left, ContainerServiceFleetGateTiming right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerServiceFleetGateTiming"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceFleetGateTiming"/>. </summary>
         public static implicit operator ContainerServiceFleetGateTiming(string value) => new ContainerServiceFleetGateTiming(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerServiceFleetGateTiming"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceFleetGateTiming?(string value) => value == null ? null : new ContainerServiceFleetGateTiming(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceFleetGateTiming other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerServiceFleetGateTiming other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

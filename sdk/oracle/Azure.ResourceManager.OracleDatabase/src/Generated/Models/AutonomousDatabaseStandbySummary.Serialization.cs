@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.OracleDatabase;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Autonomous Disaster Recovery standby database details. </summary>
-    public partial class AutonomousDatabaseStandbySummary : IJsonModel<AutonomousDatabaseStandbySummary>
+    public partial class AutonomousDatabaseStandbySummary : IUtf8JsonSerializable, IJsonModel<AutonomousDatabaseStandbySummary>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutonomousDatabaseStandbySummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseStandbySummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAutonomousDatabaseStandbySummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutonomousDatabaseStandbySummary)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutonomousDatabaseStandbySummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseStandbySummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AutonomousDatabaseStandbySummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AutonomousDatabaseStandbySummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AutonomousDatabaseStandbySummary IPersistableModel<AutonomousDatabaseStandbySummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AutonomousDatabaseStandbySummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutonomousDatabaseStandbySummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseStandbySummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseStandbySummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutonomousDatabaseStandbySummary)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(LagTimeInSeconds))
             {
                 writer.WritePropertyName("lagTimeInSeconds"u8);
@@ -99,15 +59,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("timeDisasterRecoveryRoleChanged"u8);
                 writer.WriteStringValue(DisasterRecoveryRoleChangedOn.Value, "O");
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,27 +76,22 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AutonomousDatabaseStandbySummary IJsonModel<AutonomousDatabaseStandbySummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AutonomousDatabaseStandbySummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AutonomousDatabaseStandbySummary IJsonModel<AutonomousDatabaseStandbySummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseStandbySummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseStandbySummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutonomousDatabaseStandbySummary)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutonomousDatabaseStandbySummary(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AutonomousDatabaseStandbySummary DeserializeAutonomousDatabaseStandbySummary(JsonElement element, ModelReaderWriterOptions options)
+        internal static AutonomousDatabaseStandbySummary DeserializeAutonomousDatabaseStandbySummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -144,64 +99,97 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? lagTimeInSeconds = default;
             AutonomousDatabaseLifecycleState? lifecycleState = default;
             string lifecycleDetails = default;
-            DateTimeOffset? dataGuardRoleChangedOn = default;
-            DateTimeOffset? disasterRecoveryRoleChangedOn = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            DateTimeOffset? timeDataGuardRoleChanged = default;
+            DateTimeOffset? timeDisasterRecoveryRoleChanged = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("lagTimeInSeconds"u8))
+                if (property.NameEquals("lagTimeInSeconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lagTimeInSeconds = prop.Value.GetInt32();
+                    lagTimeInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("lifecycleState"u8))
+                if (property.NameEquals("lifecycleState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lifecycleState = new AutonomousDatabaseLifecycleState(prop.Value.GetString());
+                    lifecycleState = new AutonomousDatabaseLifecycleState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("lifecycleDetails"u8))
+                if (property.NameEquals("lifecycleDetails"u8))
                 {
-                    lifecycleDetails = prop.Value.GetString();
+                    lifecycleDetails = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("timeDataGuardRoleChanged"u8))
+                if (property.NameEquals("timeDataGuardRoleChanged"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataGuardRoleChangedOn = prop.Value.GetDateTimeOffset("O");
+                    timeDataGuardRoleChanged = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("timeDisasterRecoveryRoleChanged"u8))
+                if (property.NameEquals("timeDisasterRecoveryRoleChanged"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disasterRecoveryRoleChangedOn = prop.Value.GetDateTimeOffset("O");
+                    timeDisasterRecoveryRoleChanged = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutonomousDatabaseStandbySummary(
                 lagTimeInSeconds,
                 lifecycleState,
                 lifecycleDetails,
-                dataGuardRoleChangedOn,
-                disasterRecoveryRoleChangedOn,
-                additionalBinaryDataProperties);
+                timeDataGuardRoleChanged,
+                timeDisasterRecoveryRoleChanged,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutonomousDatabaseStandbySummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseStandbySummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutonomousDatabaseStandbySummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutonomousDatabaseStandbySummary IPersistableModel<AutonomousDatabaseStandbySummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseStandbySummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAutonomousDatabaseStandbySummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutonomousDatabaseStandbySummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutonomousDatabaseStandbySummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

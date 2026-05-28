@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
+using NUnit.Framework;
+using System.Collections.Generic;
+using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Storage.Models;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Storage.Models;
-using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests
 {

@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.HardwareSecurityModules;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Backup and Restore Common properties. </summary>
-    public partial class BackupRestoreRequestBaseProperties : IJsonModel<BackupRestoreRequestBaseProperties>
+    public partial class BackupRestoreRequestBaseProperties : IUtf8JsonSerializable, IJsonModel<BackupRestoreRequestBaseProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupRestoreRequestBaseProperties"/> for deserialization. </summary>
-        internal BackupRestoreRequestBaseProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupRestoreRequestBaseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupRestoreRequestBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupRestoreRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBackupRestoreRequestBaseProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupRestoreRequestBaseProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupRestoreRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupRestoreRequestBaseProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupRestoreRequestBaseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupRestoreRequestBaseProperties IPersistableModel<BackupRestoreRequestBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupRestoreRequestBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupRestoreRequestBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupRestoreRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupRestoreRequestBaseProperties)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("azureStorageBlobContainerUri"u8);
             writer.WriteStringValue(AzureStorageBlobContainerUri.AbsoluteUri);
             if (Optional.IsDefined(Token))
@@ -86,15 +41,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -103,52 +58,80 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupRestoreRequestBaseProperties IJsonModel<BackupRestoreRequestBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupRestoreRequestBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BackupRestoreRequestBaseProperties IJsonModel<BackupRestoreRequestBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupRestoreRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupRestoreRequestBaseProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBackupRestoreRequestBaseProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupRestoreRequestBaseProperties DeserializeBackupRestoreRequestBaseProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static BackupRestoreRequestBaseProperties DeserializeBackupRestoreRequestBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri azureStorageBlobContainerUri = default;
             string token = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("azureStorageBlobContainerUri"u8))
+                if (property.NameEquals("azureStorageBlobContainerUri"u8))
                 {
-                    azureStorageBlobContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    azureStorageBlobContainerUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("token"u8))
+                if (property.NameEquals("token"u8))
                 {
-                    token = prop.Value.GetString();
+                    token = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new BackupRestoreRequestBaseProperties(azureStorageBlobContainerUri, token, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BackupRestoreRequestBaseProperties(azureStorageBlobContainerUri, token, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupRestoreRequestBaseProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupRestoreRequestBaseProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupRestoreRequestBaseProperties IPersistableModel<BackupRestoreRequestBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupRestoreRequestBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBackupRestoreRequestBaseProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupRestoreRequestBaseProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupRestoreRequestBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

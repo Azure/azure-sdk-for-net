@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    /// <summary></summary>
-    internal partial class SqlVmOperationSource : IOperationSource<SqlVmResource>
+    internal class SqlVmOperationSource : IOperationSource<SqlVmResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal SqlVmOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         SqlVmResource IOperationSource<SqlVmResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SqlVmData data = SqlVmData.DeserializeSqlVmData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<SqlVmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
             return new SqlVmResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<SqlVmResource> IOperationSource<SqlVmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SqlVmData data = SqlVmData.DeserializeSqlVmData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SqlVmResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlVmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
+            return await Task.FromResult(new SqlVmResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

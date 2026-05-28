@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.NetworkCloud;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> SecretRotationStatus represents the status of a secret rotation. </summary>
-    public partial class SecretRotationStatus : IJsonModel<SecretRotationStatus>
+    public partial class SecretRotationStatus : IUtf8JsonSerializable, IJsonModel<SecretRotationStatus>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecretRotationStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SecretRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSecretRotationStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecretRotationStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretRotationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SecretRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SecretRotationStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SecretRotationStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SecretRotationStatus IPersistableModel<SecretRotationStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SecretRotationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecretRotationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecretRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecretRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecretRotationStatus)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(ExpirePeriodDays))
             {
                 writer.WritePropertyName("expirePeriodDays"u8);
@@ -99,15 +59,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("secretType"u8);
                 writer.WriteStringValue(SecretType);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,92 +76,120 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SecretRotationStatus IJsonModel<SecretRotationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecretRotationStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecretRotationStatus IJsonModel<SecretRotationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecretRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecretRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecretRotationStatus)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecretRotationStatus(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SecretRotationStatus DeserializeSecretRotationStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecretRotationStatus DeserializeSecretRotationStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             long? expirePeriodDays = default;
-            DateTimeOffset? lastRotationOn = default;
+            DateTimeOffset? lastRotationTime = default;
             long? rotationPeriodDays = default;
             SecretArchiveReference secretArchiveReference = default;
             string secretType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("expirePeriodDays"u8))
+                if (property.NameEquals("expirePeriodDays"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expirePeriodDays = prop.Value.GetInt64();
+                    expirePeriodDays = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("lastRotationTime"u8))
+                if (property.NameEquals("lastRotationTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRotationOn = prop.Value.GetDateTimeOffset("O");
+                    lastRotationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("rotationPeriodDays"u8))
+                if (property.NameEquals("rotationPeriodDays"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rotationPeriodDays = prop.Value.GetInt64();
+                    rotationPeriodDays = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("secretArchiveReference"u8))
+                if (property.NameEquals("secretArchiveReference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    secretArchiveReference = SecretArchiveReference.DeserializeSecretArchiveReference(prop.Value, options);
+                    secretArchiveReference = SecretArchiveReference.DeserializeSecretArchiveReference(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("secretType"u8))
+                if (property.NameEquals("secretType"u8))
                 {
-                    secretType = prop.Value.GetString();
+                    secretType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecretRotationStatus(
                 expirePeriodDays,
-                lastRotationOn,
+                lastRotationTime,
                 rotationPeriodDays,
                 secretArchiveReference,
                 secretType,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecretRotationStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecretRotationStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecretRotationStatus IPersistableModel<SecretRotationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSecretRotationStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecretRotationStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecretRotationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> DataflowOpenTelemetryAnonymousAuthentication properties. </summary>
-    public partial class DataflowOpenTelemetryAnonymousAuthentication : DataflowOpenTelemetryAuthentication, IJsonModel<DataflowOpenTelemetryAnonymousAuthentication>
+    public partial class DataflowOpenTelemetryAnonymousAuthentication : IUtf8JsonSerializable, IJsonModel<DataflowOpenTelemetryAnonymousAuthentication>
     {
-        /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryAnonymousAuthentication"/> for deserialization. </summary>
-        internal DataflowOpenTelemetryAnonymousAuthentication()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowOpenTelemetryAnonymousAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataflowOpenTelemetryAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataflowOpenTelemetryAnonymousAuthentication(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataflowOpenTelemetryAnonymousAuthentication)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataflowOpenTelemetryAnonymousAuthentication)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataflowOpenTelemetryAnonymousAuthentication IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataflowOpenTelemetryAnonymousAuthentication)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowOpenTelemetryAnonymousAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,62 +28,91 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowOpenTelemetryAnonymousAuthentication)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("anonymousSettings"u8);
             writer.WriteObjectValue(AnonymousSettings, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataflowOpenTelemetryAnonymousAuthentication IJsonModel<DataflowOpenTelemetryAnonymousAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataflowOpenTelemetryAnonymousAuthentication)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataflowOpenTelemetryAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataflowOpenTelemetryAnonymousAuthentication IJsonModel<DataflowOpenTelemetryAnonymousAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowOpenTelemetryAnonymousAuthentication)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataflowOpenTelemetryAnonymousAuthentication(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataflowOpenTelemetryAnonymousAuthentication DeserializeDataflowOpenTelemetryAnonymousAuthentication(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataflowOpenTelemetryAnonymousAuthentication DeserializeDataflowOpenTelemetryAnonymousAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataflowOpenTelemetryAuthenticationMethod @method = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataflowEndpointAuthenticationAnonymous anonymousSettings = default;
-            foreach (var prop in element.EnumerateObject())
+            DataflowOpenTelemetryAuthenticationMethod method = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("method"u8))
+                if (property.NameEquals("anonymousSettings"u8))
                 {
-                    @method = new DataflowOpenTelemetryAuthenticationMethod(prop.Value.GetString());
+                    anonymousSettings = DataflowEndpointAuthenticationAnonymous.DeserializeDataflowEndpointAuthenticationAnonymous(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("anonymousSettings"u8))
+                if (property.NameEquals("method"u8))
                 {
-                    anonymousSettings = DataflowEndpointAuthenticationAnonymous.DeserializeDataflowEndpointAuthenticationAnonymous(prop.Value, options);
+                    method = new DataflowOpenTelemetryAuthenticationMethod(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DataflowOpenTelemetryAnonymousAuthentication(@method, additionalBinaryDataProperties, anonymousSettings);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataflowOpenTelemetryAnonymousAuthentication(method, serializedAdditionalRawData, anonymousSettings);
         }
+
+        BinaryData IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataflowOpenTelemetryAnonymousAuthentication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataflowOpenTelemetryAnonymousAuthentication IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataflowOpenTelemetryAnonymousAuthentication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataflowOpenTelemetryAnonymousAuthentication)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataflowOpenTelemetryAnonymousAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

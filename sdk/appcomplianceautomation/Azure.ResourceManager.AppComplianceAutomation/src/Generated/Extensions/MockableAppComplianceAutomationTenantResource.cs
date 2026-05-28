@@ -8,40 +8,41 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppComplianceAutomation;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
+    /// <summary> A class to add extension methods to TenantResource. </summary>
     public partial class MockableAppComplianceAutomationTenantResource : ArmResource
     {
         private ClientDiagnostics _providerActionsClientDiagnostics;
-        private ProviderActions _providerActionsRestClient;
+        private ProviderActionsRestOperations _providerActionsRestClient;
 
-        /// <summary> Initializes a new instance of MockableAppComplianceAutomationTenantResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableAppComplianceAutomationTenantResource"/> class for mocking. </summary>
         protected MockableAppComplianceAutomationTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableAppComplianceAutomationTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableAppComplianceAutomationTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAppComplianceAutomationTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ProviderActionsClientDiagnostics => _providerActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ProviderActionsClientDiagnostics => _providerActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ProviderActionsRestOperations ProviderActionsRestClient => _providerActionsRestClient ??= new ProviderActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private ProviderActions ProviderActionsRestClient => _providerActionsRestClient ??= new ProviderActions(ProviderActionsClientDiagnostics, Pipeline, Endpoint, "2024-06-27");
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
 
-        /// <summary> Gets a collection of AppComplianceReports in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of AppComplianceReports and their operations over a AppComplianceReportResource. </returns>
+        /// <summary> Gets a collection of AppComplianceReportResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of AppComplianceReportResources and their operations over a AppComplianceReportResource. </returns>
         public virtual AppComplianceReportCollection GetAppComplianceReports()
         {
             return GetCachedClient(client => new AppComplianceReportCollection(client, Id));
@@ -51,16 +52,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Get the AppComplianceAutomation report and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Report_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Report_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -71,8 +76,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AppComplianceReportResource>> GetAppComplianceReportAsync(string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
             return await GetAppComplianceReports().GetAsync(reportName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -80,16 +83,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Get the AppComplianceAutomation report and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Report_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Report_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,8 +107,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         [ForwardsClientCalls]
         public virtual Response<AppComplianceReportResource> GetAppComplianceReport(string reportName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
-
             return GetAppComplianceReports().Get(reportName, cancellationToken);
         }
 
@@ -109,16 +114,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Check if the given name is available for a report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/checkNameAvailability. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/checkNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_CheckNameAvailability. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_CheckNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,21 +134,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNameAvailability");
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNameAvailability");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateCheckAppComplianceReportNameAvailabilityRequest(AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppComplianceReportNameAvailabilityResult> response = Response.FromValue(AppComplianceReportNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await ProviderActionsRestClient.CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -157,16 +152,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Check if the given name is available for a report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/checkNameAvailability. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/checkNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_CheckNameAvailability. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_CheckNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,21 +172,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNameAvailability");
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.CheckAppComplianceReportNameAvailability");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateCheckAppComplianceReportNameAvailabilityRequest(AppComplianceReportNameAvailabilityContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppComplianceReportNameAvailabilityResult> response = Response.FromValue(AppComplianceReportNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = ProviderActionsRestClient.CheckNameAvailability(content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -205,16 +190,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Get the count of reports.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/getCollectionCount. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/getCollectionCount</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_GetCollectionCount. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_GetCollectionCount</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,21 +210,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetCollectionCountProviderAction");
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetCollectionCountProviderAction");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateGetCollectionCountProviderActionRequest(ReportCollectionGetCountContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ReportCollectionGetCountResult> response = Response.FromValue(ReportCollectionGetCountResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await ProviderActionsRestClient.GetCollectionCountAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -253,16 +228,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Get the count of reports.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/getCollectionCount. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/getCollectionCount</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_GetCollectionCount. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_GetCollectionCount</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,21 +248,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetCollectionCountProviderAction");
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetCollectionCountProviderAction");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateGetCollectionCountProviderActionRequest(ReportCollectionGetCountContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ReportCollectionGetCountResult> response = Response.FromValue(ReportCollectionGetCountResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = ProviderActionsRestClient.GetCollectionCount(content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -301,16 +266,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Get the resource overview status.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/getOverviewStatus. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/getOverviewStatus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_GetOverviewStatus. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_GetOverviewStatus</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,21 +286,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetOverviewStatusProviderAction");
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetOverviewStatusProviderAction");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateGetOverviewStatusProviderActionRequest(AppComplianceGetOverviewStatusContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppComplianceGetOverviewStatusResult> response = Response.FromValue(AppComplianceGetOverviewStatusResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await ProviderActionsRestClient.GetOverviewStatusAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -349,16 +304,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Get the resource overview status.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/getOverviewStatus. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/getOverviewStatus</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_GetOverviewStatus. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_GetOverviewStatus</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,21 +324,87 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetOverviewStatusProviderAction");
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetOverviewStatusProviderAction");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateGetOverviewStatusProviderActionRequest(AppComplianceGetOverviewStatusContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppComplianceGetOverviewStatusResult> response = Response.FromValue(AppComplianceGetOverviewStatusResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = ProviderActionsRestClient.GetOverviewStatus(content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List the storage accounts which are in use by related reports
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/listInUseStorageAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_ListInUseStorageAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ReportListInUseStorageAccountsResult>> GetInUseStorageAccountsProviderActionAsync(ReportListInUseStorageAccountsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetInUseStorageAccountsProviderAction");
+            scope.Start();
+            try
+            {
+                var response = await ProviderActionsRestClient.ListInUseStorageAccountsAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List the storage accounts which are in use by related reports
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/listInUseStorageAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_ListInUseStorageAccounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ReportListInUseStorageAccountsResult> GetInUseStorageAccountsProviderAction(ReportListInUseStorageAccountsContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetInUseStorageAccountsProviderAction");
+            scope.Start();
+            try
+            {
+                var response = ProviderActionsRestClient.ListInUseStorageAccounts(content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -397,16 +418,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Onboard given subscriptions to Microsoft.AppComplianceAutomation provider.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/onboard. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/onboard</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_Onboard. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_Onboard</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,27 +439,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.OnboardProviderAction");
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.OnboardProviderAction");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateOnboardProviderActionRequest(AppComplianceOnboardContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppComplianceAutomationArmOperation<AppComplianceOnboardResult> operation = new AppComplianceAutomationArmOperation<AppComplianceOnboardResult>(
-                    new AppComplianceOnboardResultOperationSource(),
-                    ProviderActionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await ProviderActionsRestClient.OnboardAsync(content, cancellationToken).ConfigureAwait(false);
+                var operation = new AppComplianceAutomationArmOperation<AppComplianceOnboardResult>(new AppComplianceOnboardResultOperationSource(), ProviderActionsClientDiagnostics, Pipeline, ProviderActionsRestClient.CreateOnboardRequest(content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -452,16 +460,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Onboard given subscriptions to Microsoft.AppComplianceAutomation provider.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/onboard. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/onboard</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_Onboard. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_Onboard</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,27 +481,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.OnboardProviderAction");
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.OnboardProviderAction");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateOnboardProviderActionRequest(AppComplianceOnboardContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppComplianceAutomationArmOperation<AppComplianceOnboardResult> operation = new AppComplianceAutomationArmOperation<AppComplianceOnboardResult>(
-                    new AppComplianceOnboardResultOperationSource(),
-                    ProviderActionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = ProviderActionsRestClient.Onboard(content, cancellationToken);
+                var operation = new AppComplianceAutomationArmOperation<AppComplianceOnboardResult>(new AppComplianceOnboardResultOperationSource(), ProviderActionsClientDiagnostics, Pipeline, ProviderActionsRestClient.CreateOnboardRequest(content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -507,16 +502,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Trigger quick evaluation for the given subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/triggerEvaluation. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/triggerEvaluation</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_TriggerEvaluation. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_TriggerEvaluation</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -528,27 +523,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.TriggerEvaluationProviderAction");
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.TriggerEvaluationProviderAction");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateTriggerEvaluationProviderActionRequest(TriggerEvaluationContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppComplianceAutomationArmOperation<TriggerEvaluationResult> operation = new AppComplianceAutomationArmOperation<TriggerEvaluationResult>(
-                    new TriggerEvaluationResultOperationSource(),
-                    ProviderActionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await ProviderActionsRestClient.TriggerEvaluationAsync(content, cancellationToken).ConfigureAwait(false);
+                var operation = new AppComplianceAutomationArmOperation<TriggerEvaluationResult>(new TriggerEvaluationResultOperationSource(), ProviderActionsClientDiagnostics, Pipeline, ProviderActionsRestClient.CreateTriggerEvaluationRequest(content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -562,16 +544,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         /// Trigger quick evaluation for the given subscriptions.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/triggerEvaluation. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/triggerEvaluation</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_TriggerEvaluation. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProviderActions_TriggerEvaluation</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -583,124 +565,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.TriggerEvaluationProviderAction");
+            using var scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.TriggerEvaluationProviderAction");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateTriggerEvaluationProviderActionRequest(TriggerEvaluationContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppComplianceAutomationArmOperation<TriggerEvaluationResult> operation = new AppComplianceAutomationArmOperation<TriggerEvaluationResult>(
-                    new TriggerEvaluationResultOperationSource(),
-                    ProviderActionsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = ProviderActionsRestClient.TriggerEvaluation(content, cancellationToken);
+                var operation = new AppComplianceAutomationArmOperation<TriggerEvaluationResult>(new TriggerEvaluationResultOperationSource(), ProviderActionsClientDiagnostics, Pipeline, ProviderActionsRestClient.CreateTriggerEvaluationRequest(content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List the storage accounts which are in use by related reports
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/listInUseStorageAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_ListInUseStorageAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ReportListInUseStorageAccountsResult>> GetInUseStorageAccountsProviderActionAsync(ReportListInUseStorageAccountsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetInUseStorageAccountsProviderAction");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateGetInUseStorageAccountsProviderActionRequest(ReportListInUseStorageAccountsContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ReportListInUseStorageAccountsResult> response = Response.FromValue(ReportListInUseStorageAccountsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List the storage accounts which are in use by related reports
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/listInUseStorageAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProviderActions_ListInUseStorageAccounts. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ReportListInUseStorageAccountsResult> GetInUseStorageAccountsProviderAction(ReportListInUseStorageAccountsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = ProviderActionsClientDiagnostics.CreateScope("MockableAppComplianceAutomationTenantResource.GetInUseStorageAccountsProviderAction");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ProviderActionsRestClient.CreateGetInUseStorageAccountsProviderActionRequest(ReportListInUseStorageAccountsContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ReportListInUseStorageAccountsResult> response = Response.FromValue(ReportListInUseStorageAccountsResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
             }
             catch (Exception e)
             {

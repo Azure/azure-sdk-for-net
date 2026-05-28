@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
@@ -40,9 +39,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="version"> An integer that is incremented each time the resource is modified. </param>
         /// <param name="lastTransitionOn"> A timestamp (in UTC) that is updated each time the resource is modified. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="policy"> Policy used to issue device certificates. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryNamespaceDeviceProperties(string uuid, bool? enabled, string externalDeviceId, string discoveredDeviceRef, string manufacturer, string model, string operatingSystem, string operatingSystemVersion, MessagingEndpoints endpoints, IDictionary<string, BinaryData> attributes, DeviceStatus status, long? version, DateTimeOffset? lastTransitionOn, DeviceRegistryProvisioningState? provisioningState, DeviceCredentialPolicy policy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceRegistryNamespaceDeviceProperties(string uuid, bool? enabled, string externalDeviceId, string discoveredDeviceRef, string manufacturer, string model, string operatingSystem, string operatingSystemVersion, MessagingEndpoints endpoints, IDictionary<string, BinaryData> attributes, DeviceStatus status, long? version, DateTimeOffset? lastTransitionOn, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uuid = uuid;
             Enabled = enabled;
@@ -58,7 +56,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             Version = version;
             LastTransitionOn = lastTransitionOn;
             ProvisioningState = provisioningState;
-            Policy = policy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -128,25 +125,5 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Provisioning state of the resource. </summary>
         public DeviceRegistryProvisioningState? ProvisioningState { get; }
-
-        /// <summary> Policy used to issue device certificates. </summary>
-        internal DeviceCredentialPolicy Policy { get; set; }
-
-        /// <summary> Resource Id of the Policy. </summary>
-        public ResourceIdentifier ResourceId
-        {
-            get
-            {
-                return Policy is null ? default : Policy.ResourceId;
-            }
-            set
-            {
-                if (Policy is null)
-                {
-                    Policy = new DeviceCredentialPolicy();
-                }
-                Policy.ResourceId = value;
-            }
-        }
     }
 }

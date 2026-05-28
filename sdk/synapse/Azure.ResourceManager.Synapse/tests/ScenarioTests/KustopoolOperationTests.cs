@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Synapse;
@@ -13,10 +9,13 @@ using Azure.ResourceManager.Synapse.Tests;
 using Azure.ResourceManager.Synapse.Tests.Helpers;
 using NUnit;
 using NUnit.Framework;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Synapse.Tests
 {
-    [Ignore("Test recordings need re-recording with current Storage SDK. See https://github.com/Azure/azure-sdk-for-net/issues/57594")]
     public class KustopoolOperationTests : SynapseManagementTestBase
     {
         public KustopoolOperationTests(bool async) : base(async)
@@ -63,12 +62,12 @@ namespace Azure.ResourceManager.Synapse.Tests
             var expectedKustoPoolName = GetFullKustoPoolName(workspaceName, kustoPoolName);
             var kustoPool = kustoPoolList.Single(pool => pool.Data.Name == expectedKustoPoolName);
 
-            Assert.That(kustoPool != null, Is.True, string.Format("kusto pool created earlier is not found when listing all in workspace {0}", workspaceName));
+            Assert.True(kustoPool != null, string.Format("kusto pool created earlier is not found when listing all in workspace {0}", workspaceName));
 
             // delete kusto pool
             await kustoPool.DeleteAsync(WaitUntil.Completed);
             kustoPoolList = await kustoPoolCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(kustoPoolList.Count, Is.EqualTo(kustoPoolCount - 1));
+            Assert.AreEqual(kustoPoolCount - 1, kustoPoolList.Count);
         }
 
         [Test]
@@ -105,23 +104,23 @@ namespace Azure.ResourceManager.Synapse.Tests
             var kustoDatabasesFromPool = kustoPoolDatabaseCollection.GetAllAsync();
             var kustoDatabaseList = await kustoDatabasesFromPool.ToEnumerableAsync();
             var kustoDatabaseCount = kustoDatabaseList.Count();
-            var expectedKustoDatabaseName = GetFullKustoDatabaseName(workspaceName, kustoPoolName, kustoDatabaseName);
+            var expectedKustoDatabaseName = GetFullKustoDatabaseName(workspaceName,kustoPoolName,kustoDatabaseName);
             var kustoDatabase = kustoDatabaseList.Single(database => database.Data.Name == expectedKustoDatabaseName);
 
-            Assert.That(kustoDatabase != null, Is.True, string.Format("kusto Database created earlier is not found when listing all in kusto pool {0}", kustoPoolName));
+            Assert.True(kustoDatabase != null, string.Format("kusto Database created earlier is not found when listing all in kusto pool {0}", kustoPoolName));
 
             // delete database
             await kustoDatabase.DeleteAsync(WaitUntil.Completed);
             kustoDatabaseList = await kustoPoolDatabaseCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(kustoDatabaseList.Count, Is.EqualTo(kustoDatabaseCount - 1));
+            Assert.AreEqual(kustoDatabaseCount - 1, kustoDatabaseList.Count);
         }
 
         private void VerifyKustoPool(SynapseKustoPoolResource kustoPool, string name, SynapseDataSourceSku sku, KustoPoolState state, string workspaceName)
         {
             var poolFullName = GetFullKustoPoolName(workspaceName, name);
-            Assert.That(kustoPool.Data.Name, Is.EqualTo(poolFullName));
+            Assert.AreEqual(kustoPool.Data.Name, poolFullName);
             AssetEqualtsSku(kustoPool.Data.Sku, sku);
-            Assert.That(kustoPool.Data.State, Is.EqualTo(state));
+            Assert.AreEqual(state, kustoPool.Data.State);
         }
 
         private string GetFullKustoPoolName(string workspaceName, string kustoPoolName)
@@ -131,17 +130,17 @@ namespace Azure.ResourceManager.Synapse.Tests
 
         private void AssetEqualtsSku(SynapseDataSourceSku sku1, SynapseDataSourceSku sku2)
         {
-            Assert.That(sku1.Size, Is.EqualTo(sku2.Size));
-            Assert.That(sku1.Name, Is.EqualTo(sku2.Name));
+            Assert.AreEqual(sku1.Size, sku2.Size);
+            Assert.AreEqual(sku1.Name, sku2.Name);
         }
 
         private void VerifyReadWriteDatabase(SynapseReadWriteDatabase database, string databaseName, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, string workspaceName, string kustoPoolName)
         {
             var databaseFullName = GetFullKustoDatabaseName(workspaceName, kustoPoolName, databaseName);
-            Assert.That(database, Is.Not.Null);
-            Assert.That(database.Name, Is.EqualTo(databaseFullName));
-            Assert.That(database.SoftDeletePeriod, Is.EqualTo(softDeletePeriod));
-            Assert.That(database.HotCachePeriod, Is.EqualTo(hotCachePeriod));
+            Assert.NotNull(database);
+            Assert.AreEqual(database.Name, databaseFullName);
+            Assert.AreEqual(database.SoftDeletePeriod, softDeletePeriod);
+            Assert.AreEqual(database.HotCachePeriod, hotCachePeriod);
         }
 
         private string GetFullKustoDatabaseName(string workspaceName, string kustoPoolName, string kustoDatabaseName)

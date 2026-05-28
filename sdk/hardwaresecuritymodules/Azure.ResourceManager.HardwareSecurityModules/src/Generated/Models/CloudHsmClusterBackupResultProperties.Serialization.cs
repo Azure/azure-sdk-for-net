@@ -10,56 +10,14 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.HardwareSecurityModules;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Properties of the Cloud HSM Cluster. </summary>
-    public partial class CloudHsmClusterBackupResultProperties : BackupRestoreBaseResultProperties, IJsonModel<CloudHsmClusterBackupResultProperties>
+    public partial class CloudHsmClusterBackupResultProperties : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterBackupResultProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupRestoreBaseResultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterBackupResultProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCloudHsmClusterBackupResultProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterBackupResultProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmClusterBackupResultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterBackupResultProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterBackupResultProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloudHsmClusterBackupResultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudHsmClusterBackupResultProperties IPersistableModel<CloudHsmClusterBackupResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (CloudHsmClusterBackupResultProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloudHsmClusterBackupResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudHsmClusterBackupResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -71,11 +29,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterBackupResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterBackupResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudHsmClusterBackupResultProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AzureStorageBlobContainerUri))
             {
@@ -89,118 +48,146 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudHsmClusterBackupResultProperties IJsonModel<CloudHsmClusterBackupResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CloudHsmClusterBackupResultProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupRestoreBaseResultProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CloudHsmClusterBackupResultProperties IJsonModel<CloudHsmClusterBackupResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterBackupResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterBackupResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudHsmClusterBackupResultProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudHsmClusterBackupResultProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CloudHsmClusterBackupResultProperties DeserializeCloudHsmClusterBackupResultProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CloudHsmClusterBackupResultProperties DeserializeCloudHsmClusterBackupResultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            Uri azureStorageBlobContainerUri = default;
+            string backupId = default;
             BackupRestoreOperationStatus? status = default;
             string statusDetails = default;
             ResponseError error = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             string jobId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri azureStorageBlobContainerUri = default;
-            string backupId = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("azureStorageBlobContainerUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new BackupRestoreOperationStatus(prop.Value.GetString());
+                    azureStorageBlobContainerUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("statusDetails"u8))
+                if (property.NameEquals("backupId"u8))
                 {
-                    statusDetails = prop.Value.GetString();
+                    backupId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("error"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHardwareSecurityModulesContext.Default);
+                    status = new BackupRestoreOperationStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("startTime"u8))
+                if (property.NameEquals("statusDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    statusDetails = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("endTime"u8))
+                if (property.NameEquals("startTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endOn = null;
-                        continue;
-                    }
-                    endOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("jobId"u8))
-                {
-                    jobId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("azureStorageBlobContainerUri"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureStorageBlobContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("backupId"u8))
+                if (property.NameEquals("endTime"u8))
                 {
-                    backupId = prop.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        endTime = null;
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("jobId"u8))
+                {
+                    jobId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new CloudHsmClusterBackupResultProperties(
                 status,
                 statusDetails,
                 error,
-                startOn,
-                endOn,
+                startTime,
+                endTime,
                 jobId,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 azureStorageBlobContainerUri,
                 backupId);
         }
+
+        BinaryData IPersistableModel<CloudHsmClusterBackupResultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterBackupResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterBackupResultProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudHsmClusterBackupResultProperties IPersistableModel<CloudHsmClusterBackupResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterBackupResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCloudHsmClusterBackupResultProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterBackupResultProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudHsmClusterBackupResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

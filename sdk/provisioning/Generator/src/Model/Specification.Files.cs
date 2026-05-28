@@ -15,9 +15,7 @@ public abstract partial class Specification : ModelBase
 
         // TODO: This assumes we're always running in place, in the repo
         string? path = Environment.CurrentDirectory;
-        while (path is not null &&
-               !Directory.Exists(Path.Combine(path, ".git")) &&
-               !File.Exists(Path.Combine(path, ".git")))
+        while (path is not null && !Directory.Exists(Path.Combine(path, ".git")))
         {
             // Walk up a level
             path = Path.GetDirectoryName(path);
@@ -26,8 +24,8 @@ public abstract partial class Specification : ModelBase
         // If all else fails, just use the current directory
         path ??= Environment.CurrentDirectory;
 
-        // Walk from the root of the repo into the service folder
-        path = Path.Combine(path, "sdk", ServiceDirectory);
+        // Walk from the root of the repo into the provisioning folder
+        path = Path.Combine(path, "sdk", "provisioning");
         if (!Directory.Exists(path))
         {
             throw new InvalidOperationException($"Directory {path} must exist to write {Namespace}!");
@@ -112,7 +110,7 @@ public abstract partial class Specification : ModelBase
                 """);
         File.WriteAllText(Path.Combine(path, "README.md"),
             $"""
-                # {string.Join(' ', Namespace!.Split('.'))} client library for .NET
+                # {Namespace!.Split('.')} client library for .NET
 
                 {Namespace} simplifies declarative resource provisioning in .NET.
 
@@ -182,15 +180,28 @@ public abstract partial class Specification : ModelBase
                     <LangVersion>12</LangVersion>
 
                     <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
-                    <NoWarn>$(NoWarn);CS1591</NoWarn>
+                    <NoWarn>CS1591</NoWarn>
                   </PropertyGroup>
 
+                  <!-- TODO: Consider adding DataPlane dependencies here like:
                   <ItemGroup>
-                    <PackageReference Include="Azure.Provisioning" />
+                    <PackageReference Include="Azure.Storage.Blobs" />
                   </ItemGroup>
+                  -->
 
                 </Project>
                 """);
+        Directory.CreateDirectory(Path.Combine(path, "src", "Properties"));
+        File.WriteAllText(Path.Combine(path, "src", "Properties", "AssemblyInfo.cs"),
+            """
+                // Copyright (c) Microsoft Corporation. All rights reserved.
+                // Licensed under the MIT License.
+
+                using System.Diagnostics.CodeAnalysis;
+
+                [assembly: Experimental("AZPROVISION001")]
+                """);
+
         // Generate the tests
         Directory.CreateDirectory(Path.Combine(path, "tests"));
         File.WriteAllText(Path.Combine(path, "tests", $"{Namespace}.Tests.csproj"),

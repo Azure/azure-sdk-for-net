@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quantum
 {
-    /// <summary></summary>
-    internal partial class QuantumWorkspaceOperationSource : IOperationSource<QuantumWorkspaceResource>
+    internal class QuantumWorkspaceOperationSource : IOperationSource<QuantumWorkspaceResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal QuantumWorkspaceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         QuantumWorkspaceResource IOperationSource<QuantumWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            QuantumWorkspaceData data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<QuantumWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuantumContext.Default);
             return new QuantumWorkspaceResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<QuantumWorkspaceResource> IOperationSource<QuantumWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            QuantumWorkspaceData data = QuantumWorkspaceData.DeserializeQuantumWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new QuantumWorkspaceResource(_client, data);
+            var data = ModelReaderWriter.Read<QuantumWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuantumContext.Default);
+            return await Task.FromResult(new QuantumWorkspaceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    /// <summary></summary>
-    internal partial class AvailabilityGroupListenerOperationSource : IOperationSource<AvailabilityGroupListenerResource>
+    internal class AvailabilityGroupListenerOperationSource : IOperationSource<AvailabilityGroupListenerResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal AvailabilityGroupListenerOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         AvailabilityGroupListenerResource IOperationSource<AvailabilityGroupListenerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AvailabilityGroupListenerData data = AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<AvailabilityGroupListenerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
             return new AvailabilityGroupListenerResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<AvailabilityGroupListenerResource> IOperationSource<AvailabilityGroupListenerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AvailabilityGroupListenerData data = AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AvailabilityGroupListenerResource(_client, data);
+            var data = ModelReaderWriter.Read<AvailabilityGroupListenerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlVirtualMachineContext.Default);
+            return await Task.FromResult(new AvailabilityGroupListenerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

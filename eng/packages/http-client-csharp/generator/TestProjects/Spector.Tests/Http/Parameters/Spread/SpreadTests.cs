@@ -13,8 +13,7 @@ using Azure;
 using Azure.Core;
 using NUnit.Framework;
 using Parameters.Spread;
-using Parameters.Spread._Alias;
-using Parameters.Spread._Model;
+using Parameters.Spread.Models;
 
 namespace TestProjects.Spector.Tests.Http.Parameters.Spread
 {

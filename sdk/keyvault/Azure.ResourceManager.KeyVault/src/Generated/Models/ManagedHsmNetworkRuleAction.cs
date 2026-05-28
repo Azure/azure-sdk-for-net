@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.KeyVault.Models
     public readonly partial struct ManagedHsmNetworkRuleAction : IEquatable<ManagedHsmNetworkRuleAction>
     {
         private readonly string _value;
-        private const string AllowValue = "Allow";
-        private const string DenyValue = "Deny";
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmNetworkRuleAction"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedHsmNetworkRuleAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Allow. </summary>
+        private const string AllowValue = "Allow";
+        private const string DenyValue = "Deny";
+
+        /// <summary> Allow. </summary>
         public static ManagedHsmNetworkRuleAction Allow { get; } = new ManagedHsmNetworkRuleAction(AllowValue);
-
-        /// <summary> Gets the Deny. </summary>
+        /// <summary> Deny. </summary>
         public static ManagedHsmNetworkRuleAction Deny { get; } = new ManagedHsmNetworkRuleAction(DenyValue);
-
         /// <summary> Determines if two <see cref="ManagedHsmNetworkRuleAction"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedHsmNetworkRuleAction left, ManagedHsmNetworkRuleAction right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ManagedHsmNetworkRuleAction"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedHsmNetworkRuleAction left, ManagedHsmNetworkRuleAction right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ManagedHsmNetworkRuleAction"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmNetworkRuleAction"/>. </summary>
         public static implicit operator ManagedHsmNetworkRuleAction(string value) => new ManagedHsmNetworkRuleAction(value);
 
-        /// <summary> Converts a string to a <see cref="ManagedHsmNetworkRuleAction"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ManagedHsmNetworkRuleAction?(string value) => value == null ? null : new ManagedHsmNetworkRuleAction(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedHsmNetworkRuleAction other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ManagedHsmNetworkRuleAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> HyperV to AzStackHCI Protected item model custom properties. </summary>
-    public partial class HyperVToAzStackHciProtectedItemCustomProperties : DataReplicationProtectedItemCustomProperties, IJsonModel<HyperVToAzStackHciProtectedItemCustomProperties>
+    public partial class HyperVToAzStackHciProtectedItemCustomProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciProtectedItemCustomProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedItemCustomProperties"/> for deserialization. </summary>
-        internal HyperVToAzStackHciProtectedItemCustomProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciProtectedItemCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationProtectedItemCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHyperVToAzStackHciProtectedItemCustomProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemCustomProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemCustomProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVToAzStackHciProtectedItemCustomProperties IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVToAzStackHciProtectedItemCustomProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVToAzStackHciProtectedItemCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemCustomProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ActiveLocation))
             {
@@ -99,14 +53,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(FabricDiscoveryMachineId);
             writer.WritePropertyName("disksToInclude"u8);
             writer.WriteStartArray();
-            foreach (HyperVToAzStackHciDiskInput item in DisksToInclude)
+            foreach (var item in DisksToInclude)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("nicsToInclude"u8);
             writer.WriteStartArray();
-            foreach (HyperVToAzStackHciNicInput item in NicsToInclude)
+            foreach (var item in NicsToInclude)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -234,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
-                foreach (HyperVToAzStackHciProtectedDiskProperties item in ProtectedDisks)
+                foreach (var item in ProtectedDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -244,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 writer.WritePropertyName("protectedNics"u8);
                 writer.WriteStartArray();
-                foreach (HyperVToAzStackHciProtectedNicProperties item in ProtectedNics)
+                foreach (var item in ProtectedNics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -262,33 +216,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVToAzStackHciProtectedItemCustomProperties IJsonModel<HyperVToAzStackHciProtectedItemCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HyperVToAzStackHciProtectedItemCustomProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationProtectedItemCustomProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HyperVToAzStackHciProtectedItemCustomProperties IJsonModel<HyperVToAzStackHciProtectedItemCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemCustomProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVToAzStackHciProtectedItemCustomProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HyperVToAzStackHciProtectedItemCustomProperties DeserializeHyperVToAzStackHciProtectedItemCustomProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HyperVToAzStackHciProtectedItemCustomProperties DeserializeHyperVToAzStackHciProtectedItemCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string instanceType = "HyperVToAzStackHCI";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ProtectedItemActiveLocation? activeLocation = default;
             ResourceIdentifier targetHciClusterId = default;
             ResourceIdentifier targetArcClusterCustomLocationId = default;
@@ -320,296 +267,300 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string targetLocation = default;
             string customLocationRegion = default;
             string failoverRecoveryPointId = default;
-            DateTimeOffset? lastRecoveryPointReceivedOn = default;
+            DateTimeOffset? lastRecoveryPointReceived = default;
             string lastRecoveryPointId = default;
             int? initialReplicationProgressPercentage = default;
             int? resyncProgressPercentage = default;
             IReadOnlyList<HyperVToAzStackHciProtectedDiskProperties> protectedDisks = default;
             IReadOnlyList<HyperVToAzStackHciProtectedNicProperties> protectedNics = default;
             string targetVmBiosId = default;
-            DateTimeOffset? lastReplicationUpdateOn = default;
-            foreach (var prop in element.EnumerateObject())
+            DateTimeOffset? lastReplicationUpdateTime = default;
+            string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("instanceType"u8))
+                if (property.NameEquals("activeLocation"u8))
                 {
-                    instanceType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("activeLocation"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    activeLocation = new ProtectedItemActiveLocation(prop.Value.GetString());
+                    activeLocation = new ProtectedItemActiveLocation(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("targetHciClusterId"u8))
+                if (property.NameEquals("targetHciClusterId"u8))
                 {
-                    targetHciClusterId = new ResourceIdentifier(prop.Value.GetString());
+                    targetHciClusterId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("targetArcClusterCustomLocationId"u8))
+                if (property.NameEquals("targetArcClusterCustomLocationId"u8))
                 {
-                    targetArcClusterCustomLocationId = new ResourceIdentifier(prop.Value.GetString());
+                    targetArcClusterCustomLocationId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("targetAzStackHciClusterName"u8))
+                if (property.NameEquals("targetAzStackHciClusterName"u8))
                 {
-                    targetAzStackHciClusterName = prop.Value.GetString();
+                    targetAzStackHciClusterName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("fabricDiscoveryMachineId"u8))
+                if (property.NameEquals("fabricDiscoveryMachineId"u8))
                 {
-                    fabricDiscoveryMachineId = new ResourceIdentifier(prop.Value.GetString());
+                    fabricDiscoveryMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("disksToInclude"u8))
+                if (property.NameEquals("disksToInclude"u8))
                 {
                     List<HyperVToAzStackHciDiskInput> array = new List<HyperVToAzStackHciDiskInput>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(HyperVToAzStackHciDiskInput.DeserializeHyperVToAzStackHciDiskInput(item, options));
                     }
                     disksToInclude = array;
                     continue;
                 }
-                if (prop.NameEquals("nicsToInclude"u8))
+                if (property.NameEquals("nicsToInclude"u8))
                 {
                     List<HyperVToAzStackHciNicInput> array = new List<HyperVToAzStackHciNicInput>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(HyperVToAzStackHciNicInput.DeserializeHyperVToAzStackHciNicInput(item, options));
                     }
                     nicsToInclude = array;
                     continue;
                 }
-                if (prop.NameEquals("sourceVmName"u8))
+                if (property.NameEquals("sourceVmName"u8))
                 {
-                    sourceVmName = prop.Value.GetString();
+                    sourceVmName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceCpuCores"u8))
+                if (property.NameEquals("sourceCpuCores"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceCpuCores = prop.Value.GetInt32();
+                    sourceCpuCores = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("sourceMemoryInMegaBytes"u8))
+                if (property.NameEquals("sourceMemoryInMegaBytes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceMemoryInMegaBytes = prop.Value.GetDouble();
+                    sourceMemoryInMegaBytes = property.Value.GetDouble();
                     continue;
                 }
-                if (prop.NameEquals("targetVmName"u8))
+                if (property.NameEquals("targetVmName"u8))
                 {
-                    targetVmName = prop.Value.GetString();
+                    targetVmName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetResourceGroupId"u8))
+                if (property.NameEquals("targetResourceGroupId"u8))
                 {
-                    targetResourceGroupId = new ResourceIdentifier(prop.Value.GetString());
+                    targetResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("storageContainerId"u8))
+                if (property.NameEquals("storageContainerId"u8))
                 {
-                    storageContainerId = new ResourceIdentifier(prop.Value.GetString());
+                    storageContainerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("hyperVGeneration"u8))
+                if (property.NameEquals("hyperVGeneration"u8))
                 {
-                    hyperVGeneration = prop.Value.GetString();
+                    hyperVGeneration = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetNetworkId"u8))
+                if (property.NameEquals("targetNetworkId"u8))
                 {
-                    targetNetworkId = prop.Value.GetString();
+                    targetNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("testNetworkId"u8))
+                if (property.NameEquals("testNetworkId"u8))
                 {
-                    testNetworkId = prop.Value.GetString();
+                    testNetworkId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetCpuCores"u8))
+                if (property.NameEquals("targetCpuCores"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetCpuCores = prop.Value.GetInt32();
+                    targetCpuCores = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("isDynamicRam"u8))
+                if (property.NameEquals("isDynamicRam"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDynamicRam = prop.Value.GetBoolean();
+                    isDynamicRam = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("dynamicMemoryConfig"u8))
+                if (property.NameEquals("dynamicMemoryConfig"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dynamicMemoryConfig = ProtectedItemDynamicMemoryConfig.DeserializeProtectedItemDynamicMemoryConfig(prop.Value, options);
+                    dynamicMemoryConfig = ProtectedItemDynamicMemoryConfig.DeserializeProtectedItemDynamicMemoryConfig(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("targetMemoryInMegaBytes"u8))
+                if (property.NameEquals("targetMemoryInMegaBytes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetMemoryInMegaBytes = prop.Value.GetInt32();
+                    targetMemoryInMegaBytes = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("runAsAccountId"u8))
+                if (property.NameEquals("runAsAccountId"u8))
                 {
-                    runAsAccountId = prop.Value.GetString();
+                    runAsAccountId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceFabricAgentName"u8))
+                if (property.NameEquals("sourceFabricAgentName"u8))
                 {
-                    sourceFabricAgentName = prop.Value.GetString();
+                    sourceFabricAgentName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetFabricAgentName"u8))
+                if (property.NameEquals("targetFabricAgentName"u8))
                 {
-                    targetFabricAgentName = prop.Value.GetString();
+                    targetFabricAgentName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceApplianceName"u8))
+                if (property.NameEquals("sourceApplianceName"u8))
                 {
-                    sourceApplianceName = prop.Value.GetString();
+                    sourceApplianceName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetApplianceName"u8))
+                if (property.NameEquals("targetApplianceName"u8))
                 {
-                    targetApplianceName = prop.Value.GetString();
+                    targetApplianceName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("osType"u8))
+                if (property.NameEquals("osType"u8))
                 {
-                    osType = prop.Value.GetString();
+                    osType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("osName"u8))
+                if (property.NameEquals("osName"u8))
                 {
-                    osName = prop.Value.GetString();
+                    osName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("firmwareType"u8))
+                if (property.NameEquals("firmwareType"u8))
                 {
-                    firmwareType = prop.Value.GetString();
+                    firmwareType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("targetLocation"u8))
+                if (property.NameEquals("targetLocation"u8))
                 {
-                    targetLocation = prop.Value.GetString();
+                    targetLocation = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customLocationRegion"u8))
+                if (property.NameEquals("customLocationRegion"u8))
                 {
-                    customLocationRegion = prop.Value.GetString();
+                    customLocationRegion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("failoverRecoveryPointId"u8))
+                if (property.NameEquals("failoverRecoveryPointId"u8))
                 {
-                    failoverRecoveryPointId = prop.Value.GetString();
+                    failoverRecoveryPointId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lastRecoveryPointReceived"u8))
+                if (property.NameEquals("lastRecoveryPointReceived"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRecoveryPointReceivedOn = prop.Value.GetDateTimeOffset("O");
+                    lastRecoveryPointReceived = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("lastRecoveryPointId"u8))
+                if (property.NameEquals("lastRecoveryPointId"u8))
                 {
-                    lastRecoveryPointId = prop.Value.GetString();
+                    lastRecoveryPointId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("initialReplicationProgressPercentage"u8))
+                if (property.NameEquals("initialReplicationProgressPercentage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialReplicationProgressPercentage = prop.Value.GetInt32();
+                    initialReplicationProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("resyncProgressPercentage"u8))
+                if (property.NameEquals("resyncProgressPercentage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncProgressPercentage = prop.Value.GetInt32();
+                    resyncProgressPercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("protectedDisks"u8))
+                if (property.NameEquals("protectedDisks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HyperVToAzStackHciProtectedDiskProperties> array = new List<HyperVToAzStackHciProtectedDiskProperties>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(HyperVToAzStackHciProtectedDiskProperties.DeserializeHyperVToAzStackHciProtectedDiskProperties(item, options));
                     }
                     protectedDisks = array;
                     continue;
                 }
-                if (prop.NameEquals("protectedNics"u8))
+                if (property.NameEquals("protectedNics"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HyperVToAzStackHciProtectedNicProperties> array = new List<HyperVToAzStackHciProtectedNicProperties>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(HyperVToAzStackHciProtectedNicProperties.DeserializeHyperVToAzStackHciProtectedNicProperties(item, options));
                     }
                     protectedNics = array;
                     continue;
                 }
-                if (prop.NameEquals("targetVmBiosId"u8))
+                if (property.NameEquals("targetVmBiosId"u8))
                 {
-                    targetVmBiosId = prop.Value.GetString();
+                    targetVmBiosId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lastReplicationUpdateTime"u8))
+                if (property.NameEquals("lastReplicationUpdateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastReplicationUpdateOn = prop.Value.GetDateTimeOffset("O");
+                    lastReplicationUpdateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVToAzStackHciProtectedItemCustomProperties(
                 instanceType,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 activeLocation,
                 targetHciClusterId,
                 targetArcClusterCustomLocationId,
@@ -641,14 +592,45 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 targetLocation,
                 customLocationRegion,
                 failoverRecoveryPointId,
-                lastRecoveryPointReceivedOn,
+                lastRecoveryPointReceived,
                 lastRecoveryPointId,
                 initialReplicationProgressPercentage,
                 resyncProgressPercentage,
                 protectedDisks ?? new ChangeTrackingList<HyperVToAzStackHciProtectedDiskProperties>(),
                 protectedNics ?? new ChangeTrackingList<HyperVToAzStackHciProtectedNicProperties>(),
                 targetVmBiosId,
-                lastReplicationUpdateOn);
+                lastReplicationUpdateTime);
         }
+
+        BinaryData IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemCustomProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HyperVToAzStackHciProtectedItemCustomProperties IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHyperVToAzStackHciProtectedItemCustomProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedItemCustomProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVToAzStackHciProtectedItemCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

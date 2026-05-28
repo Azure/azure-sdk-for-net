@@ -60,7 +60,7 @@ public partial class MessageContentUpdate : StreamingUpdate
         StreamingUpdateReason _,
         ModelReaderWriterOptions options = null)
     {
-        MessageDeltaChunk deltaObject = MessageDeltaChunk.DeserializeMessageDeltaChunk(element, options ?? ModelSerializationExtensions.WireOptions);
+        MessageDeltaChunk deltaObject = MessageDeltaChunk.DeserializeMessageDeltaChunk(element, options);
         List<MessageContentUpdate> updates = [];
         foreach (MessageDeltaContent deltaContent in deltaObject.Delta.Content ?? [])
         {

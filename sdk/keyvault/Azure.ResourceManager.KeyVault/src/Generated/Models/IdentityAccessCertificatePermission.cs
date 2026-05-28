@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary></summary>
+    /// <summary> The IdentityAccessCertificatePermission. </summary>
     public readonly partial struct IdentityAccessCertificatePermission : IEquatable<IdentityAccessCertificatePermission>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="IdentityAccessCertificatePermission"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IdentityAccessCertificatePermission(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AllValue = "all";
         private const string GetValue = "get";
         private const string ListValue = "list";
@@ -33,97 +40,57 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string BackupValue = "backup";
         private const string RestoreValue = "restore";
 
-        /// <summary> Initializes a new instance of <see cref="IdentityAccessCertificatePermission"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IdentityAccessCertificatePermission(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the All. </summary>
+        /// <summary> all. </summary>
         public static IdentityAccessCertificatePermission All { get; } = new IdentityAccessCertificatePermission(AllValue);
-
-        /// <summary> Gets the Get. </summary>
+        /// <summary> get. </summary>
         public static IdentityAccessCertificatePermission Get { get; } = new IdentityAccessCertificatePermission(GetValue);
-
-        /// <summary> Gets the List. </summary>
+        /// <summary> list. </summary>
         public static IdentityAccessCertificatePermission List { get; } = new IdentityAccessCertificatePermission(ListValue);
-
-        /// <summary> Gets the Delete. </summary>
+        /// <summary> delete. </summary>
         public static IdentityAccessCertificatePermission Delete { get; } = new IdentityAccessCertificatePermission(DeleteValue);
-
-        /// <summary> Gets the Create. </summary>
+        /// <summary> create. </summary>
         public static IdentityAccessCertificatePermission Create { get; } = new IdentityAccessCertificatePermission(CreateValue);
-
-        /// <summary> Gets the Import. </summary>
+        /// <summary> import. </summary>
         public static IdentityAccessCertificatePermission Import { get; } = new IdentityAccessCertificatePermission(ImportValue);
-
-        /// <summary> Gets the Update. </summary>
+        /// <summary> update. </summary>
         public static IdentityAccessCertificatePermission Update { get; } = new IdentityAccessCertificatePermission(UpdateValue);
-
-        /// <summary> Gets the ManageContacts. </summary>
+        /// <summary> managecontacts. </summary>
         public static IdentityAccessCertificatePermission ManageContacts { get; } = new IdentityAccessCertificatePermission(ManageContactsValue);
-
-        /// <summary> Gets the GetIssuers. </summary>
+        /// <summary> getissuers. </summary>
         public static IdentityAccessCertificatePermission GetIssuers { get; } = new IdentityAccessCertificatePermission(GetIssuersValue);
-
-        /// <summary> Gets the ListIssuers. </summary>
+        /// <summary> listissuers. </summary>
         public static IdentityAccessCertificatePermission ListIssuers { get; } = new IdentityAccessCertificatePermission(ListIssuersValue);
-
-        /// <summary> Gets the SetIssuers. </summary>
+        /// <summary> setissuers. </summary>
         public static IdentityAccessCertificatePermission SetIssuers { get; } = new IdentityAccessCertificatePermission(SetIssuersValue);
-
-        /// <summary> Gets the DeleteIssuers. </summary>
+        /// <summary> deleteissuers. </summary>
         public static IdentityAccessCertificatePermission DeleteIssuers { get; } = new IdentityAccessCertificatePermission(DeleteIssuersValue);
-
-        /// <summary> Gets the ManageIssuers. </summary>
+        /// <summary> manageissuers. </summary>
         public static IdentityAccessCertificatePermission ManageIssuers { get; } = new IdentityAccessCertificatePermission(ManageIssuersValue);
-
-        /// <summary> Gets the Recover. </summary>
+        /// <summary> recover. </summary>
         public static IdentityAccessCertificatePermission Recover { get; } = new IdentityAccessCertificatePermission(RecoverValue);
-
-        /// <summary> Gets the Purge. </summary>
+        /// <summary> purge. </summary>
         public static IdentityAccessCertificatePermission Purge { get; } = new IdentityAccessCertificatePermission(PurgeValue);
-
-        /// <summary> Gets the Backup. </summary>
+        /// <summary> backup. </summary>
         public static IdentityAccessCertificatePermission Backup { get; } = new IdentityAccessCertificatePermission(BackupValue);
-
-        /// <summary> Gets the Restore. </summary>
+        /// <summary> restore. </summary>
         public static IdentityAccessCertificatePermission Restore { get; } = new IdentityAccessCertificatePermission(RestoreValue);
-
         /// <summary> Determines if two <see cref="IdentityAccessCertificatePermission"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IdentityAccessCertificatePermission left, IdentityAccessCertificatePermission right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="IdentityAccessCertificatePermission"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IdentityAccessCertificatePermission left, IdentityAccessCertificatePermission right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="IdentityAccessCertificatePermission"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityAccessCertificatePermission"/>. </summary>
         public static implicit operator IdentityAccessCertificatePermission(string value) => new IdentityAccessCertificatePermission(value);
 
-        /// <summary> Converts a string to a <see cref="IdentityAccessCertificatePermission"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator IdentityAccessCertificatePermission?(string value) => value == null ? null : new IdentityAccessCertificatePermission(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IdentityAccessCertificatePermission other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(IdentityAccessCertificatePermission other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

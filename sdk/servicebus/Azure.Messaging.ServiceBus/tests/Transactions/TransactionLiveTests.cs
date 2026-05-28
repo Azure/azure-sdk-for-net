@@ -39,8 +39,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 Assert.NotNull(receivedMessage);
                 Assert.AreEqual(message.Body.ToString(), receivedMessage.Body.ToString());
                 await receiver.CompleteMessageAsync(receivedMessage);
-            }
-            ;
+            };
         }
 
         [Test]
@@ -74,8 +73,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 Assert.NotNull(receivedMessage);
                 Assert.AreEqual(message2.Body.ToString(), receivedMessage.Body.ToString());
                 await receiver.CompleteMessageAsync(receivedMessage);
-            }
-            ;
+            };
         }
 
         [Test]
@@ -95,14 +93,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 }
                 Assert.That(
                     async () =>
-                    {
-                        await using var noRetryClient = CreateNoRetryClient();
-                        await noRetryClient.AcceptNextSessionAsync(scope.QueueName);
-                    }, Throws.InstanceOf<ServiceBusException>()
+                    await CreateNoRetryClient().AcceptNextSessionAsync(scope.QueueName), Throws.InstanceOf<ServiceBusException>()
                     .And.Property(nameof(ServiceBusException.Reason))
                     .EqualTo(ServiceBusFailureReason.ServiceTimeout));
-            }
-            ;
+            };
         }
 
         [Test]
@@ -122,8 +116,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusReceiver receiver = client.CreateReceiver(scope.QueueName);
                 ServiceBusReceivedMessage msg = await receiver.PeekMessageAsync();
                 Assert.NotNull(msg);
-            }
-            ;
+            };
         }
 
         [Test]
@@ -149,8 +142,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 Assert.NotNull(received);
                 await receiver.CompleteMessageAsync(received);
-            }
-            ;
+            };
         }
 
         [Test]
@@ -183,8 +175,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
 
                 Assert.IsNull(receivedMessage);
-            }
-            ;
+            };
         }
 
         [Test]
@@ -543,7 +534,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
             Assert.IsNull(receivedMessage);
         }
 
-        [Test]
+       [Test]
         public async Task CrossEntityTransactionReceivesFirstRollbackSubscription()
         {
             await using var client = CreateCrossEntityTxnClient();

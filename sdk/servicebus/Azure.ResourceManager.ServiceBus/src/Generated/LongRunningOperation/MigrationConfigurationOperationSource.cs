@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary></summary>
-    internal partial class MigrationConfigurationOperationSource : IOperationSource<MigrationConfigurationResource>
+    internal class MigrationConfigurationOperationSource : IOperationSource<MigrationConfigurationResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal MigrationConfigurationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         MigrationConfigurationResource IOperationSource<MigrationConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MigrationConfigurationData data = MigrationConfigurationData.DeserializeMigrationConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<MigrationConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceBusContext.Default);
             return new MigrationConfigurationResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<MigrationConfigurationResource> IOperationSource<MigrationConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MigrationConfigurationData data = MigrationConfigurationData.DeserializeMigrationConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MigrationConfigurationResource(_client, data);
+            var data = ModelReaderWriter.Read<MigrationConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerServiceBusContext.Default);
+            return await Task.FromResult(new MigrationConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

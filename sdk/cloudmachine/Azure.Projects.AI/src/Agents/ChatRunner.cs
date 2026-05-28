@@ -93,8 +93,7 @@ namespace Azure.Projects.AI
         /// <param name="prompt"></param>
         protected virtual void OnGround(List<ChatMessage> conversation, string prompt)
         {
-            if (VectorDb == null)
-                return;
+            if (VectorDb == null) return;
             var related = VectorDb.FindRelated(prompt);
             conversation.Add(related);
         }

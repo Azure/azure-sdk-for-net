@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DependencyMap.Models;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +13,7 @@ namespace Azure.ResourceManager.DependencyMap
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(DependencyMapData))]
     [ModelReaderWriterBuildable(typeof(DependencyMapDateTimeFilter))]
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.DependencyMap
     [ModelReaderWriterBuildable(typeof(DependencyMapProperties))]
     [ModelReaderWriterBuildable(typeof(DependencyMapResource))]
     [ModelReaderWriterBuildable(typeof(DependencyMapVisualizationFilter))]
-    [ModelReaderWriterBuildable(typeof(DependencyProcessFilter))]
     [ModelReaderWriterBuildable(typeof(DiscoverySourceResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ExportDependenciesAdditionalInfo))]
     [ModelReaderWriterBuildable(typeof(ExportDependenciesContent))]
@@ -35,9 +33,6 @@ namespace Azure.ResourceManager.DependencyMap
     [ModelReaderWriterBuildable(typeof(ExportDependenciesResultProperties))]
     [ModelReaderWriterBuildable(typeof(GetConnectionsForProcessOnFocusedMachineContent))]
     [ModelReaderWriterBuildable(typeof(GetConnectionsWithConnectedMachineForFocusedMachineContent))]
-    [ModelReaderWriterBuildable(typeof(GetDependencyViewForAllMachinesContent))]
-    [ModelReaderWriterBuildable(typeof(GetDependencyViewForAllMachinesOperationResult))]
-    [ModelReaderWriterBuildable(typeof(GetDependencyViewForAllMachinesResultProperties))]
     [ModelReaderWriterBuildable(typeof(GetDependencyViewForFocusedMachineContent))]
     [ModelReaderWriterBuildable(typeof(MapsResourceListResult))]
     [ModelReaderWriterBuildable(typeof(OffAzureDiscoverySourceProperties))]

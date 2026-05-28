@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> Failover job model custom properties. </summary>
-    public partial class FailoverJobCustomProperties : DataReplicationJobCustomProperties, IJsonModel<FailoverJobCustomProperties>
+    public partial class FailoverJobCustomProperties : IUtf8JsonSerializable, IJsonModel<FailoverJobCustomProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationJobCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FailoverJobCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFailoverJobCustomProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FailoverJobCustomProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverJobCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FailoverJobCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FailoverJobCustomProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FailoverJobCustomProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FailoverJobCustomProperties IPersistableModel<FailoverJobCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (FailoverJobCustomProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FailoverJobCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FailoverJobCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,17 +28,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FailoverJobCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FailoverJobCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FailoverJobCustomProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedItemDetails))
             {
                 writer.WritePropertyName("protectedItemDetails"u8);
                 writer.WriteStartArray();
-                foreach (FailoverProtectedItemProperties item in ProtectedItemDetails)
+                foreach (var item in ProtectedItemDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -87,71 +47,99 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FailoverJobCustomProperties IJsonModel<FailoverJobCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FailoverJobCustomProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationJobCustomProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FailoverJobCustomProperties IJsonModel<FailoverJobCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FailoverJobCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FailoverJobCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FailoverJobCustomProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFailoverJobCustomProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FailoverJobCustomProperties DeserializeFailoverJobCustomProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static FailoverJobCustomProperties DeserializeFailoverJobCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string instanceType = "FailoverJobDetails";
-            AffectedObjectDetails affectedObjectDetails = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IReadOnlyList<FailoverProtectedItemProperties> protectedItemDetails = default;
-            foreach (var prop in element.EnumerateObject())
+            string instanceType = default;
+            AffectedObjectDetails affectedObjectDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("instanceType"u8))
+                if (property.NameEquals("protectedItemDetails"u8))
                 {
-                    instanceType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("affectedObjectDetails"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    affectedObjectDetails = AffectedObjectDetails.DeserializeAffectedObjectDetails(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("protectedItemDetails"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<FailoverProtectedItemProperties> array = new List<FailoverProtectedItemProperties>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(FailoverProtectedItemProperties.DeserializeFailoverProtectedItemProperties(item, options));
                     }
                     protectedItemDetails = array;
                     continue;
                 }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("affectedObjectDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    affectedObjectDetails = AffectedObjectDetails.DeserializeAffectedObjectDetails(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new FailoverJobCustomProperties(instanceType, affectedObjectDetails, additionalBinaryDataProperties, protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>());
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FailoverJobCustomProperties(instanceType, affectedObjectDetails, serializedAdditionalRawData, protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>());
         }
+
+        BinaryData IPersistableModel<FailoverJobCustomProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FailoverJobCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FailoverJobCustomProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FailoverJobCustomProperties IPersistableModel<FailoverJobCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FailoverJobCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeFailoverJobCustomProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FailoverJobCustomProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FailoverJobCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

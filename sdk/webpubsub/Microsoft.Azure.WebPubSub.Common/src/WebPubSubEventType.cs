@@ -11,14 +11,10 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <summary>
         /// system event, including connect, connected, disconnected.
         /// </summary>
-        System = 0,
+        System,
         /// <summary>
         /// user event.
         /// </summary>
-        User = 1,
-        /// <summary>
-        /// group presence event.
-        /// </summary>
-        GroupPresence = 2
+        User
     }
 }

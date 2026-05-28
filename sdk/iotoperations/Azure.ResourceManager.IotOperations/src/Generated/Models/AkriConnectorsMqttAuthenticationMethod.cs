@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -15,52 +14,35 @@ namespace Azure.ResourceManager.IotOperations.Models
     internal readonly partial struct AkriConnectorsMqttAuthenticationMethod : IEquatable<AkriConnectorsMqttAuthenticationMethod>
     {
         private readonly string _value;
-        /// <summary> Service Account Token authentication. </summary>
-        private const string ServiceAccountTokenValue = "ServiceAccountToken";
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorsMqttAuthenticationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AkriConnectorsMqttAuthenticationMethod(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string ServiceAccountTokenValue = "ServiceAccountToken";
 
         /// <summary> Service Account Token authentication. </summary>
         public static AkriConnectorsMqttAuthenticationMethod ServiceAccountToken { get; } = new AkriConnectorsMqttAuthenticationMethod(ServiceAccountTokenValue);
-
         /// <summary> Determines if two <see cref="AkriConnectorsMqttAuthenticationMethod"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AkriConnectorsMqttAuthenticationMethod left, AkriConnectorsMqttAuthenticationMethod right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AkriConnectorsMqttAuthenticationMethod"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AkriConnectorsMqttAuthenticationMethod left, AkriConnectorsMqttAuthenticationMethod right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AkriConnectorsMqttAuthenticationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AkriConnectorsMqttAuthenticationMethod"/>. </summary>
         public static implicit operator AkriConnectorsMqttAuthenticationMethod(string value) => new AkriConnectorsMqttAuthenticationMethod(value);
 
-        /// <summary> Converts a string to a <see cref="AkriConnectorsMqttAuthenticationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AkriConnectorsMqttAuthenticationMethod?(string value) => value == null ? null : new AkriConnectorsMqttAuthenticationMethod(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AkriConnectorsMqttAuthenticationMethod other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AkriConnectorsMqttAuthenticationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

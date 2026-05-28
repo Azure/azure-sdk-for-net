@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeSkuAvailability : IEquatable<DataBoxEdgeSkuAvailability>
     {
         private readonly string _value;
-        private const string AvailableValue = "Available";
-        private const string UnavailableValue = "Unavailable";
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuAvailability"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataBoxEdgeSkuAvailability(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Available. </summary>
+        private const string AvailableValue = "Available";
+        private const string UnavailableValue = "Unavailable";
+
+        /// <summary> Available. </summary>
         public static DataBoxEdgeSkuAvailability Available { get; } = new DataBoxEdgeSkuAvailability(AvailableValue);
-
-        /// <summary> Gets the Unavailable. </summary>
+        /// <summary> Unavailable. </summary>
         public static DataBoxEdgeSkuAvailability Unavailable { get; } = new DataBoxEdgeSkuAvailability(UnavailableValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuAvailability"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeSkuAvailability left, DataBoxEdgeSkuAvailability right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuAvailability"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeSkuAvailability left, DataBoxEdgeSkuAvailability right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuAvailability"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeSkuAvailability"/>. </summary>
         public static implicit operator DataBoxEdgeSkuAvailability(string value) => new DataBoxEdgeSkuAvailability(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuAvailability"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeSkuAvailability?(string value) => value == null ? null : new DataBoxEdgeSkuAvailability(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeSkuAvailability other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeSkuAvailability other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

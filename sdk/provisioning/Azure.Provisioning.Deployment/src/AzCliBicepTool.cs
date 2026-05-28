@@ -58,8 +58,7 @@ internal abstract class ExternalBicepTool
         List<BicepErrorMessage> messages = [];
         foreach (string line in (result.Error ?? "").Split('\n').Select(l => l.Trim()))
         {
-            if (string.IsNullOrEmpty(line))
-            { continue; }
+            if (string.IsNullOrEmpty(line)) { continue; }
             messages.Add(new BicepErrorMessage(line.Trim()));
         }
         return messages;

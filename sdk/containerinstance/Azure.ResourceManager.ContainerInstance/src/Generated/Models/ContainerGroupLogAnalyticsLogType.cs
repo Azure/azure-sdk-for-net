@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public readonly partial struct ContainerGroupLogAnalyticsLogType : IEquatable<ContainerGroupLogAnalyticsLogType>
     {
         private readonly string _value;
-        /// <summary> ContainerInsights. </summary>
-        private const string ContainerInsightsValue = "ContainerInsights";
-        /// <summary> ContainerInstanceLogs. </summary>
-        private const string ContainerInstanceLogsValue = "ContainerInstanceLogs";
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupLogAnalyticsLogType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerGroupLogAnalyticsLogType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string ContainerInsightsValue = "ContainerInsights";
+        private const string ContainerInstanceLogsValue = "ContainerInstanceLogs";
 
         /// <summary> ContainerInsights. </summary>
         public static ContainerGroupLogAnalyticsLogType ContainerInsights { get; } = new ContainerGroupLogAnalyticsLogType(ContainerInsightsValue);
-
         /// <summary> ContainerInstanceLogs. </summary>
         public static ContainerGroupLogAnalyticsLogType ContainerInstanceLogs { get; } = new ContainerGroupLogAnalyticsLogType(ContainerInstanceLogsValue);
-
         /// <summary> Determines if two <see cref="ContainerGroupLogAnalyticsLogType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerGroupLogAnalyticsLogType left, ContainerGroupLogAnalyticsLogType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerGroupLogAnalyticsLogType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerGroupLogAnalyticsLogType left, ContainerGroupLogAnalyticsLogType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerGroupLogAnalyticsLogType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupLogAnalyticsLogType"/>. </summary>
         public static implicit operator ContainerGroupLogAnalyticsLogType(string value) => new ContainerGroupLogAnalyticsLogType(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerGroupLogAnalyticsLogType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupLogAnalyticsLogType?(string value) => value == null ? null : new ContainerGroupLogAnalyticsLogType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerGroupLogAnalyticsLogType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerGroupLogAnalyticsLogType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

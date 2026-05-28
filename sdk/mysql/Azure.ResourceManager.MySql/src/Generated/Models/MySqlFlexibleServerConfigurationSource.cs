@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerConfigurationSource : IEquatable<MySqlFlexibleServerConfigurationSource>
     {
         private readonly string _value;
-        private const string SystemDefaultValue = "system-default";
-        private const string UserOverrideValue = "user-override";
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationSource"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MySqlFlexibleServerConfigurationSource(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the SystemDefault. </summary>
+        private const string SystemDefaultValue = "system-default";
+        private const string UserOverrideValue = "user-override";
+
+        /// <summary> system-default. </summary>
         public static MySqlFlexibleServerConfigurationSource SystemDefault { get; } = new MySqlFlexibleServerConfigurationSource(SystemDefaultValue);
-
-        /// <summary> Gets the UserOverride. </summary>
+        /// <summary> user-override. </summary>
         public static MySqlFlexibleServerConfigurationSource UserOverride { get; } = new MySqlFlexibleServerConfigurationSource(UserOverrideValue);
-
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigurationSource"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerConfigurationSource left, MySqlFlexibleServerConfigurationSource right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="MySqlFlexibleServerConfigurationSource"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerConfigurationSource left, MySqlFlexibleServerConfigurationSource right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigurationSource"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerConfigurationSource"/>. </summary>
         public static implicit operator MySqlFlexibleServerConfigurationSource(string value) => new MySqlFlexibleServerConfigurationSource(value);
 
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerConfigurationSource"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerConfigurationSource?(string value) => value == null ? null : new MySqlFlexibleServerConfigurationSource(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerConfigurationSource other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(MySqlFlexibleServerConfigurationSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

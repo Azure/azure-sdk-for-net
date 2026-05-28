@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> RackPatchParameters represents the body of the request to patch the rack properties. </summary>
     public partial class NetworkCloudRackPatch
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudRackPatch"/>. </summary>
         public NetworkCloudRackPatch()
@@ -24,54 +52,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudRackPatch"/>. </summary>
-        /// <param name="properties"> The list of the resource properties. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudRackPatch(RacksPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="rackLocation"> The free-form description of the rack location. (e.g. “DTN Datacenter, Floor 3, Isle 9, Rack 2B”). </param>
+        /// <param name="rackSerialNumber"> The globally unique identifier for the rack. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudRackPatch(IDictionary<string, string> tags, string rackLocation, string rackSerialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
             Tags = tags;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            RackLocation = rackLocation;
+            RackSerialNumber = rackSerialNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of the resource properties. </summary>
-        internal RacksPatchProperties Properties { get; set; }
-
-        /// <summary> Resource tags. </summary>
+        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The free-form description of the rack location. (e.g. "DTN Datacenter, Floor 3, Isle 9, Rack 2B"). </summary>
-        public string RackLocation
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RackLocation;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RacksPatchProperties();
-                }
-                Properties.RackLocation = value;
-            }
-        }
-
+        /// <summary> The free-form description of the rack location. (e.g. “DTN Datacenter, Floor 3, Isle 9, Rack 2B”). </summary>
+        public string RackLocation { get; set; }
         /// <summary> The globally unique identifier for the rack. </summary>
-        public string RackSerialNumber
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RackSerialNumber;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RacksPatchProperties();
-                }
-                Properties.RackSerialNumber = value;
-            }
-        }
+        public string RackSerialNumber { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site.
-    /// Serialized Name: ResourceScopeType
-    /// </summary>
+    /// <summary> Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site. </summary>
     public readonly partial struct ResourceScopeType : IEquatable<ResourceScopeType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
         private const string SubscriptionValue = "Subscription";
         private const string WebSiteValue = "WebSite";
 
-        /// <summary>
-        /// ServerFarm
-        /// Serialized Name: ResourceScopeType.ServerFarm
-        /// </summary>
+        /// <summary> ServerFarm. </summary>
         public static ResourceScopeType ServerFarm { get; } = new ResourceScopeType(ServerFarmValue);
-        /// <summary>
-        /// Subscription
-        /// Serialized Name: ResourceScopeType.Subscription
-        /// </summary>
+        /// <summary> Subscription. </summary>
         public static ResourceScopeType Subscription { get; } = new ResourceScopeType(SubscriptionValue);
-        /// <summary>
-        /// WebSite
-        /// Serialized Name: ResourceScopeType.WebSite
-        /// </summary>
+        /// <summary> WebSite. </summary>
         public static ResourceScopeType WebSite { get; } = new ResourceScopeType(WebSiteValue);
         /// <summary> Determines if two <see cref="ResourceScopeType"/> values are the same. </summary>
         public static bool operator ==(ResourceScopeType left, ResourceScopeType right) => left.Equals(right);

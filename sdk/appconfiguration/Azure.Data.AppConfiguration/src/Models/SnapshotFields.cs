@@ -5,7 +5,6 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Data.AppConfiguration
 {

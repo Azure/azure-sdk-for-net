@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Recommender
         {
             get
             {
-                return Properties is null ? default : Properties.SupportedResourceTypes;
+                return Properties.SupportedResourceTypes;
             }
         }
     }

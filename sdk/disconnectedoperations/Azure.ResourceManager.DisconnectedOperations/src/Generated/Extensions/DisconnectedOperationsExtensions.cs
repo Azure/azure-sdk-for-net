@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DisconnectedOperations.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -19,32 +17,30 @@ namespace Azure.ResourceManager.DisconnectedOperations
     /// <summary> A class to add extension methods to Azure.ResourceManager.DisconnectedOperations. </summary>
     public static partial class DisconnectedOperationsExtensions
     {
-        /// <param name="client"></param>
         private static MockableDisconnectedOperationsArmClient GetMockableDisconnectedOperationsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableDisconnectedOperationsArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableDisconnectedOperationsArmClient(client0));
         }
 
-        /// <param name="resourceGroupResource"></param>
-        private static MockableDisconnectedOperationsResourceGroupResource GetMockableDisconnectedOperationsResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableDisconnectedOperationsResourceGroupResource GetMockableDisconnectedOperationsResourceGroupResource(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockableDisconnectedOperationsResourceGroupResource(client, resourceGroupResource.Id));
+            return resource.GetCachedClient(client => new MockableDisconnectedOperationsResourceGroupResource(client, resource.Id));
         }
 
-        /// <param name="subscriptionResource"></param>
-        private static MockableDisconnectedOperationsSubscriptionResource GetMockableDisconnectedOperationsSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockableDisconnectedOperationsSubscriptionResource GetMockableDisconnectedOperationsSubscriptionResource(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockableDisconnectedOperationsSubscriptionResource(client, subscriptionResource.Id));
+            return resource.GetCachedClient(client => new MockableDisconnectedOperationsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DisconnectedOperationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DisconnectedOperationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DisconnectedOperationResource.CreateResourceIdentifier" /> to create a <see cref="DisconnectedOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsArmClient.GetDisconnectedOperationResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDisconnectedOperationsArmClient.GetDisconnectedOperationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DisconnectedOperationResource"/> object. </returns>
@@ -56,13 +52,14 @@ namespace Azure.ResourceManager.DisconnectedOperations
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DisconnectedOperationsImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DisconnectedOperationsImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DisconnectedOperationsImageResource.CreateResourceIdentifier" /> to create a <see cref="DisconnectedOperationsImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsArmClient.GetDisconnectedOperationsImageResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDisconnectedOperationsArmClient.GetDisconnectedOperationsImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DisconnectedOperationsImageResource"/> object. </returns>
@@ -74,13 +71,14 @@ namespace Azure.ResourceManager.DisconnectedOperations
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DisconnectedOperationsArtifactResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DisconnectedOperationsArtifactResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DisconnectedOperationsArtifactResource.CreateResourceIdentifier" /> to create a <see cref="DisconnectedOperationsArtifactResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsArmClient.GetDisconnectedOperationsArtifactResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDisconnectedOperationsArmClient.GetDisconnectedOperationsArtifactResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="DisconnectedOperationsArtifactResource"/> object. </returns>
@@ -92,33 +90,15 @@ namespace Azure.ResourceManager.DisconnectedOperations
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DisconnectedOperationsHardwareSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets a collection of DisconnectedOperationResources in the ResourceGroupResource.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsArmClient.GetDisconnectedOperationsHardwareSettingResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDisconnectedOperationsResourceGroupResource.GetDisconnectedOperations()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DisconnectedOperationsHardwareSettingResource"/> object. </returns>
-        public static DisconnectedOperationsHardwareSettingResource GetDisconnectedOperationsHardwareSettingResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDisconnectedOperationsArmClient(client).GetDisconnectedOperationsHardwareSettingResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of DisconnectedOperations in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsResourceGroupResource.GetDisconnectedOperations()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DisconnectedOperations and their operations over a DisconnectedOperationResource. </returns>
+        /// <returns> An object representing collection of DisconnectedOperationResources and their operations over a DisconnectedOperationResource. </returns>
         public static DisconnectedOperationCollection GetDisconnectedOperations(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -128,15 +108,34 @@ namespace Azure.ResourceManager.DisconnectedOperations
 
         /// <summary>
         /// Get a DisconnectedOperation
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsResourceGroupResource.GetDisconnectedOperationAsync(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DisconnectedOperation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDisconnectedOperationsResourceGroupResource.GetDisconnectedOperationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DisconnectedOperationResource>> GetDisconnectedOperationAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -147,15 +146,34 @@ namespace Azure.ResourceManager.DisconnectedOperations
 
         /// <summary>
         /// Get a DisconnectedOperation
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsResourceGroupResource.GetDisconnectedOperation(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DisconnectedOperation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDisconnectedOperationsResourceGroupResource.GetDisconnectedOperation(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DisconnectedOperationResource> GetDisconnectedOperation(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
@@ -166,15 +184,33 @@ namespace Azure.ResourceManager.DisconnectedOperations
 
         /// <summary>
         /// List DisconnectedOperation resources by subscription ID
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsSubscriptionResource.GetDisconnectedOperationsAsync(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/disconnectedOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DisconnectedOperation_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDisconnectedOperationsSubscriptionResource.GetDisconnectedOperations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DisconnectedOperationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DisconnectedOperationResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DisconnectedOperationResource> GetDisconnectedOperationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -184,12 +220,30 @@ namespace Azure.ResourceManager.DisconnectedOperations
 
         /// <summary>
         /// List DisconnectedOperation resources by subscription ID
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDisconnectedOperationsSubscriptionResource.GetDisconnectedOperations(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Edge/disconnectedOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DisconnectedOperation_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DisconnectedOperationResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDisconnectedOperationsSubscriptionResource.GetDisconnectedOperations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DisconnectedOperationResource"/> that may take multiple service requests to iterate over. </returns>

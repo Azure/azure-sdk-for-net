@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Outbound traffic options over virtual network.
-    /// Serialized Name: OutboundVnetRouting
-    /// </summary>
+    /// <summary> Outbound traffic options over virtual network. </summary>
     public partial class OutboundVnetRouting
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OutboundVnetRouting"/>. </summary>
-        /// <param name="isAllTrafficEnabled">
-        /// Enables all other routing options defined in OutboundVnetRouting if this setting is set to true.
-        /// Serialized Name: OutboundVnetRouting.allTraffic
-        /// </param>
-        /// <param name="isApplicationTrafficEnabled">
-        /// This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. Previously called VnetRouteAllEnabled.
-        /// Serialized Name: OutboundVnetRouting.applicationTraffic
-        /// </param>
-        /// <param name="isContentShareTrafficEnabled">
-        /// Enables accessing content over virtual network. Previously called VnetContentShareEnabled
-        /// Serialized Name: OutboundVnetRouting.contentShareTraffic
-        /// </param>
-        /// <param name="isImagePullTrafficEnabled">
-        /// Enables pulling image over Virtual Network. Previously called VnetImagePullEnabled.
-        /// Serialized Name: OutboundVnetRouting.imagePullTraffic
-        /// </param>
-        /// <param name="isBackupRestoreTrafficEnabled">
-        /// Enables Backup and Restore operations over virtual network. Previously called VnetBackupRestoreEnabled
-        /// Serialized Name: OutboundVnetRouting.backupRestoreTraffic
-        /// </param>
+        /// <param name="isAllTrafficEnabled"> Enables all other routing options defined in OutboundVnetRouting if this setting is set to true. </param>
+        /// <param name="isApplicationTrafficEnabled"> This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. Previously called VnetRouteAllEnabled. </param>
+        /// <param name="isContentShareTrafficEnabled"> Enables accessing content over virtual network. Previously called VnetContentShareEnabled. </param>
+        /// <param name="isImagePullTrafficEnabled"> Enables pulling image over Virtual Network. Previously called VnetImagePullEnabled. </param>
+        /// <param name="isBackupRestoreTrafficEnabled"> Enables Backup and Restore operations over virtual network. Previously called VnetBackupRestoreEnabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OutboundVnetRouting(bool? isAllTrafficEnabled, bool? isApplicationTrafficEnabled, bool? isContentShareTrafficEnabled, bool? isImagePullTrafficEnabled, bool? isBackupRestoreTrafficEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,34 +67,19 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Enables all other routing options defined in OutboundVnetRouting if this setting is set to true.
-        /// Serialized Name: OutboundVnetRouting.allTraffic
-        /// </summary>
+        /// <summary> Enables all other routing options defined in OutboundVnetRouting if this setting is set to true. </summary>
         [WirePath("allTraffic")]
         public bool? IsAllTrafficEnabled { get; set; }
-        /// <summary>
-        /// This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. Previously called VnetRouteAllEnabled.
-        /// Serialized Name: OutboundVnetRouting.applicationTraffic
-        /// </summary>
+        /// <summary> This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. Previously called VnetRouteAllEnabled. </summary>
         [WirePath("applicationTraffic")]
         public bool? IsApplicationTrafficEnabled { get; set; }
-        /// <summary>
-        /// Enables accessing content over virtual network. Previously called VnetContentShareEnabled
-        /// Serialized Name: OutboundVnetRouting.contentShareTraffic
-        /// </summary>
+        /// <summary> Enables accessing content over virtual network. Previously called VnetContentShareEnabled. </summary>
         [WirePath("contentShareTraffic")]
         public bool? IsContentShareTrafficEnabled { get; set; }
-        /// <summary>
-        /// Enables pulling image over Virtual Network. Previously called VnetImagePullEnabled.
-        /// Serialized Name: OutboundVnetRouting.imagePullTraffic
-        /// </summary>
+        /// <summary> Enables pulling image over Virtual Network. Previously called VnetImagePullEnabled. </summary>
         [WirePath("imagePullTraffic")]
         public bool? IsImagePullTrafficEnabled { get; set; }
-        /// <summary>
-        /// Enables Backup and Restore operations over virtual network. Previously called VnetBackupRestoreEnabled
-        /// Serialized Name: OutboundVnetRouting.backupRestoreTraffic
-        /// </summary>
+        /// <summary> Enables Backup and Restore operations over virtual network. Previously called VnetBackupRestoreEnabled. </summary>
         [WirePath("backupRestoreTraffic")]
         public bool? IsBackupRestoreTrafficEnabled { get; set; }
     }

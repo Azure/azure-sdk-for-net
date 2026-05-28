@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StandbyPool
 {
-    /// <summary></summary>
-    internal partial class StandbyContainerGroupPoolOperationSource : IOperationSource<StandbyContainerGroupPoolResource>
+    internal class StandbyContainerGroupPoolOperationSource : IOperationSource<StandbyContainerGroupPoolResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal StandbyContainerGroupPoolOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         StandbyContainerGroupPoolResource IOperationSource<StandbyContainerGroupPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            StandbyContainerGroupPoolData data = StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<StandbyContainerGroupPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStandbyPoolContext.Default);
             return new StandbyContainerGroupPoolResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<StandbyContainerGroupPoolResource> IOperationSource<StandbyContainerGroupPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            StandbyContainerGroupPoolData data = StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StandbyContainerGroupPoolResource(_client, data);
+            var data = ModelReaderWriter.Read<StandbyContainerGroupPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStandbyPoolContext.Default);
+            return await Task.FromResult(new StandbyContainerGroupPoolResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

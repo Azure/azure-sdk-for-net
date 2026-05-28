@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Quantum;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Quantum.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableQuantumResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableQuantumResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableQuantumResourceGroupResource"/> class for mocking. </summary>
         protected MockableQuantumResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableQuantumResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableQuantumResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableQuantumResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of QuantumWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of QuantumWorkspaces and their operations over a QuantumWorkspaceResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of QuantumWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of QuantumWorkspaceResources and their operations over a QuantumWorkspaceResource. </returns>
         public virtual QuantumWorkspaceCollection GetQuantumWorkspaces()
         {
             return GetCachedClient(client => new QuantumWorkspaceCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// Returns the Workspace resource associated with the given name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.Quantum.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<QuantumWorkspaceResource>> GetQuantumWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
             return await GetQuantumWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// Returns the Workspace resource associated with the given name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Workspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.Quantum.Mocking
         [ForwardsClientCalls]
         public virtual Response<QuantumWorkspaceResource> GetQuantumWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-
             return GetQuantumWorkspaces().Get(workspaceName, cancellationToken);
         }
     }

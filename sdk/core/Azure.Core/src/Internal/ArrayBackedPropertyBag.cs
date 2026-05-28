@@ -6,7 +6,6 @@ using System.Buffers;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using System.Threading;
 
 namespace Azure.Core
 {
@@ -21,9 +20,14 @@ namespace Azure.Core
         private (TKey Key, TValue Value) _second;
         private (TKey Key, TValue Value)[]? _rest;
         private int _count;
+        private readonly object _lock = new();
 #if DEBUG
         private bool _disposed;
 #endif
+
+        public ArrayBackedPropertyBag()
+        {
+        }
 
         public int Count
         {
@@ -266,13 +270,17 @@ namespace Azure.Core
             _first = default;
             _second = default;
 
-            var rest = Interlocked.Exchange(ref _rest, default);
-            if (rest == default)
+            lock (_lock)
             {
-                return;
-            }
+                if (_rest == default)
+                {
+                    return;
+                }
 
-            ArrayPool<(TKey Key, TValue Value)>.Shared.Return(rest, true);
+                var rest = _rest;
+                _rest = default;
+                ArrayPool<(TKey Key, TValue Value)>.Shared.Return(rest, true);
+            }
         }
 
         private (TKey Key, TValue Value)[] GetRest() => _rest ??

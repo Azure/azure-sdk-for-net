@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public readonly partial struct AppConfigurationProvisioningState : IEquatable<AppConfigurationProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppConfigurationProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
@@ -22,64 +29,35 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppConfigurationProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static AppConfigurationProvisioningState Creating { get; } = new AppConfigurationProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static AppConfigurationProvisioningState Updating { get; } = new AppConfigurationProvisioningState(UpdatingValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static AppConfigurationProvisioningState Deleting { get; } = new AppConfigurationProvisioningState(DeletingValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static AppConfigurationProvisioningState Succeeded { get; } = new AppConfigurationProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static AppConfigurationProvisioningState Failed { get; } = new AppConfigurationProvisioningState(FailedValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static AppConfigurationProvisioningState Canceled { get; } = new AppConfigurationProvisioningState(CanceledValue);
-
         /// <summary> Determines if two <see cref="AppConfigurationProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppConfigurationProvisioningState left, AppConfigurationProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AppConfigurationProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppConfigurationProvisioningState left, AppConfigurationProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AppConfigurationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppConfigurationProvisioningState"/>. </summary>
         public static implicit operator AppConfigurationProvisioningState(string value) => new AppConfigurationProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="AppConfigurationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AppConfigurationProvisioningState?(string value) => value == null ? null : new AppConfigurationProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppConfigurationProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AppConfigurationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

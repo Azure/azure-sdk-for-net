@@ -195,7 +195,9 @@ namespace Azure.ResourceManager.Analysis.Models
         public static Azure.ResourceManager.Analysis.Models.AnalysisManagedMode One { get { throw null; } }
         public static Azure.ResourceManager.Analysis.Models.AnalysisManagedMode Zero { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Analysis.Models.AnalysisManagedMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Analysis.Models.AnalysisManagedMode left, Azure.ResourceManager.Analysis.Models.AnalysisManagedMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Analysis.Models.AnalysisManagedMode (int value) { throw null; }
@@ -221,7 +223,9 @@ namespace Azure.ResourceManager.Analysis.Models
         public static Azure.ResourceManager.Analysis.Models.AnalysisProvisioningState Suspending { get { throw null; } }
         public static Azure.ResourceManager.Analysis.Models.AnalysisProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Analysis.Models.AnalysisProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Analysis.Models.AnalysisProvisioningState left, Azure.ResourceManager.Analysis.Models.AnalysisProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Analysis.Models.AnalysisProvisioningState (string value) { throw null; }
@@ -295,7 +299,9 @@ namespace Azure.ResourceManager.Analysis.Models
         public static Azure.ResourceManager.Analysis.Models.AnalysisSkuTier Development { get { throw null; } }
         public static Azure.ResourceManager.Analysis.Models.AnalysisSkuTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Analysis.Models.AnalysisSkuTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Analysis.Models.AnalysisSkuTier left, Azure.ResourceManager.Analysis.Models.AnalysisSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Analysis.Models.AnalysisSkuTier (string value) { throw null; }
@@ -321,7 +327,9 @@ namespace Azure.ResourceManager.Analysis.Models
         public static Azure.ResourceManager.Analysis.Models.AnalysisState Suspending { get { throw null; } }
         public static Azure.ResourceManager.Analysis.Models.AnalysisState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Analysis.Models.AnalysisState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Analysis.Models.AnalysisState left, Azure.ResourceManager.Analysis.Models.AnalysisState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Analysis.Models.AnalysisState (string value) { throw null; }
@@ -335,7 +343,9 @@ namespace Azure.ResourceManager.Analysis.Models
         public AnalysisStatus(int value) { throw null; }
         public static Azure.ResourceManager.Analysis.Models.AnalysisStatus Zero { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Analysis.Models.AnalysisStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Analysis.Models.AnalysisStatus left, Azure.ResourceManager.Analysis.Models.AnalysisStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Analysis.Models.AnalysisStatus (int value) { throw null; }
@@ -358,7 +368,9 @@ namespace Azure.ResourceManager.Analysis.Models
         public static Azure.ResourceManager.Analysis.Models.ServerMonitorMode One { get { throw null; } }
         public static Azure.ResourceManager.Analysis.Models.ServerMonitorMode Zero { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Analysis.Models.ServerMonitorMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Analysis.Models.ServerMonitorMode left, Azure.ResourceManager.Analysis.Models.ServerMonitorMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Analysis.Models.ServerMonitorMode (int value) { throw null; }

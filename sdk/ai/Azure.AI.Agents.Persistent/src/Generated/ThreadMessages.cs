@@ -10,17 +10,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Agents.Persistent
 {
+    // Data plane generated sub-client.
     /// <summary> A collection of message operations under `/threads/{threadId}/messages`. </summary>
     public partial class ThreadMessages
     {
+        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of ThreadMessages for mocking. </summary>
         protected ThreadMessages()
@@ -28,24 +38,20 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of ThreadMessages. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal ThreadMessages(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        internal ThreadMessages(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-            Pipeline = pipeline;
             _apiVersion = apiVersion;
         }
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary> Creates a new message on a specified thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="role">
@@ -62,18 +68,18 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentThreadMessage> CreateMessage(string threadId, MessageRole role, BinaryData content, IEnumerable<MessageAttachment> attachments = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PersistentThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, BinaryData content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            CreateMessageRequest spreadModel = new CreateMessageRequest(role, content, attachments?.ToList() as IList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = CreateMessage(threadId, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentThreadMessage)result, result);
+            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, attachments?.ToList() as IReadOnlyList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateMessageAsync(threadId, createMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
 
         /// <summary> Creates a new message on a specified thread. </summary>
@@ -92,80 +98,85 @@ namespace Azure.AI.Agents.Persistent
         /// </param>
         /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, BinaryData content, IEnumerable<MessageAttachment> attachments = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual Response<PersistentThreadMessage> CreateMessage(string threadId, MessageRole role, BinaryData content, IEnumerable<MessageAttachment> attachments = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            CreateMessageRequest spreadModel = new CreateMessageRequest(role, content, attachments?.ToList() as IList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = await CreateMessageAsync(threadId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentThreadMessage)result, result);
+            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, attachments?.ToList() as IReadOnlyList<MessageAttachment> ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateMessage(threadId, createMessageRequest.ToRequestContent(), context);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// [Protocol Method] Retrieves an existing message.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Retrieves an existing message. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMessage(string threadId, string messageId, RequestContext context)
+        public virtual async Task<Response<PersistentThreadMessage>> GetMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadMessages.GetMessage");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-                using HttpMessage message = CreateGetMessageRequest(threadId, messageId, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetMessageAsync(threadId, messageId, context).ConfigureAwait(false);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
+        }
+
+        /// <summary> Retrieves an existing message. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="messageId"> Identifier of the message. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PersistentThreadMessage> GetMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetMessage(threadId, messageId, context);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
         }
 
         /// <summary>
         /// [Protocol Method] Retrieves an existing message.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetMessageAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetMessageAsync(string threadId, string messageId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadMessages.GetMessage");
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessages.GetMessage");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-
                 using HttpMessage message = CreateGetMessageRequest(threadId, messageId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -174,66 +185,39 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Retrieves an existing message. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentThreadMessage> GetMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-
-            Response result = GetMessage(threadId, messageId, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentThreadMessage)result, result);
-        }
-
-        /// <summary> Retrieves an existing message. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentThreadMessage>> GetMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-
-            Response result = await GetMessageAsync(threadId, messageId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentThreadMessage)result, result);
-        }
-
         /// <summary>
-        /// [Protocol Method] Modifies an existing message on an existing thread.
+        /// [Protocol Method] Retrieves an existing message.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetMessage(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateMessage(string threadId, string messageId, RequestContent content, RequestContext context = null)
+        public virtual Response GetMessage(string threadId, string messageId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadMessages.UpdateMessage");
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessages.GetMessage");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateMessageRequest(threadId, messageId, content, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateGetMessageRequest(threadId, messageId, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -242,34 +226,77 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
+        /// <summary> Modifies an existing message on an existing thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="messageId"> Identifier of the message. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PersistentThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+
+            UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpdateMessageAsync(threadId, messageId, updateMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
+        }
+
+        /// <summary> Modifies an existing message on an existing thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="messageId"> Identifier of the message. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PersistentThreadMessage> UpdateMessage(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+
+            UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpdateMessage(threadId, messageId, updateMessageRequest.ToRequestContent(), context);
+            return Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Modifies an existing message on an existing thread.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateMessageAsync(string,string,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="messageId"> Identifier of the message. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UpdateMessageAsync(string threadId, string messageId, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadMessages.UpdateMessage");
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessages.UpdateMessage");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-                Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateUpdateMessageRequest(threadId, messageId, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -278,63 +305,41 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Modifies an existing message on an existing thread. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentThreadMessage> UpdateMessage(string threadId, string messageId, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-
-            UpdateMessageRequest spreadModel = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = UpdateMessage(threadId, messageId, spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentThreadMessage)result, result);
-        }
-
-        /// <summary> Modifies an existing message on an existing thread. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
-
-            UpdateMessageRequest spreadModel = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), default);
-            Response result = await UpdateMessageAsync(threadId, messageId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentThreadMessage)result, result);
-        }
-
         /// <summary>
-        /// [Protocol Method] Deletes an existing message on an existing thread.
+        /// [Protocol Method] Modifies an existing message on an existing thread.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateMessage(string,string,IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response InternalDeleteMessage(string threadId, string messageId, RequestContext context)
+        public virtual Response UpdateMessage(string threadId, string messageId, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadMessages.InternalDeleteMessage");
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessages.UpdateMessage");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteMessageRequest(threadId, messageId, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateUpdateMessageRequest(threadId, messageId, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -343,27 +348,71 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
+        /// <summary> Deletes an existing message on an existing thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="messageId"> Identifier of the message. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<MessageDeletionStatus>> InternalDeleteMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await InternalDeleteMessageAsync(threadId, messageId, context).ConfigureAwait(false);
+            return Response.FromValue(MessageDeletionStatus.FromResponse(response), response);
+        }
+
+        /// <summary> Deletes an existing message on an existing thread. </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="messageId"> Identifier of the message. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<MessageDeletionStatus> InternalDeleteMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = InternalDeleteMessage(threadId, messageId, context);
+            return Response.FromValue(MessageDeletionStatus.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Deletes an existing message on an existing thread.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="InternalDeleteMessageAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> InternalDeleteMessageAsync(string threadId, string messageId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ThreadMessages.InternalDeleteMessage");
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessages.InternalDeleteMessage");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateInternalDeleteMessageRequest(threadId, messageId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -372,26 +421,166 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Deletes an existing message on an existing thread. </summary>
+        /// <summary>
+        /// [Protocol Method] Deletes an existing message on an existing thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="InternalDeleteMessage(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<MessageDeletionStatus> InternalDeleteMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response InternalDeleteMessage(string threadId, string messageId, RequestContext context)
         {
-            Response result = InternalDeleteMessage(threadId, messageId, cancellationToken.ToRequestContext());
-            return Response.FromValue((MessageDeletionStatus)result, result);
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
+
+            using var scope = ClientDiagnostics.CreateScope("ThreadMessages.InternalDeleteMessage");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateInternalDeleteMessageRequest(threadId, messageId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Deletes an existing message on an existing thread. </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="messageId"> Identifier of the message. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<MessageDeletionStatus>> InternalDeleteMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateMessageRequest(string threadId, RequestContent content, RequestContext context)
         {
-            Response result = await InternalDeleteMessageAsync(threadId, messageId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((MessageDeletionStatus)result, result);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/messages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
         }
+
+        internal HttpMessage CreateGetMessagesRequest(string threadId, string runId, int? limit, string order, string after, string before, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/messages", false);
+            if (runId != null)
+            {
+                uri.AppendQuery("run_id", runId, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", limit.Value, true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetMessageRequest(string threadId, string messageId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/messages/", false);
+            uri.AppendPath(messageId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateMessageRequest(string threadId, string messageId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/messages/", false);
+            uri.AppendPath(messageId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateInternalDeleteMessageRequest(string threadId, string messageId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/threads/", false);
+            uri.AppendPath(threadId, true);
+            uri.AppendPath("/messages/", false);
+            uri.AppendPath(messageId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
+        }
+
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

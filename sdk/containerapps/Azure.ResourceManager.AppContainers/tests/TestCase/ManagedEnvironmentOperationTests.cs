@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.AppContainers.Models;
+using Azure.Core;
 using NUnit.Framework;
+using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers.Tests
 {

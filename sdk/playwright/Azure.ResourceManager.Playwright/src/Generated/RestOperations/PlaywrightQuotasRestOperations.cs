@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Playwright
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/playwrightQuotas/", false);
             uri.AppendPath(playwrightQuotaName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -72,10 +69,7 @@ namespace Azure.ResourceManager.Playwright
             uri.AppendPath("/providers/Microsoft.LoadTestService/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/playwrightQuotas", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -87,18 +81,7 @@ namespace Azure.ResourceManager.Playwright
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

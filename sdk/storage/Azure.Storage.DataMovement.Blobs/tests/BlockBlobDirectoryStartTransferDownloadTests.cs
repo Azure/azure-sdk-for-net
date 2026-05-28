@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias BaseBlobs;
 extern alias DMBlobs;
+extern alias BaseBlobs;
+
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;

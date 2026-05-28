@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
-    /// <summary> The properties of a data store. </summary>
-    public partial class DatabaseWatcherDatastore : IJsonModel<DatabaseWatcherDatastore>
+    public partial class DatabaseWatcherDatastore : IUtf8JsonSerializable, IJsonModel<DatabaseWatcherDatastore>
     {
-        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherDatastore"/> for deserialization. </summary>
-        internal DatabaseWatcherDatastore()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseWatcherDatastore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatabaseWatcherDatastore PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherDatastore>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDatabaseWatcherDatastore(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DatabaseWatcherDatastore)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherDatastore>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseWatcherContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DatabaseWatcherDatastore)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatabaseWatcherDatastore>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseWatcherDatastore IPersistableModel<DatabaseWatcherDatastore>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatabaseWatcherDatastore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseWatcherDatastore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherDatastore>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherDatastore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseWatcherDatastore)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(AdxClusterResourceId))
             {
                 writer.WritePropertyName("adxClusterResourceId"u8);
@@ -100,15 +54,15 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             writer.WriteStringValue(KustoManagementUri.AbsoluteUri);
             writer.WritePropertyName("kustoOfferingType"u8);
             writer.WriteStringValue(KustoOfferingType.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,27 +71,22 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseWatcherDatastore IJsonModel<DatabaseWatcherDatastore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatabaseWatcherDatastore JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DatabaseWatcherDatastore IJsonModel<DatabaseWatcherDatastore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherDatastore>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherDatastore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseWatcherDatastore)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDatabaseWatcherDatastore(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatabaseWatcherDatastore DeserializeDatabaseWatcherDatastore(JsonElement element, ModelReaderWriterOptions options)
+        internal static DatabaseWatcherDatastore DeserializeDatabaseWatcherDatastore(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -147,64 +96,97 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             Uri kustoClusterUri = default;
             Uri kustoDataIngestionUri = default;
             string kustoDatabaseName = default;
-            Uri kustoManagementUri = default;
+            Uri kustoManagementUrl = default;
             KustoOfferingType kustoOfferingType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("adxClusterResourceId"u8))
+                if (property.NameEquals("adxClusterResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    adxClusterResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    adxClusterResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("kustoClusterDisplayName"u8))
+                if (property.NameEquals("kustoClusterDisplayName"u8))
                 {
-                    kustoClusterDisplayName = prop.Value.GetString();
+                    kustoClusterDisplayName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("kustoClusterUri"u8))
+                if (property.NameEquals("kustoClusterUri"u8))
                 {
-                    kustoClusterUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    kustoClusterUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("kustoDataIngestionUri"u8))
+                if (property.NameEquals("kustoDataIngestionUri"u8))
                 {
-                    kustoDataIngestionUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    kustoDataIngestionUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("kustoDatabaseName"u8))
+                if (property.NameEquals("kustoDatabaseName"u8))
                 {
-                    kustoDatabaseName = prop.Value.GetString();
+                    kustoDatabaseName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("kustoManagementUrl"u8))
+                if (property.NameEquals("kustoManagementUrl"u8))
                 {
-                    kustoManagementUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    kustoManagementUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("kustoOfferingType"u8))
+                if (property.NameEquals("kustoOfferingType"u8))
                 {
-                    kustoOfferingType = new KustoOfferingType(prop.Value.GetString());
+                    kustoOfferingType = new KustoOfferingType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DatabaseWatcherDatastore(
                 adxClusterResourceId,
                 kustoClusterDisplayName,
                 kustoClusterUri,
                 kustoDataIngestionUri,
                 kustoDatabaseName,
-                kustoManagementUri,
+                kustoManagementUrl,
                 kustoOfferingType,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DatabaseWatcherDatastore>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherDatastore>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatabaseWatcherContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseWatcherDatastore)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DatabaseWatcherDatastore IPersistableModel<DatabaseWatcherDatastore>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseWatcherDatastore>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDatabaseWatcherDatastore(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseWatcherDatastore)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatabaseWatcherDatastore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

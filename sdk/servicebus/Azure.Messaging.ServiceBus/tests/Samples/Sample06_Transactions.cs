@@ -44,8 +44,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 Assert.NotNull(secondMessage);
                 await receiver.CompleteMessageAsync(secondMessage);
-            }
-            ;
+            };
         }
 
         [Test]
@@ -79,8 +78,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 #endregion
                 var bytes = await receiver.GetSessionStateAsync();
                 Assert.AreEqual(state, bytes.ToArray());
-            }
-            ;
+            };
         }
 
         [Test]

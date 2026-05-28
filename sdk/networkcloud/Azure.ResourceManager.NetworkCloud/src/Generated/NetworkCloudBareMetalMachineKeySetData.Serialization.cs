@@ -8,82 +8,19 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary> BareMetalMachineKeySet represents the bare metal machine key set. </summary>
-    public partial class NetworkCloudBareMetalMachineKeySetData : TrackedResourceData, IJsonModel<NetworkCloudBareMetalMachineKeySetData>
+    public partial class NetworkCloudBareMetalMachineKeySetData : IUtf8JsonSerializable, IJsonModel<NetworkCloudBareMetalMachineKeySetData>
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudBareMetalMachineKeySetData"/> for deserialization. </summary>
-        internal NetworkCloudBareMetalMachineKeySetData()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudBareMetalMachineKeySetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineKeySetData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNetworkCloudBareMetalMachineKeySetData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineKeySetData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkCloudBareMetalMachineKeySetData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkCloudBareMetalMachineKeySetData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="networkCloudBareMetalMachineKeySetData"> The <see cref="NetworkCloudBareMetalMachineKeySetData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NetworkCloudBareMetalMachineKeySetData networkCloudBareMetalMachineKeySetData)
-        {
-            if (networkCloudBareMetalMachineKeySetData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(networkCloudBareMetalMachineKeySetData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkCloudBareMetalMachineKeySetData"/> from. </param>
-        internal static NetworkCloudBareMetalMachineKeySetData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNetworkCloudBareMetalMachineKeySetData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudBareMetalMachineKeySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -95,14 +32,13 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineKeySetData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineKeySetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetData)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -110,138 +46,346 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WritePropertyName("azureGroupId"u8);
+            writer.WriteStringValue(AzureGroupId);
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
+            {
+                writer.WritePropertyName("detailedStatus"u8);
+                writer.WriteStringValue(DetailedStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
+            {
+                writer.WritePropertyName("detailedStatusMessage"u8);
+                writer.WriteStringValue(DetailedStatusMessage);
+            }
+            writer.WritePropertyName("expiration"u8);
+            writer.WriteStringValue(ExpireOn, "O");
+            writer.WritePropertyName("jumpHostsAllowed"u8);
+            writer.WriteStartArray();
+            foreach (var item in JumpHostsAllowed)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteStringValue(item.ToString());
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(LastValidatedOn))
+            {
+                writer.WritePropertyName("lastValidation"u8);
+                writer.WriteStringValue(LastValidatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(OSGroupName))
+            {
+                writer.WritePropertyName("osGroupName"u8);
+                writer.WriteStringValue(OSGroupName);
+            }
+            writer.WritePropertyName("privilegeLevel"u8);
+            writer.WriteStringValue(PrivilegeLevel.ToString());
+            if (Optional.IsDefined(PrivilegeLevelName))
+            {
+                writer.WritePropertyName("privilegeLevelName"u8);
+                writer.WriteStringValue(PrivilegeLevelName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            writer.WritePropertyName("userList"u8);
+            writer.WriteStartArray();
+            foreach (var item in UserList)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsCollectionDefined(UserListStatus))
+            {
+                writer.WritePropertyName("userListStatus"u8);
+                writer.WriteStartArray();
+                foreach (var item in UserListStatus)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkCloudBareMetalMachineKeySetData IJsonModel<NetworkCloudBareMetalMachineKeySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkCloudBareMetalMachineKeySetData)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkCloudBareMetalMachineKeySetData IJsonModel<NetworkCloudBareMetalMachineKeySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineKeySetData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineKeySetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetData)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkCloudBareMetalMachineKeySetData(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkCloudBareMetalMachineKeySetData DeserializeNetworkCloudBareMetalMachineKeySetData(JsonElement element, ModelReaderWriterOptions options)
+        internal static NetworkCloudBareMetalMachineKeySetData DeserializeNetworkCloudBareMetalMachineKeySetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType resourceType = default;
-            SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ETag? etag = default;
+            ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            BareMetalMachineKeySetProperties properties = default;
-            ETag? eTag = default;
-            ExtendedLocation extendedLocation = default;
-            foreach (var prop in element.EnumerateObject())
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
+            string azureGroupId = default;
+            BareMetalMachineKeySetDetailedStatus? detailedStatus = default;
+            string detailedStatusMessage = default;
+            DateTimeOffset expiration = default;
+            IList<IPAddress> jumpHostsAllowed = default;
+            DateTimeOffset? lastValidation = default;
+            string osGroupName = default;
+            BareMetalMachineKeySetPrivilegeLevel privilegeLevel = default;
+            string privilegeLevelName = default;
+            BareMetalMachineKeySetProvisioningState? provisioningState = default;
+            IList<KeySetUser> userList = default;
+            IReadOnlyList<KeySetUserStatus> userListStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("etag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("extendedLocation"u8))
                 {
-                    name = prop.Value.GetString();
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (property.NameEquals("tags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
+                if (property.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    properties = BareMetalMachineKeySetProperties.DeserializeBareMetalMachineKeySetProperties(prop.Value, options);
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("etag"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eTag = new ETag(prop.Value.GetString());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("extendedLocation"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("azureGroupId"u8))
+                        {
+                            azureGroupId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("detailedStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            detailedStatus = new BareMetalMachineKeySetDetailedStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("detailedStatusMessage"u8))
+                        {
+                            detailedStatusMessage = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("expiration"u8))
+                        {
+                            expiration = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("jumpHostsAllowed"u8))
+                        {
+                            List<IPAddress> array = new List<IPAddress>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPAddress.Parse(item.GetString()));
+                                }
+                            }
+                            jumpHostsAllowed = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("lastValidation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastValidation = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("osGroupName"u8))
+                        {
+                            osGroupName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("privilegeLevel"u8))
+                        {
+                            privilegeLevel = new BareMetalMachineKeySetPrivilegeLevel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("privilegeLevelName"u8))
+                        {
+                            privilegeLevelName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new BareMetalMachineKeySetProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("userList"u8))
+                        {
+                            List<KeySetUser> array = new List<KeySetUser>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(KeySetUser.DeserializeKeySetUser(item, options));
+                            }
+                            userList = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("userListStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<KeySetUserStatus> array = new List<KeySetUserStatus>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(KeySetUserStatus.DeserializeKeySetUserStatus(item, options));
+                            }
+                            userListStatus = array;
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudBareMetalMachineKeySetData(
                 id,
                 name,
-                resourceType,
+                type,
                 systemData,
-                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties,
-                eTag,
-                extendedLocation);
+                etag,
+                extendedLocation,
+                azureGroupId,
+                detailedStatus,
+                detailedStatusMessage,
+                expiration,
+                jumpHostsAllowed,
+                lastValidation,
+                osGroupName,
+                privilegeLevel,
+                privilegeLevelName,
+                provisioningState,
+                userList,
+                userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineKeySetData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetworkCloudBareMetalMachineKeySetData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudBareMetalMachineKeySetData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeNetworkCloudBareMetalMachineKeySetData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudBareMetalMachineKeySetData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

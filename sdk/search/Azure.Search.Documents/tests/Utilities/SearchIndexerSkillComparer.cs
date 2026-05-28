@@ -30,8 +30,7 @@ namespace Azure.Search.Documents.Tests.Utilities
             }
 
             // BUGBUG: Ignore the name since 1-based automatic names are only returned in GET methods, not PUT methods.
-            // ODataType is now internal, compare types instead
-            if (x.GetType() != y.GetType() ||
+            if (x.ODataType != y.ODataType ||
                 x.Description != y.Description ||
                 x.Context != y.Context)
             {
@@ -61,8 +60,7 @@ namespace Azure.Search.Documents.Tests.Utilities
             HashCodeBuilder builder = new HashCodeBuilder();
 
             // BUGBUG: Ignore the name since 1-based automatic names are only returned in GET methods, not PUT methods.
-            // ODataType is now internal, use type name instead
-            builder.Add(obj.GetType().FullName);
+            builder.Add(obj.ODataType);
             builder.Add(obj.Description);
             builder.Add(obj.Context);
             builder.Add(obj.Inputs, SharedInputsCollection);

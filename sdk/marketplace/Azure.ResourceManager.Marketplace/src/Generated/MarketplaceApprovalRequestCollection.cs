@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Marketplace
 {
@@ -25,81 +24,75 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class MarketplaceApprovalRequestCollection : ArmCollection, IEnumerable<MarketplaceApprovalRequestResource>, IAsyncEnumerable<MarketplaceApprovalRequestResource>
     {
-        private readonly ClientDiagnostics _privateStoreClientDiagnostics;
-        private readonly PrivateStore _privateStoreRestClient;
+        private readonly ClientDiagnostics _marketplaceApprovalRequestPrivateStoreClientDiagnostics;
+        private readonly PrivateStoreRestOperations _marketplaceApprovalRequestPrivateStoreRestClient;
 
-        /// <summary> Initializes a new instance of MarketplaceApprovalRequestCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MarketplaceApprovalRequestCollection"/> class for mocking. </summary>
         protected MarketplaceApprovalRequestCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MarketplaceApprovalRequestCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MarketplaceApprovalRequestCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MarketplaceApprovalRequestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MarketplaceApprovalRequestResource.ResourceType, out string marketplaceApprovalRequestApiVersion);
-            _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", MarketplaceApprovalRequestResource.ResourceType.Namespace, Diagnostics);
-            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Endpoint, marketplaceApprovalRequestApiVersion ?? "2025-01-01");
-            ValidateResourceId(id);
+            _marketplaceApprovalRequestPrivateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", MarketplaceApprovalRequestResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MarketplaceApprovalRequestResource.ResourceType, out string marketplaceApprovalRequestPrivateStoreApiVersion);
+            _marketplaceApprovalRequestPrivateStoreRestClient = new PrivateStoreRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, marketplaceApprovalRequestPrivateStoreApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PrivateStoreResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PrivateStoreResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateStoreResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create approval request
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RequestApprovalResources_CreateApprovalRequest. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_CreateApprovalRequest</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> The <see cref="MarketplaceApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MarketplaceApprovalRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string requestApprovalId, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.CreateOrUpdate");
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateCreateApprovalRequestRequest(Guid.Parse(Id.Name), requestApprovalId, MarketplaceApprovalRequestData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MarketplaceArmOperation<MarketplaceApprovalRequestResource> operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _marketplaceApprovalRequestPrivateStoreRestClient.CreateApprovalRequestAsync(Guid.Parse(Id.Name), requestApprovalId, data, cancellationToken).ConfigureAwait(false);
+                var uri = _marketplaceApprovalRequestPrivateStoreRestClient.CreateCreateApprovalRequestRequestUri(Guid.Parse(Id.Name), requestApprovalId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,48 +106,44 @@ namespace Azure.ResourceManager.Marketplace
         /// Create approval request
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RequestApprovalResources_CreateApprovalRequest. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_CreateApprovalRequest</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> The <see cref="MarketplaceApprovalRequestData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MarketplaceApprovalRequestResource> CreateOrUpdate(WaitUntil waitUntil, string requestApprovalId, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.CreateOrUpdate");
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateCreateApprovalRequestRequest(Guid.Parse(Id.Name), requestApprovalId, MarketplaceApprovalRequestData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MarketplaceArmOperation<MarketplaceApprovalRequestResource> operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _marketplaceApprovalRequestPrivateStoreRestClient.CreateApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, data, cancellationToken);
+                var uri = _marketplaceApprovalRequestPrivateStoreRestClient.CreateCreateApprovalRequestRequestUri(Guid.Parse(Id.Name), requestApprovalId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.Marketplace
         /// Get open request approval details
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RequestApprovalResources_GetRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         public virtual async Task<Response<MarketplaceApprovalRequestResource>> GetAsync(string requestApprovalId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.Get");
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
+                var response = await _marketplaceApprovalRequestPrivateStoreRestClient.GetRequestApprovalAsync(Guid.Parse(Id.Name), requestApprovalId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MarketplaceApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.Marketplace
         /// Get open request approval details
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RequestApprovalResources_GetRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         public virtual Response<MarketplaceApprovalRequestResource> Get(string requestApprovalId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.Get");
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MarketplaceApprovalRequestData> response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
+                var response = _marketplaceApprovalRequestPrivateStoreRestClient.GetRequestApproval(Guid.Parse(Id.Name), requestApprovalId, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MarketplaceApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,44 +247,49 @@ namespace Azure.ResourceManager.Marketplace
         /// Get all open approval requests of current user
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RequestApprovalResources_GetApprovalRequestsList. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetApprovalRequestsList</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MarketplaceApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MarketplaceApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MarketplaceApprovalRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MarketplaceApprovalRequestData, MarketplaceApprovalRequestResource>(new PrivateStoreGetApprovalRequestsListAsyncCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceApprovalRequestCollection.GetAll"), data => new MarketplaceApprovalRequestResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceApprovalRequestPrivateStoreRestClient.CreateGetApprovalRequestsListRequest(Guid.Parse(Id.Name));
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MarketplaceApprovalRequestResource(Client, MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(e)), _marketplaceApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get all open approval requests of current user
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RequestApprovalResources_GetApprovalRequestsList. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetApprovalRequestsList</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,61 +297,44 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> A collection of <see cref="MarketplaceApprovalRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MarketplaceApprovalRequestResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MarketplaceApprovalRequestData, MarketplaceApprovalRequestResource>(new PrivateStoreGetApprovalRequestsListCollectionResultOfT(_privateStoreRestClient, Guid.Parse(Id.Name), context, "MarketplaceApprovalRequestCollection.GetAll"), data => new MarketplaceApprovalRequestResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceApprovalRequestPrivateStoreRestClient.CreateGetApprovalRequestsListRequest(Guid.Parse(Id.Name));
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MarketplaceApprovalRequestResource(Client, MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(e)), _marketplaceApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RequestApprovalResources_GetRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string requestApprovalId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.Exists");
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MarketplaceApprovalRequestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MarketplaceApprovalRequestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _marketplaceApprovalRequestPrivateStoreRestClient.GetRequestApprovalAsync(Guid.Parse(Id.Name), requestApprovalId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -379,50 +348,36 @@ namespace Azure.ResourceManager.Marketplace
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RequestApprovalResources_GetRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         public virtual Response<bool> Exists(string requestApprovalId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.Exists");
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MarketplaceApprovalRequestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MarketplaceApprovalRequestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _marketplaceApprovalRequestPrivateStoreRestClient.GetRequestApproval(Guid.Parse(Id.Name), requestApprovalId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -436,54 +391,38 @@ namespace Azure.ResourceManager.Marketplace
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RequestApprovalResources_GetRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         public virtual async Task<NullableResponse<MarketplaceApprovalRequestResource>> GetIfExistsAsync(string requestApprovalId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.GetIfExists");
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MarketplaceApprovalRequestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MarketplaceApprovalRequestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _marketplaceApprovalRequestPrivateStoreRestClient.GetRequestApprovalAsync(Guid.Parse(Id.Name), requestApprovalId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MarketplaceApprovalRequestResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MarketplaceApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -497,54 +436,38 @@ namespace Azure.ResourceManager.Marketplace
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RequestApprovalResources_GetRequestApproval. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStore_GetRequestApproval</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         public virtual NullableResponse<MarketplaceApprovalRequestResource> GetIfExists(string requestApprovalId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            using DiagnosticScope scope = _privateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.GetIfExists");
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateStoreRestClient.CreateGetRequestApprovalRequest(Guid.Parse(Id.Name), requestApprovalId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MarketplaceApprovalRequestData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MarketplaceApprovalRequestData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MarketplaceApprovalRequestData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _marketplaceApprovalRequestPrivateStoreRestClient.GetRequestApproval(Guid.Parse(Id.Name), requestApprovalId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MarketplaceApprovalRequestResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MarketplaceApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -564,7 +487,6 @@ namespace Azure.ResourceManager.Marketplace
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MarketplaceApprovalRequestResource> IAsyncEnumerable<MarketplaceApprovalRequestResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

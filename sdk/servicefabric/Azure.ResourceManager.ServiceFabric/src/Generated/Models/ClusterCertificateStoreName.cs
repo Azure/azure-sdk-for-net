@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -15,87 +14,56 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public readonly partial struct ClusterCertificateStoreName : IEquatable<ClusterCertificateStoreName>
     {
         private readonly string _value;
-        /// <summary> Static value for AddressBook. </summary>
-        private const string AddressBookValue = "AddressBook";
-        /// <summary> Static value for AuthRoot. </summary>
-        private const string AuthRootValue = "AuthRoot";
-        /// <summary> Static value for CertificateAuthority. </summary>
-        private const string CertificateAuthorityValue = "CertificateAuthority";
-        /// <summary> Static value for Disallowed. </summary>
-        private const string DisallowedValue = "Disallowed";
-        /// <summary> Static value for My. </summary>
-        private const string MyValue = "My";
-        /// <summary> Static value for Root. </summary>
-        private const string RootValue = "Root";
-        /// <summary> Static value for TrustedPeople. </summary>
-        private const string TrustedPeopleValue = "TrustedPeople";
-        /// <summary> Static value for TrustedPublisher. </summary>
-        private const string TrustedPublisherValue = "TrustedPublisher";
 
         /// <summary> Initializes a new instance of <see cref="ClusterCertificateStoreName"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterCertificateStoreName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Static value for AddressBook. </summary>
+        private const string AddressBookValue = "AddressBook";
+        private const string AuthRootValue = "AuthRoot";
+        private const string CertificateAuthorityValue = "CertificateAuthority";
+        private const string DisallowedValue = "Disallowed";
+        private const string MyValue = "My";
+        private const string RootValue = "Root";
+        private const string TrustedPeopleValue = "TrustedPeople";
+        private const string TrustedPublisherValue = "TrustedPublisher";
+
+        /// <summary> AddressBook. </summary>
         public static ClusterCertificateStoreName AddressBook { get; } = new ClusterCertificateStoreName(AddressBookValue);
-
-        /// <summary> Static value for AuthRoot. </summary>
+        /// <summary> AuthRoot. </summary>
         public static ClusterCertificateStoreName AuthRoot { get; } = new ClusterCertificateStoreName(AuthRootValue);
-
-        /// <summary> Static value for CertificateAuthority. </summary>
+        /// <summary> CertificateAuthority. </summary>
         public static ClusterCertificateStoreName CertificateAuthority { get; } = new ClusterCertificateStoreName(CertificateAuthorityValue);
-
-        /// <summary> Static value for Disallowed. </summary>
+        /// <summary> Disallowed. </summary>
         public static ClusterCertificateStoreName Disallowed { get; } = new ClusterCertificateStoreName(DisallowedValue);
-
-        /// <summary> Static value for My. </summary>
+        /// <summary> My. </summary>
         public static ClusterCertificateStoreName My { get; } = new ClusterCertificateStoreName(MyValue);
-
-        /// <summary> Static value for Root. </summary>
+        /// <summary> Root. </summary>
         public static ClusterCertificateStoreName Root { get; } = new ClusterCertificateStoreName(RootValue);
-
-        /// <summary> Static value for TrustedPeople. </summary>
+        /// <summary> TrustedPeople. </summary>
         public static ClusterCertificateStoreName TrustedPeople { get; } = new ClusterCertificateStoreName(TrustedPeopleValue);
-
-        /// <summary> Static value for TrustedPublisher. </summary>
+        /// <summary> TrustedPublisher. </summary>
         public static ClusterCertificateStoreName TrustedPublisher { get; } = new ClusterCertificateStoreName(TrustedPublisherValue);
-
         /// <summary> Determines if two <see cref="ClusterCertificateStoreName"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterCertificateStoreName left, ClusterCertificateStoreName right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ClusterCertificateStoreName"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterCertificateStoreName left, ClusterCertificateStoreName right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ClusterCertificateStoreName"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterCertificateStoreName"/>. </summary>
         public static implicit operator ClusterCertificateStoreName(string value) => new ClusterCertificateStoreName(value);
 
-        /// <summary> Converts a string to a <see cref="ClusterCertificateStoreName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ClusterCertificateStoreName?(string value) => value == null ? null : new ClusterCertificateStoreName(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterCertificateStoreName other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ClusterCertificateStoreName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,37 +7,47 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkFunction.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
     /// <summary>
-    /// A class representing a AzureTrafficCollector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AzureTrafficCollectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAzureTrafficCollectors method.
+    /// A Class representing an AzureTrafficCollector along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AzureTrafficCollectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAzureTrafficCollectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAzureTrafficCollector method.
     /// </summary>
     public partial class AzureTrafficCollectorResource : ArmResource
     {
-        private readonly ClientDiagnostics _azureTrafficCollectorsClientDiagnostics;
-        private readonly AzureTrafficCollectors _azureTrafficCollectorsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="AzureTrafficCollectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="azureTrafficCollectorName"> The azureTrafficCollectorName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureTrafficCollectorName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _azureTrafficCollectorClientDiagnostics;
+        private readonly AzureTrafficCollectorsRestOperations _azureTrafficCollectorRestClient;
         private readonly AzureTrafficCollectorData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetworkFunction/azureTrafficCollectors";
 
-        /// <summary> Initializes a new instance of AzureTrafficCollectorResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AzureTrafficCollectorResource"/> class for mocking. </summary>
         protected AzureTrafficCollectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AzureTrafficCollectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AzureTrafficCollectorResource(ArmClient client, AzureTrafficCollectorData data) : this(client, data.Id)
@@ -46,92 +56,140 @@ namespace Azure.ResourceManager.NetworkFunction
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureTrafficCollectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AzureTrafficCollectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AzureTrafficCollectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _azureTrafficCollectorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string azureTrafficCollectorApiVersion);
-            _azureTrafficCollectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", ResourceType.Namespace, Diagnostics);
-            _azureTrafficCollectorsRestClient = new AzureTrafficCollectors(_azureTrafficCollectorsClientDiagnostics, Pipeline, Endpoint, azureTrafficCollectorApiVersion ?? "2022-11-01");
-            ValidateResourceId(id);
+            _azureTrafficCollectorRestClient = new AzureTrafficCollectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, azureTrafficCollectorApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AzureTrafficCollectorData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="azureTrafficCollectorName"> The azureTrafficCollectorName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureTrafficCollectorName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of CollectorPolicyResources in the AzureTrafficCollector. </summary>
+        /// <returns> An object representing collection of CollectorPolicyResources and their operations over a CollectorPolicyResource. </returns>
+        public virtual CollectorPolicyCollection GetCollectorPolicies()
+        {
+            return GetCachedClient(client => new CollectorPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the collector policy in a specified Traffic Collector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CollectorPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CollectorPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectorPolicyName"> Collector Policy Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CollectorPolicyResource>> GetCollectorPolicyAsync(string collectorPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetCollectorPolicies().GetAsync(collectorPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the collector policy in a specified Traffic Collector
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}/collectorPolicies/{collectorPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CollectorPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CollectorPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectorPolicyName"> Collector Policy Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CollectorPolicyResource> GetCollectorPolicy(string collectorPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetCollectorPolicies().Get(collectorPolicyName, cancellationToken);
         }
 
         /// <summary>
         /// Gets the specified Azure Traffic Collector in a specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureTrafficCollectors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AzureTrafficCollectorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Get");
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                var response = await _azureTrafficCollectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,42 +203,118 @@ namespace Azure.ResourceManager.NetworkFunction
         /// Gets the specified Azure Traffic Collector in a specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureTrafficCollectors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AzureTrafficCollectorResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Get");
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
+                var response = _azureTrafficCollectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a specified Azure Traffic Collector resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _azureTrafficCollectorRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkFunctionArmOperation(_azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a specified Azure Traffic Collector resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _azureTrafficCollectorRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetworkFunctionArmOperation(_azureTrafficCollectorClientDiagnostics, Pipeline, _azureTrafficCollectorRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -193,20 +327,20 @@ namespace Azure.ResourceManager.NetworkFunction
         /// Updates the specified Azure Traffic Collector tags.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureTrafficCollectors_UpdateTags. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_UpdateTags</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,21 +351,11 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Update");
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _azureTrafficCollectorRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,20 +369,20 @@ namespace Azure.ResourceManager.NetworkFunction
         /// Updates the specified Azure Traffic Collector tags.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureTrafficCollectors_UpdateTags. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_UpdateTags</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,21 +393,11 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Update");
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateUpdateTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _azureTrafficCollectorRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
                 return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,104 +408,26 @@ namespace Azure.ResourceManager.NetworkFunction
         }
 
         /// <summary>
-        /// Deletes a specified Azure Traffic Collector resource.
+        /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureTrafficCollectors_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkFunctionArmOperation operation = new NetworkFunctionArmOperation(_azureTrafficCollectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a specified Azure Traffic Collector resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureTrafficCollectors_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-11-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AzureTrafficCollectorResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureTrafficCollectorsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NetworkFunctionArmOperation operation = new NetworkFunctionArmOperation(_azureTrafficCollectorsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -401,35 +437,29 @@ namespace Azure.ResourceManager.NetworkFunction
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.AddTag");
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
-                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _azureTrafficCollectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AzureTrafficCollectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TagsObject patch = new TagsObject();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new TagsObject();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<AzureTrafficCollectorResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -439,7 +469,27 @@ namespace Azure.ResourceManager.NetworkFunction
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -449,35 +499,29 @@ namespace Azure.ResourceManager.NetworkFunction
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.AddTag");
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
-                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _azureTrafficCollectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AzureTrafficCollectorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TagsObject patch = new TagsObject();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new TagsObject();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<AzureTrafficCollectorResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -487,40 +531,54 @@ namespace Azure.ResourceManager.NetworkFunction
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AzureTrafficCollectorResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.SetTags");
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
-                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _azureTrafficCollectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AzureTrafficCollectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TagsObject patch = new TagsObject();
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new TagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    Response<AzureTrafficCollectorResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -530,40 +588,54 @@ namespace Azure.ResourceManager.NetworkFunction
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AzureTrafficCollectorResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.SetTags");
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
-                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _azureTrafficCollectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AzureTrafficCollectorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TagsObject patch = new TagsObject();
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new TagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    Response<AzureTrafficCollectorResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -573,7 +645,27 @@ namespace Azure.ResourceManager.NetworkFunction
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -581,35 +673,29 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.RemoveTag");
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
-                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _azureTrafficCollectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AzureTrafficCollectorData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    TagsObject patch = new TagsObject();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new TagsObject();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<AzureTrafficCollectorResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -619,7 +705,27 @@ namespace Azure.ResourceManager.NetworkFunction
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureTrafficCollectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -627,35 +733,29 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _azureTrafficCollectorsClientDiagnostics.CreateScope("AzureTrafficCollectorResource.RemoveTag");
+            using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _azureTrafficCollectorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AzureTrafficCollectorData> response = Response.FromValue(AzureTrafficCollectorData.FromResponse(result), result);
-                    return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _azureTrafficCollectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AzureTrafficCollectorResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AzureTrafficCollectorData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    TagsObject patch = new TagsObject();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new TagsObject();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<AzureTrafficCollectorResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -663,39 +763,6 @@ namespace Azure.ResourceManager.NetworkFunction
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of CollectorPolicies in the <see cref="AzureTrafficCollectorResource"/>. </summary>
-        /// <returns> An object representing collection of CollectorPolicies and their operations over a CollectorPolicyResource. </returns>
-        public virtual CollectorPolicyCollection GetCollectorPolicies()
-        {
-            return GetCachedClient(client => new CollectorPolicyCollection(client, Id));
-        }
-
-        /// <summary> Gets the collector policy in a specified Traffic Collector. </summary>
-        /// <param name="collectorPolicyName"> Collector Policy Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CollectorPolicyResource>> GetCollectorPolicyAsync(string collectorPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
-
-            return await GetCollectorPolicies().GetAsync(collectorPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the collector policy in a specified Traffic Collector. </summary>
-        /// <param name="collectorPolicyName"> Collector Policy Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectorPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CollectorPolicyResource> GetCollectorPolicy(string collectorPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
-
-            return GetCollectorPolicies().Get(collectorPolicyName, cancellationToken);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Generator.Management.Utilities
         /// </summary>
         /// <param name="parameter">The parameter to normalize.</param>
         /// <returns>The normalized parameter name, or null if no normalization is needed.</returns>
-        public static string? GetNormalizedBodyParameterName(ParameterProvider parameter)
+        public static string? GetNormalizedParameterNameForNonResourceMethod(ParameterProvider parameter)
         {
             if (parameter.Location != ParameterLocation.Body || !parameter.Type.IsModelType())
             {
@@ -24,7 +24,12 @@ namespace Azure.Generator.Management.Utilities
 
             var typeName = parameter.Type.Name;
 
-            // Check type name suffixes first - these are ARM conventions and take priority
+            // Check if parameter name equals "parameters" - return type name with first char lowercase
+            if (parameter.Name.Equals("parameters", System.StringComparison.Ordinal))
+            {
+                return typeName.FirstCharToLowerCase();
+            }
+
             // Check if type name ends with "Patch" - return "patch"
             if (typeName.EndsWith("Patch", System.StringComparison.Ordinal))
             {
@@ -50,13 +55,6 @@ namespace Azure.Generator.Management.Utilities
                 {
                     return "content";
                 }
-            }
-
-            // Check if parameter name equals "parameters" - return type name with first char lowercase
-            // This is checked after type suffixes to ensure ARM conventions take priority
-            if (parameter.Name.Equals("parameters", System.StringComparison.Ordinal))
-            {
-                return typeName.FirstCharToLowerCase();
             }
 
             return parameter.Name;

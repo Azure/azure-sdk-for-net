@@ -13,11 +13,43 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    /// <summary> Registered Server resource. </summary>
+    /// <summary>
+    /// A class representing the StorageSyncRegisteredServer data model.
+    /// Registered Server resource.
+    /// </summary>
     public partial class StorageSyncRegisteredServerData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerData"/>. </summary>
         public StorageSyncRegisteredServerData()
@@ -25,438 +57,152 @@ namespace Azure.ResourceManager.StorageSync
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> RegisteredServer properties. </param>
-        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegisteredServerProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="serverCertificate"> Registered Server Certificate. </param>
+        /// <param name="agentVersion"> Registered Server Agent Version. </param>
+        /// <param name="agentVersionStatus"> Registered Server Agent Version Status. </param>
+        /// <param name="agentVersionExpireOn"> Registered Server Agent Version Expiration Date. </param>
+        /// <param name="serverOSVersion"> Registered Server OS Version. </param>
+        /// <param name="serverManagementErrorCode"> Registered Server Management Error Code. </param>
+        /// <param name="lastHeartbeat"> Registered Server last heart beat. </param>
+        /// <param name="provisioningState"> Registered Server Provisioning State. </param>
+        /// <param name="serverRole"> Registered Server serverRole. </param>
+        /// <param name="clusterId"> Registered Server clusterId. </param>
+        /// <param name="clusterName"> Registered Server clusterName. </param>
+        /// <param name="serverId"> Registered Server serverId. </param>
+        /// <param name="storageSyncServiceUid"> Registered Server storageSyncServiceUid. </param>
+        /// <param name="lastWorkflowId"> Registered Server lastWorkflowId. </param>
+        /// <param name="lastOperationName"> Resource Last Operation Name. </param>
+        /// <param name="discoveryEndpointUri"> Resource discoveryEndpointUri. </param>
+        /// <param name="resourceLocation"> Resource Location. </param>
+        /// <param name="serviceLocation"> Service Location. </param>
+        /// <param name="friendlyName"> Friendly Name. </param>
+        /// <param name="managementEndpointUri"> Management Endpoint Uri. </param>
+        /// <param name="monitoringEndpointUri"> Telemetry Endpoint Uri. </param>
+        /// <param name="monitoringConfiguration"> Monitoring Configuration. </param>
+        /// <param name="serverName"> Server name. </param>
+        /// <param name="applicationId"> Server Application Id. </param>
+        /// <param name="useIdentity"> Apply server with newly discovered ApplicationId if available. </param>
+        /// <param name="latestApplicationId"> Latest Server Application Id discovered from the server. It is not yet applied. </param>
+        /// <param name="activeAuthType"> Server auth type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName, Guid? applicationId, bool? useIdentity, Guid? latestApplicationId, StorageSyncServerAuthType? activeAuthType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            ServerCertificate = serverCertificate;
+            AgentVersion = agentVersion;
+            AgentVersionStatus = agentVersionStatus;
+            AgentVersionExpireOn = agentVersionExpireOn;
+            ServerOSVersion = serverOSVersion;
+            ServerManagementErrorCode = serverManagementErrorCode;
+            LastHeartbeat = lastHeartbeat;
+            ProvisioningState = provisioningState;
+            ServerRole = serverRole;
+            ClusterId = clusterId;
+            ClusterName = clusterName;
+            ServerId = serverId;
+            StorageSyncServiceUid = storageSyncServiceUid;
+            LastWorkflowId = lastWorkflowId;
+            LastOperationName = lastOperationName;
+            DiscoveryEndpointUri = discoveryEndpointUri;
+            ResourceLocation = resourceLocation;
+            ServiceLocation = serviceLocation;
+            FriendlyName = friendlyName;
+            ManagementEndpointUri = managementEndpointUri;
+            MonitoringEndpointUri = monitoringEndpointUri;
+            MonitoringConfiguration = monitoringConfiguration;
+            ServerName = serverName;
+            ApplicationId = applicationId;
+            UseIdentity = useIdentity;
+            LatestApplicationId = latestApplicationId;
+            ActiveAuthType = activeAuthType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> RegisteredServer properties. </summary>
-        internal RegisteredServerProperties Properties { get; set; }
-
-        /// <summary> Registered Server Certificate. </summary>
-        public BinaryData ServerCertificate
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ServerCertificate;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ServerCertificate = value;
-            }
-        }
-
+        /// <summary>
+        /// Registered Server Certificate
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData ServerCertificate { get; set; }
         /// <summary> Registered Server Agent Version. </summary>
-        public string AgentVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AgentVersion;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.AgentVersion = value;
-            }
-        }
-
+        public string AgentVersion { get; set; }
         /// <summary> Registered Server Agent Version Status. </summary>
-        public RegisteredServerAgentVersionStatus? AgentVersionStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AgentVersionStatus;
-            }
-        }
-
+        public RegisteredServerAgentVersionStatus? AgentVersionStatus { get; }
         /// <summary> Registered Server Agent Version Expiration Date. </summary>
-        public DateTimeOffset? AgentVersionExpireOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AgentVersionExpireOn;
-            }
-        }
-
+        public DateTimeOffset? AgentVersionExpireOn { get; }
         /// <summary> Registered Server OS Version. </summary>
-        public string ServerOSVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ServerOSVersion;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ServerOSVersion = value;
-            }
-        }
-
+        public string ServerOSVersion { get; set; }
         /// <summary> Registered Server Management Error Code. </summary>
-        public int? ServerManagementErrorCode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ServerManagementErrorCode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ServerManagementErrorCode = value;
-            }
-        }
-
+        public int? ServerManagementErrorCode { get; set; }
         /// <summary> Registered Server last heart beat. </summary>
-        public string LastHeartbeat
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LastHeartbeat;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.LastHeartbeat = value;
-            }
-        }
-
+        public string LastHeartbeat { get; set; }
         /// <summary> Registered Server Provisioning State. </summary>
-        public string ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ProvisioningState = value;
-            }
-        }
-
+        public string ProvisioningState { get; set; }
         /// <summary> Registered Server serverRole. </summary>
-        public string ServerRole
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ServerRole;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ServerRole = value;
-            }
-        }
-
+        public string ServerRole { get; set; }
         /// <summary> Registered Server clusterId. </summary>
-        public Guid? ClusterId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ClusterId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ClusterId = value;
-            }
-        }
-
+        public Guid? ClusterId { get; set; }
         /// <summary> Registered Server clusterName. </summary>
-        public string ClusterName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ClusterName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ClusterName = value;
-            }
-        }
-
+        public string ClusterName { get; set; }
         /// <summary> Registered Server serverId. </summary>
-        public Guid? ServerId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ServerId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ServerId = value;
-            }
-        }
-
+        public Guid? ServerId { get; set; }
         /// <summary> Registered Server storageSyncServiceUid. </summary>
-        public Guid? StorageSyncServiceUid
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StorageSyncServiceUid;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.StorageSyncServiceUid = value;
-            }
-        }
-
+        public Guid? StorageSyncServiceUid { get; set; }
         /// <summary> Registered Server lastWorkflowId. </summary>
-        public string LastWorkflowId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LastWorkflowId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.LastWorkflowId = value;
-            }
-        }
-
+        public string LastWorkflowId { get; set; }
         /// <summary> Resource Last Operation Name. </summary>
-        public string LastOperationName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LastOperationName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.LastOperationName = value;
-            }
-        }
-
+        public string LastOperationName { get; set; }
         /// <summary> Resource discoveryEndpointUri. </summary>
-        public Uri DiscoveryEndpointUri
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DiscoveryEndpointUri;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.DiscoveryEndpointUri = value;
-            }
-        }
-
+        public Uri DiscoveryEndpointUri { get; set; }
         /// <summary> Resource Location. </summary>
-        public AzureLocation? ResourceLocation
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ResourceLocation;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ResourceLocation = value;
-            }
-        }
-
+        public AzureLocation? ResourceLocation { get; set; }
         /// <summary> Service Location. </summary>
-        public AzureLocation? ServiceLocation
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ServiceLocation;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ServiceLocation = value;
-            }
-        }
-
+        public AzureLocation? ServiceLocation { get; set; }
         /// <summary> Friendly Name. </summary>
-        public string FriendlyName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.FriendlyName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.FriendlyName = value;
-            }
-        }
-
+        public string FriendlyName { get; set; }
         /// <summary> Management Endpoint Uri. </summary>
-        public Uri ManagementEndpointUri
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ManagementEndpointUri;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ManagementEndpointUri = value;
-            }
-        }
-
+        public Uri ManagementEndpointUri { get; set; }
         /// <summary> Telemetry Endpoint Uri. </summary>
-        public Uri MonitoringEndpointUri
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MonitoringEndpointUri;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.MonitoringEndpointUri = value;
-            }
-        }
-
+        public Uri MonitoringEndpointUri { get; set; }
         /// <summary> Monitoring Configuration. </summary>
-        public string MonitoringConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MonitoringConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.MonitoringConfiguration = value;
-            }
-        }
-
+        public string MonitoringConfiguration { get; set; }
         /// <summary> Server name. </summary>
-        public string ServerName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ServerName;
-            }
-        }
-
+        public string ServerName { get; }
         /// <summary> Server Application Id. </summary>
-        public Guid? ApplicationId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ApplicationId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.ApplicationId = value;
-            }
-        }
-
+        public Guid? ApplicationId { get; set; }
         /// <summary> Apply server with newly discovered ApplicationId if available. </summary>
-        public bool? UseIdentity
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UseIdentity;
-            }
-        }
-
+        public bool? UseIdentity { get; }
         /// <summary> Latest Server Application Id discovered from the server. It is not yet applied. </summary>
-        public Guid? LatestApplicationId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LatestApplicationId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RegisteredServerProperties();
-                }
-                Properties.LatestApplicationId = value;
-            }
-        }
-
+        public Guid? LatestApplicationId { get; set; }
         /// <summary> Server auth type. </summary>
-        public StorageSyncServerAuthType? ActiveAuthType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ActiveAuthType;
-            }
-        }
+        public StorageSyncServerAuthType? ActiveAuthType { get; }
     }
 }

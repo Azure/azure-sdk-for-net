@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct ImageDetail : IEquatable<ImageDetail>
     {
         private readonly string _value;
-        /// <summary> Details recognized as celebrities. </summary>
-        private const string CelebritiesValue = "celebrities";
-        /// <summary> Details recognized as landmarks. </summary>
-        private const string LandmarksValue = "landmarks";
 
         /// <summary> Initializes a new instance of <see cref="ImageDetail"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImageDetail(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string CelebritiesValue = "celebrities";
+        private const string LandmarksValue = "landmarks";
 
         /// <summary> Details recognized as celebrities. </summary>
         public static ImageDetail Celebrities { get; } = new ImageDetail(CelebritiesValue);
-
         /// <summary> Details recognized as landmarks. </summary>
         public static ImageDetail Landmarks { get; } = new ImageDetail(LandmarksValue);
-
         /// <summary> Determines if two <see cref="ImageDetail"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImageDetail left, ImageDetail right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ImageDetail"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImageDetail left, ImageDetail right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ImageDetail"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageDetail"/>. </summary>
         public static implicit operator ImageDetail(string value) => new ImageDetail(value);
 
-        /// <summary> Converts a string to a <see cref="ImageDetail"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ImageDetail?(string value) => value == null ? null : new ImageDetail(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImageDetail other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ImageDetail other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RegionInfosGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/RegionInfos_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2025-07-01-preview/examples/RegionInfos_Get.json
             // this example is just showing the usage of "NetAppResourceRegionInfos_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,14 +31,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            // this example assumes you already have this RegionInfoResource created on azure
-            // for more information of creating RegionInfoResource, please refer to the document of RegionInfoResource
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this RegionInfoResource
             AzureLocation location = new AzureLocation("eastus");
-            ResourceIdentifier regionInfoResourceId = RegionInfoResource.CreateResourceIdentifier(subscriptionId, location);
-            RegionInfoResource regionInfo = client.GetRegionInfoResource(regionInfoResourceId);
+            RegionInfoResourceCollection collection = subscriptionResource.GetRegionInfoResources(location);
 
             // invoke the operation
-            RegionInfoResource result = await regionInfo.GetAsync();
+            RegionInfoResource result = await collection.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RegionInfosList()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/RegionInfos_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2025-07-01-preview/examples/RegionInfos_List.json
             // this example is just showing the usage of "NetAppResourceRegionInfos_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,27 +63,31 @@ namespace Azure.ResourceManager.NetApp.Samples
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            // this example assumes you already have this RegionInfoResource created on azure
-            // for more information of creating RegionInfoResource, please refer to the document of RegionInfoResource
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this RegionInfoResource
             AzureLocation location = new AzureLocation("eastus");
-            ResourceIdentifier regionInfoResourceId = RegionInfoResource.CreateResourceIdentifier(subscriptionId, location);
-            RegionInfoResource regionInfo = client.GetRegionInfoResource(regionInfoResourceId);
+            RegionInfoResourceCollection collection = subscriptionResource.GetRegionInfoResources(location);
 
-            // invoke the operation
-            RegionInfoResource result = await regionInfo.GetAsync();
+            // invoke the operation and iterate over the result
+            await foreach (RegionInfoResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                RegionInfoResourceData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            RegionInfoResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RegionInfosGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/RegionInfos_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2025-07-01-preview/examples/RegionInfos_Get.json
             // this example is just showing the usage of "NetAppResourceRegionInfos_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,15 +98,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            // this example assumes you already have this RegionInfoResource created on azure
-            // for more information of creating RegionInfoResource, please refer to the document of RegionInfoResource
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this RegionInfoResource
             AzureLocation location = new AzureLocation("eastus");
-            ResourceIdentifier regionInfoResourceId = RegionInfoResource.CreateResourceIdentifier(subscriptionId, location);
-            RegionInfoResource regionInfo = client.GetRegionInfoResource(regionInfoResourceId);
+            RegionInfoResourceCollection collection = subscriptionResource.GetRegionInfoResources(location);
 
             // invoke the operation
-            Response<RegionInfoResource> response = await regionInfo.GetAsync();
-            bool result = response.Value != null;
+            bool result = await collection.ExistsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -110,7 +115,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RegionInfosGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/NetApp/stable/2026-01-01/examples/RegionInfos_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2025-07-01-preview/examples/RegionInfos_Get.json
             // this example is just showing the usage of "NetAppResourceRegionInfos_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,14 +126,16 @@ namespace Azure.ResourceManager.NetApp.Samples
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            // this example assumes you already have this RegionInfoResource created on azure
-            // for more information of creating RegionInfoResource, please refer to the document of RegionInfoResource
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this RegionInfoResource
             AzureLocation location = new AzureLocation("eastus");
-            ResourceIdentifier regionInfoResourceId = RegionInfoResource.CreateResourceIdentifier(subscriptionId, location);
-            RegionInfoResource regionInfo = client.GetRegionInfoResource(regionInfoResourceId);
+            RegionInfoResourceCollection collection = subscriptionResource.GetRegionInfoResources(location);
 
             // invoke the operation
-            RegionInfoResource result = await regionInfo.GetAsync();
+            NullableResponse<RegionInfoResource> response = await collection.GetIfExistsAsync();
+            RegionInfoResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

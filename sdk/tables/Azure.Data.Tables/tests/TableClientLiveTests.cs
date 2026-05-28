@@ -50,7 +50,7 @@ namespace Azure.Data.Tables.Tests
                 // Query the entities with string filter.
                 entityResults = await client.QueryAsync<TableEntity>(TableOdataFilter.Create($"PartitionKey eq {partitionKeyValue} and RowKey eq {rowKeyValue}")).ToEnumerableAsync().ConfigureAwait(false);
             }
-            Assert.That(entityResults.Count, Is.EqualTo(1), "The entity result count should match the created count");
+            Assert.AreEqual(1, entityResults.Count, "The entity result count should match the created count");
 
             // GetEntity works also
             await client.GetEntityAsync<TableEntity>(partitionKeyValue, rowKeyValue);
@@ -370,8 +370,8 @@ namespace Azure.Data.Tables.Tests
             entityResults = await client.QueryAsync<TableEntity>().ToEnumerableAsync().ConfigureAwait(false);
 
             Assert.That(entityResults.Count, Is.EqualTo(entitiesToCreate.Count), "The entity result count should match the created count");
-            Assert.That(entityResults[0]["ETag"], Is.EqualTo("foo"));
-            Assert.That(entityResults[0].ETag, Is.Not.EqualTo(entityResults[0]["ETag"]));
+            Assert.AreEqual("foo", entityResults[0]["ETag"]);
+            Assert.AreNotEqual(entityResults[0]["ETag"], entityResults[0].ETag);
             entityResults.Clear();
         }
 
@@ -954,10 +954,9 @@ namespace Azure.Data.Tables.Tests
                 .ToEnumerableAsync()
                 .ConfigureAwait(false)).Single();
 
-            Assert.That(retrievedEntity, Is.Not.Null, "The entity should not be null");
-            Assert.That(TimeSpan.Compare(
-                retrievedEntity!.TimespanProperty.Value, interval),
-                Is.EqualTo(0),
+            Assert.IsNotNull(retrievedEntity, "The entity should not be null");
+            Assert.IsTrue(TimeSpan.Compare(
+                retrievedEntity!.TimespanProperty.Value, interval) == 0,
                 "The property value should be equal to the original value");
         }
 
@@ -1288,7 +1287,7 @@ namespace Azure.Data.Tables.Tests
             // Get the single entity by PartitionKey and RowKey that does not exist.
             var result = await client.GetEntityIfExistsAsync<TableEntity>(PartitionKeyValue, Recording.Random.NewGuid().ToString()).ConfigureAwait(false);
 
-            Assert.That(result.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.NotFound));
+            Assert.AreEqual((int)HttpStatusCode.NotFound, result.GetRawResponse().Status);
             Exception ex = Assert.Catch(() => { var x = result.Value; });
             Assert.That(ex.Message, Does.Contain(result.GetRawResponse().Status.ToString()));
         }
@@ -1383,7 +1382,7 @@ namespace Azure.Data.Tables.Tests
 
             for (int i = 0; i < entitiesToCreate.Count; i++)
             {
-                Assert.That(response.Value[i].Status, Is.EqualTo((int)HttpStatusCode.NoContent));
+                Assert.AreEqual((int)HttpStatusCode.NoContent, response.Value[i].Status);
             }
             Assert.That(response.Value.Count, Is.EqualTo(entitiesToCreate.Count));
 
@@ -1495,10 +1494,10 @@ namespace Azure.Data.Tables.Tests
             var ex = Assert.ThrowsAsync<TableTransactionFailedException>(() => client.SubmitTransactionAsync(batch));
 
             Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.EntityAlreadyExists.ToString()));
-            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Conflict), $"Status should be {HttpStatusCode.Conflict}");
+            Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
             Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
-            Assert.That(entitiesToCreate.IndexOf(entitiesToCreate.Last()), Is.EqualTo(ex.FailedTransactionActionIndex));
-            Assert.That(entitiesToCreate.Last().RowKey, Is.EqualTo(entitiesToCreate[ex.FailedTransactionActionIndex.Value].RowKey));
+            Assert.AreEqual(ex.FailedTransactionActionIndex, entitiesToCreate.IndexOf(entitiesToCreate.Last()));
+            Assert.AreEqual(entitiesToCreate[ex.FailedTransactionActionIndex.Value].RowKey, entitiesToCreate.Last().RowKey);
             Assert.That(ex.Message.Contains(nameof(TableTransactionFailedException.FailedTransactionActionIndex)));
 
             // Cosmos allows batches larger than 100.
@@ -1518,16 +1517,16 @@ namespace Azure.Data.Tables.Tests
         {
             var entity = new CustomizeSerializationEntity { PartitionKey = "partition", RowKey = "1", CurrentCount = 10, LastCount = 5, NamedProperty = "foo" };
 
-            Assert.That(entity.CountDiff, Is.Not.Zero);
+            Assert.NotZero(entity.CountDiff);
 
             await client.AddEntityAsync(entity);
 
             TableEntity retrievedEntity = await client.GetEntityAsync<TableEntity>(entity.PartitionKey, entity.RowKey);
 
-            Assert.That(retrievedEntity.TryGetValue("CountDiff", out var diffVal), Is.False);
-            Assert.That(retrievedEntity.TryGetValue("NamedProperty", out var namedPropValue), Is.False);
-            Assert.That(retrievedEntity.TryGetValue("renamed_property", out namedPropValue), Is.True);
-            Assert.That(namedPropValue, Is.EqualTo("foo"));
+            Assert.IsFalse(retrievedEntity.TryGetValue("CountDiff", out var diffVal));
+            Assert.IsFalse(retrievedEntity.TryGetValue("NamedProperty", out var namedPropValue));
+            Assert.IsTrue(retrievedEntity.TryGetValue("renamed_property", out namedPropValue));
+            Assert.AreEqual("foo", namedPropValue);
         }
     }
 }

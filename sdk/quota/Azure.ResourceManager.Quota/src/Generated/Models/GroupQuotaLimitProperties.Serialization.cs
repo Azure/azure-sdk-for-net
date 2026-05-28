@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Quota;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> Group Quota properties for the specified resource. </summary>
-    public partial class GroupQuotaLimitProperties : GroupQuotaDetails, IJsonModel<GroupQuotaLimitProperties>
+    public partial class GroupQuotaLimitProperties : IUtf8JsonSerializable, IJsonModel<GroupQuotaLimitProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override GroupQuotaDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGroupQuotaLimitProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GroupQuotaLimitProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupQuotaLimitProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GroupQuotaLimitProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GroupQuotaLimitProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotaLimitProperties IPersistableModel<GroupQuotaLimitProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (GroupQuotaLimitProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GroupQuotaLimitProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GroupQuotaLimitProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,35 +29,31 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GroupQuotaLimitProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotaLimitProperties IJsonModel<GroupQuotaLimitProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GroupQuotaLimitProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override GroupQuotaDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GroupQuotaLimitProperties IJsonModel<GroupQuotaLimitProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GroupQuotaLimitProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGroupQuotaLimitProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GroupQuotaLimitProperties DeserializeGroupQuotaLimitProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static GroupQuotaLimitProperties DeserializeGroupQuotaLimitProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -106,77 +62,308 @@ namespace Azure.ResourceManager.Quota.Models
             long? limit = default;
             string comment = default;
             string unit = default;
-            GroupQuotaDetailsName name = default;
             long? availableLimit = default;
             AllocatedQuotaToSubscriptionList allocatedToSubscriptions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string value = default;
+            string localizedValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("resourceName"u8))
+                if (property.NameEquals("resourceName"u8))
                 {
-                    resourceName = prop.Value.GetString();
+                    resourceName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("limit"u8))
+                if (property.NameEquals("limit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    limit = prop.Value.GetInt64();
+                    limit = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("comment"u8))
+                if (property.NameEquals("comment"u8))
                 {
-                    comment = prop.Value.GetString();
+                    comment = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("unit"u8))
+                if (property.NameEquals("unit"u8))
                 {
-                    unit = prop.Value.GetString();
+                    unit = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("availableLimit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    name = GroupQuotaDetailsName.DeserializeGroupQuotaDetailsName(prop.Value, options);
+                    availableLimit = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("availableLimit"u8))
+                if (property.NameEquals("allocatedToSubscriptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availableLimit = prop.Value.GetInt64();
+                    allocatedToSubscriptions = AllocatedQuotaToSubscriptionList.DeserializeAllocatedQuotaToSubscriptionList(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("allocatedToSubscriptions"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    allocatedToSubscriptions = AllocatedQuotaToSubscriptionList.DeserializeAllocatedQuotaToSubscriptionList(prop.Value, options);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("value"u8))
+                        {
+                            value = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("localizedValue"u8))
+                        {
+                            localizedValue = property0.Value.GetString();
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new GroupQuotaLimitProperties(
                 resourceName,
                 limit,
                 comment,
                 unit,
-                name,
+                value,
+                localizedValue,
                 availableLimit,
                 allocatedToSubscriptions,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceName))
+                {
+                    builder.Append("  resourceName: ");
+                    if (ResourceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Limit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  limit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Limit))
+                {
+                    builder.Append("  limit: ");
+                    builder.AppendLine($"'{Limit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Comment), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  comment: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Comment))
+                {
+                    builder.Append("  comment: ");
+                    if (Comment.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Comment}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Comment}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    builder.Append("  unit: ");
+                    if (Unit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Unit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Unit}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailableLimit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  availableLimit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AvailableLimit))
+                {
+                    builder.Append("  availableLimit: ");
+                    builder.AppendLine($"'{AvailableLimit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AllocatedToSubscriptionsValue", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  allocatedToSubscriptions: ");
+                builder.AppendLine("{");
+                builder.Append("    value: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AllocatedToSubscriptions))
+                {
+                    builder.Append("  allocatedToSubscriptions: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AllocatedToSubscriptions, options, 2, false, "  allocatedToSubscriptions: ");
+                }
+            }
+
+            builder.Append("  name:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Value))
+                {
+                    builder.Append("    value: ");
+                    if (Value.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Value}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Value}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalizedValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    localizedValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LocalizedValue))
+                {
+                    builder.Append("    localizedValue: ");
+                    if (LocalizedValue.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LocalizedValue}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LocalizedValue}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<GroupQuotaLimitProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(GroupQuotaLimitProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GroupQuotaLimitProperties IPersistableModel<GroupQuotaLimitProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeGroupQuotaLimitProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GroupQuotaLimitProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GroupQuotaLimitProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

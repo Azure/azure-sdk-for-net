@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -15,51 +14,35 @@ namespace Azure.ResourceManager.Relay.Models
     public readonly partial struct RelaySkuName : IEquatable<RelaySkuName>
     {
         private readonly string _value;
-        private const string StandardValue = "Standard";
 
         /// <summary> Initializes a new instance of <see cref="RelaySkuName"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RelaySkuName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Standard. </summary>
+        private const string StandardValue = "Standard";
+
+        /// <summary> Standard. </summary>
         public static RelaySkuName Standard { get; } = new RelaySkuName(StandardValue);
-
         /// <summary> Determines if two <see cref="RelaySkuName"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RelaySkuName left, RelaySkuName right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RelaySkuName"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RelaySkuName left, RelaySkuName right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RelaySkuName"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RelaySkuName"/>. </summary>
         public static implicit operator RelaySkuName(string value) => new RelaySkuName(value);
 
-        /// <summary> Converts a string to a <see cref="RelaySkuName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RelaySkuName?(string value) => value == null ? null : new RelaySkuName(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RelaySkuName other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RelaySkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

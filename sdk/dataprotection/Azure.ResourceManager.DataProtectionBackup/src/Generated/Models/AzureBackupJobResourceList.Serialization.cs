@@ -9,63 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.DataProtectionBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> List of AzureBackup Job resources. </summary>
-    internal partial class AzureBackupJobResourceList : DppResourceList, IJsonModel<AzureBackupJobResourceList>
+    internal partial class AzureBackupJobResourceList : IUtf8JsonSerializable, IJsonModel<AzureBackupJobResourceList>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DppResourceList PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureBackupJobResourceList(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBackupJobResourceList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureBackupJobResourceList>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureBackupJobResourceList IPersistableModel<AzureBackupJobResourceList>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureBackupJobResourceList)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureBackupJobResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureBackupJobResourceList"/> from. </param>
-        internal static AzureBackupJobResourceList FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAzureBackupJobResourceList(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureBackupJobResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,81 +26,129 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (DataProtectionBackupJobData item in Value)
+                foreach (var item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureBackupJobResourceList IJsonModel<AzureBackupJobResourceList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureBackupJobResourceList)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DppResourceList JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureBackupJobResourceList IJsonModel<AzureBackupJobResourceList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureBackupJobResourceList(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureBackupJobResourceList DeserializeAzureBackupJobResourceList(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureBackupJobResourceList DeserializeAzureBackupJobResourceList(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            IReadOnlyList<DataProtectionBackupJobData> value = default;
             string nextLink = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<DataProtectionBackupJobData> value = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("nextLink"u8))
+                if (property.NameEquals("value"u8))
                 {
-                    nextLink = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("value"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataProtectionBackupJobData> array = new List<DataProtectionBackupJobData>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new AzureBackupJobResourceList(nextLink, additionalBinaryDataProperties, value ?? new ChangeTrackingList<DataProtectionBackupJobData>());
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureBackupJobResourceList(value ?? new ChangeTrackingList<DataProtectionBackupJobData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureBackupJobResourceList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureBackupJobResourceList IPersistableModel<AzureBackupJobResourceList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureBackupJobResourceList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAzureBackupJobResourceList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureBackupJobResourceList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureBackupJobResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

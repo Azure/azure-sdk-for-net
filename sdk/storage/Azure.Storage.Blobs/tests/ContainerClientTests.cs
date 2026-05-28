@@ -3946,10 +3946,9 @@ namespace Azure.Storage.Blobs.Test
                     GetOptions()));
 
             string stringToSign = null;
-
-            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: options);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             //Act
@@ -3992,9 +3991,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
-            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: options);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -4030,9 +4029,9 @@ namespace Azure.Storage.Blobs.Test
                     GetOptions()));
 
             string stringToSign = null;
-            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: options);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -4094,9 +4093,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
-            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: options);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -4141,9 +4140,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
-            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: options);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -4178,9 +4177,9 @@ namespace Azure.Storage.Blobs.Test
             };
 
             string stringToSign = null;
-            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: options);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act

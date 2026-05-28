@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    /// <summary></summary>
-    internal partial class RedisEnterpriseClusterOperationSource : IOperationSource<RedisEnterpriseClusterResource>
+    internal class RedisEnterpriseClusterOperationSource : IOperationSource<RedisEnterpriseClusterResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal RedisEnterpriseClusterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         RedisEnterpriseClusterResource IOperationSource<RedisEnterpriseClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            RedisEnterpriseClusterData data = RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<RedisEnterpriseClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisEnterpriseContext.Default);
             return new RedisEnterpriseClusterResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<RedisEnterpriseClusterResource> IOperationSource<RedisEnterpriseClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            RedisEnterpriseClusterData data = RedisEnterpriseClusterData.DeserializeRedisEnterpriseClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RedisEnterpriseClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<RedisEnterpriseClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisEnterpriseContext.Default);
+            return await Task.FromResult(new RedisEnterpriseClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

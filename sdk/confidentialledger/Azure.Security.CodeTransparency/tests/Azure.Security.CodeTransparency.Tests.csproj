@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="SessionRecords\" />
     <EmbeddedResource Include="TestFiles\**" LinkBase="EmbeddedTestFiles" />
   </ItemGroup>

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -15,52 +14,35 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServiceNetworkPluginMode : IEquatable<ContainerServiceNetworkPluginMode>
     {
         private readonly string _value;
-        /// <summary> Used with networkPlugin=azure, pods are given IPs from the PodCIDR address space but use Azure Routing Domains rather than Kubenet's method of route tables. For more information visit https://aka.ms/aks/azure-cni-overlay. </summary>
-        private const string OverlayValue = "overlay";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceNetworkPluginMode"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceNetworkPluginMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string OverlayValue = "overlay";
 
         /// <summary> Used with networkPlugin=azure, pods are given IPs from the PodCIDR address space but use Azure Routing Domains rather than Kubenet's method of route tables. For more information visit https://aka.ms/aks/azure-cni-overlay. </summary>
         public static ContainerServiceNetworkPluginMode Overlay { get; } = new ContainerServiceNetworkPluginMode(OverlayValue);
-
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPluginMode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceNetworkPluginMode left, ContainerServiceNetworkPluginMode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPluginMode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceNetworkPluginMode left, ContainerServiceNetworkPluginMode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkPluginMode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceNetworkPluginMode"/>. </summary>
         public static implicit operator ContainerServiceNetworkPluginMode(string value) => new ContainerServiceNetworkPluginMode(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerServiceNetworkPluginMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceNetworkPluginMode?(string value) => value == null ? null : new ContainerServiceNetworkPluginMode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceNetworkPluginMode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerServiceNetworkPluginMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

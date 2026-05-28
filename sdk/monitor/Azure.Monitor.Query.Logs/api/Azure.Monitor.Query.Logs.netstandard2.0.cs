@@ -16,7 +16,9 @@ namespace Azure.Monitor.Query.Logs
         public static Azure.Monitor.Query.Logs.LogsQueryAudience AzureGovernment { get { throw null; } }
         public static Azure.Monitor.Query.Logs.LogsQueryAudience AzurePublicCloud { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.Logs.LogsQueryAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Monitor.Query.Logs.LogsQueryAudience left, Azure.Monitor.Query.Logs.LogsQueryAudience right) { throw null; }
         public static implicit operator Azure.Monitor.Query.Logs.LogsQueryAudience (string value) { throw null; }
@@ -28,7 +30,6 @@ namespace Azure.Monitor.Query.Logs
         protected LogsQueryClient() { }
         public LogsQueryClient(Azure.Core.TokenCredential credential) { }
         public LogsQueryClient(Azure.Core.TokenCredential credential, Azure.Monitor.Query.Logs.LogsQueryClientOptions options) { }
-        public LogsQueryClient(Azure.Monitor.Query.Logs.LogsQueryClientSettings settings) { }
         public LogsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LogsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.Logs.LogsQueryClientOptions options) { }
         public System.Uri Endpoint { get { throw null; } }
@@ -45,13 +46,6 @@ namespace Azure.Monitor.Query.Logs
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryWorkspaceAsync<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public static partial class LogsQueryClientHostExtensions
-    {
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Monitor.Query.Logs.LogsQueryClientSettings> configureSettings) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Monitor.Query.Logs.LogsQueryClientSettings> configureSettings) { throw null; }
-    }
     public partial class LogsQueryClientOptions : Azure.Core.ClientOptions
     {
         public LogsQueryClientOptions(Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion.V1) { }
@@ -60,13 +54,6 @@ namespace Azure.Monitor.Query.Logs
         {
             V1 = 1,
         }
-    }
-    public partial class LogsQueryClientSettings : System.ClientModel.Primitives.ClientSettings
-    {
-        public LogsQueryClientSettings() { }
-        public System.Uri Endpoint { get { throw null; } set { } }
-        public Azure.Monitor.Query.Logs.LogsQueryClientOptions Options { get { throw null; } set { } }
-        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class LogsQueryOptions
     {
@@ -141,7 +128,9 @@ namespace Azure.Monitor.Query.Logs.Models
         public static Azure.Monitor.Query.Logs.Models.LogsColumnType String { get { throw null; } }
         public static Azure.Monitor.Query.Logs.Models.LogsColumnType Timespan { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.Logs.Models.LogsColumnType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Monitor.Query.Logs.Models.LogsColumnType left, Azure.Monitor.Query.Logs.Models.LogsColumnType right) { throw null; }
         public static implicit operator Azure.Monitor.Query.Logs.Models.LogsColumnType (string value) { throw null; }
@@ -169,7 +158,7 @@ namespace Azure.Monitor.Query.Logs.Models
         public System.BinaryData GetVisualization() { throw null; }
         protected virtual Azure.Monitor.Query.Logs.Models.LogsQueryResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Monitor.Query.Logs.Models.LogsQueryResult (Azure.Response response) { throw null; }
+        public static explicit operator Azure.Monitor.Query.Logs.Models.LogsQueryResult (Azure.Response result) { throw null; }
         protected virtual Azure.Monitor.Query.Logs.Models.LogsQueryResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Monitor.Query.Logs.Models.LogsQueryResult System.ClientModel.Primitives.IJsonModel<Azure.Monitor.Query.Logs.Models.LogsQueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

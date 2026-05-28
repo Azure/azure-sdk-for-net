@@ -6,47 +6,42 @@
 #nullable disable
 
 using System;
-using Azure;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.WorkloadOrchestration.Models;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
-    internal partial class Instances
+    internal partial class InstancesRestOperations
     {
+        private readonly TelemetryDetails _userAgent;
+        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Instances for mocking. </summary>
-        protected Instances()
-        {
-        }
-
-        /// <summary> Initializes a new instance of Instances. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <summary> Initializes a new instance of InstancesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal Instances(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="applicationId"> The application id to use for user agent. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
+        public InstancesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
-            ClientDiagnostics = clientDiagnostics;
-            _endpoint = endpoint;
-            Pipeline = pipeline;
-            _apiVersion = apiVersion;
+            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
+            _apiVersion = apiVersion ?? "2025-06-01";
+            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, RequestContext context)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/targets/", false);
@@ -55,24 +50,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(solutionName, true);
             uri.AppendPath("/instances/", false);
             uri.AppendPath(instanceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/targets/", false);
@@ -81,26 +71,110 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(solutionName, true);
             uri.AppendPath("/instances/", false);
             uri.AppendPath(instanceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get Instance Resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<EdgeDeploymentInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, targetName, solutionName, instanceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EdgeDeploymentInstanceData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = EdgeDeploymentInstanceData.DeserializeEdgeDeploymentInstanceData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((EdgeDeploymentInstanceData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get Instance Resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<EdgeDeploymentInstanceData> Get(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, targetName, solutionName, instanceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        EdgeDeploymentInstanceData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = EdgeDeploymentInstanceData.DeserializeEdgeDeploymentInstanceData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((EdgeDeploymentInstanceData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, EdgeDeploymentInstanceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Edge/targets/", false);
+            uri.AppendPath(targetName, true);
+            uri.AppendPath("/solutions/", false);
+            uri.AppendPath(solutionName, true);
+            uri.AppendPath("/instances/", false);
+            uri.AppendPath(instanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, EdgeDeploymentInstanceData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/targets/", false);
@@ -109,26 +183,106 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(solutionName, true);
             uri.AppendPath("/instances/", false);
             uri.AppendPath(instanceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Create or update Instance Resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/>, <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, EdgeDeploymentInstanceData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, targetName, solutionName, instanceName, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Create or update Instance Resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/>, <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, EdgeDeploymentInstanceData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, targetName, solutionName, instanceName, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, EdgeDeploymentInstanceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Edge/targets/", false);
+            uri.AppendPath(targetName, true);
+            uri.AppendPath("/solutions/", false);
+            uri.AppendPath(solutionName, true);
+            uri.AppendPath("/instances/", false);
+            uri.AppendPath(instanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, EdgeDeploymentInstanceData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Patch;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/targets/", false);
@@ -137,23 +291,184 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath(solutionName, true);
             uri.AppendPath("/instances/", false);
             uri.AppendPath(instanceName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Method = RequestMethod.Delete;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
+            _userAgent.Apply(message);
             return message;
         }
 
-        internal HttpMessage CreateGetBySolutionRequest(Guid subscriptionId, string resourceGroupName, string targetName, string solutionName, RequestContext context)
+        /// <summary> Update an Instance Resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/>, <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, EdgeDeploymentInstanceData data, CancellationToken cancellationToken = default)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, targetName, solutionName, instanceName, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Update an Instance Resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/>, <paramref name="instanceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, EdgeDeploymentInstanceData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, targetName, solutionName, instanceName, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName)
+        {
+            var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Edge/targets/", false);
+            uri.AppendPath(targetName, true);
+            uri.AppendPath("/solutions/", false);
+            uri.AppendPath(solutionName, true);
+            uri.AppendPath("/instances/", false);
+            uri.AppendPath(instanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Edge/targets/", false);
+            uri.AppendPath(targetName, true);
+            uri.AppendPath("/solutions/", false);
+            uri.AppendPath(solutionName, true);
+            uri.AppendPath("/instances/", false);
+            uri.AppendPath(instanceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Delete Instance Resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, targetName, solutionName, instanceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Delete Instance Resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="instanceName"> Name of the instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/>, <paramref name="solutionName"/> or <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string targetName, string solutionName, string instanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+            Argument.AssertNotNullOrEmpty(instanceName, nameof(instanceName));
+
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, targetName, solutionName, instanceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListBySolutionRequestUri(string subscriptionId, string resourceGroupName, string targetName, string solutionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Edge/targets/", false);
@@ -161,39 +476,181 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             uri.AppendPath("/solutions/", false);
             uri.AppendPath(solutionName, true);
             uri.AppendPath("/instances", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateListBySolutionRequest(string subscriptionId, string resourceGroupName, string targetName, string solutionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Edge/targets/", false);
+            uri.AppendPath(targetName, true);
+            uri.AppendPath("/solutions/", false);
+            uri.AppendPath(solutionName, true);
+            uri.AppendPath("/instances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
             return message;
         }
 
-        internal HttpMessage CreateNextGetBySolutionRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string targetName, string solutionName, RequestContext context)
+        /// <summary> List Instance Resources. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/> or <paramref name="solutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<InstanceListResult>> ListBySolutionAsync(string subscriptionId, string resourceGroupName, string targetName, string solutionName, CancellationToken cancellationToken = default)
         {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+
+            using var message = CreateListBySolutionRequest(subscriptionId, resourceGroupName, targetName, solutionName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
             {
-                uri.Reset(nextPage);
+                case 200:
+                    {
+                        InstanceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = InstanceListResult.DeserializeInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
             }
-            else
+        }
+
+        /// <summary> List Instance Resources. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/> or <paramref name="solutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<InstanceListResult> ListBySolution(string subscriptionId, string resourceGroupName, string targetName, string solutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+
+            using var message = CreateListBySolutionRequest(subscriptionId, resourceGroupName, targetName, solutionName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
             {
-                uri.Reset(new Uri(_endpoint, nextPage));
+                case 200:
+                    {
+                        InstanceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = InstanceListResult.DeserializeInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
+        }
+
+        internal RequestUriBuilder CreateListBySolutionNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string targetName, string solutionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListBySolutionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string targetName, string solutionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
             return message;
+        }
+
+        /// <summary> List Instance Resources. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/> or <paramref name="solutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<InstanceListResult>> ListBySolutionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string targetName, string solutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+
+            using var message = CreateListBySolutionNextPageRequest(nextLink, subscriptionId, resourceGroupName, targetName, solutionName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        InstanceListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = InstanceListResult.DeserializeInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List Instance Resources. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="targetName"> Name of the target. </param>
+        /// <param name="solutionName"> Name of the solution. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/> or <paramref name="solutionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetName"/> or <paramref name="solutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<InstanceListResult> ListBySolutionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string targetName, string solutionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(solutionName, nameof(solutionName));
+
+            using var message = CreateListBySolutionNextPageRequest(nextLink, subscriptionId, resourceGroupName, targetName, solutionName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        InstanceListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = InstanceListResult.DeserializeInstanceListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
     }
 }

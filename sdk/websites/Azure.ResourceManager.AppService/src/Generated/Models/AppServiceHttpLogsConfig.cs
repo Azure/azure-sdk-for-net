@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Http logs configuration.
-    /// Serialized Name: HttpLogsConfig
-    /// </summary>
+    /// <summary> Http logs configuration. </summary>
     public partial class AppServiceHttpLogsConfig
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceHttpLogsConfig"/>. </summary>
-        /// <param name="fileSystem">
-        /// Http logs to file system configuration.
-        /// Serialized Name: HttpLogsConfig.fileSystem
-        /// </param>
-        /// <param name="azureBlobStorage">
-        /// Http logs to azure blob storage configuration.
-        /// Serialized Name: HttpLogsConfig.azureBlobStorage
-        /// </param>
+        /// <param name="fileSystem"> Http logs to file system configuration. </param>
+        /// <param name="azureBlobStorage"> Http logs to azure blob storage configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceHttpLogsConfig(FileSystemHttpLogsConfig fileSystem, AppServiceBlobStorageHttpLogsConfig azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Http logs to file system configuration.
-        /// Serialized Name: HttpLogsConfig.fileSystem
-        /// </summary>
+        /// <summary> Http logs to file system configuration. </summary>
         [WirePath("fileSystem")]
         public FileSystemHttpLogsConfig FileSystem { get; set; }
-        /// <summary>
-        /// Http logs to azure blob storage configuration.
-        /// Serialized Name: HttpLogsConfig.azureBlobStorage
-        /// </summary>
+        /// <summary> Http logs to azure blob storage configuration. </summary>
         [WirePath("azureBlobStorage")]
         public AppServiceBlobStorageHttpLogsConfig AzureBlobStorage { get; set; }
     }

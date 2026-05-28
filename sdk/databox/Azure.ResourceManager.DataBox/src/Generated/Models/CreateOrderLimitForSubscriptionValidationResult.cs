@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -15,18 +14,20 @@ namespace Azure.ResourceManager.DataBox.Models
     public partial class CreateOrderLimitForSubscriptionValidationResult : DataBoxValidationInputResult
     {
         /// <summary> Initializes a new instance of <see cref="CreateOrderLimitForSubscriptionValidationResult"/>. </summary>
-        internal CreateOrderLimitForSubscriptionValidationResult() : base(DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit)
+        internal CreateOrderLimitForSubscriptionValidationResult()
         {
+            ValidationType = DataBoxValidationInputDiscriminator.ValidateCreateOrderLimit;
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateOrderLimitForSubscriptionValidationResult"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> Create order limit validation status. </param>
-        internal CreateOrderLimitForSubscriptionValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataBoxValidationStatus? status) : base(validationType, error, additionalBinaryDataProperties)
+        internal CreateOrderLimitForSubscriptionValidationResult(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxValidationStatus? status) : base(validationType, error, serializedAdditionalRawData)
         {
             Status = status;
+            ValidationType = validationType;
         }
 
         /// <summary> Create order limit validation status. </summary>

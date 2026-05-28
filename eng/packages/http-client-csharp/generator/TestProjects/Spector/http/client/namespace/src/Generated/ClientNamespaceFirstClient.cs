@@ -6,25 +6,19 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
-using Client.Clientnamespace.First;
+using client.clientnamespace.first;
 
-namespace Client.Clientnamespace
+namespace client.clientnamespace
 {
     public partial class ClientNamespaceFirstClient
     {
-        public ClientNamespaceFirstClient() : this(new Uri("http://localhost:3000"), new ClientClientNamespaceClientOptions()) => throw null;
+        public ClientNamespaceFirstClient() : this(new Uri("http://localhost:3000"), new ClientNamespaceFirstClientOptions()) => throw null;
 
-        internal ClientNamespaceFirstClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientClientNamespaceClientOptions options) => throw null;
-
-        public ClientNamespaceFirstClient(Uri endpoint, ClientClientNamespaceClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public ClientNamespaceFirstClient(ClientNamespaceFirstClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public ClientNamespaceFirstClient(Uri endpoint, ClientNamespaceFirstClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

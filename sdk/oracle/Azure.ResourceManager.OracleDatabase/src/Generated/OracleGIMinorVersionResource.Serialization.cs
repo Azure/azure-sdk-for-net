@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    /// <summary></summary>
     public partial class OracleGIMinorVersionResource : IJsonModel<OracleGIMinorVersionData>
     {
-        private static IJsonModel<OracleGIMinorVersionData> s_dataDeserializationInstance;
+        private static OracleGIMinorVersionData s_dataDeserializationInstance;
+        private static OracleGIMinorVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<OracleGIMinorVersionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OracleGIMinorVersionData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OracleGIMinorVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OracleGIMinorVersionData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OracleGIMinorVersionData IJsonModel<OracleGIMinorVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        OracleGIMinorVersionData IJsonModel<OracleGIMinorVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleGIMinorVersionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OracleGIMinorVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleGIMinorVersionData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         OracleGIMinorVersionData IPersistableModel<OracleGIMinorVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleGIMinorVersionData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OracleGIMinorVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<OracleGIMinorVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleGIMinorVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

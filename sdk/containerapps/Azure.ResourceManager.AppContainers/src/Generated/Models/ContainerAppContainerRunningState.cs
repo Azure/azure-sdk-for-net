@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppContainerRunningState : IEquatable<ContainerAppContainerRunningState>
     {
         private readonly string _value;
-        /// <summary> Running. </summary>
-        private const string RunningValue = "Running";
-        /// <summary> Terminated. </summary>
-        private const string TerminatedValue = "Terminated";
-        /// <summary> Waiting. </summary>
-        private const string WaitingValue = "Waiting";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppContainerRunningState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppContainerRunningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string RunningValue = "Running";
+        private const string TerminatedValue = "Terminated";
+        private const string WaitingValue = "Waiting";
 
         /// <summary> Running. </summary>
         public static ContainerAppContainerRunningState Running { get; } = new ContainerAppContainerRunningState(RunningValue);
-
         /// <summary> Terminated. </summary>
         public static ContainerAppContainerRunningState Terminated { get; } = new ContainerAppContainerRunningState(TerminatedValue);
-
         /// <summary> Waiting. </summary>
         public static ContainerAppContainerRunningState Waiting { get; } = new ContainerAppContainerRunningState(WaitingValue);
-
         /// <summary> Determines if two <see cref="ContainerAppContainerRunningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppContainerRunningState left, ContainerAppContainerRunningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerAppContainerRunningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppContainerRunningState left, ContainerAppContainerRunningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerAppContainerRunningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppContainerRunningState"/>. </summary>
         public static implicit operator ContainerAppContainerRunningState(string value) => new ContainerAppContainerRunningState(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerAppContainerRunningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerAppContainerRunningState?(string value) => value == null ? null : new ContainerAppContainerRunningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppContainerRunningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerAppContainerRunningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Service Account Token for BrokerAuthentication. </summary>
-    internal partial class DataflowEndpointAuthenticationServiceAccountToken : IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>
+    public partial class DataflowEndpointAuthenticationServiceAccountToken : IUtf8JsonSerializable, IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>
     {
-        /// <summary> Initializes a new instance of <see cref="DataflowEndpointAuthenticationServiceAccountToken"/> for deserialization. </summary>
-        internal DataflowEndpointAuthenticationServiceAccountToken()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataflowEndpointAuthenticationServiceAccountToken PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataflowEndpointAuthenticationServiceAccountToken(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataflowEndpointAuthenticationServiceAccountToken)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataflowEndpointAuthenticationServiceAccountToken)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataflowEndpointAuthenticationServiceAccountToken IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,22 +28,23 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowEndpointAuthenticationServiceAccountToken)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("audience"u8);
             writer.WriteStringValue(Audience);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -98,46 +53,74 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataflowEndpointAuthenticationServiceAccountToken IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataflowEndpointAuthenticationServiceAccountToken JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataflowEndpointAuthenticationServiceAccountToken IJsonModel<DataflowEndpointAuthenticationServiceAccountToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataflowEndpointAuthenticationServiceAccountToken)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataflowEndpointAuthenticationServiceAccountToken(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataflowEndpointAuthenticationServiceAccountToken DeserializeDataflowEndpointAuthenticationServiceAccountToken(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataflowEndpointAuthenticationServiceAccountToken DeserializeDataflowEndpointAuthenticationServiceAccountToken(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string audience = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("audience"u8))
+                if (property.NameEquals("audience"u8))
                 {
-                    audience = prop.Value.GetString();
+                    audience = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DataflowEndpointAuthenticationServiceAccountToken(audience, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataflowEndpointAuthenticationServiceAccountToken(audience, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataflowEndpointAuthenticationServiceAccountToken)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataflowEndpointAuthenticationServiceAccountToken IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataflowEndpointAuthenticationServiceAccountToken(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataflowEndpointAuthenticationServiceAccountToken)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataflowEndpointAuthenticationServiceAccountToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,92 +14,59 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ClusterDetailedStatus : IEquatable<ClusterDetailedStatus>
     {
         private readonly string _value;
-        /// <summary> The PendingDeployment status. </summary>
-        private const string PendingDeploymentValue = "PendingDeployment";
-        /// <summary> The Deploying status. </summary>
-        private const string DeployingValue = "Deploying";
-        /// <summary> The Running status. </summary>
-        private const string RunningValue = "Running";
-        /// <summary> The Updating status. </summary>
-        private const string UpdatingValue = "Updating";
-        /// <summary> The UpdatePaused status. </summary>
-        private const string UpdatePausedValue = "UpdatePaused";
-        /// <summary> The Degraded status. </summary>
-        private const string DegradedValue = "Degraded";
-        /// <summary> The Deleting status. </summary>
-        private const string DeletingValue = "Deleting";
-        /// <summary> The Disconnected status. </summary>
-        private const string DisconnectedValue = "Disconnected";
-        /// <summary> The Failed status. </summary>
-        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="ClusterDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterDetailedStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The PendingDeployment status. </summary>
+        private const string PendingDeploymentValue = "PendingDeployment";
+        private const string DeployingValue = "Deploying";
+        private const string RunningValue = "Running";
+        private const string UpdatingValue = "Updating";
+        private const string UpdatePausedValue = "UpdatePaused";
+        private const string DegradedValue = "Degraded";
+        private const string DeletingValue = "Deleting";
+        private const string DisconnectedValue = "Disconnected";
+        private const string FailedValue = "Failed";
+
+        /// <summary> PendingDeployment. </summary>
         public static ClusterDetailedStatus PendingDeployment { get; } = new ClusterDetailedStatus(PendingDeploymentValue);
-
-        /// <summary> The Deploying status. </summary>
+        /// <summary> Deploying. </summary>
         public static ClusterDetailedStatus Deploying { get; } = new ClusterDetailedStatus(DeployingValue);
-
-        /// <summary> The Running status. </summary>
+        /// <summary> Running. </summary>
         public static ClusterDetailedStatus Running { get; } = new ClusterDetailedStatus(RunningValue);
-
-        /// <summary> The Updating status. </summary>
+        /// <summary> Updating. </summary>
         public static ClusterDetailedStatus Updating { get; } = new ClusterDetailedStatus(UpdatingValue);
-
-        /// <summary> The UpdatePaused status. </summary>
+        /// <summary> UpdatePaused. </summary>
         public static ClusterDetailedStatus UpdatePaused { get; } = new ClusterDetailedStatus(UpdatePausedValue);
-
-        /// <summary> The Degraded status. </summary>
+        /// <summary> Degraded. </summary>
         public static ClusterDetailedStatus Degraded { get; } = new ClusterDetailedStatus(DegradedValue);
-
-        /// <summary> The Deleting status. </summary>
+        /// <summary> Deleting. </summary>
         public static ClusterDetailedStatus Deleting { get; } = new ClusterDetailedStatus(DeletingValue);
-
-        /// <summary> The Disconnected status. </summary>
+        /// <summary> Disconnected. </summary>
         public static ClusterDetailedStatus Disconnected { get; } = new ClusterDetailedStatus(DisconnectedValue);
-
-        /// <summary> The Failed status. </summary>
+        /// <summary> Failed. </summary>
         public static ClusterDetailedStatus Failed { get; } = new ClusterDetailedStatus(FailedValue);
-
         /// <summary> Determines if two <see cref="ClusterDetailedStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterDetailedStatus left, ClusterDetailedStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ClusterDetailedStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterDetailedStatus left, ClusterDetailedStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ClusterDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterDetailedStatus"/>. </summary>
         public static implicit operator ClusterDetailedStatus(string value) => new ClusterDetailedStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ClusterDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ClusterDetailedStatus?(string value) => value == null ? null : new ClusterDetailedStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterDetailedStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ClusterDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

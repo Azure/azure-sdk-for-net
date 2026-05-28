@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -18,22 +17,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
     {
         private const string HttpRequestName = "$request";
         private readonly Type _userType;
-        private readonly WebPubSubServiceAccessOptions _options;
-        private readonly WebPubSubServiceAccessFactory _accessFactory;
-        private readonly ILogger _logger;
+        private readonly WebPubSubFunctionsOptions _options;
 
         public WebPubSubContextBinding(
             BindingProviderContext context,
             IConfiguration configuration,
             INameResolver nameResolver,
-            WebPubSubServiceAccessOptions options,
-            WebPubSubServiceAccessFactory accessFactory,
-            ILogger logger) : base(context, configuration, nameResolver)
+            WebPubSubFunctionsOptions options) : base(context, configuration, nameResolver)
         {
             _userType = context.Parameter.ParameterType;
             _options = options;
-            _accessFactory = accessFactory;
-            _logger = logger;
         }
 
         protected async override Task<IValueProvider> BuildAsync(WebPubSubContextAttribute attrResolved, IReadOnlyDictionary<string, object> bindingData)
@@ -54,9 +47,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             try
             {
-                var accesses = _accessFactory.ResolveAccessesOrDefault(attrResolved?.Connections, _options.WebPubSubAccess);
-                var validator = new RequestValidator(accesses, _logger);
-                var serviceRequest = await request.ReadWebPubSubRequestAsync(validator).ConfigureAwait(false);
+                // fallback to use global settings.
+                var validationOptions = attrResolved.Connections != null ?
+                    new WebPubSubValidationOptions(attrResolved.Connections) :
+                    new WebPubSubValidationOptions(_options.ConnectionString);
+                var serviceRequest = await request.ReadWebPubSubRequestAsync(validationOptions).ConfigureAwait(false);
 
                 switch (serviceRequest)
                 {

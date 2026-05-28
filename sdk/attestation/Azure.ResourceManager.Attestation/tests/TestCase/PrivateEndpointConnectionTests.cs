@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.Attestation.Tests
             var endpoint = await GetEndpointResource(resourceGroup, providerResource.Data.Id);
             var endpointCollection = providerResource.GetAttestationPrivateEndpointConnections();
             //2.Get
-            var connection = await endpointCollection.GetAllAsync().ToEnumerableAsync();
-            string privateEndpointConnectionName = connection.FirstOrDefault().Data.Name;
-            var privateEndpointConnectionData = connection.FirstOrDefault().Data;
+            var connections = await endpointCollection.GetAllAsync().ToEnumerableAsync();
+            string privateEndpointConnectionName = connections.FirstOrDefault().Data.Name;
+            var privateEndpointConnectionData = connections.FirstOrDefault().Data;
             Assert.NotNull(privateEndpointConnectionData);
-            Assert.AreEqual("Approved", privateEndpointConnectionData.PrivateLinkServiceConnectionState.Status.ToString());
+            Assert.AreEqual("Approved", privateEndpointConnectionData.ConnectionState.Status.ToString());
             //3.GetAll
             var list = await endpointCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, list.Count);

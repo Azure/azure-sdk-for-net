@@ -49,10 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/providers/MgmtTypeSpec/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/previewActions", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

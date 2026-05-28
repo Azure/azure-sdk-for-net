@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.IO;
-using System.Reflection;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources.DeploymentStacks.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
 {
@@ -43,18 +42,18 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
                     "DeploymentTemplates",
                     $"rg-stack-template.json")));
 
-            data.DenySettings = new DeploymentStackDenySettings(DeploymentStackDenySettingsMode.None);
+            data.DenySettings = new DenySettings(DenySettingsMode.None);
 
             data.ActionOnUnmanage = new ActionOnUnmanage()
             {
-                Resources = UnmanageActionResourceMode.Detach,
-                ResourceGroups = UnmanageActionResourceGroupMode.Detach,
-                ManagementGroups = UnmanageActionManagementGroupMode.Detach
+                Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
             };
 
             data.BypassStackOutOfSyncError = false;
 
-            data.Parameters.Add("templateSpecName", new DeploymentParameterItem { Value = BinaryData.FromString("\"stacksTestTemplate4321\"") });
+            data.Parameters.Add("templateSpecName", new DeploymentParameter { Value = BinaryData.FromString("\"stacksTestTemplate4321\"") });
 
             return data;
         }
@@ -71,18 +70,18 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
                     "DeploymentTemplates",
                     $"sub-stack-template.json")));
 
-            data.DenySettings = new DeploymentStackDenySettings(DeploymentStackDenySettingsMode.None);
+            data.DenySettings = new DenySettings(DenySettingsMode.None);
 
             data.ActionOnUnmanage = new ActionOnUnmanage()
             {
-                Resources = UnmanageActionResourceMode.Detach,
-                ResourceGroups = UnmanageActionResourceGroupMode.Detach,
-                ManagementGroups = UnmanageActionManagementGroupMode.Detach
+                Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
             };
 
             data.BypassStackOutOfSyncError = false;
 
-            data.Parameters.Add("rgName", new DeploymentParameterItem { Value = BinaryData.FromString("\"stacksTestRG4321\"") });
+            data.Parameters.Add("rgName", new DeploymentParameter { Value = BinaryData.FromString("\"stacksTestRG4321\"") } );
 
             return data;
         }
@@ -99,18 +98,18 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Tests
                     "DeploymentTemplates",
                     $"mg-stack-template.json")));
 
-            data.DenySettings = new DeploymentStackDenySettings(DeploymentStackDenySettingsMode.None);
+            data.DenySettings = new DenySettings(DenySettingsMode.None);
 
             data.ActionOnUnmanage = new ActionOnUnmanage()
             {
-                Resources = UnmanageActionResourceMode.Detach,
-                ResourceGroups = UnmanageActionResourceGroupMode.Detach,
-                ManagementGroups = UnmanageActionManagementGroupMode.Detach
+                Resources = DeploymentStacksDeleteDetachEnum.Detach,
+                ResourceGroups = DeploymentStacksDeleteDetachEnum.Detach,
+                ManagementGroups = DeploymentStacksDeleteDetachEnum.Detach
             };
 
             data.BypassStackOutOfSyncError = false;
 
-            data.Parameters.Add("message", new DeploymentParameterItem { Value = BinaryData.FromString("\"hello world\"") });
+            data.Parameters.Add("message", new DeploymentParameter { Value = BinaryData.FromString("\"hello world\"") });
 
             return data;
         }

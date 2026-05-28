@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ServiceFabric;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> Defines a health policy used to evaluate the health of an application or one of its children entities. </summary>
-    public partial class ArmApplicationHealthPolicy : IJsonModel<ArmApplicationHealthPolicy>
+    public partial class ArmApplicationHealthPolicy : IUtf8JsonSerializable, IJsonModel<ArmApplicationHealthPolicy>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArmApplicationHealthPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeArmApplicationHealthPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationHealthPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArmApplicationHealthPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ArmApplicationHealthPolicy IPersistableModel<ArmApplicationHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ArmApplicationHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArmApplicationHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ConsiderWarningAsError))
             {
                 writer.WritePropertyName("considerWarningAsError"u8);
@@ -100,15 +60,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,27 +77,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ArmApplicationHealthPolicy IJsonModel<ArmApplicationHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArmApplicationHealthPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArmApplicationHealthPolicy IJsonModel<ArmApplicationHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeArmApplicationHealthPolicy(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ArmApplicationHealthPolicy DeserializeArmApplicationHealthPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static ArmApplicationHealthPolicy DeserializeArmApplicationHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,56 +101,89 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             int? maxPercentUnhealthyDeployedApplications = default;
             ArmServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default;
             IDictionary<string, ArmServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("considerWarningAsError"u8))
+                if (property.NameEquals("considerWarningAsError"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    considerWarningAsError = prop.Value.GetBoolean();
+                    considerWarningAsError = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("maxPercentUnhealthyDeployedApplications"u8))
+                if (property.NameEquals("maxPercentUnhealthyDeployedApplications"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxPercentUnhealthyDeployedApplications = prop.Value.GetInt32();
+                    maxPercentUnhealthyDeployedApplications = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("defaultServiceTypeHealthPolicy"u8))
+                if (property.NameEquals("defaultServiceTypeHealthPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    defaultServiceTypeHealthPolicy = ArmServiceTypeHealthPolicy.DeserializeArmServiceTypeHealthPolicy(prop.Value, options);
+                    defaultServiceTypeHealthPolicy = ArmServiceTypeHealthPolicy.DeserializeArmServiceTypeHealthPolicy(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("serviceTypeHealthPolicyMap"u8))
+                if (property.NameEquals("serviceTypeHealthPolicyMap"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, ArmServiceTypeHealthPolicy> dictionary = new Dictionary<string, ArmServiceTypeHealthPolicy>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ArmServiceTypeHealthPolicy.DeserializeArmServiceTypeHealthPolicy(prop0.Value, options));
+                        dictionary.Add(property0.Name, ArmServiceTypeHealthPolicy.DeserializeArmServiceTypeHealthPolicy(property0.Value, options));
                     }
                     serviceTypeHealthPolicyMap = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ArmApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ArmApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, ArmServiceTypeHealthPolicy>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArmApplicationHealthPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ArmApplicationHealthPolicy IPersistableModel<ArmApplicationHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeArmApplicationHealthPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmApplicationHealthPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArmApplicationHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     internal static partial class MarketplaceTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MarketplaceType value) => value switch
         {
             MarketplaceType.NotSpecified => "NotSpecified",
@@ -21,25 +20,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MarketplaceType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static MarketplaceType ToMarketplaceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified"))
-            {
-                return MarketplaceType.NotSpecified;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AddOn"))
-            {
-                return MarketplaceType.AddOn;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Bypass"))
-            {
-                return MarketplaceType.Bypass;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Store"))
-            {
-                return MarketplaceType.Store;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return MarketplaceType.NotSpecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AddOn")) return MarketplaceType.AddOn;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Bypass")) return MarketplaceType.Bypass;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Store")) return MarketplaceType.Store;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MarketplaceType value.");
         }
     }

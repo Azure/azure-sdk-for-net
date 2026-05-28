@@ -4,13 +4,13 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Text.Json;
 using System.Threading.Tasks;
+using System.Text.Json;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
 
@@ -162,8 +162,7 @@ namespace Azure.ResourceManager.Resources.Tests
             return data;
         }
 
-        protected static DeploymentStackData CreateSubDeploymentStackDataWithTemplate(AzureLocation location)
-        {
+        protected static DeploymentStackData CreateSubDeploymentStackDataWithTemplate(AzureLocation location) {
             var data = new DeploymentStackData();
 
             data.Location = location;
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.Resources.Tests
 
             data.BypassStackOutOfSyncError = false;
 
-            data.Parameters.Add("rgName", new DeploymentParameter { Value = BinaryData.FromString("\"stacksTestRG4321\"") });
+            data.Parameters.Add("rgName", new DeploymentParameter { Value = BinaryData.FromString("\"stacksTestRG4321\"") } );
 
             return data;
         }

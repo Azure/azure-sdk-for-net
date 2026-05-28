@@ -10,70 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    /// <summary> The SAP request to get list of availability zones. </summary>
-    public partial class SapAvailabilityZoneDetailsContent : IJsonModel<SapAvailabilityZoneDetailsContent>
+    public partial class SapAvailabilityZoneDetailsContent : IUtf8JsonSerializable, IJsonModel<SapAvailabilityZoneDetailsContent>
     {
-        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZoneDetailsContent"/> for deserialization. </summary>
-        internal SapAvailabilityZoneDetailsContent()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapAvailabilityZoneDetailsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SapAvailabilityZoneDetailsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SapAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSapAvailabilityZoneDetailsContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapAvailabilityZoneDetailsContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SapAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SapAvailabilityZoneDetailsContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SapAvailabilityZoneDetailsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SapAvailabilityZoneDetailsContent IPersistableModel<SapAvailabilityZoneDetailsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SapAvailabilityZoneDetailsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="sapAvailabilityZoneDetailsContent"> The <see cref="SapAvailabilityZoneDetailsContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SapAvailabilityZoneDetailsContent sapAvailabilityZoneDetailsContent)
-        {
-            if (sapAvailabilityZoneDetailsContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(sapAvailabilityZoneDetailsContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapAvailabilityZoneDetailsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -85,26 +28,27 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SapAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SapAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapAvailabilityZoneDetailsContent)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("appLocation"u8);
             writer.WriteStringValue(AppLocation);
             writer.WritePropertyName("sapProduct"u8);
             writer.WriteStringValue(SapProduct.ToString());
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -113,27 +57,22 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SapAvailabilityZoneDetailsContent IJsonModel<SapAvailabilityZoneDetailsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SapAvailabilityZoneDetailsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SapAvailabilityZoneDetailsContent IJsonModel<SapAvailabilityZoneDetailsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SapAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SapAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapAvailabilityZoneDetailsContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapAvailabilityZoneDetailsContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SapAvailabilityZoneDetailsContent DeserializeSapAvailabilityZoneDetailsContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static SapAvailabilityZoneDetailsContent DeserializeSapAvailabilityZoneDetailsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -141,30 +80,63 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             AzureLocation appLocation = default;
             SapProductType sapProduct = default;
             SapDatabaseType databaseType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("appLocation"u8))
+                if (property.NameEquals("appLocation"u8))
                 {
-                    appLocation = new AzureLocation(prop.Value.GetString());
+                    appLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sapProduct"u8))
+                if (property.NameEquals("sapProduct"u8))
                 {
-                    sapProduct = new SapProductType(prop.Value.GetString());
+                    sapProduct = new SapProductType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("databaseType"u8))
+                if (property.NameEquals("databaseType"u8))
                 {
-                    databaseType = new SapDatabaseType(prop.Value.GetString());
+                    databaseType = new SapDatabaseType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SapAvailabilityZoneDetailsContent(appLocation, sapProduct, databaseType, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SapAvailabilityZoneDetailsContent(appLocation, sapProduct, databaseType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SapAvailabilityZoneDetailsContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SapAvailabilityZoneDetailsContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SapAvailabilityZoneDetailsContent IPersistableModel<SapAvailabilityZoneDetailsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapAvailabilityZoneDetailsContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSapAvailabilityZoneDetailsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapAvailabilityZoneDetailsContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapAvailabilityZoneDetailsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

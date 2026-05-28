@@ -52,10 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/providers/MgmtTypeSpec/zoos/", false);
             uri.AppendPath(zooName, true);
             uri.AppendPath("/recommend", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

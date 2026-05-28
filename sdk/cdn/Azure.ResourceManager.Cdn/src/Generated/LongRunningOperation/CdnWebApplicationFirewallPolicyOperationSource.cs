@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary></summary>
-    internal partial class CdnWebApplicationFirewallPolicyOperationSource : IOperationSource<CdnWebApplicationFirewallPolicyResource>
+    internal class CdnWebApplicationFirewallPolicyOperationSource : IOperationSource<CdnWebApplicationFirewallPolicyResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal CdnWebApplicationFirewallPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         CdnWebApplicationFirewallPolicyResource IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CdnWebApplicationFirewallPolicyData data = CdnWebApplicationFirewallPolicyData.DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
             return new CdnWebApplicationFirewallPolicyResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<CdnWebApplicationFirewallPolicyResource> IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CdnWebApplicationFirewallPolicyData data = CdnWebApplicationFirewallPolicyData.DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CdnWebApplicationFirewallPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            return await Task.FromResult(new CdnWebApplicationFirewallPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

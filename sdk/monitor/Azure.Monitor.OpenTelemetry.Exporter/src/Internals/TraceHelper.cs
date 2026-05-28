@@ -50,11 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         case TelemetryType.Request:
                             var requestData = new RequestData(Version, activity, ref activityTagsProcessor);
-                            // Only set Name if not already set by override attribute
-                            if (string.IsNullOrEmpty(requestData.Name))
-                            {
-                                requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
-                            }
+                            requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RequestData",
@@ -109,16 +105,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
                 // In case of duplicate keys, only the first occurence will be exported.
-                var maxValueLength = SchemaConstants.GenAiProperties.Contains(keyValuePair.Key)
-                    ? SchemaConstants.GenAi_Properties_MaxValueLength
-                    : SchemaConstants.KVP_MaxValueLength;
-                var stringValue = Convert.ToString(keyValuePair.Value, CultureInfo.InvariantCulture).Truncate(maxValueLength) ?? "null";
 #if NET
-                destination.TryAdd(keyValuePair.Key, stringValue);
+                destination.TryAdd(keyValuePair.Key, Convert.ToString(keyValuePair.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
 #else
                 if (!destination.ContainsKey(keyValuePair.Key))
                 {
-                    destination.Add(keyValuePair.Key, stringValue);
+                    destination.Add(keyValuePair.Key, Convert.ToString(keyValuePair.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
                 }
 #endif
             }
@@ -131,16 +123,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
                 // In case of duplicate keys, only the first occurence will be exported.
-                var maxValueLength = SchemaConstants.GenAiProperties.Contains(key)
-                    ? SchemaConstants.GenAi_Properties_MaxValueLength
-                    : SchemaConstants.KVP_MaxValueLength;
-                var sanitizedValue = value.Truncate(maxValueLength) ?? "null";
 #if NET
-                destination.TryAdd(key, sanitizedValue);
+                destination.TryAdd(key, value.Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
 #else
                 if (!destination.ContainsKey(key))
                 {
-                    destination.Add(key, sanitizedValue);
+                    destination.Add(key, value.Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
                 }
 #endif
             }

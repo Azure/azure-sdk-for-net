@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -25,62 +24,41 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetDiffDiskPlacement : IEquatable<ComputeFleetDiffDiskPlacement>
     {
         private readonly string _value;
-        /// <summary> CacheDisk option. </summary>
-        private const string CacheDiskValue = "CacheDisk";
-        /// <summary> Resource Disk option. </summary>
-        private const string ResourceDiskValue = "ResourceDisk";
-        /// <summary> NvmeDisk option. </summary>
-        private const string NvmeDiskValue = "NvmeDisk";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetDiffDiskPlacement"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetDiffDiskPlacement(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string CacheDiskValue = "CacheDisk";
+        private const string ResourceDiskValue = "ResourceDisk";
+        private const string NvmeDiskValue = "NvmeDisk";
 
         /// <summary> CacheDisk option. </summary>
         public static ComputeFleetDiffDiskPlacement CacheDisk { get; } = new ComputeFleetDiffDiskPlacement(CacheDiskValue);
-
         /// <summary> Resource Disk option. </summary>
         public static ComputeFleetDiffDiskPlacement ResourceDisk { get; } = new ComputeFleetDiffDiskPlacement(ResourceDiskValue);
-
         /// <summary> NvmeDisk option. </summary>
         public static ComputeFleetDiffDiskPlacement NvmeDisk { get; } = new ComputeFleetDiffDiskPlacement(NvmeDiskValue);
-
         /// <summary> Determines if two <see cref="ComputeFleetDiffDiskPlacement"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetDiffDiskPlacement left, ComputeFleetDiffDiskPlacement right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ComputeFleetDiffDiskPlacement"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetDiffDiskPlacement left, ComputeFleetDiffDiskPlacement right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ComputeFleetDiffDiskPlacement"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetDiffDiskPlacement"/>. </summary>
         public static implicit operator ComputeFleetDiffDiskPlacement(string value) => new ComputeFleetDiffDiskPlacement(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeFleetDiffDiskPlacement"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ComputeFleetDiffDiskPlacement?(string value) => value == null ? null : new ComputeFleetDiffDiskPlacement(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetDiffDiskPlacement other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ComputeFleetDiffDiskPlacement other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

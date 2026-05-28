@@ -10,7 +10,6 @@ namespace Azure.ResourceManager.TestFramework
             ExceptionList = new[]
             {
                 "Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupBackupRestoreFilesContent",
-                "Azure.ResourceManager.NetApp.Models.ExportPolicyRule",
             };
         }
     }

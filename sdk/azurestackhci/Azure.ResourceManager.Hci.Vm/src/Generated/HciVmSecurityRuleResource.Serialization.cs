@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
-    /// <summary></summary>
     public partial class HciVmSecurityRuleResource : IJsonModel<HciVmSecurityRuleData>
     {
-        private static IJsonModel<HciVmSecurityRuleData> s_dataDeserializationInstance;
+        private static HciVmSecurityRuleData s_dataDeserializationInstance;
+        private static HciVmSecurityRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<HciVmSecurityRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciVmSecurityRuleData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmSecurityRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciVmSecurityRuleData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmSecurityRuleData IJsonModel<HciVmSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        HciVmSecurityRuleData IJsonModel<HciVmSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciVmSecurityRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciVmSecurityRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmSecurityRuleData>(Data, options, AzureResourceManagerHciVmContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         HciVmSecurityRuleData IPersistableModel<HciVmSecurityRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmSecurityRuleData>(data, options, AzureResourceManagerHciVmContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciVmSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<HciVmSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciVmSecurityRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

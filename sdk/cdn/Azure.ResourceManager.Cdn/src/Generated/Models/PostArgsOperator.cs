@@ -7,14 +7,24 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: PostArgsOperator
+    /// </summary>
     public readonly partial struct PostArgsOperator : IEquatable<PostArgsOperator>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="PostArgsOperator"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostArgsOperator(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AnyValue = "Any";
         private const string EqualValue = "Equal";
         private const string ContainsValue = "Contains";
@@ -26,76 +36,73 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Initializes a new instance of <see cref="PostArgsOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostArgsOperator(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: PostArgsOperator.Any
+        /// </summary>
         public static PostArgsOperator Any { get; } = new PostArgsOperator(AnyValue);
-
-        /// <summary> Gets the Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: PostArgsOperator.Equal
+        /// </summary>
         public static PostArgsOperator Equal { get; } = new PostArgsOperator(EqualValue);
-
-        /// <summary> Gets the Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: PostArgsOperator.Contains
+        /// </summary>
         public static PostArgsOperator Contains { get; } = new PostArgsOperator(ContainsValue);
-
-        /// <summary> Gets the BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: PostArgsOperator.BeginsWith
+        /// </summary>
         public static PostArgsOperator BeginsWith { get; } = new PostArgsOperator(BeginsWithValue);
-
-        /// <summary> Gets the EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: PostArgsOperator.EndsWith
+        /// </summary>
         public static PostArgsOperator EndsWith { get; } = new PostArgsOperator(EndsWithValue);
-
-        /// <summary> Gets the LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: PostArgsOperator.LessThan
+        /// </summary>
         public static PostArgsOperator LessThan { get; } = new PostArgsOperator(LessThanValue);
-
-        /// <summary> Gets the LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: PostArgsOperator.LessThanOrEqual
+        /// </summary>
         public static PostArgsOperator LessThanOrEqual { get; } = new PostArgsOperator(LessThanOrEqualValue);
-
-        /// <summary> Gets the GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: PostArgsOperator.GreaterThan
+        /// </summary>
         public static PostArgsOperator GreaterThan { get; } = new PostArgsOperator(GreaterThanValue);
-
-        /// <summary> Gets the GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: PostArgsOperator.GreaterThanOrEqual
+        /// </summary>
         public static PostArgsOperator GreaterThanOrEqual { get; } = new PostArgsOperator(GreaterThanOrEqualValue);
-
-        /// <summary> Gets the RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: PostArgsOperator.RegEx
+        /// </summary>
         public static PostArgsOperator RegEx { get; } = new PostArgsOperator(RegExValue);
-
         /// <summary> Determines if two <see cref="PostArgsOperator"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostArgsOperator left, PostArgsOperator right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PostArgsOperator"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostArgsOperator left, PostArgsOperator right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PostArgsOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostArgsOperator"/>. </summary>
         public static implicit operator PostArgsOperator(string value) => new PostArgsOperator(value);
 
-        /// <summary> Converts a string to a <see cref="PostArgsOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PostArgsOperator?(string value) => value == null ? null : new PostArgsOperator(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostArgsOperator other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PostArgsOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

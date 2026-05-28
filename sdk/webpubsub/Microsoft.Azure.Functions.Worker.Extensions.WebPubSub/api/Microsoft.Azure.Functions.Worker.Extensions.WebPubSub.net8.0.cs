@@ -67,6 +67,7 @@ namespace Microsoft.Azure.Functions.Worker
         public string UserId { get { throw null; } set { } }
         public void ClearStates() { }
         public void SetState(string key, System.BinaryData value) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetState(string key, object value) { }
     }
     public sealed partial class DisconnectedEventRequest : Microsoft.Azure.Functions.Worker.WebPubSubEventRequest
@@ -175,6 +176,7 @@ namespace Microsoft.Azure.Functions.Worker
         public Microsoft.Azure.Functions.Worker.WebPubSubDataType DataType { get { throw null; } set { } }
         public void ClearStates() { }
         public void SetState(string key, System.BinaryData value) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void SetState(string key, object value) { }
     }
     public abstract partial class WebPubSubAction

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -15,59 +14,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public readonly partial struct DynatraceOneAgentMonitoringType : IEquatable<DynatraceOneAgentMonitoringType>
     {
         private readonly string _value;
-        private const string CloudInfrastructureValue = "CLOUD_INFRASTRUCTURE";
-        private const string FullStackValue = "FULL_STACK";
-        private const string DiscoveryValue = "DISCOVERY";
 
         /// <summary> Initializes a new instance of <see cref="DynatraceOneAgentMonitoringType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynatraceOneAgentMonitoringType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the CloudInfrastructure. </summary>
+        private const string CloudInfrastructureValue = "CLOUD_INFRASTRUCTURE";
+        private const string FullStackValue = "FULL_STACK";
+
+        /// <summary> CLOUD_INFRASTRUCTURE. </summary>
         public static DynatraceOneAgentMonitoringType CloudInfrastructure { get; } = new DynatraceOneAgentMonitoringType(CloudInfrastructureValue);
-
-        /// <summary> Gets the FullStack. </summary>
+        /// <summary> FULL_STACK. </summary>
         public static DynatraceOneAgentMonitoringType FullStack { get; } = new DynatraceOneAgentMonitoringType(FullStackValue);
-
-        /// <summary> Gets the Discovery. </summary>
-        public static DynatraceOneAgentMonitoringType Discovery { get; } = new DynatraceOneAgentMonitoringType(DiscoveryValue);
-
         /// <summary> Determines if two <see cref="DynatraceOneAgentMonitoringType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynatraceOneAgentMonitoringType left, DynatraceOneAgentMonitoringType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DynatraceOneAgentMonitoringType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynatraceOneAgentMonitoringType left, DynatraceOneAgentMonitoringType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DynatraceOneAgentMonitoringType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceOneAgentMonitoringType"/>. </summary>
         public static implicit operator DynatraceOneAgentMonitoringType(string value) => new DynatraceOneAgentMonitoringType(value);
 
-        /// <summary> Converts a string to a <see cref="DynatraceOneAgentMonitoringType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceOneAgentMonitoringType?(string value) => value == null ? null : new DynatraceOneAgentMonitoringType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynatraceOneAgentMonitoringType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DynatraceOneAgentMonitoringType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

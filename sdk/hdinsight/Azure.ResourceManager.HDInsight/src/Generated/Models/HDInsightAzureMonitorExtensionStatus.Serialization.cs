@@ -9,63 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.HDInsight;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The azure monitor status response. </summary>
-    public partial class HDInsightAzureMonitorExtensionStatus : IJsonModel<HDInsightAzureMonitorExtensionStatus>
+    public partial class HDInsightAzureMonitorExtensionStatus : IUtf8JsonSerializable, IJsonModel<HDInsightAzureMonitorExtensionStatus>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HDInsightAzureMonitorExtensionStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHDInsightAzureMonitorExtensionStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightAzureMonitorExtensionStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightAzureMonitorExtensionStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightAzureMonitorExtensionStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HDInsightAzureMonitorExtensionStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HDInsightAzureMonitorExtensionStatus IPersistableModel<HDInsightAzureMonitorExtensionStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HDInsightAzureMonitorExtensionStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HDInsightAzureMonitorExtensionStatus"/> from. </param>
-        internal static HDInsightAzureMonitorExtensionStatus FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHDInsightAzureMonitorExtensionStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HDInsightAzureMonitorExtensionStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -77,11 +28,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightAzureMonitorExtensionStatus)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(IsClusterMonitoringEnabled))
             {
                 writer.WritePropertyName("clusterMonitoringEnabled"u8);
@@ -97,15 +49,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("selectedConfigurations"u8);
                 writer.WriteObjectValue(SelectedConfigurations, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -114,66 +66,94 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HDInsightAzureMonitorExtensionStatus IJsonModel<HDInsightAzureMonitorExtensionStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HDInsightAzureMonitorExtensionStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HDInsightAzureMonitorExtensionStatus IJsonModel<HDInsightAzureMonitorExtensionStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightAzureMonitorExtensionStatus)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHDInsightAzureMonitorExtensionStatus(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HDInsightAzureMonitorExtensionStatus DeserializeHDInsightAzureMonitorExtensionStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static HDInsightAzureMonitorExtensionStatus DeserializeHDInsightAzureMonitorExtensionStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? isClusterMonitoringEnabled = default;
+            bool? clusterMonitoringEnabled = default;
             string workspaceId = default;
             HDInsightAzureMonitorSelectedConfigurations selectedConfigurations = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("clusterMonitoringEnabled"u8))
+                if (property.NameEquals("clusterMonitoringEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isClusterMonitoringEnabled = prop.Value.GetBoolean();
+                    clusterMonitoringEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("workspaceId"u8))
+                if (property.NameEquals("workspaceId"u8))
                 {
-                    workspaceId = prop.Value.GetString();
+                    workspaceId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("selectedConfigurations"u8))
+                if (property.NameEquals("selectedConfigurations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    selectedConfigurations = HDInsightAzureMonitorSelectedConfigurations.DeserializeHDInsightAzureMonitorSelectedConfigurations(prop.Value, options);
+                    selectedConfigurations = HDInsightAzureMonitorSelectedConfigurations.DeserializeHDInsightAzureMonitorSelectedConfigurations(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new HDInsightAzureMonitorExtensionStatus(isClusterMonitoringEnabled, workspaceId, selectedConfigurations, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HDInsightAzureMonitorExtensionStatus(clusterMonitoringEnabled, workspaceId, selectedConfigurations, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightAzureMonitorExtensionStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightAzureMonitorExtensionStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HDInsightAzureMonitorExtensionStatus IPersistableModel<HDInsightAzureMonitorExtensionStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightAzureMonitorExtensionStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHDInsightAzureMonitorExtensionStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightAzureMonitorExtensionStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HDInsightAzureMonitorExtensionStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

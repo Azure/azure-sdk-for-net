@@ -7,14 +7,24 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Resource status of the profile. </summary>
+    /// <summary>
+    /// Resource status of the profile.
+    /// Serialized Name: ProfileResourceState
+    /// </summary>
     public readonly partial struct ProfileResourceState : IEquatable<ProfileResourceState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProfileResourceState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string CreatingValue = "Creating";
         private const string ActiveValue = "Active";
         private const string DeletingValue = "Deleting";
@@ -25,73 +35,68 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CommittingMigrationValue = "CommittingMigration";
         private const string AbortingMigrationValue = "AbortingMigration";
 
-        /// <summary> Initializes a new instance of <see cref="ProfileResourceState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProfileResourceState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ProfileResourceState.Creating
+        /// </summary>
         public static ProfileResourceState Creating { get; } = new ProfileResourceState(CreatingValue);
-
-        /// <summary> Gets the Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: ProfileResourceState.Active
+        /// </summary>
         public static ProfileResourceState Active { get; } = new ProfileResourceState(ActiveValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProfileResourceState.Deleting
+        /// </summary>
         public static ProfileResourceState Deleting { get; } = new ProfileResourceState(DeletingValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ProfileResourceState.Disabled
+        /// </summary>
         public static ProfileResourceState Disabled { get; } = new ProfileResourceState(DisabledValue);
-
-        /// <summary> Gets the Migrating. </summary>
+        /// <summary>
+        /// Migrating
+        /// Serialized Name: ProfileResourceState.Migrating
+        /// </summary>
         public static ProfileResourceState Migrating { get; } = new ProfileResourceState(MigratingValue);
-
-        /// <summary> Gets the Migrated. </summary>
+        /// <summary>
+        /// Migrated
+        /// Serialized Name: ProfileResourceState.Migrated
+        /// </summary>
         public static ProfileResourceState Migrated { get; } = new ProfileResourceState(MigratedValue);
-
-        /// <summary> Gets the PendingMigrationCommit. </summary>
+        /// <summary>
+        /// PendingMigrationCommit
+        /// Serialized Name: ProfileResourceState.PendingMigrationCommit
+        /// </summary>
         public static ProfileResourceState PendingMigrationCommit { get; } = new ProfileResourceState(PendingMigrationCommitValue);
-
-        /// <summary> Gets the CommittingMigration. </summary>
+        /// <summary>
+        /// CommittingMigration
+        /// Serialized Name: ProfileResourceState.CommittingMigration
+        /// </summary>
         public static ProfileResourceState CommittingMigration { get; } = new ProfileResourceState(CommittingMigrationValue);
-
-        /// <summary> Gets the AbortingMigration. </summary>
+        /// <summary>
+        /// AbortingMigration
+        /// Serialized Name: ProfileResourceState.AbortingMigration
+        /// </summary>
         public static ProfileResourceState AbortingMigration { get; } = new ProfileResourceState(AbortingMigrationValue);
-
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProfileResourceState left, ProfileResourceState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProfileResourceState left, ProfileResourceState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ProfileResourceState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProfileResourceState"/>. </summary>
         public static implicit operator ProfileResourceState(string value) => new ProfileResourceState(value);
 
-        /// <summary> Converts a string to a <see cref="ProfileResourceState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ProfileResourceState?(string value) => value == null ? null : new ProfileResourceState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProfileResourceState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ProfileResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

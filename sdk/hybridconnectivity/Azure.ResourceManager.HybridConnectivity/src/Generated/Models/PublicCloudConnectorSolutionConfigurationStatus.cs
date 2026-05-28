@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -15,67 +14,44 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     public readonly partial struct PublicCloudConnectorSolutionConfigurationStatus : IEquatable<PublicCloudConnectorSolutionConfigurationStatus>
     {
         private readonly string _value;
-        /// <summary> New status. </summary>
-        private const string NewValue = "New";
-        /// <summary> InProgress status. </summary>
-        private const string InProgressValue = "InProgress";
-        /// <summary> Canceled status. </summary>
-        private const string CompletedValue = "Completed";
-        /// <summary> Failed status. </summary>
-        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorSolutionConfigurationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PublicCloudConnectorSolutionConfigurationStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string NewValue = "New";
+        private const string InProgressValue = "InProgress";
+        private const string CompletedValue = "Completed";
+        private const string FailedValue = "Failed";
 
         /// <summary> New status. </summary>
         public static PublicCloudConnectorSolutionConfigurationStatus New { get; } = new PublicCloudConnectorSolutionConfigurationStatus(NewValue);
-
         /// <summary> InProgress status. </summary>
         public static PublicCloudConnectorSolutionConfigurationStatus InProgress { get; } = new PublicCloudConnectorSolutionConfigurationStatus(InProgressValue);
-
         /// <summary> Canceled status. </summary>
         public static PublicCloudConnectorSolutionConfigurationStatus Completed { get; } = new PublicCloudConnectorSolutionConfigurationStatus(CompletedValue);
-
         /// <summary> Failed status. </summary>
         public static PublicCloudConnectorSolutionConfigurationStatus Failed { get; } = new PublicCloudConnectorSolutionConfigurationStatus(FailedValue);
-
         /// <summary> Determines if two <see cref="PublicCloudConnectorSolutionConfigurationStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PublicCloudConnectorSolutionConfigurationStatus left, PublicCloudConnectorSolutionConfigurationStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PublicCloudConnectorSolutionConfigurationStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PublicCloudConnectorSolutionConfigurationStatus left, PublicCloudConnectorSolutionConfigurationStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PublicCloudConnectorSolutionConfigurationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PublicCloudConnectorSolutionConfigurationStatus"/>. </summary>
         public static implicit operator PublicCloudConnectorSolutionConfigurationStatus(string value) => new PublicCloudConnectorSolutionConfigurationStatus(value);
 
-        /// <summary> Converts a string to a <see cref="PublicCloudConnectorSolutionConfigurationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PublicCloudConnectorSolutionConfigurationStatus?(string value) => value == null ? null : new PublicCloudConnectorSolutionConfigurationStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PublicCloudConnectorSolutionConfigurationStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PublicCloudConnectorSolutionConfigurationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

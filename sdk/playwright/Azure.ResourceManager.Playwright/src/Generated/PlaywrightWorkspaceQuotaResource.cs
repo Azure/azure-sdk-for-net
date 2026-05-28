@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Playwright
         {
             TryGetApiVersion(ResourceType, out string playwrightWorkspaceQuotaApiVersion);
             _playwrightWorkspaceQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", ResourceType.Namespace, Diagnostics);
-            _playwrightWorkspaceQuotasRestClient = new PlaywrightWorkspaceQuotas(_playwrightWorkspaceQuotasClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceQuotaApiVersion ?? "2026-02-01-preview");
+            _playwrightWorkspaceQuotasRestClient = new PlaywrightWorkspaceQuotas(_playwrightWorkspaceQuotasClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceQuotaApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -88,31 +88,11 @@ namespace Azure.ResourceManager.Playwright
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Gets a Playwright workspace quota resource by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PlaywrightWorkspaceQuotaResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a Playwright workspace quota resource by name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PlaywrightWorkspaceQuotaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -140,27 +120,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Gets a Playwright workspace quota resource by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}/quotas/{quotaName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaceQuotas_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PlaywrightWorkspaceQuotaResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a Playwright workspace quota resource by name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PlaywrightWorkspaceQuotaResource> Get(CancellationToken cancellationToken = default)
         {

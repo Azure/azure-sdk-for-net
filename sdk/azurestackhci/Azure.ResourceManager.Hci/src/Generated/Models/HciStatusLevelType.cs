@@ -7,70 +7,48 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The level code. Indicates the severity or importance of the status message. </summary>
+    /// <summary> The level code. </summary>
     public readonly partial struct HciStatusLevelType : IEquatable<HciStatusLevelType>
     {
         private readonly string _value;
-        /// <summary> Informational message indicating normal operation. </summary>
-        private const string InfoValue = "Info";
-        /// <summary> Warning message indicating a potential issue or non-critical problem. </summary>
-        private const string WarningValue = "Warning";
-        /// <summary> Error message indicating a failure or critical issue. </summary>
-        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="HciStatusLevelType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciStatusLevelType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Informational message indicating normal operation. </summary>
+        private const string InfoValue = "Info";
+        private const string WarningValue = "Warning";
+        private const string ErrorValue = "Error";
+
+        /// <summary> Info. </summary>
         public static HciStatusLevelType Info { get; } = new HciStatusLevelType(InfoValue);
-
-        /// <summary> Warning message indicating a potential issue or non-critical problem. </summary>
+        /// <summary> Warning. </summary>
         public static HciStatusLevelType Warning { get; } = new HciStatusLevelType(WarningValue);
-
-        /// <summary> Error message indicating a failure or critical issue. </summary>
+        /// <summary> Error. </summary>
         public static HciStatusLevelType Error { get; } = new HciStatusLevelType(ErrorValue);
-
         /// <summary> Determines if two <see cref="HciStatusLevelType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciStatusLevelType left, HciStatusLevelType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="HciStatusLevelType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciStatusLevelType left, HciStatusLevelType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="HciStatusLevelType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciStatusLevelType"/>. </summary>
         public static implicit operator HciStatusLevelType(string value) => new HciStatusLevelType(value);
 
-        /// <summary> Converts a string to a <see cref="HciStatusLevelType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HciStatusLevelType?(string value) => value == null ? null : new HciStatusLevelType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciStatusLevelType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(HciStatusLevelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -8,61 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Storage;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Settings for Azure Files identity based authentication. </summary>
-    public partial class FilesIdentityBasedAuthentication : IJsonModel<FilesIdentityBasedAuthentication>
+    public partial class FilesIdentityBasedAuthentication : IUtf8JsonSerializable, IJsonModel<FilesIdentityBasedAuthentication>
     {
-        /// <summary> Initializes a new instance of <see cref="FilesIdentityBasedAuthentication"/> for deserialization. </summary>
-        internal FilesIdentityBasedAuthentication()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilesIdentityBasedAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FilesIdentityBasedAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFilesIdentityBasedAuthentication(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FilesIdentityBasedAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FilesIdentityBasedAuthentication IPersistableModel<FilesIdentityBasedAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FilesIdentityBasedAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FilesIdentityBasedAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +29,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("directoryServiceOptions"u8);
             writer.WriteStringValue(DirectoryServiceOptions.ToString());
             if (Optional.IsDefined(ActiveDirectoryProperties))
@@ -96,15 +52,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("smbOAuthSettings"u8);
                 writer.WriteObjectValue(SmbOAuthSettings, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -113,27 +69,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FilesIdentityBasedAuthentication IJsonModel<FilesIdentityBasedAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FilesIdentityBasedAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FilesIdentityBasedAuthentication IJsonModel<FilesIdentityBasedAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFilesIdentityBasedAuthentication(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FilesIdentityBasedAuthentication DeserializeFilesIdentityBasedAuthentication(JsonElement element, ModelReaderWriterOptions options)
+        internal static FilesIdentityBasedAuthentication DeserializeFilesIdentityBasedAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -142,47 +93,157 @@ namespace Azure.ResourceManager.Storage.Models
             StorageActiveDirectoryProperties activeDirectoryProperties = default;
             DefaultSharePermission? defaultSharePermission = default;
             SmbOAuthSettings smbOAuthSettings = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("directoryServiceOptions"u8))
+                if (property.NameEquals("directoryServiceOptions"u8))
                 {
-                    directoryServiceOptions = new DirectoryServiceOption(prop.Value.GetString());
+                    directoryServiceOptions = new DirectoryServiceOption(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("activeDirectoryProperties"u8))
+                if (property.NameEquals("activeDirectoryProperties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    activeDirectoryProperties = StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(prop.Value, options);
+                    activeDirectoryProperties = StorageActiveDirectoryProperties.DeserializeStorageActiveDirectoryProperties(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("defaultSharePermission"u8))
+                if (property.NameEquals("defaultSharePermission"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    defaultSharePermission = new DefaultSharePermission(prop.Value.GetString());
+                    defaultSharePermission = new DefaultSharePermission(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("smbOAuthSettings"u8))
+                if (property.NameEquals("smbOAuthSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    smbOAuthSettings = SmbOAuthSettings.DeserializeSmbOAuthSettings(prop.Value, options);
+                    smbOAuthSettings = SmbOAuthSettings.DeserializeSmbOAuthSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties, defaultSharePermission, smbOAuthSettings, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FilesIdentityBasedAuthentication(directoryServiceOptions, activeDirectoryProperties, defaultSharePermission, smbOAuthSettings, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DirectoryServiceOptions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  directoryServiceOptions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  directoryServiceOptions: ");
+                builder.AppendLine($"'{DirectoryServiceOptions.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveDirectoryProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  activeDirectoryProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActiveDirectoryProperties))
+                {
+                    builder.Append("  activeDirectoryProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ActiveDirectoryProperties, options, 2, false, "  activeDirectoryProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSharePermission), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultSharePermission: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultSharePermission))
+                {
+                    builder.Append("  defaultSharePermission: ");
+                    builder.AppendLine($"'{DefaultSharePermission.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsSmbOAuthEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  smbOAuthSettings: ");
+                builder.AppendLine("{");
+                builder.Append("    isSmbOAuthEnabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SmbOAuthSettings))
+                {
+                    builder.Append("  smbOAuthSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SmbOAuthSettings, options, 2, false, "  smbOAuthSettings: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<FilesIdentityBasedAuthentication>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FilesIdentityBasedAuthentication IPersistableModel<FilesIdentityBasedAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeFilesIdentityBasedAuthentication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FilesIdentityBasedAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

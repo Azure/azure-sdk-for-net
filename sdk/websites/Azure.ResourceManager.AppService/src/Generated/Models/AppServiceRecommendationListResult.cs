@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of recommendations.
-    /// Serialized Name: RecommendationCollection
-    /// </summary>
+    /// <summary> Collection of recommendations. </summary>
     internal partial class AppServiceRecommendationListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceRecommendationListResult"/>. </summary>
-        /// <param name="value">
-        /// The Recommendation items on this page
-        /// Serialized Name: RecommendationCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppServiceRecommendationListResult(IEnumerable<AppServiceRecommendation> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceRecommendationListResult"/>. </summary>
-        /// <param name="value">
-        /// The Recommendation items on this page
-        /// Serialized Name: RecommendationCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: RecommendationCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceRecommendationListResult(IReadOnlyList<AppServiceRecommendation> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppServiceRecommendationListResult(IReadOnlyList<AppServiceRecommendation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The Recommendation items on this page
-        /// Serialized Name: RecommendationCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<AppServiceRecommendation> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: RecommendationCollection.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

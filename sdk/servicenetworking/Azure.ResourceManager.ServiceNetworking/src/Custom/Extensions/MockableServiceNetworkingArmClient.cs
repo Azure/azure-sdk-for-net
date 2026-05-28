@@ -3,8 +3,8 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
+using System;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Mocking

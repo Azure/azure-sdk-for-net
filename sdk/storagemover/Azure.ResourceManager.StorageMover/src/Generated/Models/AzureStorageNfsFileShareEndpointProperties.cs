@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -19,32 +18,37 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
         /// <param name="fileShareName"> The name of the Azure Storage NFS file share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountResourceId"/> or <paramref name="fileShareName"/> is null. </exception>
-        public AzureStorageNfsFileShareEndpointProperties(ResourceIdentifier storageAccountResourceId, string fileShareName) : base(EndpointType.AzureStorageNfsFileShare)
+        public AzureStorageNfsFileShareEndpointProperties(ResourceIdentifier storageAccountResourceId, string fileShareName)
         {
             Argument.AssertNotNull(storageAccountResourceId, nameof(storageAccountResourceId));
             Argument.AssertNotNull(fileShareName, nameof(fileShareName));
 
             StorageAccountResourceId = storageAccountResourceId;
             FileShareName = fileShareName;
+            EndpointType = EndpointType.AzureStorageNfsFileShare;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureStorageNfsFileShareEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="endpointKind"> The Endpoint resource kind source or target. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountResourceId"> The Azure Resource ID of the storage account. </param>
         /// <param name="fileShareName"> The name of the Azure Storage NFS file share. </param>
-        internal AzureStorageNfsFileShareEndpointProperties(EndpointType endpointType, string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier storageAccountResourceId, string fileShareName) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
+        internal AzureStorageNfsFileShareEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier storageAccountResourceId, string fileShareName) : base(endpointType, description, provisioningState, serializedAdditionalRawData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             FileShareName = fileShareName;
+            EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureStorageNfsFileShareEndpointProperties"/> for deserialization. </summary>
+        internal AzureStorageNfsFileShareEndpointProperties()
+        {
         }
 
         /// <summary> The Azure Resource ID of the storage account. </summary>
         public ResourceIdentifier StorageAccountResourceId { get; set; }
-
         /// <summary> The name of the Azure Storage NFS file share. </summary>
         public string FileShareName { get; set; }
     }

@@ -14,14 +14,47 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     /// <summary> The restrictions of the SKU. </summary>
     public partial class ResourceSkuRestrictions
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictions"/>. </summary>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="values"/> or <paramref name="restrictionInfo"/> is null. </exception>
         internal ResourceSkuRestrictions(IEnumerable<string> values, ResourceSkuRestrictionInfo restrictionInfo)
         {
+            Argument.AssertNotNull(values, nameof(values));
+            Argument.AssertNotNull(restrictionInfo, nameof(restrictionInfo));
+
             Values = values.ToList();
             RestrictionInfo = restrictionInfo;
         }
@@ -31,25 +64,27 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> the reason for restriction. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType, IList<string> values, ResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceSkuRestrictions(ResourceSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, ResourceSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RestrictionsType = restrictionsType;
             Values = values;
             RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictions"/> for deserialization. </summary>
+        internal ResourceSkuRestrictions()
+        {
         }
 
         /// <summary> the type of restrictions. </summary>
         public ResourceSkuRestrictionsType? RestrictionsType { get; }
-
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
-        public IList<string> Values { get; }
-
+        public IReadOnlyList<string> Values { get; }
         /// <summary> The information about the restriction where the SKU cannot be used. </summary>
         public ResourceSkuRestrictionInfo RestrictionInfo { get; }
-
         /// <summary> the reason for restriction. </summary>
         public ResourceSkuRestrictionsReasonCode? ReasonCode { get; }
     }

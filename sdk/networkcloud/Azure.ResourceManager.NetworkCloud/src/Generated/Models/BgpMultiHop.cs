@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BgpMultiHop : IEquatable<BgpMultiHop>
     {
         private readonly string _value;
-        /// <summary> Enable multi-hop peering support. </summary>
-        private const string TrueValue = "True";
-        /// <summary> Disable multi-hop peering support. </summary>
-        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="BgpMultiHop"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BgpMultiHop(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Enable multi-hop peering support. </summary>
+        private const string TrueValue = "True";
+        private const string FalseValue = "False";
+
+        /// <summary> True. </summary>
         public static BgpMultiHop True { get; } = new BgpMultiHop(TrueValue);
-
-        /// <summary> Disable multi-hop peering support. </summary>
+        /// <summary> False. </summary>
         public static BgpMultiHop False { get; } = new BgpMultiHop(FalseValue);
-
         /// <summary> Determines if two <see cref="BgpMultiHop"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BgpMultiHop left, BgpMultiHop right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BgpMultiHop"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BgpMultiHop left, BgpMultiHop right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BgpMultiHop"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BgpMultiHop"/>. </summary>
         public static implicit operator BgpMultiHop(string value) => new BgpMultiHop(value);
 
-        /// <summary> Converts a string to a <see cref="BgpMultiHop"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BgpMultiHop?(string value) => value == null ? null : new BgpMultiHop(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BgpMultiHop other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BgpMultiHop other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

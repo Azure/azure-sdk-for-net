@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.BotService
 {
-    /// <summary></summary>
     public partial class BotServicePrivateEndpointConnectionResource : IJsonModel<BotServicePrivateEndpointConnectionData>
     {
-        private static IJsonModel<BotServicePrivateEndpointConnectionData> s_dataDeserializationInstance;
+        private static BotServicePrivateEndpointConnectionData s_dataDeserializationInstance;
+        private static BotServicePrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<BotServicePrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BotServicePrivateEndpointConnectionData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BotServicePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BotServicePrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BotServicePrivateEndpointConnectionData IJsonModel<BotServicePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        BotServicePrivateEndpointConnectionData IJsonModel<BotServicePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BotServicePrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BotServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BotServicePrivateEndpointConnectionData>(Data, options, AzureResourceManagerBotServiceContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         BotServicePrivateEndpointConnectionData IPersistableModel<BotServicePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BotServicePrivateEndpointConnectionData>(data, options, AzureResourceManagerBotServiceContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BotServicePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<BotServicePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BotServicePrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -14,36 +14,41 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class RegistryEndpointSystemAssignedIdentityAuthentication : RegistryEndpointAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>. </summary>
-        public RegistryEndpointSystemAssignedIdentityAuthentication() : base(RegistryEndpointAuthenticationMethod.SystemAssignedManagedIdentity)
+        /// <param name="systemAssignedManagedIdentitySettings"> System assigned managed identity properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="systemAssignedManagedIdentitySettings"/> is null. </exception>
+        public RegistryEndpointSystemAssignedIdentityAuthentication(RegistryEndpointSystemAssignedManagedIdentitySettings systemAssignedManagedIdentitySettings)
         {
+            Argument.AssertNotNull(systemAssignedManagedIdentitySettings, nameof(systemAssignedManagedIdentitySettings));
 
+            SystemAssignedManagedIdentitySettings = systemAssignedManagedIdentitySettings;
+            Method = RegistryEndpointAuthenticationMethod.SystemAssignedManagedIdentity;
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="systemAssignedManagedIdentitySettings"> System assigned managed identity properties. </param>
-        internal RegistryEndpointSystemAssignedIdentityAuthentication(RegistryEndpointAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegistryEndpointSystemAssignedManagedIdentitySettings systemAssignedManagedIdentitySettings) : base(@method, additionalBinaryDataProperties)
+        internal RegistryEndpointSystemAssignedIdentityAuthentication(RegistryEndpointAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData, RegistryEndpointSystemAssignedManagedIdentitySettings systemAssignedManagedIdentitySettings) : base(method, serializedAdditionalRawData)
         {
             SystemAssignedManagedIdentitySettings = systemAssignedManagedIdentitySettings;
+            Method = method;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/> for deserialization. </summary>
+        internal RegistryEndpointSystemAssignedIdentityAuthentication()
+        {
         }
 
         /// <summary> System assigned managed identity properties. </summary>
         internal RegistryEndpointSystemAssignedManagedIdentitySettings SystemAssignedManagedIdentitySettings { get; set; }
-
         /// <summary> Audience of the service to authenticate against. Optional; defaults to the audience for Service host configuration. </summary>
         public string SystemAssignedManagedIdentityAudience
         {
-            get
-            {
-                return SystemAssignedManagedIdentitySettings is null ? default : SystemAssignedManagedIdentitySettings.Audience;
-            }
+            get => SystemAssignedManagedIdentitySettings is null ? default : SystemAssignedManagedIdentitySettings.Audience;
             set
             {
                 if (SystemAssignedManagedIdentitySettings is null)
-                {
                     SystemAssignedManagedIdentitySettings = new RegistryEndpointSystemAssignedManagedIdentitySettings();
-                }
                 SystemAssignedManagedIdentitySettings.Audience = value;
             }
         }

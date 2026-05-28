@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ComputeFleet;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> Describes a virtual machine scale set data disk. </summary>
-    public partial class ComputeFleetVmssDataDisk : IJsonModel<ComputeFleetVmssDataDisk>
+    public partial class ComputeFleetVmssDataDisk : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmssDataDisk>
     {
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssDataDisk"/> for deserialization. </summary>
-        internal ComputeFleetVmssDataDisk()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmssDataDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVmssDataDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeComputeFleetVmssDataDisk(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmssDataDisk)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmssDataDisk)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeFleetVmssDataDisk>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVmssDataDisk IPersistableModel<ComputeFleetVmssDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeFleetVmssDataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetVmssDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssDataDisk)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -123,15 +78,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -140,27 +95,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVmssDataDisk IJsonModel<ComputeFleetVmssDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVmssDataDisk JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeFleetVmssDataDisk IJsonModel<ComputeFleetVmssDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssDataDisk)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeFleetVmssDataDisk(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeFleetVmssDataDisk DeserializeComputeFleetVmssDataDisk(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeFleetVmssDataDisk DeserializeComputeFleetVmssDataDisk(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -168,111 +118,144 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             string name = default;
             int lun = default;
             ComputeFleetCachingType? caching = default;
-            bool? isWriteAcceleratorEnabled = default;
+            bool? writeAcceleratorEnabled = default;
             ComputeFleetDiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
             ComputeFleetVmssManagedDisk managedDisk = default;
-            long? diskIopsReadWrite = default;
-            long? diskMbpsReadWrite = default;
+            long? diskIOPSReadWrite = default;
+            long? diskMBpsReadWrite = default;
             ComputeFleetDiskDeleteOptionType? deleteOption = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lun"u8))
+                if (property.NameEquals("lun"u8))
                 {
-                    lun = prop.Value.GetInt32();
+                    lun = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("caching"u8))
+                if (property.NameEquals("caching"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    caching = new ComputeFleetCachingType(prop.Value.GetString());
+                    caching = new ComputeFleetCachingType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("writeAcceleratorEnabled"u8))
+                if (property.NameEquals("writeAcceleratorEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isWriteAcceleratorEnabled = prop.Value.GetBoolean();
+                    writeAcceleratorEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("createOption"u8))
+                if (property.NameEquals("createOption"u8))
                 {
-                    createOption = new ComputeFleetDiskCreateOptionType(prop.Value.GetString());
+                    createOption = new ComputeFleetDiskCreateOptionType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("diskSizeGB"u8))
+                if (property.NameEquals("diskSizeGB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskSizeGB = prop.Value.GetInt32();
+                    diskSizeGB = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("managedDisk"u8))
+                if (property.NameEquals("managedDisk"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    managedDisk = ComputeFleetVmssManagedDisk.DeserializeComputeFleetVmssManagedDisk(prop.Value, options);
+                    managedDisk = ComputeFleetVmssManagedDisk.DeserializeComputeFleetVmssManagedDisk(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("diskIOPSReadWrite"u8))
+                if (property.NameEquals("diskIOPSReadWrite"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskIopsReadWrite = prop.Value.GetInt64();
+                    diskIOPSReadWrite = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("diskMBpsReadWrite"u8))
+                if (property.NameEquals("diskMBpsReadWrite"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskMbpsReadWrite = prop.Value.GetInt64();
+                    diskMBpsReadWrite = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("deleteOption"u8))
+                if (property.NameEquals("deleteOption"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deleteOption = new ComputeFleetDiskDeleteOptionType(prop.Value.GetString());
+                    deleteOption = new ComputeFleetDiskDeleteOptionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeFleetVmssDataDisk(
                 name,
                 lun,
                 caching,
-                isWriteAcceleratorEnabled,
+                writeAcceleratorEnabled,
                 createOption,
                 diskSizeGB,
                 managedDisk,
-                diskIopsReadWrite,
-                diskMbpsReadWrite,
+                diskIOPSReadWrite,
+                diskMBpsReadWrite,
                 deleteOption,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ComputeFleetVmssDataDisk>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetVmssDataDisk)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ComputeFleetVmssDataDisk IPersistableModel<ComputeFleetVmssDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeComputeFleetVmssDataDisk(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetVmssDataDisk)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComputeFleetVmssDataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

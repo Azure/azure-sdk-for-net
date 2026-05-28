@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedCache
@@ -22,53 +21,55 @@ namespace Azure.ResourceManager.ConnectedCache
     /// <summary>
     /// A class representing a collection of <see cref="EnterpriseMccCustomerResource"/> and their operations.
     /// Each <see cref="EnterpriseMccCustomerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="EnterpriseMccCustomerCollection"/> instance call the GetEnterpriseMccCustomers method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="EnterpriseMccCustomerCollection"/> instance call the GetEnterpriseMccCustomers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class EnterpriseMccCustomerCollection : ArmCollection, IEnumerable<EnterpriseMccCustomerResource>, IAsyncEnumerable<EnterpriseMccCustomerResource>
     {
-        private readonly ClientDiagnostics _enterpriseMccCustomersClientDiagnostics;
-        private readonly EnterpriseMccCustomers _enterpriseMccCustomersRestClient;
+        private readonly ClientDiagnostics _enterpriseMccCustomerClientDiagnostics;
+        private readonly EnterpriseMccCustomersRestOperations _enterpriseMccCustomerRestClient;
 
-        /// <summary> Initializes a new instance of EnterpriseMccCustomerCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EnterpriseMccCustomerCollection"/> class for mocking. </summary>
         protected EnterpriseMccCustomerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnterpriseMccCustomerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EnterpriseMccCustomerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EnterpriseMccCustomerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _enterpriseMccCustomerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EnterpriseMccCustomerResource.ResourceType, out string enterpriseMccCustomerApiVersion);
-            _enterpriseMccCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
-            _enterpriseMccCustomersRestClient = new EnterpriseMccCustomers(_enterpriseMccCustomersClientDiagnostics, Pipeline, Endpoint, enterpriseMccCustomerApiVersion ?? "2024-11-30-preview");
-            ValidateResourceId(id);
+            _enterpriseMccCustomerRestClient = new EnterpriseMccCustomersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, enterpriseMccCustomerApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// This api creates an enterprise mcc customer with the specified create parameters
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EnterpriseMccCustomerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customerResourceName, EnterpriseMccCustomerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _enterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.CreateOrUpdate");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enterpriseMccCustomersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, EnterpriseMccCustomerData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ConnectedCacheArmOperation<EnterpriseMccCustomerResource> operation = new ConnectedCacheArmOperation<EnterpriseMccCustomerResource>(
-                    new EnterpriseMccCustomerOperationSource(Client),
-                    _enterpriseMccCustomersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _enterpriseMccCustomerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ConnectedCacheArmOperation<EnterpriseMccCustomerResource>(new EnterpriseMccCustomerOperationSource(Client), _enterpriseMccCustomerClientDiagnostics, Pipeline, _enterpriseMccCustomerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api creates an enterprise mcc customer with the specified create parameters
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EnterpriseMccCustomerResource> CreateOrUpdate(WaitUntil waitUntil, string customerResourceName, EnterpriseMccCustomerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _enterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.CreateOrUpdate");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enterpriseMccCustomersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, EnterpriseMccCustomerData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ConnectedCacheArmOperation<EnterpriseMccCustomerResource> operation = new ConnectedCacheArmOperation<EnterpriseMccCustomerResource>(
-                    new EnterpriseMccCustomerOperationSource(Client),
-                    _enterpriseMccCustomersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _enterpriseMccCustomerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, data, cancellationToken);
+                var operation = new ConnectedCacheArmOperation<EnterpriseMccCustomerResource>(new EnterpriseMccCustomerOperationSource(Client), _enterpriseMccCustomerClientDiagnostics, Pipeline, _enterpriseMccCustomerRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.ConnectedCache
         /// Gets the enterprise mcc customer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         public virtual async Task<Response<EnterpriseMccCustomerResource>> GetAsync(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using DiagnosticScope scope = _enterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.Get");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enterpriseMccCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EnterpriseMccCustomerData> response = Response.FromValue(EnterpriseMccCustomerData.FromResponse(result), result);
+                var response = await _enterpriseMccCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new EnterpriseMccCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.ConnectedCache
         /// Gets the enterprise mcc customer resource information using this get call
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         public virtual Response<EnterpriseMccCustomerResource> Get(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using DiagnosticScope scope = _enterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.Get");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enterpriseMccCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<EnterpriseMccCustomerData> response = Response.FromValue(EnterpriseMccCustomerData.FromResponse(result), result);
+                var response = _enterpriseMccCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new EnterpriseMccCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.ConnectedCache
         /// This api gets the information about all enterprise mcc customer resources under the given subscription and resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnterpriseMccCustomerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EnterpriseMccCustomerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EnterpriseMccCustomerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetByResourceGroupAsyncCollectionResultOfT(_enterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EnterpriseMccCustomerCollection.GetAll"), data => new EnterpriseMccCustomerResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _enterpriseMccCustomerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _enterpriseMccCustomerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnterpriseMccCustomerResource(Client, EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(e)), _enterpriseMccCustomerClientDiagnostics, Pipeline, "EnterpriseMccCustomerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// This api gets the information about all enterprise mcc customer resources under the given subscription and resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.ConnectedCache
         /// <returns> A collection of <see cref="EnterpriseMccCustomerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EnterpriseMccCustomerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetByResourceGroupCollectionResultOfT(_enterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EnterpriseMccCustomerCollection.GetAll"), data => new EnterpriseMccCustomerResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _enterpriseMccCustomerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _enterpriseMccCustomerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnterpriseMccCustomerResource(Client, EnterpriseMccCustomerData.DeserializeEnterpriseMccCustomerData(e)), _enterpriseMccCustomerClientDiagnostics, Pipeline, "EnterpriseMccCustomerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using DiagnosticScope scope = _enterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.Exists");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enterpriseMccCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<EnterpriseMccCustomerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EnterpriseMccCustomerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EnterpriseMccCustomerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _enterpriseMccCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.ConnectedCache
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using DiagnosticScope scope = _enterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.Exists");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enterpriseMccCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<EnterpriseMccCustomerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EnterpriseMccCustomerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EnterpriseMccCustomerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _enterpriseMccCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.ConnectedCache
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<EnterpriseMccCustomerResource>> GetIfExistsAsync(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using DiagnosticScope scope = _enterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.GetIfExists");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enterpriseMccCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<EnterpriseMccCustomerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EnterpriseMccCustomerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EnterpriseMccCustomerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _enterpriseMccCustomerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<EnterpriseMccCustomerResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new EnterpriseMccCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.ConnectedCache
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedCache/enterpriseMccCustomers/{customerResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnterpriseMccCustomers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnterpriseMccCustomerResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnterpriseMccCustomerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="customerResourceName"> Name of the Customer resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customerResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customerResourceName"/> is null. </exception>
         public virtual NullableResponse<EnterpriseMccCustomerResource> GetIfExists(string customerResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customerResourceName, nameof(customerResourceName));
 
-            using DiagnosticScope scope = _enterpriseMccCustomersClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.GetIfExists");
+            using var scope = _enterpriseMccCustomerClientDiagnostics.CreateScope("EnterpriseMccCustomerCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enterpriseMccCustomersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<EnterpriseMccCustomerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EnterpriseMccCustomerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EnterpriseMccCustomerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _enterpriseMccCustomerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customerResourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<EnterpriseMccCustomerResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new EnterpriseMccCustomerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.ConnectedCache
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EnterpriseMccCustomerResource> IAsyncEnumerable<EnterpriseMccCustomerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

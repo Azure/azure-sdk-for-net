@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public readonly partial struct ContainerGroupIdentityAccessLevel : IEquatable<ContainerGroupIdentityAccessLevel>
     {
         private readonly string _value;
-        /// <summary> All. </summary>
-        private const string AllValue = "All";
-        /// <summary> System. </summary>
-        private const string SystemValue = "System";
-        /// <summary> User. </summary>
-        private const string UserValue = "User";
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupIdentityAccessLevel"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerGroupIdentityAccessLevel(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string AllValue = "All";
+        private const string SystemValue = "System";
+        private const string UserValue = "User";
 
         /// <summary> All. </summary>
         public static ContainerGroupIdentityAccessLevel All { get; } = new ContainerGroupIdentityAccessLevel(AllValue);
-
         /// <summary> System. </summary>
         public static ContainerGroupIdentityAccessLevel System { get; } = new ContainerGroupIdentityAccessLevel(SystemValue);
-
         /// <summary> User. </summary>
         public static ContainerGroupIdentityAccessLevel User { get; } = new ContainerGroupIdentityAccessLevel(UserValue);
-
         /// <summary> Determines if two <see cref="ContainerGroupIdentityAccessLevel"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerGroupIdentityAccessLevel left, ContainerGroupIdentityAccessLevel right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerGroupIdentityAccessLevel"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerGroupIdentityAccessLevel left, ContainerGroupIdentityAccessLevel right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerGroupIdentityAccessLevel"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupIdentityAccessLevel"/>. </summary>
         public static implicit operator ContainerGroupIdentityAccessLevel(string value) => new ContainerGroupIdentityAccessLevel(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerGroupIdentityAccessLevel"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerGroupIdentityAccessLevel?(string value) => value == null ? null : new ContainerGroupIdentityAccessLevel(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerGroupIdentityAccessLevel other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerGroupIdentityAccessLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

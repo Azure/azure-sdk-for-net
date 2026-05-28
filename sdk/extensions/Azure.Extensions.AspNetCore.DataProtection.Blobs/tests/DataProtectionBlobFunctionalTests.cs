@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 {
-    public class DataProtectionBlobFunctionalTests : LiveTestBase<DataProtectionTestEnvironment>
+    public class DataProtectionBlobFunctionalTests: LiveTestBase<DataProtectionTestEnvironment>
     {
         [Test]
         public async Task PersistsKeysToAzureBlob()
@@ -32,7 +32,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
             var anotherDataProtector = anotherServices.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
             var unprotectedText = anotherDataProtector.Unprotect(protectedText);
 
-            Assert.That(unprotectedText, Is.EqualTo("Hello world!"));
+            Assert.AreEqual("Hello world!", unprotectedText);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
             var anotherDataProtector = anotherServices.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
             var unprotectedText = anotherDataProtector.Unprotect(protectedText);
 
-            Assert.That(unprotectedText, Is.EqualTo("Hello world!"));
+            Assert.AreEqual("Hello world!", unprotectedText);
         }
 
         [Test]
@@ -63,14 +63,14 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 
             var repository = new AzureBlobXmlRepository(blobClient);
             repository.StoreElement(new XElement("XmlElement"), null);
-            Assert.That(repository.GetAllElements().Count, Is.EqualTo(1));
+            Assert.AreEqual(1, repository.GetAllElements().Count);
 
             var repository2 = new AzureBlobXmlRepository(blobClient);
             // Store another element
             repository2.StoreElement(new XElement("XmlElement"), null);
 
-            Assert.That(repository2.GetAllElements().Count, Is.EqualTo(2));
-            Assert.That(repository.GetAllElements().Count, Is.EqualTo(2));
+            Assert.AreEqual(2, repository2.GetAllElements().Count);
+            Assert.AreEqual(2, repository.GetAllElements().Count);
         }
 
         private async Task<BlobClient> GetBlobClient(string name)

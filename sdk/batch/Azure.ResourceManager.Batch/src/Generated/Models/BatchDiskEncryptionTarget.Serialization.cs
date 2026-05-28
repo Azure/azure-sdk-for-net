@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchDiskEncryptionTargetExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchDiskEncryptionTarget value) => value switch
         {
             BatchDiskEncryptionTarget.OSDisk => "OsDisk",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchDiskEncryptionTarget value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static BatchDiskEncryptionTarget ToBatchDiskEncryptionTarget(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OsDisk"))
-            {
-                return BatchDiskEncryptionTarget.OSDisk;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TemporaryDisk"))
-            {
-                return BatchDiskEncryptionTarget.TemporaryDisk;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OsDisk")) return BatchDiskEncryptionTarget.OSDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TemporaryDisk")) return BatchDiskEncryptionTarget.TemporaryDisk;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchDiskEncryptionTarget value.");
         }
     }

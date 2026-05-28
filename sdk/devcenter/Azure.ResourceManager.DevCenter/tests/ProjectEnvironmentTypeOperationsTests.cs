@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DevCenter.Tests
             };
 
             data.UserRoleAssignments[TestEnvironment.TestUserOid] = new DevCenterUserRoleAssignments(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } }, null);
-            data.Roles["4cbf0b6c-e750-441c-98a7-10da8387e4d6"] = new DevCenterEnvironmentRole();
+            data.CreatorRoleAssignment = new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(new Dictionary<string, DevCenterEnvironmentRole> { { "4cbf0b6c-e750-441c-98a7-10da8387e4d6", new DevCenterEnvironmentRole() } }, null);
 
             DevCenterProjectEnvironmentResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, ProjectEnvironmentTypeName, data)).Value;
 
-            Assert.That(createdResource, Is.Not.Null);
-            Assert.That(createdResource.Data, Is.Not.Null);
+            Assert.NotNull(createdResource);
+            Assert.NotNull(createdResource.Data);
 
             // List ProjectEnvironmentTypes
             List<DevCenterProjectEnvironmentResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
             Response<DevCenterProjectEnvironmentResource> retrievedProjectEnvironmentType = await resourceCollection.GetAsync(ProjectEnvironmentTypeName);
-            Assert.That(retrievedProjectEnvironmentType.Value, Is.Not.Null);
-            Assert.That(retrievedProjectEnvironmentType.Value.Data, Is.Not.Null);
+            Assert.NotNull(retrievedProjectEnvironmentType.Value);
+            Assert.NotNull(retrievedProjectEnvironmentType.Value.Data);
 
             // Delete
             ArmOperation deleteOp = await retrievedProjectEnvironmentType.Value.DeleteAsync(WaitUntil.Completed);

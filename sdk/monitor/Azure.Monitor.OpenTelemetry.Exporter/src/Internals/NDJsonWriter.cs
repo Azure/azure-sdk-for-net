@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
+using System.IO;
 using System.Text.Json;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -11,40 +11,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private static readonly byte[] s_separator = { (byte)'\n' };
 
-        private readonly Azure.Core.ArrayBufferWriter<byte> _buffer = new();
-
         public NDJsonWriter()
         {
-            JsonWriter = new Utf8JsonWriter(_buffer, new JsonWriterOptions() { SkipValidation = true });
+            Stream = new MemoryStream();
+            JsonWriter = new Utf8JsonWriter(Stream, new JsonWriterOptions() { SkipValidation = true });
         }
 
+        private MemoryStream Stream { get; }
         public Utf8JsonWriter JsonWriter { get; }
 
         public void WriteNewLine()
         {
             JsonWriter.Flush();
             JsonWriter.Reset();
-            _buffer.Write(s_separator);
+            Stream.Write(s_separator, 0, 1);
         }
 
-        public ReadOnlyMemory<byte> ToBytes()
+        public Memory<byte> ToBytes()
         {
             JsonWriter.Flush();
-            return _buffer.WrittenMemory;
+            return Stream.ToArray();
         }
 
         public override string ToString()
         {
-#if NET8_0_OR_GREATER
-            return System.Text.Encoding.UTF8.GetString(_buffer.WrittenSpan);
-#else
-            return System.Text.Encoding.UTF8.GetString(_buffer.WrittenSpan.ToArray());
-#endif
+            Stream.Position = 0;
+            using var streamReader = new StreamReader(Stream);
+            return streamReader.ReadToEnd();
         }
 
         public void Dispose()
         {
-            JsonWriter.Dispose();
+            Stream?.Dispose();
+            JsonWriter?.Dispose();
         }
     }
 }

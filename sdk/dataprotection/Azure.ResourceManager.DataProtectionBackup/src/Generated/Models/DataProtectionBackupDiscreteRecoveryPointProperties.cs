@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -16,15 +15,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/>. </summary>
         /// <param name="recoverOn"></param>
-        public DataProtectionBackupDiscreteRecoveryPointProperties(DateTimeOffset recoverOn) : base("AzureBackupDiscreteRecoveryPoint")
+        public DataProtectionBackupDiscreteRecoveryPointProperties(DateTimeOffset recoverOn)
         {
             RecoveryPointDataStoresDetails = new ChangeTrackingList<RecoveryPointDataStoreDetail>();
             RecoverOn = recoverOn;
+            ObjectType = "AzureBackupDiscreteRecoveryPoint";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/>. </summary>
         /// <param name="objectType"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="friendlyName"></param>
         /// <param name="recoveryPointDataStoresDetails"></param>
         /// <param name="recoverOn"></param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="retentionTagVersion"></param>
         /// <param name="expireOn"></param>
         /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
-        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState) : base(objectType, additionalBinaryDataProperties)
+        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState) : base(objectType, serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             RecoveryPointDataStoresDetails = recoveryPointDataStoresDetails;
@@ -49,38 +49,34 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RetentionTagVersion = retentionTagVersion;
             ExpireOn = expireOn;
             RecoveryPointState = recoveryPointState;
+            ObjectType = objectType ?? "AzureBackupDiscreteRecoveryPoint";
         }
 
-        /// <summary> Gets or sets the FriendlyName. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/> for deserialization. </summary>
+        internal DataProtectionBackupDiscreteRecoveryPointProperties()
+        {
+        }
+
+        /// <summary> Gets or sets the friendly name. </summary>
         public string FriendlyName { get; set; }
-
-        /// <summary> Gets the RecoveryPointDataStoresDetails. </summary>
+        /// <summary> Gets the recovery point data stores details. </summary>
         public IList<RecoveryPointDataStoreDetail> RecoveryPointDataStoresDetails { get; }
-
-        /// <summary> Gets or sets the RecoverOn. </summary>
+        /// <summary> Gets or sets the recover on. </summary>
         public DateTimeOffset RecoverOn { get; set; }
-
-        /// <summary> Gets or sets the PolicyName. </summary>
+        /// <summary> Gets or sets the policy name. </summary>
         public string PolicyName { get; set; }
-
-        /// <summary> Gets or sets the PolicyVersion. </summary>
+        /// <summary> Gets or sets the policy version. </summary>
         public string PolicyVersion { get; set; }
-
-        /// <summary> Gets or sets the RecoveryPointId. </summary>
+        /// <summary> Gets or sets the recovery point id. </summary>
         public string RecoveryPointId { get; set; }
-
-        /// <summary> Gets or sets the RecoveryPointType. </summary>
+        /// <summary> Gets or sets the recovery point type. </summary>
         public string RecoveryPointType { get; set; }
-
-        /// <summary> Gets or sets the RetentionTagName. </summary>
+        /// <summary> Gets or sets the retention tag name. </summary>
         public string RetentionTagName { get; set; }
-
-        /// <summary> Gets or sets the RetentionTagVersion. </summary>
+        /// <summary> Gets or sets the retention tag version. </summary>
         public string RetentionTagVersion { get; set; }
-
-        /// <summary> Gets the ExpireOn. </summary>
+        /// <summary> Gets the expire on. </summary>
         public DateTimeOffset? ExpireOn { get; }
-
         /// <summary> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </summary>
         public DataProtectionBackupRecoveryPointCompletionState? RecoveryPointState { get; set; }
     }

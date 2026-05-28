@@ -58,8 +58,7 @@ internal class BicepWriter
         {
             foreach (T value in values)
             {
-                if (!first && separate != null)
-                { writer = separate(writer); }
+                if (!first && separate != null) { writer = separate(writer); }
                 first = false;
 
                 writer = append(writer, value);

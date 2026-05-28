@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         internal ContainerGroupInstanceCountSummary(IReadOnlyList<PoolResourceStateCount> instanceCountsByState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceCountsByState = instanceCountsByState;
-            _additionalBinaryDataProperties = serializedAdditionalRawData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The count of pooled resources in each state. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> Details of the resource. </summary>
     public partial class ConsumptionResourceProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionResourceProperties"/>. </summary>
         internal ConsumptionResourceProperties()
@@ -25,13 +53,13 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionResourceProperties"/>. </summary>
         /// <param name="appliedScopes"> List of subscriptions for which the reservation is applied. </param>
-        /// <param name="onDemandRate"> On-demand rate of the resource. Most resources use hourly rates, except for BlockBlob, ManagedDisk, Backup, and Azure Files, which use monthly rates. Only hardware rates are included; software rates are excluded.  Note: there could be new resources that use hourly rates in the future. </param>
+        /// <param name="onDemandRate"> On demand rate of the resource. </param>
         /// <param name="product"> Azure product ex: Standard_E8s_v3 etc. </param>
         /// <param name="region"> Azure resource region ex:EastUS, WestUS etc. </param>
-        /// <param name="reservationRate"> Hourly reservation rate of the resource. Varies based on the term. </param>
+        /// <param name="reservationRate"> Reservation rate of the resource. </param>
         /// <param name="resourceType"> The azure resource type. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConsumptionResourceProperties(IReadOnlyList<string> appliedScopes, float? onDemandRate, string product, string region, float? reservationRate, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionResourceProperties(IReadOnlyList<string> appliedScopes, float? onDemandRate, string product, string region, float? reservationRate, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppliedScopes = appliedScopes;
             OnDemandRate = onDemandRate;
@@ -39,24 +67,19 @@ namespace Azure.ResourceManager.Consumption.Models
             Region = region;
             ReservationRate = reservationRate;
             ResourceType = resourceType;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of subscriptions for which the reservation is applied. </summary>
         public IReadOnlyList<string> AppliedScopes { get; }
-
-        /// <summary> On-demand rate of the resource. Most resources use hourly rates, except for BlockBlob, ManagedDisk, Backup, and Azure Files, which use monthly rates. Only hardware rates are included; software rates are excluded.  Note: there could be new resources that use hourly rates in the future. </summary>
+        /// <summary> On demand rate of the resource. </summary>
         public float? OnDemandRate { get; }
-
         /// <summary> Azure product ex: Standard_E8s_v3 etc. </summary>
         public string Product { get; }
-
         /// <summary> Azure resource region ex:EastUS, WestUS etc. </summary>
         public string Region { get; }
-
-        /// <summary> Hourly reservation rate of the resource. Varies based on the term. </summary>
+        /// <summary> Reservation rate of the resource. </summary>
         public float? ReservationRate { get; }
-
         /// <summary> The azure resource type. </summary>
         public string ResourceType { get; }
     }

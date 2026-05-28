@@ -10,65 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> The Data Box Edge/Gateway device extended info patch. </summary>
-    public partial class DataBoxEdgeDeviceExtendedInfoPatch : IJsonModel<DataBoxEdgeDeviceExtendedInfoPatch>
+    public partial class DataBoxEdgeDeviceExtendedInfoPatch : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeDeviceExtendedInfoPatch>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataBoxEdgeDeviceExtendedInfoPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataBoxEdgeDeviceExtendedInfoPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeDeviceExtendedInfoPatch IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="dataBoxEdgeDeviceExtendedInfoPatch"> The <see cref="DataBoxEdgeDeviceExtendedInfoPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DataBoxEdgeDeviceExtendedInfoPatch dataBoxEdgeDeviceExtendedInfoPatch)
-        {
-            if (dataBoxEdgeDeviceExtendedInfoPatch == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(dataBoxEdgeDeviceExtendedInfoPatch, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeDeviceExtendedInfoPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -80,11 +28,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ClientSecretStoreId))
             {
                 writer.WritePropertyName("clientSecretStoreId"u8);
@@ -110,15 +59,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("syncStatus"u8);
                 writer.WriteStringValue(SyncStatus.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -127,88 +76,116 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeDeviceExtendedInfoPatch IJsonModel<DataBoxEdgeDeviceExtendedInfoPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataBoxEdgeDeviceExtendedInfoPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataBoxEdgeDeviceExtendedInfoPatch IJsonModel<DataBoxEdgeDeviceExtendedInfoPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxEdgeDeviceExtendedInfoPatch(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataBoxEdgeDeviceExtendedInfoPatch DeserializeDataBoxEdgeDeviceExtendedInfoPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataBoxEdgeDeviceExtendedInfoPatch DeserializeDataBoxEdgeDeviceExtendedInfoPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier clientSecretStoreId = default;
-            Uri clientSecretStoreUri = default;
+            Uri clientSecretStoreUrl = default;
             string channelIntegrityKeyName = default;
             string channelIntegrityKeyVersion = default;
             EdgeKeyVaultSyncStatus? syncStatus = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("clientSecretStoreId"u8))
+                if (property.NameEquals("clientSecretStoreId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clientSecretStoreId = new ResourceIdentifier(prop.Value.GetString());
+                    clientSecretStoreId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("clientSecretStoreUrl"u8))
+                if (property.NameEquals("clientSecretStoreUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clientSecretStoreUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    clientSecretStoreUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("channelIntegrityKeyName"u8))
+                if (property.NameEquals("channelIntegrityKeyName"u8))
                 {
-                    channelIntegrityKeyName = prop.Value.GetString();
+                    channelIntegrityKeyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("channelIntegrityKeyVersion"u8))
+                if (property.NameEquals("channelIntegrityKeyVersion"u8))
                 {
-                    channelIntegrityKeyVersion = prop.Value.GetString();
+                    channelIntegrityKeyVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("syncStatus"u8))
+                if (property.NameEquals("syncStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    syncStatus = new EdgeKeyVaultSyncStatus(prop.Value.GetString());
+                    syncStatus = new EdgeKeyVaultSyncStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeDeviceExtendedInfoPatch(
                 clientSecretStoreId,
-                clientSecretStoreUri,
+                clientSecretStoreUrl,
                 channelIntegrityKeyName,
                 channelIntegrityKeyVersion,
                 syncStatus,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeDeviceExtendedInfoPatch IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataBoxEdgeDeviceExtendedInfoPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.Marketplace.Models
     public readonly partial struct PrivateStoreOperation : IEquatable<PrivateStoreOperation>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreOperation"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PrivateStoreOperation(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string DeletePrivateStoreOfferValue = "DeletePrivateStoreOffer";
         private const string DeletePrivateStoreCollectionValue = "DeletePrivateStoreCollection";
         private const string DeletePrivateStoreCollectionOfferValue = "DeletePrivateStoreCollectionOffer";
         private const string PingValue = "Ping";
 
-        /// <summary> Initializes a new instance of <see cref="PrivateStoreOperation"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PrivateStoreOperation(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the DeletePrivateStoreOffer. </summary>
+        /// <summary> DeletePrivateStoreOffer. </summary>
         public static PrivateStoreOperation DeletePrivateStoreOffer { get; } = new PrivateStoreOperation(DeletePrivateStoreOfferValue);
-
-        /// <summary> Gets the DeletePrivateStoreCollection. </summary>
+        /// <summary> DeletePrivateStoreCollection. </summary>
         public static PrivateStoreOperation DeletePrivateStoreCollection { get; } = new PrivateStoreOperation(DeletePrivateStoreCollectionValue);
-
-        /// <summary> Gets the DeletePrivateStoreCollectionOffer. </summary>
+        /// <summary> DeletePrivateStoreCollectionOffer. </summary>
         public static PrivateStoreOperation DeletePrivateStoreCollectionOffer { get; } = new PrivateStoreOperation(DeletePrivateStoreCollectionOfferValue);
-
-        /// <summary> Gets the Ping. </summary>
+        /// <summary> Ping. </summary>
         public static PrivateStoreOperation Ping { get; } = new PrivateStoreOperation(PingValue);
-
         /// <summary> Determines if two <see cref="PrivateStoreOperation"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrivateStoreOperation left, PrivateStoreOperation right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PrivateStoreOperation"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrivateStoreOperation left, PrivateStoreOperation right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PrivateStoreOperation"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateStoreOperation"/>. </summary>
         public static implicit operator PrivateStoreOperation(string value) => new PrivateStoreOperation(value);
 
-        /// <summary> Converts a string to a <see cref="PrivateStoreOperation"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PrivateStoreOperation?(string value) => value == null ? null : new PrivateStoreOperation(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrivateStoreOperation other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PrivateStoreOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

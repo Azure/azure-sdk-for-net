@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
@@ -28,11 +27,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// we will order them by the offset (i.e. {offset, block_id}).
         /// </summary>
         private ConcurrentDictionary<long, string> _blocks;
-        private Uri _uri;
 
         protected override string ResourceId => DataMovementBlobConstants.ResourceId.BlockBlob;
 
-        public override Uri Uri => _uri ??= BlobClient.Uri.BuildSanitizedUri();
+        public override Uri Uri => BlobClient.Uri;
 
         public override string ProviderId => "blob";
 
@@ -65,16 +63,9 @@ namespace Azure.Storage.DataMovement.Blobs
             BlockBlobClient blobClient,
             BlockBlobStorageResourceOptions options = default)
         {
+            BlobClient = blobClient;
             _blocks = new ConcurrentDictionary<long, string>();
             _options = options;
-
-            blobClient = blobClient.ValidateAndApplySnapshotAndVersionId(
-                blobClient.Uri,
-                _options,
-                (c, s) => c.WithSnapshot(s),
-                (c, v) => c.WithVersion(v));
-
-            BlobClient = blobClient;
         }
 
         /// <summary>
@@ -212,7 +203,7 @@ namespace Azure.Storage.DataMovement.Blobs
             // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
             // TODO: subject to change as we scale to support resource types outside of blobs.
             await BlobClient.SyncUploadFromUriAsync(
-                options?.SourceUri,
+                sourceResource.Uri,
                 DataMovementBlobsExtensions.GetSyncUploadFromUriOptions(
                     _options,
                     overwrite,
@@ -255,7 +246,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
             }
             await BlobClient.StageBlockFromUriAsync(
-                options?.SourceUri,
+                sourceResource.Uri,
                 id,
                 options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -304,17 +295,6 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
             return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the SAS URI for the storage resource if available.
-        /// </summary>
-        /// <returns>
-        /// Gets the SAS URI for the storage resource if available. If not available will return default.
-        /// </returns>
-        protected override Uri GetSasWithUri()
-        {
-            return BlobBaseClientInternals.GetSasUri(BlobClient);
         }
 
         /// <summary>
@@ -370,8 +350,6 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            // Snapshot and versionId are preserved in the URI (from BuildSanitizedUri)
-            // No need to store them separately in checkpoint details
             return new BlobSourceCheckpointDetails();
         }
 

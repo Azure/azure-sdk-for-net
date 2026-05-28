@@ -6,13 +6,12 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActionParametersContent))]
     [ModelReaderWriterBuildable(typeof(AlexaInfo))]
@@ -46,7 +45,6 @@ namespace Azure.Analytics.Defender.Easm
     [ModelReaderWriterBuildable(typeof(DataConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(DeltaDateResult))]
     [ModelReaderWriterBuildable(typeof(DeltaDetailsRequestContent))]
-    [ModelReaderWriterBuildable(typeof(DeltaPageResult))]
     [ModelReaderWriterBuildable(typeof(DeltaRangeResult))]
     [ModelReaderWriterBuildable(typeof(DeltaResult))]
     [ModelReaderWriterBuildable(typeof(DeltaSummaryRequestContent))]
@@ -56,7 +54,6 @@ namespace Azure.Analytics.Defender.Easm
     [ModelReaderWriterBuildable(typeof(DiscoveryGroup))]
     [ModelReaderWriterBuildable(typeof(DiscoveryGroupPayload))]
     [ModelReaderWriterBuildable(typeof(DiscoveryGroupSummaryResult))]
-    [ModelReaderWriterBuildable(typeof(DiscoveryRunPageResult))]
     [ModelReaderWriterBuildable(typeof(DiscoveryRunResult))]
     [ModelReaderWriterBuildable(typeof(DiscoverySource))]
     [ModelReaderWriterBuildable(typeof(DiscoveryTemplate))]
@@ -95,14 +92,6 @@ namespace Azure.Analytics.Defender.Easm
     [ModelReaderWriterBuildable(typeof(PageAsset))]
     [ModelReaderWriterBuildable(typeof(PageAssetResource))]
     [ModelReaderWriterBuildable(typeof(PageCause))]
-    [ModelReaderWriterBuildable(typeof(PagedAssetResource))]
-    [ModelReaderWriterBuildable(typeof(PagedCisaCveResult))]
-    [ModelReaderWriterBuildable(typeof(PagedDataConnection))]
-    [ModelReaderWriterBuildable(typeof(PagedDiscoGroup))]
-    [ModelReaderWriterBuildable(typeof(PagedDiscoTemplate))]
-    [ModelReaderWriterBuildable(typeof(PagedPolicy))]
-    [ModelReaderWriterBuildable(typeof(PagedSavedFilter))]
-    [ModelReaderWriterBuildable(typeof(PagedTask))]
     [ModelReaderWriterBuildable(typeof(PortDetails))]
     [ModelReaderWriterBuildable(typeof(ReportAssetSnapshotExportPayload))]
     [ModelReaderWriterBuildable(typeof(ReportAssetSnapshotPayload))]

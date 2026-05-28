@@ -8,36 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApiCenter.Models;
 
 namespace Azure.ResourceManager.ApiCenter
 {
-    /// <summary></summary>
-    internal partial class ApiSpecExportResultOperationSource : IOperationSource<ApiSpecExportResult>
+    internal class ApiSpecExportResultOperationSource : IOperationSource<ApiSpecExportResult>
     {
-        /// <summary></summary>
-        internal ApiSpecExportResultOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ApiSpecExportResult IOperationSource<ApiSpecExportResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ApiSpecExportResult.DeserializeApiSpecExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return ApiSpecExportResult.DeserializeApiSpecExportResult(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ApiSpecExportResult> IOperationSource<ApiSpecExportResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ApiSpecExportResult.DeserializeApiSpecExportResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return ApiSpecExportResult.DeserializeApiSpecExportResult(document.RootElement);
         }
     }
 }

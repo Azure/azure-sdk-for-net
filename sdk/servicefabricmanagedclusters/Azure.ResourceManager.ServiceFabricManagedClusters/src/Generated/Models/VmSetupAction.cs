@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct VmSetupAction : IEquatable<VmSetupAction>
     {
         private readonly string _value;
-        /// <summary> Enable windows containers feature. </summary>
-        private const string EnableContainersValue = "EnableContainers";
-        /// <summary> Enables windows HyperV feature. </summary>
-        private const string EnableHyperVValue = "EnableHyperV";
 
         /// <summary> Initializes a new instance of <see cref="VmSetupAction"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VmSetupAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string EnableContainersValue = "EnableContainers";
+        private const string EnableHyperVValue = "EnableHyperV";
 
         /// <summary> Enable windows containers feature. </summary>
         public static VmSetupAction EnableContainers { get; } = new VmSetupAction(EnableContainersValue);
-
         /// <summary> Enables windows HyperV feature. </summary>
         public static VmSetupAction EnableHyperV { get; } = new VmSetupAction(EnableHyperVValue);
-
         /// <summary> Determines if two <see cref="VmSetupAction"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VmSetupAction left, VmSetupAction right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="VmSetupAction"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VmSetupAction left, VmSetupAction right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="VmSetupAction"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VmSetupAction"/>. </summary>
         public static implicit operator VmSetupAction(string value) => new VmSetupAction(value);
 
-        /// <summary> Converts a string to a <see cref="VmSetupAction"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator VmSetupAction?(string value) => value == null ? null : new VmSetupAction(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VmSetupAction other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(VmSetupAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

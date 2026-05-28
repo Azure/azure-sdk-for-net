@@ -34,14 +34,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName"> This property is only supported in Jira V1 Dataset, please consider upgrading to V2 dataset. </param>
-        /// <param name="schemaTypePropertiesSchema"> The schema name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="table"> The table name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType string). </param>
-        internal JiraObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> schemaTypePropertiesSchema, DataFactoryElement<string> table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
+        internal JiraObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
-            SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
-            Table = table;
             DatasetType = datasetType ?? "JiraObject";
         }
 
@@ -50,11 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary> This property is only supported in Jira V1 Dataset, please consider upgrading to V2 dataset. </summary>
+        /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
-        /// <summary> The schema name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
-        /// <summary> The table name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Table { get; set; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct StorageSettingType : IEquatable<StorageSettingType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSettingType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageSettingType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string GeoRedundantValue = "GeoRedundant";
         private const string LocallyRedundantValue = "LocallyRedundant";
         private const string ZoneRedundantValue = "ZoneRedundant";
 
-        /// <summary> Initializes a new instance of <see cref="StorageSettingType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageSettingType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the GeoRedundant. </summary>
+        /// <summary> GeoRedundant. </summary>
         public static StorageSettingType GeoRedundant { get; } = new StorageSettingType(GeoRedundantValue);
-
-        /// <summary> Gets the LocallyRedundant. </summary>
+        /// <summary> LocallyRedundant. </summary>
         public static StorageSettingType LocallyRedundant { get; } = new StorageSettingType(LocallyRedundantValue);
-
-        /// <summary> Gets the ZoneRedundant. </summary>
+        /// <summary> ZoneRedundant. </summary>
         public static StorageSettingType ZoneRedundant { get; } = new StorageSettingType(ZoneRedundantValue);
-
         /// <summary> Determines if two <see cref="StorageSettingType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageSettingType left, StorageSettingType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageSettingType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageSettingType left, StorageSettingType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageSettingType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageSettingType"/>. </summary>
         public static implicit operator StorageSettingType(string value) => new StorageSettingType(value);
 
-        /// <summary> Converts a string to a <see cref="StorageSettingType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageSettingType?(string value) => value == null ? null : new StorageSettingType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageSettingType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StorageSettingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

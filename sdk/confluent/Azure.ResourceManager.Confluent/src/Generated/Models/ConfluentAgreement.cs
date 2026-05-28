@@ -15,8 +15,37 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Agreement Terms definition. </summary>
     public partial class ConfluentAgreement : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConfluentAgreement"/>. </summary>
         public ConfluentAgreement()
@@ -24,155 +53,47 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfluentAgreement"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Represents the properties of the resource. </param>
-        internal ConfluentAgreement(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfluentAgreementProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="publisher"> Publisher identifier string. </param>
+        /// <param name="product"> Product identifier string. </param>
+        /// <param name="plan"> Plan identifier string. </param>
+        /// <param name="licenseTextLink"> Link to HTML with Microsoft and Publisher terms. </param>
+        /// <param name="privacyPolicyLink"> Link to the privacy policy of the publisher. </param>
+        /// <param name="retrieveOn"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
+        /// <param name="signature"> Terms signature. </param>
+        /// <param name="isAccepted"> If any version of the terms have been accepted, otherwise false. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfluentAgreement(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveOn, string signature, bool? isAccepted, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            Publisher = publisher;
+            Product = product;
+            Plan = plan;
+            LicenseTextLink = licenseTextLink;
+            PrivacyPolicyLink = privacyPolicyLink;
+            RetrieveOn = retrieveOn;
+            Signature = signature;
+            IsAccepted = isAccepted;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Represents the properties of the resource. </summary>
-        internal ConfluentAgreementProperties Properties { get; set; }
 
         /// <summary> Publisher identifier string. </summary>
-        public string Publisher
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Publisher;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConfluentAgreementProperties();
-                }
-                Properties.Publisher = value;
-            }
-        }
-
+        public string Publisher { get; set; }
         /// <summary> Product identifier string. </summary>
-        public string Product
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Product;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConfluentAgreementProperties();
-                }
-                Properties.Product = value;
-            }
-        }
-
+        public string Product { get; set; }
         /// <summary> Plan identifier string. </summary>
-        public string Plan
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Plan;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConfluentAgreementProperties();
-                }
-                Properties.Plan = value;
-            }
-        }
-
+        public string Plan { get; set; }
         /// <summary> Link to HTML with Microsoft and Publisher terms. </summary>
-        public string LicenseTextLink
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LicenseTextLink;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConfluentAgreementProperties();
-                }
-                Properties.LicenseTextLink = value;
-            }
-        }
-
+        public string LicenseTextLink { get; set; }
         /// <summary> Link to the privacy policy of the publisher. </summary>
-        public string PrivacyPolicyLink
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivacyPolicyLink;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConfluentAgreementProperties();
-                }
-                Properties.PrivacyPolicyLink = value;
-            }
-        }
-
+        public string PrivacyPolicyLink { get; set; }
         /// <summary> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </summary>
-        public DateTimeOffset? RetrieveOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RetrieveOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConfluentAgreementProperties();
-                }
-                Properties.RetrieveOn = value;
-            }
-        }
-
+        public DateTimeOffset? RetrieveOn { get; set; }
         /// <summary> Terms signature. </summary>
-        public string Signature
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Signature;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConfluentAgreementProperties();
-                }
-                Properties.Signature = value;
-            }
-        }
-
+        public string Signature { get; set; }
         /// <summary> If any version of the terms have been accepted, otherwise false. </summary>
-        public bool? IsAccepted
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsAccepted;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConfluentAgreementProperties();
-                }
-                Properties.IsAccepted = value;
-            }
-        }
+        public bool? IsAccepted { get; set; }
     }
 }

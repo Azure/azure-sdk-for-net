@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Elastic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> Properties specific to the monitor resource. </summary>
-    public partial class ElasticMonitorProperties : IJsonModel<ElasticMonitorProperties>
+    public partial class ElasticMonitorProperties : IUtf8JsonSerializable, IJsonModel<ElasticMonitorProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticMonitorProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticMonitorProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticMonitorProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticMonitorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ElasticMonitorProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ElasticMonitorProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticMonitorProperties IPersistableModel<ElasticMonitorProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ElasticMonitorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticMonitorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,12 +28,13 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticMonitorProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -139,25 +99,15 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WritePropertyName("generateApiKey"u8);
                 writer.WriteBooleanValue(IsApiKeyGenerated.Value);
             }
-            if (Optional.IsDefined(HostingType))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("hostingType"u8);
-                writer.WriteStringValue(HostingType.Value.ToString());
-            }
-            if (Optional.IsDefined(ProjectDetails))
-            {
-                writer.WritePropertyName("projectDetails"u8);
-                writer.WriteObjectValue(ProjectDetails, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -166,27 +116,22 @@ namespace Azure.ResourceManager.Elastic.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticMonitorProperties IJsonModel<ElasticMonitorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticMonitorProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ElasticMonitorProperties IJsonModel<ElasticMonitorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticMonitorProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeElasticMonitorProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ElasticMonitorProperties DeserializeElasticMonitorProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ElasticMonitorProperties DeserializeElasticMonitorProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -203,132 +148,114 @@ namespace Azure.ResourceManager.Elastic.Models
             string sourceCampaignId = default;
             ElasticLiftrResourceCategory? liftrResourceCategory = default;
             int? liftrResourcePreference = default;
-            bool? isApiKeyGenerated = default;
-            MonitorResourceHostingType? hostingType = default;
-            MonitorResourceProjectDetails projectDetails = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            bool? generateApiKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new ElasticProvisioningState(prop.Value.GetString());
+                    provisioningState = new ElasticProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("monitoringStatus"u8))
+                if (property.NameEquals("monitoringStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monitoringStatus = new ElasticMonitoringStatus(prop.Value.GetString());
+                    monitoringStatus = new ElasticMonitoringStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("elasticProperties"u8))
+                if (property.NameEquals("elasticProperties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    elasticProperties = ElasticCloudProperties.DeserializeElasticCloudProperties(prop.Value, options);
+                    elasticProperties = ElasticCloudProperties.DeserializeElasticCloudProperties(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("userInfo"u8))
+                if (property.NameEquals("userInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userInfo = ElasticUserInfo.DeserializeElasticUserInfo(prop.Value, options);
+                    userInfo = ElasticUserInfo.DeserializeElasticUserInfo(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("planDetails"u8))
+                if (property.NameEquals("planDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    planDetails = ElasticPlanDetails.DeserializeElasticPlanDetails(prop.Value, options);
+                    planDetails = ElasticPlanDetails.DeserializeElasticPlanDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("version"u8))
+                if (property.NameEquals("version"u8))
                 {
-                    version = prop.Value.GetString();
+                    version = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subscriptionState"u8))
+                if (property.NameEquals("subscriptionState"u8))
                 {
-                    subscriptionState = prop.Value.GetString();
+                    subscriptionState = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("saaSAzureSubscriptionStatus"u8))
+                if (property.NameEquals("saaSAzureSubscriptionStatus"u8))
                 {
-                    saaSAzureSubscriptionStatus = prop.Value.GetString();
+                    saaSAzureSubscriptionStatus = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceCampaignName"u8))
+                if (property.NameEquals("sourceCampaignName"u8))
                 {
-                    sourceCampaignName = prop.Value.GetString();
+                    sourceCampaignName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceCampaignId"u8))
+                if (property.NameEquals("sourceCampaignId"u8))
                 {
-                    sourceCampaignId = prop.Value.GetString();
+                    sourceCampaignId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("liftrResourceCategory"u8))
+                if (property.NameEquals("liftrResourceCategory"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    liftrResourceCategory = new ElasticLiftrResourceCategory(prop.Value.GetString());
+                    liftrResourceCategory = new ElasticLiftrResourceCategory(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("liftrResourcePreference"u8))
+                if (property.NameEquals("liftrResourcePreference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    liftrResourcePreference = prop.Value.GetInt32();
+                    liftrResourcePreference = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("generateApiKey"u8))
+                if (property.NameEquals("generateApiKey"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isApiKeyGenerated = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("hostingType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hostingType = new MonitorResourceHostingType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("projectDetails"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    projectDetails = MonitorResourceProjectDetails.DeserializeMonitorResourceProjectDetails(prop.Value, options);
+                    generateApiKey = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticMonitorProperties(
                 provisioningState,
                 monitoringStatus,
@@ -342,10 +269,39 @@ namespace Azure.ResourceManager.Elastic.Models
                 sourceCampaignId,
                 liftrResourceCategory,
                 liftrResourcePreference,
-                isApiKeyGenerated,
-                hostingType,
-                projectDetails,
-                additionalBinaryDataProperties);
+                generateApiKey,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticMonitorProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticMonitorProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ElasticMonitorProperties IPersistableModel<ElasticMonitorProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticMonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeElasticMonitorProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticMonitorProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticMonitorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

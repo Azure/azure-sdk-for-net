@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DisconnectedOperations;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableDisconnectedOperationsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableDisconnectedOperationsResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableDisconnectedOperationsResourceGroupResource"/> class for mocking. </summary>
         protected MockableDisconnectedOperationsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableDisconnectedOperationsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableDisconnectedOperationsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDisconnectedOperationsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of DisconnectedOperations in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of DisconnectedOperations and their operations over a DisconnectedOperationResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of DisconnectedOperationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DisconnectedOperationResources and their operations over a DisconnectedOperationResource. </returns>
         public virtual DisconnectedOperationCollection GetDisconnectedOperations()
         {
             return GetCachedClient(client => new DisconnectedOperationCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         /// Get a DisconnectedOperation
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DisconnectedOperations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DisconnectedOperation_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DisconnectedOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DisconnectedOperationResource>> GetDisconnectedOperationAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             return await GetDisconnectedOperations().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         /// Get a DisconnectedOperation
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/disconnectedOperations/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DisconnectedOperations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DisconnectedOperation_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DisconnectedOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         [ForwardsClientCalls]
         public virtual Response<DisconnectedOperationResource> GetDisconnectedOperation(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
             return GetDisconnectedOperations().Get(name, cancellationToken);
         }
     }

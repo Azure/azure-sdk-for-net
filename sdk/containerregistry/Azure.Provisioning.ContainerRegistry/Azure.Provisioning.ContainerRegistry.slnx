@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.ContainerRegistry.csproj" />
-  <Project Path="tests/Azure.Provisioning.ContainerRegistry.Tests.csproj" />
-</Solution>

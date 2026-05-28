@@ -59,20 +59,20 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
     },
 };
 
-Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextJobState analyzeTextJobState = response.Value;
+AnalyzeTextOperationState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
+foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
 {
-    if (taskResult is HealthcareOperationResult)
+    if (analyzeTextLROResult is HealthcareOperationResult)
     {
-        HealthcareOperationResult healthcareOperationResult = (HealthcareOperationResult)taskResult;
-        Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareOperationResult.Results.ModelVersion}\"");
+        HealthcareOperationResult healthcareLROResult = (HealthcareOperationResult)analyzeTextLROResult;
+        Console.WriteLine($"Analyze Healthcare Entities, model version: \"{healthcareLROResult.Results.ModelVersion}\"");
         Console.WriteLine();
 
         // View the healthcare entities recognized in the input documents.
-        foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareOperationResult.Results.Documents)
+        foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{healthcareEntitiesDocument.Id}\":");
             Console.WriteLine($"  Recognized the following {healthcareEntitiesDocument.Entities.Count} healthcare entities:");
@@ -136,7 +136,7 @@ foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Item
             }
 
             // View the errors in the document
-            foreach (DocumentError error in healthcareOperationResult.Results.Errors)
+            foreach (DocumentError error in healthcareLROResult.Results.Errors)
             {
                 Console.WriteLine($"  Error in document: {error.Id}!");
                 Console.WriteLine($"  Document error code: {error.Error.Code}");

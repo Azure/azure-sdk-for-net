@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.EdgeOrder;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Preferences related to the order. </summary>
-    public partial class OrderItemPreferences : IJsonModel<OrderItemPreferences>
+    public partial class OrderItemPreferences : IUtf8JsonSerializable, IJsonModel<OrderItemPreferences>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OrderItemPreferences PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OrderItemPreferences>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOrderItemPreferences(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrderItemPreferences>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OrderItemPreferences>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OrderItemPreferences>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OrderItemPreferences IPersistableModel<OrderItemPreferences>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OrderItemPreferences>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OrderItemPreferences>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,16 +28,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrderItemPreferences>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrderItemPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(NotificationPreferences))
             {
                 writer.WritePropertyName("notificationPreferences"u8);
                 writer.WriteStartArray();
-                foreach (NotificationPreference item in NotificationPreferences)
+                foreach (var item in NotificationPreferences)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -99,20 +59,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("managementResourcePreferences"u8);
                 writer.WriteObjectValue(ManagementResourcePreferences, options);
             }
-            if (Optional.IsDefined(TermCommitmentPreferences))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("termCommitmentPreferences"u8);
-                writer.WriteObjectValue(TermCommitmentPreferences, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +76,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OrderItemPreferences IJsonModel<OrderItemPreferences>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OrderItemPreferences JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        OrderItemPreferences IJsonModel<OrderItemPreferences>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrderItemPreferences>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrderItemPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOrderItemPreferences(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OrderItemPreferences DeserializeOrderItemPreferences(JsonElement element, ModelReaderWriterOptions options)
+        internal static OrderItemPreferences DeserializeOrderItemPreferences(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -150,72 +100,89 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             TransportPreferences transportPreferences = default;
             EncryptionPreferences encryptionPreferences = default;
             ManagementResourcePreferences managementResourcePreferences = default;
-            EdgeOrderTermCommitmentPreferences termCommitmentPreferences = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("notificationPreferences"u8))
+                if (property.NameEquals("notificationPreferences"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NotificationPreference> array = new List<NotificationPreference>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(NotificationPreference.DeserializeNotificationPreference(item, options));
                     }
                     notificationPreferences = array;
                     continue;
                 }
-                if (prop.NameEquals("transportPreferences"u8))
+                if (property.NameEquals("transportPreferences"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(prop.Value, options);
+                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("encryptionPreferences"u8))
+                if (property.NameEquals("encryptionPreferences"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptionPreferences = EncryptionPreferences.DeserializeEncryptionPreferences(prop.Value, options);
+                    encryptionPreferences = EncryptionPreferences.DeserializeEncryptionPreferences(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("managementResourcePreferences"u8))
+                if (property.NameEquals("managementResourcePreferences"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("termCommitmentPreferences"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    termCommitmentPreferences = EdgeOrderTermCommitmentPreferences.DeserializeEdgeOrderTermCommitmentPreferences(prop.Value, options);
+                    managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new OrderItemPreferences(
-                notificationPreferences ?? new ChangeTrackingList<NotificationPreference>(),
-                transportPreferences,
-                encryptionPreferences,
-                managementResourcePreferences,
-                termCommitmentPreferences,
-                additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OrderItemPreferences(notificationPreferences ?? new ChangeTrackingList<NotificationPreference>(), transportPreferences, encryptionPreferences, managementResourcePreferences, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OrderItemPreferences>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrderItemPreferences>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OrderItemPreferences IPersistableModel<OrderItemPreferences>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrderItemPreferences>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeOrderItemPreferences(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OrderItemPreferences)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OrderItemPreferences>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

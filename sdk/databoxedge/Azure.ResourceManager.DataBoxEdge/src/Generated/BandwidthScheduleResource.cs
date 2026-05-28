@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a BandwidthSchedule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BandwidthScheduleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource"/> using the GetBandwidthSchedules method.
+    /// A Class representing a BandwidthSchedule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BandwidthScheduleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBandwidthScheduleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataBoxEdgeDeviceResource"/> using the GetBandwidthSchedule method.
     /// </summary>
     public partial class BandwidthScheduleResource : ArmResource
     {
-        private readonly ClientDiagnostics _bandwidthSchedulesClientDiagnostics;
-        private readonly BandwidthSchedules _bandwidthSchedulesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="BandwidthScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deviceName"> The deviceName. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _bandwidthScheduleClientDiagnostics;
+        private readonly BandwidthSchedulesRestOperations _bandwidthScheduleRestClient;
         private readonly BandwidthScheduleData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataBoxEdge/dataBoxEdgeDevices/bandwidthSchedules";
 
-        /// <summary> Initializes a new instance of BandwidthScheduleResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BandwidthScheduleResource"/> class for mocking. </summary>
         protected BandwidthScheduleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BandwidthScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BandwidthScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BandwidthScheduleResource(ArmClient client, BandwidthScheduleData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.DataBoxEdge
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BandwidthScheduleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BandwidthScheduleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BandwidthScheduleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _bandwidthScheduleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string bandwidthScheduleApiVersion);
-            _bandwidthSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", ResourceType.Namespace, Diagnostics);
-            _bandwidthSchedulesRestClient = new BandwidthSchedules(_bandwidthSchedulesClientDiagnostics, Pipeline, Endpoint, bandwidthScheduleApiVersion ?? "2023-12-01");
-            ValidateResourceId(id);
+            _bandwidthScheduleRestClient = new BandwidthSchedulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, bandwidthScheduleApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BandwidthScheduleData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="deviceName"> The deviceName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deviceName, string name)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets the properties of the specified bandwidth schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BandwidthSchedules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BandwidthSchedules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BandwidthScheduleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="BandwidthScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BandwidthScheduleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleResource.Get");
+            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _bandwidthSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BandwidthScheduleData> response = Response.FromValue(BandwidthScheduleData.FromResponse(result), result);
+                var response = await _bandwidthScheduleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BandwidthScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +132,33 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets the properties of the specified bandwidth schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BandwidthSchedules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BandwidthSchedules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BandwidthScheduleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="BandwidthScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BandwidthScheduleResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleResource.Get");
+            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _bandwidthSchedulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BandwidthScheduleData> response = Response.FromValue(BandwidthScheduleData.FromResponse(result), result);
+                var response = _bandwidthScheduleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BandwidthScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +172,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Deletes the specified bandwidth schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BandwidthSchedules_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>BandwidthSchedules_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BandwidthScheduleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="BandwidthScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,21 +193,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleResource.Delete");
+            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _bandwidthSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_bandwidthSchedulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _bandwidthScheduleRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxEdgeArmOperation(_bandwidthScheduleClientDiagnostics, Pipeline, _bandwidthScheduleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +214,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Deletes the specified bandwidth schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BandwidthSchedules_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>BandwidthSchedules_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BandwidthScheduleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="BandwidthScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,21 +235,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleResource.Delete");
+            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _bandwidthSchedulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DataBoxEdgeArmOperation operation = new DataBoxEdgeArmOperation(_bandwidthSchedulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _bandwidthScheduleRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new DataBoxEdgeArmOperation(_bandwidthScheduleClientDiagnostics, Pipeline, _bandwidthScheduleRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -286,23 +253,23 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Update a BandwidthSchedule.
+        /// Creates or updates a bandwidth schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BandwidthSchedules_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>BandwidthSchedules_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BandwidthScheduleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="BandwidthScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,27 +281,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleResource.Update");
+            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _bandwidthSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BandwidthScheduleData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DataBoxEdgeArmOperation<BandwidthScheduleResource> operation = new DataBoxEdgeArmOperation<BandwidthScheduleResource>(
-                    new BandwidthScheduleOperationSource(Client),
-                    _bandwidthSchedulesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _bandwidthScheduleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxEdgeArmOperation<BandwidthScheduleResource>(new BandwidthScheduleOperationSource(Client), _bandwidthScheduleClientDiagnostics, Pipeline, _bandwidthScheduleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -345,23 +299,23 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Update a BandwidthSchedule.
+        /// Creates or updates a bandwidth schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/bandwidthSchedules/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BandwidthSchedules_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>BandwidthSchedules_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BandwidthScheduleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="BandwidthScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,27 +327,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _bandwidthSchedulesClientDiagnostics.CreateScope("BandwidthScheduleResource.Update");
+            using var scope = _bandwidthScheduleClientDiagnostics.CreateScope("BandwidthScheduleResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _bandwidthSchedulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BandwidthScheduleData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DataBoxEdgeArmOperation<BandwidthScheduleResource> operation = new DataBoxEdgeArmOperation<BandwidthScheduleResource>(
-                    new BandwidthScheduleOperationSource(Client),
-                    _bandwidthSchedulesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _bandwidthScheduleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new DataBoxEdgeArmOperation<BandwidthScheduleResource>(new BandwidthScheduleOperationSource(Client), _bandwidthScheduleClientDiagnostics, Pipeline, _bandwidthScheduleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

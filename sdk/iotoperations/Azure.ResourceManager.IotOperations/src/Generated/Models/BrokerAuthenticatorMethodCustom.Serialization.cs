@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Custom method for BrokerAuthentication. </summary>
-    public partial class BrokerAuthenticatorMethodCustom : IJsonModel<BrokerAuthenticatorMethodCustom>
+    public partial class BrokerAuthenticatorMethodCustom : IUtf8JsonSerializable, IJsonModel<BrokerAuthenticatorMethodCustom>
     {
-        /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorMethodCustom"/> for deserialization. </summary>
-        internal BrokerAuthenticatorMethodCustom()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BrokerAuthenticatorMethodCustom>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerAuthenticatorMethodCustom PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethodCustom>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerAuthenticatorMethodCustom(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerAuthenticatorMethodCustom)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethodCustom>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BrokerAuthenticatorMethodCustom)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrokerAuthenticatorMethodCustom>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerAuthenticatorMethodCustom IPersistableModel<BrokerAuthenticatorMethodCustom>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BrokerAuthenticatorMethodCustom>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerAuthenticatorMethodCustom>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethodCustom>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethodCustom>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerAuthenticatorMethodCustom)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
@@ -98,24 +53,19 @@ namespace Azure.ResourceManager.IotOperations.Models
                 foreach (var item in Headers)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -124,27 +74,22 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerAuthenticatorMethodCustom IJsonModel<BrokerAuthenticatorMethodCustom>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerAuthenticatorMethodCustom JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BrokerAuthenticatorMethodCustom IJsonModel<BrokerAuthenticatorMethodCustom>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethodCustom>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethodCustom>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerAuthenticatorMethodCustom)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBrokerAuthenticatorMethodCustom(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BrokerAuthenticatorMethodCustom DeserializeBrokerAuthenticatorMethodCustom(JsonElement element, ModelReaderWriterOptions options)
+        internal static BrokerAuthenticatorMethodCustom DeserializeBrokerAuthenticatorMethodCustom(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -153,55 +98,81 @@ namespace Azure.ResourceManager.IotOperations.Models
             string caCertConfigMap = default;
             Uri endpoint = default;
             IDictionary<string, string> headers = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("auth"u8))
+                if (property.NameEquals("auth"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    auth = BrokerAuthenticatorCustomAuth.DeserializeBrokerAuthenticatorCustomAuth(prop.Value, options);
+                    auth = BrokerAuthenticatorCustomAuth.DeserializeBrokerAuthenticatorCustomAuth(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("caCertConfigMap"u8))
+                if (property.NameEquals("caCertConfigMap"u8))
                 {
-                    caCertConfigMap = prop.Value.GetString();
+                    caCertConfigMap = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("endpoint"u8))
+                if (property.NameEquals("endpoint"u8))
                 {
-                    endpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    endpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("headers"u8))
+                if (property.NameEquals("headers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     headers = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new BrokerAuthenticatorMethodCustom(auth, caCertConfigMap, endpoint, headers ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BrokerAuthenticatorMethodCustom(auth, caCertConfigMap, endpoint, headers ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BrokerAuthenticatorMethodCustom>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethodCustom>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BrokerAuthenticatorMethodCustom)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BrokerAuthenticatorMethodCustom IPersistableModel<BrokerAuthenticatorMethodCustom>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerAuthenticatorMethodCustom>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBrokerAuthenticatorMethodCustom(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerAuthenticatorMethodCustom)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BrokerAuthenticatorMethodCustom>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

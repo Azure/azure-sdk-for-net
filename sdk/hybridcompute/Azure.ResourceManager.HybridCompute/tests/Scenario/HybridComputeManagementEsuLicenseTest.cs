@@ -84,15 +84,13 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeleteEsuLicense()
-        {
+        public async Task CanDeleteEsuLicense(){
             await deleteEsuLicense();
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeleteLicenseProfile()
-        {
+        public async Task CanDeleteLicenseProfile(){
             await deleteLicenseProfile();
         }
     }

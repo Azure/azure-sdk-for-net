@@ -8,92 +8,85 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
     /// <summary>
     /// A class representing a collection of <see cref="EdgeConfigTemplateVersionResource"/> and their operations.
     /// Each <see cref="EdgeConfigTemplateVersionResource"/> in the collection will belong to the same instance of <see cref="EdgeConfigTemplateResource"/>.
-    /// To get a <see cref="EdgeConfigTemplateVersionCollection"/> instance call the GetEdgeConfigTemplateVersions method from an instance of <see cref="EdgeConfigTemplateResource"/>.
+    /// To get an <see cref="EdgeConfigTemplateVersionCollection"/> instance call the GetEdgeConfigTemplateVersions method from an instance of <see cref="EdgeConfigTemplateResource"/>.
     /// </summary>
     public partial class EdgeConfigTemplateVersionCollection : ArmCollection, IEnumerable<EdgeConfigTemplateVersionResource>, IAsyncEnumerable<EdgeConfigTemplateVersionResource>
     {
-        private readonly ClientDiagnostics _configTemplateVersionsClientDiagnostics;
-        private readonly ConfigTemplateVersions _configTemplateVersionsRestClient;
+        private readonly ClientDiagnostics _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics;
+        private readonly ConfigTemplateVersionsRestOperations _edgeConfigTemplateVersionConfigTemplateVersionsRestClient;
 
-        /// <summary> Initializes a new instance of EdgeConfigTemplateVersionCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeConfigTemplateVersionCollection"/> class for mocking. </summary>
         protected EdgeConfigTemplateVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeConfigTemplateVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeConfigTemplateVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EdgeConfigTemplateVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeConfigTemplateVersionResource.ResourceType, out string edgeConfigTemplateVersionApiVersion);
-            _configTemplateVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeConfigTemplateVersionResource.ResourceType.Namespace, Diagnostics);
-            _configTemplateVersionsRestClient = new ConfigTemplateVersions(_configTemplateVersionsClientDiagnostics, Pipeline, Endpoint, edgeConfigTemplateVersionApiVersion ?? "2025-06-01");
-            ValidateResourceId(id);
+            _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeConfigTemplateVersionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EdgeConfigTemplateVersionResource.ResourceType, out string edgeConfigTemplateVersionConfigTemplateVersionsApiVersion);
+            _edgeConfigTemplateVersionConfigTemplateVersionsRestClient = new ConfigTemplateVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeConfigTemplateVersionConfigTemplateVersionsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != EdgeConfigTemplateResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeConfigTemplateResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EdgeConfigTemplateResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a Config Template Version Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigTemplateVersions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplateVersion_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeConfigTemplateVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateVersionName"> The name of the ConfigTemplateVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configTemplateVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         public virtual async Task<Response<EdgeConfigTemplateVersionResource>> GetAsync(string configTemplateVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateVersionName, nameof(configTemplateVersionName));
 
-            using DiagnosticScope scope = _configTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.Get");
+            using var scope = _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configTemplateVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configTemplateVersionName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EdgeConfigTemplateVersionData> response = Response.FromValue(EdgeConfigTemplateVersionData.FromResponse(result), result);
+                var response = await _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configTemplateVersionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeConfigTemplateVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -107,42 +100,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Config Template Version Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigTemplateVersions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplateVersion_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeConfigTemplateVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateVersionName"> The name of the ConfigTemplateVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configTemplateVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         public virtual Response<EdgeConfigTemplateVersionResource> Get(string configTemplateVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateVersionName, nameof(configTemplateVersionName));
 
-            using DiagnosticScope scope = _configTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.Get");
+            using var scope = _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configTemplateVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configTemplateVersionName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<EdgeConfigTemplateVersionData> response = Response.FromValue(EdgeConfigTemplateVersionData.FromResponse(result), result);
+                var response = _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configTemplateVersionName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeConfigTemplateVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -156,50 +145,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List Config Template Version Resources
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigTemplateVersions_ListByConfigTemplate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplateVersion_ListByConfigTemplate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeConfigTemplateVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeConfigTemplateVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EdgeConfigTemplateVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeConfigTemplateVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateAsyncCollectionResultOfT(
-                _configTemplateVersionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "EdgeConfigTemplateVersionCollection.GetAll"), data => new EdgeConfigTemplateVersionResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.CreateListByConfigTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.CreateListByConfigTemplateNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeConfigTemplateVersionResource(Client, EdgeConfigTemplateVersionData.DeserializeEdgeConfigTemplateVersionData(e)), _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics, Pipeline, "EdgeConfigTemplateVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Config Template Version Resources
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigTemplateVersions_ListByConfigTemplate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplateVersion_ListByConfigTemplate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeConfigTemplateVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,67 +196,45 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeConfigTemplateVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeConfigTemplateVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<EdgeConfigTemplateVersionData, EdgeConfigTemplateVersionResource>(new ConfigTemplateVersionsGetByConfigTemplateCollectionResultOfT(
-                _configTemplateVersionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "EdgeConfigTemplateVersionCollection.GetAll"), data => new EdgeConfigTemplateVersionResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.CreateListByConfigTemplateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.CreateListByConfigTemplateNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeConfigTemplateVersionResource(Client, EdgeConfigTemplateVersionData.DeserializeEdgeConfigTemplateVersionData(e)), _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics, Pipeline, "EdgeConfigTemplateVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigTemplateVersions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplateVersion_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeConfigTemplateVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateVersionName"> The name of the ConfigTemplateVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configTemplateVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configTemplateVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateVersionName, nameof(configTemplateVersionName));
 
-            using DiagnosticScope scope = _configTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.Exists");
+            using var scope = _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configTemplateVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configTemplateVersionName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<EdgeConfigTemplateVersionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeConfigTemplateVersionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeConfigTemplateVersionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configTemplateVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -281,50 +248,36 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigTemplateVersions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplateVersion_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeConfigTemplateVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateVersionName"> The name of the ConfigTemplateVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configTemplateVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         public virtual Response<bool> Exists(string configTemplateVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateVersionName, nameof(configTemplateVersionName));
 
-            using DiagnosticScope scope = _configTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.Exists");
+            using var scope = _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configTemplateVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configTemplateVersionName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<EdgeConfigTemplateVersionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeConfigTemplateVersionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeConfigTemplateVersionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configTemplateVersionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -338,54 +291,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigTemplateVersions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplateVersion_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeConfigTemplateVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateVersionName"> The name of the ConfigTemplateVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configTemplateVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         public virtual async Task<NullableResponse<EdgeConfigTemplateVersionResource>> GetIfExistsAsync(string configTemplateVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateVersionName, nameof(configTemplateVersionName));
 
-            using DiagnosticScope scope = _configTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.GetIfExists");
+            using var scope = _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configTemplateVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configTemplateVersionName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<EdgeConfigTemplateVersionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeConfigTemplateVersionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeConfigTemplateVersionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configTemplateVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<EdgeConfigTemplateVersionResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeConfigTemplateVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,54 +336,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/configTemplates/{configTemplateName}/versions/{configTemplateVersionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigTemplateVersions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigTemplateVersion_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeConfigTemplateVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="configTemplateVersionName"> The name of the ConfigTemplateVersion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configTemplateVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configTemplateVersionName"/> is null. </exception>
         public virtual NullableResponse<EdgeConfigTemplateVersionResource> GetIfExists(string configTemplateVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configTemplateVersionName, nameof(configTemplateVersionName));
 
-            using DiagnosticScope scope = _configTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.GetIfExists");
+            using var scope = _edgeConfigTemplateVersionConfigTemplateVersionsClientDiagnostics.CreateScope("EdgeConfigTemplateVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configTemplateVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configTemplateVersionName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<EdgeConfigTemplateVersionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeConfigTemplateVersionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeConfigTemplateVersionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _edgeConfigTemplateVersionConfigTemplateVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configTemplateVersionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<EdgeConfigTemplateVersionResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeConfigTemplateVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -466,7 +387,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeConfigTemplateVersionResource> IAsyncEnumerable<EdgeConfigTemplateVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

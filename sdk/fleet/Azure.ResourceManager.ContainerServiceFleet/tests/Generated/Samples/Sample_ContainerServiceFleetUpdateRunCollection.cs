@@ -75,7 +75,7 @@ DisplayName = "gate after stage1",
                     NodeImageSelection = new NodeImageSelection(NodeImageSelectionType.Latest),
                 },
             };
-            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, updateRunName, data, matchConditions: null);
+            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, updateRunName, data);
             ContainerServiceFleetUpdateRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -129,12 +129,9 @@ AfterStageWaitInSeconds = 3600,
                     },
                 },
             };
-            MatchConditions matchConditions = new MatchConditions
-            {
-                IfMatch = new ETag("wyolpuaxgybeygcbz"),
-                IfNoneMatch = new ETag("rwrhonlormgshamadufoo")
-            };
-            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, updateRunName, data, matchConditions: matchConditions);
+            string ifMatch = "wyolpuaxgybeygcbz";
+            string ifNoneMatch = "rwrhonlormgshamadufoo";
+            ArmOperation<ContainerServiceFleetUpdateRunResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, updateRunName, data, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch);
             ContainerServiceFleetUpdateRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

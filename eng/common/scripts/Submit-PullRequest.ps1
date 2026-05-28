@@ -29,10 +29,6 @@ List of github teams to add as reviewers
 .PARAMETER Assignees
 Users to assign to the PR after opening. Users should be a comma-separated list
 with no preceding `@` symbol (e.g. "user1,usertwo,user3")
-.PARAMETER MaintainerCanModify
-Whether to allow maintainers of the base repo to push to the PR branch.
-Set to false for cross-fork PRs where the token lacks permission to grant
-collaborator access on the fork.
 .PARAMETER CloseAfterOpenForTesting
 Close the PR after opening to save on CI resources and prevent alerts to code
 owners, assignees, requested reviewers, or others.
@@ -77,8 +73,6 @@ param(
 
   [boolean]$OpenAsDraft=$false,
 
-  [boolean]$MaintainerCanModify=$true,
-
   [boolean]$AddBuildSummary=($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
@@ -120,7 +114,7 @@ else {
       -Head "${PROwner}:${PRBranch}" `
       -Base $BaseBranch `
       -Body $PRBody `
-      -Maintainer_Can_Modify $MaintainerCanModify `
+      -Maintainer_Can_Modify $true `
       -Draft:$OpenAsDraft `
       -AuthToken $AuthToken
 

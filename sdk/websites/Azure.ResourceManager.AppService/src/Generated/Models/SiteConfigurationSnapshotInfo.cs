@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A snapshot of a web app configuration.
-    /// Serialized Name: SiteConfigurationSnapshotInfo
-    /// </summary>
+    /// <summary> A snapshot of a web app configuration. </summary>
     public partial class SiteConfigurationSnapshotInfo : ResourceData
     {
         /// <summary>
@@ -60,18 +57,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="snapshotTakenOn">
-        /// The time the snapshot was taken.
-        /// Serialized Name: SiteConfigurationSnapshotInfo.properties.time
-        /// </param>
-        /// <param name="snapshotId">
-        /// The id of the snapshot
-        /// Serialized Name: SiteConfigurationSnapshotInfo.properties.snapshotId
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="snapshotTakenOn"> The time the snapshot was taken. </param>
+        /// <param name="snapshotId"> The id of the snapshot. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteConfigurationSnapshotInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? snapshotTakenOn, int? snapshotId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,22 +69,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The time the snapshot was taken.
-        /// Serialized Name: SiteConfigurationSnapshotInfo.properties.time
-        /// </summary>
+        /// <summary> The time the snapshot was taken. </summary>
         [WirePath("properties.time")]
         public DateTimeOffset? SnapshotTakenOn { get; }
-        /// <summary>
-        /// The id of the snapshot
-        /// Serialized Name: SiteConfigurationSnapshotInfo.properties.snapshotId
-        /// </summary>
+        /// <summary> The id of the snapshot. </summary>
         [WirePath("properties.snapshotId")]
         public int? SnapshotId { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

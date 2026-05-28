@@ -2,17 +2,18 @@
 // Licensed under the MIT License.
 
 extern alias BaseShares;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Storage.Tests;
 using BaseShares::Azure.Storage.Files.Shares;
 using BaseShares::Azure.Storage.Files.Shares.Models;
 using Moq;
+using Azure.Storage.Tests;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -71,8 +72,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             mock.Setup(m => m.GetSubdirectoryClient(It.IsAny<string>()))
                 .Returns<string>(name =>
                 {
-                    var subDirStructure = directoryStructure.FirstOrDefault(d => d.Value.IsDirectory && d.Value.Name == name)
-                         ?? throw new DirectoryNotFoundException("Directory not in test directory structure.");
+                   var subDirStructure = directoryStructure.FirstOrDefault(d => d.Value.IsDirectory && d.Value.Name == name)
+                        ?? throw new DirectoryNotFoundException("Directory not in test directory structure.");
                     UriBuilder uriBuilder = new UriBuilder(mock.Object.Uri);
                     uriBuilder.Path = Path.Combine(uriBuilder.Path, name);
                     Mock<ShareDirectoryClient> directory = new();

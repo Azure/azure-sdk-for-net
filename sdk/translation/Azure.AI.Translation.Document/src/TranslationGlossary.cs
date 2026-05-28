@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    [CodeGenType("Glossary")]
+    [CodeGenModel("Glossary")]
     public partial class TranslationGlossary
     {
         /// <summary>

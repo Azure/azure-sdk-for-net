@@ -6,13 +6,11 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -24,49 +22,51 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// </summary>
     public partial class BackupProtectionIntentCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _protectionIntentResourcesClientDiagnostics;
-        private readonly ProtectionIntentResources _protectionIntentResourcesRestClient;
+        private readonly ClientDiagnostics _backupProtectionIntentProtectionIntentClientDiagnostics;
+        private readonly ProtectionIntentRestOperations _backupProtectionIntentProtectionIntentRestClient;
 
-        /// <summary> Initializes a new instance of BackupProtectionIntentCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupProtectionIntentCollection"/> class for mocking. </summary>
         protected BackupProtectionIntentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BackupProtectionIntentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupProtectionIntentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BackupProtectionIntentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(BackupProtectionIntentResource.ResourceType, out string backupProtectionIntentApiVersion);
-            _protectionIntentResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionIntentResource.ResourceType.Namespace, Diagnostics);
-            _protectionIntentResourcesRestClient = new ProtectionIntentResources(_protectionIntentResourcesClientDiagnostics, Pipeline, Endpoint, backupProtectionIntentApiVersion ?? "2026-01-31-preview");
-            ValidateResourceId(id);
+            _backupProtectionIntentProtectionIntentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", BackupProtectionIntentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BackupProtectionIntentResource.ResourceType, out string backupProtectionIntentProtectionIntentApiVersion);
+            _backupProtectionIntentProtectionIntentRestClient = new ProtectionIntentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, backupProtectionIntentProtectionIntentApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create Intent for Enabling backup of an item. This is a synchronous operation.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionIntentResources_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionIntent_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="data"> resource backed up item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="intentObjectName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="intentObjectName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BackupProtectionIntentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string fabricName, string intentObjectName, BackupProtectionIntentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -85,24 +85,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _protectionIntentResourcesClientDiagnostics.CreateScope("BackupProtectionIntentCollection.CreateOrUpdate");
+            using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectionIntentResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, BackupProtectionIntentData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BackupProtectionIntentData> response = Response.FromValue(BackupProtectionIntentData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RecoveryServicesBackupArmOperation<BackupProtectionIntentResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionIntentResource>(Response.FromValue(new BackupProtectionIntentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _backupProtectionIntentProtectionIntentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _backupProtectionIntentProtectionIntentRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionIntentResource>(Response.FromValue(new BackupProtectionIntentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +108,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Create Intent for Enabling backup of an item. This is a synchronous operation.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionIntentResources_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionIntent_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,8 +131,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="data"> resource backed up item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="intentObjectName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="intentObjectName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BackupProtectionIntentResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string fabricName, string intentObjectName, BackupProtectionIntentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
@@ -144,24 +140,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _protectionIntentResourcesClientDiagnostics.CreateScope("BackupProtectionIntentCollection.CreateOrUpdate");
+            using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectionIntentResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, BackupProtectionIntentData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BackupProtectionIntentData> response = Response.FromValue(BackupProtectionIntentData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RecoveryServicesBackupArmOperation<BackupProtectionIntentResource> operation = new RecoveryServicesBackupArmOperation<BackupProtectionIntentResource>(Response.FromValue(new BackupProtectionIntentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _backupProtectionIntentProtectionIntentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, data, cancellationToken);
+                var uri = _backupProtectionIntentProtectionIntentRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesBackupArmOperation<BackupProtectionIntentResource>(Response.FromValue(new BackupProtectionIntentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -176,16 +164,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// call the GetItemOperationResult API.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionIntentResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionIntent_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,29 +185,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual async Task<Response<BackupProtectionIntentResource>> GetAsync(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
-            using DiagnosticScope scope = _protectionIntentResourcesClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Get");
+            using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectionIntentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BackupProtectionIntentData> response = Response.FromValue(BackupProtectionIntentData.FromResponse(result), result);
+                var response = await _backupProtectionIntentProtectionIntentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BackupProtectionIntentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -230,16 +214,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// call the GetItemOperationResult API.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionIntentResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionIntent_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,29 +235,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual Response<BackupProtectionIntentResource> Get(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
-            using DiagnosticScope scope = _protectionIntentResourcesClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Get");
+            using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectionIntentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BackupProtectionIntentData> response = Response.FromValue(BackupProtectionIntentData.FromResponse(result), result);
+                var response = _backupProtectionIntentProtectionIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BackupProtectionIntentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,16 +263,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionIntentResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionIntent_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,37 +284,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
-            using DiagnosticScope scope = _protectionIntentResourcesClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Exists");
+            using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectionIntentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<BackupProtectionIntentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BackupProtectionIntentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BackupProtectionIntentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _backupProtectionIntentProtectionIntentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,16 +310,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionIntentResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionIntent_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,37 +331,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
-            using DiagnosticScope scope = _protectionIntentResourcesClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Exists");
+            using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectionIntentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<BackupProtectionIntentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BackupProtectionIntentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BackupProtectionIntentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _backupProtectionIntentProtectionIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -405,16 +357,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionIntentResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionIntent_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,41 +378,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupProtectionIntentResource>> GetIfExistsAsync(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
-            using DiagnosticScope scope = _protectionIntentResourcesClientDiagnostics.CreateScope("BackupProtectionIntentCollection.GetIfExists");
+            using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectionIntentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<BackupProtectionIntentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BackupProtectionIntentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BackupProtectionIntentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _backupProtectionIntentProtectionIntentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<BackupProtectionIntentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new BackupProtectionIntentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -470,16 +406,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectionIntentResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectionIntent_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupProtectionIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -487,41 +427,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="fabricName"> The name of the BackupFabricResource. </param>
         /// <param name="intentObjectName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual NullableResponse<BackupProtectionIntentResource> GetIfExists(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
             Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
-            using DiagnosticScope scope = _protectionIntentResourcesClientDiagnostics.CreateScope("BackupProtectionIntentCollection.GetIfExists");
+            using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectionIntentResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<BackupProtectionIntentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(BackupProtectionIntentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((BackupProtectionIntentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _backupProtectionIntentProtectionIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vaultName, fabricName, intentObjectName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<BackupProtectionIntentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new BackupProtectionIntentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

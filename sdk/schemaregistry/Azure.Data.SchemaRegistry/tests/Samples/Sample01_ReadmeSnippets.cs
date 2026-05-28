@@ -62,7 +62,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
             #endregion
 
-            Assert.That(schemaProperties, Is.Not.Null);
+            Assert.NotNull(schemaProperties);
             _schemaProperties = schemaProperties.Value;
             _definition = definition;
         }
@@ -95,7 +95,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string schemaId = schemaProperties.Id;
             #endregion
 
-            Assert.That(schemaId, Is.EqualTo(_schemaProperties.Id));
+            Assert.AreEqual(_schemaProperties.Id, schemaId);
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string definition = schema.Definition;
             #endregion
 
-            Assert.That(definition, Is.EqualTo(Regex.Replace(_definition, @"\s+", string.Empty)));
+            Assert.AreEqual(Regex.Replace(_definition, @"\s+", string.Empty), definition);
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
             string definition = schema.Definition;
             #endregion
 
-            Assert.That(definition, Is.EqualTo(Regex.Replace(_definition, @"\s+", string.Empty)));
+            Assert.AreEqual(Regex.Replace(_definition, @"\s+", string.Empty), definition);
         }
     }
 }

@@ -7,37 +7,47 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.OnlineExperimentation.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OnlineExperimentation
 {
     /// <summary>
-    /// A class representing a OnlineExperimentationWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="OnlineExperimentationWorkspaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOnlineExperimentationWorkspaces method.
+    /// A Class representing an OnlineExperimentationWorkspace along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OnlineExperimentationWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOnlineExperimentationWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetOnlineExperimentationWorkspace method.
     /// </summary>
     public partial class OnlineExperimentationWorkspaceResource : ArmResource
     {
-        private readonly ClientDiagnostics _onlineExperimentationWorkspacesClientDiagnostics;
-        private readonly OnlineExperimentationWorkspaces _onlineExperimentationWorkspacesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="OnlineExperimentationWorkspaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _onlineExperimentationWorkspaceClientDiagnostics;
+        private readonly OnlineExperimentationWorkspacesRestOperations _onlineExperimentationWorkspaceRestClient;
         private readonly OnlineExperimentationWorkspaceData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.OnlineExperimentation/workspaces";
 
-        /// <summary> Initializes a new instance of OnlineExperimentationWorkspaceResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OnlineExperimentationWorkspaceResource"/> class for mocking. </summary>
         protected OnlineExperimentationWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OnlineExperimentationWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OnlineExperimentationWorkspaceResource(ArmClient client, OnlineExperimentationWorkspaceData data) : this(client, data.Id)
@@ -46,92 +56,71 @@ namespace Azure.ResourceManager.OnlineExperimentation
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OnlineExperimentationWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OnlineExperimentationWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _onlineExperimentationWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string onlineExperimentationWorkspaceApiVersion);
-            _onlineExperimentationWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", ResourceType.Namespace, Diagnostics);
-            _onlineExperimentationWorkspacesRestClient = new OnlineExperimentationWorkspaces(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, Endpoint, onlineExperimentationWorkspaceApiVersion ?? "2025-08-01-preview");
-            ValidateResourceId(id);
+            _onlineExperimentationWorkspaceRestClient = new OnlineExperimentationWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, onlineExperimentationWorkspaceApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual OnlineExperimentationWorkspaceData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets an online experimentation workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="OnlineExperimentationWorkspaceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<OnlineExperimentationWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Get");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
+                var response = await _onlineExperimentationWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,42 +134,118 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// Gets an online experimentation workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="OnlineExperimentationWorkspaceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OnlineExperimentationWorkspaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Get");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
+                var response = _onlineExperimentationWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an online experimentation workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _onlineExperimentationWorkspaceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new OnlineExperimentationArmOperation(_onlineExperimentationWorkspaceClientDiagnostics, Pipeline, _onlineExperimentationWorkspaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an online experimentation workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _onlineExperimentationWorkspaceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new OnlineExperimentationArmOperation(_onlineExperimentationWorkspaceClientDiagnostics, Pipeline, _onlineExperimentationWorkspaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -193,20 +258,20 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// Patch an online experimentation workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="OnlineExperimentationWorkspaceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,27 +283,14 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Update");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OnlineExperimentationWorkspacePatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
-                    new OnlineExperimentationWorkspaceOperationSource(Client),
-                    _onlineExperimentationWorkspacesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _onlineExperimentationWorkspaceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspaceOperationSource(Client), _onlineExperimentationWorkspaceClientDiagnostics, Pipeline, _onlineExperimentationWorkspaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -252,20 +304,20 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// Patch an online experimentation workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="OnlineExperimentationWorkspaceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,27 +329,14 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Update");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OnlineExperimentationWorkspacePatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
-                    new OnlineExperimentationWorkspaceOperationSource(Client),
-                    _onlineExperimentationWorkspacesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _onlineExperimentationWorkspaceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspaceOperationSource(Client), _onlineExperimentationWorkspaceClientDiagnostics, Pipeline, _onlineExperimentationWorkspaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -308,104 +347,26 @@ namespace Azure.ResourceManager.OnlineExperimentation
         }
 
         /// <summary>
-        /// Deletes an online experimentation workspace.
+        /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="OnlineExperimentationWorkspaceResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OnlineExperimentationArmOperation operation = new OnlineExperimentationArmOperation(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes an online experimentation workspace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OnlineExperimentationWorkspaces_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="OnlineExperimentationWorkspaceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OnlineExperimentationArmOperation operation = new OnlineExperimentationArmOperation(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -415,34 +376,28 @@ namespace Azure.ResourceManager.OnlineExperimentation
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.AddTag");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
-                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _onlineExperimentationWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    OnlineExperimentationWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    OnlineExperimentationWorkspacePatch patch = new OnlineExperimentationWorkspacePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new OnlineExperimentationWorkspacePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<OnlineExperimentationWorkspaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -453,7 +408,27 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -463,34 +438,28 @@ namespace Azure.ResourceManager.OnlineExperimentation
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.AddTag");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
-                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _onlineExperimentationWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    OnlineExperimentationWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    OnlineExperimentationWorkspacePatch patch = new OnlineExperimentationWorkspacePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new OnlineExperimentationWorkspacePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<OnlineExperimentationWorkspaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -501,39 +470,53 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<OnlineExperimentationWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.SetTags");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
-                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _onlineExperimentationWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    OnlineExperimentationWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    OnlineExperimentationWorkspacePatch patch = new OnlineExperimentationWorkspacePatch();
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new OnlineExperimentationWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<OnlineExperimentationWorkspaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -544,39 +527,53 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<OnlineExperimentationWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.SetTags");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
-                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _onlineExperimentationWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    OnlineExperimentationWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    OnlineExperimentationWorkspacePatch patch = new OnlineExperimentationWorkspacePatch();
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new OnlineExperimentationWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<OnlineExperimentationWorkspaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -587,7 +584,27 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -595,34 +612,28 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.RemoveTag");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
-                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _onlineExperimentationWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    OnlineExperimentationWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    OnlineExperimentationWorkspacePatch patch = new OnlineExperimentationWorkspacePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new OnlineExperimentationWorkspacePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<OnlineExperimentationWorkspaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -633,7 +644,27 @@ namespace Azure.ResourceManager.OnlineExperimentation
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -641,34 +672,28 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _onlineExperimentationWorkspacesClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.RemoveTag");
+            using var scope = _onlineExperimentationWorkspaceClientDiagnostics.CreateScope("OnlineExperimentationWorkspaceResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<OnlineExperimentationWorkspaceData> response = Response.FromValue(OnlineExperimentationWorkspaceData.FromResponse(result), result);
-                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _onlineExperimentationWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new OnlineExperimentationWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    OnlineExperimentationWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    OnlineExperimentationWorkspacePatch patch = new OnlineExperimentationWorkspacePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new OnlineExperimentationWorkspacePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<OnlineExperimentationWorkspaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -677,72 +702,6 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of OnlineExperimentationPrivateEndpointConnections in the <see cref="OnlineExperimentationWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of OnlineExperimentationPrivateEndpointConnections and their operations over a OnlineExperimentationPrivateEndpointConnectionResource. </returns>
-        public virtual OnlineExperimentationPrivateEndpointConnectionCollection GetOnlineExperimentationPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new OnlineExperimentationPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary> Gets the private endpoint connection details for an online experimentation workspace resource. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the PrivateEndpointConnection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OnlineExperimentationPrivateEndpointConnectionResource>> GetOnlineExperimentationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetOnlineExperimentationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the private endpoint connection details for an online experimentation workspace resource. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the PrivateEndpointConnection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<OnlineExperimentationPrivateEndpointConnectionResource> GetOnlineExperimentationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return GetOnlineExperimentationPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of OnlineExperimentationPrivateLinks in the <see cref="OnlineExperimentationWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of OnlineExperimentationPrivateLinks and their operations over a OnlineExperimentationPrivateLinkResource. </returns>
-        public virtual OnlineExperimentationPrivateLinkCollection GetOnlineExperimentationPrivateLinks()
-        {
-            return GetCachedClient(client => new OnlineExperimentationPrivateLinkCollection(client, Id));
-        }
-
-        /// <summary> Gets a private link resource for an online experimentation workspace resource. </summary>
-        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OnlineExperimentationPrivateLinkResource>> GetOnlineExperimentationPrivateLinkAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
-
-            return await GetOnlineExperimentationPrivateLinks().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a private link resource for an online experimentation workspace resource. </summary>
-        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<OnlineExperimentationPrivateLinkResource> GetOnlineExperimentationPrivateLink(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
-
-            return GetOnlineExperimentationPrivateLinks().Get(privateLinkResourceName, cancellationToken);
         }
     }
 }

@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     internal static partial class AzureFileShareAccessTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AzureFileShareAccessType value) => value switch
         {
             AzureFileShareAccessType.Shared => "Shared",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AzureFileShareAccessType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static AzureFileShareAccessType ToAzureFileShareAccessType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Shared"))
-            {
-                return AzureFileShareAccessType.Shared;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Exclusive"))
-            {
-                return AzureFileShareAccessType.Exclusive;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Shared")) return AzureFileShareAccessType.Shared;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Exclusive")) return AzureFileShareAccessType.Exclusive;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AzureFileShareAccessType value.");
         }
     }

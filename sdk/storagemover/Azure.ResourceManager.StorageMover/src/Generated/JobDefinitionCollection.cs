@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageMover
 {
@@ -25,81 +24,75 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class JobDefinitionCollection : ArmCollection, IEnumerable<JobDefinitionResource>, IAsyncEnumerable<JobDefinitionResource>
     {
-        private readonly ClientDiagnostics _jobDefinitionsClientDiagnostics;
-        private readonly JobDefinitions _jobDefinitionsRestClient;
+        private readonly ClientDiagnostics _jobDefinitionClientDiagnostics;
+        private readonly JobDefinitionsRestOperations _jobDefinitionRestClient;
 
-        /// <summary> Initializes a new instance of JobDefinitionCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobDefinitionCollection"/> class for mocking. </summary>
         protected JobDefinitionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobDefinitionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="JobDefinitionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal JobDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _jobDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", JobDefinitionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(JobDefinitionResource.ResourceType, out string jobDefinitionApiVersion);
-            _jobDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageMover", JobDefinitionResource.ResourceType.Namespace, Diagnostics);
-            _jobDefinitionsRestClient = new JobDefinitions(_jobDefinitionsClientDiagnostics, Pipeline, Endpoint, jobDefinitionApiVersion ?? "2025-12-01");
-            ValidateResourceId(id);
+            _jobDefinitionRestClient = new JobDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobDefinitionApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != StorageMoverProjectResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageMoverProjectResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StorageMoverProjectResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates a Job Definition resource, which contains configuration for a single unit of managed data transfer.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobDefinitions_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinition_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> The <see cref="JobDefinitionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<JobDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobDefinitionName, JobDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("JobDefinitionCollection.CreateOrUpdate");
+            using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _jobDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, JobDefinitionData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<JobDefinitionData> response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageMoverArmOperation<JobDefinitionResource> operation = new StorageMoverArmOperation<JobDefinitionResource>(Response.FromValue(new JobDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _jobDefinitionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _jobDefinitionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageMoverArmOperation<JobDefinitionResource>(Response.FromValue(new JobDefinitionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,48 +106,44 @@ namespace Azure.ResourceManager.StorageMover
         /// Creates or updates a Job Definition resource, which contains configuration for a single unit of managed data transfer.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobDefinitions_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinition_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> The <see cref="JobDefinitionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<JobDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string jobDefinitionName, JobDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("JobDefinitionCollection.CreateOrUpdate");
+            using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _jobDefinitionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, JobDefinitionData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<JobDefinitionData> response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageMoverArmOperation<JobDefinitionResource> operation = new StorageMoverArmOperation<JobDefinitionResource>(Response.FromValue(new JobDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _jobDefinitionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data, cancellationToken);
+                var uri = _jobDefinitionRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageMoverArmOperation<JobDefinitionResource>(Response.FromValue(new JobDefinitionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.StorageMover
         /// Gets a Job Definition resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobDefinitions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinition_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual async Task<Response<JobDefinitionResource>> GetAsync(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
 
-            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("JobDefinitionCollection.Get");
+            using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _jobDefinitionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<JobDefinitionData> response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
+                var response = await _jobDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new JobDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.StorageMover
         /// Gets a Job Definition resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobDefinitions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinition_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual Response<JobDefinitionResource> Get(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
 
-            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("JobDefinitionCollection.Get");
+            using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _jobDefinitionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<JobDefinitionData> response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
+                var response = _jobDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new JobDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,51 +247,50 @@ namespace Azure.ResourceManager.StorageMover
         /// Lists all Job Definitions in a Project.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobDefinitions_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinition_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="JobDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JobDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<JobDefinitionData, JobDefinitionResource>(new JobDefinitionsGetAllAsyncCollectionResultOfT(
-                _jobDefinitionsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "JobDefinitionCollection.GetAll"), data => new JobDefinitionResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobDefinitionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobDefinitionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobDefinitionResource(Client, JobDefinitionData.DeserializeJobDefinitionData(e)), _jobDefinitionClientDiagnostics, Pipeline, "JobDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all Job Definitions in a Project.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobDefinitions_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinition_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,68 +298,45 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> A collection of <see cref="JobDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JobDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<JobDefinitionData, JobDefinitionResource>(new JobDefinitionsGetAllCollectionResultOfT(
-                _jobDefinitionsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                context,
-                "JobDefinitionCollection.GetAll"), data => new JobDefinitionResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobDefinitionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobDefinitionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobDefinitionResource(Client, JobDefinitionData.DeserializeJobDefinitionData(e)), _jobDefinitionClientDiagnostics, Pipeline, "JobDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobDefinitions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinition_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
 
-            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("JobDefinitionCollection.Exists");
+            using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _jobDefinitionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<JobDefinitionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((JobDefinitionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _jobDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,50 +350,36 @@ namespace Azure.ResourceManager.StorageMover
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobDefinitions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinition_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual Response<bool> Exists(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
 
-            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("JobDefinitionCollection.Exists");
+            using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _jobDefinitionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<JobDefinitionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((JobDefinitionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _jobDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -450,54 +393,38 @@ namespace Azure.ResourceManager.StorageMover
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobDefinitions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinition_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual async Task<NullableResponse<JobDefinitionResource>> GetIfExistsAsync(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
 
-            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("JobDefinitionCollection.GetIfExists");
+            using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _jobDefinitionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<JobDefinitionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((JobDefinitionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _jobDefinitionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<JobDefinitionResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new JobDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -511,54 +438,38 @@ namespace Azure.ResourceManager.StorageMover
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageMover/storageMovers/{storageMoverName}/projects/{projectName}/jobDefinitions/{jobDefinitionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobDefinitions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>JobDefinition_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobDefinitionName"/> is null. </exception>
         public virtual NullableResponse<JobDefinitionResource> GetIfExists(string jobDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobDefinitionName, nameof(jobDefinitionName));
 
-            using DiagnosticScope scope = _jobDefinitionsClientDiagnostics.CreateScope("JobDefinitionCollection.GetIfExists");
+            using var scope = _jobDefinitionClientDiagnostics.CreateScope("JobDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _jobDefinitionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<JobDefinitionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(JobDefinitionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((JobDefinitionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _jobDefinitionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobDefinitionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<JobDefinitionResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new JobDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -578,7 +489,6 @@ namespace Azure.ResourceManager.StorageMover
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<JobDefinitionResource> IAsyncEnumerable<JobDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

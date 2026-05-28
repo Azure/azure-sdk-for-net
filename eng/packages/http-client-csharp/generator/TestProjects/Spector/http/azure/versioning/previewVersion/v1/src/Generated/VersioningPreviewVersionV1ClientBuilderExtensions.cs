@@ -8,7 +8,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using Specs.Azure.Versioning.PreviewVersion;
+using _Specs_.Azure.Versioning.PreviewVersion;
 
 namespace Microsoft.Extensions.Azure
 {

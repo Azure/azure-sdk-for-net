@@ -10,55 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> IaaS VM workload-specific backup item representing an Azure Resource Manager virtual machine. </summary>
-    public partial class IaasComputeVmContainer : IaasVmContainer, IJsonModel<IaasComputeVmContainer>
+    public partial class IaasComputeVmContainer : IUtf8JsonSerializable, IJsonModel<IaasComputeVmContainer>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupGenericProtectionContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmContainer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIaasComputeVmContainer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IaasComputeVmContainer)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasComputeVmContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmContainer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IaasComputeVmContainer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IaasComputeVmContainer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IaasComputeVmContainer IPersistableModel<IaasComputeVmContainer>.Create(BinaryData data, ModelReaderWriterOptions options) => (IaasComputeVmContainer)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IaasComputeVmContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IaasComputeVmContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,109 +28,107 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmContainer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IaasComputeVmContainer)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IaasComputeVmContainer IJsonModel<IaasComputeVmContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IaasComputeVmContainer)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BackupGenericProtectionContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IaasComputeVmContainer IJsonModel<IaasComputeVmContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmContainer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IaasComputeVmContainer)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIaasComputeVmContainer(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IaasComputeVmContainer DeserializeIaasComputeVmContainer(JsonElement element, ModelReaderWriterOptions options)
+        internal static IaasComputeVmContainer DeserializeIaasComputeVmContainer(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ResourceIdentifier virtualMachineId = default;
+            string virtualMachineVersion = default;
+            string resourceGroup = default;
             string friendlyName = default;
             BackupManagementType? backupManagementType = default;
             string registrationStatus = default;
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ResourceIdentifier virtualMachineId = default;
-            string virtualMachineVersion = default;
-            string resourceGroup = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("friendlyName"u8))
+                if (property.NameEquals("virtualMachineId"u8))
                 {
-                    friendlyName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("backupManagementType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupManagementType = new BackupManagementType(prop.Value.GetString());
+                    virtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("registrationStatus"u8))
+                if (property.NameEquals("virtualMachineVersion"u8))
                 {
-                    registrationStatus = prop.Value.GetString();
+                    virtualMachineVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("healthStatus"u8))
+                if (property.NameEquals("resourceGroup"u8))
                 {
-                    healthStatus = prop.Value.GetString();
+                    resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("containerType"u8))
+                if (property.NameEquals("friendlyName"u8))
                 {
-                    containerType = new ProtectableContainerType(prop.Value.GetString());
+                    friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("protectableObjectType"u8))
+                if (property.NameEquals("backupManagementType"u8))
                 {
-                    protectableObjectType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("virtualMachineId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    virtualMachineId = new ResourceIdentifier(prop.Value.GetString());
+                    backupManagementType = new BackupManagementType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("virtualMachineVersion"u8))
+                if (property.NameEquals("registrationStatus"u8))
                 {
-                    virtualMachineVersion = prop.Value.GetString();
+                    registrationStatus = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceGroup"u8))
+                if (property.NameEquals("healthStatus"u8))
                 {
-                    resourceGroup = prop.Value.GetString();
+                    healthStatus = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("containerType"u8))
+                {
+                    containerType = property.Value.GetString().ToProtectableContainerType();
+                    continue;
+                }
+                if (property.NameEquals("protectableObjectType"u8))
+                {
+                    protectableObjectType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new IaasComputeVmContainer(
                 friendlyName,
                 backupManagementType,
@@ -180,10 +136,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 virtualMachineId,
                 virtualMachineVersion,
                 resourceGroup);
         }
+
+        BinaryData IPersistableModel<IaasComputeVmContainer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IaasComputeVmContainer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IaasComputeVmContainer IPersistableModel<IaasComputeVmContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasComputeVmContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeIaasComputeVmContainer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IaasComputeVmContainer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IaasComputeVmContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

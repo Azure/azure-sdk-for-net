@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     internal static partial class KeyVaultSkuNameExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this KeyVaultSkuName value) => value switch
         {
             KeyVaultSkuName.Standard => "standard",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultSkuName value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static KeyVaultSkuName ToKeyVaultSkuName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "standard"))
-            {
-                return KeyVaultSkuName.Standard;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "premium"))
-            {
-                return KeyVaultSkuName.Premium;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "standard")) return KeyVaultSkuName.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "premium")) return KeyVaultSkuName.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultSkuName value.");
         }
     }

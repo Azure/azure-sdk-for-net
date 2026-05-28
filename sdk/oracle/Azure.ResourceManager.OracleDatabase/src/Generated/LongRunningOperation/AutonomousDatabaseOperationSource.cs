@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    /// <summary></summary>
-    internal partial class AutonomousDatabaseOperationSource : IOperationSource<AutonomousDatabaseResource>
+    internal class AutonomousDatabaseOperationSource : IOperationSource<AutonomousDatabaseResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal AutonomousDatabaseOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         AutonomousDatabaseResource IOperationSource<AutonomousDatabaseResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AutonomousDatabaseData data = AutonomousDatabaseData.DeserializeAutonomousDatabaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<AutonomousDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new AutonomousDatabaseResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<AutonomousDatabaseResource> IOperationSource<AutonomousDatabaseResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AutonomousDatabaseData data = AutonomousDatabaseData.DeserializeAutonomousDatabaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AutonomousDatabaseResource(_client, data);
+            var data = ModelReaderWriter.Read<AutonomousDatabaseData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
+            return await Task.FromResult(new AutonomousDatabaseResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

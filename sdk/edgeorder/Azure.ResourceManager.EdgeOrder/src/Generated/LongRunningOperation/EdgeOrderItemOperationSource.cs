@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary></summary>
-    internal partial class EdgeOrderItemOperationSource : IOperationSource<EdgeOrderItemResource>
+    internal class EdgeOrderItemOperationSource : IOperationSource<EdgeOrderItemResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal EdgeOrderItemOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         EdgeOrderItemResource IOperationSource<EdgeOrderItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            EdgeOrderItemData data = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<EdgeOrderItemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEdgeOrderContext.Default);
             return new EdgeOrderItemResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<EdgeOrderItemResource> IOperationSource<EdgeOrderItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            EdgeOrderItemData data = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new EdgeOrderItemResource(_client, data);
+            var data = ModelReaderWriter.Read<EdgeOrderItemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEdgeOrderContext.Default);
+            return await Task.FromResult(new EdgeOrderItemResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

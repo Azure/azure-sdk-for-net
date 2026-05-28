@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.DevOpsInfrastructure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> Defines an Azure DevOps organization. </summary>
-    public partial class DevOpsOrganization : IJsonModel<DevOpsOrganization>
+    public partial class DevOpsOrganization : IUtf8JsonSerializable, IJsonModel<DevOpsOrganization>
     {
-        /// <summary> Initializes a new instance of <see cref="DevOpsOrganization"/> for deserialization. </summary>
-        internal DevOpsOrganization()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsOrganization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevOpsOrganization PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsOrganization>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDevOpsOrganization(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevOpsOrganization)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsOrganization>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevOpsOrganization)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevOpsOrganization>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevOpsOrganization IPersistableModel<DevOpsOrganization>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevOpsOrganization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevOpsOrganization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,24 +28,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsOrganization>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsOrganization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsOrganization)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsCollectionDefined(Projects))
             {
                 writer.WritePropertyName("projects"u8);
                 writer.WriteStartArray();
-                foreach (string item in Projects)
+                foreach (var item in Projects)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -111,15 +61,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 writer.WritePropertyName("alias"u8);
                 writer.WriteStringValue(Alias);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -128,100 +78,121 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DevOpsOrganization IJsonModel<DevOpsOrganization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevOpsOrganization JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DevOpsOrganization IJsonModel<DevOpsOrganization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsOrganization>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsOrganization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevOpsOrganization)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDevOpsOrganization(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DevOpsOrganization DeserializeDevOpsOrganization(JsonElement element, ModelReaderWriterOptions options)
+        internal static DevOpsOrganization DeserializeDevOpsOrganization(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri uri = default;
+            Uri url = default;
             IList<string> projects = default;
             int? parallelism = default;
             bool? openAccess = default;
             string @alias = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("url"u8))
+                if (property.NameEquals("url"u8))
                 {
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("projects"u8))
+                if (property.NameEquals("projects"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     projects = array;
                     continue;
                 }
-                if (prop.NameEquals("parallelism"u8))
+                if (property.NameEquals("parallelism"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    parallelism = prop.Value.GetInt32();
+                    parallelism = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("openAccess"u8))
+                if (property.NameEquals("openAccess"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    openAccess = prop.Value.GetBoolean();
+                    openAccess = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("alias"u8))
+                if (property.NameEquals("alias"u8))
                 {
-                    @alias = prop.Value.GetString();
+                    @alias = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevOpsOrganization(
-                uri,
+                url,
                 projects ?? new ChangeTrackingList<string>(),
                 parallelism,
                 openAccess,
                 @alias,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevOpsOrganization>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsOrganization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevOpsOrganization)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevOpsOrganization IPersistableModel<DevOpsOrganization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevOpsOrganization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDevOpsOrganization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevOpsOrganization)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevOpsOrganization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

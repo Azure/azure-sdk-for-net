@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of Kudu continuous web job information elements.
-    /// Serialized Name: ContinuousWebJobCollection
-    /// </summary>
+    /// <summary> Collection of Kudu continuous web job information elements. </summary>
     internal partial class ContinuousWebJobListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContinuousWebJobListResult"/>. </summary>
-        /// <param name="value">
-        /// The ContinuousWebJob items on this page
-        /// Serialized Name: ContinuousWebJobCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ContinuousWebJobListResult(IEnumerable<ContinuousWebJobData> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContinuousWebJobListResult"/>. </summary>
-        /// <param name="value">
-        /// The ContinuousWebJob items on this page
-        /// Serialized Name: ContinuousWebJobCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: ContinuousWebJobCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContinuousWebJobListResult(IReadOnlyList<ContinuousWebJobData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContinuousWebJobListResult(IReadOnlyList<ContinuousWebJobData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The ContinuousWebJob items on this page
-        /// Serialized Name: ContinuousWebJobCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<ContinuousWebJobData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: ContinuousWebJobCollection.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

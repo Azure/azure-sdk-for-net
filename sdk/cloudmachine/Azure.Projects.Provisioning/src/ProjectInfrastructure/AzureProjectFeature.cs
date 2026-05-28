@@ -19,8 +19,7 @@ public abstract partial class AzureProjectFeature
 
     public string Id { get; }
 
-    protected internal virtual void EmitFeatures(ProjectInfrastructure infrastructure)
-    {
+    protected internal virtual void EmitFeatures(ProjectInfrastructure infrastructure) {
         infrastructure.Features.Append(this);
     }
 

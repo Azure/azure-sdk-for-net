@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -306,75 +306,6 @@ namespace Azure.ResourceManager.Compute
             return GetGalleryInVmAccessControlProfiles().Get(inVmAccessControlProfileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GalleryScriptResources in the Gallery. </summary>
-        /// <returns> An object representing collection of GalleryScriptResources and their operations over a GalleryScriptResource. </returns>
-        public virtual GalleryScriptCollection GetGalleryScripts()
-        {
-            return GetCachedClient(client => new GalleryScriptCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves information about a gallery script definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScripts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="galleryScriptName"> The name of the gallery Script Definition to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryScriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GalleryScriptResource>> GetGalleryScriptAsync(string galleryScriptName, CancellationToken cancellationToken = default)
-        {
-            return await GetGalleryScripts().GetAsync(galleryScriptName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about a gallery script definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScripts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="galleryScriptName"> The name of the gallery Script Definition to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="galleryScriptName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GalleryScriptResource> GetGalleryScript(string galleryScriptName, CancellationToken cancellationToken = default)
-        {
-            return GetGalleryScripts().Get(galleryScriptName, cancellationToken);
-        }
-
         /// <summary>
         /// Retrieves information about a Shared Image Gallery.
         /// <list type="bullet">
@@ -388,7 +319,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -430,7 +361,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -472,7 +403,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -514,7 +445,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -556,7 +487,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -602,7 +533,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -648,7 +579,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -690,7 +621,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -732,7 +663,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -765,7 +696,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -798,7 +729,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -860,7 +791,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -922,7 +853,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -979,7 +910,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1036,7 +967,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1096,7 +1027,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <description>2024-03-03</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

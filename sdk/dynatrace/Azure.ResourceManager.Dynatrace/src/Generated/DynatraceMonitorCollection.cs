@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dynatrace
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.Dynatrace
     /// </summary>
     public partial class DynatraceMonitorCollection : ArmCollection, IEnumerable<DynatraceMonitorResource>, IAsyncEnumerable<DynatraceMonitorResource>
     {
-        private readonly ClientDiagnostics _monitorsClientDiagnostics;
-        private readonly Monitors _monitorsRestClient;
+        private readonly ClientDiagnostics _dynatraceMonitorMonitorsClientDiagnostics;
+        private readonly MonitorsRestOperations _dynatraceMonitorMonitorsRestClient;
 
-        /// <summary> Initializes a new instance of DynatraceMonitorCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DynatraceMonitorCollection"/> class for mocking. </summary>
         protected DynatraceMonitorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DynatraceMonitorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DynatraceMonitorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DynatraceMonitorResource.ResourceType, out string dynatraceMonitorApiVersion);
-            _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", DynatraceMonitorResource.ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Endpoint, dynatraceMonitorApiVersion ?? "2024-04-24");
-            ValidateResourceId(id);
+            _dynatraceMonitorMonitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", DynatraceMonitorResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DynatraceMonitorResource.ResourceType, out string dynatraceMonitorMonitorsApiVersion);
+            _dynatraceMonitorMonitorsRestClient = new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceMonitorMonitorsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a MonitorResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MonitorResources_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-24. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DynatraceMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string monitorName, DynatraceMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _monitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.CreateOrUpdate");
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _monitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, DynatraceMonitorData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DynatraceArmOperation<DynatraceMonitorResource> operation = new DynatraceArmOperation<DynatraceMonitorResource>(
-                    new DynatraceMonitorOperationSource(Client),
-                    _monitorsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _dynatraceMonitorMonitorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DynatraceArmOperation<DynatraceMonitorResource>(new DynatraceMonitorOperationSource(Client), _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, _dynatraceMonitorMonitorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.Dynatrace
         /// Create a MonitorResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MonitorResources_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-24. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DynatraceMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string monitorName, DynatraceMonitorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _monitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.CreateOrUpdate");
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _monitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, DynatraceMonitorData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DynatraceArmOperation<DynatraceMonitorResource> operation = new DynatraceArmOperation<DynatraceMonitorResource>(
-                    new DynatraceMonitorOperationSource(Client),
-                    _monitorsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _dynatraceMonitorMonitorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data, cancellationToken);
+                var operation = new DynatraceArmOperation<DynatraceMonitorResource>(new DynatraceMonitorOperationSource(Client), _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, _dynatraceMonitorMonitorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, monitorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.Dynatrace
         /// Get a MonitorResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MonitorResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-24. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<Response<DynatraceMonitorResource>> GetAsync(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using DiagnosticScope scope = _monitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Get");
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _monitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DynatraceMonitorData> response = Response.FromValue(DynatraceMonitorData.FromResponse(result), result);
+                var response = await _dynatraceMonitorMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DynatraceMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.Dynatrace
         /// Get a MonitorResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MonitorResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-24. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual Response<DynatraceMonitorResource> Get(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using DiagnosticScope scope = _monitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Get");
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _monitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DynatraceMonitorData> response = Response.FromValue(DynatraceMonitorData.FromResponse(result), result);
+                var response = _dynatraceMonitorMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DynatraceMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.Dynatrace
         /// List MonitorResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MonitorResources_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-24. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DynatraceMonitorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DynatraceMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DynatraceMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetByResourceGroupAsyncCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DynatraceMonitorCollection.GetAll"), data => new DynatraceMonitorResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DynatraceMonitorResource(Client, DynatraceMonitorData.DeserializeDynatraceMonitorData(e)), _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List MonitorResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MonitorResources_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-24. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> A collection of <see cref="DynatraceMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DynatraceMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetByResourceGroupCollectionResultOfT(_monitorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DynatraceMonitorCollection.GetAll"), data => new DynatraceMonitorResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dynatraceMonitorMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dynatraceMonitorMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DynatraceMonitorResource(Client, DynatraceMonitorData.DeserializeDynatraceMonitorData(e)), _dynatraceMonitorMonitorsClientDiagnostics, Pipeline, "DynatraceMonitorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MonitorResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-24. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using DiagnosticScope scope = _monitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Exists");
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _monitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DynatraceMonitorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DynatraceMonitorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DynatraceMonitorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dynatraceMonitorMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.Dynatrace
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MonitorResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-24. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual Response<bool> Exists(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using DiagnosticScope scope = _monitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Exists");
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _monitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DynatraceMonitorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DynatraceMonitorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DynatraceMonitorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dynatraceMonitorMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.Dynatrace
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MonitorResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-24. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<NullableResponse<DynatraceMonitorResource>> GetIfExistsAsync(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using DiagnosticScope scope = _monitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.GetIfExists");
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _monitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DynatraceMonitorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DynatraceMonitorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DynatraceMonitorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dynatraceMonitorMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DynatraceMonitorResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DynatraceMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.Dynatrace
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MonitorResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-24. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DynatraceMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorName"> Monitor resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual NullableResponse<DynatraceMonitorResource> GetIfExists(string monitorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
-            using DiagnosticScope scope = _monitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.GetIfExists");
+            using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _monitorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DynatraceMonitorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DynatraceMonitorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DynatraceMonitorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dynatraceMonitorMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DynatraceMonitorResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DynatraceMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.Dynatrace
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DynatraceMonitorResource> IAsyncEnumerable<DynatraceMonitorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

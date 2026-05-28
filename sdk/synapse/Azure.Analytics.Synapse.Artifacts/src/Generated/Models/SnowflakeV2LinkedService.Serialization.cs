@@ -135,11 +135,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
-            if (Optional.IsDefined(UseUtcTimestamps))
-            {
-                writer.WritePropertyName("useUtcTimestamps"u8);
-                writer.WriteObjectValue<object>(UseUtcTimestamps);
-            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -177,7 +172,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SecretBase privateKey = default;
             SecretBase privateKeyPassphrase = default;
             string encryptedCredential = default;
-            object useUtcTimestamps = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -378,15 +372,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             encryptedCredential = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("useUtcTimestamps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            useUtcTimestamps = property0.Value.GetObject();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -416,8 +401,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 schema,
                 privateKey,
                 privateKeyPassphrase,
-                encryptedCredential,
-                useUtcTimestamps);
+                encryptedCredential);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

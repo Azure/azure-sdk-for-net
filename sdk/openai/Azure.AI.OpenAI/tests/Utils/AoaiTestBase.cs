@@ -53,15 +53,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
 
     public AzureTestEnvironment TestEnvironment { get; }
 
-    private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
-    {
-        "Playback" => RecordedTestMode.Playback,
-        "Live" => RecordedTestMode.Live,
-        "Record" => RecordedTestMode.Record,
-        _ => null
-    };
-
-    protected AoaiTestBase(bool isAsync) : this(isAsync: isAsync, mode: GetRecordedTestMode(), automaticRecord: null)
+    protected AoaiTestBase(bool isAsync) : this(isAsync, null, null)
     { }
 
     protected AoaiTestBase(bool isAsync, RecordedTestMode? mode = null, bool? automaticRecord = null)
@@ -302,7 +294,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         };
     }
 
-    #endregion
+#endregion
 
     /// <summary>
     /// Polls until a condition has been met with a maximum wait time. The function will always return the last value even
@@ -415,8 +407,8 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(ImageClient):
                 clientObject = topLevelClient.GetImageClient(getDeployment());
                 break;
-            case nameof(ResponsesClient):
-                clientObject = topLevelClient.GetResponsesClient();
+            case nameof(OpenAIResponseClient):
+                clientObject = topLevelClient.GetOpenAIResponseClient(getDeployment());
                 break;
             case nameof(VectorStoreClient):
                 clientObject = topLevelClient.GetVectorStoreClient();
@@ -430,8 +422,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
                 break;
             default:
                 throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");
-        }
-        ;
+        };
 
         if (!wrapClient)
         {

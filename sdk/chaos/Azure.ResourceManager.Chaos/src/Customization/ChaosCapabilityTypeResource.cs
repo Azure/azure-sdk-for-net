@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core;
+using System.Threading.Tasks;
+using System.Threading;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Chaos
 {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos
         }
 
         private readonly ClientDiagnostics _chaosCapabilityTypeCapabilityTypesClientDiagnostics;
-        private readonly CapabilityTypes _chaosCapabilityTypeCapabilityTypesRestClient;
+        private readonly CapabilityTypesRestOperations _chaosCapabilityTypeCapabilityTypesRestClient;
 #pragma warning disable CS0618 // Type or member is obsolete
         private readonly ChaosCapabilityTypeData _data;
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Chaos
         {
             _chaosCapabilityTypeCapabilityTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string chaosCapabilityTypeCapabilityTypesApiVersion);
-            _chaosCapabilityTypeCapabilityTypesRestClient = new CapabilityTypes(_chaosCapabilityTypeCapabilityTypesClientDiagnostics, Pipeline, Endpoint, chaosCapabilityTypeCapabilityTypesApiVersion);
+            _chaosCapabilityTypeCapabilityTypesRestClient = new CapabilityTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosCapabilityTypeCapabilityTypesApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -110,9 +110,23 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Task<Response<ChaosCapabilityTypeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosCapabilityTypeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException();
+            using var scope = _chaosCapabilityTypeCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityTypeResource.Get");
+            scope.Start();
+            try
+            {
+                var response = await _chaosCapabilityTypeCapabilityTypesRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                var capabilityTypeResponse = CustomizationHelper.GetCapabilityTypeData(response.Value);
+                return Response.FromValue(new ChaosCapabilityTypeResource(Client, capabilityTypeResponse), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -139,7 +153,21 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ChaosCapabilityTypeResource> Get(CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException();
+            using var scope = _chaosCapabilityTypeCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityTypeResource.Get");
+            scope.Start();
+            try
+            {
+                var response = _chaosCapabilityTypeCapabilityTypesRestClient.Get(Id.SubscriptionId, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                var capabilityTypeResponse = CustomizationHelper.GetCapabilityTypeData(response.Value);
+                return Response.FromValue(new ChaosCapabilityTypeResource(Client, capabilityTypeResponse), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

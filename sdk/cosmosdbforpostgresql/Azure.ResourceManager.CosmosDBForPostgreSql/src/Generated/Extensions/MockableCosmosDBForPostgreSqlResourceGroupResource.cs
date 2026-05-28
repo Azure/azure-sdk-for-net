@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDBForPostgreSql;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableCosmosDBForPostgreSqlResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableCosmosDBForPostgreSqlResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBForPostgreSqlResourceGroupResource"/> class for mocking. </summary>
         protected MockableCosmosDBForPostgreSqlResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableCosmosDBForPostgreSqlResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBForPostgreSqlResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCosmosDBForPostgreSqlResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of CosmosDBForPostgreSqlClusters in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of CosmosDBForPostgreSqlClusters and their operations over a CosmosDBForPostgreSqlClusterResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of CosmosDBForPostgreSqlClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CosmosDBForPostgreSqlClusterResources and their operations over a CosmosDBForPostgreSqlClusterResource. </returns>
         public virtual CosmosDBForPostgreSqlClusterCollection GetCosmosDBForPostgreSqlClusters()
         {
             return GetCachedClient(client => new CosmosDBForPostgreSqlClusterCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// Gets information about a cluster such as compute and storage configuration and cluster lifecycle metadata such as cluster creation date and time.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-03-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBForPostgreSqlClusterResource>> GetCosmosDBForPostgreSqlClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
             return await GetCosmosDBForPostgreSqlClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// Gets information about a cluster such as compute and storage configuration and cluster lifecycle metadata such as cluster creation date and time.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-03-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         [ForwardsClientCalls]
         public virtual Response<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlCluster(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
             return GetCosmosDBForPostgreSqlClusters().Get(clusterName, cancellationToken);
         }
     }

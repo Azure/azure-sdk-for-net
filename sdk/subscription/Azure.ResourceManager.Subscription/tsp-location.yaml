@@ -1,4 +1,0 @@
-directory: specification/subscription/resource-manager/Microsoft.Subscription/Subscription
-commit: e393681748e363e5165b1cb59fef025ac96cd27f
-repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

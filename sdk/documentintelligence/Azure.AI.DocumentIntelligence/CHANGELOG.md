@@ -4,9 +4,6 @@
 
 ### Features Added
 
-- Added `DocumentIntelligenceClientSettings` to support creating a `DocumentIntelligenceClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-- Added `DocumentIntelligenceAdministrationClientSettings` to support creating a `DocumentIntelligenceAdministrationClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -11,7 +11,7 @@ using System.Text;
 namespace Azure.AI.OpenAI.Responses;
 
 [Experimental("OPENAI002")]
-internal partial class AzureResponsesClient
+internal partial class AzureOpenAIResponseClient
 {
     internal override PipelineMessage CreateCreateResponseRequest(
         BinaryContent content,
@@ -31,23 +31,19 @@ internal partial class AzureResponsesClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateGetResponseRequest(string responseId, IEnumerable<IncludedResponseProperty> include, bool? stream, int? startingAfter, bool? includeObfuscation, RequestOptions options)
+    internal override PipelineMessage CreateGetResponseRequest(string responseId, IEnumerable<InternalIncludable> includables, bool? stream, int? startingAfter, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _aoaiEndpoint, _apiVersion, string.Empty)
             .WithPath("responses", responseId)
-            .WithOptionalQueryParameter("include[]", $"{GetIncludeQueryStringValue(include)}", escape: false)
+            .WithOptionalQueryParameter("include[]", $"{GetIncludeQueryStringValue(includables)}", escape: false)
             .WithOptionalQueryParameter("stream", stream)
             .WithOptionalQueryParameter("starting_after", startingAfter)
             .WithMethod("GET")
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateGetResponseInputItemsRequest(string responseId, int? limit, string order, string after, string before, RequestOptions options)
+    internal override PipelineMessage CreateGetInputItemsRequest(string responseId, int? limit, string order, string after, string before, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _aoaiEndpoint, _apiVersion, string.Empty)
             .WithPath("responses", responseId, "input_items")
-            .WithOptionalQueryParameter("limit", limit)
-            .WithOptionalQueryParameter("order", order)
-            .WithOptionalQueryParameter("after", after)
-            .WithOptionalQueryParameter("before", before)
             .WithMethod("GET")
             .WithOptions(options)
             .Build();
@@ -59,14 +55,14 @@ internal partial class AzureResponsesClient
         .WithOptions(options)
         .Build();
 
-    private static string GetIncludeQueryStringValue(IEnumerable<IncludedResponseProperty> include)
+    private static string GetIncludeQueryStringValue(IEnumerable<InternalIncludable> include)
     {
         if (include?.Any() != true)
         {
             return string.Empty;
         }
         StringBuilder valueBuilder = new();
-        foreach (IncludedResponseProperty item in include)
+        foreach (InternalIncludable item in include)
         {
             if (valueBuilder.Length > 0)
             {

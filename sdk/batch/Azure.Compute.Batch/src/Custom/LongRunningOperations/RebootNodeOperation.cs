@@ -64,17 +64,17 @@ namespace Azure.Compute.Batch
         /// <param name="client">
         /// The client used to check for completion.
         /// </param>
-        /// <param name="operationId">The ID of this operation.</param>
+        /// <param name="id">The ID of this operation.</param>
         public RebootNodeOperation(
             BatchClient client,
-            string operationId)
+            string id)
         {
-            if (String.IsNullOrEmpty(operationId))
+            if (String.IsNullOrEmpty(id))
                 throw new ArgumentNullException("id is not formated correctly");
-            string[] idSplit = operationId.Split(';');
+            string[] idSplit = id.Split(';');
             _nodeId = idSplit[0];
             _poolId = idSplit[1];
-            Id = operationId;
+            Id = id;
             _rawResponse = null;
             _client = client;
         }

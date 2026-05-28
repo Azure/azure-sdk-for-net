@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct PostPlannedFailoverRedundancy : IEquatable<PostPlannedFailoverRedundancy>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="PostPlannedFailoverRedundancy"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PostPlannedFailoverRedundancy(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string StandardGrsValue = "Standard_GRS";
         private const string StandardGzrsValue = "Standard_GZRS";
         private const string StandardRagrsValue = "Standard_RAGRS";
         private const string StandardRagzrsValue = "Standard_RAGZRS";
 
-        /// <summary> Initializes a new instance of <see cref="PostPlannedFailoverRedundancy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PostPlannedFailoverRedundancy(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the StandardGrs. </summary>
+        /// <summary> Standard_GRS. </summary>
         public static PostPlannedFailoverRedundancy StandardGrs { get; } = new PostPlannedFailoverRedundancy(StandardGrsValue);
-
-        /// <summary> Gets the StandardGzrs. </summary>
+        /// <summary> Standard_GZRS. </summary>
         public static PostPlannedFailoverRedundancy StandardGzrs { get; } = new PostPlannedFailoverRedundancy(StandardGzrsValue);
-
-        /// <summary> Gets the StandardRagrs. </summary>
+        /// <summary> Standard_RAGRS. </summary>
         public static PostPlannedFailoverRedundancy StandardRagrs { get; } = new PostPlannedFailoverRedundancy(StandardRagrsValue);
-
-        /// <summary> Gets the StandardRagzrs. </summary>
+        /// <summary> Standard_RAGZRS. </summary>
         public static PostPlannedFailoverRedundancy StandardRagzrs { get; } = new PostPlannedFailoverRedundancy(StandardRagzrsValue);
-
         /// <summary> Determines if two <see cref="PostPlannedFailoverRedundancy"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostPlannedFailoverRedundancy left, PostPlannedFailoverRedundancy right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PostPlannedFailoverRedundancy"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostPlannedFailoverRedundancy left, PostPlannedFailoverRedundancy right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PostPlannedFailoverRedundancy"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostPlannedFailoverRedundancy"/>. </summary>
         public static implicit operator PostPlannedFailoverRedundancy(string value) => new PostPlannedFailoverRedundancy(value);
 
-        /// <summary> Converts a string to a <see cref="PostPlannedFailoverRedundancy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PostPlannedFailoverRedundancy?(string value) => value == null ? null : new PostPlannedFailoverRedundancy(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostPlannedFailoverRedundancy other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PostPlannedFailoverRedundancy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Text.Tests
         public void TextAnalysisClientEndpointNull()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new TextAnalysisClient(null, new AzureKeyCredential("test-key")));
+                () => new TextAnalysisClient(null, (AzureKeyCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.Text.Tests
         public void TextAnalysisClientEndpointNullUsingTokenCredential()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new TextAnalysisClient(null, new MockCredential()));
+                () => new TextAnalysisClient(null, (TokenCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 

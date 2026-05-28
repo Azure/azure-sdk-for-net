@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct DirectoryServiceOption : IEquatable<DirectoryServiceOption>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DirectoryServiceOption"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DirectoryServiceOption(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NoneValue = "None";
         private const string AaddsValue = "AADDS";
         private const string ADValue = "AD";
         private const string AadkerbValue = "AADKERB";
 
-        /// <summary> Initializes a new instance of <see cref="DirectoryServiceOption"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DirectoryServiceOption(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static DirectoryServiceOption None { get; } = new DirectoryServiceOption(NoneValue);
-
-        /// <summary> Gets the Aadds. </summary>
+        /// <summary> AADDS. </summary>
         public static DirectoryServiceOption Aadds { get; } = new DirectoryServiceOption(AaddsValue);
-
-        /// <summary> Gets the AD. </summary>
+        /// <summary> AD. </summary>
         public static DirectoryServiceOption AD { get; } = new DirectoryServiceOption(ADValue);
-
-        /// <summary> Gets the Aadkerb. </summary>
+        /// <summary> AADKERB. </summary>
         public static DirectoryServiceOption Aadkerb { get; } = new DirectoryServiceOption(AadkerbValue);
-
         /// <summary> Determines if two <see cref="DirectoryServiceOption"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DirectoryServiceOption left, DirectoryServiceOption right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DirectoryServiceOption"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DirectoryServiceOption left, DirectoryServiceOption right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DirectoryServiceOption"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DirectoryServiceOption"/>. </summary>
         public static implicit operator DirectoryServiceOption(string value) => new DirectoryServiceOption(value);
 
-        /// <summary> Converts a string to a <see cref="DirectoryServiceOption"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DirectoryServiceOption?(string value) => value == null ? null : new DirectoryServiceOption(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DirectoryServiceOption other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DirectoryServiceOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

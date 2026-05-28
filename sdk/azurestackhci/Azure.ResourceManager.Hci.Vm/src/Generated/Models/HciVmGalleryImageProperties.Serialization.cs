@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    /// <summary> Properties under the gallery image resource. </summary>
-    public partial class HciVmGalleryImageProperties : IJsonModel<HciVmGalleryImageProperties>
+    public partial class HciVmGalleryImageProperties : IUtf8JsonSerializable, IJsonModel<HciVmGalleryImageProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="HciVmGalleryImageProperties"/> for deserialization. </summary>
-        internal HciVmGalleryImageProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciVmGalleryImageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmGalleryImageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmGalleryImageProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmGalleryImageProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HciVmGalleryImageProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciVmGalleryImageProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmGalleryImageProperties IPersistableModel<HciVmGalleryImageProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciVmGalleryImageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmGalleryImageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciVmGalleryImageProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
@@ -101,6 +55,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
+            }
+            if (Optional.IsDefined(VmImageRepositoryCredentials))
+            {
+                writer.WritePropertyName("vmImageRepositoryCredentials"u8);
+                writer.WriteObjectValue(VmImageRepositoryCredentials, options);
             }
             if (Optional.IsDefined(Identifier))
             {
@@ -127,15 +86,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("sourceVirtualMachineId"u8);
                 writer.WriteStringValue(SourceVirtualMachineId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -144,27 +103,22 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmGalleryImageProperties IJsonModel<HciVmGalleryImageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmGalleryImageProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciVmGalleryImageProperties IJsonModel<HciVmGalleryImageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciVmGalleryImageProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciVmGalleryImageProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciVmGalleryImageProperties DeserializeHciVmGalleryImageProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciVmGalleryImageProperties DeserializeHciVmGalleryImageProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -174,113 +128,157 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             HciVmOSType osType = default;
             CloudInitDataSource? cloudInitDataSource = default;
             HciVmHyperVGeneration? hyperVGeneration = default;
+            HciVmImageRepositoryCredentials vmImageRepositoryCredentials = default;
             HciVmGalleryImageIdentifier identifier = default;
             HciVmGalleryImageVersion version = default;
             HciVmProvisioningState? provisioningState = default;
             HciVmGalleryImageStatus status = default;
             ResourceIdentifier sourceVirtualMachineId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("containerId"u8))
+                if (property.NameEquals("containerId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerId = new ResourceIdentifier(prop.Value.GetString());
+                    containerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("imagePath"u8))
+                if (property.NameEquals("imagePath"u8))
                 {
-                    imagePath = prop.Value.GetString();
+                    imagePath = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("osType"u8))
+                if (property.NameEquals("osType"u8))
                 {
-                    osType = new HciVmOSType(prop.Value.GetString());
+                    osType = new HciVmOSType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("cloudInitDataSource"u8))
+                if (property.NameEquals("cloudInitDataSource"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloudInitDataSource = new CloudInitDataSource(prop.Value.GetString());
+                    cloudInitDataSource = new CloudInitDataSource(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("hyperVGeneration"u8))
+                if (property.NameEquals("hyperVGeneration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hyperVGeneration = new HciVmHyperVGeneration(prop.Value.GetString());
+                    hyperVGeneration = new HciVmHyperVGeneration(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("identifier"u8))
+                if (property.NameEquals("vmImageRepositoryCredentials"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identifier = HciVmGalleryImageIdentifier.DeserializeHciVmGalleryImageIdentifier(prop.Value, options);
+                    vmImageRepositoryCredentials = HciVmImageRepositoryCredentials.DeserializeHciVmImageRepositoryCredentials(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("version"u8))
+                if (property.NameEquals("identifier"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    version = HciVmGalleryImageVersion.DeserializeHciVmGalleryImageVersion(prop.Value, options);
+                    identifier = HciVmGalleryImageIdentifier.DeserializeHciVmGalleryImageIdentifier(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new HciVmProvisioningState(prop.Value.GetString());
+                    version = HciVmGalleryImageVersion.DeserializeHciVmGalleryImageVersion(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = HciVmGalleryImageStatus.DeserializeHciVmGalleryImageStatus(prop.Value, options);
+                    provisioningState = new HciVmProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sourceVirtualMachineId"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceVirtualMachineId = new ResourceIdentifier(prop.Value.GetString());
+                    status = HciVmGalleryImageStatus.DeserializeHciVmGalleryImageStatus(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("sourceVirtualMachineId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceVirtualMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new HciVmGalleryImageProperties(
                 containerId,
                 imagePath,
                 osType,
                 cloudInitDataSource,
                 hyperVGeneration,
+                vmImageRepositoryCredentials,
                 identifier,
                 version,
                 provisioningState,
                 status,
                 sourceVirtualMachineId,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HciVmGalleryImageProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciVmGalleryImageProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HciVmGalleryImageProperties IPersistableModel<HciVmGalleryImageProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciVmGalleryImageProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHciVmGalleryImageProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmGalleryImageProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciVmGalleryImageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

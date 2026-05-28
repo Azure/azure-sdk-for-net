@@ -31,8 +31,6 @@ model BarProperties {
 
 @armResourceOperations
 interface Bars {
-  list is ArmResourceListByParent<Bar>;
-
   createOrUpdate is ArmResourceCreateOrUpdateAsync<Bar>;
 
   get is ArmResourceRead<Bar>;
@@ -40,9 +38,9 @@ interface Bars {
   delete is ArmResourceDeleteWithoutOkAsync<Bar>;
 
   update is ArmCustomPatchSync<Bar, Bar>;
-}
 
-@@Azure.ResourceManager.Legacy.renamePathParameter(Bars.list, "fooName", "name");
+  list is ArmResourceListByParent<Bar>;
+}
 
 @singleton("current")
 @parentResource(Bar)
@@ -131,24 +129,4 @@ interface BarSettingsOperations {
 interface BarQuotaOperations {
   get is ArmResourceRead<BarQuotaResource>;
   update is ArmCustomPatchAsync<BarQuotaResource, BarQuotaResource>;
-}
-
-/** An Employee resource */
-@parentResource(Bar)
-model Employee is TrackedResource<EmployeeProperties> {
-  ...ResourceNameParameter<Employee>;
-}
-
-/** Employee properties */
-model EmployeeProperties {
-  /** Age of employee */
-  age?: int32;
-
-  /** City of employee */
-  city?: string;
-}
-
-@armResourceOperations
-interface Employees {
-  listByParent is ArmResourceListByParent<Employee>;
 }

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.OracleDatabase;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The estimated total time required in minutes for all patching operations (database server, storage server, and network switch patching). </summary>
-    public partial class EstimatedPatchingTime : IJsonModel<EstimatedPatchingTime>
+    public partial class EstimatedPatchingTime : IUtf8JsonSerializable, IJsonModel<EstimatedPatchingTime>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EstimatedPatchingTime PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EstimatedPatchingTime>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEstimatedPatchingTime(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EstimatedPatchingTime)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EstimatedPatchingTime>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EstimatedPatchingTime>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EstimatedPatchingTime)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EstimatedPatchingTime>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EstimatedPatchingTime IPersistableModel<EstimatedPatchingTime>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EstimatedPatchingTime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EstimatedPatchingTime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EstimatedPatchingTime>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EstimatedPatchingTime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EstimatedPatchingTime)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(EstimatedDBServerPatchingTime))
             {
                 writer.WritePropertyName("estimatedDbServerPatchingTime"u8);
@@ -94,15 +54,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("totalEstimatedPatchingTime"u8);
                 writer.WriteNumberValue(TotalEstimatedPatchingTime.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,80 +71,108 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EstimatedPatchingTime IJsonModel<EstimatedPatchingTime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EstimatedPatchingTime JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EstimatedPatchingTime IJsonModel<EstimatedPatchingTime>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EstimatedPatchingTime>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EstimatedPatchingTime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EstimatedPatchingTime)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEstimatedPatchingTime(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EstimatedPatchingTime DeserializeEstimatedPatchingTime(JsonElement element, ModelReaderWriterOptions options)
+        internal static EstimatedPatchingTime DeserializeEstimatedPatchingTime(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? estimatedDBServerPatchingTime = default;
+            int? estimatedDbServerPatchingTime = default;
             int? estimatedNetworkSwitchesPatchingTime = default;
             int? estimatedStorageServerPatchingTime = default;
             int? totalEstimatedPatchingTime = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("estimatedDbServerPatchingTime"u8))
+                if (property.NameEquals("estimatedDbServerPatchingTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    estimatedDBServerPatchingTime = prop.Value.GetInt32();
+                    estimatedDbServerPatchingTime = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("estimatedNetworkSwitchesPatchingTime"u8))
+                if (property.NameEquals("estimatedNetworkSwitchesPatchingTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    estimatedNetworkSwitchesPatchingTime = prop.Value.GetInt32();
+                    estimatedNetworkSwitchesPatchingTime = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("estimatedStorageServerPatchingTime"u8))
+                if (property.NameEquals("estimatedStorageServerPatchingTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    estimatedStorageServerPatchingTime = prop.Value.GetInt32();
+                    estimatedStorageServerPatchingTime = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("totalEstimatedPatchingTime"u8))
+                if (property.NameEquals("totalEstimatedPatchingTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalEstimatedPatchingTime = prop.Value.GetInt32();
+                    totalEstimatedPatchingTime = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new EstimatedPatchingTime(estimatedDBServerPatchingTime, estimatedNetworkSwitchesPatchingTime, estimatedStorageServerPatchingTime, totalEstimatedPatchingTime, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EstimatedPatchingTime(estimatedDbServerPatchingTime, estimatedNetworkSwitchesPatchingTime, estimatedStorageServerPatchingTime, totalEstimatedPatchingTime, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EstimatedPatchingTime>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EstimatedPatchingTime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EstimatedPatchingTime)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EstimatedPatchingTime IPersistableModel<EstimatedPatchingTime>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EstimatedPatchingTime>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEstimatedPatchingTime(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EstimatedPatchingTime)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EstimatedPatchingTime>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

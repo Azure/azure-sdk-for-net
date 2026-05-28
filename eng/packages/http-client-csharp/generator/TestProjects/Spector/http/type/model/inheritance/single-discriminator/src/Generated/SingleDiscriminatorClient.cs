@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,12 +18,7 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
     {
         public SingleDiscriminatorClient() : this(new Uri("http://localhost:3000"), new SingleDiscriminatorClientOptions()) => throw null;
 
-        internal SingleDiscriminatorClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SingleDiscriminatorClientOptions options) => throw null;
-
-        public SingleDiscriminatorClient(Uri endpoint, SingleDiscriminatorClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public SingleDiscriminatorClient(SingleDiscriminatorClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public SingleDiscriminatorClient(Uri endpoint, SingleDiscriminatorClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

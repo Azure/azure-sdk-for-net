@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -15,137 +14,86 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct HciProvisioningState : IEquatable<HciProvisioningState>
     {
         private readonly string _value;
-        /// <summary> The provisioning state is not specified. </summary>
-        private const string NotSpecifiedValue = "NotSpecified";
-        /// <summary> An error occurred during provisioning. </summary>
-        private const string ErrorValue = "Error";
-        /// <summary> Provisioning completed successfully. </summary>
-        private const string SucceededValue = "Succeeded";
-        /// <summary> Provisioning failed. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> Provisioning was canceled. </summary>
-        private const string CanceledValue = "Canceled";
-        /// <summary> The resource is connected. </summary>
-        private const string ConnectedValue = "Connected";
-        /// <summary> The resource is disconnected. </summary>
-        private const string DisconnectedValue = "Disconnected";
-        /// <summary> The resource has been deleted. </summary>
-        private const string DeletedValue = "Deleted";
-        /// <summary> The resource is being created. </summary>
-        private const string CreatingValue = "Creating";
-        /// <summary> The resource is being updated. </summary>
-        private const string UpdatingValue = "Updating";
-        /// <summary> The resource is being deleted. </summary>
-        private const string DeletingValue = "Deleting";
-        /// <summary> The resource is being moved. </summary>
-        private const string MovingValue = "Moving";
-        /// <summary> Provisioning partially succeeded. </summary>
-        private const string PartiallySucceededValue = "PartiallySucceeded";
-        /// <summary> The resource is partially connected. </summary>
-        private const string PartiallyConnectedValue = "PartiallyConnected";
-        /// <summary> Provisioning is in progress. </summary>
-        private const string InProgressValue = "InProgress";
-        /// <summary> Provisioning request has been accepted. </summary>
-        private const string AcceptedValue = "Accepted";
-        /// <summary> The resource is currently provisioning. </summary>
-        private const string ProvisioningValue = "Provisioning";
-        /// <summary> The resource is being disabled. </summary>
-        private const string DisableInProgressValue = "DisableInProgress";
 
         /// <summary> Initializes a new instance of <see cref="HciProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciProvisioningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The provisioning state is not specified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        private const string ErrorValue = "Error";
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string ConnectedValue = "Connected";
+        private const string DisconnectedValue = "Disconnected";
+        private const string DeletedValue = "Deleted";
+        private const string CreatingValue = "Creating";
+        private const string UpdatingValue = "Updating";
+        private const string DeletingValue = "Deleting";
+        private const string MovingValue = "Moving";
+        private const string PartiallySucceededValue = "PartiallySucceeded";
+        private const string PartiallyConnectedValue = "PartiallyConnected";
+        private const string InProgressValue = "InProgress";
+        private const string AcceptedValue = "Accepted";
+        private const string ProvisioningValue = "Provisioning";
+        private const string DisableInProgressValue = "DisableInProgress";
+
+        /// <summary> NotSpecified. </summary>
         public static HciProvisioningState NotSpecified { get; } = new HciProvisioningState(NotSpecifiedValue);
-
-        /// <summary> An error occurred during provisioning. </summary>
+        /// <summary> Error. </summary>
         public static HciProvisioningState Error { get; } = new HciProvisioningState(ErrorValue);
-
-        /// <summary> Provisioning completed successfully. </summary>
+        /// <summary> Succeeded. </summary>
         public static HciProvisioningState Succeeded { get; } = new HciProvisioningState(SucceededValue);
-
-        /// <summary> Provisioning failed. </summary>
+        /// <summary> Failed. </summary>
         public static HciProvisioningState Failed { get; } = new HciProvisioningState(FailedValue);
-
-        /// <summary> Provisioning was canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static HciProvisioningState Canceled { get; } = new HciProvisioningState(CanceledValue);
-
-        /// <summary> The resource is connected. </summary>
+        /// <summary> Connected. </summary>
         public static HciProvisioningState Connected { get; } = new HciProvisioningState(ConnectedValue);
-
-        /// <summary> The resource is disconnected. </summary>
+        /// <summary> Disconnected. </summary>
         public static HciProvisioningState Disconnected { get; } = new HciProvisioningState(DisconnectedValue);
-
-        /// <summary> The resource has been deleted. </summary>
+        /// <summary> Deleted. </summary>
         public static HciProvisioningState Deleted { get; } = new HciProvisioningState(DeletedValue);
-
-        /// <summary> The resource is being created. </summary>
+        /// <summary> Creating. </summary>
         public static HciProvisioningState Creating { get; } = new HciProvisioningState(CreatingValue);
-
-        /// <summary> The resource is being updated. </summary>
+        /// <summary> Updating. </summary>
         public static HciProvisioningState Updating { get; } = new HciProvisioningState(UpdatingValue);
-
-        /// <summary> The resource is being deleted. </summary>
+        /// <summary> Deleting. </summary>
         public static HciProvisioningState Deleting { get; } = new HciProvisioningState(DeletingValue);
-
-        /// <summary> The resource is being moved. </summary>
+        /// <summary> Moving. </summary>
         public static HciProvisioningState Moving { get; } = new HciProvisioningState(MovingValue);
-
-        /// <summary> Provisioning partially succeeded. </summary>
+        /// <summary> PartiallySucceeded. </summary>
         public static HciProvisioningState PartiallySucceeded { get; } = new HciProvisioningState(PartiallySucceededValue);
-
-        /// <summary> The resource is partially connected. </summary>
+        /// <summary> PartiallyConnected. </summary>
         public static HciProvisioningState PartiallyConnected { get; } = new HciProvisioningState(PartiallyConnectedValue);
-
-        /// <summary> Provisioning is in progress. </summary>
+        /// <summary> InProgress. </summary>
         public static HciProvisioningState InProgress { get; } = new HciProvisioningState(InProgressValue);
-
-        /// <summary> Provisioning request has been accepted. </summary>
+        /// <summary> Accepted. </summary>
         public static HciProvisioningState Accepted { get; } = new HciProvisioningState(AcceptedValue);
-
-        /// <summary> The resource is currently provisioning. </summary>
+        /// <summary> Provisioning. </summary>
         public static HciProvisioningState Provisioning { get; } = new HciProvisioningState(ProvisioningValue);
-
-        /// <summary> The resource is being disabled. </summary>
+        /// <summary> DisableInProgress. </summary>
         public static HciProvisioningState DisableInProgress { get; } = new HciProvisioningState(DisableInProgressValue);
-
         /// <summary> Determines if two <see cref="HciProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciProvisioningState left, HciProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="HciProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciProvisioningState left, HciProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="HciProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciProvisioningState"/>. </summary>
         public static implicit operator HciProvisioningState(string value) => new HciProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="HciProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HciProvisioningState?(string value) => value == null ? null : new HciProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(HciProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

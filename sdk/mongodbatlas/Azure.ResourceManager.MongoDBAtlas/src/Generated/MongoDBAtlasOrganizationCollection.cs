@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MongoDBAtlas
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.MongoDBAtlas
     /// </summary>
     public partial class MongoDBAtlasOrganizationCollection : ArmCollection, IEnumerable<MongoDBAtlasOrganizationResource>, IAsyncEnumerable<MongoDBAtlasOrganizationResource>
     {
-        private readonly ClientDiagnostics _organizationsClientDiagnostics;
-        private readonly Organizations _organizationsRestClient;
+        private readonly ClientDiagnostics _mongoDBAtlasOrganizationOrganizationsClientDiagnostics;
+        private readonly OrganizationsRestOperations _mongoDBAtlasOrganizationOrganizationsRestClient;
 
-        /// <summary> Initializes a new instance of MongoDBAtlasOrganizationCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MongoDBAtlasOrganizationCollection"/> class for mocking. </summary>
         protected MongoDBAtlasOrganizationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MongoDBAtlasOrganizationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MongoDBAtlasOrganizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MongoDBAtlasOrganizationResource.ResourceType, out string mongoDBAtlasOrganizationApiVersion);
-            _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas", MongoDBAtlasOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, mongoDBAtlasOrganizationApiVersion ?? "2025-06-01");
-            ValidateResourceId(id);
+            _mongoDBAtlasOrganizationOrganizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas", MongoDBAtlasOrganizationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MongoDBAtlasOrganizationResource.ResourceType, out string mongoDBAtlasOrganizationOrganizationsApiVersion);
+            _mongoDBAtlasOrganizationOrganizationsRestClient = new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBAtlasOrganizationOrganizationsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MongoDBAtlasOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, MongoDBAtlasOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.CreateOrUpdate");
+            using var scope = _mongoDBAtlasOrganizationOrganizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, MongoDBAtlasOrganizationData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(
-                    new MongoDBAtlasOrganizationOperationSource(Client),
-                    _organizationsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _mongoDBAtlasOrganizationOrganizationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(new MongoDBAtlasOrganizationOperationSource(Client), _mongoDBAtlasOrganizationOrganizationsClientDiagnostics, Pipeline, _mongoDBAtlasOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// Create a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MongoDBAtlasOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationName, MongoDBAtlasOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.CreateOrUpdate");
+            using var scope = _mongoDBAtlasOrganizationOrganizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, MongoDBAtlasOrganizationData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource> operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(
-                    new MongoDBAtlasOrganizationOperationSource(Client),
-                    _organizationsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _mongoDBAtlasOrganizationOrganizationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
+                var operation = new MongoDBAtlasArmOperation<MongoDBAtlasOrganizationResource>(new MongoDBAtlasOrganizationOperationSource(Client), _mongoDBAtlasOrganizationOrganizationsClientDiagnostics, Pipeline, _mongoDBAtlasOrganizationOrganizationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual async Task<Response<MongoDBAtlasOrganizationResource>> GetAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.Get");
+            using var scope = _mongoDBAtlasOrganizationOrganizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
+                var response = await _mongoDBAtlasOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MongoDBAtlasOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual Response<MongoDBAtlasOrganizationResource> Get(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.Get");
+            using var scope = _mongoDBAtlasOrganizationOrganizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MongoDBAtlasOrganizationData> response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
+                var response = _mongoDBAtlasOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MongoDBAtlasOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// List OrganizationResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoDBAtlasOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MongoDBAtlasOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoDBAtlasOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MongoDBAtlasOrganizationCollection.GetAll"), data => new MongoDBAtlasOrganizationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBAtlasOrganizationOrganizationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mongoDBAtlasOrganizationOrganizationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MongoDBAtlasOrganizationResource(Client, MongoDBAtlasOrganizationData.DeserializeMongoDBAtlasOrganizationData(e)), _mongoDBAtlasOrganizationOrganizationsClientDiagnostics, Pipeline, "MongoDBAtlasOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List OrganizationResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <returns> A collection of <see cref="MongoDBAtlasOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MongoDBAtlasOrganizationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MongoDBAtlasOrganizationData, MongoDBAtlasOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MongoDBAtlasOrganizationCollection.GetAll"), data => new MongoDBAtlasOrganizationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBAtlasOrganizationOrganizationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mongoDBAtlasOrganizationOrganizationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MongoDBAtlasOrganizationResource(Client, MongoDBAtlasOrganizationData.DeserializeMongoDBAtlasOrganizationData(e)), _mongoDBAtlasOrganizationOrganizationsClientDiagnostics, Pipeline, "MongoDBAtlasOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.Exists");
+            using var scope = _mongoDBAtlasOrganizationOrganizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MongoDBAtlasOrganizationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MongoDBAtlasOrganizationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _mongoDBAtlasOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual Response<bool> Exists(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.Exists");
+            using var scope = _mongoDBAtlasOrganizationOrganizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MongoDBAtlasOrganizationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MongoDBAtlasOrganizationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _mongoDBAtlasOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual async Task<NullableResponse<MongoDBAtlasOrganizationResource>> GetIfExistsAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.GetIfExists");
+            using var scope = _mongoDBAtlasOrganizationOrganizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MongoDBAtlasOrganizationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MongoDBAtlasOrganizationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _mongoDBAtlasOrganizationOrganizationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MongoDBAtlasOrganizationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MongoDBAtlasOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual NullableResponse<MongoDBAtlasOrganizationResource> GetIfExists(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.GetIfExists");
+            using var scope = _mongoDBAtlasOrganizationOrganizationsClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MongoDBAtlasOrganizationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MongoDBAtlasOrganizationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MongoDBAtlasOrganizationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _mongoDBAtlasOrganizationOrganizationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MongoDBAtlasOrganizationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MongoDBAtlasOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.MongoDBAtlas
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MongoDBAtlasOrganizationResource> IAsyncEnumerable<MongoDBAtlasOrganizationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

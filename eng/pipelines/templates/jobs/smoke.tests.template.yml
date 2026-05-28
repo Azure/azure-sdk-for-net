@@ -1,0 +1,94 @@
+parameters:
+  - name: Daily
+    type: boolean
+    default: true
+  - name: Artifact
+    type: object
+    default: {}
+  - name: ArtifactName
+    type: string
+    default: ""
+  - name: TimeoutInMinutes
+    type: number
+    default: 60
+  - name: DependsOn
+    type: string
+    default: ''
+  - name: Matrix
+    type: string
+  - name: OSName
+    type: string
+  # Unused, here for compatibility with generate-job-matrix.yml
+  - name: UsePlatformContainer
+    type: boolean
+    default: false
+  - name: CloudConfig
+    type: object
+    default: {}
+
+jobs:
+  - job:
+    displayName: Smoke Test
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+    ${{ if eq(parameters.Daily, false) }}:
+      dependsOn:
+        - ${{ parameters.DependsOn }}
+        - smoke_test_eligibility
+      condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true),
+          ne(${{ parameters.Matrix }}, '{}'))
+    ${{ else }}:
+      dependsOn: ${{ parameters.DependsOn }}
+      condition: ne(${{ parameters.Matrix }}, '{}')
+    strategy:
+      matrix: $[ ${{ parameters.Matrix }} ]
+    pool:
+      ${{ if eq(parameters.OSName, 'macOS') }}:
+        vmImage: $(OSVmImage)
+      ${{ else }}:
+        image: $(OSVmImage)
+      name: $(Pool)
+      os: ${{ parameters.OSName }}
+
+    steps:
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+        parameters:
+          AgentImage: ${{ parameters.OSName }}
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        parameters:
+          EnableNuGetCache: false
+
+      - ${{ if eq(parameters.Daily, true) }}:
+        - task: PowerShell@2
+          displayName: Use latest dev feed package versions
+          inputs:
+            targetType: filePath
+            filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+            arguments: -CI -PreferDevVersion
+            workingDirectory: common/SmokeTests/SmokeTest
+            pwsh: true
+
+      - ${{ if eq(parameters.Daily, false) }}:
+        - download: current
+          artifact: ${{ parameters.ArtifactName }}
+          timeoutInMinutes: 5
+
+      - ${{ if eq(parameters.Daily, false) }}:
+        - task: PowerShell@2
+          displayName: Use latest GA/Beta package versions
+          inputs:
+            targetType: filePath
+            filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+            arguments: -CI -PreferDevVersion -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
+            workingDirectory: common/SmokeTests/SmokeTest
+            pwsh: true
+
+      - pwsh: Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: Show SmokeTest.csproj
+
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+      - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: dotnet restore
+
+      - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
+        displayName: "Run Smoke Tests"

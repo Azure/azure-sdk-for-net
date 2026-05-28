@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The content hash.
-    /// Serialized Name: ContentHash
-    /// </summary>
+    /// <summary> The content hash. </summary>
     public partial class WebAppContentHash
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppContentHash"/>. </summary>
-        /// <param name="algorithm">
-        /// The algorithm of the content hash.
-        /// Serialized Name: ContentHash.algorithm
-        /// </param>
-        /// <param name="value">
-        /// The value of the content hash.
-        /// Serialized Name: ContentHash.value
-        /// </param>
+        /// <param name="algorithm"> The algorithm of the content hash. </param>
+        /// <param name="value"> The value of the content hash. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebAppContentHash(string algorithm, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The algorithm of the content hash.
-        /// Serialized Name: ContentHash.algorithm
-        /// </summary>
+        /// <summary> The algorithm of the content hash. </summary>
         [WirePath("algorithm")]
         public string Algorithm { get; }
-        /// <summary>
-        /// The value of the content hash.
-        /// Serialized Name: ContentHash.value
-        /// </summary>
+        /// <summary> The value of the content hash. </summary>
         [WirePath("value")]
         public string Value { get; }
     }

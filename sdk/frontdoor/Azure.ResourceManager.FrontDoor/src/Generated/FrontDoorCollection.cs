@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.FrontDoor
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorCollection : ArmCollection, IEnumerable<FrontDoorResource>, IAsyncEnumerable<FrontDoorResource>
     {
-        private readonly ClientDiagnostics _frontDoorsClientDiagnostics;
-        private readonly FrontDoors _frontDoorsRestClient;
+        private readonly ClientDiagnostics _frontDoorClientDiagnostics;
+        private readonly FrontDoorsRestOperations _frontDoorRestClient;
 
-        /// <summary> Initializes a new instance of FrontDoorCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorCollection"/> class for mocking. </summary>
         protected FrontDoorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontDoorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _frontDoorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FrontDoorResource.ResourceType, out string frontDoorApiVersion);
-            _frontDoorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorResource.ResourceType.Namespace, Diagnostics);
-            _frontDoorsRestClient = new FrontDoors(_frontDoorsClientDiagnostics, Pipeline, Endpoint, frontDoorApiVersion ?? "2025-11-01");
-            ValidateResourceId(id);
+            _frontDoorRestClient = new FrontDoorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates a new Front Door with a Front Door name under the specified subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
         /// <param name="data"> Front Door properties needed to create a new Front Door. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string frontDoorName, FrontDoorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _frontDoorsClientDiagnostics.CreateScope("FrontDoorCollection.CreateOrUpdate");
+            using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _frontDoorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, FrontDoorData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FrontDoorArmOperation<FrontDoorResource> operation = new FrontDoorArmOperation<FrontDoorResource>(
-                    new FrontDoorOperationSource(Client),
-                    _frontDoorsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation<FrontDoorResource>(new FrontDoorOperationSource(Client), _frontDoorClientDiagnostics, Pipeline, _frontDoorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.FrontDoor
         /// Creates a new Front Door with a Front Door name under the specified subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
         /// <param name="data"> Front Door properties needed to create a new Front Door. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorResource> CreateOrUpdate(WaitUntil waitUntil, string frontDoorName, FrontDoorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _frontDoorsClientDiagnostics.CreateScope("FrontDoorCollection.CreateOrUpdate");
+            using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _frontDoorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, FrontDoorData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                FrontDoorArmOperation<FrontDoorResource> operation = new FrontDoorArmOperation<FrontDoorResource>(
-                    new FrontDoorOperationSource(Client),
-                    _frontDoorsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, data, cancellationToken);
+                var operation = new FrontDoorArmOperation<FrontDoorResource>(new FrontDoorOperationSource(Client), _frontDoorClientDiagnostics, Pipeline, _frontDoorRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets a Front Door with the specified Front Door name under the specified subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorResource>> GetAsync(string frontDoorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
 
-            using DiagnosticScope scope = _frontDoorsClientDiagnostics.CreateScope("FrontDoorCollection.Get");
+            using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _frontDoorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FrontDoorData> response = Response.FromValue(FrontDoorData.FromResponse(result), result);
+                var response = await _frontDoorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets a Front Door with the specified Front Door name under the specified subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual Response<FrontDoorResource> Get(string frontDoorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
 
-            using DiagnosticScope scope = _frontDoorsClientDiagnostics.CreateScope("FrontDoorCollection.Get");
+            using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _frontDoorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FrontDoorData> response = Response.FromValue(FrontDoorData.FromResponse(result), result);
+                var response = _frontDoorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.FrontDoor
         /// Lists all of the Front Doors within a resource group under a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorsGetByResourceGroupAsyncCollectionResultOfT(_frontDoorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorCollection.GetAll"), data => new FrontDoorResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the Front Doors within a resource group under a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="FrontDoorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<FrontDoorData, FrontDoorResource>(new FrontDoorsGetByResourceGroupCollectionResultOfT(_frontDoorsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "FrontDoorCollection.GetAll"), data => new FrontDoorResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorResource(Client, FrontDoorData.DeserializeFrontDoorData(e)), _frontDoorClientDiagnostics, Pipeline, "FrontDoorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string frontDoorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
 
-            using DiagnosticScope scope = _frontDoorsClientDiagnostics.CreateScope("FrontDoorCollection.Exists");
+            using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _frontDoorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<FrontDoorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _frontDoorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.FrontDoor
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual Response<bool> Exists(string frontDoorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
 
-            using DiagnosticScope scope = _frontDoorsClientDiagnostics.CreateScope("FrontDoorCollection.Exists");
+            using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _frontDoorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<FrontDoorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _frontDoorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorResource>> GetIfExistsAsync(string frontDoorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
 
-            using DiagnosticScope scope = _frontDoorsClientDiagnostics.CreateScope("FrontDoorCollection.GetIfExists");
+            using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _frontDoorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<FrontDoorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _frontDoorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<FrontDoorResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorResource> GetIfExists(string frontDoorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
 
-            using DiagnosticScope scope = _frontDoorsClientDiagnostics.CreateScope("FrontDoorCollection.GetIfExists");
+            using var scope = _frontDoorClientDiagnostics.CreateScope("FrontDoorCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _frontDoorsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<FrontDoorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _frontDoorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<FrontDoorResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.FrontDoor
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FrontDoorResource> IAsyncEnumerable<FrontDoorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

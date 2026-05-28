@@ -158,7 +158,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {
@@ -181,7 +181,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {
@@ -197,7 +197,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
             Response response = await service.DeleteConfigurationSettingAsync(testSetting.Key);
 
-            Assert.That(response.Status, Is.EqualTo(204));
+            Assert.AreEqual(204, response.Status);
             response.Dispose();
         }
 
@@ -224,7 +224,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     await service.GetConfigurationSettingAsync(testSettingDiff.Key);
                 });
 
-                Assert.That(e.Status, Is.EqualTo(404));
+                Assert.AreEqual(404, e.Status);
             }
             finally
             {
@@ -255,7 +255,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     await service.GetConfigurationSettingAsync(testSettingDiff.Key, testSettingDiff.Label);
                 });
 
-                Assert.That(e.Status, Is.EqualTo(404));
+                Assert.AreEqual(404, e.Status);
             }
             finally
             {
@@ -278,7 +278,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                     await service.DeleteConfigurationSettingAsync(testSetting.Key, testSetting.Label)
                 );
-                Assert.That(exception.Status, Is.EqualTo(409));
+                Assert.AreEqual(409, exception.Status);
             }
             finally
             {
@@ -313,7 +313,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Test
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                     await service.DeleteConfigurationSettingAsync(setting, onlyIfUnchanged: true));
-                Assert.That(exception.Status, Is.EqualTo(412));
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -330,7 +330,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 ConfigurationSetting setting = await service.SetConfigurationSettingAsync(testSetting);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {
@@ -349,7 +349,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting);
 
                 ConfigurationSetting setting = await service.SetConfigurationSettingAsync(testSetting);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {
@@ -373,7 +373,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Test
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                     await service.SetConfigurationSettingAsync(testSetting.Key, "new_value", testSetting.Label));
-                Assert.That(exception.Status, Is.EqualTo(409));
+                Assert.AreEqual(409, exception.Status);
             }
             finally
             {
@@ -395,9 +395,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // Test
                 Response<ConfigurationSetting> response = await service.SetConfigurationSettingAsync(setting, onlyIfUnchanged: true);
-                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-                Assert.That(response.Value.Value, Is.EqualTo(setting.Value));
-                Assert.That(response.Value.ETag, Is.Not.EqualTo(setting.ETag));
+                Assert.AreEqual(200, response.GetRawResponse().Status);
+                Assert.AreEqual(setting.Value, response.Value.Value);
+                Assert.AreNotEqual(setting.ETag, response.Value.ETag);
             }
             finally
             {
@@ -421,7 +421,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Test
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                     await service.SetConfigurationSettingAsync(setting, onlyIfUnchanged: true));
-                Assert.That(exception.Status, Is.EqualTo(412));
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -441,8 +441,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 string value = "my_value";
                 ConfigurationSetting setting = await service.SetConfigurationSettingAsync(key, value);
 
-                Assert.That(setting.Key, Is.EqualTo(key));
-                Assert.That(setting.Value, Is.EqualTo(value));
+                Assert.AreEqual(key, setting.Key);
+                Assert.AreEqual(value, setting.Value);
             }
             finally
             {
@@ -463,9 +463,9 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 ConfigurationSetting setting = await service.SetConfigurationSettingAsync(key, value, label);
 
-                Assert.That(setting.Key, Is.EqualTo(key));
-                Assert.That(setting.Value, Is.EqualTo(value));
-                Assert.That(setting.Label, Is.EqualTo(label));
+                Assert.AreEqual(key, setting.Key);
+                Assert.AreEqual(value, setting.Value);
+                Assert.AreEqual(label, setting.Label);
             }
             finally
             {
@@ -483,7 +483,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 Response<ConfigurationSetting> response = await service.SetConfigurationSettingAsync(testSetting);
                 response.GetRawResponse().Headers.TryGetValue("x-ms-client-request-id", out string requestId);
-                Assert.That(requestId, Is.Not.Empty);
+                Assert.IsNotEmpty(requestId);
             }
             finally
             {
@@ -506,7 +506,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     await service.AddConfigurationSettingAsync(testSetting);
                 });
 
-                Assert.That(exception.Status, Is.EqualTo(412));
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -523,7 +523,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {
@@ -543,7 +543,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSettingNoLabel);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSettingNoLabel, setting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSettingNoLabel, setting));
             }
             finally
             {
@@ -563,8 +563,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 string value = "my_value";
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(key, value);
 
-                Assert.That(setting.Key, Is.EqualTo(key));
-                Assert.That(setting.Value, Is.EqualTo(value));
+                Assert.AreEqual(key, setting.Key);
+                Assert.AreEqual(value, setting.Value);
             }
             finally
             {
@@ -585,9 +585,9 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(key, value, label);
 
-                Assert.That(setting.Key, Is.EqualTo(key));
-                Assert.That(setting.Value, Is.EqualTo(value));
-                Assert.That(setting.Label, Is.EqualTo(label));
+                Assert.AreEqual(key, setting.Key);
+                Assert.AreEqual(value, setting.Value);
+                Assert.AreEqual(label, setting.Label);
             }
             finally
             {
@@ -626,16 +626,16 @@ namespace Azure.Data.AppConfiguration.Tests
                 {
                     if (value.Label.Contains("update"))
                     {
-                        Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(value, testSettingUpdate), Is.True);
+                        Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, testSettingUpdate));
                     }
                     else
                     {
-                        Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(value, setting), Is.True);
+                        Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, setting));
                     }
                     resultsReturned++;
                 }
 
-                Assert.That(resultsReturned, Is.EqualTo(expectedEvents));
+                Assert.AreEqual(expectedEvents, resultsReturned);
             }
             finally
             {
@@ -691,16 +691,16 @@ namespace Azure.Data.AppConfiguration.Tests
                 {
                     if (value.Label.Contains("update"))
                     {
-                        Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(value, testSettingUpdate), Is.True);
+                        Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, testSettingUpdate));
                     }
                     else
                     {
-                        Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(value, setting), Is.True);
+                        Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, setting));
                     }
                     resultsReturned++;
                 }
 
-                Assert.That(resultsReturned, Is.EqualTo(expectedRevisions));
+                Assert.AreEqual(expectedRevisions, resultsReturned);
             }
             finally
             {
@@ -731,11 +731,11 @@ namespace Azure.Data.AppConfiguration.Tests
                 int resultsReturned = 0;
                 await foreach (ConfigurationSetting value in revisions)
                 {
-                    Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(value, testSettingUpdate), Is.True);
+                    Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(value, testSettingUpdate));
                     resultsReturned++;
                 }
 
-                Assert.That(resultsReturned, Is.EqualTo(1));
+                Assert.AreEqual(1, resultsReturned);
             }
             finally
             {
@@ -759,7 +759,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(testSettingNoLabel);
                 // Test
                 ConfigurationSetting setting = await service.GetConfigurationSettingAsync(testSettingNoLabel.Key);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSettingNoLabel, setting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSettingNoLabel, setting));
             }
             finally
             {
@@ -778,7 +778,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.GetConfigurationSettingAsync(testSetting.Key);
             });
 
-            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.AreEqual(404, exception.Status);
         }
 
         [RecordedTest]
@@ -798,7 +798,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // Test
                 ConfigurationSetting responseSetting = await service.GetConfigurationSettingAsync(testSetting.Key, testSetting.Label);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
             }
             finally
             {
@@ -823,7 +823,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     IfMatch = testSetting.ETag
                 });
 
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
             }
             finally
             {
@@ -848,7 +848,7 @@ namespace Azure.Data.AppConfiguration.Tests
                         IfMatch = new ETag("this won't match")
                     }));
 
-                Assert.That(exception.Status, Is.EqualTo(412));
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -896,7 +896,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     IfNoneMatch = new ETag("this won't match")
                 });
 
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
             }
             finally
             {
@@ -917,7 +917,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 // Test
                 // TODO: add a test with a more granular timestamp.
                 ConfigurationSetting responseSetting = await service.GetConfigurationSettingAsync(testSetting, DateTimeOffset.MaxValue);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, responseSetting));
             }
             finally
             {
@@ -939,8 +939,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 modifiedSetting = await service.SetConfigurationSettingAsync(modifiedSetting);
 
                 Response<ConfigurationSetting> response = await service.GetConfigurationSettingAsync(setting, onlyIfChanged: true).ConfigureAwait(false);
-                Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(modifiedSetting, response.Value), Is.True);
+                Assert.AreEqual(200, response.GetRawResponse().Status);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(modifiedSetting, response.Value));
             }
             finally
             {
@@ -959,7 +959,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
 
                 Response<ConfigurationSetting> response = await service.GetConfigurationSettingAsync(new ConfigurationSetting(setting.Key, "", setting.Label, setting.ETag), onlyIfChanged: true).ConfigureAwait(false);
-                Assert.That(response.GetRawResponse().Status, Is.EqualTo(304));
+                Assert.AreEqual(304, response.GetRawResponse().Status);
                 Assert.Catch<Exception>(() => _ = response.Value);
             }
             finally
@@ -980,7 +980,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // Test
                 Response<ConfigurationSetting> response = await service.GetConfigurationSettingAsync(setting, onlyIfChanged: true).ConfigureAwait(false);
-                Assert.That(response.GetRawResponse().Status, Is.EqualTo(304));
+                Assert.AreEqual(304, response.GetRawResponse().Status);
 
                 bool throws = false;
                 try
@@ -992,7 +992,7 @@ namespace Azure.Data.AppConfiguration.Tests
                     throws = true;
                 }
 
-                Assert.That(throws, Is.True);
+                Assert.IsTrue(throws);
             }
             finally
             {
@@ -1019,10 +1019,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
                 {
                     Response<ConfigurationSetting> response = await service.GetConfigurationSettingAsync(testSetting, onlyIfChanged: true);
-                    Assert.That(response.GetRawResponse().Status, Is.EqualTo(304));
+                    Assert.AreEqual(304, response.GetRawResponse().Status);
                 }
 
-                Assert.That(logMessage, Is.Null);
+                Assert.Null(logMessage);
             }
             finally
             {
@@ -1046,7 +1046,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // Test
                 ConfigurationSetting setting = await service.GetConfigurationSettingAsync(testSettingNoLabel.Key);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSettingNoLabel, setting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSettingNoLabel, setting));
             }
             finally
             {
@@ -1066,7 +1066,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // Test
                 ConfigurationSetting setting = await service.GetConfigurationSettingAsync(testSetting.Key, testSetting.Label);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {
@@ -1087,11 +1087,11 @@ namespace Azure.Data.AppConfiguration.Tests
 
             await foreach (ConfigurationSetting item in service.GetConfigurationSettingsAsync(selector, CancellationToken.None))
             {
-                Assert.That(item.Value, Is.EqualTo("test_value"));
+                Assert.AreEqual("test_value", item.Value);
                 resultsReturned++;
             }
 
-            Assert.That(resultsReturned, Is.EqualTo(expectedEvents));
+            Assert.AreEqual(expectedEvents, resultsReturned);
         }
 
         [RecordedTest]
@@ -1124,13 +1124,13 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 Response response = page.GetRawResponse();
 
-                Assert.That(response.Status, Is.EqualTo(304));
-                Assert.That(page.Values, Is.Empty);
+                Assert.AreEqual(304, response.Status);
+                Assert.IsEmpty(page.Values);
 
                 pagesCount++;
             }
 
-            Assert.That(pagesCount, Is.EqualTo(2));
+            Assert.AreEqual(2, pagesCount);
         }
 
         [RecordedTest]
@@ -1163,13 +1163,13 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 Response response = page.GetRawResponse();
 
-                Assert.That(response.Status, Is.EqualTo(304));
-                Assert.That(page.Values, Is.Empty);
+                Assert.AreEqual(304, response.Status);
+                Assert.IsEmpty(page.Values);
 
                 pagesCount++;
             }
 
-            Assert.That(pagesCount, Is.EqualTo(2));
+            Assert.AreEqual(2, pagesCount);
         }
 
         [RecordedTest]
@@ -1208,10 +1208,10 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await pagesEnumerator.MoveNextAsync();
                 firstPage = pagesEnumerator.Current;
-                Assert.That(firstPage.GetRawResponse().Status, Is.EqualTo(304));
+                Assert.AreEqual(304, firstPage.GetRawResponse().Status);
             }
 
-            Assert.That(logMessage, Is.Null);
+            Assert.Null(logMessage);
         }
 
         [RecordedTest]
@@ -1250,10 +1250,10 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 pagesEnumerator.MoveNext();
                 firstPage = pagesEnumerator.Current;
-                Assert.That(firstPage.GetRawResponse().Status, Is.EqualTo(304));
+                Assert.AreEqual(304, firstPage.GetRawResponse().Status);
             }
 
-            Assert.That(logMessage, Is.Null);
+            Assert.Null(logMessage);
         }
 
         [RecordedTest]
@@ -1293,19 +1293,19 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 if (pagesCount == 0)
                 {
-                    Assert.That(response.Status, Is.EqualTo(304));
-                    Assert.That(page.Values, Is.Empty);
+                    Assert.AreEqual(304, response.Status);
+                    Assert.IsEmpty(page.Values);
                 }
                 else
                 {
-                    Assert.That(response.Status, Is.EqualTo(200));
-                    Assert.That(page.Values, Is.Not.Empty);
+                    Assert.AreEqual(200, response.Status);
+                    Assert.IsNotEmpty(page.Values);
                 }
 
                 pagesCount++;
             }
 
-            Assert.That(pagesCount, Is.EqualTo(2));
+            Assert.AreEqual(2, pagesCount);
         }
 
         [RecordedTest]
@@ -1345,281 +1345,19 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 if (pagesCount == 0)
                 {
-                    Assert.That(response.Status, Is.EqualTo(304));
-                    Assert.That(page.Values, Is.Empty);
+                    Assert.AreEqual(304, response.Status);
+                    Assert.IsEmpty(page.Values);
                 }
                 else
                 {
-                    Assert.That(response.Status, Is.EqualTo(200));
-                    Assert.That(page.Values, Is.Not.Empty);
+                    Assert.AreEqual(200, response.Status);
+                    Assert.IsNotEmpty(page.Values);
                 }
 
                 pagesCount++;
             }
 
-            Assert.That(pagesCount, Is.EqualTo(2));
-        }
-
-        [RecordedTest]
-        [AsyncOnly]
-        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
-        public async Task CheckBatchSettingIfChangedWithUnmodifiedPage()
-        {
-            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
-
-            const int expectedEvents = 105;
-            var key = await SetMultipleKeys(service, expectedEvents);
-
-            SettingSelector selector = new SettingSelector { KeyFilter = key };
-            var matchConditionsList = new List<MatchConditions>();
-
-            await foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettingsAsync(selector).AsPages())
-            {
-                Response response = page.GetRawResponse();
-                var matchConditions = new MatchConditions()
-                {
-                    IfNoneMatch = response.Headers.ETag
-                };
-
-                matchConditionsList.Add(matchConditions);
-            }
-
-            int pagesCount = 0;
-
-            await foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettingsAsync(selector).AsPages(matchConditionsList))
-            {
-                Response response = page.GetRawResponse();
-
-                Assert.That(response.Status, Is.EqualTo(304));
-                Assert.That(page.Values, Is.Empty);
-
-                pagesCount++;
-            }
-
-            Assert.That(pagesCount, Is.EqualTo(2));
-        }
-
-        [RecordedTest]
-        [SyncOnly]
-        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
-        public async Task CheckBatchSettingIfChangedWithUnmodifiedPageSync()
-        {
-            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
-
-            const int expectedEvents = 105;
-            var key = await SetMultipleKeys(service, expectedEvents);
-
-            SettingSelector selector = new SettingSelector { KeyFilter = key };
-            var matchConditionsList = new List<MatchConditions>();
-
-            foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettings(selector).AsPages())
-            {
-                Response response = page.GetRawResponse();
-                var matchConditions = new MatchConditions()
-                {
-                    IfNoneMatch = response.Headers.ETag
-                };
-
-                matchConditionsList.Add(matchConditions);
-            }
-
-            int pagesCount = 0;
-
-            foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettings(selector).AsPages(matchConditionsList))
-            {
-                Response response = page.GetRawResponse();
-
-                Assert.That(response.Status, Is.EqualTo(304));
-                Assert.That(page.Values, Is.Empty);
-
-                pagesCount++;
-            }
-
-            Assert.That(pagesCount, Is.EqualTo(2));
-        }
-
-        [RecordedTest]
-        [AsyncOnly]
-        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
-        public async Task CheckBatchSettingIfChangedWithUnmodifiedPageDoesNotLogWarningAsync()
-        {
-            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
-
-            const int expectedEvents = 105;
-            var key = await SetMultipleKeys(service, expectedEvents);
-
-            SettingSelector selector = new SettingSelector { KeyFilter = key };
-            var matchConditionsList = new List<MatchConditions>();
-
-            var pagesEnumerator = service.CheckConfigurationSettingsAsync(selector).AsPages().GetAsyncEnumerator();
-            await pagesEnumerator.MoveNextAsync();
-
-            Page<ConfigurationSetting> firstPage = pagesEnumerator.Current;
-
-            var matchConditions = new MatchConditions()
-            {
-                IfNoneMatch = firstPage.GetRawResponse().Headers.ETag
-            };
-            matchConditionsList.Add(matchConditions);
-
-            string logMessage = null;
-            Action<EventWrittenEventArgs, string> warningLog = (_, text) =>
-            {
-                logMessage = text;
-            };
-
-            pagesEnumerator = service.CheckConfigurationSettingsAsync(selector).AsPages(matchConditionsList).GetAsyncEnumerator();
-
-            using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
-            {
-                await pagesEnumerator.MoveNextAsync();
-                firstPage = pagesEnumerator.Current;
-                Assert.That(firstPage.GetRawResponse().Status, Is.EqualTo(304));
-            }
-
-            Assert.That(logMessage, Is.Null);
-        }
-
-        [RecordedTest]
-        [SyncOnly]
-        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
-        public async Task CheckBatchSettingIfChangedWithUnmodifiedPageDoesNotLogWarningSync()
-        {
-            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
-
-            const int expectedEvents = 105;
-            var key = await SetMultipleKeys(service, expectedEvents);
-
-            SettingSelector selector = new SettingSelector { KeyFilter = key };
-            var matchConditionsList = new List<MatchConditions>();
-
-            var pagesEnumerator = service.CheckConfigurationSettings(selector).AsPages().GetEnumerator();
-            pagesEnumerator.MoveNext();
-
-            Page<ConfigurationSetting> firstPage = pagesEnumerator.Current;
-
-            var matchConditions = new MatchConditions()
-            {
-                IfNoneMatch = firstPage.GetRawResponse().Headers.ETag
-            };
-            matchConditionsList.Add(matchConditions);
-
-            string logMessage = null;
-            Action<EventWrittenEventArgs, string> warningLog = (_, text) =>
-            {
-                logMessage = text;
-            };
-
-            pagesEnumerator = service.CheckConfigurationSettings(selector).AsPages(matchConditionsList).GetEnumerator();
-
-            using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
-            {
-                pagesEnumerator.MoveNext();
-                firstPage = pagesEnumerator.Current;
-                Assert.That(firstPage.GetRawResponse().Status, Is.EqualTo(304));
-            }
-
-            Assert.That(logMessage, Is.Null);
-        }
-
-        [RecordedTest]
-        [AsyncOnly]
-        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
-        public async Task CheckBatchSettingIfChangedWithModifiedPage()
-        {
-            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
-
-            const int expectedEvents = 105;
-            var key = await SetMultipleKeys(service, expectedEvents);
-
-            SettingSelector selector = new SettingSelector { KeyFilter = key };
-            var matchConditionsList = new List<MatchConditions>();
-            ConfigurationSetting lastSetting = null;
-
-            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages())
-            {
-                Response response = page.GetRawResponse();
-                var matchConditions = new MatchConditions()
-                {
-                    IfNoneMatch = response.Headers.ETag
-                };
-
-                matchConditionsList.Add(matchConditions);
-                lastSetting = page.Values.Last();
-            }
-
-            lastSetting.Value += "1";
-            await service.SetConfigurationSettingAsync(lastSetting);
-
-            int pagesCount = 0;
-
-            await foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettingsAsync(selector).AsPages(matchConditionsList))
-            {
-                Response response = page.GetRawResponse();
-
-                if (pagesCount == 0)
-                {
-                    Assert.That(response.Status, Is.EqualTo(304));
-                }
-                else
-                {
-                    Assert.That(response.Status, Is.EqualTo(200));
-                }
-
-                pagesCount++;
-            }
-
-            Assert.That(pagesCount, Is.EqualTo(2));
-        }
-
-        [RecordedTest]
-        [SyncOnly]
-        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
-        public async Task CheckBatchSettingIfChangedWithModifiedPageSync()
-        {
-            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
-
-            const int expectedEvents = 105;
-            var key = await SetMultipleKeys(service, expectedEvents);
-
-            SettingSelector selector = new SettingSelector { KeyFilter = key };
-            var matchConditionsList = new List<MatchConditions>();
-            ConfigurationSetting lastSetting = null;
-
-            foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettings(selector).AsPages())
-            {
-                Response response = page.GetRawResponse();
-                var matchConditions = new MatchConditions()
-                {
-                    IfNoneMatch = response.Headers.ETag
-                };
-
-                matchConditionsList.Add(matchConditions);
-                lastSetting = page.Values.Last();
-            }
-
-            lastSetting.Value += "1";
-            await service.SetConfigurationSettingAsync(lastSetting);
-
-            int pagesCount = 0;
-
-            foreach (Page<ConfigurationSetting> page in service.CheckConfigurationSettings(selector).AsPages(matchConditionsList))
-            {
-                Response response = page.GetRawResponse();
-
-                if (pagesCount == 0)
-                {
-                    Assert.That(response.Status, Is.EqualTo(304));
-                }
-                else
-                {
-                    Assert.That(response.Status, Is.EqualTo(200));
-                }
-
-                pagesCount++;
-            }
-
-            Assert.That(pagesCount, Is.EqualTo(2));
+            Assert.AreEqual(2, pagesCount);
         }
 
         [RecordedTest]
@@ -1634,13 +1372,13 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var selector = new SettingSelector();
 
-                Assert.That(selector.KeyFilter, Is.EqualTo(null));
-                Assert.That(selector.LabelFilter, Is.EqualTo(null));
+                Assert.AreEqual(null, selector.KeyFilter);
+                Assert.AreEqual(null, selector.LabelFilter);
 
                 var resultsReturned = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).Count;
 
                 //At least there should be one key available
-                Assert.That(resultsReturned, Is.GreaterThanOrEqualTo(1));
+                Assert.GreaterOrEqual(resultsReturned, 1);
             }
             finally
             {
@@ -1667,9 +1405,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
-                Assert.That(batch.Length, Is.EqualTo(1));
-                Assert.That(batch[0].Key, Is.EqualTo(testSetting.Key));
-                Assert.That(batch[0].Label, Is.EqualTo(testSetting.Label));
+                Assert.AreEqual(1, batch.Length);
+                Assert.AreEqual(testSetting.Key, batch[0].Key);
+                Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
             finally
             {
@@ -1691,8 +1429,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
-                Assert.That(batch.Length, Is.EqualTo(1));
-                Assert.That(batch[0].Key, Is.EqualTo(testSetting.Key));
+                Assert.AreEqual(1, batch.Length);
+                Assert.AreEqual(testSetting.Key, batch[0].Key);
             }
             finally
             {
@@ -1712,14 +1450,14 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var selector = new SettingSelector { LabelFilter = testSetting.Label };
 
-                Assert.That(selector.KeyFilter, Is.EqualTo(null));
+                Assert.AreEqual(null, selector.KeyFilter);
 
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
                 //At least there should be one key available
-                Assert.That(batch, Is.Not.Empty);
-                Assert.That(batch[0].Label, Is.EqualTo(testSetting.Label));
+                CollectionAssert.IsNotEmpty(batch);
+                Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
             finally
             {
@@ -1746,15 +1484,15 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
-                Assert.That(batch.Length, Is.EqualTo(1));
+                Assert.AreEqual(1, batch.Length);
 
-                Assert.That(batch[0].Key, Is.Not.Null);
-                Assert.That(batch[0].Label, Is.Not.Null);
-                Assert.That(default(ETag), Is.Not.EqualTo(batch[0].ETag));
-                Assert.That(batch[0].Value, Is.Null);
-                Assert.That(batch[0].ContentType, Is.Null);
-                Assert.That(batch[0].LastModified, Is.Null);
-                Assert.That(batch[0].IsReadOnly, Is.Null);
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.AreNotEqual(batch[0].ETag, default(ETag));
+                Assert.IsNull(batch[0].Value);
+                Assert.IsNull(batch[0].ContentType);
+                Assert.IsNull(batch[0].LastModified);
+                Assert.IsNull(batch[0].IsReadOnly);
             }
             finally
             {
@@ -1780,14 +1518,14 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 List<ConfigurationSetting> batch = await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync();
 
-                Assert.That(batch, Is.Not.Empty);
-                Assert.That(batch[0].Key, Is.Not.Null);
-                Assert.That(batch[0].IsReadOnly, Is.Not.Null);
-                Assert.That(batch[0].Label, Is.Null);
-                Assert.That(batch[0].Value, Is.Null);
-                Assert.That(batch[0].ContentType, Is.Null);
-                Assert.That(batch[0].LastModified, Is.Null);
-                Assert.That(default(ETag), Is.EqualTo(batch[0].ETag));
+                CollectionAssert.IsNotEmpty(batch);
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].IsReadOnly);
+                Assert.IsNull(batch[0].Label);
+                Assert.IsNull(batch[0].Value);
+                Assert.IsNull(batch[0].ContentType);
+                Assert.IsNull(batch[0].LastModified);
+                Assert.AreEqual(batch[0].ETag, default(ETag));
             }
             finally
             {
@@ -1816,15 +1554,15 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
-                Assert.That(batch.Length, Is.EqualTo(1));
+                Assert.AreEqual(1, batch.Length);
 
-                Assert.That(batch[0].Key, Is.Not.Null);
-                Assert.That(batch[0].Label, Is.Not.Null);
-                Assert.That(batch[0].Value, Is.Not.Null);
-                Assert.That(batch[0].ContentType, Is.Not.Null);
-                Assert.That(default(ETag), Is.Not.EqualTo(batch[0].ETag));
-                Assert.That(batch[0].LastModified, Is.Not.Null);
-                Assert.That(batch[0].IsReadOnly, Is.Not.Null);
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.IsNotNull(batch[0].Value);
+                Assert.IsNotNull(batch[0].ContentType);
+                Assert.AreNotEqual(batch[0].ETag, default(ETag));
+                Assert.IsNotNull(batch[0].LastModified);
+                Assert.IsNotNull(batch[0].IsReadOnly);
             }
             finally
             {
@@ -1855,16 +1593,16 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
-                Assert.That(batch.Length, Is.EqualTo(1));
+                Assert.AreEqual(1, batch.Length);
 
-                Assert.That(batch[0].Key, Is.Not.Null);
-                Assert.That(batch[0].Label, Is.Not.Null);
-                Assert.That(batch[0].Value, Is.Not.Null);
-                Assert.That(batch[0].ContentType, Is.Not.Null);
-                Assert.That(default(ETag), Is.Not.EqualTo(batch[0].ETag));
-                Assert.That(batch[0].LastModified, Is.Not.Null);
-                Assert.That(batch[0].IsReadOnly, Is.Not.Null);
-                Assert.That(batch[0].Tags, Is.Not.Empty);
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.IsNotNull(batch[0].Value);
+                Assert.IsNotNull(batch[0].ContentType);
+                Assert.AreNotEqual(batch[0].ETag, default(ETag));
+                Assert.IsNotNull(batch[0].LastModified);
+                Assert.IsNotNull(batch[0].IsReadOnly);
+                Assert.IsNotEmpty(batch[0].Tags);
             }
             finally
             {
@@ -1887,9 +1625,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 // There should be at least one key available
-                Assert.That(settings, Is.Not.Empty);
-                Assert.That(settings[0].Key, Is.EqualTo(testSetting.Key));
-                Assert.That(settings[0].Label, Is.EqualTo(testSetting.Label));
+                CollectionAssert.IsNotEmpty(settings);
+                Assert.AreEqual(testSetting.Key, settings[0].Key);
+                Assert.AreEqual(testSetting.Label, settings[0].Label);
             }
             finally
             {
@@ -1912,11 +1650,11 @@ namespace Azure.Data.AppConfiguration.Tests
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
                 // There should be at least one key available.
-                Assert.That(settings, Is.Not.Empty);
+                CollectionAssert.IsNotEmpty(settings);
 
                 foreach (ConfigurationSetting setting in settings)
                 {
-                    Assert.That(setting.Key, Does.StartWith("abc"));
+                    StringAssert.StartsWith("abc", setting.Key);
                 }
             }
             finally
@@ -1959,11 +1697,11 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(settings.Length, Is.EqualTo(2));
-                Assert.That(settings.Any(s => s.Key == "abcd"), Is.True);
-                Assert.That(settings.Any(s => s.Key == "wxyz"), Is.True);
-                Assert.That(settings.Any(s => s.Tags.Any() == true), Is.True);
-                Assert.That(settings.Any(s => s.Tags.SequenceEqual(expectedTags)), Is.True);
+                Assert.AreEqual(2, settings.Length);
+                Assert.IsTrue(settings.Any(s => s.Key == "abcd"));
+                Assert.IsTrue(settings.Any(s => s.Key == "wxyz"));
+                Assert.IsTrue(settings.Any(s => s.Tags.Any() == true));
+                Assert.IsTrue(settings.Any(s => s.Tags.SequenceEqual(expectedTags)));
             }
             finally
             {
@@ -1999,7 +1737,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(settings.Length, Is.EqualTo(0));
+                Assert.AreEqual(0, settings.Length);
             }
             finally
             {
@@ -2025,9 +1763,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(settings.Length, Is.GreaterThanOrEqualTo(2));
-                Assert.That(settings.Any(s => s.Key == "ab,cd"), Is.True);
-                Assert.That(settings.Any(s => s.Key == "wx,yz"), Is.True);
+                Assert.GreaterOrEqual(settings.Length, 2);
+                Assert.IsTrue(settings.Any(s => s.Key == "ab,cd"));
+                Assert.IsTrue(settings.Any(s => s.Key == "wx,yz"));
             }
             finally
             {
@@ -2053,7 +1791,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(settings, Is.Empty);
+                CollectionAssert.IsEmpty(settings);
             }
             finally
             {
@@ -2079,9 +1817,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(settings.Length, Is.GreaterThanOrEqualTo(2));
-                Assert.That(settings.Any(s => s.Key == "abc"), Is.True);
-                Assert.That(settings.Any(s => s.Key == "xyz"), Is.True);
+                Assert.GreaterOrEqual(settings.Length, 2);
+                Assert.IsTrue(settings.Any(s => s.Key == "abc"));
+                Assert.IsTrue(settings.Any(s => s.Key == "xyz"));
             }
             finally
             {
@@ -2107,9 +1845,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(settings.Length, Is.GreaterThanOrEqualTo(2));
-                Assert.That(settings.Any(s => s.Label == "abc"), Is.True);
-                Assert.That(settings.Any(s => s.Label == "xyz"), Is.True);
+                Assert.GreaterOrEqual(settings.Length, 2);
+                Assert.IsTrue(settings.Any(s => s.Label == "abc"));
+                Assert.IsTrue(settings.Any(s => s.Label == "xyz"));
             }
             finally
             {
@@ -2128,7 +1866,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 var setting = await service.AddConfigurationSettingAsync(testSetting);
                 var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, true);
-                Assert.That(readOnly.Value.IsReadOnly, Is.True);
+                Assert.IsTrue(readOnly.Value.IsReadOnly);
             }
             finally
             {
@@ -2156,9 +1894,9 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
                 setting = await service.SetReadOnlyAsync(setting, !isReadOnly, onlyIfUnchanged: true);
-                Assert.That(setting.IsReadOnly, Is.EqualTo(!isReadOnly));
+                Assert.AreEqual(!isReadOnly, setting.IsReadOnly);
                 setting = await service.SetReadOnlyAsync(setting, isReadOnly, onlyIfUnchanged: true);
-                Assert.That(setting.IsReadOnly, Is.EqualTo(isReadOnly));
+                Assert.AreEqual(isReadOnly, setting.IsReadOnly);
             }
             finally
             {
@@ -2182,7 +1920,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 // Test
                 RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => await service.SetReadOnlyAsync(setting, isReadOnly, onlyIfUnchanged: true));
-                Assert.That(exception.Status, Is.EqualTo(412));
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -2200,7 +1938,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 var setting = await service.AddConfigurationSettingAsync(testSetting);
                 var readOnly = await service.SetReadOnlyAsync(testSetting.Key, testSetting.Label, false);
-                Assert.That(readOnly.Value.IsReadOnly, Is.False);
+                Assert.IsFalse(readOnly.Value.IsReadOnly);
             }
             finally
             {
@@ -2226,7 +1964,7 @@ namespace Azure.Data.AppConfiguration.Tests
             try
             {
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(testSetting);
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
             }
             finally
             {
@@ -2245,49 +1983,13 @@ namespace Azure.Data.AppConfiguration.Tests
                 var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
                 var setting = settingResponse.Value;
 
-                Assert.That(setting, Is.InstanceOf<FeatureFlagConfigurationSetting>());
-                Assert.That(setting.Key, Is.EqualTo(testSetting.Key));
-                Assert.That(setting.Value, Is.EqualTo(testSetting.Value));
+                Assert.IsInstanceOf<FeatureFlagConfigurationSetting>(setting);
+                Assert.AreEqual(testSetting.Key, setting.Key);
+                Assert.AreEqual(testSetting.Value, setting.Value);
             }
             finally
             {
                 AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
-            }
-        }
-
-        [RecordedTest]
-        public async Task CanAddAndGetMinimalFeatureFlag()
-        {
-            ConfigurationClient service = GetClient();
-            string featureId = GenerateKeyId("minimal-feature");
-            string key = FeatureFlagConfigurationSetting.KeyPrefix + featureId;
-
-            var minimalFeatureFlagSetting = new ConfigurationSetting(key, "{\"id\":\"" + featureId + "\"}")
-            {
-                ContentType = FeatureFlagConfigurationSetting.FeatureFlagContentType
-            };
-
-            try
-            {
-                var addResponse = await service.AddConfigurationSettingAsync(minimalFeatureFlagSetting);
-                Assert.That(addResponse.Value.Key, Is.EqualTo(key));
-                Assert.That(addResponse.Value.ContentType, Is.EqualTo(FeatureFlagConfigurationSetting.FeatureFlagContentType));
-
-                var getResponse = await service.GetConfigurationSettingAsync(key);
-                var retrievedSetting = getResponse.Value;
-
-                Assert.That(retrievedSetting, Is.InstanceOf<FeatureFlagConfigurationSetting>());
-                Assert.That(retrievedSetting.Key, Is.EqualTo(key));
-                Assert.That(retrievedSetting.ContentType, Is.EqualTo(FeatureFlagConfigurationSetting.FeatureFlagContentType));
-
-                var featureFlag = (FeatureFlagConfigurationSetting)retrievedSetting;
-                Assert.That(featureFlag.FeatureId, Is.EqualTo(featureId));
-                Assert.That(featureFlag.IsEnabled, Is.EqualTo(false));
-                Assert.That(featureFlag.ClientFilters.Count, Is.EqualTo(0));
-            }
-            finally
-            {
-                AssertStatus200(await service.DeleteConfigurationSettingAsync(key));
             }
         }
 
@@ -2314,29 +2016,29 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
 
-                var setting = (FeatureFlagConfigurationSetting)settingResponse.Value;
-                Assert.That(setting.IsEnabled, Is.True);
+                var setting = (FeatureFlagConfigurationSetting) settingResponse.Value;
+                Assert.True(setting.IsEnabled);
                 setting.IsEnabled = false;
 
                 await service.SetConfigurationSettingAsync(setting);
 
                 settingResponse = await service.GetConfigurationSettingAsync(setting.Key);
-                setting = (FeatureFlagConfigurationSetting)settingResponse.Value;
+                setting = (FeatureFlagConfigurationSetting) settingResponse.Value;
 
-                Assert.That(settingResponse.Value, Is.InstanceOf<FeatureFlagConfigurationSetting>());
-                Assert.That(setting.Description, Is.EqualTo("Feature description"));
-                Assert.That(setting.DisplayName, Is.EqualTo("Feature display name"));
-                Assert.That(setting.ClientFilters.Count, Is.EqualTo(2));
+                Assert.IsInstanceOf<FeatureFlagConfigurationSetting>(settingResponse.Value);
+                Assert.AreEqual("Feature description", setting.Description);
+                Assert.AreEqual("Feature display name", setting.DisplayName);
+                Assert.AreEqual(2, setting.ClientFilters.Count);
                 var filter1 = setting.ClientFilters[0];
-                Assert.That(filter1.Name, Is.EqualTo("FilterA"));
+                Assert.AreEqual("FilterA", filter1.Name);
                 var filter2 = setting.ClientFilters[1];
-                Assert.That(filter2.Name, Is.EqualTo("Microsoft.TimeWindow"));
-                Assert.That(filter2.Parameters, Is.EqualTo(new Dictionary<string, object>()
+                Assert.AreEqual("Microsoft.TimeWindow", filter2.Name);
+                Assert.AreEqual(new Dictionary<string, object>()
                 {
                     { "Start", "Wed, 01 May 2019 13:59:59 GMT" },
                     { "End", "Mon, 01 July 2019 00:00:00 GMT" }
-                }));
-                Assert.That(setting.IsEnabled, Is.False);
+                }, filter2.Parameters);
+                Assert.False(setting.IsEnabled);
             }
             finally
             {
@@ -2364,14 +2066,14 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting2);
 
                 var selectedSettings = await service.GetConfigurationSettingsAsync(
-                    new SettingSelector() { KeyFilter = FeatureFlagConfigurationSetting.KeyPrefix + "feature 1-*" })
+                    new SettingSelector() { KeyFilter = FeatureFlagConfigurationSetting.KeyPrefix + "feature 1-*"})
                     .ToEnumerableAsync();
 
-                Assert.That(selectedSettings.Count, Is.EqualTo(2));
+                Assert.AreEqual(2, selectedSettings.Count);
                 foreach (var setting in selectedSettings)
                 {
-                    FeatureFlagConfigurationSetting featureFlag = (FeatureFlagConfigurationSetting)setting;
-                    Assert.That(featureFlag.Description, Is.EqualTo("Feature description"));
+                    FeatureFlagConfigurationSetting featureFlag = (FeatureFlagConfigurationSetting) setting;
+                    Assert.AreEqual("Feature description", featureFlag.Description);
                 }
             }
             finally
@@ -2392,10 +2094,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
                 var setting = settingResponse.Value;
 
-                Assert.That(setting, Is.InstanceOf<SecretReferenceConfigurationSetting>());
-                Assert.That(setting.Key, Is.EqualTo(testSetting.Key));
-                Assert.That(setting.Value, Is.EqualTo(testSetting.Value));
-                Assert.That(((SecretReferenceConfigurationSetting)setting).SecretId.AbsoluteUri, Is.EqualTo("http://secret1.com/"));
+                Assert.IsInstanceOf<SecretReferenceConfigurationSetting>(setting);
+                Assert.AreEqual(testSetting.Key, setting.Key);
+                Assert.AreEqual(testSetting.Value, setting.Value);
+                Assert.AreEqual("http://secret1.com/", ((SecretReferenceConfigurationSetting)setting).SecretId.AbsoluteUri);
             }
             finally
             {
@@ -2413,16 +2115,16 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 var settingResponse = await service.AddConfigurationSettingAsync(testSetting);
 
-                var setting = (SecretReferenceConfigurationSetting)settingResponse.Value;
+                var setting = (SecretReferenceConfigurationSetting) settingResponse.Value;
                 setting.SecretId = new Uri("http://secret2.com/");
 
                 await service.SetConfigurationSettingAsync(setting);
 
                 settingResponse = await service.GetConfigurationSettingAsync(setting.Key);
-                setting = (SecretReferenceConfigurationSetting)settingResponse.Value;
+                setting = (SecretReferenceConfigurationSetting) settingResponse.Value;
 
-                Assert.That(settingResponse.Value, Is.InstanceOf<SecretReferenceConfigurationSetting>());
-                Assert.That(setting.SecretId.AbsoluteUri, Is.EqualTo("http://secret2.com/"));
+                Assert.IsInstanceOf<SecretReferenceConfigurationSetting>(settingResponse.Value);
+                Assert.AreEqual("http://secret2.com/", setting.SecretId.AbsoluteUri);
             }
             finally
             {
@@ -2444,15 +2146,15 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting2);
 
                 var selectedSettings = await service.GetConfigurationSettingsAsync(
-                    new SettingSelector() { KeyFilter = "secret 1-*" })
+                    new SettingSelector() { KeyFilter = "secret 1-*"})
                     .ToEnumerableAsync();
 
-                Assert.That(selectedSettings.Count, Is.EqualTo(2));
+                Assert.AreEqual(2, selectedSettings.Count);
                 foreach (var setting in selectedSettings)
                 {
-                    SecretReferenceConfigurationSetting featureFlag = (SecretReferenceConfigurationSetting)setting;
-                    Assert.That(featureFlag.SecretId.AbsoluteUri, Does.StartWith("http://secret"));
-                    Assert.That(featureFlag.SecretId.AbsoluteUri, Does.EndWith(".com/"));
+                    SecretReferenceConfigurationSetting featureFlag = (SecretReferenceConfigurationSetting) setting;
+                    StringAssert.StartsWith("http://secret", featureFlag.SecretId.AbsoluteUri);
+                    StringAssert.EndsWith(".com/", featureFlag.SecretId.AbsoluteUri);
                 }
             }
             finally
@@ -2496,8 +2198,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting1);
 
                 var selectedSetting = (FeatureFlagConfigurationSetting)await service.GetConfigurationSettingAsync(testSetting1.Key);
-                var audience = (IDictionary)selectedSetting.ClientFilters[0].Parameters["Audience"];
-                var groups = (IList)audience["Groups"];
+                var audience = (IDictionary) selectedSetting.ClientFilters[0].Parameters["Audience"];
+                var groups = (IList) audience["Groups"];
 
                 groups.Add(new Dictionary<string, object>()
                 {
@@ -2506,7 +2208,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 });
 
                 var resultingSetting = await service.SetConfigurationSettingAsync(selectedSetting);
-                Assert.That(resultingSetting.Value.Value, Is.EqualTo("{\"id\":\"my_feature\",\"enabled\":true,\"conditions\":{\"client_filters\":[{\"name\":\"Microsoft.Targeting\",\"parameters\":{\"Audience\":{\"Groups\":[{\"Name\":\"Group1\",\"RolloutPercentage\":100},{\"Name\":\"Group2\",\"RolloutPercentage\":50}]}}}]}}"));
+                Assert.AreEqual("{\"id\":\"my_feature\",\"enabled\":true,\"conditions\":{\"client_filters\":[{\"name\":\"Microsoft.Targeting\",\"parameters\":{\"Audience\":{\"Groups\":[{\"Name\":\"Group1\",\"RolloutPercentage\":100},{\"Name\":\"Group2\",\"RolloutPercentage\":50}]}}}]}}", resultingSetting.Value.Value);
             }
             finally
             {
@@ -2677,10 +2379,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 ValidateCompletedOperation(operation);
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();
-                Assert.That(2, Is.GreaterThanOrEqualTo(settings.Count()));
+                Assert.GreaterOrEqual(2, settings.Count());
 
-                Assert.That(settings[0].Key, Is.EqualTo(key1));
-                Assert.That(settings[1].Key, Is.EqualTo(key2));
+                Assert.AreEqual(key1, settings[0].Key);
+                Assert.AreEqual(key2, settings[1].Key);
             }
             finally
             {
@@ -2742,14 +2444,14 @@ namespace Azure.Data.AppConfiguration.Tests
                 ValidateCompletedOperation(operation);
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();
-                Assert.That(settings.Count(), Is.EqualTo(3));
+                Assert.AreEqual(3, settings.Count());
 
-                Assert.That(settings[0].Key, Is.EqualTo(key1));
-                Assert.That(settings[1].Key, Is.EqualTo(key2));
-                Assert.That(settings[2].Key, Is.EqualTo(key3));
-                Assert.That(settings[0].Tags, Is.EqualTo(expectedTags));
-                Assert.That(settings[1].Tags, Is.EqualTo(expectedTags));
-                Assert.That(settings[2].Tags, Is.EqualTo(expectedTags));
+                Assert.AreEqual(key1, settings[0].Key);
+                Assert.AreEqual(key2, settings[1].Key);
+                Assert.AreEqual(key3, settings[2].Key);
+                Assert.AreEqual(expectedTags, settings[0].Tags);
+                Assert.AreEqual(expectedTags, settings[1].Tags);
+                Assert.AreEqual(expectedTags, settings[2].Tags);
             }
             finally
             {
@@ -2807,7 +2509,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 ValidateCompletedOperation(operation);
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();
-                Assert.That(settings.Count(), Is.EqualTo(0));
+                Assert.AreEqual(0, settings.Count());
             }
             finally
             {
@@ -2841,8 +2543,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
 
                 ConfigurationSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
-                Assert.That(archivedSnapshot, Is.Not.Null);
-                Assert.That(archivedSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Archived));
+                Assert.NotNull(archivedSnapshot);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
             }
             finally
             {
@@ -2873,12 +2575,12 @@ namespace Azure.Data.AppConfiguration.Tests
                 ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
 
                 ConfigurationSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
-                Assert.That(archivedSnapshot, Is.Not.Null);
-                Assert.That(archivedSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Archived));
+                Assert.NotNull(archivedSnapshot);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
 
                 ConfigurationSnapshot recoveredSnapshot = await service.RecoverSnapshotAsync(snapshotName);
-                Assert.That(recoveredSnapshot, Is.Not.Null);
-                Assert.That(recoveredSnapshot.Status, Is.EqualTo(ConfigurationSnapshotStatus.Ready));
+                Assert.NotNull(recoveredSnapshot);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Ready, recoveredSnapshot.Status);
             }
             finally
             {
@@ -2912,7 +2614,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 var selector = new SnapshotSelector();
                 var snapshots = service.GetSnapshotsAsync(selector);
                 var resultsReturned = (await snapshots.ToEnumerableAsync()).Count;
-                Assert.That(resultsReturned, Is.GreaterThanOrEqualTo(2));
+                Assert.GreaterOrEqual(resultsReturned, 2);
             }
             finally
             {
@@ -2951,8 +2653,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 ConfigurationSnapshot[] batch = (await service.GetSnapshotsAsync(selector).ToEnumerableAsync()).ToArray();
 
-                Assert.That(batch.Length, Is.EqualTo(1));
-                Assert.That(batch[0].Name, Is.EqualTo(firstSnapshotName));
+                Assert.AreEqual(1, batch.Length);
+                Assert.AreEqual(firstSnapshotName, batch[0].Name);
             }
             finally
             {
@@ -2979,7 +2681,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var settingsForSnapshot = service.GetConfigurationSettingsForSnapshotAsync(snapshotName);
                 var settingscount = (await settingsForSnapshot.ToEnumerableAsync()).Count;
-                Assert.That(settingscount, Is.GreaterThanOrEqualTo(1));
+                Assert.GreaterOrEqual(settingscount, 1);
             }
             finally
             {
@@ -3008,10 +2710,10 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var settingsForSnapshot = service.GetConfigurationSettingsForSnapshotAsync(snapshotName);
                 var settings = await settingsForSnapshot.ToEnumerableAsync();
-                Assert.That(settings.Count, Is.GreaterThanOrEqualTo(1));
+                Assert.GreaterOrEqual(settings.Count, 1);
 
                 var settingForSnapshot = settings.FirstOrDefault();
-                Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(createdSetting, settingForSnapshot), Is.True);
+                Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(createdSetting, settingForSnapshot));
             }
             finally
             {
@@ -3041,11 +2743,11 @@ namespace Azure.Data.AppConfiguration.Tests
                 int expectedLabels = 1;
                 await foreach (SettingLabel label in service.GetLabelsAsync(selector, CancellationToken.None))
                 {
-                    Assert.That(label.Name, Is.EqualTo(setting.Label));
+                    Assert.AreEqual(setting.Label, label.Name);
                     resultsReturned++;
                 }
 
-                Assert.That(resultsReturned, Is.EqualTo(expectedLabels));
+                Assert.AreEqual(expectedLabels, resultsReturned);
             }
             finally
             {
@@ -3081,7 +2783,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 }
 
                 var labels = await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync();
-                Assert.That(labels.Count, Is.GreaterThanOrEqualTo(2));
+                Assert.GreaterOrEqual(labels.Count, 2);
 
                 bool foundLabel1 = false;
                 bool foundLabel2 = false;
@@ -3102,8 +2804,8 @@ namespace Azure.Data.AppConfiguration.Tests
                     }
                 }
 
-                Assert.That(foundLabel1, Is.True);
-                Assert.That(foundLabel2, Is.True);
+                Assert.IsTrue(foundLabel1);
+                Assert.IsTrue(foundLabel2);
             }
             finally
             {
@@ -3133,11 +2835,11 @@ namespace Azure.Data.AppConfiguration.Tests
                 List<SettingLabel> labels = await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync();
 
                 // There should be at least one label retrieved.
-                Assert.That(labels, Is.Not.Empty);
+                CollectionAssert.IsNotEmpty(labels);
 
                 foreach (SettingLabel label in labels)
                 {
-                    Assert.That(label.Name, Does.StartWith("abc"));
+                    StringAssert.StartsWith("abc", label.Name);
                 }
             }
             finally
@@ -3167,9 +2869,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 SettingLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(2, Is.GreaterThanOrEqualTo(labels.Length));
-                Assert.That(labels.Any(l => l.Name == "ab,cd"), Is.True);
-                Assert.That(labels.Any(l => l.Name == "wx,yz"), Is.True);
+                Assert.GreaterOrEqual(2, labels.Length);
+                Assert.IsTrue(labels.Any(l => l.Name == "ab,cd"));
+                Assert.IsTrue(labels.Any(l => l.Name == "wx,yz"));
             }
             finally
             {
@@ -3199,9 +2901,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 SettingLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(2, Is.GreaterThanOrEqualTo(labels.Length));
-                Assert.That(labels.Any(l => l.Name == "abc"), Is.True);
-                Assert.That(labels.Any(l => l.Name == "xyz"), Is.True);
+                Assert.GreaterOrEqual(2, labels.Length);
+                Assert.IsTrue(labels.Any(l => l.Name == "abc"));
+                Assert.IsTrue(labels.Any(l => l.Name == "xyz"));
             }
             finally
             {
@@ -3227,11 +2929,11 @@ namespace Azure.Data.AppConfiguration.Tests
 
             await foreach (SettingLabel label in service.GetLabelsAsync(selector, CancellationToken.None))
             {
-                Assert.That(label.Name, Does.StartWith(labelPrefix));
+                StringAssert.StartsWith(labelPrefix, label.Name);
                 resultsReturned++;
             }
 
-            Assert.That(resultsReturned, Is.EqualTo(expectedEvents));
+            Assert.AreEqual(expectedEvents, resultsReturned);
         }
 
         [RecordedTest]
@@ -3253,10 +2955,10 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 SettingLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(labels.Length, Is.EqualTo(1));
+                Assert.AreEqual(1, labels.Length);
 
-                Assert.That(labels[0].Name, Is.Not.Null);
-                Assert.That(labels[0].Name, Is.EqualTo(setting.Label));
+                Assert.IsNotNull(labels[0].Name);
+                Assert.AreEqual(setting.Label, labels[0].Name);
             }
             finally
             {
@@ -3287,8 +2989,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 SettingLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(labels.Length, Is.EqualTo(1));
-                Assert.That(labels[0].Name, Is.Null);
+                Assert.AreEqual(1, labels.Length);
+                Assert.IsNull(labels[0].Name);
             }
             finally
             {
@@ -3313,8 +3015,8 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 SettingLabel[] labels = (await service.GetLabelsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
-                Assert.That(labels.Length, Is.EqualTo(1));
-                Assert.That(labels[0].Name, Is.EqualTo(testSetting.Label));
+                Assert.AreEqual(1, labels.Length);
+                Assert.AreEqual(testSetting.Label, labels[0].Name);
             }
             finally
             {
@@ -3324,32 +3026,32 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private void ValidateCreatedSnapshot(ConfigurationSnapshot createdSnapshot, ConfigurationSnapshot retrievedSnapshot, string expectedName)
         {
-            Assert.That(createdSnapshot, Is.Not.Null);
-            Assert.That(createdSnapshot.Name, Is.EqualTo(expectedName));
+            Assert.NotNull(createdSnapshot);
+            Assert.AreEqual(expectedName, createdSnapshot.Name);
 
-            Assert.That(retrievedSnapshot, Is.Not.Null);
-            Assert.That(retrievedSnapshot.Name, Is.EqualTo(createdSnapshot.Name));
+            Assert.NotNull(retrievedSnapshot);
+            Assert.AreEqual(createdSnapshot.Name, retrievedSnapshot.Name);
 
             // validate retrieved filters
             if (createdSnapshot.Filters != null)
             {
-                Assert.That(retrievedSnapshot.Filters, Is.Not.Null);
-                Assert.That(retrievedSnapshot.Filters.Count, Is.EqualTo(createdSnapshot.Filters.Count));
+                Assert.NotNull(retrievedSnapshot.Filters);
+                Assert.AreEqual(createdSnapshot.Filters.Count, retrievedSnapshot.Filters.Count);
                 for (int i = 0; i < createdSnapshot.Filters.Count; i++)
                 {
-                    Assert.That(retrievedSnapshot.Filters[i].Key, Is.EqualTo(createdSnapshot.Filters[i].Key));
-                    Assert.That(retrievedSnapshot.Filters[i].Tags, Is.EqualTo(createdSnapshot.Filters[i].Tags));
+                    Assert.AreEqual(createdSnapshot.Filters[i].Key, retrievedSnapshot.Filters[i].Key);
+                    Assert.AreEqual(createdSnapshot.Filters[i].Tags, retrievedSnapshot.Filters[i].Tags);
                 }
             }
         }
 
         private static void ValidateCompletedOperation(CreateSnapshotOperation operation)
         {
-            Assert.That(operation.HasValue, Is.True);
-            Assert.That(operation.HasCompleted, Is.True);
-            Assert.That(operation.Id, Is.Not.Null);
+            Assert.IsTrue(operation.HasValue);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.NotNull(operation.Id);
         }
 
-        private static void AssertStatus200(Response response) => Assert.That(response.Status, Is.EqualTo(200));
+        private static void AssertStatus200(Response response) => Assert.AreEqual(200, response.Status);
     }
 }

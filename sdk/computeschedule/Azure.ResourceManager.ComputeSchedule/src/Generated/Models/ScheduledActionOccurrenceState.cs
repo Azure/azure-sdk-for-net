@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -15,82 +14,53 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct ScheduledActionOccurrenceState : IEquatable<ScheduledActionOccurrenceState>
     {
         private readonly string _value;
-        /// <summary> The occurrence was created. </summary>
-        private const string CreatedValue = "Created";
-        /// <summary> The occurrence is being rescheduled. </summary>
-        private const string ReschedulingValue = "Rescheduling";
-        /// <summary> The occurrence has been scheduled. </summary>
-        private const string ScheduledValue = "Scheduled";
-        /// <summary> The occurrence has successfully ran. </summary>
-        private const string SucceededValue = "Succeeded";
-        /// <summary> The occurrence has failed during its scheduling. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> The occurrence is going through cancellation. </summary>
-        private const string CancellingValue = "Cancelling";
-        /// <summary> The occurrence has been canceled. </summary>
-        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionOccurrenceState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledActionOccurrenceState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string CreatedValue = "Created";
+        private const string ReschedulingValue = "Rescheduling";
+        private const string ScheduledValue = "Scheduled";
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CancellingValue = "Cancelling";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> The occurrence was created. </summary>
         public static ScheduledActionOccurrenceState Created { get; } = new ScheduledActionOccurrenceState(CreatedValue);
-
         /// <summary> The occurrence is being rescheduled. </summary>
         public static ScheduledActionOccurrenceState Rescheduling { get; } = new ScheduledActionOccurrenceState(ReschedulingValue);
-
         /// <summary> The occurrence has been scheduled. </summary>
         public static ScheduledActionOccurrenceState Scheduled { get; } = new ScheduledActionOccurrenceState(ScheduledValue);
-
         /// <summary> The occurrence has successfully ran. </summary>
         public static ScheduledActionOccurrenceState Succeeded { get; } = new ScheduledActionOccurrenceState(SucceededValue);
-
         /// <summary> The occurrence has failed during its scheduling. </summary>
         public static ScheduledActionOccurrenceState Failed { get; } = new ScheduledActionOccurrenceState(FailedValue);
-
         /// <summary> The occurrence is going through cancellation. </summary>
         public static ScheduledActionOccurrenceState Cancelling { get; } = new ScheduledActionOccurrenceState(CancellingValue);
-
         /// <summary> The occurrence has been canceled. </summary>
         public static ScheduledActionOccurrenceState Canceled { get; } = new ScheduledActionOccurrenceState(CanceledValue);
-
         /// <summary> Determines if two <see cref="ScheduledActionOccurrenceState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionOccurrenceState left, ScheduledActionOccurrenceState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ScheduledActionOccurrenceState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionOccurrenceState left, ScheduledActionOccurrenceState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ScheduledActionOccurrenceState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionOccurrenceState"/>. </summary>
         public static implicit operator ScheduledActionOccurrenceState(string value) => new ScheduledActionOccurrenceState(value);
 
-        /// <summary> Converts a string to a <see cref="ScheduledActionOccurrenceState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionOccurrenceState?(string value) => value == null ? null : new ScheduledActionOccurrenceState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionOccurrenceState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ScheduledActionOccurrenceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

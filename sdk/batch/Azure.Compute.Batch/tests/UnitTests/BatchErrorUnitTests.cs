@@ -3,11 +3,11 @@
 
 using System;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Compute.Batch;
-using Azure.Core.TestFramework;
 using Moq;
+using Azure.Core.TestFramework;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Compute.Batch.Tests.UnitTests
@@ -24,7 +24,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
             // Act
-            var result = (BatchError)mockResponse.Object;
+            var result = BatchError.FromResponse(mockResponse.Object);
 
             // Assert
             Assert.NotNull(result);
@@ -43,7 +43,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
             // Act
-            var result = (BatchError)mockResponse.Object;
+            var result = BatchError.FromResponse(mockResponse.Object);
 
             // Assert
             Assert.NotNull(result);
@@ -66,7 +66,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
             // Act
-            var result = (BatchError)mockResponse.Object;
+            var result = BatchError.FromResponse(mockResponse.Object);
 
             // Assert
             Assert.NotNull(result);

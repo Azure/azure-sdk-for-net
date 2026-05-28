@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ResourceDeletionPolicy : IEquatable<ResourceDeletionPolicy>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceDeletionPolicy"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceDeletionPolicy(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NotSpecifiedValue = "NotSpecified";
         private const string CascadeDeleteAllValue = "CascadeDeleteAll";
         private const string CascadeDeleteProxyOnlyChildrenValue = "CascadeDeleteProxyOnlyChildren";
 
-        /// <summary> Initializes a new instance of <see cref="ResourceDeletionPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceDeletionPolicy(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NotSpecified. </summary>
+        /// <summary> NotSpecified. </summary>
         public static ResourceDeletionPolicy NotSpecified { get; } = new ResourceDeletionPolicy(NotSpecifiedValue);
-
-        /// <summary> Gets the CascadeDeleteAll. </summary>
+        /// <summary> CascadeDeleteAll. </summary>
         public static ResourceDeletionPolicy CascadeDeleteAll { get; } = new ResourceDeletionPolicy(CascadeDeleteAllValue);
-
-        /// <summary> Gets the CascadeDeleteProxyOnlyChildren. </summary>
+        /// <summary> CascadeDeleteProxyOnlyChildren. </summary>
         public static ResourceDeletionPolicy CascadeDeleteProxyOnlyChildren { get; } = new ResourceDeletionPolicy(CascadeDeleteProxyOnlyChildrenValue);
-
         /// <summary> Determines if two <see cref="ResourceDeletionPolicy"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceDeletionPolicy left, ResourceDeletionPolicy right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ResourceDeletionPolicy"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceDeletionPolicy left, ResourceDeletionPolicy right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ResourceDeletionPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceDeletionPolicy"/>. </summary>
         public static implicit operator ResourceDeletionPolicy(string value) => new ResourceDeletionPolicy(value);
 
-        /// <summary> Converts a string to a <see cref="ResourceDeletionPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ResourceDeletionPolicy?(string value) => value == null ? null : new ResourceDeletionPolicy(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceDeletionPolicy other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ResourceDeletionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

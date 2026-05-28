@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedServiceIdentities;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableManagedServiceIdentitiesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableManagedServiceIdentitiesResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableManagedServiceIdentitiesResourceGroupResource"/> class for mocking. </summary>
         protected MockableManagedServiceIdentitiesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableManagedServiceIdentitiesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableManagedServiceIdentitiesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableManagedServiceIdentitiesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of UserAssignedIdentities in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of UserAssignedIdentities and their operations over a UserAssignedIdentityResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of UserAssignedIdentityResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of UserAssignedIdentityResources and their operations over a UserAssignedIdentityResource. </returns>
         public virtual UserAssignedIdentityCollection GetUserAssignedIdentities()
         {
             return GetCachedClient(client => new UserAssignedIdentityCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// Gets the identity.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return await GetUserAssignedIdentities().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// Gets the identity.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         [ForwardsClientCalls]
         public virtual Response<UserAssignedIdentityResource> GetUserAssignedIdentity(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return GetUserAssignedIdentities().Get(resourceName, cancellationToken);
         }
     }

@@ -3,11 +3,8 @@
 
 using Azure.Core;
 
-using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Client options for <see cref="ConversationAnalysisAuthoring"/>. </summary>
-    [CodeGenType("ConversationAnalysisAuthoringOptions")]
     public partial class ConversationAnalysisAuthoringClientOptions : ClientOptions
     {
         /// <summary>

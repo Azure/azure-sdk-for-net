@@ -1,43 +1,22 @@
 # Release History
 
-## 2.0.0 (2026-06-06)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- GA release of the Azure AI Translator Text Translation SDK targeting the 2026-06-06 API version.
-- Added `TextTranslationClientSettings` to support creating a `TextTranslationClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-- `TranslationTarget.Tone` property is now strongly typed as `TranslationTone?` instead of `string`.
-- `TranslationTarget.Gender` property is now strongly typed as `TranslationGender?` instead of `string`.
-
-### Breaking Changes
-
-- Removed `TranslationTarget.Grade` property.
-- Changed `TranslationTarget.Tone` type from `string` to `TranslationTone?`.
-- Changed `TranslationTarget.Gender` type from `string` to `TranslationGender?`.
-
-## 2.0.0-beta.1 (2026-01-08)
-
-### Features Added
-
-- Added support for the Azure AI Translator API 2025-10-01-preview, including translations using LLM models, adaptive custom translation, tone variant translations, and gender-specific language translations.
-- Added `TranslationTarget` class for configuring translation options.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
-- Added `Models` property to `GetSupportedLanguagesResult` to include the list of LLM models available for translations.
-- Changed the name of the model factory `AITranslationTextModelFactory` to `TranslationTextModelFactory` matching the new project structure.
-- Changed the name of `TargetLanguage` property to `Language` in `TranslationText`.
-- Changed the name of `Confidence` property to `Score` in `DetectedLanguage`.
-- Removed `TextTranslationTranslateOptions` and `TextTranslationTransliterateOptions`.
-- `SourceText` property in `TranslatedTextItem` deprecated and marked as obsolete.
-- Dictionary, sentence boundaries and text alignments features have been removed and relevant classes and properties have been marked as deprecated.
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.0.0 (2024-05-21)
 
 ### Features Added
 
-- Introduced model factory `Azure.AI.Translation.Text.AITranslationTextModelFactory` for mocking.
+- Introduced model factory `Azure.AI.Translation.Text.TextTranslationModelFactory` for mocking.
 - Added options overloads to Translate and Transliterate. TextTranslationTranslateOptions and TextTranslationTransliterateOptions roll up method parameters into a single object.
 - Add support for using AAD authentication.
 
@@ -61,3 +40,4 @@ Initial version of Text Translation client library for .NET
 - Added support for Getting the Supported Languages - [GetLanguages API](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-languages)
 - Added support for Looking up the Dictionary Entries - [LookupDictionaryEntries API](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-lookup)
 - Added support for Looking up the Dictionary Examples - [LookupDictionaryExamples API](https://learn.microsoft.com/azure/cognitive-services/translator/reference/v3-0-dictionary-examples)
+

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,8 +16,6 @@ namespace _Type.Property.AdditionalProperties
     public partial class SpreadRecordNonDiscriminatedUnion2
     {
         protected SpreadRecordNonDiscriminatedUnion2() => throw null;
-
-        internal SpreadRecordNonDiscriminatedUnion2(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

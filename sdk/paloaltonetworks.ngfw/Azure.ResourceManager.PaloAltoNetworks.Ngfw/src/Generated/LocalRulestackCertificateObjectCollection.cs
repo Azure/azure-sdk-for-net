@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class LocalRulestackCertificateObjectCollection : ArmCollection, IEnumerable<LocalRulestackCertificateObjectResource>, IAsyncEnumerable<LocalRulestackCertificateObjectResource>
     {
-        private readonly ClientDiagnostics _certificateObjectLocalRulestackClientDiagnostics;
-        private readonly CertificateObjectLocalRulestack _certificateObjectLocalRulestackRestClient;
+        private readonly ClientDiagnostics _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics;
+        private readonly CertificateObjectLocalRulestackRestOperations _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient;
 
-        /// <summary> Initializes a new instance of LocalRulestackCertificateObjectCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LocalRulestackCertificateObjectCollection"/> class for mocking. </summary>
         protected LocalRulestackCertificateObjectCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocalRulestackCertificateObjectCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LocalRulestackCertificateObjectCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal LocalRulestackCertificateObjectCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(LocalRulestackCertificateObjectResource.ResourceType, out string localRulestackCertificateObjectApiVersion);
-            _certificateObjectLocalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", LocalRulestackCertificateObjectResource.ResourceType.Namespace, Diagnostics);
-            _certificateObjectLocalRulestackRestClient = new CertificateObjectLocalRulestack(_certificateObjectLocalRulestackClientDiagnostics, Pipeline, Endpoint, localRulestackCertificateObjectApiVersion ?? "2025-10-08");
-            ValidateResourceId(id);
+            _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", LocalRulestackCertificateObjectResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(LocalRulestackCertificateObjectResource.ResourceType, out string localRulestackCertificateObjectCertificateObjectLocalRulestackApiVersion);
+            _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient = new CertificateObjectLocalRulestackRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, localRulestackCertificateObjectCertificateObjectLocalRulestackApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != LocalRulestackResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LocalRulestackResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LocalRulestackResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a CertificateObjectLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CertificateObjectLocalRulestackResources_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CertificateObjectLocalRulestack_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="name"> certificate name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LocalRulestackCertificateObjectResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, LocalRulestackCertificateObjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _certificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.CreateOrUpdate");
+            using var scope = _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackCertificateObjectData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NgfwArmOperation<LocalRulestackCertificateObjectResource> operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(
-                    new LocalRulestackCertificateObjectOperationSource(Client),
-                    _certificateObjectLocalRulestackClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(new LocalRulestackCertificateObjectOperationSource(Client), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Create a CertificateObjectLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CertificateObjectLocalRulestackResources_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CertificateObjectLocalRulestack_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="name"> certificate name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LocalRulestackCertificateObjectResource> CreateOrUpdate(WaitUntil waitUntil, string name, LocalRulestackCertificateObjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _certificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.CreateOrUpdate");
+            using var scope = _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, LocalRulestackCertificateObjectData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NgfwArmOperation<LocalRulestackCertificateObjectResource> operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(
-                    new LocalRulestackCertificateObjectOperationSource(Client),
-                    _certificateObjectLocalRulestackClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
+                var operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(new LocalRulestackCertificateObjectOperationSource(Client), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get a CertificateObjectLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CertificateObjectLocalRulestackResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CertificateObjectLocalRulestack_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<LocalRulestackCertificateObjectResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _certificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.Get");
+            using var scope = _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LocalRulestackCertificateObjectData> response = Response.FromValue(LocalRulestackCertificateObjectData.FromResponse(result), result);
+                var response = await _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LocalRulestackCertificateObjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get a CertificateObjectLocalRulestackResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CertificateObjectLocalRulestackResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CertificateObjectLocalRulestack_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<LocalRulestackCertificateObjectResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _certificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.Get");
+            using var scope = _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LocalRulestackCertificateObjectData> response = Response.FromValue(LocalRulestackCertificateObjectData.FromResponse(result), result);
+                var response = _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LocalRulestackCertificateObjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// List CertificateObjectLocalRulestackResource resources by LocalRulestacks
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CertificateObjectLocalRulestackResources_ListByLocalRulestacks. </description>
+        /// <term>Operation Id</term>
+        /// <description>CertificateObjectLocalRulestack_ListByLocalRulestacks</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocalRulestackCertificateObjectResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LocalRulestackCertificateObjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalRulestackCertificateObjectResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<LocalRulestackCertificateObjectData, LocalRulestackCertificateObjectResource>(new CertificateObjectLocalRulestackGetByLocalRulestacksAsyncCollectionResultOfT(
-                _certificateObjectLocalRulestackRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "LocalRulestackCertificateObjectCollection.GetAll"), data => new LocalRulestackCertificateObjectResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackCertificateObjectResource(Client, LocalRulestackCertificateObjectData.DeserializeLocalRulestackCertificateObjectData(e)), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, "LocalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List CertificateObjectLocalRulestackResource resources by LocalRulestacks
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CertificateObjectLocalRulestackResources_ListByLocalRulestacks. </description>
+        /// <term>Operation Id</term>
+        /// <description>CertificateObjectLocalRulestack_ListByLocalRulestacks</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> A collection of <see cref="LocalRulestackCertificateObjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalRulestackCertificateObjectResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<LocalRulestackCertificateObjectData, LocalRulestackCertificateObjectResource>(new CertificateObjectLocalRulestackGetByLocalRulestacksCollectionResultOfT(
-                _certificateObjectLocalRulestackRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "LocalRulestackCertificateObjectCollection.GetAll"), data => new LocalRulestackCertificateObjectResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateListByLocalRulestacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.CreateListByLocalRulestacksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackCertificateObjectResource(Client, LocalRulestackCertificateObjectData.DeserializeLocalRulestackCertificateObjectData(e)), _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics, Pipeline, "LocalRulestackCertificateObjectCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CertificateObjectLocalRulestackResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CertificateObjectLocalRulestack_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _certificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.Exists");
+            using var scope = _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<LocalRulestackCertificateObjectData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LocalRulestackCertificateObjectData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LocalRulestackCertificateObjectData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CertificateObjectLocalRulestackResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CertificateObjectLocalRulestack_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _certificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.Exists");
+            using var scope = _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<LocalRulestackCertificateObjectData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LocalRulestackCertificateObjectData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LocalRulestackCertificateObjectData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CertificateObjectLocalRulestackResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CertificateObjectLocalRulestack_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<LocalRulestackCertificateObjectResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _certificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.GetIfExists");
+            using var scope = _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<LocalRulestackCertificateObjectData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LocalRulestackCertificateObjectData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LocalRulestackCertificateObjectData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<LocalRulestackCertificateObjectResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new LocalRulestackCertificateObjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/certificates/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CertificateObjectLocalRulestackResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CertificateObjectLocalRulestack_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackCertificateObjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<LocalRulestackCertificateObjectResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _certificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.GetIfExists");
+            using var scope = _localRulestackCertificateObjectCertificateObjectLocalRulestackClientDiagnostics.CreateScope("LocalRulestackCertificateObjectCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<LocalRulestackCertificateObjectData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LocalRulestackCertificateObjectData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LocalRulestackCertificateObjectData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _localRulestackCertificateObjectCertificateObjectLocalRulestackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<LocalRulestackCertificateObjectResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new LocalRulestackCertificateObjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<LocalRulestackCertificateObjectResource> IAsyncEnumerable<LocalRulestackCertificateObjectResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

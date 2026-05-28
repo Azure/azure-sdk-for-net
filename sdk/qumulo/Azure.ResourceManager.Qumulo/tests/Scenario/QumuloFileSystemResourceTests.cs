@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
@@ -10,6 +8,9 @@ using Azure.ResourceManager.Qumulo.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+
+using System;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Qumulo.Tests
 {
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Qumulo.Tests
             QumuloFileSystemResource fileSystemResource2 = (await fileSystemResource.UpdateAsync(fileSystemResourcePatch)).Value;
 
             Assert.AreEqual(fileSystemResource2.Data.Tags["Counter"], "1");
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await fileSystemResource.UpdateAsync(null)).Value);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await fileSystemResource.UpdateAsync( null)).Value);
         }
 
         [RecordedTest]

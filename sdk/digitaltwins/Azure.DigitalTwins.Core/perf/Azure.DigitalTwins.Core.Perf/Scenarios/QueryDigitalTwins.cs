@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using Azure.DigitalTwins.Core.Perf.Infrastructure;
 using Azure.Identity;
 using Azure.Test.Perf;
-using FluentAssertions;
 using NUnit.Framework;
+using FluentAssertions;
 
 namespace Azure.DigitalTwins.Core.Perf.Scenarios
 {

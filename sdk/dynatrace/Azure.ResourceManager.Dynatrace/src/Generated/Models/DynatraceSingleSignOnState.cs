@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public readonly partial struct DynatraceSingleSignOnState : IEquatable<DynatraceSingleSignOnState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DynatraceSingleSignOnState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InitialValue = "Initial";
         private const string EnableValue = "Enable";
         private const string DisableValue = "Disable";
         private const string ExistingValue = "Existing";
 
-        /// <summary> Initializes a new instance of <see cref="DynatraceSingleSignOnState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DynatraceSingleSignOnState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Initial. </summary>
+        /// <summary> Initial. </summary>
         public static DynatraceSingleSignOnState Initial { get; } = new DynatraceSingleSignOnState(InitialValue);
-
-        /// <summary> Gets the Enable. </summary>
+        /// <summary> Enable. </summary>
         public static DynatraceSingleSignOnState Enable { get; } = new DynatraceSingleSignOnState(EnableValue);
-
-        /// <summary> Gets the Disable. </summary>
+        /// <summary> Disable. </summary>
         public static DynatraceSingleSignOnState Disable { get; } = new DynatraceSingleSignOnState(DisableValue);
-
-        /// <summary> Gets the Existing. </summary>
+        /// <summary> Existing. </summary>
         public static DynatraceSingleSignOnState Existing { get; } = new DynatraceSingleSignOnState(ExistingValue);
-
         /// <summary> Determines if two <see cref="DynatraceSingleSignOnState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynatraceSingleSignOnState left, DynatraceSingleSignOnState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DynatraceSingleSignOnState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynatraceSingleSignOnState left, DynatraceSingleSignOnState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DynatraceSingleSignOnState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceSingleSignOnState"/>. </summary>
         public static implicit operator DynatraceSingleSignOnState(string value) => new DynatraceSingleSignOnState(value);
 
-        /// <summary> Converts a string to a <see cref="DynatraceSingleSignOnState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceSingleSignOnState?(string value) => value == null ? null : new DynatraceSingleSignOnState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynatraceSingleSignOnState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DynatraceSingleSignOnState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

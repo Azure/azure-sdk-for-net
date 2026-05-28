@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Language.Conversations;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> A resolution for ordinal numbers entity instances. </summary>
-    public partial class OrdinalResolution : ResolutionBase, IJsonModel<OrdinalResolution>
+    public partial class OrdinalResolution : IUtf8JsonSerializable, IJsonModel<OrdinalResolution>
     {
-        /// <summary> Initializes a new instance of <see cref="OrdinalResolution"/> for deserialization. </summary>
-        internal OrdinalResolution()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrdinalResolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResolutionBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OrdinalResolution>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeOrdinalResolution(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OrdinalResolution)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<OrdinalResolution>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(OrdinalResolution)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OrdinalResolution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OrdinalResolution IPersistableModel<OrdinalResolution>.Create(BinaryData data, ModelReaderWriterOptions options) => (OrdinalResolution)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OrdinalResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OrdinalResolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrdinalResolution>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrdinalResolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OrdinalResolution)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("offset"u8);
             writer.WriteStringValue(Offset);
@@ -88,64 +43,108 @@ namespace Azure.AI.Language.Conversations.Models
             writer.WriteStringValue(Value);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        OrdinalResolution IJsonModel<OrdinalResolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OrdinalResolution)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResolutionBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        OrdinalResolution IJsonModel<OrdinalResolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OrdinalResolution>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrdinalResolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OrdinalResolution)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOrdinalResolution(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OrdinalResolution DeserializeOrdinalResolution(JsonElement element, ModelReaderWriterOptions options)
+        internal static OrdinalResolution DeserializeOrdinalResolution(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResolutionKind resolutionKind = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string offset = default;
             RelativeTo relativeTo = default;
             string value = default;
-            foreach (var prop in element.EnumerateObject())
+            ResolutionKind resolutionKind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("resolutionKind"u8))
+                if (property.NameEquals("offset"u8))
                 {
-                    resolutionKind = new ResolutionKind(prop.Value.GetString());
+                    offset = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("offset"u8))
+                if (property.NameEquals("relativeTo"u8))
                 {
-                    offset = prop.Value.GetString();
+                    relativeTo = new RelativeTo(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("relativeTo"u8))
+                if (property.NameEquals("value"u8))
                 {
-                    relativeTo = new RelativeTo(prop.Value.GetString());
+                    value = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("value"u8))
+                if (property.NameEquals("resolutionKind"u8))
                 {
-                    value = prop.Value.GetString();
+                    resolutionKind = new ResolutionKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new OrdinalResolution(resolutionKind, additionalBinaryDataProperties, offset, relativeTo, value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OrdinalResolution(resolutionKind, serializedAdditionalRawData, offset, relativeTo, value);
+        }
+
+        BinaryData IPersistableModel<OrdinalResolution>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrdinalResolution>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OrdinalResolution)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OrdinalResolution IPersistableModel<OrdinalResolution>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OrdinalResolution>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeOrdinalResolution(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OrdinalResolution)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OrdinalResolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new OrdinalResolution FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeOrdinalResolution(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

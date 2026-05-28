@@ -8,7 +8,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
     internal interface IBlobScanInfoManager
     {
-        Task<DateTimeOffset?> LoadLatestScanAsync(string storageAccountName, string containerName);
-        Task UpdateLatestScanAsync(string storageAccountName, string containerName, DateTimeOffset scanInfo);
+        Task<DateTime?> LoadLatestScanAsync(string storageAccountName, string containerName);
+        Task UpdateLatestScanAsync(string storageAccountName, string containerName, DateTime scanInfo);
     }
 }

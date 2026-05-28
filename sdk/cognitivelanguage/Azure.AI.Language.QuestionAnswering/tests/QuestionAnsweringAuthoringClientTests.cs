@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.Language.QuestionAnswering.Authoring;
-using Azure.Core;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Language.QuestionAnswering.Authoring;
+using Azure.Core.TestFramework;
+using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
 {
@@ -23,7 +23,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         public void QuestionAnsweringAuthoringClientEndpointNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
-                () => new QuestionAnsweringAuthoringClient(null, new AzureKeyCredential("test-key")));
+                () => new QuestionAnsweringAuthoringClient(null, (AzureKeyCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
@@ -41,7 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         public void QuestionAnsweringAuthoringClientEndpointNullUsingTokenCredential()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-                () => new QuestionAnsweringClient(null, new MockCredential()));
+                () => new QuestionAnsweringClient(null, (TokenCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary></summary>
-    internal partial class NetAppVolumeOperationSource : IOperationSource<NetAppVolumeResource>
+    internal class NetAppVolumeOperationSource : IOperationSource<NetAppVolumeResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal NetAppVolumeOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         NetAppVolumeResource IOperationSource<NetAppVolumeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetAppVolumeData data = NetAppVolumeData.DeserializeNetAppVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<NetAppVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new NetAppVolumeResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<NetAppVolumeResource> IOperationSource<NetAppVolumeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetAppVolumeData data = NetAppVolumeData.DeserializeNetAppVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetAppVolumeResource(_client, data);
+            var data = ModelReaderWriter.Read<NetAppVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            return await Task.FromResult(new NetAppVolumeResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

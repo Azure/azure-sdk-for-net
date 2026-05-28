@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Azure.Core;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
+using System.Runtime.CompilerServices;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
 {

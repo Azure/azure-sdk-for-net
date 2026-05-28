@@ -24,14 +24,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         private const string SourceIPValue = "SourceIP";
         private const string DestinationIPValue = "DestinationIP";
-        private const string BidirectionalValue = "Bidirectional";
 
-        /// <summary> SourceDestinationType SourceIP. </summary>
+        /// <summary> SourceIP. </summary>
         public static SourceDestinationType SourceIP { get; } = new SourceDestinationType(SourceIPValue);
-        /// <summary> SourceDestinationType DestinationIP. </summary>
+        /// <summary> DestinationIP. </summary>
         public static SourceDestinationType DestinationIP { get; } = new SourceDestinationType(DestinationIPValue);
-        /// <summary> SourceDestinationType Bidirectional. </summary>
-        public static SourceDestinationType Bidirectional { get; } = new SourceDestinationType(BidirectionalValue);
         /// <summary> Determines if two <see cref="SourceDestinationType"/> values are the same. </summary>
         public static bool operator ==(SourceDestinationType left, SourceDestinationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceDestinationType"/> values are not the same. </summary>

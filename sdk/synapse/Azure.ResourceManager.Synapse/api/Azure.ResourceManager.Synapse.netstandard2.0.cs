@@ -2150,9 +2150,11 @@ namespace Azure.ResourceManager.Synapse
         Azure.ResourceManager.Synapse.SynapseSqlPoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Synapse.SynapseSqlPoolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use Update(WaitUntil waitUntil, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default).", false)]
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> Update(Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use UpdateAsync(WaitUntil waitUntil, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default).", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> UpdateAsync(Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2918,7 +2920,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.AadAuthenticationState InConsistent { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.AadAuthenticationState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.AadAuthenticationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.AadAuthenticationState left, Azure.ResourceManager.Synapse.Models.AadAuthenticationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.AadAuthenticationState (string value) { throw null; }
@@ -3115,7 +3119,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSize XXLarge { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSize XXXLarge { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSize other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSize left, Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSize (string value) { throw null; }
@@ -3133,7 +3139,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSizeFamily MemoryOptimized { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSizeFamily None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSizeFamily other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSizeFamily left, Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSizeFamily right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.BigDataPoolNodeSizeFamily (string value) { throw null; }
@@ -3198,7 +3206,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.KustoPoolCompressionType GZip { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.KustoPoolCompressionType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.KustoPoolCompressionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.KustoPoolCompressionType left, Azure.ResourceManager.Synapse.Models.KustoPoolCompressionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.KustoPoolCompressionType (string value) { throw null; }
@@ -3269,7 +3279,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason left, Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.KustoPoolNameUnavailableReason (string value) { throw null; }
@@ -3327,7 +3339,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.KustoPoolSkuSize Medium { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.KustoPoolSkuSize Small { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.KustoPoolSkuSize other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.KustoPoolSkuSize left, Azure.ResourceManager.Synapse.Models.KustoPoolSkuSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.KustoPoolSkuSize (string value) { throw null; }
@@ -3350,7 +3364,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.KustoPoolState Unavailable { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.KustoPoolState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.KustoPoolState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.KustoPoolState left, Azure.ResourceManager.Synapse.Models.KustoPoolState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.KustoPoolState (string value) { throw null; }
@@ -3365,7 +3381,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public KustoPoolType(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.KustoPoolType MicrosoftSynapseWorkspacesKustoPools { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.KustoPoolType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.KustoPoolType left, Azure.ResourceManager.Synapse.Models.KustoPoolType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.KustoPoolType (string value) { throw null; }
@@ -3420,7 +3438,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.ResourceProvisioningState Running { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.ResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.ResourceProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.ResourceProvisioningState left, Azure.ResourceManager.Synapse.Models.ResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.ResourceProvisioningState (string value) { throw null; }
@@ -3468,7 +3488,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Varchar { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Xml { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType left, Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType (string value) { throw null; }
@@ -3483,7 +3505,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SqlPoolConnectionPolicyName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SqlPoolConnectionPolicyName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SqlPoolConnectionPolicyName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SqlPoolConnectionPolicyName left, Azure.ResourceManager.Synapse.Models.SqlPoolConnectionPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SqlPoolConnectionPolicyName (string value) { throw null; }
@@ -3501,7 +3525,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode Recovery { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode Restore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode left, Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode (string value) { throw null; }
@@ -3527,7 +3553,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SqlPoolSecurityAlertPolicyName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SqlPoolSecurityAlertPolicyName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SqlPoolSecurityAlertPolicyName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SqlPoolSecurityAlertPolicyName left, Azure.ResourceManager.Synapse.Models.SqlPoolSecurityAlertPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SqlPoolSecurityAlertPolicyName (string value) { throw null; }
@@ -3543,7 +3571,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType Grs { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType Lrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType left, Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType (string value) { throw null; }
@@ -3597,7 +3627,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SqlServerSecurityAlertPolicyName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SqlServerSecurityAlertPolicyName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SqlServerSecurityAlertPolicyName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SqlServerSecurityAlertPolicyName left, Azure.ResourceManager.Synapse.Models.SqlServerSecurityAlertPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SqlServerSecurityAlertPolicyName (string value) { throw null; }
@@ -3612,7 +3644,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseAadOnlyAuthenticationName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseAadOnlyAuthenticationName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseAadOnlyAuthenticationName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseAadOnlyAuthenticationName left, Azure.ResourceManager.Synapse.Models.SynapseAadOnlyAuthenticationName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseAadOnlyAuthenticationName (string value) { throw null; }
@@ -3638,7 +3672,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseBlobAuditingPolicyName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseBlobAuditingPolicyName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseBlobAuditingPolicyName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseBlobAuditingPolicyName left, Azure.ResourceManager.Synapse.Models.SynapseBlobAuditingPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseBlobAuditingPolicyName (string value) { throw null; }
@@ -3659,7 +3695,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseBlobStorageEventType MicrosoftStorageBlobCreated { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseBlobStorageEventType MicrosoftStorageBlobRenamed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseBlobStorageEventType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseBlobStorageEventType left, Azure.ResourceManager.Synapse.Models.SynapseBlobStorageEventType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseBlobStorageEventType (string value) { throw null; }
@@ -3675,7 +3713,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole AllDatabasesAdmin { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole AllDatabasesViewer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole left, Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole (string value) { throw null; }
@@ -3725,7 +3765,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseDatabasePrincipalAssignmentType(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalAssignmentType MicrosoftSynapseWorkspacesKustoPoolsDatabasesPrincipalAssignments { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalAssignmentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalAssignmentType left, Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalAssignmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalAssignmentType (string value) { throw null; }
@@ -3745,7 +3787,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalRole User { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalRole Viewer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalRole left, Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalRole (string value) { throw null; }
@@ -3760,7 +3804,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseDataConnectionType(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseDataConnectionType MicrosoftSynapseWorkspacesKustoPoolsDatabasesDataConnections { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseDataConnectionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseDataConnectionType left, Azure.ResourceManager.Synapse.Models.SynapseDataConnectionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseDataConnectionType (string value) { throw null; }
@@ -3811,7 +3857,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType General { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType MemoryOptimized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType left, Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType (string value) { throw null; }
@@ -3888,7 +3936,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseDataSourceScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseDataSourceScaleType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseDataSourceScaleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseDataSourceScaleType left, Azure.ResourceManager.Synapse.Models.SynapseDataSourceScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseDataSourceScaleType (string value) { throw null; }
@@ -3916,7 +3966,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseDataWarehouseUserActivityName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseDataWarehouseUserActivityName Current { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseDataWarehouseUserActivityName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseDataWarehouseUserActivityName left, Azure.ResourceManager.Synapse.Models.SynapseDataWarehouseUserActivityName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseDataWarehouseUserActivityName (string value) { throw null; }
@@ -3937,7 +3989,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseDayOfWeek Tuesday { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseDayOfWeek Wednesday { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseDayOfWeek other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseDayOfWeek left, Azure.ResourceManager.Synapse.Models.SynapseDayOfWeek right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseDayOfWeek (string value) { throw null; }
@@ -3952,7 +4006,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseDedicatedSqlMinimalTlsSettingName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseDedicatedSqlMinimalTlsSettingName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseDedicatedSqlMinimalTlsSettingName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseDedicatedSqlMinimalTlsSettingName left, Azure.ResourceManager.Synapse.Models.SynapseDedicatedSqlMinimalTlsSettingName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseDedicatedSqlMinimalTlsSettingName (string value) { throw null; }
@@ -3969,7 +4025,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseDefaultPrincipalsModificationKind Replace { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseDefaultPrincipalsModificationKind Union { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseDefaultPrincipalsModificationKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseDefaultPrincipalsModificationKind left, Azure.ResourceManager.Synapse.Models.SynapseDefaultPrincipalsModificationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseDefaultPrincipalsModificationKind (string value) { throw null; }
@@ -4014,7 +4072,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseEncryptionProtectorName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName Current { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName left, Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName (string value) { throw null; }
@@ -4087,7 +4147,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseEventGridDataFormat Txt { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseEventGridDataFormat W3CLogfile { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseEventGridDataFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseEventGridDataFormat left, Azure.ResourceManager.Synapse.Models.SynapseEventGridDataFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseEventGridDataFormat (string value) { throw null; }
@@ -4136,7 +4198,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseEventHubDataFormat Txt { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseEventHubDataFormat W3CLogfile { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseEventHubDataFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseEventHubDataFormat left, Azure.ResourceManager.Synapse.Models.SynapseEventHubDataFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseEventHubDataFormat (string value) { throw null; }
@@ -4164,7 +4228,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseGeoBackupPolicyName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseGeoBackupPolicyName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseGeoBackupPolicyName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseGeoBackupPolicyName left, Azure.ResourceManager.Synapse.Models.SynapseGeoBackupPolicyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseGeoBackupPolicyName (string value) { throw null; }
@@ -4216,7 +4282,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeyName AuthKey1 { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeyName AuthKey2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeyName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeyName left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeyName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeyName (string value) { throw null; }
@@ -4244,7 +4312,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate Off { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate (string value) { throw null; }
@@ -4334,7 +4404,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition Enterprise { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition (string value) { throw null; }
@@ -4350,7 +4422,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType IntegrationRuntimeReference { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType LinkedServiceReference { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType (string value) { throw null; }
@@ -4367,7 +4441,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode NotSet { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode SslEncrypted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode (string value) { throw null; }
@@ -4383,7 +4459,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType BasePrice { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType LicenseIncluded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType (string value) { throw null; }
@@ -4517,7 +4595,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier PremiumRS { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier (string value) { throw null; }
@@ -4558,7 +4638,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState Stopped { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState Stopping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState (string value) { throw null; }
@@ -4600,7 +4682,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult None { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult Succeed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult (string value) { throw null; }
@@ -4663,7 +4747,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat Txt { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat W3CLogfile { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat left, Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIotHubDataFormat (string value) { throw null; }
@@ -4739,7 +4825,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionName Python { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionName R { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionName left, Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseLanguageExtensionName (string value) { throw null; }
@@ -4873,7 +4961,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus Starting { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus Unavailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus left, Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus (string value) { throw null; }
@@ -4946,7 +5036,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapsePrincipalAssignmentType(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapsePrincipalAssignmentType MicrosoftSynapseWorkspacesKustoPoolsPrincipalAssignments { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapsePrincipalAssignmentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapsePrincipalAssignmentType left, Azure.ResourceManager.Synapse.Models.SynapsePrincipalAssignmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapsePrincipalAssignmentType (string value) { throw null; }
@@ -4963,7 +5055,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapsePrincipalsModificationKind Replace { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapsePrincipalsModificationKind Union { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapsePrincipalsModificationKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapsePrincipalsModificationKind left, Azure.ResourceManager.Synapse.Models.SynapsePrincipalsModificationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapsePrincipalsModificationKind (string value) { throw null; }
@@ -4980,7 +5074,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapsePrincipalType Group { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapsePrincipalType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapsePrincipalType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapsePrincipalType left, Azure.ResourceManager.Synapse.Models.SynapsePrincipalType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapsePrincipalType (string value) { throw null; }
@@ -5049,7 +5145,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseProvisioningState left, Azure.ResourceManager.Synapse.Models.SynapseProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseProvisioningState (string value) { throw null; }
@@ -5137,7 +5235,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseReplicationState Seeding { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseReplicationState Suspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseReplicationState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseReplicationState left, Azure.ResourceManager.Synapse.Models.SynapseReplicationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseReplicationState (string value) { throw null; }
@@ -5241,7 +5341,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus Online { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus Upgrading { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus left, Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus (string value) { throw null; }
@@ -5330,7 +5432,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseServerKeyType AzureKeyVault { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseServerKeyType ServiceManaged { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseServerKeyType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseServerKeyType left, Azure.ResourceManager.Synapse.Models.SynapseServerKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseServerKeyType (string value) { throw null; }
@@ -5376,7 +5480,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseSkuName ComputeOptimized { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseSkuName StorageOptimized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseSkuName left, Azure.ResourceManager.Synapse.Models.SynapseSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseSkuName (string value) { throw null; }
@@ -5392,7 +5498,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType Artifact { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType File { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType left, Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseSparkConfigurationType (string value) { throw null; }
@@ -5577,7 +5685,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseTransparentDataEncryptionName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseTransparentDataEncryptionName Current { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseTransparentDataEncryptionName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseTransparentDataEncryptionName left, Azure.ResourceManager.Synapse.Models.SynapseTransparentDataEncryptionName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseTransparentDataEncryptionName (string value) { throw null; }
@@ -5597,7 +5707,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseVulnerabilityAssessmentName(string value) { throw null; }
         public static Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentName Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentName left, Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentName (string value) { throw null; }
@@ -5645,7 +5757,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanState InProgress { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanState Passed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanState left, Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanState (string value) { throw null; }
@@ -5661,7 +5775,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanTriggerType OnDemand { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanTriggerType Recurring { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanTriggerType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanTriggerType left, Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanTriggerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseVulnerabilityAssessmentScanTriggerType (string value) { throw null; }
@@ -5751,7 +5867,9 @@ namespace Azure.ResourceManager.Synapse.Models
         public static Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess left, Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess (string value) { throw null; }

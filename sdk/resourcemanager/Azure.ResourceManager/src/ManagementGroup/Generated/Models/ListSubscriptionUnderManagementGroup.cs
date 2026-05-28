@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListSubscriptionUnderManagementGroup"/>. </summary>
-        /// <param name="value"> The SubscriptionUnderManagementGroup items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ListSubscriptionUnderManagementGroup(IEnumerable<ManagementGroupSubscriptionData> value)
+        internal ListSubscriptionUnderManagementGroup()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<ManagementGroupSubscriptionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListSubscriptionUnderManagementGroup"/>. </summary>
-        /// <param name="value"> The SubscriptionUnderManagementGroup items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> The list of subscriptions. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListSubscriptionUnderManagementGroup(IReadOnlyList<ManagementGroupSubscriptionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListSubscriptionUnderManagementGroup(IReadOnlyList<ManagementGroupSubscriptionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListSubscriptionUnderManagementGroup"/> for deserialization. </summary>
-        internal ListSubscriptionUnderManagementGroup()
-        {
-        }
-
-        /// <summary> The SubscriptionUnderManagementGroup items on this page. </summary>
+        /// <summary> The list of subscriptions. </summary>
         public IReadOnlyList<ManagementGroupSubscriptionData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The URL to use for getting the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataBoxEdge;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataBoxEdge.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableDataBoxEdgeResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableDataBoxEdgeResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableDataBoxEdgeResourceGroupResource"/> class for mocking. </summary>
         protected MockableDataBoxEdgeResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableDataBoxEdgeResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableDataBoxEdgeResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDataBoxEdgeResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of DataBoxEdgeDevices in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of DataBoxEdgeDevices and their operations over a DataBoxEdgeDeviceResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of DataBoxEdgeDeviceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DataBoxEdgeDeviceResources and their operations over a DataBoxEdgeDeviceResource. </returns>
         public virtual DataBoxEdgeDeviceCollection GetDataBoxEdgeDevices()
         {
             return GetCachedClient(client => new DataBoxEdgeDeviceCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// Gets the properties of the Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DataBoxEdgeDevices_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Devices_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeDeviceResource>> GetDataBoxEdgeDeviceAsync(string deviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
             return await GetDataBoxEdgeDevices().GetAsync(deviceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// Gets the properties of the Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DataBoxEdgeDevices_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Devices_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevice(string deviceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(deviceName, nameof(deviceName));
-
             return GetDataBoxEdgeDevices().Get(deviceName, cancellationToken);
         }
     }

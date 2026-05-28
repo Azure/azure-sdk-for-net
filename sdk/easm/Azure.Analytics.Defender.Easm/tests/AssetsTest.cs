@@ -27,10 +27,10 @@ namespace Azure.Analytics.Defender.Easm.Tests
         public async System.Threading.Tasks.Task AssetsListTest()
         {
             var results = client.GetAssetResourcesAsync();
-            Assert.That(results, Is.Not.Null);
+            Assert.IsNotNull(results);
             await foreach (var result in results)
             {
-                Assert.That((result.Name), Is.Not.Null);
+                Assert.IsNotNull((result.Name));
                 break;
             }
         }
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
         {
             var result = await client.GetAssetResourceAsync(assetId);
             AssetResource resource = result.Value;
-            Assert.That(resource.Name, Is.EqualTo(assetName));
+            Assert.AreEqual(assetName, resource.Name);
         }
 
         [Test]
@@ -51,9 +51,9 @@ namespace Azure.Analytics.Defender.Easm.Tests
 
             Response<TaskResource> result = await client.UpdateAssetsAsync(filter, assetUpdateData);
             TaskResource task = result.Value;
-            Assert.That(task.State, Is.EqualTo(TaskResourceState.Complete));
-            Assert.That(task.Phase, Is.EqualTo(TaskResourcePhase.Complete));
-            Assert.That(UUID_REGEX.Matches(task.Id), Is.Not.Empty);
+            Assert.AreEqual(TaskResourceState.Complete, task.State);
+            Assert.AreEqual(TaskResourcePhase.Complete, task.Phase);
+            Assert.IsNotEmpty(UUID_REGEX.Matches(task.Id));
         }
     }
 }

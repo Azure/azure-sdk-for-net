@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
-    /// <summary></summary>
-    internal partial class SubscriptionQuotaAllocationsListOperationSource : IOperationSource<SubscriptionQuotaAllocationsListResource>
+    internal class SubscriptionQuotaAllocationsListOperationSource : IOperationSource<SubscriptionQuotaAllocationsListResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal SubscriptionQuotaAllocationsListOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         SubscriptionQuotaAllocationsListResource IOperationSource<SubscriptionQuotaAllocationsListResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SubscriptionQuotaAllocationsListData data = SubscriptionQuotaAllocationsListData.DeserializeSubscriptionQuotaAllocationsListData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return new SubscriptionQuotaAllocationsListResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<SubscriptionQuotaAllocationsListResource> IOperationSource<SubscriptionQuotaAllocationsListResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SubscriptionQuotaAllocationsListData data = SubscriptionQuotaAllocationsListData.DeserializeSubscriptionQuotaAllocationsListData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SubscriptionQuotaAllocationsListResource(_client, data);
+            var data = ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
+            return await Task.FromResult(new SubscriptionQuotaAllocationsListResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

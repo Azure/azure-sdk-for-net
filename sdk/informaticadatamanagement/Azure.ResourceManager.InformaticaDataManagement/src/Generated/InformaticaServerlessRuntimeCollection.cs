@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="InformaticaServerlessRuntimeResource"/> and their operations.
-    /// Each <see cref="InformaticaServerlessRuntimeResource"/> in the collection will belong to the same instance of <see cref="InformaticaOrganizationResource"/>.
-    /// To get a <see cref="InformaticaServerlessRuntimeCollection"/> instance call the GetInformaticaServerlessRuntimes method from an instance of <see cref="InformaticaOrganizationResource"/>.
+    /// Each <see cref="InformaticaServerlessRuntimeResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="InformaticaServerlessRuntimeCollection"/> instance call the GetInformaticaServerlessRuntimes method from an instance of the parent resource.
     /// </summary>
     public partial class InformaticaServerlessRuntimeCollection : ArmCollection, IEnumerable<InformaticaServerlessRuntimeResource>, IAsyncEnumerable<InformaticaServerlessRuntimeResource>
     {
@@ -50,27 +50,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         {
             if (id.ResourceType != InformaticaOrganizationResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, InformaticaOrganizationResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, InformaticaOrganizationResource.ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Create a InformaticaServerlessRuntimeResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerlessRuntimes_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a InformaticaServerlessRuntimeResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -112,23 +96,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Create a InformaticaServerlessRuntimeResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerlessRuntimes_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a InformaticaServerlessRuntimeResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -170,23 +138,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Get a InformaticaServerlessRuntimeResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerlessRuntimes_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a InformaticaServerlessRuntimeResource. </summary>
         /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverlessRuntimeName"/> is null. </exception>
@@ -219,23 +171,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Get a InformaticaServerlessRuntimeResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerlessRuntimes_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a InformaticaServerlessRuntimeResource. </summary>
         /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverlessRuntimeName"/> is null. </exception>
@@ -268,23 +204,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerlessRuntimes_ListByInformaticaOrganizationResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InformaticaServerlessRuntimeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InformaticaServerlessRuntimeResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -293,32 +213,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceAsyncCollectionResultOfT(
-                _serverlessRuntimesRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "InformaticaServerlessRuntimeCollection.GetAll"), data => new InformaticaServerlessRuntimeResource(Client, data));
+            return new AsyncPageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceAsyncCollectionResultOfT(_serverlessRuntimesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new InformaticaServerlessRuntimeResource(Client, data));
         }
 
-        /// <summary>
-        /// List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerlessRuntimes_ListByInformaticaOrganizationResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InformaticaServerlessRuntimeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InformaticaServerlessRuntimeResource> GetAll(CancellationToken cancellationToken = default)
@@ -327,32 +225,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceCollectionResultOfT(
-                _serverlessRuntimesRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "InformaticaServerlessRuntimeCollection.GetAll"), data => new InformaticaServerlessRuntimeResource(Client, data));
+            return new PageableWrapper<InformaticaServerlessRuntimeData, InformaticaServerlessRuntimeResource>(new ServerlessRuntimesGetByInformaticaOrganizationResourceCollectionResultOfT(_serverlessRuntimesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new InformaticaServerlessRuntimeResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerlessRuntimes_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverlessRuntimeName"/> is null. </exception>
@@ -393,23 +269,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerlessRuntimes_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverlessRuntimeName"/> is null. </exception>
@@ -450,23 +310,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerlessRuntimes_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverlessRuntimeName"/> is null. </exception>
@@ -511,23 +355,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations/{organizationName}/serverlessRuntimes/{serverlessRuntimeName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServerlessRuntimes_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-08. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="serverlessRuntimeName"> Name of the Serverless Runtime resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverlessRuntimeName"/> is null. </exception>

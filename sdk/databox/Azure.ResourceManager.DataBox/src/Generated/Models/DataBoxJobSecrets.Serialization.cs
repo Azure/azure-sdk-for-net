@@ -10,56 +10,14 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.DataBox;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The secrets related to a databox job. </summary>
-    public partial class DataBoxJobSecrets : JobSecrets, IJsonModel<DataBoxJobSecrets>
+    public partial class DataBoxJobSecrets : IUtf8JsonSerializable, IJsonModel<DataBoxJobSecrets>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override JobSecrets PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataBoxJobSecrets(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataBoxJobSecrets>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxJobSecrets IPersistableModel<DataBoxJobSecrets>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxJobSecrets)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataBoxJobSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxJobSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -71,17 +29,18 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(PodSecrets))
             {
                 writer.WritePropertyName("podSecrets"u8);
                 writer.WriteStartArray();
-                foreach (DataBoxSecret item in PodSecrets)
+                foreach (var item in PodSecrets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -89,81 +48,109 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxJobSecrets IJsonModel<DataBoxJobSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataBoxJobSecrets)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override JobSecrets JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataBoxJobSecrets IJsonModel<DataBoxJobSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxJobSecrets(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataBoxJobSecrets DeserializeDataBoxJobSecrets(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataBoxJobSecrets DeserializeDataBoxJobSecrets(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataBoxOrderType jobSecretsType = default;
-            DataCenterAccessSecurityCode dataCenterAccessSecurityCode = default;
-            ResponseError error = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IReadOnlyList<DataBoxSecret> podSecrets = default;
-            foreach (var prop in element.EnumerateObject())
+            DataBoxOrderType jobSecretsType = default;
+            DataCenterAccessSecurityCode dcAccessSecurityCode = default;
+            ResponseError error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("jobSecretsType"u8))
+                if (property.NameEquals("podSecrets"u8))
                 {
-                    jobSecretsType = prop.Value.GetString().ToDataBoxOrderType();
-                    continue;
-                }
-                if (prop.NameEquals("dcAccessSecurityCode"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataCenterAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("error"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataBoxContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("podSecrets"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataBoxSecret> array = new List<DataBoxSecret>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(DataBoxSecret.DeserializeDataBoxSecret(item, options));
                     }
                     podSecrets = array;
                     continue;
                 }
+                if (property.NameEquals("jobSecretsType"u8))
+                {
+                    jobSecretsType = property.Value.GetString().ToDataBoxOrderType();
+                    continue;
+                }
+                if (property.NameEquals("dcAccessSecurityCode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("error"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataBoxContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DataBoxJobSecrets(jobSecretsType, dataCenterAccessSecurityCode, error, additionalBinaryDataProperties, podSecrets ?? new ChangeTrackingList<DataBoxSecret>());
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxJobSecrets(jobSecretsType, dcAccessSecurityCode, error, serializedAdditionalRawData, podSecrets ?? new ChangeTrackingList<DataBoxSecret>());
         }
+
+        BinaryData IPersistableModel<DataBoxJobSecrets>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxJobSecrets IPersistableModel<DataBoxJobSecrets>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataBoxJobSecrets(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxJobSecrets)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxJobSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

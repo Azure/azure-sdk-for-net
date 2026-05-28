@@ -122,11 +122,11 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
 #endif
             #endregion
 
-            Assert.That(eventData.IsReadOnly, Is.False);
+            Assert.IsFalse(eventData.IsReadOnly);
             string[] contentType = eventData.ContentType.Split('+');
-            Assert.That(contentType.Length, Is.EqualTo(2));
-            Assert.That(contentType[0], Is.EqualTo("application/json"));
-            Assert.That(contentType[1], Is.Not.Empty);
+            Assert.AreEqual(2, contentType.Length);
+            Assert.AreEqual("application/json", contentType[0]);
+            Assert.IsNotEmpty(contentType[1]);
 
             #region Snippet:SchemaRegistryJsonDeserializeEventDataGenerics
             Employee deserialized = await serializer.DeserializeAsync<Employee>(eventData);
@@ -202,7 +202,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Samples
                 return isValid;
             }
         }
-        #endregion
+#endregion
 
         internal static class SampleValidationClass
         {

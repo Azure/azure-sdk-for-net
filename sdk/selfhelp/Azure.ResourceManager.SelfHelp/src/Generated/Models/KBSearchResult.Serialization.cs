@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.SelfHelp;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Details of an AzureKB search result. </summary>
-    public partial class KBSearchResult : IJsonModel<KBSearchResult>
+    public partial class KBSearchResult : IUtf8JsonSerializable, IJsonModel<KBSearchResult>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KBSearchResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KBSearchResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKBSearchResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KBSearchResult)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KBSearchResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KBSearchResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KBSearchResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KBSearchResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KBSearchResult IPersistableModel<KBSearchResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KBSearchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KBSearchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KBSearchResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KBSearchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KBSearchResult)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
@@ -114,15 +74,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -131,27 +91,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KBSearchResult IJsonModel<KBSearchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KBSearchResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KBSearchResult IJsonModel<KBSearchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KBSearchResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KBSearchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KBSearchResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKBSearchResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KBSearchResult DeserializeKBSearchResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static KBSearchResult DeserializeKBSearchResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -164,66 +119,68 @@ namespace Azure.ResourceManager.SelfHelp.Models
             KBSearchResultType? resultType = default;
             int? rank = default;
             string link = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("solutionId"u8))
+                if (property.NameEquals("solutionId"u8))
                 {
-                    solutionId = prop.Value.GetString();
+                    solutionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("content"u8))
+                if (property.NameEquals("content"u8))
                 {
-                    content = prop.Value.GetString();
+                    content = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("title"u8))
+                if (property.NameEquals("title"u8))
                 {
-                    title = prop.Value.GetString();
+                    title = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("confidence"u8))
+                if (property.NameEquals("confidence"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    confidence = new SelfHelpConfidence(prop.Value.GetString());
+                    confidence = new SelfHelpConfidence(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("source"u8))
+                if (property.NameEquals("source"u8))
                 {
-                    source = prop.Value.GetString();
+                    source = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resultType"u8))
+                if (property.NameEquals("resultType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resultType = new KBSearchResultType(prop.Value.GetString());
+                    resultType = new KBSearchResultType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("rank"u8))
+                if (property.NameEquals("rank"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rank = prop.Value.GetInt32();
+                    rank = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("link"u8))
+                if (property.NameEquals("link"u8))
                 {
-                    link = prop.Value.GetString();
+                    link = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new KBSearchResult(
                 solutionId,
                 content,
@@ -233,7 +190,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 resultType,
                 rank,
                 link,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KBSearchResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KBSearchResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSelfHelpContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KBSearchResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KBSearchResult IPersistableModel<KBSearchResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KBSearchResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeKBSearchResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KBSearchResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KBSearchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

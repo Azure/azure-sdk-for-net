@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="CreateAsync(AtlasRelationship,CancellationToken)">
+      <example>
+This sample shows how to call CreateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+AtlasRelationship body = new AtlasRelationship
+{
+    Attributes =
+    {
+        ["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
+        ["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
+        ["description"] = BinaryData.FromObjectAsJson("Example Description"),
+        ["source"] = null,
+        ["status"] = null
+    },
+    TypeName = "AtlasGlossarySynonym",
+    CreatedBy = "ExampleCreator",
+    End1 = new AtlasObjectId
+    {
+        Guid = "856d31e6-e342-a1ce-6273-22ddb77029c6",
+        TypeName = "AtlasGlossaryTerm",
+    },
+    End2 = new AtlasObjectId
+    {
+        Guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+        TypeName = "AtlasGlossaryTerm",
+    },
+    Label = "r:AtlasGlossarySynonym",
+    Status = StatusAtlasRelationship.Active,
+    UpdatedBy = "ExampleUpdator",
+    Version = 0L,
+};
+Response<AtlasRelationship> response = await client.CreateAsync(body);
+]]></code></example>
+    </member>
+    <member name="Create(AtlasRelationship,CancellationToken)">
+      <example>
+This sample shows how to call Create.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+AtlasRelationship body = new AtlasRelationship
+{
+    Attributes =
+    {
+        ["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
+        ["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
+        ["description"] = BinaryData.FromObjectAsJson("Example Description"),
+        ["source"] = null,
+        ["status"] = null
+    },
+    TypeName = "AtlasGlossarySynonym",
+    CreatedBy = "ExampleCreator",
+    End1 = new AtlasObjectId
+    {
+        Guid = "856d31e6-e342-a1ce-6273-22ddb77029c6",
+        TypeName = "AtlasGlossaryTerm",
+    },
+    End2 = new AtlasObjectId
+    {
+        Guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+        TypeName = "AtlasGlossaryTerm",
+    },
+    Label = "r:AtlasGlossarySynonym",
+    Status = StatusAtlasRelationship.Active,
+    UpdatedBy = "ExampleUpdator",
+    Version = 0L,
+};
+Response<AtlasRelationship> response = client.Create(body);
+]]></code></example>
+    </member>
+    <member name="CreateAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    typeName = "AtlasGlossarySynonym",
+    attributes = new
+    {
+        expression = "Example Expression",
+        steward = "Example Steward",
+        description = "Example Description",
+    },
+    end1 = new
+    {
+        guid = "856d31e6-e342-a1ce-6273-22ddb77029c6",
+        typeName = "AtlasGlossaryTerm",
+    },
+    end2 = new
+    {
+        guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+        typeName = "AtlasGlossaryTerm",
+    },
+    label = "r:AtlasGlossarySynonym",
+    status = "ACTIVE",
+    createdBy = "ExampleCreator",
+    updatedBy = "ExampleUpdator",
+    version = 0L,
+});
+Response response = await client.CreateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="Create(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Create and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    typeName = "AtlasGlossarySynonym",
+    attributes = new
+    {
+        expression = "Example Expression",
+        steward = "Example Steward",
+        description = "Example Description",
+    },
+    end1 = new
+    {
+        guid = "856d31e6-e342-a1ce-6273-22ddb77029c6",
+        typeName = "AtlasGlossaryTerm",
+    },
+    end2 = new
+    {
+        guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+        typeName = "AtlasGlossaryTerm",
+    },
+    label = "r:AtlasGlossarySynonym",
+    status = "ACTIVE",
+    createdBy = "ExampleCreator",
+    updatedBy = "ExampleUpdator",
+    version = 0L,
+});
+Response response = client.Create(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateAsync(AtlasRelationship,CancellationToken)">
+      <example>
+This sample shows how to call UpdateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+AtlasRelationship body = new AtlasRelationship
+{
+    Attributes =
+    {
+        ["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
+        ["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
+        ["description"] = BinaryData.FromObjectAsJson("Example Description"),
+        ["source"] = null,
+        ["status"] = null
+    },
+    TypeName = "AtlasGlossarySynonym",
+    CreatedBy = "ExampleCreator",
+    End1 = new AtlasObjectId
+    {
+        Guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+        TypeName = "AtlasGlossaryTerm",
+    },
+    End2 = new AtlasObjectId
+    {
+        Guid = "b0942506-2d7d-1f45-d286-c29ca9e7f2ef",
+        TypeName = "AtlasGlossaryTerm",
+    },
+    Guid = "b2810301-293f-493f-88f1-7ac8784fb1fd",
+    Label = "r:AtlasGlossarySynonym",
+    Status = StatusAtlasRelationship.Active,
+    UpdatedBy = "ExampleUpdator",
+    Version = 0L,
+};
+Response<AtlasRelationship> response = await client.UpdateAsync(body);
+]]></code></example>
+    </member>
+    <member name="Update(AtlasRelationship,CancellationToken)">
+      <example>
+This sample shows how to call Update.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+AtlasRelationship body = new AtlasRelationship
+{
+    Attributes =
+    {
+        ["expression"] = BinaryData.FromObjectAsJson("Example Expression"),
+        ["steward"] = BinaryData.FromObjectAsJson("Example Steward"),
+        ["description"] = BinaryData.FromObjectAsJson("Example Description"),
+        ["source"] = null,
+        ["status"] = null
+    },
+    TypeName = "AtlasGlossarySynonym",
+    CreatedBy = "ExampleCreator",
+    End1 = new AtlasObjectId
+    {
+        Guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+        TypeName = "AtlasGlossaryTerm",
+    },
+    End2 = new AtlasObjectId
+    {
+        Guid = "b0942506-2d7d-1f45-d286-c29ca9e7f2ef",
+        TypeName = "AtlasGlossaryTerm",
+    },
+    Guid = "b2810301-293f-493f-88f1-7ac8784fb1fd",
+    Label = "r:AtlasGlossarySynonym",
+    Status = StatusAtlasRelationship.Active,
+    UpdatedBy = "ExampleUpdator",
+    Version = 0L,
+};
+Response<AtlasRelationship> response = client.Update(body);
+]]></code></example>
+    </member>
+    <member name="UpdateAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    typeName = "AtlasGlossarySynonym",
+    attributes = new
+    {
+        expression = "Example Expression",
+        steward = "Example Steward",
+        description = "Example Description",
+    },
+    guid = "b2810301-293f-493f-88f1-7ac8784fb1fd",
+    end1 = new
+    {
+        guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+        typeName = "AtlasGlossaryTerm",
+    },
+    end2 = new
+    {
+        guid = "b0942506-2d7d-1f45-d286-c29ca9e7f2ef",
+        typeName = "AtlasGlossaryTerm",
+    },
+    label = "r:AtlasGlossarySynonym",
+    status = "ACTIVE",
+    createdBy = "ExampleCreator",
+    updatedBy = "ExampleUpdator",
+    version = 0L,
+});
+Response response = await client.UpdateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="Update(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Update and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+using RequestContent content = RequestContent.Create(new
+{
+    typeName = "AtlasGlossarySynonym",
+    attributes = new
+    {
+        expression = "Example Expression",
+        steward = "Example Steward",
+        description = "Example Description",
+    },
+    guid = "b2810301-293f-493f-88f1-7ac8784fb1fd",
+    end1 = new
+    {
+        guid = "77481037-2874-9bdc-9b9e-76bb94ee71aa",
+        typeName = "AtlasGlossaryTerm",
+    },
+    end2 = new
+    {
+        guid = "b0942506-2d7d-1f45-d286-c29ca9e7f2ef",
+        typeName = "AtlasGlossaryTerm",
+    },
+    label = "r:AtlasGlossarySynonym",
+    status = "ACTIVE",
+    createdBy = "ExampleCreator",
+    updatedBy = "ExampleUpdator",
+    version = 0L,
+});
+Response response = client.Update(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetRelationshipAsync(string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetRelationshipAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+Response<AtlasRelationshipWithExtInfo> response = await client.GetRelationshipAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+]]></code></example>
+    </member>
+    <member name="GetRelationship(string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call GetRelationship.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+Response<AtlasRelationshipWithExtInfo> response = client.GetRelationship("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+]]></code></example>
+    </member>
+    <member name="GetRelationshipAsync(string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetRelationshipAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+Response response = await client.GetRelationshipAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", false, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetRelationship(string,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetRelationship and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+Response response = client.GetRelationship("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", false, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+Response response = await client.DeleteAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Delete(string,RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
+
+Response response = client.Delete("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+  </members>
+</doc>

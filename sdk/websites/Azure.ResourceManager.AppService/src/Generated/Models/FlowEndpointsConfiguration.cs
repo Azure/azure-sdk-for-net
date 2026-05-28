@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The endpoints configuration.
-    /// Serialized Name: FlowEndpointsConfiguration
-    /// </summary>
+    /// <summary> The endpoints configuration. </summary>
     public partial class FlowEndpointsConfiguration
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowEndpointsConfiguration"/>. </summary>
-        /// <param name="workflow">
-        /// The workflow endpoints.
-        /// Serialized Name: FlowEndpointsConfiguration.workflow
-        /// </param>
-        /// <param name="connector">
-        /// The connector endpoints.
-        /// Serialized Name: FlowEndpointsConfiguration.connector
-        /// </param>
+        /// <param name="workflow"> The workflow endpoints. </param>
+        /// <param name="connector"> The connector endpoints. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FlowEndpointsConfiguration(FlowEndpoints workflow, FlowEndpoints connector, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The workflow endpoints.
-        /// Serialized Name: FlowEndpointsConfiguration.workflow
-        /// </summary>
+        /// <summary> The workflow endpoints. </summary>
         [WirePath("workflow")]
         public FlowEndpoints Workflow { get; set; }
-        /// <summary>
-        /// The connector endpoints.
-        /// Serialized Name: FlowEndpointsConfiguration.connector
-        /// </summary>
+        /// <summary> The connector endpoints. </summary>
         [WirePath("connector")]
         public FlowEndpoints Connector { get; set; }
     }

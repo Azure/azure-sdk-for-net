@@ -8,76 +8,141 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
+    /// <summary> A class to add extension methods to TenantResource. </summary>
     public partial class MockableResourcesTenantResource : ArmResource
     {
-        private ClientDiagnostics _deploymentsOperationGroupClientDiagnostics;
-        private DeploymentsOperationGroup _deploymentsOperationGroupRestClient;
+        private ClientDiagnostics _armDeploymentDeploymentsClientDiagnostics;
+        private DeploymentsRestOperations _armDeploymentDeploymentsRestClient;
 
-        /// <summary> Initializes a new instance of MockableResourcesTenantResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesTenantResource"/> class for mocking. </summary>
         protected MockableResourcesTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableResourcesTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableResourcesTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableResourcesTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DeploymentsOperationGroupClientDiagnostics => _deploymentsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ArmDeploymentDeploymentsClientDiagnostics => _armDeploymentDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
+        private DeploymentsRestOperations ArmDeploymentDeploymentsRestClient => _armDeploymentDeploymentsRestClient ??= new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ArmDeploymentResource.ResourceType));
 
-        private DeploymentsOperationGroup DeploymentsOperationGroupRestClient => _deploymentsOperationGroupRestClient ??= new DeploymentsOperationGroup(DeploymentsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-04-01");
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of ArmDeploymentResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
+        public virtual ArmDeploymentCollection GetArmDeployments()
+        {
+            return GetCachedClient(client => new ArmDeploymentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            return await GetArmDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a deployment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ArmDeploymentResource> GetArmDeployment(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            return GetArmDeployments().Get(deploymentName, cancellationToken);
+        }
 
         /// <summary>
         /// Calculate the hash of the given template.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Resources/calculateTemplateHash. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/calculateTemplateHash</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentsOperationGroup_CalculateTemplateHash. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_CalculateTemplateHash</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="template"> The request body. </param>
+        /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
         public virtual async Task<Response<TemplateHashResult>> CalculateDeploymentTemplateHashAsync(BinaryData template, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(template, nameof(template));
 
-            using DiagnosticScope scope = DeploymentsOperationGroupClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateDeploymentTemplateHash");
+            using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateDeploymentTemplateHash");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                Core.HttpMessage message = DeploymentsOperationGroupRestClient.CreateCalculateDeploymentTemplateHashRequest(RequestContent.Create(template), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TemplateHashResult> response = Response.FromValue(TemplateHashResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await ArmDeploymentDeploymentsRestClient.CalculateTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -91,41 +156,35 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// Calculate the hash of the given template.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Resources/calculateTemplateHash. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/calculateTemplateHash</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DeploymentsOperationGroup_CalculateTemplateHash. </description>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_CalculateTemplateHash</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="template"> The request body. </param>
+        /// <param name="template"> The template provided to calculate hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
         public virtual Response<TemplateHashResult> CalculateDeploymentTemplateHash(BinaryData template, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(template, nameof(template));
 
-            using DiagnosticScope scope = DeploymentsOperationGroupClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateDeploymentTemplateHash");
+            using var scope = ArmDeploymentDeploymentsClientDiagnostics.CreateScope("MockableResourcesTenantResource.CalculateDeploymentTemplateHash");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                Core.HttpMessage message = DeploymentsOperationGroupRestClient.CreateCalculateDeploymentTemplateHashRequest(RequestContent.Create(template), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<TemplateHashResult> response = Response.FromValue(TemplateHashResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = ArmDeploymentDeploymentsRestClient.CalculateTemplateHash(template, cancellationToken);
                 return response;
             }
             catch (Exception e)

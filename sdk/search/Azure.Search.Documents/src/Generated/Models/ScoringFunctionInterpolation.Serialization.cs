@@ -11,7 +11,6 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal static partial class ScoringFunctionInterpolationExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ScoringFunctionInterpolation value) => value switch
         {
             ScoringFunctionInterpolation.Linear => "linear",
@@ -21,25 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionInterpolation value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static ScoringFunctionInterpolation ToScoringFunctionInterpolation(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "linear"))
-            {
-                return ScoringFunctionInterpolation.Linear;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "constant"))
-            {
-                return ScoringFunctionInterpolation.Constant;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "quadratic"))
-            {
-                return ScoringFunctionInterpolation.Quadratic;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "logarithmic"))
-            {
-                return ScoringFunctionInterpolation.Logarithmic;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "linear")) return ScoringFunctionInterpolation.Linear;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "constant")) return ScoringFunctionInterpolation.Constant;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "quadratic")) return ScoringFunctionInterpolation.Quadratic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "logarithmic")) return ScoringFunctionInterpolation.Logarithmic;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ScoringFunctionInterpolation value.");
         }
     }

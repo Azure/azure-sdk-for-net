@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation;
+using _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 
-namespace Specs.Azure.ClientGenerator.Core.Usage
+namespace _Specs_.Azure.ClientGenerator.Core.Usage
 {
     public static partial class _Specs_AzureClientGeneratorCoreUsageModelFactory
     {

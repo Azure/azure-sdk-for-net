@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageAccountSasPermission : IEquatable<StorageAccountSasPermission>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountSasPermission"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageAccountSasPermission(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string RValue = "r";
         private const string DValue = "d";
         private const string WValue = "w";
@@ -24,70 +31,39 @@ namespace Azure.ResourceManager.Storage.Models
         private const string UValue = "u";
         private const string PValue = "p";
 
-        /// <summary> Initializes a new instance of <see cref="StorageAccountSasPermission"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageAccountSasPermission(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the R. </summary>
+        /// <summary> r. </summary>
         public static StorageAccountSasPermission R { get; } = new StorageAccountSasPermission(RValue);
-
-        /// <summary> Gets the D. </summary>
+        /// <summary> d. </summary>
         public static StorageAccountSasPermission D { get; } = new StorageAccountSasPermission(DValue);
-
-        /// <summary> Gets the W. </summary>
+        /// <summary> w. </summary>
         public static StorageAccountSasPermission W { get; } = new StorageAccountSasPermission(WValue);
-
-        /// <summary> Gets the L. </summary>
+        /// <summary> l. </summary>
         public static StorageAccountSasPermission L { get; } = new StorageAccountSasPermission(LValue);
-
-        /// <summary> Gets the A. </summary>
+        /// <summary> a. </summary>
         public static StorageAccountSasPermission A { get; } = new StorageAccountSasPermission(AValue);
-
-        /// <summary> Gets the C. </summary>
+        /// <summary> c. </summary>
         public static StorageAccountSasPermission C { get; } = new StorageAccountSasPermission(CValue);
-
-        /// <summary> Gets the U. </summary>
+        /// <summary> u. </summary>
         public static StorageAccountSasPermission U { get; } = new StorageAccountSasPermission(UValue);
-
-        /// <summary> Gets the P. </summary>
+        /// <summary> p. </summary>
         public static StorageAccountSasPermission P { get; } = new StorageAccountSasPermission(PValue);
-
         /// <summary> Determines if two <see cref="StorageAccountSasPermission"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAccountSasPermission left, StorageAccountSasPermission right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageAccountSasPermission"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAccountSasPermission left, StorageAccountSasPermission right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageAccountSasPermission"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountSasPermission"/>. </summary>
         public static implicit operator StorageAccountSasPermission(string value) => new StorageAccountSasPermission(value);
 
-        /// <summary> Converts a string to a <see cref="StorageAccountSasPermission"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountSasPermission?(string value) => value == null ? null : new StorageAccountSasPermission(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountSasPermission other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StorageAccountSasPermission other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

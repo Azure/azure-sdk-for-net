@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Describes the parameters for updating a rolling upgrade of application or cluster. </summary>
-    public partial class RuntimeRollingUpgradeUpdateMonitoringPolicy : IJsonModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>
+    public partial class RuntimeRollingUpgradeUpdateMonitoringPolicy : IUtf8JsonSerializable, IJsonModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="RuntimeRollingUpgradeUpdateMonitoringPolicy"/> for deserialization. </summary>
-        internal RuntimeRollingUpgradeUpdateMonitoringPolicy()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RuntimeRollingUpgradeUpdateMonitoringPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRuntimeRollingUpgradeUpdateMonitoringPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RuntimeRollingUpgradeUpdateMonitoringPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RuntimeRollingUpgradeUpdateMonitoringPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RuntimeRollingUpgradeUpdateMonitoringPolicy IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RuntimeRollingUpgradeUpdateMonitoringPolicy)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("rollingUpgradeMode"u8);
             writer.WriteStringValue(RollingUpgradeMode.ToString());
             if (Optional.IsDefined(ForceRestart))
@@ -126,15 +81,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("instanceCloseDelayDurationInSeconds"u8);
                 writer.WriteNumberValue(InstanceCloseDelayDurationInSeconds.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -143,27 +98,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RuntimeRollingUpgradeUpdateMonitoringPolicy IJsonModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RuntimeRollingUpgradeUpdateMonitoringPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RuntimeRollingUpgradeUpdateMonitoringPolicy IJsonModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RuntimeRollingUpgradeUpdateMonitoringPolicy)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRuntimeRollingUpgradeUpdateMonitoringPolicy(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RuntimeRollingUpgradeUpdateMonitoringPolicy DeserializeRuntimeRollingUpgradeUpdateMonitoringPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static RuntimeRollingUpgradeUpdateMonitoringPolicy DeserializeRuntimeRollingUpgradeUpdateMonitoringPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -178,80 +128,82 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string upgradeTimeoutInMilliseconds = default;
             string upgradeDomainTimeoutInMilliseconds = default;
             long? instanceCloseDelayDurationInSeconds = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("rollingUpgradeMode"u8))
+                if (property.NameEquals("rollingUpgradeMode"u8))
                 {
-                    rollingUpgradeMode = new RuntimeRollingUpgradeMode(prop.Value.GetString());
+                    rollingUpgradeMode = new RuntimeRollingUpgradeMode(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("forceRestart"u8))
+                if (property.NameEquals("forceRestart"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    forceRestart = prop.Value.GetBoolean();
+                    forceRestart = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("replicaSetCheckTimeoutInMilliseconds"u8))
+                if (property.NameEquals("replicaSetCheckTimeoutInMilliseconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    replicaSetCheckTimeoutInMilliseconds = prop.Value.GetInt64();
+                    replicaSetCheckTimeoutInMilliseconds = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("failureAction"u8))
+                if (property.NameEquals("failureAction"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failureAction = new RuntimeFailureAction(prop.Value.GetString());
+                    failureAction = new RuntimeFailureAction(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("healthCheckWaitDurationInMilliseconds"u8))
+                if (property.NameEquals("healthCheckWaitDurationInMilliseconds"u8))
                 {
-                    healthCheckWaitDurationInMilliseconds = prop.Value.GetString();
+                    healthCheckWaitDurationInMilliseconds = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("healthCheckStableDurationInMilliseconds"u8))
+                if (property.NameEquals("healthCheckStableDurationInMilliseconds"u8))
                 {
-                    healthCheckStableDurationInMilliseconds = prop.Value.GetString();
+                    healthCheckStableDurationInMilliseconds = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("healthCheckRetryTimeoutInMilliseconds"u8))
+                if (property.NameEquals("healthCheckRetryTimeoutInMilliseconds"u8))
                 {
-                    healthCheckRetryTimeoutInMilliseconds = prop.Value.GetString();
+                    healthCheckRetryTimeoutInMilliseconds = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("upgradeTimeoutInMilliseconds"u8))
+                if (property.NameEquals("upgradeTimeoutInMilliseconds"u8))
                 {
-                    upgradeTimeoutInMilliseconds = prop.Value.GetString();
+                    upgradeTimeoutInMilliseconds = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("upgradeDomainTimeoutInMilliseconds"u8))
+                if (property.NameEquals("upgradeDomainTimeoutInMilliseconds"u8))
                 {
-                    upgradeDomainTimeoutInMilliseconds = prop.Value.GetString();
+                    upgradeDomainTimeoutInMilliseconds = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("instanceCloseDelayDurationInSeconds"u8))
+                if (property.NameEquals("instanceCloseDelayDurationInSeconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    instanceCloseDelayDurationInSeconds = prop.Value.GetInt64();
+                    instanceCloseDelayDurationInSeconds = property.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new RuntimeRollingUpgradeUpdateMonitoringPolicy(
                 rollingUpgradeMode,
                 forceRestart,
@@ -263,7 +215,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 upgradeTimeoutInMilliseconds,
                 upgradeDomainTimeoutInMilliseconds,
                 instanceCloseDelayDurationInSeconds,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RuntimeRollingUpgradeUpdateMonitoringPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RuntimeRollingUpgradeUpdateMonitoringPolicy IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeRuntimeRollingUpgradeUpdateMonitoringPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RuntimeRollingUpgradeUpdateMonitoringPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RuntimeRollingUpgradeUpdateMonitoringPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

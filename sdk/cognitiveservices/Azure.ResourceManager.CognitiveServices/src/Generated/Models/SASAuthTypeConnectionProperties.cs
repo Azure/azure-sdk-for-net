@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -16,8 +15,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class SASAuthTypeConnectionProperties : CognitiveServicesConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="SASAuthTypeConnectionProperties"/>. </summary>
-        public SASAuthTypeConnectionProperties() : base(ConnectionAuthType.SAS)
+        public SASAuthTypeConnectionProperties()
         {
+            AuthType = ConnectionAuthType.SAS;
         }
 
         /// <summary> Initializes a new instance of <see cref="SASAuthTypeConnectionProperties"/>. </summary>
@@ -34,31 +34,25 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sharedUserList"></param>
         /// <param name="target"> The connection URL to be used. </param>
         /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"></param>
-        internal SASAuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? @group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConnectionSharedAccessSignature credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, @group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, additionalBinaryDataProperties)
+        internal SASAuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, ConnectionSharedAccessSignature credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
         {
             Credentials = credentials;
+            AuthType = authType;
         }
 
-        /// <summary> Gets or sets the Credentials. </summary>
-        [WirePath("credentials")]
+        /// <summary> Gets or sets the credentials. </summary>
         internal ConnectionSharedAccessSignature Credentials { get; set; }
-
-        /// <summary> Gets or sets the Sas. </summary>
+        /// <summary> Gets or sets the credentials sas. </summary>
         [WirePath("credentials.sas")]
         public string CredentialsSas
         {
-            get
-            {
-                return Credentials is null ? default : Credentials.Sas;
-            }
+            get => Credentials is null ? default : Credentials.Sas;
             set
             {
                 if (Credentials is null)
-                {
                     Credentials = new ConnectionSharedAccessSignature();
-                }
                 Credentials.Sas = value;
             }
         }

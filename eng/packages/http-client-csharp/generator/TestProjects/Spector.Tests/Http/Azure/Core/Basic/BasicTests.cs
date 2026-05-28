@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
-using Specs.Azure.Core.Basic;
+using _Specs_.Azure.Core.Basic;
 using Azure;
 using Azure.Core;
 using NUnit.Framework;

@@ -833,9 +833,11 @@ namespace Azure.ResourceManager.Logic
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Logic.LogicWorkflowData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Logic.LogicWorkflowData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.LogicWorkflowResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use Update(WaitUntil waitUntil, LogicWorkflowData data, CancellationToken cancellationToken = default) instead.", false)]
         public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource> Update(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Logic.LogicWorkflowResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use UpdateAsync(WaitUntil waitUntil, LogicWorkflowData data, CancellationToken cancellationToken = default) instead.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource>> UpdateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ValidateByResourceGroup(Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1492,7 +1494,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm RC2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm left, Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.AS2EncryptionAlgorithm (string value) { throw null; }
@@ -1540,7 +1544,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm Sha2384 { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm Sha2512 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm left, Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.AS2HashingAlgorithm (string value) { throw null; }
@@ -1643,7 +1649,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Sha2384 { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm Sha2512 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm left, Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.AS2SigningAlgorithm (string value) { throw null; }
@@ -1725,7 +1733,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.EdifactCharacterSet Unox { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.EdifactCharacterSet Unoy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.EdifactCharacterSet other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.EdifactCharacterSet left, Azure.ResourceManager.Logic.Models.EdifactCharacterSet right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.EdifactCharacterSet (string value) { throw null; }
@@ -2208,7 +2218,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountMapType Xslt20 { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountMapType Xslt30 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountMapType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountMapType left, Azure.ResourceManager.Logic.Models.IntegrationAccountMapType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountMapType (string value) { throw null; }
@@ -2235,7 +2247,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType B2B { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType left, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType (string value) { throw null; }
@@ -2251,7 +2265,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType Xml { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType left, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType (string value) { throw null; }
@@ -2269,7 +2285,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName left, Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName (string value) { throw null; }
@@ -2285,7 +2303,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption DisableSourceInfoEnrich { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption left, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountTrackEventOperationOption (string value) { throw null; }
@@ -2355,7 +2375,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12TransactionSet { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType X12TransactionSetAcknowledgment { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType left, Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationAccountTrackingRecordType (string value) { throw null; }
@@ -2385,7 +2407,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentAccessEndpointType Internal { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentAccessEndpointType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentAccessEndpointType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentAccessEndpointType left, Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentAccessEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentAccessEndpointType (string value) { throw null; }
@@ -2424,7 +2448,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType Sql { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType SslCertificateVerification { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType left, Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyCategoryType (string value) { throw null; }
@@ -2454,7 +2480,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyHealthState Unhealthy { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyHealthState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyHealthState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyHealthState left, Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyHealthState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkDependencyHealthState (string value) { throw null; }
@@ -2485,7 +2513,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkEndPointAccessibilityState NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkEndPointAccessibilityState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkEndPointAccessibilityState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkEndPointAccessibilityState left, Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkEndPointAccessibilityState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentNetworkEndPointAccessibilityState (string value) { throw null; }
@@ -2569,7 +2599,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuName NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuName Premium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuName left, Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuName (string value) { throw null; }
@@ -2586,7 +2618,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuScaleType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuScaleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuScaleType left, Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSkuScaleType (string value) { throw null; }
@@ -2617,7 +2651,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode InvalidOperationId { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode left, Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.IntegrationServiceErrorCode (string value) { throw null; }
@@ -2711,7 +2747,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility Internal { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility left, Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicApiDeploymentParameterVisibility (string value) { throw null; }
@@ -2741,7 +2779,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus Preview { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus Production { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus left, Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicApiOperationAnnotationStatus (string value) { throw null; }
@@ -2869,7 +2909,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicApiTier Premium { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicApiTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicApiTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicApiTier left, Azure.ResourceManager.Logic.Models.LogicApiTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicApiTier (string value) { throw null; }
@@ -2886,7 +2928,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicApiType Rest { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicApiType Soap { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicApiType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicApiType left, Azure.ResourceManager.Logic.Models.LogicApiType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicApiType (string value) { throw null; }
@@ -3002,7 +3046,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicKeyType Primary { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicKeyType Secondary { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicKeyType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicKeyType left, Azure.ResourceManager.Logic.Models.LogicKeyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicKeyType (string value) { throw null; }
@@ -3047,7 +3093,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicSkuName Shared { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicSkuName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicSkuName left, Azure.ResourceManager.Logic.Models.LogicSkuName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicSkuName (string value) { throw null; }
@@ -3105,7 +3153,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType SecureString { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType left, Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowParameterType (string value) { throw null; }
@@ -3141,7 +3191,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Updating { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState Waiting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState left, Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowProvisioningState (string value) { throw null; }
@@ -3163,7 +3215,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Week { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency Year { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency left, Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowRecurrenceFrequency (string value) { throw null; }
@@ -3330,7 +3384,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowState NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowState Suspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowState left, Azure.ResourceManager.Logic.Models.LogicWorkflowState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowState (string value) { throw null; }
@@ -3357,7 +3413,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus TimedOut { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowStatus Waiting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowStatus left, Azure.ResourceManager.Logic.Models.LogicWorkflowStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowStatus (string value) { throw null; }
@@ -3420,7 +3478,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Unregistering { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState left, Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerProvisioningState (string value) { throw null; }
@@ -3492,7 +3552,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod SoapPassThrough { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod SoapToRest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod left, Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.LogicWsdlImportMethod (string value) { throw null; }
@@ -3521,7 +3583,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.MessageFilterType Include { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.MessageFilterType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.MessageFilterType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.MessageFilterType left, Azure.ResourceManager.Logic.Models.MessageFilterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.MessageFilterType (string value) { throw null; }
@@ -3560,7 +3624,9 @@ namespace Azure.ResourceManager.Logic.Models
         public OpenAuthenticationProviderType(string value) { throw null; }
         public static Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType AAD { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType left, Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.OpenAuthenticationProviderType (string value) { throw null; }
@@ -3732,7 +3798,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.SwaggerSchemaType Object { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.SwaggerSchemaType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.SwaggerSchemaType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.SwaggerSchemaType left, Azure.ResourceManager.Logic.Models.SwaggerSchemaType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.SwaggerSchemaType (string value) { throw null; }
@@ -3766,7 +3834,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy Optional { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy left, Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.TrailingSeparatorPolicy (string value) { throw null; }
@@ -3784,7 +3854,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.UsageIndicator Production { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.UsageIndicator Test { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.UsageIndicator other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.UsageIndicator left, Azure.ResourceManager.Logic.Models.UsageIndicator right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.UsageIndicator (string value) { throw null; }
@@ -3839,7 +3911,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.X12CharacterSet NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.X12CharacterSet Utf8 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.X12CharacterSet other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.X12CharacterSet left, Azure.ResourceManager.Logic.Models.X12CharacterSet right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.X12CharacterSet (string value) { throw null; }
@@ -3856,7 +3930,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.X12DateFormat NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.X12DateFormat Yymmdd { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.X12DateFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.X12DateFormat left, Azure.ResourceManager.Logic.Models.X12DateFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.X12DateFormat (string value) { throw null; }
@@ -4066,7 +4142,9 @@ namespace Azure.ResourceManager.Logic.Models
         public static Azure.ResourceManager.Logic.Models.X12TimeFormat HhmmsSdd { get { throw null; } }
         public static Azure.ResourceManager.Logic.Models.X12TimeFormat NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Logic.Models.X12TimeFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Logic.Models.X12TimeFormat left, Azure.ResourceManager.Logic.Models.X12TimeFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.Logic.Models.X12TimeFormat (string value) { throw null; }

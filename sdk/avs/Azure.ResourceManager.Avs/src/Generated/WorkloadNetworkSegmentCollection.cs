@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkSegmentCollection : ArmCollection, IEnumerable<WorkloadNetworkSegmentResource>, IAsyncEnumerable<WorkloadNetworkSegmentResource>
     {
-        private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
-        private readonly WorkloadNetworks _workloadNetworksRestClient;
+        private readonly ClientDiagnostics _workloadNetworkSegmentWorkloadNetworksClientDiagnostics;
+        private readonly WorkloadNetworksRestOperations _workloadNetworkSegmentWorkloadNetworksRestClient;
 
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkSegmentCollection"/> class for mocking. </summary>
         protected WorkloadNetworkSegmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkSegmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal WorkloadNetworkSegmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(WorkloadNetworkSegmentResource.ResourceType, out string workloadNetworkSegmentApiVersion);
-            _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkSegmentResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _workloadNetworkSegmentWorkloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkSegmentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(WorkloadNetworkSegmentResource.ResourceType, out string workloadNetworkSegmentWorkloadNetworksApiVersion);
+            _workloadNetworkSegmentWorkloadNetworksRestClient = new WorkloadNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkSegmentWorkloadNetworksApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WorkloadNetworkResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a WorkloadNetworkSegment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworkSegment_CreateSegments</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.Avs
         /// <param name="segmentId"> The ID of the NSX Segment. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadNetworkSegmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string segmentId, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.CreateOrUpdate");
+            using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadNetworksRestClient.CreateCreateSegmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AvsArmOperation<WorkloadNetworkSegmentResource> operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(
-                    new WorkloadNetworkSegmentOperationSource(Client),
-                    _workloadNetworksClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _workloadNetworkSegmentWorkloadNetworksRestClient.CreateSegmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, segmentId, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentOperationSource(Client), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkSegmentWorkloadNetworksRestClient.CreateCreateSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, segmentId, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.Avs
         /// Create a WorkloadNetworkSegment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworkSegment_CreateSegments</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.Avs
         /// <param name="segmentId"> The ID of the NSX Segment. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadNetworkSegmentResource> CreateOrUpdate(WaitUntil waitUntil, string segmentId, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.CreateOrUpdate");
+            using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadNetworksRestClient.CreateCreateSegmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, WorkloadNetworkSegmentData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AvsArmOperation<WorkloadNetworkSegmentResource> operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(
-                    new WorkloadNetworkSegmentOperationSource(Client),
-                    _workloadNetworksClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _workloadNetworkSegmentWorkloadNetworksRestClient.CreateSegments(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, segmentId, data, cancellationToken);
+                var operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentOperationSource(Client), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkSegmentWorkloadNetworksRestClient.CreateCreateSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, segmentId, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.Avs
         /// Get a WorkloadNetworkSegment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworkSegment_GetSegment</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="segmentId"> The ID of the NSX Segment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual async Task<Response<WorkloadNetworkSegmentResource>> GetAsync(string segmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Get");
+            using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
+                var response = await _workloadNetworkSegmentWorkloadNetworksRestClient.GetSegmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, segmentId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.Avs
         /// Get a WorkloadNetworkSegment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworkSegment_GetSegment</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="segmentId"> The ID of the NSX Segment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual Response<WorkloadNetworkSegmentResource> Get(string segmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Get");
+            using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<WorkloadNetworkSegmentData> response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
+                var response = _workloadNetworkSegmentWorkloadNetworksRestClient.GetSegment(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, segmentId, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.Avs
         /// List WorkloadNetworkSegment resources by WorkloadNetwork
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworkSegment_ListSegments</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadNetworkSegmentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadNetworkSegmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkSegmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<WorkloadNetworkSegmentData, WorkloadNetworkSegmentResource>(new WorkloadNetworksGetSegmentsAsyncCollectionResultOfT(
-                _workloadNetworksRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                context,
-                "WorkloadNetworkSegmentCollection.GetAll"), data => new WorkloadNetworkSegmentResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkSegmentResource(Client, WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(e)), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkSegmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List WorkloadNetworkSegment resources by WorkloadNetwork
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworkSegment_ListSegments</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="WorkloadNetworkSegmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkSegmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<WorkloadNetworkSegmentData, WorkloadNetworkSegmentResource>(new WorkloadNetworksGetSegmentsCollectionResultOfT(
-                _workloadNetworksRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                context,
-                "WorkloadNetworkSegmentCollection.GetAll"), data => new WorkloadNetworkSegmentResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkSegmentWorkloadNetworksRestClient.CreateListSegmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkSegmentResource(Client, WorkloadNetworkSegmentData.DeserializeWorkloadNetworkSegmentData(e)), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkSegmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworkSegment_GetSegment</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="segmentId"> The ID of the NSX Segment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string segmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Exists");
+            using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<WorkloadNetworkSegmentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((WorkloadNetworkSegmentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _workloadNetworkSegmentWorkloadNetworksRestClient.GetSegmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, segmentId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.Avs
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworkSegment_GetSegment</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="segmentId"> The ID of the NSX Segment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual Response<bool> Exists(string segmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Exists");
+            using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<WorkloadNetworkSegmentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((WorkloadNetworkSegmentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _workloadNetworkSegmentWorkloadNetworksRestClient.GetSegment(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, segmentId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.Avs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworkSegment_GetSegment</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="segmentId"> The ID of the NSX Segment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadNetworkSegmentResource>> GetIfExistsAsync(string segmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.GetIfExists");
+            using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<WorkloadNetworkSegmentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((WorkloadNetworkSegmentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _workloadNetworkSegmentWorkloadNetworksRestClient.GetSegmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, segmentId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<WorkloadNetworkSegmentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.Avs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/segments/{segmentId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworkSegment_GetSegment</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkSegmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="segmentId"> The ID of the NSX Segment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual NullableResponse<WorkloadNetworkSegmentResource> GetIfExists(string segmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
-            using DiagnosticScope scope = _workloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.GetIfExists");
+            using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _workloadNetworksRestClient.CreateGetSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, segmentId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<WorkloadNetworkSegmentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(WorkloadNetworkSegmentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((WorkloadNetworkSegmentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _workloadNetworkSegmentWorkloadNetworksRestClient.GetSegment(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, segmentId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<WorkloadNetworkSegmentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new WorkloadNetworkSegmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.Avs
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<WorkloadNetworkSegmentResource> IAsyncEnumerable<WorkloadNetworkSegmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

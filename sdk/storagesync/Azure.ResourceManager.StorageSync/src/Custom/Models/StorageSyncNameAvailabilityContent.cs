@@ -4,10 +4,12 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Parameters for a check name availability request. </summary>
+    [CodeGenSuppress("StorageSyncNameAvailabilityContent", typeof(string))]
     public partial class StorageSyncNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of StorageSyncNameAvailabilityContent. </summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct RankingOrder : IEquatable<RankingOrder>
     {
         private readonly string _value;
-        /// <summary> Sets sort order as BoostedRerankerScore. </summary>
-        private const string BoostedRerankerScoreValue = "BoostedRerankerScore";
-        /// <summary> Sets sort order as ReRankerScore. </summary>
-        private const string ReRankerScoreValue = "RerankerScore";
 
         /// <summary> Initializes a new instance of <see cref="RankingOrder"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RankingOrder(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string BoostedRerankerScoreValue = "BoostedRerankerScore";
+        private const string ReRankerScoreValue = "RerankerScore";
 
         /// <summary> Sets sort order as BoostedRerankerScore. </summary>
         public static RankingOrder BoostedRerankerScore { get; } = new RankingOrder(BoostedRerankerScoreValue);
-
         /// <summary> Sets sort order as ReRankerScore. </summary>
         public static RankingOrder ReRankerScore { get; } = new RankingOrder(ReRankerScoreValue);
-
         /// <summary> Determines if two <see cref="RankingOrder"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RankingOrder left, RankingOrder right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RankingOrder"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RankingOrder left, RankingOrder right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RankingOrder"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RankingOrder"/>. </summary>
         public static implicit operator RankingOrder(string value) => new RankingOrder(value);
 
-        /// <summary> Converts a string to a <see cref="RankingOrder"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RankingOrder?(string value) => value == null ? null : new RankingOrder(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RankingOrder other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RankingOrder other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

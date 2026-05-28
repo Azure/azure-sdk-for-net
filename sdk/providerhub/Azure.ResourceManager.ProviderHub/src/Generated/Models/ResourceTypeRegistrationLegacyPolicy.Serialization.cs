@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ProviderHub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The legacy policy. </summary>
-    public partial class ResourceTypeRegistrationLegacyPolicy : IJsonModel<ResourceTypeRegistrationLegacyPolicy>
+    public partial class ResourceTypeRegistrationLegacyPolicy : IUtf8JsonSerializable, IJsonModel<ResourceTypeRegistrationLegacyPolicy>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceTypeRegistrationLegacyPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationLegacyPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceTypeRegistrationLegacyPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationLegacyPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeRegistrationLegacyPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationLegacyPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationLegacyPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceTypeRegistrationLegacyPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceTypeRegistrationLegacyPolicy IPersistableModel<ResourceTypeRegistrationLegacyPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceTypeRegistrationLegacyPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceTypeRegistrationLegacyPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,16 +28,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationLegacyPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationLegacyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceTypeRegistrationLegacyPolicy)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(DisallowedLegacyOperations))
             {
                 writer.WritePropertyName("disallowedLegacyOperations"u8);
                 writer.WriteStartArray();
-                foreach (ProviderLegacyOperation item in DisallowedLegacyOperations)
+                foreach (var item in DisallowedLegacyOperations)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -88,21 +48,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("disallowedConditions"u8);
                 writer.WriteStartArray();
-                foreach (LegacyDisallowedCondition item in DisallowedConditions)
+                foreach (var item in DisallowedConditions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,58 +71,54 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceTypeRegistrationLegacyPolicy IJsonModel<ResourceTypeRegistrationLegacyPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceTypeRegistrationLegacyPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceTypeRegistrationLegacyPolicy IJsonModel<ResourceTypeRegistrationLegacyPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationLegacyPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationLegacyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceTypeRegistrationLegacyPolicy)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceTypeRegistrationLegacyPolicy(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceTypeRegistrationLegacyPolicy DeserializeResourceTypeRegistrationLegacyPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceTypeRegistrationLegacyPolicy DeserializeResourceTypeRegistrationLegacyPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<ProviderLegacyOperation> disallowedLegacyOperations = default;
             IList<LegacyDisallowedCondition> disallowedConditions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("disallowedLegacyOperations"u8))
+                if (property.NameEquals("disallowedLegacyOperations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ProviderLegacyOperation> array = new List<ProviderLegacyOperation>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new ProviderLegacyOperation(item.GetString()));
                     }
                     disallowedLegacyOperations = array;
                     continue;
                 }
-                if (prop.NameEquals("disallowedConditions"u8))
+                if (property.NameEquals("disallowedConditions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<LegacyDisallowedCondition> array = new List<LegacyDisallowedCondition>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(LegacyDisallowedCondition.DeserializeLegacyDisallowedCondition(item, options));
                     }
@@ -171,10 +127,42 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ResourceTypeRegistrationLegacyPolicy(disallowedLegacyOperations ?? new ChangeTrackingList<ProviderLegacyOperation>(), disallowedConditions ?? new ChangeTrackingList<LegacyDisallowedCondition>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceTypeRegistrationLegacyPolicy(disallowedLegacyOperations ?? new ChangeTrackingList<ProviderLegacyOperation>(), disallowedConditions ?? new ChangeTrackingList<LegacyDisallowedCondition>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceTypeRegistrationLegacyPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationLegacyPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationLegacyPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceTypeRegistrationLegacyPolicy IPersistableModel<ResourceTypeRegistrationLegacyPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeRegistrationLegacyPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeResourceTypeRegistrationLegacyPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeRegistrationLegacyPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceTypeRegistrationLegacyPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct RuntimeFailureAction : IEquatable<RuntimeFailureAction>
     {
         private readonly string _value;
-        /// <summary> Indicates that a rollback of the upgrade will be performed by Service Fabric if the upgrade fails. </summary>
-        private const string RollbackValue = "Rollback";
-        /// <summary> Indicates that a manual repair will need to be performed by the administrator if the upgrade fails. Service Fabric will not proceed to the next upgrade domain automatically. </summary>
-        private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="RuntimeFailureAction"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RuntimeFailureAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string RollbackValue = "Rollback";
+        private const string ManualValue = "Manual";
 
         /// <summary> Indicates that a rollback of the upgrade will be performed by Service Fabric if the upgrade fails. </summary>
         public static RuntimeFailureAction Rollback { get; } = new RuntimeFailureAction(RollbackValue);
-
         /// <summary> Indicates that a manual repair will need to be performed by the administrator if the upgrade fails. Service Fabric will not proceed to the next upgrade domain automatically. </summary>
         public static RuntimeFailureAction Manual { get; } = new RuntimeFailureAction(ManualValue);
-
         /// <summary> Determines if two <see cref="RuntimeFailureAction"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RuntimeFailureAction left, RuntimeFailureAction right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RuntimeFailureAction"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RuntimeFailureAction left, RuntimeFailureAction right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RuntimeFailureAction"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RuntimeFailureAction"/>. </summary>
         public static implicit operator RuntimeFailureAction(string value) => new RuntimeFailureAction(value);
 
-        /// <summary> Converts a string to a <see cref="RuntimeFailureAction"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RuntimeFailureAction?(string value) => value == null ? null : new RuntimeFailureAction(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RuntimeFailureAction other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RuntimeFailureAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

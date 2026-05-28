@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct InstallRebootBehavior : IEquatable<InstallRebootBehavior>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="InstallRebootBehavior"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public InstallRebootBehavior(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NeverRebootsValue = "NeverReboots";
         private const string RequiresRebootValue = "RequiresReboot";
         private const string RequestRebootValue = "RequestReboot";
 
-        /// <summary> Initializes a new instance of <see cref="InstallRebootBehavior"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InstallRebootBehavior(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NeverReboots. </summary>
+        /// <summary> NeverReboots. </summary>
         public static InstallRebootBehavior NeverReboots { get; } = new InstallRebootBehavior(NeverRebootsValue);
-
-        /// <summary> Gets the RequiresReboot. </summary>
+        /// <summary> RequiresReboot. </summary>
         public static InstallRebootBehavior RequiresReboot { get; } = new InstallRebootBehavior(RequiresRebootValue);
-
-        /// <summary> Gets the RequestReboot. </summary>
+        /// <summary> RequestReboot. </summary>
         public static InstallRebootBehavior RequestReboot { get; } = new InstallRebootBehavior(RequestRebootValue);
-
         /// <summary> Determines if two <see cref="InstallRebootBehavior"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InstallRebootBehavior left, InstallRebootBehavior right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="InstallRebootBehavior"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InstallRebootBehavior left, InstallRebootBehavior right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="InstallRebootBehavior"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InstallRebootBehavior"/>. </summary>
         public static implicit operator InstallRebootBehavior(string value) => new InstallRebootBehavior(value);
 
-        /// <summary> Converts a string to a <see cref="InstallRebootBehavior"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator InstallRebootBehavior?(string value) => value == null ? null : new InstallRebootBehavior(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InstallRebootBehavior other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(InstallRebootBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

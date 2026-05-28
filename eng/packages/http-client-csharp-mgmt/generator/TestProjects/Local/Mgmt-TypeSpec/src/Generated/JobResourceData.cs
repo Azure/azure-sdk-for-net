@@ -21,13 +21,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Initializes a new instance of <see cref="JobResourceData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="jobName"> Gets or sets the JobName. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public JobResourceData(AzureLocation location, string jobName) : base(location)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal JobResourceData(AzureLocation location, JobProperties properties) : base(location)
         {
-            Argument.AssertNotNull(jobName, nameof(jobName));
-
-            Properties = new JobProperties(jobName);
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="JobResourceData"/>. </summary>
@@ -47,7 +44,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        internal JobProperties Properties { get; set; }
+        internal JobProperties Properties { get; }
 
         /// <summary> Gets or sets the JobName. </summary>
         [WirePath("properties.jobName")]
@@ -55,11 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties is null ? default : Properties.JobName;
-            }
-            set
-            {
-                Properties = new JobProperties(value);
+                return Properties.JobName;
             }
         }
     }

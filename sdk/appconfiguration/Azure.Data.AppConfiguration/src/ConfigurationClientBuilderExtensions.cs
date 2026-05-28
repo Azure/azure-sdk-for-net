@@ -4,7 +4,6 @@
 using System;
 using Azure.Core.Extensions;
 using Azure.Data.AppConfiguration;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Microsoft.Extensions.Azure
 {

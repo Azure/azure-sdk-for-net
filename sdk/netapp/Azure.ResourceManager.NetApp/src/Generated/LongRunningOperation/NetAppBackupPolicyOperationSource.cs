@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary></summary>
-    internal partial class NetAppBackupPolicyOperationSource : IOperationSource<NetAppBackupPolicyResource>
+    internal class NetAppBackupPolicyOperationSource : IOperationSource<NetAppBackupPolicyResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal NetAppBackupPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         NetAppBackupPolicyResource IOperationSource<NetAppBackupPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetAppBackupPolicyData data = NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<NetAppBackupPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new NetAppBackupPolicyResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<NetAppBackupPolicyResource> IOperationSource<NetAppBackupPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetAppBackupPolicyData data = NetAppBackupPolicyData.DeserializeNetAppBackupPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetAppBackupPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<NetAppBackupPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            return await Task.FromResult(new NetAppBackupPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.DevOpsInfrastructure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> The updatable properties of the Pool. </summary>
-    public partial class PoolUpdateProperties : IJsonModel<PoolUpdateProperties>
+    public partial class PoolUpdateProperties : IUtf8JsonSerializable, IJsonModel<PoolUpdateProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PoolUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePoolUpdateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PoolUpdateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PoolUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PoolUpdateProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PoolUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PoolUpdateProperties IPersistableModel<PoolUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PoolUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PoolUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PoolUpdateProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -109,15 +69,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 writer.WritePropertyName("runtimeConfiguration"u8);
                 writer.WriteObjectValue(RuntimeConfiguration, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,27 +86,22 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PoolUpdateProperties IJsonModel<PoolUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PoolUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PoolUpdateProperties IJsonModel<PoolUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PoolUpdateProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePoolUpdateProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PoolUpdateProperties DeserializePoolUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static PoolUpdateProperties DeserializePoolUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -158,73 +113,75 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             DevOpsFabricProfile fabricProfile = default;
             string devCenterProjectResourceId = default;
             RuntimeConfiguration runtimeConfiguration = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new DevOpsInfrastructureProvisioningState(prop.Value.GetString());
+                    provisioningState = new DevOpsInfrastructureProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("maximumConcurrency"u8))
+                if (property.NameEquals("maximumConcurrency"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maximumConcurrency = prop.Value.GetInt32();
+                    maximumConcurrency = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("organizationProfile"u8))
+                if (property.NameEquals("organizationProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    organizationProfile = DevOpsOrganizationProfile.DeserializeDevOpsOrganizationProfile(prop.Value, options);
+                    organizationProfile = DevOpsOrganizationProfile.DeserializeDevOpsOrganizationProfile(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("agentProfile"u8))
+                if (property.NameEquals("agentProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agentProfile = DevOpsPoolAgentProfile.DeserializeDevOpsPoolAgentProfile(prop.Value, options);
+                    agentProfile = DevOpsPoolAgentProfile.DeserializeDevOpsPoolAgentProfile(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("fabricProfile"u8))
+                if (property.NameEquals("fabricProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fabricProfile = DevOpsFabricProfile.DeserializeDevOpsFabricProfile(prop.Value, options);
+                    fabricProfile = DevOpsFabricProfile.DeserializeDevOpsFabricProfile(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("devCenterProjectResourceId"u8))
+                if (property.NameEquals("devCenterProjectResourceId"u8))
                 {
-                    devCenterProjectResourceId = prop.Value.GetString();
+                    devCenterProjectResourceId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("runtimeConfiguration"u8))
+                if (property.NameEquals("runtimeConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runtimeConfiguration = RuntimeConfiguration.DeserializeRuntimeConfiguration(prop.Value, options);
+                    runtimeConfiguration = RuntimeConfiguration.DeserializeRuntimeConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new PoolUpdateProperties(
                 provisioningState,
                 maximumConcurrency,
@@ -233,7 +190,38 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 fabricProfile,
                 devCenterProjectResourceId,
                 runtimeConfiguration,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PoolUpdateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PoolUpdateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PoolUpdateProperties IPersistableModel<PoolUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PoolUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePoolUpdateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PoolUpdateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PoolUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

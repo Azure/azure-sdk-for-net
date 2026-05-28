@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.DataBoxEdge;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Fields for tracking resource move. </summary>
-    public partial class DataBoxEdgeResourceMoveDetails : IJsonModel<DataBoxEdgeResourceMoveDetails>
+    public partial class DataBoxEdgeResourceMoveDetails : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeResourceMoveDetails>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataBoxEdgeResourceMoveDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeResourceMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataBoxEdgeResourceMoveDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeResourceMoveDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeResourceMoveDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeResourceMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeResourceMoveDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataBoxEdgeResourceMoveDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeResourceMoveDetails IPersistableModel<DataBoxEdgeResourceMoveDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataBoxEdgeResourceMoveDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeResourceMoveDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeResourceMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeResourceMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeResourceMoveDetails)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(OperationInProgress))
             {
                 writer.WritePropertyName("operationInProgress"u8);
@@ -84,15 +44,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("operationInProgressLockTimeoutInUTC"u8);
                 writer.WriteStringValue(OperationInProgressLockTimeoutInUtc.Value, "O");
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,60 +61,88 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeResourceMoveDetails IJsonModel<DataBoxEdgeResourceMoveDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataBoxEdgeResourceMoveDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataBoxEdgeResourceMoveDetails IJsonModel<DataBoxEdgeResourceMoveDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeResourceMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeResourceMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeResourceMoveDetails)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxEdgeResourceMoveDetails(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataBoxEdgeResourceMoveDetails DeserializeDataBoxEdgeResourceMoveDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataBoxEdgeResourceMoveDetails DeserializeDataBoxEdgeResourceMoveDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataBoxEdgeResourceMoveStatus? operationInProgress = default;
             DateTimeOffset? operationInProgressLockTimeoutInUtc = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("operationInProgress"u8))
+                if (property.NameEquals("operationInProgress"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operationInProgress = new DataBoxEdgeResourceMoveStatus(prop.Value.GetString());
+                    operationInProgress = new DataBoxEdgeResourceMoveStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("operationInProgressLockTimeoutInUTC"u8))
+                if (property.NameEquals("operationInProgressLockTimeoutInUTC"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operationInProgressLockTimeoutInUtc = prop.Value.GetDateTimeOffset("O");
+                    operationInProgressLockTimeoutInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DataBoxEdgeResourceMoveDetails(operationInProgress, operationInProgressLockTimeoutInUtc, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeResourceMoveDetails(operationInProgress, operationInProgressLockTimeoutInUtc, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeResourceMoveDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeResourceMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeResourceMoveDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeResourceMoveDetails IPersistableModel<DataBoxEdgeResourceMoveDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeResourceMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataBoxEdgeResourceMoveDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeResourceMoveDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeResourceMoveDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

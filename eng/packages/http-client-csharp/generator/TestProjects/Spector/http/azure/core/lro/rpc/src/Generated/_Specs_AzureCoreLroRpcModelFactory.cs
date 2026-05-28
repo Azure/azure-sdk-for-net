@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
-namespace Specs.Azure.Core.Lro.Rpc
+namespace _Specs_.Azure.Core.Lro.Rpc
 {
     public static partial class _Specs_AzureCoreLroRpcModelFactory
     {

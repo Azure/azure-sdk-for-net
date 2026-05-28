@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class ShareDestinationFormatTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ShareDestinationFormatType value) => value switch
         {
             ShareDestinationFormatType.UnknownType => "UnknownType",
@@ -23,33 +22,14 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareDestinationFormatType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static ShareDestinationFormatType ToShareDestinationFormatType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UnknownType"))
-            {
-                return ShareDestinationFormatType.UnknownType;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HCS"))
-            {
-                return ShareDestinationFormatType.Hcs;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlockBlob"))
-            {
-                return ShareDestinationFormatType.BlockBlob;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PageBlob"))
-            {
-                return ShareDestinationFormatType.PageBlob;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureFile"))
-            {
-                return ShareDestinationFormatType.AzureFile;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManagedDisk"))
-            {
-                return ShareDestinationFormatType.ManagedDisk;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UnknownType")) return ShareDestinationFormatType.UnknownType;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HCS")) return ShareDestinationFormatType.Hcs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlockBlob")) return ShareDestinationFormatType.BlockBlob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PageBlob")) return ShareDestinationFormatType.PageBlob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureFile")) return ShareDestinationFormatType.AzureFile;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ManagedDisk")) return ShareDestinationFormatType.ManagedDisk;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareDestinationFormatType value.");
         }
     }

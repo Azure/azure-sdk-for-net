@@ -15,15 +15,48 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     /// <summary> Describes an available Compute SKU Location Information. </summary>
     public partial class ResourceSkuLocationInfo
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="zones"/> or <paramref name="zoneDetails"/> is null. </exception>
         internal ResourceSkuLocationInfo(AzureLocation location, IEnumerable<string> zones, IEnumerable<ResourceSkuZoneDetails> zoneDetails)
         {
+            Argument.AssertNotNull(zones, nameof(zones));
+            Argument.AssertNotNull(zoneDetails, nameof(zoneDetails));
+
             Location = location;
             Zones = zones.ToList();
             ZoneDetails = zoneDetails.ToList();
@@ -33,22 +66,25 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuLocationInfo(AzureLocation location, IList<string> zones, IList<ResourceSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceSkuLocationInfo(AzureLocation location, IReadOnlyList<string> zones, IReadOnlyList<ResourceSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuLocationInfo"/> for deserialization. </summary>
+        internal ResourceSkuLocationInfo()
+        {
         }
 
         /// <summary> Location of the SKU. </summary>
         public AzureLocation Location { get; }
-
         /// <summary> List of availability zones where the SKU is supported. </summary>
-        public IList<string> Zones { get; }
-
+        public IReadOnlyList<string> Zones { get; }
         /// <summary> Gets details of capabilities available to a SKU in specific zones. </summary>
-        public IList<ResourceSkuZoneDetails> ZoneDetails { get; }
+        public IReadOnlyList<ResourceSkuZoneDetails> ZoneDetails { get; }
     }
 }

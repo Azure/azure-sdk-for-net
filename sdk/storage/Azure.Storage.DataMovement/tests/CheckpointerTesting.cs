@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using Azure.Storage.DataMovement.JobPlan;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.JobPlan;
+using System;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests

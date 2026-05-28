@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.EdgeOrder;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Holds details about product hierarchy information. </summary>
-    public partial class HierarchyInformation : IJsonModel<HierarchyInformation>
+    public partial class HierarchyInformation : IUtf8JsonSerializable, IJsonModel<HierarchyInformation>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HierarchyInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHierarchyInformation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HierarchyInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HierarchyInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HierarchyInformation IPersistableModel<HierarchyInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HierarchyInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HierarchyInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HierarchyInformation)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ProductFamilyName))
             {
                 writer.WritePropertyName("productFamilyName"u8);
@@ -94,20 +54,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("configurationName"u8);
                 writer.WriteStringValue(ConfigurationName);
             }
-            if (Optional.IsDefined(ConfigurationIdDisplayName))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("configurationIdDisplayName"u8);
-                writer.WriteStringValue(ConfigurationIdDisplayName);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,27 +71,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HierarchyInformation IJsonModel<HierarchyInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HierarchyInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HierarchyInformation IJsonModel<HierarchyInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HierarchyInformation)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHierarchyInformation(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HierarchyInformation DeserializeHierarchyInformation(JsonElement element, ModelReaderWriterOptions options)
+        internal static HierarchyInformation DeserializeHierarchyInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -145,47 +95,68 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             string productLineName = default;
             string productName = default;
             string configurationName = default;
-            string configurationIdDisplayName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("productFamilyName"u8))
+                if (property.NameEquals("productFamilyName"u8))
                 {
-                    productFamilyName = prop.Value.GetString();
+                    productFamilyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("productLineName"u8))
+                if (property.NameEquals("productLineName"u8))
                 {
-                    productLineName = prop.Value.GetString();
+                    productLineName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("productName"u8))
+                if (property.NameEquals("productName"u8))
                 {
-                    productName = prop.Value.GetString();
+                    productName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("configurationName"u8))
+                if (property.NameEquals("configurationName"u8))
                 {
-                    configurationName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("configurationIdDisplayName"u8))
-                {
-                    configurationIdDisplayName = prop.Value.GetString();
+                    configurationName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new HierarchyInformation(
-                productFamilyName,
-                productLineName,
-                productName,
-                configurationName,
-                configurationIdDisplayName,
-                additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HierarchyInformation(productFamilyName, productLineName, productName, configurationName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HierarchyInformation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HierarchyInformation IPersistableModel<HierarchyInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHierarchyInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HierarchyInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

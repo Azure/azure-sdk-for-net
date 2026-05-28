@@ -38,23 +38,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
             return GetCachedClient(client => new PlaywrightWorkspaceCollection(client, Id));
         }
 
-        /// <summary>
-        /// Get a PlaywrightWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a PlaywrightWorkspace. </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>
@@ -67,23 +51,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
             return await GetPlaywrightWorkspaces().GetAsync(playwrightWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get a PlaywrightWorkspace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces/{playwrightWorkspaceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightWorkspaces_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a PlaywrightWorkspace. </summary>
         /// <param name="playwrightWorkspaceName"> The name of the PlaywrightWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="playwrightWorkspaceName"/> is null. </exception>

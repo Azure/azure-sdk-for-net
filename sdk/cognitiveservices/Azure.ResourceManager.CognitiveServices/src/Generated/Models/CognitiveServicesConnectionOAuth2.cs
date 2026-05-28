@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -17,8 +16,37 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// </summary>
     public partial class CognitiveServicesConnectionOAuth2
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesConnectionOAuth2"/>. </summary>
         public CognitiveServicesConnectionOAuth2()
@@ -40,8 +68,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// Concur, ServiceNow auth server AccessToken grant type is 'Password'
         /// which requires UsernamePassword
         /// </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesConnectionOAuth2(Uri authUri, Guid? clientId, string clientSecret, string developerToken, string password, string refreshToken, Guid? tenantId, string username, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesConnectionOAuth2(Uri authUri, Guid? clientId, string clientSecret, string developerToken, string password, string refreshToken, Guid? tenantId, string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthUri = authUri;
             ClientId = clientId;
@@ -51,40 +79,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             RefreshToken = refreshToken;
             TenantId = tenantId;
             Username = username;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Required by Concur connection category. </summary>
         [WirePath("authUrl")]
         public Uri AuthUri { get; set; }
-
         /// <summary> Client id in the format of UUID. </summary>
         [WirePath("clientId")]
         public Guid? ClientId { get; set; }
-
-        /// <summary> Gets or sets the ClientSecret. </summary>
+        /// <summary> Gets or sets the client secret. </summary>
         [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
-
         /// <summary> Required by GoogleAdWords connection category. </summary>
         [WirePath("developerToken")]
         public string DeveloperToken { get; set; }
-
-        /// <summary> Gets or sets the Password. </summary>
+        /// <summary> Gets or sets the password. </summary>
         [WirePath("password")]
         public string Password { get; set; }
-
         /// <summary>
         /// Required by GoogleBigQuery, GoogleAdWords, Hubspot, QuickBooks, Square, Xero, Zoho
         /// where user needs to get RefreshToken offline
         /// </summary>
         [WirePath("refreshToken")]
         public string RefreshToken { get; set; }
-
         /// <summary> Required by QuickBooks and Xero connection categories. </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
-
         /// <summary>
         /// Concur, ServiceNow auth server AccessToken grant type is 'Password'
         /// which requires UsernamePassword

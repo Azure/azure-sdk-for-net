@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -15,18 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public partial class HyperVToAzStackHciRecoveryPointCustomProperties : DataReplicationRecoveryPointCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciRecoveryPointCustomProperties"/>. </summary>
-        internal HyperVToAzStackHciRecoveryPointCustomProperties() : base("HyperVToAzStackHCI")
+        internal HyperVToAzStackHciRecoveryPointCustomProperties()
         {
             DiskIds = new ChangeTrackingList<string>();
+            InstanceType = "HyperVToAzStackHCI";
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciRecoveryPointCustomProperties"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationRecoveryPointCustomProperties. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskIds"> Gets or sets the list of the disk Ids. </param>
-        internal HyperVToAzStackHciRecoveryPointCustomProperties(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<string> diskIds) : base(instanceType, additionalBinaryDataProperties)
+        internal HyperVToAzStackHciRecoveryPointCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<string> diskIds) : base(instanceType, serializedAdditionalRawData)
         {
             DiskIds = diskIds;
+            InstanceType = instanceType ?? "HyperVToAzStackHCI";
         }
 
         /// <summary> Gets or sets the list of the disk Ids. </summary>

@@ -9,8 +9,7 @@ param (
   [string]$SettingsPath
 )
 . (Join-Path $PSScriptRoot common.ps1)
-$DefaultDocWardenVersion = "0.7.3"
-$FeedUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-python/pypi/simple/"
+$DefaultDocWardenVersion = "0.7.2"
 $script:FoundError = $false
 
 function Test-Readme-Files {
@@ -82,17 +81,16 @@ if ($RepoRoot) {
 Write-Host "ScanPath=$ScanPaths"
 
 Write-Host "Installing setup tools and DocWarden"
-Write-Host "pip install setuptools wheel --quiet --index-url $FeedUrl"
-pip install setuptools wheel --quiet --index-url $FeedUrl
+Write-Host "pip install setuptools wheel --quiet"
+pip install setuptools wheel --quiet
 if ($LASTEXITCODE -ne 0) {
-  LogError "pip install setuptools wheel --quiet --index-url $FeedUrl failed with exit code $LASTEXITCODE"
+  LogError "pip install setuptools wheel --quiet failed with exit code $LASTEXITCODE"
   exit 1
 }
-
-Write-Host "pip install doc-warden==$DocWardenVersion --quiet --index-url $FeedUrl"
-pip install doc-warden==$DocWardenVersion --quiet --index-url $FeedUrl
+Write-Host "pip install doc-warden==$DocWardenVersion --quiet"
+pip install doc-warden==$DocWardenVersion --quiet
 if ($LASTEXITCODE -ne 0) {
-  LogError "pip install doc-warden==$DocWardenVersion --quiet --index-url $FeedUrl failed with exit code $LASTEXITCODE"
+  LogError "pip install doc-warden==$DocWardenVersion --quiet failed with exit code $LASTEXITCODE"
   exit 1
 }
 

@@ -1,5 +1,6 @@
 # Lint the CODEOWNERS file for a given repository and filter out baseline errors
-# Uses partial clone (fetchFilter: tree:0) to avoid downloading full git history while allowing branch operations
+# Note: Due to the nature of the verifications, which includes source paths/globs
+# for the repository, this pipeline cannot use sparse-checkout.
 trigger: none
 
 pr:
@@ -38,10 +39,6 @@ stages:
       UserOrgUri: "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-write-teams/user-org-visibility-blob"
 
     steps:
-      - checkout: self
-        fetchFilter: tree:0
-        fetchTags: false
-
       - pwsh: |
           dotnet tool install --global --add-source "$(DotNetDevOpsFeed)" --version "$(CodeownersLinterVersion)" "Azure.Sdk.Tools.CodeownersLinter"
         displayName: Install CodeownersLinter

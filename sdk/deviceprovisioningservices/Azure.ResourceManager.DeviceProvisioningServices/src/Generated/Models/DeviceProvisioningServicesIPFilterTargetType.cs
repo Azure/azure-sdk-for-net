@@ -10,11 +10,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> Target for requests captured by this rule. </summary>
     public enum DeviceProvisioningServicesIPFilterTargetType
     {
-        /// <summary> All. </summary>
+        /// <summary> all. </summary>
         All,
-        /// <summary> ServiceApi. </summary>
+        /// <summary> serviceApi. </summary>
         ServiceApi,
-        /// <summary> DeviceApi. </summary>
+        /// <summary> deviceApi. </summary>
         DeviceApi
     }
 }

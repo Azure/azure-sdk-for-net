@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers;
-using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -127,8 +126,7 @@ namespace Azure.Core.Pipeline
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                     int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
 #pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
-                    if (bytesRead == 0)
-                        break;
+                    if (bytesRead == 0) break;
                     await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
                 }
             }
@@ -175,7 +173,7 @@ namespace Azure.Core.Pipeline
                 throw CancellationHelper.CreateOperationCanceledException(
                     inner,
                     timeoutToken,
-                    $"The operation was cancelled because it exceeded the configured timeout of {timeout.ToString("g", CultureInfo.InvariantCulture)}. " +
+                    $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. " +
                     $"Network timeout can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.{nameof(RetryOptions.NetworkTimeout)}.");
             }
         }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The DetectorMetadata.
-    /// Serialized Name: ResponseMetaData
-    /// </summary>
+    /// <summary> The DetectorMetadata. </summary>
     internal partial class DetectorMetadata
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DetectorMetadata"/>. </summary>
-        /// <param name="dataSource">
-        /// Source of the Data
-        /// Serialized Name: ResponseMetaData.dataSource
-        /// </param>
+        /// <param name="dataSource"> Source of the Data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DetectorMetadata(DetectorDataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Source of the Data
-        /// Serialized Name: ResponseMetaData.dataSource
-        /// </summary>
+        /// <summary> Source of the Data. </summary>
         [WirePath("dataSource")]
         public DetectorDataSource DataSource { get; set; }
     }

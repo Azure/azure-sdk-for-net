@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Publishing Credentials Policies entity collection ARM resource.
-    /// Serialized Name: PublishingCredentialsPoliciesCollection
-    /// </summary>
+    /// <summary> Publishing Credentials Policies entity collection ARM resource. </summary>
     internal partial class PublishingCredentialsPoliciesListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PublishingCredentialsPoliciesListResult"/>. </summary>
-        /// <param name="value">
-        /// The CsmPublishingCredentialsPoliciesEntity items on this page
-        /// Serialized Name: PublishingCredentialsPoliciesCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PublishingCredentialsPoliciesListResult(IEnumerable<CsmPublishingCredentialsPoliciesEntityData> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PublishingCredentialsPoliciesListResult"/>. </summary>
-        /// <param name="value">
-        /// The CsmPublishingCredentialsPoliciesEntity items on this page
-        /// Serialized Name: PublishingCredentialsPoliciesCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: PublishingCredentialsPoliciesCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublishingCredentialsPoliciesListResult(IReadOnlyList<CsmPublishingCredentialsPoliciesEntityData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PublishingCredentialsPoliciesListResult(IReadOnlyList<CsmPublishingCredentialsPoliciesEntityData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The CsmPublishingCredentialsPoliciesEntity items on this page
-        /// Serialized Name: PublishingCredentialsPoliciesCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<CsmPublishingCredentialsPoliciesEntityData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: PublishingCredentialsPoliciesCollection.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

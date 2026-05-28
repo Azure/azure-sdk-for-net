@@ -85,31 +85,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Get a SelfHelpResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="SelfHelpResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a SelfHelpResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SelfHelpResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -121,7 +101,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SelfHelpResourceData> response = Response.FromValue(SelfHelpResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,27 +117,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary>
-        /// Get a SelfHelpResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/MgmtTypeSpec/selfHelps/{selfHelpName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SolutionResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="SelfHelpResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a SelfHelpResource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SelfHelpResource> Get(CancellationToken cancellationToken = default)
         {
@@ -169,7 +129,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                HttpMessage message = _solutionResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SelfHelpResourceData> response = Response.FromValue(SelfHelpResourceData.FromResponse(result), result);
                 if (response.Value == null)

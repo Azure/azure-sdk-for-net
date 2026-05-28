@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeStorageAccountCredentialCollection : ArmCollection, IEnumerable<DataBoxEdgeStorageAccountCredentialResource>, IAsyncEnumerable<DataBoxEdgeStorageAccountCredentialResource>
     {
-        private readonly ClientDiagnostics _storageAccountCredentialsClientDiagnostics;
-        private readonly StorageAccountCredentials _storageAccountCredentialsRestClient;
+        private readonly ClientDiagnostics _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics;
+        private readonly StorageAccountCredentialsRestOperations _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient;
 
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountCredentialCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageAccountCredentialCollection"/> class for mocking. </summary>
         protected DataBoxEdgeStorageAccountCredentialCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataBoxEdgeStorageAccountCredentialCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DataBoxEdgeStorageAccountCredentialCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DataBoxEdgeStorageAccountCredentialResource.ResourceType, out string dataBoxEdgeStorageAccountCredentialApiVersion);
-            _storageAccountCredentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeStorageAccountCredentialResource.ResourceType.Namespace, Diagnostics);
-            _storageAccountCredentialsRestClient = new StorageAccountCredentials(_storageAccountCredentialsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeStorageAccountCredentialApiVersion ?? "2023-12-01");
-            ValidateResourceId(id);
+            _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeStorageAccountCredentialResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataBoxEdgeStorageAccountCredentialResource.ResourceType, out string dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsApiVersion);
+            _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient = new StorageAccountCredentialsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataBoxEdgeDeviceResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataBoxEdgeDeviceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates the storage account credential.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageAccountCredentials_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The storage account credential name. </param>
         /// <param name="data"> The storage account credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataBoxEdgeStorageAccountCredentialResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DataBoxEdgeStorageAccountCredentialData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _storageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.CreateOrUpdate");
+            using var scope = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeStorageAccountCredentialData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(
-                    new DataBoxEdgeStorageAccountCredentialOperationSource(Client),
-                    _storageAccountCredentialsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialOperationSource(Client), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Creates or updates the storage account credential.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageAccountCredentials_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The storage account credential name. </param>
         /// <param name="data"> The storage account credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataBoxEdgeStorageAccountCredentialResource> CreateOrUpdate(WaitUntil waitUntil, string name, DataBoxEdgeStorageAccountCredentialData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _storageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.CreateOrUpdate");
+            using var scope = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeStorageAccountCredentialData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(
-                    new DataBoxEdgeStorageAccountCredentialOperationSource(Client),
-                    _storageAccountCredentialsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
+                var operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(new DataBoxEdgeStorageAccountCredentialOperationSource(Client), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets the properties of the specified storage account credential.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageAccountCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The storage account credential name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<DataBoxEdgeStorageAccountCredentialResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _storageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.Get");
+            using var scope = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storageAccountCredentialsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataBoxEdgeStorageAccountCredentialData> response = Response.FromValue(DataBoxEdgeStorageAccountCredentialData.FromResponse(result), result);
+                var response = await _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataBoxEdgeStorageAccountCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets the properties of the specified storage account credential.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageAccountCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The storage account credential name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<DataBoxEdgeStorageAccountCredentialResource> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _storageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.Get");
+            using var scope = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storageAccountCredentialsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataBoxEdgeStorageAccountCredentialData> response = Response.FromValue(DataBoxEdgeStorageAccountCredentialData.FromResponse(result), result);
+                var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataBoxEdgeStorageAccountCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Gets all the storage account credentials in a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageAccountCredentials_ListByDataBoxEdgeDevice. </description>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_ListByDataBoxEdgeDevice</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeStorageAccountCredentialResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeStorageAccountCredentialResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeStorageAccountCredentialResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DataBoxEdgeStorageAccountCredentialData, DataBoxEdgeStorageAccountCredentialResource>(new StorageAccountCredentialsGetByDataBoxEdgeDeviceAsyncCollectionResultOfT(
-                _storageAccountCredentialsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DataBoxEdgeStorageAccountCredentialCollection.GetAll"), data => new DataBoxEdgeStorageAccountCredentialResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeStorageAccountCredentialResource(Client, DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(e)), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, "DataBoxEdgeStorageAccountCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all the storage account credentials in a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageAccountCredentials_ListByDataBoxEdgeDevice. </description>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_ListByDataBoxEdgeDevice</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="DataBoxEdgeStorageAccountCredentialResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeStorageAccountCredentialResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DataBoxEdgeStorageAccountCredentialData, DataBoxEdgeStorageAccountCredentialResource>(new StorageAccountCredentialsGetByDataBoxEdgeDeviceCollectionResultOfT(
-                _storageAccountCredentialsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DataBoxEdgeStorageAccountCredentialCollection.GetAll"), data => new DataBoxEdgeStorageAccountCredentialResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeStorageAccountCredentialResource(Client, DataBoxEdgeStorageAccountCredentialData.DeserializeDataBoxEdgeStorageAccountCredentialData(e)), _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics, Pipeline, "DataBoxEdgeStorageAccountCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageAccountCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The storage account credential name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _storageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.Exists");
+            using var scope = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storageAccountCredentialsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DataBoxEdgeStorageAccountCredentialData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataBoxEdgeStorageAccountCredentialData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataBoxEdgeStorageAccountCredentialData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageAccountCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The storage account credential name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _storageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.Exists");
+            using var scope = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storageAccountCredentialsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DataBoxEdgeStorageAccountCredentialData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataBoxEdgeStorageAccountCredentialData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataBoxEdgeStorageAccountCredentialData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageAccountCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The storage account credential name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<DataBoxEdgeStorageAccountCredentialResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _storageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.GetIfExists");
+            using var scope = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storageAccountCredentialsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DataBoxEdgeStorageAccountCredentialData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataBoxEdgeStorageAccountCredentialData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataBoxEdgeStorageAccountCredentialData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DataBoxEdgeStorageAccountCredentialResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataBoxEdgeStorageAccountCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/storageAccountCredentials/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StorageAccountCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StorageAccountCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-12-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeStorageAccountCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The storage account credential name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<DataBoxEdgeStorageAccountCredentialResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _storageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.GetIfExists");
+            using var scope = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCredentialCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _storageAccountCredentialsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DataBoxEdgeStorageAccountCredentialData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DataBoxEdgeStorageAccountCredentialData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DataBoxEdgeStorageAccountCredentialData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _dataBoxEdgeStorageAccountCredentialStorageAccountCredentialsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DataBoxEdgeStorageAccountCredentialResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataBoxEdgeStorageAccountCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.DataBoxEdge
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataBoxEdgeStorageAccountCredentialResource> IAsyncEnumerable<DataBoxEdgeStorageAccountCredentialResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

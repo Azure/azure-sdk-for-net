@@ -6,35 +6,47 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotOperations
 {
     /// <summary>
-    /// A class representing a IotOperationsBrokerAuthorization along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotOperationsBrokerAuthorizationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotOperationsBrokerResource"/> using the GetIotOperationsBrokerAuthorizations method.
+    /// A Class representing an IotOperationsBrokerAuthorization along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="IotOperationsBrokerAuthorizationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetIotOperationsBrokerAuthorizationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotOperationsBrokerResource"/> using the GetIotOperationsBrokerAuthorization method.
     /// </summary>
     public partial class IotOperationsBrokerAuthorizationResource : ArmResource
     {
-        private readonly ClientDiagnostics _brokerAuthorizationClientDiagnostics;
-        private readonly BrokerAuthorization _brokerAuthorizationRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="IotOperationsBrokerAuthorizationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="instanceName"> The instanceName. </param>
+        /// <param name="brokerName"> The brokerName. </param>
+        /// <param name="authorizationName"> The authorizationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, string authorizationName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics;
+        private readonly BrokerAuthorizationRestOperations _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient;
         private readonly IotOperationsBrokerAuthorizationData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.IoTOperations/instances/brokers/authorizations";
 
-        /// <summary> Initializes a new instance of IotOperationsBrokerAuthorizationResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotOperationsBrokerAuthorizationResource"/> class for mocking. </summary>
         protected IotOperationsBrokerAuthorizationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotOperationsBrokerAuthorizationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotOperationsBrokerAuthorizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal IotOperationsBrokerAuthorizationResource(ArmClient client, IotOperationsBrokerAuthorizationData data) : this(client, data.Id)
@@ -43,94 +55,71 @@ namespace Azure.ResourceManager.IotOperations
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotOperationsBrokerAuthorizationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotOperationsBrokerAuthorizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal IotOperationsBrokerAuthorizationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string iotOperationsBrokerAuthorizationApiVersion);
-            _brokerAuthorizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            _brokerAuthorizationRestClient = new BrokerAuthorization(_brokerAuthorizationClientDiagnostics, Pipeline, Endpoint, iotOperationsBrokerAuthorizationApiVersion ?? "2025-10-01");
-            ValidateResourceId(id);
+            _iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string iotOperationsBrokerAuthorizationBrokerAuthorizationApiVersion);
+            _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient = new BrokerAuthorizationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsBrokerAuthorizationBrokerAuthorizationApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual IotOperationsBrokerAuthorizationData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="instanceName"> The instanceName. </param>
-        /// <param name="brokerName"> The brokerName. </param>
-        /// <param name="authorizationName"> The authorizationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, string authorizationName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a BrokerAuthorizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BrokerAuthorization_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BrokerAuthorizationResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="IotOperationsBrokerAuthorizationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsBrokerAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IotOperationsBrokerAuthorizationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _brokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Get");
+            using var scope = _iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _brokerAuthorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<IotOperationsBrokerAuthorizationData> response = Response.FromValue(IotOperationsBrokerAuthorizationData.FromResponse(result), result);
+                var response = await _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new IotOperationsBrokerAuthorizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,41 +133,33 @@ namespace Azure.ResourceManager.IotOperations
         /// Get a BrokerAuthorizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BrokerAuthorization_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>BrokerAuthorizationResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="IotOperationsBrokerAuthorizationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsBrokerAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IotOperationsBrokerAuthorizationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _brokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Get");
+            using var scope = _iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _brokerAuthorizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<IotOperationsBrokerAuthorizationData> response = Response.FromValue(IotOperationsBrokerAuthorizationData.FromResponse(result), result);
+                var response = _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new IotOperationsBrokerAuthorizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,20 +173,20 @@ namespace Azure.ResourceManager.IotOperations
         /// Delete a BrokerAuthorizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BrokerAuthorization_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>BrokerAuthorizationResource_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="IotOperationsBrokerAuthorizationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsBrokerAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,21 +194,14 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _brokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Delete");
+            using var scope = _iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _brokerAuthorizationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                IotOperationsArmOperation operation = new IotOperationsArmOperation(_brokerAuthorizationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new IotOperationsArmOperation(_iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics, Pipeline, _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -241,20 +215,20 @@ namespace Azure.ResourceManager.IotOperations
         /// Delete a BrokerAuthorizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BrokerAuthorization_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>BrokerAuthorizationResource_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="IotOperationsBrokerAuthorizationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsBrokerAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,21 +236,14 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _brokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Delete");
+            using var scope = _iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _brokerAuthorizationRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                IotOperationsArmOperation operation = new IotOperationsArmOperation(_brokerAuthorizationClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new IotOperationsArmOperation(_iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics, Pipeline, _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -287,23 +254,23 @@ namespace Azure.ResourceManager.IotOperations
         }
 
         /// <summary>
-        /// Update a IotOperationsBrokerAuthorization.
+        /// Create a BrokerAuthorizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BrokerAuthorization_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>BrokerAuthorizationResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="IotOperationsBrokerAuthorizationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsBrokerAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,27 +282,14 @@ namespace Azure.ResourceManager.IotOperations
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _brokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Update");
+            using var scope = _iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _brokerAuthorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsBrokerAuthorizationData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource> operation = new IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource>(
-                    new IotOperationsBrokerAuthorizationOperationSource(Client),
-                    _brokerAuthorizationClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource>(new IotOperationsBrokerAuthorizationOperationSource(Client), _iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics, Pipeline, _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -346,23 +300,23 @@ namespace Azure.ResourceManager.IotOperations
         }
 
         /// <summary>
-        /// Update a IotOperationsBrokerAuthorization.
+        /// Create a BrokerAuthorizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/brokers/{brokerName}/authorizations/{authorizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> BrokerAuthorization_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>BrokerAuthorizationResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="IotOperationsBrokerAuthorizationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsBrokerAuthorizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,27 +328,14 @@ namespace Azure.ResourceManager.IotOperations
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _brokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Update");
+            using var scope = _iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics.CreateScope("IotOperationsBrokerAuthorizationResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _brokerAuthorizationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsBrokerAuthorizationData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource> operation = new IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource>(
-                    new IotOperationsBrokerAuthorizationOperationSource(Client),
-                    _brokerAuthorizationClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new IotOperationsArmOperation<IotOperationsBrokerAuthorizationResource>(new IotOperationsBrokerAuthorizationOperationSource(Client), _iotOperationsBrokerAuthorizationBrokerAuthorizationClientDiagnostics, Pipeline, _iotOperationsBrokerAuthorizationBrokerAuthorizationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

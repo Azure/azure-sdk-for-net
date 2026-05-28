@@ -1710,109 +1710,6 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Set Permissions
 
-        #region Get System Properties
-        /// <summary>
-        /// The <see cref="GetSystemProperties"/> operation returns all system defined properties for a path.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
-        /// Get Properties</see>.
-        /// </summary>
-        /// <param name="options">
-        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
-        /// when getting the path's system properties.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{PathSystemProperties}"/> describing the
-        /// path's system properties.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
-        /// containing each failure instance.
-        /// </remarks>
-        public override Response<PathSystemProperties> GetSystemProperties(
-            PathGetSystemPropertiesOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(GetSystemProperties)}");
-
-            try
-            {
-                scope.Start();
-
-                return base.GetSystemProperties(
-                    options,
-                    cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="GetSystemPropertiesAsync"/> operation returns all system defined properties for a path.
-        ///
-        /// For more information, see
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
-        /// Get Properties</see>.
-        /// </summary>
-        /// <param name="options">
-        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
-        /// when getting the path's system properties.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{PathSystemProperties}"/> describing the
-        /// path's system properties.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
-        /// containing each failure instance.
-        /// </remarks>
-        public override async Task<Response<PathSystemProperties>> GetSystemPropertiesAsync(
-            PathGetSystemPropertiesOptions options = default,
-            CancellationToken cancellationToken = default)
-        {
-            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(GetSystemProperties)}");
-
-            try
-            {
-                scope.Start();
-
-                return await base.GetSystemPropertiesAsync(
-                    options,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-            finally
-            {
-                scope.Dispose();
-            }
-        }
-        #endregion Get System Properties
-
         #region Get Properties
         /// <summary>
         /// The <see cref="GetProperties"/> operation returns all
@@ -3351,7 +3248,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -3382,7 +3279,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
@@ -3417,7 +3314,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -3443,7 +3340,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.

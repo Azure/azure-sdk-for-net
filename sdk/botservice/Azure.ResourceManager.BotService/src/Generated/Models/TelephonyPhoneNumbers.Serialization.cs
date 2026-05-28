@@ -10,55 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary> A telephone number for the Telephony channel. </summary>
-    public partial class TelephonyPhoneNumbers : IJsonModel<TelephonyPhoneNumbers>
+    public partial class TelephonyPhoneNumbers : IUtf8JsonSerializable, IJsonModel<TelephonyPhoneNumbers>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TelephonyPhoneNumbers PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTelephonyPhoneNumbers(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TelephonyPhoneNumbers)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TelephonyPhoneNumbers>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TelephonyPhoneNumbers)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TelephonyPhoneNumbers>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TelephonyPhoneNumbers IPersistableModel<TelephonyPhoneNumbers>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TelephonyPhoneNumbers>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TelephonyPhoneNumbers>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,11 +28,12 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TelephonyPhoneNumbers)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -87,53 +46,109 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(AcsEndpoint))
             {
-                writer.WritePropertyName("acsEndpoint"u8);
-                writer.WriteStringValue(AcsEndpoint);
+                if (AcsEndpoint != null)
+                {
+                    writer.WritePropertyName("acsEndpoint"u8);
+                    writer.WriteStringValue(AcsEndpoint);
+                }
+                else
+                {
+                    writer.WriteNull("acsEndpoint");
+                }
             }
             if (Optional.IsDefined(AcsSecret))
             {
-                writer.WritePropertyName("acsSecret"u8);
-                writer.WriteStringValue(AcsSecret);
+                if (AcsSecret != null)
+                {
+                    writer.WritePropertyName("acsSecret"u8);
+                    writer.WriteStringValue(AcsSecret);
+                }
+                else
+                {
+                    writer.WriteNull("acsSecret");
+                }
             }
             if (Optional.IsDefined(AcsResourceId))
             {
-                writer.WritePropertyName("acsResourceId"u8);
-                writer.WriteStringValue(AcsResourceId);
+                if (AcsResourceId != null)
+                {
+                    writer.WritePropertyName("acsResourceId"u8);
+                    writer.WriteStringValue(AcsResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("acsResourceId");
+                }
             }
             if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
-                writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
-                writer.WriteStringValue(CognitiveServiceSubscriptionKey);
+                if (CognitiveServiceSubscriptionKey != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceSubscriptionKey"u8);
+                    writer.WriteStringValue(CognitiveServiceSubscriptionKey);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceSubscriptionKey");
+                }
             }
             if (Optional.IsDefined(CognitiveServiceRegion))
             {
-                writer.WritePropertyName("cognitiveServiceRegion"u8);
-                writer.WriteStringValue(CognitiveServiceRegion);
+                if (CognitiveServiceRegion != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceRegion"u8);
+                    writer.WriteStringValue(CognitiveServiceRegion);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceRegion");
+                }
             }
             if (Optional.IsDefined(CognitiveServiceResourceId))
             {
-                writer.WritePropertyName("cognitiveServiceResourceId"u8);
-                writer.WriteStringValue(CognitiveServiceResourceId);
+                if (CognitiveServiceResourceId != null)
+                {
+                    writer.WritePropertyName("cognitiveServiceResourceId"u8);
+                    writer.WriteStringValue(CognitiveServiceResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("cognitiveServiceResourceId");
+                }
             }
             if (Optional.IsDefined(DefaultLocale))
             {
-                writer.WritePropertyName("defaultLocale"u8);
-                writer.WriteStringValue(DefaultLocale);
+                if (DefaultLocale != null)
+                {
+                    writer.WritePropertyName("defaultLocale"u8);
+                    writer.WriteStringValue(DefaultLocale);
+                }
+                else
+                {
+                    writer.WriteNull("defaultLocale");
+                }
             }
             if (Optional.IsDefined(OfferType))
             {
-                writer.WritePropertyName("offerType"u8);
-                writer.WriteStringValue(OfferType);
+                if (OfferType != null)
+                {
+                    writer.WritePropertyName("offerType"u8);
+                    writer.WriteStringValue(OfferType);
+                }
+                else
+                {
+                    writer.WriteNull("offerType");
+                }
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -142,27 +157,22 @@ namespace Azure.ResourceManager.BotService.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TelephonyPhoneNumbers IJsonModel<TelephonyPhoneNumbers>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TelephonyPhoneNumbers JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TelephonyPhoneNumbers IJsonModel<TelephonyPhoneNumbers>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TelephonyPhoneNumbers)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTelephonyPhoneNumbers(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TelephonyPhoneNumbers DeserializeTelephonyPhoneNumbers(JsonElement element, ModelReaderWriterOptions options)
+        internal static TelephonyPhoneNumbers DeserializeTelephonyPhoneNumbers(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -177,102 +187,106 @@ namespace Azure.ResourceManager.BotService.Models
             ResourceIdentifier cognitiveServiceResourceId = default;
             string defaultLocale = default;
             string offerType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("phoneNumber"u8))
+                if (property.NameEquals("phoneNumber"u8))
                 {
-                    phoneNumber = prop.Value.GetString();
+                    phoneNumber = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("acsEndpoint"u8))
+                if (property.NameEquals("acsEndpoint"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         acsEndpoint = null;
                         continue;
                     }
-                    acsEndpoint = prop.Value.GetString();
+                    acsEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("acsSecret"u8))
+                if (property.NameEquals("acsSecret"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         acsSecret = null;
                         continue;
                     }
-                    acsSecret = prop.Value.GetString();
+                    acsSecret = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("acsResourceId"u8))
+                if (property.NameEquals("acsResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        acsResourceId = null;
                         continue;
                     }
-                    acsResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    acsResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("cognitiveServiceSubscriptionKey"u8))
+                if (property.NameEquals("cognitiveServiceSubscriptionKey"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceSubscriptionKey = null;
                         continue;
                     }
-                    cognitiveServiceSubscriptionKey = prop.Value.GetString();
+                    cognitiveServiceSubscriptionKey = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("cognitiveServiceRegion"u8))
+                if (property.NameEquals("cognitiveServiceRegion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         cognitiveServiceRegion = null;
                         continue;
                     }
-                    cognitiveServiceRegion = prop.Value.GetString();
+                    cognitiveServiceRegion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("cognitiveServiceResourceId"u8))
+                if (property.NameEquals("cognitiveServiceResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        cognitiveServiceResourceId = null;
                         continue;
                     }
-                    cognitiveServiceResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    cognitiveServiceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("defaultLocale"u8))
+                if (property.NameEquals("defaultLocale"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         defaultLocale = null;
                         continue;
                     }
-                    defaultLocale = prop.Value.GetString();
+                    defaultLocale = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("offerType"u8))
+                if (property.NameEquals("offerType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         offerType = null;
                         continue;
                     }
-                    offerType = prop.Value.GetString();
+                    offerType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new TelephonyPhoneNumbers(
                 id,
                 phoneNumber,
@@ -284,7 +298,38 @@ namespace Azure.ResourceManager.BotService.Models
                 cognitiveServiceResourceId,
                 defaultLocale,
                 offerType,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TelephonyPhoneNumbers>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TelephonyPhoneNumbers)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TelephonyPhoneNumbers IPersistableModel<TelephonyPhoneNumbers>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeTelephonyPhoneNumbers(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TelephonyPhoneNumbers)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TelephonyPhoneNumbers>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

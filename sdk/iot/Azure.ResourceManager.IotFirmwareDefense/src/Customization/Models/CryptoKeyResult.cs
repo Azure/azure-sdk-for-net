@@ -22,8 +22,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary> Type of the key (public or private). </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string KeyType
-        {
+        public string KeyType {
             get => CryptoKeyType.ToString();
             set => CryptoKeyType = value;
         }

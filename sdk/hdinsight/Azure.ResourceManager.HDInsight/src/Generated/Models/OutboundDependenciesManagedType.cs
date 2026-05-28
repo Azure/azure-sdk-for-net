@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.HDInsight.Models
     public readonly partial struct OutboundDependenciesManagedType : IEquatable<OutboundDependenciesManagedType>
     {
         private readonly string _value;
-        /// <summary> Managed. </summary>
-        private const string ManagedValue = "Managed";
-        /// <summary> External. </summary>
-        private const string ExternalValue = "External";
 
         /// <summary> Initializes a new instance of <see cref="OutboundDependenciesManagedType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OutboundDependenciesManagedType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string ManagedValue = "Managed";
+        private const string ExternalValue = "External";
 
         /// <summary> Managed. </summary>
         public static OutboundDependenciesManagedType Managed { get; } = new OutboundDependenciesManagedType(ManagedValue);
-
         /// <summary> External. </summary>
         public static OutboundDependenciesManagedType External { get; } = new OutboundDependenciesManagedType(ExternalValue);
-
         /// <summary> Determines if two <see cref="OutboundDependenciesManagedType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OutboundDependenciesManagedType left, OutboundDependenciesManagedType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="OutboundDependenciesManagedType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OutboundDependenciesManagedType left, OutboundDependenciesManagedType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="OutboundDependenciesManagedType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OutboundDependenciesManagedType"/>. </summary>
         public static implicit operator OutboundDependenciesManagedType(string value) => new OutboundDependenciesManagedType(value);
 
-        /// <summary> Converts a string to a <see cref="OutboundDependenciesManagedType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator OutboundDependenciesManagedType?(string value) => value == null ? null : new OutboundDependenciesManagedType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OutboundDependenciesManagedType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(OutboundDependenciesManagedType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

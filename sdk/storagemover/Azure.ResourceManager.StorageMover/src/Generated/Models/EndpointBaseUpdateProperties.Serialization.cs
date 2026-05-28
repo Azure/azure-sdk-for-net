@@ -8,59 +8,15 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager.StorageMover;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary>
-    /// The Endpoint resource, which contains information about file sources and targets.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="S3WithHmacEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="AzureStorageNfsFileShareEndpointUpdateProperties"/>, <see cref="AzureMultiCloudConnectorEndpointUpdateProperties"/>, and <see cref="SmbMountEndpointUpdateProperties"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownEndpointBaseUpdateProperties))]
-    public abstract partial class EndpointBaseUpdateProperties : IJsonModel<EndpointBaseUpdateProperties>
+    public partial class EndpointBaseUpdateProperties : IUtf8JsonSerializable, IJsonModel<EndpointBaseUpdateProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EndpointBaseUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEndpointBaseUpdateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EndpointBaseUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EndpointBaseUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EndpointBaseUpdateProperties IPersistableModel<EndpointBaseUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EndpointBaseUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EndpointBaseUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -72,11 +28,12 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             if (Optional.IsDefined(Description))
@@ -84,15 +41,15 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,52 +58,70 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EndpointBaseUpdateProperties IJsonModel<EndpointBaseUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EndpointBaseUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EndpointBaseUpdateProperties IJsonModel<EndpointBaseUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEndpointBaseUpdateProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EndpointBaseUpdateProperties DeserializeEndpointBaseUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static EndpointBaseUpdateProperties DeserializeEndpointBaseUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("endpointType"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("endpointType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureStorageBlobContainer":
-                        return AzureStorageBlobContainerEndpointUpdateProperties.DeserializeAzureStorageBlobContainerEndpointUpdateProperties(element, options);
-                    case "S3WithHMAC":
-                        return S3WithHmacEndpointUpdateProperties.DeserializeS3WithHmacEndpointUpdateProperties(element, options);
-                    case "NfsMount":
-                        return NfsMountEndpointUpdateProperties.DeserializeNfsMountEndpointUpdateProperties(element, options);
-                    case "AzureStorageSmbFileShare":
-                        return AzureStorageSmbFileShareEndpointUpdateProperties.DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(element, options);
-                    case "AzureStorageNfsFileShare":
-                        return AzureStorageNfsFileShareEndpointUpdateProperties.DeserializeAzureStorageNfsFileShareEndpointUpdateProperties(element, options);
-                    case "AzureMultiCloudConnector":
-                        return AzureMultiCloudConnectorEndpointUpdateProperties.DeserializeAzureMultiCloudConnectorEndpointUpdateProperties(element, options);
-                    case "SmbMount":
-                        return SmbMountEndpointUpdateProperties.DeserializeSmbMountEndpointUpdateProperties(element, options);
+                    case "AzureMultiCloudConnector": return AzureMultiCloudConnectorEndpointUpdateProperties.DeserializeAzureMultiCloudConnectorEndpointUpdateProperties(element, options);
+                    case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointUpdateProperties.DeserializeAzureStorageBlobContainerEndpointUpdateProperties(element, options);
+                    case "AzureStorageNfsFileShare": return AzureStorageNfsFileShareEndpointUpdateProperties.DeserializeAzureStorageNfsFileShareEndpointUpdateProperties(element, options);
+                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointUpdateProperties.DeserializeAzureStorageSmbFileShareEndpointUpdateProperties(element, options);
+                    case "NfsMount": return NfsMountEndpointUpdateProperties.DeserializeNfsMountEndpointUpdateProperties(element, options);
+                    case "SmbMount": return SmbMountEndpointUpdateProperties.DeserializeSmbMountEndpointUpdateProperties(element, options);
                 }
             }
             return UnknownEndpointBaseUpdateProperties.DeserializeUnknownEndpointBaseUpdateProperties(element, options);
         }
+
+        BinaryData IPersistableModel<EndpointBaseUpdateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EndpointBaseUpdateProperties IPersistableModel<EndpointBaseUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEndpointBaseUpdateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EndpointBaseUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,66 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
     /// A class representing a collection of <see cref="ElasticSanSnapshotResource"/> and their operations.
     /// Each <see cref="ElasticSanSnapshotResource"/> in the collection will belong to the same instance of <see cref="ElasticSanVolumeGroupResource"/>.
-    /// To get a <see cref="ElasticSanSnapshotCollection"/> instance call the GetElasticSanSnapshots method from an instance of <see cref="ElasticSanVolumeGroupResource"/>.
+    /// To get an <see cref="ElasticSanSnapshotCollection"/> instance call the GetElasticSanSnapshots method from an instance of <see cref="ElasticSanVolumeGroupResource"/>.
     /// </summary>
     public partial class ElasticSanSnapshotCollection : ArmCollection, IEnumerable<ElasticSanSnapshotResource>, IAsyncEnumerable<ElasticSanSnapshotResource>
     {
-        private readonly ClientDiagnostics _snapshotsClientDiagnostics;
-        private readonly Snapshots _snapshotsRestClient;
+        private readonly ClientDiagnostics _elasticSanSnapshotSnapshotsClientDiagnostics;
+        private readonly SnapshotsRestOperations _elasticSanSnapshotSnapshotsRestClient;
 
-        /// <summary> Initializes a new instance of ElasticSanSnapshotCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanSnapshotCollection"/> class for mocking. </summary>
         protected ElasticSanSnapshotCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanSnapshotCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticSanSnapshotCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ElasticSanSnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ElasticSanSnapshotResource.ResourceType, out string elasticSanSnapshotApiVersion);
-            _snapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanSnapshotResource.ResourceType.Namespace, Diagnostics);
-            _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Endpoint, elasticSanSnapshotApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _elasticSanSnapshotSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ElasticSanSnapshotResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ElasticSanSnapshotResource.ResourceType, out string elasticSanSnapshotSnapshotsApiVersion);
+            _elasticSanSnapshotSnapshotsRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanSnapshotSnapshotsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ElasticSanVolumeGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticSanVolumeGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ElasticSanVolumeGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a Volume Snapshot.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshots_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="data"> Snapshot object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ElasticSanSnapshotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string snapshotName, ElasticSanSnapshotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.CreateOrUpdate");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, ElasticSanSnapshotData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ElasticSanArmOperation<ElasticSanSnapshotResource> operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(
-                    new ElasticSanSnapshotOperationSource(Client),
-                    _snapshotsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _elasticSanSnapshotSnapshotsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(new ElasticSanSnapshotOperationSource(Client), _elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.ElasticSan
         /// Create a Volume Snapshot.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshots_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="data"> Snapshot object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ElasticSanSnapshotResource> CreateOrUpdate(WaitUntil waitUntil, string snapshotName, ElasticSanSnapshotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.CreateOrUpdate");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, ElasticSanSnapshotData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ElasticSanArmOperation<ElasticSanSnapshotResource> operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(
-                    new ElasticSanSnapshotOperationSource(Client),
-                    _snapshotsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _elasticSanSnapshotSnapshotsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data, cancellationToken);
+                var operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(new ElasticSanSnapshotOperationSource(Client), _elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.ElasticSan
         /// Get a Volume Snapshot.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<Response<ElasticSanSnapshotResource>> GetAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Get");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ElasticSanSnapshotData> response = Response.FromValue(ElasticSanSnapshotData.FromResponse(result), result);
+                var response = await _elasticSanSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ElasticSanSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.ElasticSan
         /// Get a Volume Snapshot.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<ElasticSanSnapshotResource> Get(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Get");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ElasticSanSnapshotData> response = Response.FromValue(ElasticSanSnapshotData.FromResponse(result), result);
+                var response = _elasticSanSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ElasticSanSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,124 +243,98 @@ namespace Azure.ResourceManager.ElasticSan
         /// List Snapshots in a VolumeGroup or List Snapshots by Volume (name) in a VolumeGroup using filter
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshots_ListByVolumeGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_ListByVolumeGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticSanSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticSanSnapshotResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ElasticSanSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ElasticSanSnapshotResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ElasticSanSnapshotData, ElasticSanSnapshotResource>(new SnapshotsGetByVolumeGroupAsyncCollectionResultOfT(
-                _snapshotsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                filter,
-                context,
-                "ElasticSanSnapshotCollection.GetAll"), data => new ElasticSanSnapshotResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanSnapshotSnapshotsRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticSanSnapshotResource(Client, ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(e)), _elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, "ElasticSanSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Snapshots in a VolumeGroup or List Snapshots by Volume (name) in a VolumeGroup using filter
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshots_ListByVolumeGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_ListByVolumeGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Specify $filter='volumeName eq &lt;volume name&gt;' to filter on volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticSanSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticSanSnapshotResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticSanSnapshotResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ElasticSanSnapshotData, ElasticSanSnapshotResource>(new SnapshotsGetByVolumeGroupCollectionResultOfT(
-                _snapshotsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                filter,
-                context,
-                "ElasticSanSnapshotCollection.GetAll"), data => new ElasticSanSnapshotResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanSnapshotSnapshotsRestClient.CreateListByVolumeGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticSanSnapshotSnapshotsRestClient.CreateListByVolumeGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticSanSnapshotResource(Client, ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(e)), _elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, "ElasticSanSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Exists");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ElasticSanSnapshotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ElasticSanSnapshotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ElasticSanSnapshotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _elasticSanSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -403,50 +348,36 @@ namespace Azure.ResourceManager.ElasticSan
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Exists");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ElasticSanSnapshotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ElasticSanSnapshotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ElasticSanSnapshotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _elasticSanSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -460,54 +391,38 @@ namespace Azure.ResourceManager.ElasticSan
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<NullableResponse<ElasticSanSnapshotResource>> GetIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetIfExists");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ElasticSanSnapshotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ElasticSanSnapshotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ElasticSanSnapshotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _elasticSanSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ElasticSanSnapshotResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ElasticSanSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -521,54 +436,38 @@ namespace Azure.ResourceManager.ElasticSan
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshots_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the volume snapshot within the given volume group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual NullableResponse<ElasticSanSnapshotResource> GetIfExists(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetIfExists");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ElasticSanSnapshotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ElasticSanSnapshotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ElasticSanSnapshotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _elasticSanSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ElasticSanSnapshotResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ElasticSanSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -588,7 +487,6 @@ namespace Azure.ResourceManager.ElasticSan
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ElasticSanSnapshotResource> IAsyncEnumerable<ElasticSanSnapshotResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -26,9 +26,7 @@ param (
   [string] $DocRepoLocation, # the location of the cloned doc repo
 
   [Parameter(Mandatory = $false)]
-  [string] $PackageSourceOverride,
-
-  [switch] $SkipLegacyOnboarding
+  [string] $PackageSourceOverride
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -59,11 +57,7 @@ function PackageIsValidForDocsOnboarding($package) {
     -DocRepoLocation $DocRepoLocation
 }
 
-$MONIKERS = @('latest', 'preview') 
-if (!$SkipLegacyOnboarding) {
-  $MONIKERS += 'legacy'
-}
-
+$MONIKERS = @('latest', 'preview', 'legacy')
 foreach ($moniker in $MONIKERS) {
   try {
     Write-Host "Onboarding packages for moniker: $moniker"

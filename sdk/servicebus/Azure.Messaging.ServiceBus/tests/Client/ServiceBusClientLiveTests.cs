@@ -228,7 +228,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: useSessions))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var message = ServiceBusTestUtilities.GetMessage(useSessions ? "sessionId" : null);
@@ -272,7 +272,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: useSessions))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var message = ServiceBusTestUtilities.GetMessage(useSessions ? "sessionId" : null);
@@ -311,7 +311,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = CreateClient(60);
+                var client = CreateClient(60);
                 var duration = TimeSpan.FromSeconds(5);
                 using var cancellationTokenSource = new CancellationTokenSource(duration);
 
@@ -335,7 +335,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = CreateClient();
+                var client = CreateClient();
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, "");
                 Assert.AreEqual("", receiver.SessionId);
             }

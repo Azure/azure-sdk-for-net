@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Terraform;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.Terraform.Models
     public readonly partial struct TargetTerraformProvider : IEquatable<TargetTerraformProvider>
     {
         private readonly string _value;
-        /// <summary> https://registry.terraform.io/providers/hashicorp/azurerm/latest. </summary>
-        private const string AzureRMValue = "azurerm";
-        /// <summary> https://registry.terraform.io/providers/Azure/azapi/latest. </summary>
-        private const string AzApiValue = "azapi";
 
         /// <summary> Initializes a new instance of <see cref="TargetTerraformProvider"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TargetTerraformProvider(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string AzureRMValue = "azurerm";
+        private const string AzApiValue = "azapi";
 
         /// <summary> https://registry.terraform.io/providers/hashicorp/azurerm/latest. </summary>
         public static TargetTerraformProvider AzureRM { get; } = new TargetTerraformProvider(AzureRMValue);
-
         /// <summary> https://registry.terraform.io/providers/Azure/azapi/latest. </summary>
         public static TargetTerraformProvider AzApi { get; } = new TargetTerraformProvider(AzApiValue);
-
         /// <summary> Determines if two <see cref="TargetTerraformProvider"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TargetTerraformProvider left, TargetTerraformProvider right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="TargetTerraformProvider"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TargetTerraformProvider left, TargetTerraformProvider right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="TargetTerraformProvider"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TargetTerraformProvider"/>. </summary>
         public static implicit operator TargetTerraformProvider(string value) => new TargetTerraformProvider(value);
 
-        /// <summary> Converts a string to a <see cref="TargetTerraformProvider"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator TargetTerraformProvider?(string value) => value == null ? null : new TargetTerraformProvider(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TargetTerraformProvider other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(TargetTerraformProvider other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

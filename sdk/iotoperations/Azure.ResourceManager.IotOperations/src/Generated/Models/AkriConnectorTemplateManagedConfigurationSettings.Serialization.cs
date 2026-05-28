@@ -7,61 +7,16 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary>
-    /// AkriConnectorTemplateManagedConfiguration properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AkriConnectorTemplateRuntimeImageConfiguration"/> and <see cref="AkriConnectorTemplateRuntimeStatefulSetConfiguration"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownAkriConnectorTemplateManagedConfigurationSettings))]
-    public abstract partial class AkriConnectorTemplateManagedConfigurationSettings : IJsonModel<AkriConnectorTemplateManagedConfigurationSettings>
+    public partial class AkriConnectorTemplateManagedConfigurationSettings : IUtf8JsonSerializable, IJsonModel<AkriConnectorTemplateManagedConfigurationSettings>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AkriConnectorTemplateManagedConfigurationSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAkriConnectorTemplateManagedConfigurationSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AkriConnectorTemplateManagedConfigurationSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AkriConnectorTemplateManagedConfigurationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AkriConnectorTemplateManagedConfigurationSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AkriConnectorTemplateManagedConfigurationSettings IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AkriConnectorTemplateManagedConfigurationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -73,11 +28,12 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AkriConnectorTemplateManagedConfigurationSettings)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("managedConfigurationType"u8);
             writer.WriteStringValue(ManagedConfigurationType.ToString());
             if (Optional.IsDefined(Allocation))
@@ -89,7 +45,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 writer.WritePropertyName("persistentVolumeClaims"u8);
                 writer.WriteStartArray();
-                foreach (AkriConnectorTemplatePersistentVolumeClaim item in PersistentVolumeClaims)
+                foreach (var item in PersistentVolumeClaims)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -102,11 +58,6 @@ namespace Azure.ResourceManager.IotOperations.Models
                 foreach (var item in AdditionalConfiguration)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -115,7 +66,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 writer.WritePropertyName("persistentVolumeClaimTemplates"u8);
                 writer.WriteStartArray();
-                foreach (IDictionary<string, BinaryData> item in PersistentVolumeClaimTemplates)
+                foreach (var item in PersistentVolumeClaimTemplates)
                 {
                     if (item == null)
                     {
@@ -132,9 +83,9 @@ namespace Azure.ResourceManager.IotOperations.Models
                             continue;
                         }
 #if NET6_0_OR_GREATER
-                        writer.WriteRawValue(item0.Value);
+				writer.WriteRawValue(item0.Value);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                        using (JsonDocument document = JsonDocument.Parse(item0.Value, ModelSerializationExtensions.JsonDocumentOptions))
                         {
                             JsonSerializer.Serialize(writer, document.RootElement);
                         }
@@ -148,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
-                foreach (AkriConnectorsSecret item in Secrets)
+                foreach (var item in Secrets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -159,15 +110,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("trustSettings"u8);
                 writer.WriteObjectValue(TrustSettings, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -176,42 +127,66 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AkriConnectorTemplateManagedConfigurationSettings IJsonModel<AkriConnectorTemplateManagedConfigurationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AkriConnectorTemplateManagedConfigurationSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AkriConnectorTemplateManagedConfigurationSettings IJsonModel<AkriConnectorTemplateManagedConfigurationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AkriConnectorTemplateManagedConfigurationSettings)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAkriConnectorTemplateManagedConfigurationSettings(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AkriConnectorTemplateManagedConfigurationSettings DeserializeAkriConnectorTemplateManagedConfigurationSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static AkriConnectorTemplateManagedConfigurationSettings DeserializeAkriConnectorTemplateManagedConfigurationSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("managedConfigurationType"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("managedConfigurationType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "ImageConfiguration":
-                        return AkriConnectorTemplateRuntimeImageConfiguration.DeserializeAkriConnectorTemplateRuntimeImageConfiguration(element, options);
-                    case "StatefulSetConfiguration":
-                        return AkriConnectorTemplateRuntimeStatefulSetConfiguration.DeserializeAkriConnectorTemplateRuntimeStatefulSetConfiguration(element, options);
+                    case "ImageConfiguration": return AkriConnectorTemplateRuntimeImageConfiguration.DeserializeAkriConnectorTemplateRuntimeImageConfiguration(element, options);
+                    case "StatefulSetConfiguration": return AkriConnectorTemplateRuntimeStatefulSetConfiguration.DeserializeAkriConnectorTemplateRuntimeStatefulSetConfiguration(element, options);
                 }
             }
             return UnknownAkriConnectorTemplateManagedConfigurationSettings.DeserializeUnknownAkriConnectorTemplateManagedConfigurationSettings(element, options);
         }
+
+        BinaryData IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AkriConnectorTemplateManagedConfigurationSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AkriConnectorTemplateManagedConfigurationSettings IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAkriConnectorTemplateManagedConfigurationSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AkriConnectorTemplateManagedConfigurationSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AkriConnectorTemplateManagedConfigurationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

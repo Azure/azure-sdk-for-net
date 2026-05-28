@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Redis
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisFirewallRuleCollection : ArmCollection, IEnumerable<RedisFirewallRuleResource>, IAsyncEnumerable<RedisFirewallRuleResource>
     {
-        private readonly ClientDiagnostics _redisFirewallRulesClientDiagnostics;
-        private readonly RedisFirewallRules _redisFirewallRulesRestClient;
+        private readonly ClientDiagnostics _redisFirewallRuleFirewallRulesClientDiagnostics;
+        private readonly FirewallRulesRestOperations _redisFirewallRuleFirewallRulesRestClient;
 
-        /// <summary> Initializes a new instance of RedisFirewallRuleCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisFirewallRuleCollection"/> class for mocking. </summary>
         protected RedisFirewallRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisFirewallRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal RedisFirewallRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(RedisFirewallRuleResource.ResourceType, out string redisFirewallRuleApiVersion);
-            _redisFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisFirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            _redisFirewallRulesRestClient = new RedisFirewallRules(_redisFirewallRulesClientDiagnostics, Pipeline, Endpoint, redisFirewallRuleApiVersion ?? "2025-08-01-preview");
-            ValidateResourceId(id);
+            _redisFirewallRuleFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisFirewallRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RedisFirewallRuleResource.ResourceType, out string redisFirewallRuleFirewallRulesApiVersion);
+            _redisFirewallRuleFirewallRulesRestClient = new FirewallRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisFirewallRuleFirewallRulesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != RedisResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RedisResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RedisResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a redis cache firewall rule
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RedisFirewallRules_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.Redis
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="data"> Parameters supplied to the create or update redis firewall rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisFirewallRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, RedisFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _redisFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.CreateOrUpdate");
+            using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, RedisFirewallRuleData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RedisFirewallRuleData> response = Response.FromValue(RedisFirewallRuleData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RedisArmOperation<RedisFirewallRuleResource> operation = new RedisArmOperation<RedisFirewallRuleResource>(Response.FromValue(new RedisFirewallRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _redisFirewallRuleFirewallRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _redisFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RedisArmOperation<RedisFirewallRuleResource>(Response.FromValue(new RedisFirewallRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.Redis
         /// Create or update a redis cache firewall rule
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RedisFirewallRules_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.Redis
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="data"> Parameters supplied to the create or update redis firewall rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RedisFirewallRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, RedisFirewallRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _redisFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.CreateOrUpdate");
+            using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, RedisFirewallRuleData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<RedisFirewallRuleData> response = Response.FromValue(RedisFirewallRuleData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                RedisArmOperation<RedisFirewallRuleResource> operation = new RedisArmOperation<RedisFirewallRuleResource>(Response.FromValue(new RedisFirewallRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _redisFirewallRuleFirewallRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, data, cancellationToken);
+                var uri = _redisFirewallRuleFirewallRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RedisArmOperation<RedisFirewallRuleResource>(Response.FromValue(new RedisFirewallRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.Redis
         /// Gets a single firewall rule in a specified redis cache.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RedisFirewallRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<Response<RedisFirewallRuleResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _redisFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.Get");
+            using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RedisFirewallRuleData> response = Response.FromValue(RedisFirewallRuleData.FromResponse(result), result);
+                var response = await _redisFirewallRuleFirewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new RedisFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.Redis
         /// Gets a single firewall rule in a specified redis cache.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RedisFirewallRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<RedisFirewallRuleResource> Get(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _redisFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.Get");
+            using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<RedisFirewallRuleData> response = Response.FromValue(RedisFirewallRuleData.FromResponse(result), result);
+                var response = _redisFirewallRuleFirewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new RedisFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,50 +247,50 @@ namespace Azure.ResourceManager.Redis
         /// Gets all firewall rules in the specified redis cache.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RedisFirewallRules_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RedisFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RedisFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisFirewallRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<RedisFirewallRuleData, RedisFirewallRuleResource>(new RedisFirewallRulesGetAllAsyncCollectionResultOfT(
-                _redisFirewallRulesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "RedisFirewallRuleCollection.GetAll"), data => new RedisFirewallRuleResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisFirewallRuleFirewallRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisFirewallRuleFirewallRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisFirewallRuleResource(Client, RedisFirewallRuleData.DeserializeRedisFirewallRuleData(e)), _redisFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "RedisFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all firewall rules in the specified redis cache.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RedisFirewallRules_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,67 +298,45 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisFirewallRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisFirewallRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<RedisFirewallRuleData, RedisFirewallRuleResource>(new RedisFirewallRulesGetAllCollectionResultOfT(
-                _redisFirewallRulesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "RedisFirewallRuleCollection.GetAll"), data => new RedisFirewallRuleResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisFirewallRuleFirewallRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisFirewallRuleFirewallRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisFirewallRuleResource(Client, RedisFirewallRuleData.DeserializeRedisFirewallRuleData(e)), _redisFirewallRuleFirewallRulesClientDiagnostics, Pipeline, "RedisFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RedisFirewallRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _redisFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.Exists");
+            using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<RedisFirewallRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RedisFirewallRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RedisFirewallRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _redisFirewallRuleFirewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,50 +350,36 @@ namespace Azure.ResourceManager.Redis
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RedisFirewallRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _redisFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.Exists");
+            using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<RedisFirewallRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RedisFirewallRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RedisFirewallRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _redisFirewallRuleFirewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -448,54 +393,38 @@ namespace Azure.ResourceManager.Redis
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RedisFirewallRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual async Task<NullableResponse<RedisFirewallRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _redisFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.GetIfExists");
+            using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<RedisFirewallRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RedisFirewallRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RedisFirewallRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _redisFirewallRuleFirewallRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<RedisFirewallRuleResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new RedisFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -509,54 +438,38 @@ namespace Azure.ResourceManager.Redis
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{cacheName}/firewallRules/{ruleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RedisFirewallRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FirewallRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         public virtual NullableResponse<RedisFirewallRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _redisFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.GetIfExists");
+            using var scope = _redisFirewallRuleFirewallRulesClientDiagnostics.CreateScope("RedisFirewallRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _redisFirewallRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<RedisFirewallRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(RedisFirewallRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((RedisFirewallRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _redisFirewallRuleFirewallRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<RedisFirewallRuleResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new RedisFirewallRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -576,7 +489,6 @@ namespace Azure.ResourceManager.Redis
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<RedisFirewallRuleResource> IAsyncEnumerable<RedisFirewallRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

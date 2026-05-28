@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    /// <summary></summary>
-    internal partial class DataProtectionBackupVaultOperationSource : IOperationSource<DataProtectionBackupVaultResource>
+    internal class DataProtectionBackupVaultOperationSource : IOperationSource<DataProtectionBackupVaultResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DataProtectionBackupVaultOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DataProtectionBackupVaultResource IOperationSource<DataProtectionBackupVaultResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DataProtectionBackupVaultData data = DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DataProtectionBackupVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataProtectionBackupContext.Default);
             return new DataProtectionBackupVaultResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DataProtectionBackupVaultResource> IOperationSource<DataProtectionBackupVaultResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DataProtectionBackupVaultData data = DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DataProtectionBackupVaultResource(_client, data);
+            var data = ModelReaderWriter.Read<DataProtectionBackupVaultData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataProtectionBackupContext.Default);
+            return await Task.FromResult(new DataProtectionBackupVaultResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

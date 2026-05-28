@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    /// <summary></summary>
-    internal partial class CosmosDBForPostgreSqlCoordinatorConfigurationOperationSource : IOperationSource<CosmosDBForPostgreSqlCoordinatorConfigurationResource>
+    internal class CosmosDBForPostgreSqlCoordinatorConfigurationOperationSource : IOperationSource<CosmosDBForPostgreSqlCoordinatorConfigurationResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal CosmosDBForPostgreSqlCoordinatorConfigurationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         CosmosDBForPostgreSqlCoordinatorConfigurationResource IOperationSource<CosmosDBForPostgreSqlCoordinatorConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CosmosDBForPostgreSqlServerConfigurationData data = CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlServerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
             return new CosmosDBForPostgreSqlCoordinatorConfigurationResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<CosmosDBForPostgreSqlCoordinatorConfigurationResource> IOperationSource<CosmosDBForPostgreSqlCoordinatorConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CosmosDBForPostgreSqlServerConfigurationData data = CosmosDBForPostgreSqlServerConfigurationData.DeserializeCosmosDBForPostgreSqlServerConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CosmosDBForPostgreSqlCoordinatorConfigurationResource(_client, data);
+            var data = ModelReaderWriter.Read<CosmosDBForPostgreSqlServerConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
+            return await Task.FromResult(new CosmosDBForPostgreSqlCoordinatorConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -49,16 +49,17 @@ public class ProxyTransportTests
 
         return await TestRecording.CreateAsync(mode, "test-session.json", mockProxy.Object, testBase);
     }
+    #region Constructor Tests
 
     [Test]
     public async Task ConstructorThrowsOnNullProxyProcess()
     {
         var mockTransport = new MockPipelineTransport(msg => new MockPipelineResponse(200));
         var testRecording = await CreateTestRecordingAsync(RecordedTestMode.Record);
-        EntryRecordModel getRecordingMode() => EntryRecordModel.Record;
+        Func<EntryRecordModel> getRecordingMode = () => EntryRecordModel.Record;
 
         var exception = Assert.Throws<ArgumentNullException>(() =>
-            new ProxyTransport(null, mockTransport, testRecording, getRecordingMode));
+            new ProxyTransport(null!, mockTransport, testRecording, getRecordingMode));
 
         Assert.That(exception.ParamName, Is.EqualTo("proxyProcess"), "Should identify proxyProcess parameter");
     }
@@ -68,10 +69,10 @@ public class ProxyTransportTests
     {
         var mockProxyProcess = new TestProxyProcess();
         var testRecording = await CreateTestRecordingAsync(RecordedTestMode.Record);
-        EntryRecordModel getRecordingMode() => EntryRecordModel.Record;
+        Func<EntryRecordModel> getRecordingMode = () => EntryRecordModel.Record;
 
         var exception = Assert.Throws<ArgumentNullException>(() =>
-            new ProxyTransport(mockProxyProcess, null, testRecording, getRecordingMode));
+            new ProxyTransport(mockProxyProcess, null!, testRecording, getRecordingMode));
 
         Assert.That(exception.ParamName, Is.EqualTo("innerTransport"), "Should identify innerTransport parameter");
     }
@@ -81,10 +82,10 @@ public class ProxyTransportTests
     {
         var mockProxyProcess = new TestProxyProcess();
         var mockTransport = new MockPipelineTransport(msg => new MockPipelineResponse(200));
-        EntryRecordModel getRecordingMode() => EntryRecordModel.Record;
+        Func<EntryRecordModel> getRecordingMode = () => EntryRecordModel.Record;
 
         var exception = Assert.Throws<ArgumentNullException>(() =>
-            new ProxyTransport(mockProxyProcess, mockTransport, null, getRecordingMode));
+            new ProxyTransport(mockProxyProcess, mockTransport, null!, getRecordingMode));
 
         Assert.That(exception.ParamName, Is.EqualTo("recording"), "Should identify recording parameter");
     }
@@ -101,6 +102,10 @@ public class ProxyTransportTests
 
         Assert.That(exception.ParamName, Is.EqualTo("getRecordingMode"), "Should identify getRecordingMode parameter");
     }
+
+    #endregion
+
+    #region CreateMessage Tests
 
     [Test]
     public async Task CreateMessageSetsHasRequestsFlag()
@@ -140,6 +145,10 @@ public class ProxyTransportTests
         var exception = Assert.Throws<TestRecordingMismatchException>(() => proxyTransport.CreateMessage());
         Assert.That(exception, Is.SameAs(mismatchException), "Should throw the same mismatch exception");
     }
+
+    #endregion
+
+    #region Request Redirection Tests
 
     [Test]
     public async Task ProcessAsyncThrowsWhenProxyPortIsNull()
@@ -205,6 +214,10 @@ public class ProxyTransportTests
         }
     }
 
+    #endregion
+
+    #region Recording Mode Behavior Tests
+
     [Test]
     public async Task ProcessAsyncAddsSkipHeaderForDoNotRecord()
     {
@@ -212,7 +225,7 @@ public class ProxyTransportTests
         var mockTransport = new MockPipelineTransport(msg => new MockPipelineResponse(200));
         var testRecording = await CreateTestRecordingAsync(RecordedTestMode.Record, "test-do-not-record");
 
-        static EntryRecordModel getRecordingMode() => EntryRecordModel.DoNotRecord;
+        Func<EntryRecordModel> getRecordingMode = () => EntryRecordModel.DoNotRecord;
 
         var proxyTransport = new ProxyTransport(mockProxyProcess, mockTransport, testRecording, getRecordingMode);
         var message = proxyTransport.CreateMessage();
@@ -242,7 +255,7 @@ public class ProxyTransportTests
         var mockTransport = new MockPipelineTransport(msg => new MockPipelineResponse(200));
         var testRecording = await CreateTestRecordingAsync(RecordedTestMode.Record, "test-skip-body");
 
-        static EntryRecordModel getRecordingMode() => EntryRecordModel.RecordWithoutRequestBody;
+        Func<EntryRecordModel> getRecordingMode = () => EntryRecordModel.RecordWithoutRequestBody;
 
         var proxyTransport = new ProxyTransport(mockProxyProcess, mockTransport, testRecording, getRecordingMode);
         var message = proxyTransport.CreateMessage();
@@ -272,7 +285,7 @@ public class ProxyTransportTests
         var mockTransport = new MockPipelineTransport(msg => new MockPipelineResponse(200));
         var testRecording = await CreateTestRecordingAsync(RecordedTestMode.Playback, "test-clear-content");
 
-        EntryRecordModel getRecordingMode() => EntryRecordModel.RecordWithoutRequestBody;
+        Func<EntryRecordModel> getRecordingMode = () => EntryRecordModel.RecordWithoutRequestBody;
 
         var proxyTransport = new ProxyTransport(mockProxyProcess, mockTransport, testRecording, getRecordingMode);
         var message = proxyTransport.CreateMessage();
@@ -293,6 +306,10 @@ public class ProxyTransportTests
         // In playback mode with RecordWithoutRequestBody, content should be cleared
         Assert.That(message.Request.Content, Is.Null, "Should clear content in playback mode with RecordWithoutRequestBody");
     }
+
+    #endregion
+
+    #region Error Handling Tests
 
     [Test]
     public async Task ProcessAsyncThrowsForDoNotRecordInPlaybackMode()
@@ -315,6 +332,10 @@ public class ProxyTransportTests
         Assert.That(exception.Message, Does.Contain("Playback mode"),
             "Should mention Playback mode in error message");
     }
+
+    #endregion
+
+    #region URI Restoration Tests
 
     [Test]
     public async Task ProcessAsyncRestoresOriginalUriAfterProcessing()
@@ -350,6 +371,10 @@ public class ProxyTransportTests
         Assert.That(message.Request.Uri, Is.EqualTo(originalUri), "Should restore original URI after processing");
     }
 
+    #endregion
+
+    #region Response Processing Tests
+
     [Test]
     public async Task ProcessAsyncThrowsMismatchExceptionOnXRequestMismatchHeader()
     {
@@ -379,6 +404,10 @@ public class ProxyTransportTests
             // Expected to throw due to null port, but we can verify the mismatch response behavior would work
         }
     }
+
+    #endregion
+
+    #region Error Handling Tests
 
     [Test]
     public async Task ProcessAsyncThrowsWhenRecordingIdIsNull()
@@ -432,4 +461,6 @@ public class ProxyTransportTests
             // Expected to throw due to null port, but we can verify error handling behavior
         }
     }
+
+    #endregion
 }

@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal static partial class StorageAccountExpandExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageAccountExpand value) => value switch
         {
             StorageAccountExpand.GeoReplicationStats => "geoReplicationStats",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountExpand value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static StorageAccountExpand ToStorageAccountExpand(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "geoReplicationStats"))
-            {
-                return StorageAccountExpand.GeoReplicationStats;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "blobRestoreStatus"))
-            {
-                return StorageAccountExpand.BlobRestoreStatus;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "geoReplicationStats")) return StorageAccountExpand.GeoReplicationStats;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "blobRestoreStatus")) return StorageAccountExpand.BlobRestoreStatus;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountExpand value.");
         }
     }

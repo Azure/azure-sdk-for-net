@@ -15,14 +15,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public partial class DatasetBrokerStateStoreDestination : DatasetDestination
     {
         /// <summary> Initializes a new instance of <see cref="DatasetBrokerStateStoreDestination"/>. </summary>
-        /// <param name="key"> The MQTT broker state store destination key. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public DatasetBrokerStateStoreDestination(string key)
+        /// <param name="configuration"> The MQTT broker state store destination configuration. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
+        public DatasetBrokerStateStoreDestination(BrokerStateStoreDestinationConfiguration configuration)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(configuration, nameof(configuration));
 
-            Configuration = new BrokerStateStoreDestinationConfiguration(key);
-            Target = DatasetDestinationTarget.BrokerStateStore;
+            Configuration = configuration;
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetBrokerStateStoreDestination"/>. </summary>

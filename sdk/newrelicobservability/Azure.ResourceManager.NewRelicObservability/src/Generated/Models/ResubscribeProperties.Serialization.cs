@@ -10,65 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> Resubscribe Properties. </summary>
-    public partial class ResubscribeProperties : IJsonModel<ResubscribeProperties>
+    public partial class ResubscribeProperties : IUtf8JsonSerializable, IJsonModel<ResubscribeProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResubscribeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResubscribeProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResubscribeProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResubscribeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResubscribeProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResubscribeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResubscribeProperties IPersistableModel<ResubscribeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResubscribeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="resubscribeProperties"> The <see cref="ResubscribeProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ResubscribeProperties resubscribeProperties)
-        {
-            if (resubscribeProperties == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(resubscribeProperties, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResubscribeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -80,11 +28,12 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResubscribeProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
@@ -120,15 +69,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -137,27 +86,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResubscribeProperties IJsonModel<ResubscribeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResubscribeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResubscribeProperties IJsonModel<ResubscribeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResubscribeProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResubscribeProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResubscribeProperties DeserializeResubscribeProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResubscribeProperties DeserializeResubscribeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -169,49 +113,51 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             string organizationId = default;
             string publisherId = default;
             string offerId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("planId"u8))
+                if (property.NameEquals("planId"u8))
                 {
-                    planId = prop.Value.GetString();
+                    planId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("termId"u8))
+                if (property.NameEquals("termId"u8))
                 {
-                    termId = prop.Value.GetString();
+                    termId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subscriptionId"u8))
+                if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = prop.Value.GetString();
+                    subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceGroup"u8))
+                if (property.NameEquals("resourceGroup"u8))
                 {
-                    resourceGroup = prop.Value.GetString();
+                    resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("organizationId"u8))
+                if (property.NameEquals("organizationId"u8))
                 {
-                    organizationId = prop.Value.GetString();
+                    organizationId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("publisherId"u8))
+                if (property.NameEquals("publisherId"u8))
                 {
-                    publisherId = prop.Value.GetString();
+                    publisherId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("offerId"u8))
+                if (property.NameEquals("offerId"u8))
                 {
-                    offerId = prop.Value.GetString();
+                    offerId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResubscribeProperties(
                 planId,
                 termId,
@@ -220,7 +166,38 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 organizationId,
                 publisherId,
                 offerId,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResubscribeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResubscribeProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResubscribeProperties IPersistableModel<ResubscribeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResubscribeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeResubscribeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResubscribeProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResubscribeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -71,8 +71,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                             {
                                 x.EnableLiveMetrics = false;
                                 x.ConnectionString = testConnectionString;
-                                x.SamplingRatio = 1.0f; // Ensure 100% sampling for tests
-                                x.TracesPerSecond = null; // Disable rate limited sampler
                             })
                             .WithTracing(x => x.AddInMemoryExporter(activities))
                             // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
@@ -133,22 +131,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             WaitForActivityExport(telemetryItems, x => x.Name == "Request");
 
             // ASSERT
-            lock (telemetryItems)
-            {
-                _telemetryOutput.Write(telemetryItems);
-                Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
-                var telemetryItem = telemetryItems.Where(x => x.Name == "Request").Single();
-                var activity = activities.Single();
+            _telemetryOutput.Write(telemetryItems);
+            Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            var telemetryItem = telemetryItems.Where(x => x.Name == "Request").Single();
+            var activity = activities.Single();
 
-                VerifyTelemetryItem(
-                    isSuccess: statusCode == 200,
-                    isException: shouldThrow,
-                    expectedUrl: expectedUrl,
-                    operationName: $"GET {path}",
-                    statusCode: statusCode.ToString(),
-                    telemetryItem: telemetryItem,
-                    activity: activity);
-            }
+            VerifyTelemetryItem(
+                isSuccess: statusCode == 200,
+                isException: shouldThrow,
+                expectedUrl: expectedUrl,
+                operationName: $"GET {path}",
+                statusCode: statusCode.ToString(),
+                telemetryItem: telemetryItem,
+                activity: activity);
         }
 
         private void WaitForActivityExport<T>(List<T> traceTelemetryItems, Func<T, bool>? predicate = null)
@@ -157,12 +152,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 condition: () =>
                 {
                     Thread.Sleep(10);
-                    lock (traceTelemetryItems)
-                    {
-                        return predicate is null
-                            ? traceTelemetryItems.Any()
-                            : traceTelemetryItems.Any(predicate);
-                    }
+                    return predicate is null
+                        ? traceTelemetryItems.Any()
+                        : traceTelemetryItems.Any(predicate);
                 },
                 timeout: TimeSpan.FromSeconds(10));
 

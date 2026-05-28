@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// An app cloneability criterion.
-    /// Serialized Name: SiteCloneabilityCriterion
-    /// </summary>
+    /// <summary> An app cloneability criterion. </summary>
     public partial class SiteCloneabilityCriterion
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteCloneabilityCriterion"/>. </summary>
-        /// <param name="name">
-        /// Name of criterion.
-        /// Serialized Name: SiteCloneabilityCriterion.name
-        /// </param>
-        /// <param name="description">
-        /// Description of criterion.
-        /// Serialized Name: SiteCloneabilityCriterion.description
-        /// </param>
+        /// <param name="name"> Name of criterion. </param>
+        /// <param name="description"> Description of criterion. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteCloneabilityCriterion(string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of criterion.
-        /// Serialized Name: SiteCloneabilityCriterion.name
-        /// </summary>
+        /// <summary> Name of criterion. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Description of criterion.
-        /// Serialized Name: SiteCloneabilityCriterion.description
-        /// </summary>
+        /// <summary> Description of criterion. </summary>
         [WirePath("description")]
         public string Description { get; }
     }

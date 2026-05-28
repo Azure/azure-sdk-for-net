@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+		<TargetFrameworks>net9.0</TargetFrameworks>
+		<RequiredTargetFrameworks>net9.0</RequiredTargetFrameworks>
 		<PackageId>Azure.Generator.Management</PackageId>
 		<Version>1.0.0-beta.1</Version>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
@@ -11,10 +12,6 @@
 		<PackageReference Include="Azure.Generator" />
 		<PackageReference Include="Azure.ResourceManager" />
 		<PackageReference Include="Humanizer.Core" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Include="Assets\README.md.template" />
 	</ItemGroup>
 
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">

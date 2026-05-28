@@ -28,9 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Null(azureMonitorOptions.ConnectionString);
             Assert.False(azureMonitorOptions.DisableOfflineStorage);
             Assert.Equal(1.0F, azureMonitorOptions.SamplingRatio);
-            Assert.Equal(5.0, azureMonitorOptions.TracesPerSecond);
             Assert.Null(azureMonitorOptions.StorageDirectory);
-            Assert.True(azureMonitorOptions.EnableTraceBasedLogsSampler);
         }
 
 #if NET
@@ -41,8 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 ""ConnectionString"" : ""testJsonValue"",
                 ""DisableOfflineStorage"" : ""true"",
                 ""SamplingRatio"" : 0.5,
-                ""StorageDirectory"" : ""testJsonValue"",
-                ""EnableTraceBasedLogsSampler"" : ""true""
+                ""StorageDirectory"" : ""testJsonValue""
                 }}";
 
             var configuration = new ConfigurationBuilder()
@@ -58,35 +55,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Equal("testJsonValue", azureMonitorOptions.ConnectionString);
             Assert.True(azureMonitorOptions.DisableOfflineStorage);
             Assert.Equal(0.5F, azureMonitorOptions.SamplingRatio);
-            Assert.Null(azureMonitorOptions.TracesPerSecond);
-            Assert.Equal("testJsonValue", azureMonitorOptions.StorageDirectory);
-        }
-
-        [Fact]
-        public void VerifyConfigure_TracesPerSecond_ViaJson()
-        {
-            var appSettings = @"{""AzureMonitor"":{
-                ""ConnectionString"" : ""testJsonValue"",
-                ""DisableOfflineStorage"" : ""true"",
-                ""TracesPerSecond"" : 6.0,
-                ""StorageDirectory"" : ""testJsonValue"",
-                ""EnableTraceBasedLogsSampler"" : ""true""
-                }}";
-
-            var configuration = new ConfigurationBuilder()
-                .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appSettings)))
-                .Build();
-
-            var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
-
-            var azureMonitorOptions = new AzureMonitorOptions();
-
-            defaultAzureMonitorOptions.Configure(azureMonitorOptions);
-
-            Assert.Equal("testJsonValue", azureMonitorOptions.ConnectionString);
-            Assert.True(azureMonitorOptions.DisableOfflineStorage);
-            Assert.Equal(1.0F, azureMonitorOptions.SamplingRatio);
-            Assert.Equal(6.0, azureMonitorOptions.TracesPerSecond);
             Assert.Equal("testJsonValue", azureMonitorOptions.StorageDirectory);
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -21,12 +20,7 @@ namespace Versioning.MadeOptional
 
         public MadeOptionalClient(Uri endpoint) : this(endpoint, new MadeOptionalClientOptions()) => throw null;
 
-        internal MadeOptionalClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MadeOptionalClientOptions options) => throw null;
-
-        public MadeOptionalClient(Uri endpoint, MadeOptionalClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public MadeOptionalClient(MadeOptionalClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public MadeOptionalClient(Uri endpoint, MadeOptionalClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

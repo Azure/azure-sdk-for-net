@@ -10,55 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Backup Vault. </summary>
-    public partial class DataProtectionBackupVaultProperties : IJsonModel<DataProtectionBackupVaultProperties>
+    public partial class DataProtectionBackupVaultProperties : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupVaultProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataProtectionBackupVaultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataProtectionBackupVaultProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupVaultProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupVaultProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataProtectionBackupVaultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataProtectionBackupVaultProperties IPersistableModel<DataProtectionBackupVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataProtectionBackupVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataProtectionBackupVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,11 +28,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataProtectionBackupVaultProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
@@ -100,16 +59,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings, options);
             }
-            if (Optional.IsCollectionDefined(StorageSettings))
+            writer.WritePropertyName("storageSettings"u8);
+            writer.WriteStartArray();
+            foreach (var item in StorageSettings)
             {
-                writer.WritePropertyName("storageSettings"u8);
-                writer.WriteStartArray();
-                foreach (DataProtectionBackupStorageSetting item in StorageSettings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(IsVaultProtectedByResourceGuard))
             {
                 writer.WritePropertyName("isVaultProtectedByResourceGuard"u8);
@@ -134,13 +90,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
-                foreach (string item in ResourceGuardOperationRequests)
+                foreach (var item in ResourceGuardOperationRequests)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -149,21 +100,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("replicatedRegions"u8);
                 writer.WriteStartArray();
-                foreach (AzureLocation item in ReplicatedRegions)
+                foreach (var item in ReplicatedRegions)
                 {
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -172,27 +123,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataProtectionBackupVaultProperties IJsonModel<DataProtectionBackupVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataProtectionBackupVaultProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataProtectionBackupVaultProperties IJsonModel<DataProtectionBackupVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataProtectionBackupVaultProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataProtectionBackupVaultProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataProtectionBackupVaultProperties DeserializeDataProtectionBackupVaultProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataProtectionBackupVaultProperties DeserializeDataProtectionBackupVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -209,133 +155,123 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             BcdrSecurityLevel? bcdrSecurityLevel = default;
             IList<string> resourceGuardOperationRequests = default;
             IList<AzureLocation> replicatedRegions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("monitoringSettings"u8))
+                if (property.NameEquals("monitoringSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(prop.Value, options);
+                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new DataProtectionBackupProvisioningState(prop.Value.GetString());
+                    provisioningState = new DataProtectionBackupProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("resourceMoveState"u8))
+                if (property.NameEquals("resourceMoveState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceMoveState = new BackupVaultResourceMoveState(prop.Value.GetString());
+                    resourceMoveState = new BackupVaultResourceMoveState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("resourceMoveDetails"u8))
+                if (property.NameEquals("resourceMoveDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceMoveDetails = BackupVaultResourceMoveDetails.DeserializeBackupVaultResourceMoveDetails(prop.Value, options);
+                    resourceMoveDetails = BackupVaultResourceMoveDetails.DeserializeBackupVaultResourceMoveDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("securitySettings"u8))
+                if (property.NameEquals("securitySettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(prop.Value, options);
+                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("storageSettings"u8))
+                if (property.NameEquals("storageSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DataProtectionBackupStorageSetting> array = new List<DataProtectionBackupStorageSetting>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(DataProtectionBackupStorageSetting.DeserializeDataProtectionBackupStorageSetting(item, options));
                     }
                     storageSettings = array;
                     continue;
                 }
-                if (prop.NameEquals("isVaultProtectedByResourceGuard"u8))
+                if (property.NameEquals("isVaultProtectedByResourceGuard"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isVaultProtectedByResourceGuard = prop.Value.GetBoolean();
+                    isVaultProtectedByResourceGuard = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("featureSettings"u8))
+                if (property.NameEquals("featureSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(prop.Value, options);
+                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("secureScore"u8))
+                if (property.NameEquals("secureScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    secureScore = new BackupVaultSecureScoreLevel(prop.Value.GetString());
+                    secureScore = new BackupVaultSecureScoreLevel(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("bcdrSecurityLevel"u8))
+                if (property.NameEquals("bcdrSecurityLevel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bcdrSecurityLevel = new BcdrSecurityLevel(prop.Value.GetString());
+                    bcdrSecurityLevel = new BcdrSecurityLevel(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("resourceGuardOperationRequests"u8))
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     resourceGuardOperationRequests = array;
                     continue;
                 }
-                if (prop.NameEquals("replicatedRegions"u8))
+                if (property.NameEquals("replicatedRegions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new AzureLocation(item.GetString()));
                     }
@@ -344,23 +280,55 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataProtectionBackupVaultProperties(
                 monitoringSettings,
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
                 securitySettings,
-                storageSettings ?? new ChangeTrackingList<DataProtectionBackupStorageSetting>(),
+                storageSettings,
                 isVaultProtectedByResourceGuard,
                 featureSettings,
                 secureScore,
                 bcdrSecurityLevel,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 replicatedRegions ?? new ChangeTrackingList<AzureLocation>(),
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataProtectionBackupVaultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupVaultProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataProtectionBackupVaultProperties IPersistableModel<DataProtectionBackupVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataProtectionBackupVaultProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupVaultProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataProtectionBackupVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

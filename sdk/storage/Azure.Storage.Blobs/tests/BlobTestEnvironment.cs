@@ -4,7 +4,6 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -42,9 +41,7 @@ namespace Azure.Storage.Blobs.Tests
                         await blobClient.CreateIfNotExistsAsync();
                         await blobClient.GetPropertiesAsync();
 
-                        BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: DateTimeOffset.UtcNow.AddHours(1));
-                        var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(
-                            options: options);
+                        var userDelegationKey = await serviceClient.GetUserDelegationKeyAsync(startsOn: null, expiresOn: DateTimeOffset.UtcNow.AddHours(1));
                         var sasBuilder = new BlobSasBuilder(BlobSasPermissions.All, DateTimeOffset.UtcNow.AddHours(1))
                         {
                             BlobContainerName = containerName,
@@ -58,8 +55,7 @@ namespace Azure.Storage.Blobs.Tests
                         await containerClient.DeleteIfExistsAsync();
                     }
                 }
-            }
-            catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
+            } catch (RequestFailedException e) when (e.Status == 403 && e.ErrorCode == "AuthorizationPermissionMismatch")
             {
                 TestContext.Error.WriteLine($"Blob Probing OAuth - not ready {Process.GetCurrentProcess().Id}");
                 return false;

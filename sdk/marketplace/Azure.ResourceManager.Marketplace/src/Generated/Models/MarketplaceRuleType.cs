@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.Marketplace.Models
     public readonly partial struct MarketplaceRuleType : IEquatable<MarketplaceRuleType>
     {
         private readonly string _value;
-        private const string PrivateProductsValue = "PrivateProducts";
-        private const string TermsAndConditionValue = "TermsAndCondition";
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceRuleType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MarketplaceRuleType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the PrivateProducts. </summary>
+        private const string PrivateProductsValue = "PrivateProducts";
+        private const string TermsAndConditionValue = "TermsAndCondition";
+
+        /// <summary> PrivateProducts. </summary>
         public static MarketplaceRuleType PrivateProducts { get; } = new MarketplaceRuleType(PrivateProductsValue);
-
-        /// <summary> Gets the TermsAndCondition. </summary>
+        /// <summary> TermsAndCondition. </summary>
         public static MarketplaceRuleType TermsAndCondition { get; } = new MarketplaceRuleType(TermsAndConditionValue);
-
         /// <summary> Determines if two <see cref="MarketplaceRuleType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MarketplaceRuleType left, MarketplaceRuleType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="MarketplaceRuleType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MarketplaceRuleType left, MarketplaceRuleType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="MarketplaceRuleType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MarketplaceRuleType"/>. </summary>
         public static implicit operator MarketplaceRuleType(string value) => new MarketplaceRuleType(value);
 
-        /// <summary> Converts a string to a <see cref="MarketplaceRuleType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator MarketplaceRuleType?(string value) => value == null ? null : new MarketplaceRuleType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MarketplaceRuleType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(MarketplaceRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

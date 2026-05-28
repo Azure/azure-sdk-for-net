@@ -7,57 +7,16 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type `semantic`. </summary>
-    public partial class QueryCaptionResult : IJsonModel<QueryCaptionResult>
+    public partial class QueryCaptionResult : IUtf8JsonSerializable, IJsonModel<QueryCaptionResult>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QueryCaptionResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryCaptionResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQueryCaptionResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QueryCaptionResult)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryCaptionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryCaptionResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(QueryCaptionResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QueryCaptionResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QueryCaptionResult IPersistableModel<QueryCaptionResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QueryCaptionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QueryCaptionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryCaptionResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QueryCaptionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QueryCaptionResult)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
@@ -81,8 +41,15 @@ namespace Azure.Search.Documents.Models
             }
             if (options.Format != "W" && Optional.IsDefined(Highlights))
             {
-                writer.WritePropertyName("highlights"u8);
-                writer.WriteStringValue(Highlights);
+                if (Highlights != null)
+                {
+                    writer.WritePropertyName("highlights"u8);
+                    writer.WriteStringValue(Highlights);
+                }
+                else
+                {
+                    writer.WriteNull("highlights");
+                }
             }
             foreach (var item in AdditionalProperties)
             {
@@ -91,54 +58,98 @@ namespace Azure.Search.Documents.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QueryCaptionResult IJsonModel<QueryCaptionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QueryCaptionResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QueryCaptionResult IJsonModel<QueryCaptionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QueryCaptionResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QueryCaptionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QueryCaptionResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeQueryCaptionResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static QueryCaptionResult DeserializeQueryCaptionResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static QueryCaptionResult DeserializeQueryCaptionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string text = default;
             string highlights = default;
-            ChangeTrackingDictionary<string, object> additionalProperties = new ChangeTrackingDictionary<string, object>();
-            foreach (var prop in element.EnumerateObject())
+            IReadOnlyDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("text"u8))
+                if (property.NameEquals("text"u8))
                 {
-                    text = prop.Value.GetString();
+                    text = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("highlights"u8))
+                if (property.NameEquals("highlights"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         highlights = null;
                         continue;
                     }
-                    highlights = prop.Value.GetString();
+                    highlights = property.Value.GetString();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, prop.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
-            return new QueryCaptionResult(text, highlights, new ReadOnlyDictionary<string, object>(additionalProperties));
+            additionalProperties = additionalPropertiesDictionary;
+            return new QueryCaptionResult(text, highlights, additionalProperties);
+        }
+
+        BinaryData IPersistableModel<QueryCaptionResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryCaptionResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(QueryCaptionResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        QueryCaptionResult IPersistableModel<QueryCaptionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryCaptionResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeQueryCaptionResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryCaptionResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueryCaptionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static QueryCaptionResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeQueryCaptionResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

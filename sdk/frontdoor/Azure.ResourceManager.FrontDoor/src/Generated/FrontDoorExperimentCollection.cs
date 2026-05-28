@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.FrontDoor
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorExperimentCollection : ArmCollection, IEnumerable<FrontDoorExperimentResource>, IAsyncEnumerable<FrontDoorExperimentResource>
     {
-        private readonly ClientDiagnostics _experimentsClientDiagnostics;
-        private readonly Experiments _experimentsRestClient;
+        private readonly ClientDiagnostics _frontDoorExperimentExperimentsClientDiagnostics;
+        private readonly ExperimentsRestOperations _frontDoorExperimentExperimentsRestClient;
 
-        /// <summary> Initializes a new instance of FrontDoorExperimentCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorExperimentCollection"/> class for mocking. </summary>
         protected FrontDoorExperimentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorExperimentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorExperimentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontDoorExperimentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(FrontDoorExperimentResource.ResourceType, out string frontDoorExperimentApiVersion);
-            _experimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorExperimentResource.ResourceType.Namespace, Diagnostics);
-            _experimentsRestClient = new Experiments(_experimentsClientDiagnostics, Pipeline, Endpoint, frontDoorExperimentApiVersion ?? "2025-11-01");
-            ValidateResourceId(id);
+            _frontDoorExperimentExperimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", FrontDoorExperimentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(FrontDoorExperimentResource.ResourceType, out string frontDoorExperimentExperimentsApiVersion);
+            _frontDoorExperimentExperimentsRestClient = new ExperimentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorExperimentExperimentsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != FrontDoorNetworkExperimentProfileResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FrontDoorNetworkExperimentProfileResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, FrontDoorNetworkExperimentProfileResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates an Experiment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
         /// <param name="data"> The Experiment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorExperimentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string experimentName, FrontDoorExperimentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.CreateOrUpdate");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, FrontDoorExperimentData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FrontDoorArmOperation<FrontDoorExperimentResource> operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(
-                    new FrontDoorExperimentOperationSource(Client),
-                    _experimentsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _frontDoorExperimentExperimentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(new FrontDoorExperimentOperationSource(Client), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, _frontDoorExperimentExperimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.FrontDoor
         /// Creates or updates an Experiment
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
         /// <param name="data"> The Experiment resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorExperimentResource> CreateOrUpdate(WaitUntil waitUntil, string experimentName, FrontDoorExperimentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.CreateOrUpdate");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, FrontDoorExperimentData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                FrontDoorArmOperation<FrontDoorExperimentResource> operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(
-                    new FrontDoorExperimentOperationSource(Client),
-                    _experimentsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _frontDoorExperimentExperimentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, data, cancellationToken);
+                var operation = new FrontDoorArmOperation<FrontDoorExperimentResource>(new FrontDoorExperimentOperationSource(Client), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, _frontDoorExperimentExperimentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets an Experiment by ExperimentName
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorExperimentResource>> GetAsync(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Get");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
+                var response = await _frontDoorExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets an Experiment by ExperimentName
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual Response<FrontDoorExperimentResource> Get(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Get");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FrontDoorExperimentData> response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
+                var response = _frontDoorExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.FrontDoor
         /// Gets a list of Experiments
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_ListByProfile. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListByProfile</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorExperimentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorExperimentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<FrontDoorExperimentData, FrontDoorExperimentResource>(new ExperimentsGetByProfileAsyncCollectionResultOfT(
-                _experimentsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "FrontDoorExperimentCollection.GetAll"), data => new FrontDoorExperimentResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorExperimentResource(Client, FrontDoorExperimentData.DeserializeFrontDoorExperimentData(e)), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, "FrontDoorExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of Experiments
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_ListByProfile. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_ListByProfile</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="FrontDoorExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorExperimentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<FrontDoorExperimentData, FrontDoorExperimentResource>(new ExperimentsGetByProfileCollectionResultOfT(
-                _experimentsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "FrontDoorExperimentCollection.GetAll"), data => new FrontDoorExperimentResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorExperimentResource(Client, FrontDoorExperimentData.DeserializeFrontDoorExperimentData(e)), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, "FrontDoorExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Exists");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<FrontDoorExperimentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorExperimentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _frontDoorExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.FrontDoor
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual Response<bool> Exists(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Exists");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<FrontDoorExperimentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorExperimentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _frontDoorExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorExperimentResource>> GetIfExistsAsync(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetIfExists");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<FrontDoorExperimentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorExperimentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _frontDoorExperimentExperimentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<FrontDoorExperimentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Experiments_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorExperimentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="experimentName"> The Experiment identifier associated with the Experiment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="experimentName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorExperimentResource> GetIfExists(string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using DiagnosticScope scope = _experimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetIfExists");
+            using var scope = _frontDoorExperimentExperimentsClientDiagnostics.CreateScope("FrontDoorExperimentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _experimentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<FrontDoorExperimentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorExperimentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorExperimentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _frontDoorExperimentExperimentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, experimentName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<FrontDoorExperimentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorExperimentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.FrontDoor
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FrontDoorExperimentResource> IAsyncEnumerable<FrontDoorExperimentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

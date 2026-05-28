@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
                 MessageTitle = "title",
                 MessageBody = "body",
             };
-            await userSession.SendMessageAsync(sendMessage);
+            await userSession.SendMessageAsync(sendMessage: sendMessage);
 
             Console.WriteLine("Succeeded");
         }

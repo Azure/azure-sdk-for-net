@@ -11,6 +11,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         internal int _eventCount;
         internal int _metricCount;
         internal int _traceCount;
-        internal int _availabilityCount;
     }
 }

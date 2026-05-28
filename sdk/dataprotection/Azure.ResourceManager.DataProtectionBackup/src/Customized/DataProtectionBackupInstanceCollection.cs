@@ -7,8 +7,10 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.ResourceManager.DataProtectionBackup.Models;
+using Azure.ResourceManager.Resources;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
@@ -47,7 +49,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DataProtectionBackupInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, backupInstanceName, data, null, cancellationToken).ConfigureAwait(false);
+        {
+            return await CreateOrUpdateAsync(waitUntil, backupInstanceName, data, null, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Create or update a backup instance in a backup vault
@@ -78,6 +82,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupInstanceName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DataProtectionBackupInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string backupInstanceName, DataProtectionBackupInstanceData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, backupInstanceName, data, null, cancellationToken);
+        {
+            return CreateOrUpdate(waitUntil, backupInstanceName, data, null, cancellationToken);
+        }
     }
 }

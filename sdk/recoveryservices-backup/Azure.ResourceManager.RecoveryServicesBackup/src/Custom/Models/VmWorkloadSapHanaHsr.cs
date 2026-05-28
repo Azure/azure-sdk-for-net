@@ -3,11 +3,10 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
+using System;
 using System.ComponentModel;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure VM workload-specific protectable item representing SAP HANA Dbinstance. </summary>

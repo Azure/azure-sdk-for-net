@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsNetworkSecurityPerimeterConfigurationProvisioningState : IEquatable<EventHubsNetworkSecurityPerimeterConfigurationProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UnknownValue = "Unknown";
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
@@ -27,79 +34,45 @@ namespace Azure.ResourceManager.EventHubs.Models
         private const string DeletedValue = "Deleted";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Unknown { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(UnknownValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Creating { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Updating { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(UpdatingValue);
-
-        /// <summary> Gets the Accepted. </summary>
+        /// <summary> Accepted. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Accepted { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(AcceptedValue);
-
-        /// <summary> Gets the InvalidResponse. </summary>
+        /// <summary> InvalidResponse. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState InvalidResponse { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(InvalidResponseValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(SucceededValue);
-
-        /// <summary> Gets the SucceededWithIssues. </summary>
+        /// <summary> SucceededWithIssues. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState SucceededWithIssues { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(SucceededWithIssuesValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Failed { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(FailedValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Deleting { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(DeletingValue);
-
-        /// <summary> Gets the Deleted. </summary>
+        /// <summary> Deleted. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Deleted { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(DeletedValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static EventHubsNetworkSecurityPerimeterConfigurationProvisioningState Canceled { get; } = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(CanceledValue);
-
         /// <summary> Determines if two <see cref="EventHubsNetworkSecurityPerimeterConfigurationProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsNetworkSecurityPerimeterConfigurationProvisioningState left, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="EventHubsNetworkSecurityPerimeterConfigurationProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsNetworkSecurityPerimeterConfigurationProvisioningState left, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="EventHubsNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
         public static implicit operator EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(string value) => new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="EventHubsNetworkSecurityPerimeterConfigurationProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsNetworkSecurityPerimeterConfigurationProvisioningState?(string value) => value == null ? null : new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsNetworkSecurityPerimeterConfigurationProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(EventHubsNetworkSecurityPerimeterConfigurationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

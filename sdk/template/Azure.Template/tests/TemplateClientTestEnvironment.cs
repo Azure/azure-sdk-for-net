@@ -7,14 +7,11 @@ namespace Azure.Template.Tests
 {
     public class TemplateClientTestEnvironment : TestEnvironment
     {
-        // TODO: Update these properties to match your service's test environment variables
-        public string Endpoint => GetRecordedVariable("SERVICE_ENDPOINT");
+        public string KeyVaultUri => GetRecordedVariable("KEYVAULT_URL");
 
         // You can sanitize secrets from recorded variables e.g., principal secrets.
         // See https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#test-environment-and-live-test-resources for variables,
         // and https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework#sanitizing for sanitizing responses.
-
-        // Example of a secret variable:
-        // public string ApiKey => GetRecordedVariable("API_KEY", options => options.IsSecret());
+        public string KeyVaultSecret => GetRecordedVariable("KEYVAULT_SECRET", options => options.IsSecret());
     }
 }

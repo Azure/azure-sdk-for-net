@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The FrontEndConfiguration.
-    /// Serialized Name: FrontEndConfiguration
-    /// </summary>
+    /// <summary> The FrontEndConfiguration. </summary>
     internal partial class FrontEndConfiguration
     {
         /// <summary>
@@ -54,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontEndConfiguration"/>. </summary>
-        /// <param name="kind"> Serialized Name: FrontEndConfiguration.kind. </param>
+        /// <param name="kind"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontEndConfiguration(FrontEndServiceType? kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: FrontEndConfiguration.kind. </summary>
+        /// <summary> Gets or sets the kind. </summary>
         [WirePath("kind")]
         public FrontEndServiceType? Kind { get; set; }
     }

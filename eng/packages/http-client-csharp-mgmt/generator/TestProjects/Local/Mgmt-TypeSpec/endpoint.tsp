@@ -69,6 +69,4 @@ interface EndpointResources {
     EndpointResource,
     Azure.ResourceManager.Foundations.ExtensionBaseParameters
   >;
-
-  list is ArmResourceListByParent<EndpointResource>;
 }

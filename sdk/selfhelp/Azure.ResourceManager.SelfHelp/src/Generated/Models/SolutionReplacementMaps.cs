@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Solution replacement maps. </summary>
     public partial class SolutionReplacementMaps
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SolutionReplacementMaps"/>. </summary>
         internal SolutionReplacementMaps()
@@ -35,8 +63,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="metricsBasedCharts"> Solution metrics based charts. </param>
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionReplacementMaps(IList<KBWebResult> webResults, IList<SolutionsDiagnostic> diagnostics, IList<SolutionsTroubleshooters> troubleshooters, IList<MetricsBasedChart> metricsBasedCharts, IList<SelfHelpVideo> videos, IList<VideoGroupDetail> videoGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SolutionReplacementMaps(IReadOnlyList<KBWebResult> webResults, IReadOnlyList<SolutionsDiagnostic> diagnostics, IReadOnlyList<SolutionsTroubleshooters> troubleshooters, IReadOnlyList<MetricsBasedChart> metricsBasedCharts, IReadOnlyList<SelfHelpVideo> videos, IReadOnlyList<VideoGroupDetail> videoGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebResults = webResults;
             Diagnostics = diagnostics;
@@ -44,25 +72,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             MetricsBasedCharts = metricsBasedCharts;
             Videos = videos;
             VideoGroups = videoGroups;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Solution AzureKB results. </summary>
-        public IList<KBWebResult> WebResults { get; }
-
+        public IReadOnlyList<KBWebResult> WebResults { get; }
         /// <summary> Solution diagnostics results. </summary>
-        public IList<SolutionsDiagnostic> Diagnostics { get; }
-
+        public IReadOnlyList<SolutionsDiagnostic> Diagnostics { get; }
         /// <summary> Solutions Troubleshooters. </summary>
-        public IList<SolutionsTroubleshooters> Troubleshooters { get; }
-
+        public IReadOnlyList<SolutionsTroubleshooters> Troubleshooters { get; }
         /// <summary> Solution metrics based charts. </summary>
-        public IList<MetricsBasedChart> MetricsBasedCharts { get; }
-
+        public IReadOnlyList<MetricsBasedChart> MetricsBasedCharts { get; }
         /// <summary> Video solutions, which have the power to engage the customer by stimulating their senses. </summary>
-        public IList<SelfHelpVideo> Videos { get; }
-
+        public IReadOnlyList<SelfHelpVideo> Videos { get; }
         /// <summary> Group of Videos. </summary>
-        public IList<VideoGroupDetail> VideoGroups { get; }
+        public IReadOnlyList<VideoGroupDetail> VideoGroups { get; }
     }
 }

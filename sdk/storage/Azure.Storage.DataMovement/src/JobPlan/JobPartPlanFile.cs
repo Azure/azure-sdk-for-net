@@ -62,13 +62,7 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             try
             {
-                using (FileStream fileStream = new FileStream(
-                    result.FileName.ToString(),
-                    FileMode.Create,
-                    FileAccess.Write,
-                    FileShare.None,
-                    bufferSize: 4096,
-                    FileOptions.None))
+                using (FileStream fileStream = File.Create(result.FileName.ToString()))
                 using (MemoryStream ms = new())
                 {
                     header.Serialize(ms);
@@ -77,7 +71,6 @@ namespace Azure.Storage.DataMovement.JobPlan
                         fileStream,
                         DataMovementConstants.DefaultStreamCopyBufferSize,
                         cancellationToken).ConfigureAwait(false);
-                    await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception)

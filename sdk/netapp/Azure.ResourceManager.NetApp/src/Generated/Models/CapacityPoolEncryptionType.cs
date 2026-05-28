@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct CapacityPoolEncryptionType : IEquatable<CapacityPoolEncryptionType>
     {
         private readonly string _value;
-        /// <summary> EncryptionType Single, volumes will use single encryption at rest. </summary>
-        private const string SingleValue = "Single";
-        /// <summary> EncryptionType Double, volumes will use double encryption at rest. </summary>
-        private const string DoubleValue = "Double";
 
         /// <summary> Initializes a new instance of <see cref="CapacityPoolEncryptionType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CapacityPoolEncryptionType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string SingleValue = "Single";
+        private const string DoubleValue = "Double";
 
         /// <summary> EncryptionType Single, volumes will use single encryption at rest. </summary>
         public static CapacityPoolEncryptionType Single { get; } = new CapacityPoolEncryptionType(SingleValue);
-
         /// <summary> EncryptionType Double, volumes will use double encryption at rest. </summary>
         public static CapacityPoolEncryptionType Double { get; } = new CapacityPoolEncryptionType(DoubleValue);
-
         /// <summary> Determines if two <see cref="CapacityPoolEncryptionType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CapacityPoolEncryptionType left, CapacityPoolEncryptionType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CapacityPoolEncryptionType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CapacityPoolEncryptionType left, CapacityPoolEncryptionType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CapacityPoolEncryptionType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityPoolEncryptionType"/>. </summary>
         public static implicit operator CapacityPoolEncryptionType(string value) => new CapacityPoolEncryptionType(value);
 
-        /// <summary> Converts a string to a <see cref="CapacityPoolEncryptionType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CapacityPoolEncryptionType?(string value) => value == null ? null : new CapacityPoolEncryptionType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CapacityPoolEncryptionType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CapacityPoolEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

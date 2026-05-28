@@ -13,115 +13,94 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> Represents order item resource. </summary>
+    /// <summary>
+    /// A class representing the EdgeOrderItem data model.
+    /// Represents order item contract
+    /// </summary>
     public partial class EdgeOrderItemData : TrackedResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="orderItemDetails"> Represents order item details. </param>
+        /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="orderItemDetails"/> or <paramref name="orderId"/> is null. </exception>
-        public EdgeOrderItemData(AzureLocation location, EdgeOrderItemDetails orderItemDetails, ResourceIdentifier orderId) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="orderItemDetails"/>, <paramref name="addressDetails"/> or <paramref name="orderId"/> is null. </exception>
+        public EdgeOrderItemData(AzureLocation location, EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, ResourceIdentifier orderId) : base(location)
         {
             Argument.AssertNotNull(orderItemDetails, nameof(orderItemDetails));
+            Argument.AssertNotNull(addressDetails, nameof(addressDetails));
             Argument.AssertNotNull(orderId, nameof(orderId));
 
-            Properties = new OrderItemProperties(orderItemDetails, orderId);
+            OrderItemDetails = orderItemDetails;
+            AddressDetails = addressDetails;
+            OrderId = orderId;
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Order item properties. </param>
-        /// <param name="identity"> Msi identity of the resource. </param>
-        internal EdgeOrderItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, OrderItemProperties properties, EdgeOrderResourceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="orderItemDetails"> Represents order item details. </param>
+        /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
+        /// <param name="startOn"> Start time of order item. </param>
+        /// <param name="orderId"> Id of the order to which order item belongs to. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, DateTimeOffset? startOn, ResourceIdentifier orderId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
-            Identity = identity;
+            OrderItemDetails = orderItemDetails;
+            AddressDetails = addressDetails;
+            StartOn = startOn;
+            OrderId = orderId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Order item properties. </summary>
-        internal OrderItemProperties Properties { get; set; }
-
-        /// <summary> Msi identity of the resource. </summary>
-        public EdgeOrderResourceIdentity Identity { get; set; }
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemData"/> for deserialization. </summary>
+        internal EdgeOrderItemData()
+        {
+        }
 
         /// <summary> Represents order item details. </summary>
-        public EdgeOrderItemDetails OrderItemDetails
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OrderItemDetails;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new OrderItemProperties();
-                }
-                Properties.OrderItemDetails = value;
-            }
-        }
-
+        public EdgeOrderItemDetails OrderItemDetails { get; set; }
         /// <summary> Represents shipping and return address for order item. </summary>
-        public EdgeOrderItemAddressDetails AddressDetails
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AddressDetails;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new OrderItemProperties();
-                }
-                Properties.AddressDetails = value;
-            }
-        }
-
+        public EdgeOrderItemAddressDetails AddressDetails { get; set; }
         /// <summary> Start time of order item. </summary>
-        public DateTimeOffset? StartOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StartOn;
-            }
-        }
-
+        public DateTimeOffset? StartOn { get; }
         /// <summary> Id of the order to which order item belongs to. </summary>
-        public ResourceIdentifier OrderId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OrderId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new OrderItemProperties();
-                }
-                Properties.OrderId = value;
-            }
-        }
-
-        /// <summary> Provisioning state. </summary>
-        public EdgeOrderProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
+        public ResourceIdentifier OrderId { get; set; }
     }
 }

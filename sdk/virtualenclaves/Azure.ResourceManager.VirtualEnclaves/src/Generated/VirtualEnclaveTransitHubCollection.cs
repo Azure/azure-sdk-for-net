@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.VirtualEnclaves
     /// </summary>
     public partial class VirtualEnclaveTransitHubCollection : ArmCollection, IEnumerable<VirtualEnclaveTransitHubResource>, IAsyncEnumerable<VirtualEnclaveTransitHubResource>
     {
-        private readonly ClientDiagnostics _transitHubClientDiagnostics;
-        private readonly TransitHub _transitHubRestClient;
+        private readonly ClientDiagnostics _virtualEnclaveTransitHubTransitHubClientDiagnostics;
+        private readonly TransitHubRestOperations _virtualEnclaveTransitHubTransitHubRestClient;
 
-        /// <summary> Initializes a new instance of VirtualEnclaveTransitHubCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveTransitHubCollection"/> class for mocking. </summary>
         protected VirtualEnclaveTransitHubCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveTransitHubCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveTransitHubCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualEnclaveTransitHubCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualEnclaveTransitHubResource.ResourceType, out string virtualEnclaveTransitHubApiVersion);
-            _transitHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveTransitHubResource.ResourceType.Namespace, Diagnostics);
-            _transitHubRestClient = new TransitHub(_transitHubClientDiagnostics, Pipeline, Endpoint, virtualEnclaveTransitHubApiVersion ?? "2025-05-01-preview");
-            ValidateResourceId(id);
+            _virtualEnclaveTransitHubTransitHubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveTransitHubResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualEnclaveTransitHubResource.ResourceType, out string virtualEnclaveTransitHubTransitHubApiVersion);
+            _virtualEnclaveTransitHubTransitHubRestClient = new TransitHubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveTransitHubTransitHubApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != VirtualEnclaveCommunityResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VirtualEnclaveCommunityResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VirtualEnclaveCommunityResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a TransitHubResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TransitHub_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>TransitHubResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="transitHubName"> The name of the TransitHub Resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transitHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualEnclaveTransitHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string transitHubName, VirtualEnclaveTransitHubData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transitHubName, nameof(transitHubName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _transitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.CreateOrUpdate");
+            using var scope = _virtualEnclaveTransitHubTransitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _transitHubRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, VirtualEnclaveTransitHubData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                VirtualEnclavesArmOperation<VirtualEnclaveTransitHubResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveTransitHubResource>(
-                    new VirtualEnclaveTransitHubOperationSource(Client),
-                    _transitHubClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _virtualEnclaveTransitHubTransitHubRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transitHubName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveTransitHubResource>(new VirtualEnclaveTransitHubOperationSource(Client), _virtualEnclaveTransitHubTransitHubClientDiagnostics, Pipeline, _virtualEnclaveTransitHubTransitHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transitHubName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Create a TransitHubResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TransitHub_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>TransitHubResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="transitHubName"> The name of the TransitHub Resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transitHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualEnclaveTransitHubResource> CreateOrUpdate(WaitUntil waitUntil, string transitHubName, VirtualEnclaveTransitHubData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transitHubName, nameof(transitHubName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _transitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.CreateOrUpdate");
+            using var scope = _virtualEnclaveTransitHubTransitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _transitHubRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, VirtualEnclaveTransitHubData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                VirtualEnclavesArmOperation<VirtualEnclaveTransitHubResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveTransitHubResource>(
-                    new VirtualEnclaveTransitHubOperationSource(Client),
-                    _transitHubClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _virtualEnclaveTransitHubTransitHubRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transitHubName, data, cancellationToken);
+                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveTransitHubResource>(new VirtualEnclaveTransitHubOperationSource(Client), _virtualEnclaveTransitHubTransitHubClientDiagnostics, Pipeline, _virtualEnclaveTransitHubTransitHubRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transitHubName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a TransitHubResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TransitHub_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TransitHubResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transitHubName"> The name of the TransitHub Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transitHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         public virtual async Task<Response<VirtualEnclaveTransitHubResource>> GetAsync(string transitHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transitHubName, nameof(transitHubName));
 
-            using DiagnosticScope scope = _transitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.Get");
+            using var scope = _virtualEnclaveTransitHubTransitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VirtualEnclaveTransitHubData> response = Response.FromValue(VirtualEnclaveTransitHubData.FromResponse(result), result);
+                var response = await _virtualEnclaveTransitHubTransitHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transitHubName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveTransitHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a TransitHubResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TransitHub_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TransitHubResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transitHubName"> The name of the TransitHub Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transitHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         public virtual Response<VirtualEnclaveTransitHubResource> Get(string transitHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transitHubName, nameof(transitHubName));
 
-            using DiagnosticScope scope = _transitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.Get");
+            using var scope = _virtualEnclaveTransitHubTransitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<VirtualEnclaveTransitHubData> response = Response.FromValue(VirtualEnclaveTransitHubData.FromResponse(result), result);
+                var response = _virtualEnclaveTransitHubTransitHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transitHubName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveTransitHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// List TransitHubResource resources by CommunityResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TransitHub_ListByCommunityResource. </description>
+        /// <term>Operation Id</term>
+        /// <description>TransitHubResource_ListByCommunityResource</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualEnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualEnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualEnclaveTransitHubResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<VirtualEnclaveTransitHubData, VirtualEnclaveTransitHubResource>(new TransitHubGetByCommunityResourceAsyncCollectionResultOfT(
-                _transitHubRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "VirtualEnclaveTransitHubCollection.GetAll"), data => new VirtualEnclaveTransitHubResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEnclaveTransitHubTransitHubRestClient.CreateListByCommunityResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEnclaveTransitHubTransitHubRestClient.CreateListByCommunityResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveTransitHubResource(Client, VirtualEnclaveTransitHubData.DeserializeVirtualEnclaveTransitHubData(e)), _virtualEnclaveTransitHubTransitHubClientDiagnostics, Pipeline, "VirtualEnclaveTransitHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List TransitHubResource resources by CommunityResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TransitHub_ListByCommunityResource. </description>
+        /// <term>Operation Id</term>
+        /// <description>TransitHubResource_ListByCommunityResource</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <returns> A collection of <see cref="VirtualEnclaveTransitHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualEnclaveTransitHubResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<VirtualEnclaveTransitHubData, VirtualEnclaveTransitHubResource>(new TransitHubGetByCommunityResourceCollectionResultOfT(
-                _transitHubRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "VirtualEnclaveTransitHubCollection.GetAll"), data => new VirtualEnclaveTransitHubResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEnclaveTransitHubTransitHubRestClient.CreateListByCommunityResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEnclaveTransitHubTransitHubRestClient.CreateListByCommunityResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveTransitHubResource(Client, VirtualEnclaveTransitHubData.DeserializeVirtualEnclaveTransitHubData(e)), _virtualEnclaveTransitHubTransitHubClientDiagnostics, Pipeline, "VirtualEnclaveTransitHubCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TransitHub_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TransitHubResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transitHubName"> The name of the TransitHub Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transitHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string transitHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transitHubName, nameof(transitHubName));
 
-            using DiagnosticScope scope = _transitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.Exists");
+            using var scope = _virtualEnclaveTransitHubTransitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<VirtualEnclaveTransitHubData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveTransitHubData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveTransitHubData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _virtualEnclaveTransitHubTransitHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transitHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TransitHub_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TransitHubResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transitHubName"> The name of the TransitHub Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transitHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         public virtual Response<bool> Exists(string transitHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transitHubName, nameof(transitHubName));
 
-            using DiagnosticScope scope = _transitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.Exists");
+            using var scope = _virtualEnclaveTransitHubTransitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<VirtualEnclaveTransitHubData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveTransitHubData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveTransitHubData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _virtualEnclaveTransitHubTransitHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transitHubName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TransitHub_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TransitHubResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transitHubName"> The name of the TransitHub Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transitHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualEnclaveTransitHubResource>> GetIfExistsAsync(string transitHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transitHubName, nameof(transitHubName));
 
-            using DiagnosticScope scope = _transitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.GetIfExists");
+            using var scope = _virtualEnclaveTransitHubTransitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<VirtualEnclaveTransitHubData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveTransitHubData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveTransitHubData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _virtualEnclaveTransitHubTransitHubRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transitHubName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<VirtualEnclaveTransitHubResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveTransitHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}/transitHubs/{transitHubName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TransitHub_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TransitHubResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveTransitHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="transitHubName"> The name of the TransitHub Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transitHubName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transitHubName"/> is null. </exception>
         public virtual NullableResponse<VirtualEnclaveTransitHubResource> GetIfExists(string transitHubName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transitHubName, nameof(transitHubName));
 
-            using DiagnosticScope scope = _transitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.GetIfExists");
+            using var scope = _virtualEnclaveTransitHubTransitHubClientDiagnostics.CreateScope("VirtualEnclaveTransitHubCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _transitHubRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<VirtualEnclaveTransitHubData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveTransitHubData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveTransitHubData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _virtualEnclaveTransitHubTransitHubRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transitHubName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<VirtualEnclaveTransitHubResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveTransitHubResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.VirtualEnclaves
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<VirtualEnclaveTransitHubResource> IAsyncEnumerable<VirtualEnclaveTransitHubResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

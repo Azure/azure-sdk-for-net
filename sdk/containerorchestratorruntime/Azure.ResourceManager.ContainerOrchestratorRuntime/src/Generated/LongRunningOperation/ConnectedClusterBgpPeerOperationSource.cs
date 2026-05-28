@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
-    /// <summary></summary>
-    internal partial class ConnectedClusterBgpPeerOperationSource : IOperationSource<ConnectedClusterBgpPeerResource>
+    internal class ConnectedClusterBgpPeerOperationSource : IOperationSource<ConnectedClusterBgpPeerResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ConnectedClusterBgpPeerOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ConnectedClusterBgpPeerResource IOperationSource<ConnectedClusterBgpPeerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ConnectedClusterBgpPeerData data = ConnectedClusterBgpPeerData.DeserializeConnectedClusterBgpPeerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ConnectedClusterBgpPeerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
             return new ConnectedClusterBgpPeerResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ConnectedClusterBgpPeerResource> IOperationSource<ConnectedClusterBgpPeerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ConnectedClusterBgpPeerData data = ConnectedClusterBgpPeerData.DeserializeConnectedClusterBgpPeerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ConnectedClusterBgpPeerResource(_client, data);
+            var data = ModelReaderWriter.Read<ConnectedClusterBgpPeerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+            return await Task.FromResult(new ConnectedClusterBgpPeerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

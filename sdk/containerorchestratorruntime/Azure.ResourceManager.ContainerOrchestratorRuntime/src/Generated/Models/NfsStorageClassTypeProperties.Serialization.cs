@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerOrchestratorRuntime;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
-    /// <summary> The properties of NFS StorageClass. </summary>
-    public partial class NfsStorageClassTypeProperties : StorageClassTypeProperties, IJsonModel<NfsStorageClassTypeProperties>
+    public partial class NfsStorageClassTypeProperties : IUtf8JsonSerializable, IJsonModel<NfsStorageClassTypeProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="NfsStorageClassTypeProperties"/> for deserialization. </summary>
-        internal NfsStorageClassTypeProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NfsStorageClassTypeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override StorageClassTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NfsStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNfsStorageClassTypeProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NfsStorageClassTypeProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NfsStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NfsStorageClassTypeProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NfsStorageClassTypeProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NfsStorageClassTypeProperties IPersistableModel<NfsStorageClassTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (NfsStorageClassTypeProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NfsStorageClassTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NfsStorageClassTypeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NfsStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NfsStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NfsStorageClassTypeProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("server"u8);
             writer.WriteStringValue(Server);
@@ -101,87 +56,115 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NfsStorageClassTypeProperties IJsonModel<NfsStorageClassTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NfsStorageClassTypeProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override StorageClassTypeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NfsStorageClassTypeProperties IJsonModel<NfsStorageClassTypeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NfsStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NfsStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NfsStorageClassTypeProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNfsStorageClassTypeProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NfsStorageClassTypeProperties DeserializeNfsStorageClassTypeProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static NfsStorageClassTypeProperties DeserializeNfsStorageClassTypeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            StorageClassType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string server = default;
             string share = default;
             string subDir = default;
             string mountPermissions = default;
             NfsDirectoryActionOnVolumeDeletion? onDelete = default;
-            foreach (var prop in element.EnumerateObject())
+            StorageClassType type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (property.NameEquals("server"u8))
                 {
-                    @type = new StorageClassType(prop.Value.GetString());
+                    server = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("server"u8))
+                if (property.NameEquals("share"u8))
                 {
-                    server = prop.Value.GetString();
+                    share = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("share"u8))
+                if (property.NameEquals("subDir"u8))
                 {
-                    share = prop.Value.GetString();
+                    subDir = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subDir"u8))
+                if (property.NameEquals("mountPermissions"u8))
                 {
-                    subDir = prop.Value.GetString();
+                    mountPermissions = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("mountPermissions"u8))
+                if (property.NameEquals("onDelete"u8))
                 {
-                    mountPermissions = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("onDelete"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    onDelete = new NfsDirectoryActionOnVolumeDeletion(prop.Value.GetString());
+                    onDelete = new NfsDirectoryActionOnVolumeDeletion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new StorageClassType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new NfsStorageClassTypeProperties(
-                @type,
-                additionalBinaryDataProperties,
+                type,
+                serializedAdditionalRawData,
                 server,
                 share,
                 subDir,
                 mountPermissions,
                 onDelete);
         }
+
+        BinaryData IPersistableModel<NfsStorageClassTypeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NfsStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NfsStorageClassTypeProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NfsStorageClassTypeProperties IPersistableModel<NfsStorageClassTypeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NfsStorageClassTypeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeNfsStorageClassTypeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NfsStorageClassTypeProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NfsStorageClassTypeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

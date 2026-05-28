@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerService;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Mesh upgrade profile properties for a major.minor release. </summary>
-    public partial class MeshUpgradeProfileProperties : MeshRevision, IJsonModel<MeshUpgradeProfileProperties>
+    public partial class MeshUpgradeProfileProperties : IUtf8JsonSerializable, IJsonModel<MeshUpgradeProfileProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MeshRevision PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MeshUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMeshUpgradeProfileProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MeshUpgradeProfileProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MeshUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MeshUpgradeProfileProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MeshUpgradeProfileProperties IPersistableModel<MeshUpgradeProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (MeshUpgradeProfileProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MeshUpgradeProfileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MeshUpgradeProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,35 +30,31 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MeshUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MeshUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MeshUpgradeProfileProperties IJsonModel<MeshUpgradeProfileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MeshUpgradeProfileProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MeshRevision JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MeshUpgradeProfileProperties IJsonModel<MeshUpgradeProfileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MeshUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MeshUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMeshUpgradeProfileProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MeshUpgradeProfileProperties DeserializeMeshUpgradeProfileProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static MeshUpgradeProfileProperties DeserializeMeshUpgradeProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,43 +62,37 @@ namespace Azure.ResourceManager.ContainerService.Models
             string revision = default;
             IList<string> upgrades = default;
             IList<CompatibleVersions> compatibleWith = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("revision"u8))
+                if (property.NameEquals("revision"u8))
                 {
-                    revision = prop.Value.GetString();
+                    revision = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("upgrades"u8))
+                if (property.NameEquals("upgrades"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     upgrades = array;
                     continue;
                 }
-                if (prop.NameEquals("compatibleWith"u8))
+                if (property.NameEquals("compatibleWith"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CompatibleVersions> array = new List<CompatibleVersions>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(CompatibleVersions.DeserializeCompatibleVersions(item, options));
                     }
@@ -150,10 +101,141 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new MeshUpgradeProfileProperties(revision, upgrades ?? new ChangeTrackingList<string>(), compatibleWith ?? new ChangeTrackingList<CompatibleVersions>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MeshUpgradeProfileProperties(revision, upgrades ?? new ChangeTrackingList<string>(), compatibleWith ?? new ChangeTrackingList<CompatibleVersions>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Revision), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  revision: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Revision))
+                {
+                    builder.Append("  revision: ");
+                    if (Revision.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Revision}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Revision}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Upgrades), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  upgrades: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Upgrades))
+                {
+                    if (Upgrades.Any())
+                    {
+                        builder.Append("  upgrades: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Upgrades)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompatibleWith), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  compatibleWith: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CompatibleWith))
+                {
+                    if (CompatibleWith.Any())
+                    {
+                        builder.Append("  compatibleWith: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CompatibleWith)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  compatibleWith: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MeshUpgradeProfileProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MeshUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MeshUpgradeProfileProperties IPersistableModel<MeshUpgradeProfileProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MeshUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMeshUpgradeProfileProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MeshUpgradeProfileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

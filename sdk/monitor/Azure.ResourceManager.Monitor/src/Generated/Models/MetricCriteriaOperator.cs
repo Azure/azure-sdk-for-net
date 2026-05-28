@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The criteria operator. Previously undocumented values might be returned. </summary>
+    /// <summary> the criteria operator. </summary>
     public readonly partial struct MetricCriteriaOperator : IEquatable<MetricCriteriaOperator>
     {
         private readonly string _value;

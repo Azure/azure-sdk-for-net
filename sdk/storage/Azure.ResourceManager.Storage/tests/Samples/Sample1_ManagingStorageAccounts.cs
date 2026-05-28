@@ -4,11 +4,11 @@
 #region Snippet:Managing_StorageAccounts_NameSpaces
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using Azure.Core;
 #endregion
 
 namespace Azure.ResourceManager.Storage.Tests.Samples

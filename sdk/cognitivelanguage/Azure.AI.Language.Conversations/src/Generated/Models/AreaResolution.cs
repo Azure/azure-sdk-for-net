@@ -16,26 +16,31 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="AreaResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The area Unit of measurement. </param>
-        internal AreaResolution(double value, AreaUnit unit) : base(ResolutionKind.AreaResolution)
+        internal AreaResolution(double value, AreaUnit unit)
         {
+            ResolutionKind = ResolutionKind.AreaResolution;
             Value = value;
             Unit = unit;
         }
 
         /// <summary> Initializes a new instance of <see cref="AreaResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The area Unit of measurement. </param>
-        internal AreaResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, AreaUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
+        internal AreaResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value, AreaUnit unit) : base(resolutionKind, serializedAdditionalRawData)
         {
             Value = value;
             Unit = unit;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AreaResolution"/> for deserialization. </summary>
+        internal AreaResolution()
+        {
+        }
+
         /// <summary> The numeric value that the extracted text denotes. </summary>
         public double Value { get; }
-
         /// <summary> The area Unit of measurement. </summary>
         public AreaUnit Unit { get; }
     }

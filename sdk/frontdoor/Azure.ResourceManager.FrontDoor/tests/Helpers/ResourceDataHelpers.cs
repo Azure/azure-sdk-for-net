@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using Azure.Core;
+using System;
+using System.Text;
+using Azure.ResourceManager.Resources;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
 {
@@ -105,7 +105,10 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                         RouteConfiguration = new ForwardingConfiguration()
                         {
                             ForwardingProtocol = FrontDoorForwardingProtocol.MatchRequest,
-                            BackendPoolId = new ResourceIdentifier(subid + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.Network/Frontdoors/" + frontDoorName + "/BackendPools/backendPool1")
+                            BackendPool = new WritableSubResource()
+                            {
+                                Id = new ResourceIdentifier(subid + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.Network/Frontdoors/" + frontDoorName + "/BackendPools/backendPool1")
+                            }
                         }
                     }
                 },
@@ -130,8 +133,14 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                     new FrontDoorBackendPool()
                     {
                         Name = "backendPool1",
-                        LoadBalancingSettingsId = new ResourceIdentifier(subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/loadBalancingSettings/loadBalancingSettings1"),
-                        HealthProbeSettingsId = new ResourceIdentifier(subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/healthProbeSettings/healthProbeSettings1"),
+                        LoadBalancingSettings = new WritableSubResource()
+                        {
+                            Id = new ResourceIdentifier(subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/loadBalancingSettings/loadBalancingSettings1")
+                        },
+                        HealthProbeSettings = new WritableSubResource()
+                        {
+                            Id = new ResourceIdentifier(subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/healthProbeSettings/healthProbeSettings1")
+                        },
                         Backends =
                         {
                             backends
@@ -270,7 +279,9 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                     CustomBlockResponseBody = "PGh0bWw+CjxoZWFkZXI+PHRpdGxlPkhlbGxvPC90aXRsZT48L2hlYWRlcj4KPGJvZHk+CkhlbGxvIHdvcmxkCjwvYm9keT4KPC9odG1sPg==",
                     RequestBodyCheck = PolicyRequestBodyCheck.Disabled,
                 },
-                Rules =
+                CustomRuleList = new CustomRuleList()
+                {
+                    Rules =
             {
                 new WebApplicationCustomRule(1, WebApplicationRuleType.RateLimitRule, matchConditions1,RuleMatchActionType.Block)
                 {
@@ -281,12 +292,15 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                 {
                     Name = "customrule2"
                 }
-            },
+            }
+                },
                 Sku = new FrontDoorSku()
                 {
                     Name = "Premium_AzureFrontDoor"
                 },
-                ManagedRuleSets =
+                ManagedRules = new ManagedRuleSetList()
+                {
+                    ManagedRuleSets =
             {
                 new ManagedRuleSet("DefaultRuleSet", "1.0")
                 {
@@ -323,6 +337,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                     }
                 }
             }
+                }
             };
             return data;
         }

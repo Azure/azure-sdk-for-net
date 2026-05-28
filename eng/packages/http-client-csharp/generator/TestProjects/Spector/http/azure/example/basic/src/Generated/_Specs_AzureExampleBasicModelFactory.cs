@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Specs.Azure.Example.Basic
+namespace _Specs_.Azure.Example.Basic
 {
     public static partial class _Specs_AzureExampleBasicModelFactory
     {

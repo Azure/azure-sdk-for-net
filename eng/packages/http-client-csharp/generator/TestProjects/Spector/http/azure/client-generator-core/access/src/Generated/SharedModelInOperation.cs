@@ -5,19 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Specs.Azure.ClientGenerator.Core.Access._SharedModelInOperation
+namespace _Specs_.Azure.ClientGenerator.Core.Access._SharedModelInOperation
 {
     public partial class SharedModelInOperation
     {
         protected SharedModelInOperation() => throw null;
-
-        internal SharedModelInOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

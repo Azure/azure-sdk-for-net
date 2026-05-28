@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.TrustedSigning
                 {
                     Properties = new CodeSigningAccountProperties();
                 }
-                Properties.SkuName = value;
+                Properties.SkuName = value.Value;
             }
         }
     }

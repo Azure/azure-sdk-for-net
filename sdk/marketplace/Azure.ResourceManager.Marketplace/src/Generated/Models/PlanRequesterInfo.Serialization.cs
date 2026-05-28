@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Marketplace;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> user request details. </summary>
-    public partial class PlanRequesterInfo : IJsonModel<PlanRequesterInfo>
+    public partial class PlanRequesterInfo : IUtf8JsonSerializable, IJsonModel<PlanRequesterInfo>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PlanRequesterInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePlanRequesterInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlanRequesterInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PlanRequesterInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PlanRequesterInfo IPersistableModel<PlanRequesterInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PlanRequesterInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlanRequesterInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
@@ -99,15 +59,15 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,27 +76,22 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PlanRequesterInfo IJsonModel<PlanRequesterInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PlanRequesterInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PlanRequesterInfo IJsonModel<PlanRequesterInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePlanRequesterInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PlanRequesterInfo DeserializePlanRequesterInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static PlanRequesterInfo DeserializePlanRequesterInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,46 +101,79 @@ namespace Azure.ResourceManager.Marketplace.Models
             string justification = default;
             string subscriptionId = default;
             string subscriptionName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("user"u8))
+                if (property.NameEquals("user"u8))
                 {
-                    user = prop.Value.GetString();
+                    user = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("date"u8))
+                if (property.NameEquals("date"u8))
                 {
-                    date = prop.Value.GetString();
+                    date = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("justification"u8))
+                if (property.NameEquals("justification"u8))
                 {
-                    justification = prop.Value.GetString();
+                    justification = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subscriptionId"u8))
+                if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = prop.Value.GetString();
+                    subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subscriptionName"u8))
+                if (property.NameEquals("subscriptionName"u8))
                 {
-                    subscriptionName = prop.Value.GetString();
+                    subscriptionName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new PlanRequesterInfo(
                 user,
                 date,
                 justification,
                 subscriptionId,
                 subscriptionName,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PlanRequesterInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PlanRequesterInfo IPersistableModel<PlanRequesterInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePlanRequesterInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PlanRequesterInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PlanRequesterInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

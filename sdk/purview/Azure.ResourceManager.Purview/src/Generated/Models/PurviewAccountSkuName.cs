@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.Purview.Models
     public readonly partial struct PurviewAccountSkuName : IEquatable<PurviewAccountSkuName>
     {
         private readonly string _value;
-        /// <summary> Standard. </summary>
-        private const string StandardValue = "Standard";
-        /// <summary> Free. </summary>
-        private const string FreeValue = "Free";
 
         /// <summary> Initializes a new instance of <see cref="PurviewAccountSkuName"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PurviewAccountSkuName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string StandardValue = "Standard";
+        private const string FreeValue = "Free";
 
         /// <summary> Standard. </summary>
         public static PurviewAccountSkuName Standard { get; } = new PurviewAccountSkuName(StandardValue);
-
         /// <summary> Free. </summary>
         public static PurviewAccountSkuName Free { get; } = new PurviewAccountSkuName(FreeValue);
-
         /// <summary> Determines if two <see cref="PurviewAccountSkuName"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PurviewAccountSkuName left, PurviewAccountSkuName right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PurviewAccountSkuName"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PurviewAccountSkuName left, PurviewAccountSkuName right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PurviewAccountSkuName"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewAccountSkuName"/>. </summary>
         public static implicit operator PurviewAccountSkuName(string value) => new PurviewAccountSkuName(value);
 
-        /// <summary> Converts a string to a <see cref="PurviewAccountSkuName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PurviewAccountSkuName?(string value) => value == null ? null : new PurviewAccountSkuName(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PurviewAccountSkuName other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PurviewAccountSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

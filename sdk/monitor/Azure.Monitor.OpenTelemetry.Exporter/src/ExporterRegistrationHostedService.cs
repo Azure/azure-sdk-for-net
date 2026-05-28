@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,10 +66,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
 
                 // TODO: Add Ai Sampler.
-                tracerProvider.AddProcessor(new MainAgentAttributionSpanProcessor());
                 tracerProvider.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
-                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions), exporterOptions),
+                    new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(exporterOptions)),
                     new BatchActivityExportProcessor(new AzureMonitorTraceExporter(exporterOptions))
                 }));
             }
@@ -85,25 +83,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
                 var exporter = new AzureMonitorLogExporter(exporterOptions);
 
-                BaseProcessor<LogRecord> baseProcessor = exporterOptions.EnableTraceBasedLogsSampler
-                                                            ? new LogFilteringProcessor(exporter)
-                                                            : new BatchLogRecordExportProcessor(exporter);
-
-                loggerProvider.AddProcessor(new MainAgentAttributionLogProcessor());
-
                 if (exporterOptions.EnableLiveMetrics)
                 {
                     var manager = serviceProvider!.GetRequiredService<LiveMetricsClientManager>();
 
-                    loggerProvider.AddProcessor(new CompositeProcessor<LogRecord>(
-                    [
-                        new LiveMetricsLogProcessor(manager),
-                        baseProcessor
-                    ]));
+                    loggerProvider.AddProcessor(new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
+                        {
+                                new LiveMetricsLogProcessor(manager),
+                                new BatchLogRecordExportProcessor(exporter)
+                        }));
                 }
                 else
                 {
-                    loggerProvider.AddProcessor(baseProcessor);
+                    loggerProvider.AddProcessor(new BatchLogRecordExportProcessor(exporter));
                 }
             }
         }

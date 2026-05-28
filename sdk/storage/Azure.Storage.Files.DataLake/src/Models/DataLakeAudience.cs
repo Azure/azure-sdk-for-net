@@ -30,14 +30,16 @@ namespace Azure.Storage.Files.DataLake.Models
             _value = value;
         }
 
+        private const string _defaultAudience = "https://storage.azure.com/";
+
         /// <summary>
         /// Default Audience. Use to acquire a token for authorizing requests to any Azure Storage account
         ///
-        /// Resource ID: &quot;https://storage.azure.com&quot;.
+        /// Resource ID: &quot;https://storage.azure.com/ &quot;.
         ///
         /// If no audience is specified, this is the default value.
         /// </summary>
-        public static DataLakeAudience DefaultAudience { get; } = new(Constants.DefaultAudience);
+        public static DataLakeAudience DefaultAudience { get; } = new(_defaultAudience);
 
         /// <summary>
         /// The service endpoint for a given storage account.
@@ -47,7 +49,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// The storage account name used to populate the service endpoint.
         /// </param>
         /// <returns></returns>
-        public static DataLakeAudience CreateDataLakeServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.blob.core.windows.net");
+        public static DataLakeAudience CreateDataLakeServiceAccountAudience(string storageAccountName) => new($"https://{storageAccountName}.blob.core.windows.net/");
 
         /// <summary> Determines if two <see cref="DataLakeAudience"/> values are the same. </summary>
         public static bool operator ==(DataLakeAudience left, DataLakeAudience right) => left.Equals(right);
@@ -72,6 +74,13 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Creates a scope with the respective audience and the default scope.
         /// </summary>
         /// <returns></returns>
-        internal string CreateDefaultScope() => Constants.CreateDefaultScope(_value);
+        internal string CreateDefaultScope()
+        {
+            if (_value.EndsWith("/", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return $"{(_value)}{Constants.DefaultScope}";
+            }
+            return $"{(_value)}/{Constants.DefaultScope}";
+        }
     }
 }

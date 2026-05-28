@@ -8,74 +8,103 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Result for canMigrate operation. </summary>
+    /// <summary>
+    /// Result for canMigrate operation.
+    /// Serialized Name: CanMigrateResult
+    /// </summary>
     public partial class CanMigrateResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CanMigrateResult"/>. </summary>
         internal CanMigrateResult()
         {
+            Errors = new ChangeTrackingList<MigrationErrorType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CanMigrateResult"/>. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="canMigrateResultType"> Resource type. </param>
-        /// <param name="properties"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CanMigrateResult(ResourceIdentifier resourceId, string canMigrateResultType, CanMigrateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="resourceId">
+        /// Resource ID.
+        /// Serialized Name: CanMigrateResult.id
+        /// </param>
+        /// <param name="canMigrateResultType">
+        /// Resource type.
+        /// Serialized Name: CanMigrateResult.type
+        /// </param>
+        /// <param name="canMigrate">
+        /// Flag that says if the profile can be migrated
+        /// Serialized Name: CanMigrateResult.properties.canMigrate
+        /// </param>
+        /// <param name="defaultSku">
+        /// Recommended sku for the migration
+        /// Serialized Name: CanMigrateResult.properties.defaultSku
+        /// </param>
+        /// <param name="errors"> Serialized Name: CanMigrateResult.properties.errors. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CanMigrateResult(ResourceIdentifier resourceId, string canMigrateResultType, bool? canMigrate, CanMigrateDefaultSku? defaultSku, IReadOnlyList<MigrationErrorType> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             CanMigrateResultType = canMigrateResultType;
-            Properties = properties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            CanMigrate = canMigrate;
+            DefaultSku = defaultSku;
+            Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource ID. </summary>
-        [WirePath("id")]
+        /// <summary>
+        /// Resource ID.
+        /// Serialized Name: CanMigrateResult.id
+        /// </summary>
         public ResourceIdentifier ResourceId { get; }
-
-        /// <summary> Resource type. </summary>
-        [WirePath("type")]
+        /// <summary>
+        /// Resource type.
+        /// Serialized Name: CanMigrateResult.type
+        /// </summary>
         public string CanMigrateResultType { get; }
-
-        /// <summary> Gets the Properties. </summary>
-        [WirePath("properties")]
-        internal CanMigrateProperties Properties { get; }
-
-        /// <summary> Flag that says if the profile can be migrated. </summary>
-        [WirePath("properties.canMigrate")]
-        public bool? CanMigrate
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CanMigrate;
-            }
-        }
-
-        /// <summary> Recommended sku for the migration. </summary>
-        [WirePath("properties.defaultSku")]
-        public CanMigrateDefaultSku? DefaultSku
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DefaultSku;
-            }
-        }
-
-        /// <summary> Gets the Errors. </summary>
-        [WirePath("properties.errors")]
-        public IReadOnlyList<MigrationErrorType> Errors
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Errors;
-            }
-        }
+        /// <summary>
+        /// Flag that says if the profile can be migrated
+        /// Serialized Name: CanMigrateResult.properties.canMigrate
+        /// </summary>
+        public bool? CanMigrate { get; }
+        /// <summary>
+        /// Recommended sku for the migration
+        /// Serialized Name: CanMigrateResult.properties.defaultSku
+        /// </summary>
+        public CanMigrateDefaultSku? DefaultSku { get; }
+        /// <summary> Serialized Name: CanMigrateResult.properties.errors. </summary>
+        public IReadOnlyList<MigrationErrorType> Errors { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The configuration settings of the registration for the Apple provider
-    /// Serialized Name: AppleRegistration
-    /// </summary>
+    /// <summary> The configuration settings of the registration for the Apple provider. </summary>
     public partial class AppServiceAppleRegistration
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceAppleRegistration"/>. </summary>
-        /// <param name="clientId">
-        /// The Client ID of the app used for login.
-        /// Serialized Name: AppleRegistration.clientId
-        /// </param>
-        /// <param name="clientSecretSettingName">
-        /// The app setting name that contains the client secret.
-        /// Serialized Name: AppleRegistration.clientSecretSettingName
-        /// </param>
+        /// <param name="clientId"> The Client ID of the app used for login. </param>
+        /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceAppleRegistration(string clientId, string clientSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The Client ID of the app used for login.
-        /// Serialized Name: AppleRegistration.clientId
-        /// </summary>
+        /// <summary> The Client ID of the app used for login. </summary>
         [WirePath("clientId")]
         public string ClientId { get; set; }
-        /// <summary>
-        /// The app setting name that contains the client secret.
-        /// Serialized Name: AppleRegistration.clientSecretSettingName
-        /// </summary>
+        /// <summary> The app setting name that contains the client secret. </summary>
         [WirePath("clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
     }

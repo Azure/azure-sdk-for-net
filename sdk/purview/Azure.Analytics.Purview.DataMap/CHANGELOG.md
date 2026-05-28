@@ -4,8 +4,6 @@
 
 ### Features Added
 
-- Added `DataMapClientSettings` to support creating a `DataMapClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-
 ### Breaking Changes
 
 ### Bugs Fixed

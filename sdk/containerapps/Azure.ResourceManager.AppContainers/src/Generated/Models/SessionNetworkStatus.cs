@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct SessionNetworkStatus : IEquatable<SessionNetworkStatus>
     {
         private readonly string _value;
-        /// <summary> EgressEnabled. </summary>
-        private const string EgressEnabledValue = "EgressEnabled";
-        /// <summary> EgressDisabled. </summary>
-        private const string EgressDisabledValue = "EgressDisabled";
 
         /// <summary> Initializes a new instance of <see cref="SessionNetworkStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SessionNetworkStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string EgressEnabledValue = "EgressEnabled";
+        private const string EgressDisabledValue = "EgressDisabled";
 
         /// <summary> EgressEnabled. </summary>
         public static SessionNetworkStatus EgressEnabled { get; } = new SessionNetworkStatus(EgressEnabledValue);
-
         /// <summary> EgressDisabled. </summary>
         public static SessionNetworkStatus EgressDisabled { get; } = new SessionNetworkStatus(EgressDisabledValue);
-
         /// <summary> Determines if two <see cref="SessionNetworkStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SessionNetworkStatus left, SessionNetworkStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SessionNetworkStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SessionNetworkStatus left, SessionNetworkStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SessionNetworkStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionNetworkStatus"/>. </summary>
         public static implicit operator SessionNetworkStatus(string value) => new SessionNetworkStatus(value);
 
-        /// <summary> Converts a string to a <see cref="SessionNetworkStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SessionNetworkStatus?(string value) => value == null ? null : new SessionNetworkStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SessionNetworkStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SessionNetworkStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

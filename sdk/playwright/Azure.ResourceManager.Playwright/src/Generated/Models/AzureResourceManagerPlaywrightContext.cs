@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Playwright.Models;
 
@@ -16,7 +15,6 @@ namespace Azure.ResourceManager.Playwright
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PlaywrightFreeTrialProperties))]
     [ModelReaderWriterBuildable(typeof(PlaywrightNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(PlaywrightNameAvailabilityResult))]
@@ -35,9 +33,7 @@ namespace Azure.ResourceManager.Playwright
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceQuotaResource))]
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(PlaywrightWorkspaceUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerPlaywrightContext : ModelReaderWriterContext
     {
     }

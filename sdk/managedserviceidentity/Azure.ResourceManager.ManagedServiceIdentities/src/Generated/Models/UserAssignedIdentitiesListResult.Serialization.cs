@@ -8,69 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.ManagedServiceIdentities;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
-    /// <summary> Values returned by the List operation. </summary>
-    internal partial class UserAssignedIdentitiesListResult : IJsonModel<UserAssignedIdentitiesListResult>
+    internal partial class UserAssignedIdentitiesListResult : IUtf8JsonSerializable, IJsonModel<UserAssignedIdentitiesListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentitiesListResult"/> for deserialization. </summary>
-        internal UserAssignedIdentitiesListResult()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentitiesListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserAssignedIdentitiesListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeUserAssignedIdentitiesListResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentitiesListResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesListResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentitiesListResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UserAssignedIdentitiesListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UserAssignedIdentitiesListResult IPersistableModel<UserAssignedIdentitiesListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UserAssignedIdentitiesListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="UserAssignedIdentitiesListResult"/> from. </param>
-        internal static UserAssignedIdentitiesListResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeUserAssignedIdentitiesListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UserAssignedIdentitiesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -82,32 +30,36 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UserAssignedIdentitiesListResult)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("value"u8);
-            writer.WriteStartArray();
-            foreach (UserAssignedIdentityData item in Value)
+
+            if (Optional.IsCollectionDefined(Value))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
+                writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,61 +68,152 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UserAssignedIdentitiesListResult IJsonModel<UserAssignedIdentitiesListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserAssignedIdentitiesListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UserAssignedIdentitiesListResult IJsonModel<UserAssignedIdentitiesListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UserAssignedIdentitiesListResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUserAssignedIdentitiesListResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UserAssignedIdentitiesListResult DeserializeUserAssignedIdentitiesListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static UserAssignedIdentitiesListResult DeserializeUserAssignedIdentitiesListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<UserAssignedIdentityData> value = default;
-            Uri nextLink = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IReadOnlyList<UserAssignedIdentityData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("value"u8))
+                if (property.NameEquals("value"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<UserAssignedIdentityData> array = new List<UserAssignedIdentityData>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(UserAssignedIdentityData.DeserializeUserAssignedIdentityData(item, options));
                     }
                     value = array;
                     continue;
                 }
-                if (prop.NameEquals("nextLink"u8))
+                if (property.NameEquals("nextLink"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    nextLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new UserAssignedIdentitiesListResult(value, nextLink, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UserAssignedIdentitiesListResult(value ?? new ChangeTrackingList<UserAssignedIdentityData>(), nextLink, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Value))
+                {
+                    if (Value.Any())
+                    {
+                        builder.Append("  value: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Value)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  value: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextLink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nextLink: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextLink))
+                {
+                    builder.Append("  nextLink: ");
+                    if (NextLink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NextLink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NextLink}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<UserAssignedIdentitiesListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(UserAssignedIdentitiesListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UserAssignedIdentitiesListResult IPersistableModel<UserAssignedIdentitiesListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentitiesListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeUserAssignedIdentitiesListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UserAssignedIdentitiesListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UserAssignedIdentitiesListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

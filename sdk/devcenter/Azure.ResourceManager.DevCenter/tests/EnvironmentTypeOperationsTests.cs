@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.DevCenter.Tests
             DevCenterEnvironmentTypeResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, environmentTypeName, data)).Value;
 
-            Assert.That(createdResource, Is.Not.Null);
-            Assert.That(createdResource.Data, Is.Not.Null);
+            Assert.NotNull(createdResource);
+            Assert.NotNull(createdResource.Data);
 
             // List EnvironmentTypes
             List<DevCenterEnvironmentTypeResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
             Response<DevCenterEnvironmentTypeResource> retrievedEnvironmentType = await resourceCollection.GetAsync(environmentTypeName);
-            Assert.That(retrievedEnvironmentType.Value, Is.Not.Null);
-            Assert.That(retrievedEnvironmentType.Value.Data, Is.Not.Null);
+            Assert.NotNull(retrievedEnvironmentType.Value);
+            Assert.NotNull(retrievedEnvironmentType.Value.Data);
 
             // Delete
             ArmOperation deleteOp = await retrievedEnvironmentType.Value.DeleteAsync(WaitUntil.Completed);

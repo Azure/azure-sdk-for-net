@@ -134,8 +134,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions("prebuilt-layout", endpoint);
-            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, analyzeRequest);
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "prebuilt-layout", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -146,8 +146,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
-            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions("prebuilt-layout", new Uri("http://host.com/doc.pdf"));
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, analyzeRequest);
+
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -209,8 +210,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions("customModel", new Uri("http://host.com/doc.pdf"));
-            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, analyzeRequest);
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "customModel", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -222,8 +223,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions("customModel", new Uri("http://host.com/doc.pdf"));
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, analyzeRequest);
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "customModel", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -296,7 +297,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 ResultPrefix = "trainingDocsResult/",
                 OverwriteExisting = true,
             };
-            Operation<AnalyzeBatchResult> operation = client.AnalyzeBatchDocuments(WaitUntil.Completed, analyzeBatchRequest);
+            Operation<AnalyzeBatchResult> operation = client.AnalyzeBatchDocuments(WaitUntil.Completed, "customModel", analyzeBatchRequest);
             AnalyzeBatchResult responseData = operation.Value;
         }
 
@@ -313,7 +314,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 ResultPrefix = "trainingDocsResult/",
                 OverwriteExisting = true,
             };
-            Operation<AnalyzeBatchResult> operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, analyzeBatchRequest);
+            Operation<AnalyzeBatchResult> operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, "customModel", analyzeBatchRequest);
             AnalyzeBatchResult responseData = operation.Value;
         }
 
@@ -375,9 +376,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            ClassifyDocumentOptions classifyRequest =
-                new ClassifyDocumentOptions("classifierId", new Uri("http://host.com/doc.pdf"));
-            Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, classifyRequest);
+            ClassifyDocumentOptions classifyRequest = new ClassifyDocumentOptions
+            {
+                UriSource = new Uri("http://host.com/doc.pdf"),
+            };
+            Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "classifierId", classifyRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -389,8 +392,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            ClassifyDocumentOptions classifyRequest = new ClassifyDocumentOptions("classifierId", new Uri("http://host.com/doc.pdf"));
-            Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifyRequest);
+            ClassifyDocumentOptions classifyRequest = new ClassifyDocumentOptions
+            {
+                UriSource = new Uri("http://host.com/doc.pdf"),
+            };
+            Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "classifierId", classifyRequest);
             AnalyzeResult responseData = operation.Value;
         }
     }

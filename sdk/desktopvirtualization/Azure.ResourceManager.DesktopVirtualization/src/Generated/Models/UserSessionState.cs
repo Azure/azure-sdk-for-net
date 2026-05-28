@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -15,77 +14,50 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct UserSessionState : IEquatable<UserSessionState>
     {
         private readonly string _value;
-        /// <summary> SessionState is unknown. </summary>
-        private const string UnknownValue = "Unknown";
-        /// <summary> Session is active. </summary>
-        private const string ActiveValue = "Active";
-        /// <summary> Session is disconnected. </summary>
-        private const string DisconnectedValue = "Disconnected";
-        /// <summary> Session is pending connection. </summary>
-        private const string PendingValue = "Pending";
-        /// <summary> Session is logging off. </summary>
-        private const string LogOffValue = "LogOff";
-        /// <summary> Session has mounted user profile disk. </summary>
-        private const string UserProfileDiskMountedValue = "UserProfileDiskMounted";
 
         /// <summary> Initializes a new instance of <see cref="UserSessionState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UserSessionState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> SessionState is unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        private const string ActiveValue = "Active";
+        private const string DisconnectedValue = "Disconnected";
+        private const string PendingValue = "Pending";
+        private const string LogOffValue = "LogOff";
+        private const string UserProfileDiskMountedValue = "UserProfileDiskMounted";
+
+        /// <summary> Unknown. </summary>
         public static UserSessionState Unknown { get; } = new UserSessionState(UnknownValue);
-
-        /// <summary> Session is active. </summary>
+        /// <summary> Active. </summary>
         public static UserSessionState Active { get; } = new UserSessionState(ActiveValue);
-
-        /// <summary> Session is disconnected. </summary>
+        /// <summary> Disconnected. </summary>
         public static UserSessionState Disconnected { get; } = new UserSessionState(DisconnectedValue);
-
-        /// <summary> Session is pending connection. </summary>
+        /// <summary> Pending. </summary>
         public static UserSessionState Pending { get; } = new UserSessionState(PendingValue);
-
-        /// <summary> Session is logging off. </summary>
+        /// <summary> LogOff. </summary>
         public static UserSessionState LogOff { get; } = new UserSessionState(LogOffValue);
-
-        /// <summary> Session has mounted user profile disk. </summary>
+        /// <summary> UserProfileDiskMounted. </summary>
         public static UserSessionState UserProfileDiskMounted { get; } = new UserSessionState(UserProfileDiskMountedValue);
-
         /// <summary> Determines if two <see cref="UserSessionState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UserSessionState left, UserSessionState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="UserSessionState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UserSessionState left, UserSessionState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="UserSessionState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UserSessionState"/>. </summary>
         public static implicit operator UserSessionState(string value) => new UserSessionState(value);
 
-        /// <summary> Converts a string to a <see cref="UserSessionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator UserSessionState?(string value) => value == null ? null : new UserSessionState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UserSessionState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(UserSessionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

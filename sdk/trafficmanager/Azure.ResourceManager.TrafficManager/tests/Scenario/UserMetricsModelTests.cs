@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         {
             await Create();
 
-            TrafficManagerUserMetricsResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
+            TrafficManagerUserMetricsResource userMetricsModelResource = _subscription.GetTrafficManagerUserMetrics();
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
             Assert.IsNotEmpty(userMetricsModelResource.Data.Key);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         {
             await Delete();
 
-            TrafficManagerUserMetricsResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
+            TrafficManagerUserMetricsResource userMetricsModelResource = _subscription.GetTrafficManagerUserMetrics();
             userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
             Assert.IsEmpty(userMetricsModelResource.Data.Key);
@@ -75,16 +75,19 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
         private async Task Delete()
         {
-            TrafficManagerUserMetricsResource userMetricsModelResource = (await _subscription.GetTrafficManagerUserMetrics().GetAsync()).Value;
+            TrafficManagerUserMetricsResource userMetricsModelResource = _subscription.GetTrafficManagerUserMetrics();
+
+            userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
             await userMetricsModelResource.DeleteAsync(WaitUntil.Completed);
         }
 
         private async Task Create()
         {
-            TrafficManagerUserMetricsResource userMetrics = _subscription.GetTrafficManagerUserMetrics();
+            TrafficManagerUserMetricsResource userMetricsModelResource = _subscription.GetTrafficManagerUserMetrics();
+            userMetricsModelResource = await userMetricsModelResource.GetAsync();
 
-            ArmOperation<TrafficManagerUserMetricsResource> userMetricsModelResourceOperation = await userMetrics.CreateOrUpdateAsync(WaitUntil.Completed);
+            ArmOperation<TrafficManagerUserMetricsResource> userMetricsModelResourceOperation = await userMetricsModelResource.CreateOrUpdateAsync(WaitUntil.Completed);
 
             Assert.IsTrue(userMetricsModelResourceOperation.HasCompleted);
             Assert.IsTrue(userMetricsModelResourceOperation.HasValue);

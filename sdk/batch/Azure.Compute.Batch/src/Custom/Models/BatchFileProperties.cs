@@ -13,11 +13,11 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class BatchFileProperties
     {
-        internal BatchFileProperties(bool batchFileIsDirectory, string batchFileMode, Uri batchFileUri, DateTime creationTime)
+        internal BatchFileProperties(bool batchFileIsDirectory, string batchFileMode, string batchFileUrl, DateTime creationTime)
         {
             IsDirectory = batchFileIsDirectory;
             Mode = batchFileMode;
-            FileUri = batchFileUri;
+            FileUrl = batchFileUrl;
             CreationTime = creationTime;
         }
 
@@ -28,7 +28,7 @@ namespace Azure.Compute.Batch
         public string Mode { get; }
 
         /// <summary> The URL of the file. </summary>
-        public Uri FileUri { get; }
+        public string FileUrl { get; }
 
         /// <summary> The file creation time. </summary>
         public DateTime CreationTime { get; }
@@ -40,22 +40,18 @@ namespace Azure.Compute.Batch
             string isDirectoryStr = "";
             bool isDirectory = false;
             string mode = "";
-            Uri fileUri = null;
+            string fileUrl = "";
             string creationTimeStr = "";
 
             response.Headers.TryGetValue("ocp-creation-time", out creationTimeStr);
             response.Headers.TryGetValue("ocp-batch-file-isdirectory", out isDirectoryStr);
-            response.Headers.TryGetValue("ocp-batch-file-url", out string fileUrlStr);
-            if (Uri.TryCreate(fileUrlStr, UriKind.RelativeOrAbsolute, out Uri parsedUri))
-            {
-                fileUri = parsedUri;
-            }
+            response.Headers.TryGetValue("ocp-batch-file-url", out fileUrl);
             response.Headers.TryGetValue("ocp-batch-file-mode", out mode);
 
             Boolean.TryParse(isDirectoryStr, out isDirectory);
             DateTime creationTime = DateTime.Parse(creationTimeStr, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
 
-            return new BatchFileProperties(isDirectory, mode, fileUri, creationTime);
+            return new BatchFileProperties(isDirectory, mode, fileUrl, creationTime);
         }
     }
 }

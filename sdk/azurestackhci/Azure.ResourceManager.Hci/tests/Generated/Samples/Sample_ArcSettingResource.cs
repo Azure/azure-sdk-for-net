@@ -98,10 +98,18 @@ namespace Azure.ResourceManager.Hci.Samples
             // invoke the operation
             ArcSettingPatch patch = new ArcSettingPatch
             {
-                Properties = new ArcSettingsPatchProperties
+                ConnectivityProperties = BinaryData.FromObjectAsJson(new
                 {
-                    ConnectivityProperties = BinaryData.FromObjectAsJson(new { enabled = true }),
-                },
+                    enabled = "true",
+                    serviceConfigurations = new object[]
+            {
+new
+{
+port = "6516",
+serviceName = "WAC",
+}
+            },
+                }),
             };
             ArcSettingResource result = await arcSetting.UpdateAsync(patch);
 

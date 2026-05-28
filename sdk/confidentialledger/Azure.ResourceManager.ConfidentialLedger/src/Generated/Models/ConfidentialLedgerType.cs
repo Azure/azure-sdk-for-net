@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     public readonly partial struct ConfidentialLedgerType : IEquatable<ConfidentialLedgerType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConfidentialLedgerType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UnknownValue = "Unknown";
         private const string PublicValue = "Public";
         private const string PrivateValue = "Private";
 
-        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConfidentialLedgerType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static ConfidentialLedgerType Unknown { get; } = new ConfidentialLedgerType(UnknownValue);
-
-        /// <summary> Gets the Public. </summary>
+        /// <summary> Public. </summary>
         public static ConfidentialLedgerType Public { get; } = new ConfidentialLedgerType(PublicValue);
-
-        /// <summary> Gets the Private. </summary>
+        /// <summary> Private. </summary>
         public static ConfidentialLedgerType Private { get; } = new ConfidentialLedgerType(PrivateValue);
-
         /// <summary> Determines if two <see cref="ConfidentialLedgerType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfidentialLedgerType left, ConfidentialLedgerType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ConfidentialLedgerType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfidentialLedgerType left, ConfidentialLedgerType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ConfidentialLedgerType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialLedgerType"/>. </summary>
         public static implicit operator ConfidentialLedgerType(string value) => new ConfidentialLedgerType(value);
 
-        /// <summary> Converts a string to a <see cref="ConfidentialLedgerType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialLedgerType?(string value) => value == null ? null : new ConfidentialLedgerType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfidentialLedgerType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ConfidentialLedgerType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

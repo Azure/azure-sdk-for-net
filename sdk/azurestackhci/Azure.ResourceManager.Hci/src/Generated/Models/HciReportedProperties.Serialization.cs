@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The device Configuration for HCI device. </summary>
-    public partial class HciReportedProperties : HciEdgeDeviceReportedProperties, IJsonModel<HciReportedProperties>
+    public partial class HciReportedProperties : IUtf8JsonSerializable, IJsonModel<HciReportedProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override HciEdgeDeviceReportedProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciReportedProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciReportedProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciReportedProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HciReportedProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciReportedProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciReportedProperties IPersistableModel<HciReportedProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (HciReportedProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciReportedProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciReportedProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciReportedProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(NetworkProfile))
             {
@@ -90,152 +51,221 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("sbeDeploymentPackageInfo"u8);
                 writer.WriteObjectValue(SbeDeploymentPackageInfo, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageProfile))
-            {
-                writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
-            {
-                writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile, options);
-            }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciReportedProperties IJsonModel<HciReportedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HciReportedProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override HciEdgeDeviceReportedProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciReportedProperties IJsonModel<HciReportedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciReportedProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciReportedProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciReportedProperties DeserializeHciReportedProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciReportedProperties DeserializeHciReportedProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            HciEdgeDeviceState? deviceState = default;
-            ExtensionProfile extensionProfile = default;
-            DateTimeOffset? lastSyncedOn = default;
-            ConfidentialVmProfile confidentialVmProfile = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             HciNetworkProfile networkProfile = default;
             HciOSProfile osProfile = default;
             SbeDeploymentPackageInfo sbeDeploymentPackageInfo = default;
-            HciStorageProfile storageProfile = default;
-            HciHardwareProfile hardwareProfile = default;
-            foreach (var prop in element.EnumerateObject())
+            HciEdgeDeviceState? deviceState = default;
+            HciEdgeDeviceExtensionProfile extensionProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("deviceState"u8))
+                if (property.NameEquals("networkProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deviceState = new HciEdgeDeviceState(prop.Value.GetString());
+                    networkProfile = HciNetworkProfile.DeserializeHciNetworkProfile(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("extensionProfile"u8))
+                if (property.NameEquals("osProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extensionProfile = ExtensionProfile.DeserializeExtensionProfile(prop.Value, options);
+                    osProfile = HciOSProfile.DeserializeHciOSProfile(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("lastSyncTimestamp"u8))
+                if (property.NameEquals("sbeDeploymentPackageInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSyncedOn = prop.Value.GetDateTimeOffset("O");
+                    sbeDeploymentPackageInfo = SbeDeploymentPackageInfo.DeserializeSbeDeploymentPackageInfo(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("confidentialVmProfile"u8))
+                if (property.NameEquals("deviceState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    confidentialVmProfile = ConfidentialVmProfile.DeserializeConfidentialVmProfile(prop.Value, options);
+                    deviceState = new HciEdgeDeviceState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("networkProfile"u8))
+                if (property.NameEquals("extensionProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkProfile = HciNetworkProfile.DeserializeHciNetworkProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("osProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    osProfile = HciOSProfile.DeserializeHciOSProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("sbeDeploymentPackageInfo"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sbeDeploymentPackageInfo = SbeDeploymentPackageInfo.DeserializeSbeDeploymentPackageInfo(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("storageProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageProfile = HciStorageProfile.DeserializeHciStorageProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("hardwareProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hardwareProfile = HciHardwareProfile.DeserializeHciHardwareProfile(prop.Value, options);
+                    extensionProfile = HciEdgeDeviceExtensionProfile.DeserializeHciEdgeDeviceExtensionProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new HciReportedProperties(
                 deviceState,
                 extensionProfile,
-                lastSyncedOn,
-                confidentialVmProfile,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 networkProfile,
                 osProfile,
-                sbeDeploymentPackageInfo,
-                storageProfile,
-                hardwareProfile);
+                sbeDeploymentPackageInfo);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkProfile))
+                {
+                    builder.Append("  networkProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkProfile, options, 2, false, "  networkProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSProfile), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  osProfile: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OSProfile))
+                {
+                    builder.Append("  osProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, OSProfile, options, 2, false, "  osProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SbeDeploymentPackageInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sbeDeploymentPackageInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SbeDeploymentPackageInfo))
+                {
+                    builder.Append("  sbeDeploymentPackageInfo: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SbeDeploymentPackageInfo, options, 2, false, "  sbeDeploymentPackageInfo: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deviceState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeviceState))
+                {
+                    builder.Append("  deviceState: ");
+                    builder.AppendLine($"'{DeviceState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Extensions", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  extensionProfile: ");
+                builder.AppendLine("{");
+                builder.Append("    extensions: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtensionProfile))
+                {
+                    builder.Append("  extensionProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExtensionProfile, options, 2, false, "  extensionProfile: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<HciReportedProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(HciReportedProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HciReportedProperties IPersistableModel<HciReportedProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHciReportedProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciReportedProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciReportedProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

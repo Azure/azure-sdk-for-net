@@ -270,11 +270,6 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("inProgressOperationId"u8);
                 writer.WriteStringValue(InProgressOperationId.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess);
-            }
             if (Optional.IsDefined(IsStorageAccountRequired))
             {
                 writer.WritePropertyName("storageAccountRequired"u8);
@@ -359,7 +354,6 @@ namespace Azure.ResourceManager.AppService.Models
             bool? httpsOnly = default;
             RedundancyMode? redundancyMode = default;
             Guid? inProgressOperationId = default;
-            string publicNetworkAccess = default;
             bool? storageAccountRequired = default;
             string keyVaultReferenceIdentity = default;
             ResourceIdentifier virtualNetworkSubnetId = default;
@@ -758,11 +752,6 @@ namespace Azure.ResourceManager.AppService.Models
                             inProgressOperationId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            publicNetworkAccess = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("storageAccountRequired"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -841,7 +830,6 @@ namespace Azure.ResourceManager.AppService.Models
                 httpsOnly,
                 redundancyMode,
                 inProgressOperationId,
-                publicNetworkAccess,
                 storageAccountRequired,
                 keyVaultReferenceIdentity,
                 virtualNetworkSubnetId,
@@ -1706,29 +1694,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     builder.Append("    inProgressOperationId: ");
                     builder.AppendLine($"'{InProgressOperationId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    publicNetworkAccess: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PublicNetworkAccess))
-                {
-                    builder.Append("    publicNetworkAccess: ");
-                    if (PublicNetworkAccess.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PublicNetworkAccess}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PublicNetworkAccess}'");
-                    }
                 }
             }
 

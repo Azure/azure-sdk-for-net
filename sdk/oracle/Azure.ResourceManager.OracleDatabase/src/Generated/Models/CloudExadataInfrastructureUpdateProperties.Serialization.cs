@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.OracleDatabase;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> The updatable properties of the CloudExadataInfrastructure. </summary>
-    public partial class CloudExadataInfrastructureUpdateProperties : IJsonModel<CloudExadataInfrastructureUpdateProperties>
+    public partial class CloudExadataInfrastructureUpdateProperties : IUtf8JsonSerializable, IJsonModel<CloudExadataInfrastructureUpdateProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudExadataInfrastructureUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCloudExadataInfrastructureUpdateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CloudExadataInfrastructureUpdateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudExadataInfrastructureUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CloudExadataInfrastructureUpdateProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloudExadataInfrastructureUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudExadataInfrastructureUpdateProperties IPersistableModel<CloudExadataInfrastructureUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloudExadataInfrastructureUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudExadataInfrastructureUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudExadataInfrastructureUpdateProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ComputeCount))
             {
                 writer.WritePropertyName("computeCount"u8);
@@ -93,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("customerContacts"u8);
                 writer.WriteStartArray();
-                foreach (OracleCustomerContact item in CustomerContacts)
+                foreach (var item in CustomerContacts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -104,15 +64,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +81,22 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudExadataInfrastructureUpdateProperties IJsonModel<CloudExadataInfrastructureUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudExadataInfrastructureUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CloudExadataInfrastructureUpdateProperties IJsonModel<CloudExadataInfrastructureUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudExadataInfrastructureUpdateProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudExadataInfrastructureUpdateProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CloudExadataInfrastructureUpdateProperties DeserializeCloudExadataInfrastructureUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CloudExadataInfrastructureUpdateProperties DeserializeCloudExadataInfrastructureUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -151,67 +106,100 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OracleDatabaseMaintenanceWindow maintenanceWindow = default;
             IList<OracleCustomerContact> customerContacts = default;
             string displayName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("computeCount"u8))
+                if (property.NameEquals("computeCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    computeCount = prop.Value.GetInt32();
+                    computeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("storageCount"u8))
+                if (property.NameEquals("storageCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageCount = prop.Value.GetInt32();
+                    storageCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("maintenanceWindow"u8))
+                if (property.NameEquals("maintenanceWindow"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maintenanceWindow = OracleDatabaseMaintenanceWindow.DeserializeOracleDatabaseMaintenanceWindow(prop.Value, options);
+                    maintenanceWindow = OracleDatabaseMaintenanceWindow.DeserializeOracleDatabaseMaintenanceWindow(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("customerContacts"u8))
+                if (property.NameEquals("customerContacts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<OracleCustomerContact> array = new List<OracleCustomerContact>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(OracleCustomerContact.DeserializeOracleCustomerContact(item, options));
                     }
                     customerContacts = array;
                     continue;
                 }
-                if (prop.NameEquals("displayName"u8))
+                if (property.NameEquals("displayName"u8))
                 {
-                    displayName = prop.Value.GetString();
+                    displayName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new CloudExadataInfrastructureUpdateProperties(
                 computeCount,
                 storageCount,
                 maintenanceWindow,
                 customerContacts ?? new ChangeTrackingList<OracleCustomerContact>(),
                 displayName,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudExadataInfrastructureUpdateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CloudExadataInfrastructureUpdateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudExadataInfrastructureUpdateProperties IPersistableModel<CloudExadataInfrastructureUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudExadataInfrastructureUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCloudExadataInfrastructureUpdateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudExadataInfrastructureUpdateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudExadataInfrastructureUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

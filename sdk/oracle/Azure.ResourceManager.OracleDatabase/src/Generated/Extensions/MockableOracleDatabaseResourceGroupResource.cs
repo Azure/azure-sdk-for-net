@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.OracleDatabase;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableOracleDatabaseResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableOracleDatabaseResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableOracleDatabaseResourceGroupResource"/> class for mocking. </summary>
         protected MockableOracleDatabaseResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableOracleDatabaseResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableOracleDatabaseResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableOracleDatabaseResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of CloudExadataInfrastructures in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of CloudExadataInfrastructures and their operations over a CloudExadataInfrastructureResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of CloudExadataInfrastructureResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CloudExadataInfrastructureResources and their operations over a CloudExadataInfrastructureResource. </returns>
         public virtual CloudExadataInfrastructureCollection GetCloudExadataInfrastructures()
         {
             return GetCachedClient(client => new CloudExadataInfrastructureCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a CloudExadataInfrastructure
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CloudExadataInfrastructureResource>> GetCloudExadataInfrastructureAsync(string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
-
             return await GetCloudExadataInfrastructures().GetAsync(cloudexadatainfrastructurename, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a CloudExadataInfrastructure
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,13 +99,11 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<CloudExadataInfrastructureResource> GetCloudExadataInfrastructure(string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
-
             return GetCloudExadataInfrastructures().Get(cloudexadatainfrastructurename, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CloudVmClusters in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of CloudVmClusters and their operations over a CloudVmClusterResource. </returns>
+        /// <summary> Gets a collection of CloudVmClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CloudVmClusterResources and their operations over a CloudVmClusterResource. </returns>
         public virtual CloudVmClusterCollection GetCloudVmClusters()
         {
             return GetCachedClient(client => new CloudVmClusterCollection(client, Id));
@@ -107,16 +113,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a CloudVmCluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,8 +137,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CloudVmClusterResource>> GetCloudVmClusterAsync(string cloudvmclustername, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
-
             return await GetCloudVmClusters().GetAsync(cloudvmclustername, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,16 +144,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a CloudVmCluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudVmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,13 +168,11 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<CloudVmClusterResource> GetCloudVmCluster(string cloudvmclustername, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudvmclustername, nameof(cloudvmclustername));
-
             return GetCloudVmClusters().Get(cloudvmclustername, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AutonomousDatabases in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of AutonomousDatabases and their operations over a AutonomousDatabaseResource. </returns>
+        /// <summary> Gets a collection of AutonomousDatabaseResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AutonomousDatabaseResources and their operations over a AutonomousDatabaseResource. </returns>
         public virtual AutonomousDatabaseCollection GetAutonomousDatabases()
         {
             return GetCachedClient(client => new AutonomousDatabaseCollection(client, Id));
@@ -172,16 +182,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a AutonomousDatabase
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,8 +206,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AutonomousDatabaseResource>> GetAutonomousDatabaseAsync(string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
-
             return await GetAutonomousDatabases().GetAsync(autonomousdatabasename, cancellationToken).ConfigureAwait(false);
         }
 
@@ -201,16 +213,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a AutonomousDatabase
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/autonomousDatabases/{autonomousdatabasename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AutonomousDatabases_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AutonomousDatabase_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutonomousDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,13 +237,11 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<AutonomousDatabaseResource> GetAutonomousDatabase(string autonomousdatabasename, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(autonomousdatabasename, nameof(autonomousdatabasename));
-
             return GetAutonomousDatabases().Get(autonomousdatabasename, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExadbVmClusters in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ExadbVmClusters and their operations over a ExadbVmClusterResource. </returns>
+        /// <summary> Gets a collection of ExadbVmClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ExadbVmClusterResources and their operations over a ExadbVmClusterResource. </returns>
         public virtual ExadbVmClusterCollection GetExadbVmClusters()
         {
             return GetCachedClient(client => new ExadbVmClusterCollection(client, Id));
@@ -237,16 +251,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a ExadbVmCluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExadbVmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExadbVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -257,8 +275,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ExadbVmClusterResource>> GetExadbVmClusterAsync(string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
-
             return await GetExadbVmClusters().GetAsync(exadbVmClusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -266,16 +282,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a ExadbVmCluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exadbVmClusters/{exadbVmClusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExadbVmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ExadbVmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExadbVmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,13 +306,11 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<ExadbVmClusterResource> GetExadbVmCluster(string exadbVmClusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exadbVmClusterName, nameof(exadbVmClusterName));
-
             return GetExadbVmClusters().Get(exadbVmClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExascaleDBStorageVaults in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of ExascaleDBStorageVaults and their operations over a ExascaleDBStorageVaultResource. </returns>
+        /// <summary> Gets a collection of ExascaleDBStorageVaultResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ExascaleDBStorageVaultResources and their operations over a ExascaleDBStorageVaultResource. </returns>
         public virtual ExascaleDBStorageVaultCollection GetExascaleDBStorageVaults()
         {
             return GetCachedClient(client => new ExascaleDBStorageVaultCollection(client, Id));
@@ -302,16 +320,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a ExascaleDbStorageVault
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExascaleDbStorageVaults_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ExascaleDbStorageVault_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,8 +344,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ExascaleDBStorageVaultResource>> GetExascaleDBStorageVaultAsync(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
-
             return await GetExascaleDBStorageVaults().GetAsync(exascaleDbStorageVaultName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -331,16 +351,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a ExascaleDbStorageVault
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/exascaleDbStorageVaults/{exascaleDbStorageVaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExascaleDbStorageVaults_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ExascaleDbStorageVault_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExascaleDBStorageVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,13 +375,11 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<ExascaleDBStorageVaultResource> GetExascaleDBStorageVault(string exascaleDbStorageVaultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(exascaleDbStorageVaultName, nameof(exascaleDbStorageVaultName));
-
             return GetExascaleDBStorageVaults().Get(exascaleDbStorageVaultName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OracleNetworkAnchors in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of OracleNetworkAnchors and their operations over a OracleNetworkAnchorResource. </returns>
+        /// <summary> Gets a collection of OracleNetworkAnchorResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OracleNetworkAnchorResources and their operations over a OracleNetworkAnchorResource. </returns>
         public virtual OracleNetworkAnchorCollection GetOracleNetworkAnchors()
         {
             return GetCachedClient(client => new OracleNetworkAnchorCollection(client, Id));
@@ -367,16 +389,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a NetworkAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkAnchors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>NetworkAnchor_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleNetworkAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -387,8 +413,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OracleNetworkAnchorResource>> GetOracleNetworkAnchorAsync(string networkAnchorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkAnchorName, nameof(networkAnchorName));
-
             return await GetOracleNetworkAnchors().GetAsync(networkAnchorName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -396,16 +420,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a NetworkAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/networkAnchors/{networkAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkAnchors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>NetworkAnchor_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleNetworkAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,13 +444,11 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<OracleNetworkAnchorResource> GetOracleNetworkAnchor(string networkAnchorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(networkAnchorName, nameof(networkAnchorName));
-
             return GetOracleNetworkAnchors().Get(networkAnchorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OracleResourceAnchors in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of OracleResourceAnchors and their operations over a OracleResourceAnchorResource. </returns>
+        /// <summary> Gets a collection of OracleResourceAnchorResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OracleResourceAnchorResources and their operations over a OracleResourceAnchorResource. </returns>
         public virtual OracleResourceAnchorCollection GetOracleResourceAnchors()
         {
             return GetCachedClient(client => new OracleResourceAnchorCollection(client, Id));
@@ -432,16 +458,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a ResourceAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,8 +482,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OracleResourceAnchorResource>> GetOracleResourceAnchorAsync(string resourceAnchorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceAnchorName, nameof(resourceAnchorName));
-
             return await GetOracleResourceAnchors().GetAsync(resourceAnchorName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -461,16 +489,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a ResourceAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -481,13 +513,11 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<OracleResourceAnchorResource> GetOracleResourceAnchor(string resourceAnchorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceAnchorName, nameof(resourceAnchorName));
-
             return GetOracleResourceAnchors().Get(resourceAnchorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OracleDBSystems in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of OracleDBSystems and their operations over a OracleDBSystemResource. </returns>
+        /// <summary> Gets a collection of OracleDBSystemResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of OracleDBSystemResources and their operations over a OracleDBSystemResource. </returns>
         public virtual OracleDBSystemCollection GetOracleDBSystems()
         {
             return GetCachedClient(client => new OracleDBSystemCollection(client, Id));
@@ -497,16 +527,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a DbSystem
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,8 +551,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OracleDBSystemResource>> GetOracleDBSystemAsync(string dbSystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
-
             return await GetOracleDBSystems().GetAsync(dbSystemName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -526,16 +558,20 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// Get a DbSystem
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -546,8 +582,6 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         [ForwardsClientCalls]
         public virtual Response<OracleDBSystemResource> GetOracleDBSystem(string dbSystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
-
             return GetOracleDBSystems().Get(dbSystemName, cancellationToken);
         }
     }

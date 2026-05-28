@@ -6,12 +6,9 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
-using SpecialWords._ExtensibleStrings;
 using SpecialWords._ModelProperties;
 using SpecialWords._Models;
-using SpecialWords._ReservedOperationBodyParams;
 
 namespace SpecialWords
 {
@@ -19,22 +16,13 @@ namespace SpecialWords
     {
         public SpecialWordsClient() : this(new Uri("http://localhost:3000"), new SpecialWordsClientOptions()) => throw null;
 
-        internal SpecialWordsClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, SpecialWordsClientOptions options) => throw null;
-
-        public SpecialWordsClient(Uri endpoint, SpecialWordsClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public SpecialWordsClient(SpecialWordsClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public SpecialWordsClient(Uri endpoint, SpecialWordsClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Models GetModelsClient() => throw null;
 
         public virtual ModelProperties GetModelPropertiesClient() => throw null;
-
-        public virtual ReservedOperationBodyParams GetReservedOperationBodyParamsClient() => throw null;
-
-        public virtual ExtensibleStrings GetExtensibleStringsClient() => throw null;
 
         public virtual Operations GetOperationsClient() => throw null;
 

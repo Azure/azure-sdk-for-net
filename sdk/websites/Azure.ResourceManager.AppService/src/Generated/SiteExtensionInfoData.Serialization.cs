@@ -404,7 +404,6 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
-                kind,
                 extensionId,
                 title,
                 extensionType,
@@ -425,6 +424,7 @@ namespace Azure.ResourceManager.AppService
                 installedDateTime,
                 provisioningState,
                 comment,
+                kind,
                 serializedAdditionalRawData);
         }
 

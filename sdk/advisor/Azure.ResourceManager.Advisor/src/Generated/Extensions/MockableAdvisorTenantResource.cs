@@ -8,50 +8,56 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Advisor;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Advisor.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
+    /// <summary> A class to add extension methods to TenantResource. </summary>
     public partial class MockableAdvisorTenantResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableAdvisorTenantResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableAdvisorTenantResource"/> class for mocking. </summary>
         protected MockableAdvisorTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableAdvisorTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableAdvisorTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAdvisorTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of AdvisorMetadataEntities in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of AdvisorMetadataEntities and their operations over a AdvisorMetadataEntityResource. </returns>
-        public virtual AdvisorMetadataEntityCollection GetAdvisorMetadataEntities()
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            return GetCachedClient(client => new AdvisorMetadataEntityCollection(client, Id));
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of MetadataEntityResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of MetadataEntityResources and their operations over a MetadataEntityResource. </returns>
+        public virtual MetadataEntityCollection GetMetadataEntities()
+        {
+            return GetCachedClient(client => new MetadataEntityCollection(client, Id));
         }
 
         /// <summary>
         /// Gets the metadata entity.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Advisor/metadata/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MetadataEntities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetadataEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -60,27 +66,29 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AdvisorMetadataEntityResource>> GetAdvisorMetadataEntityAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetadataEntityResource>> GetMetadataEntityAsync(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetAdvisorMetadataEntities().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMetadataEntities().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the metadata entity.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Advisor/metadata/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Advisor/metadata/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MetadataEntities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RecommendationMetadata_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MetadataEntityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,11 +97,9 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AdvisorMetadataEntityResource> GetAdvisorMetadataEntity(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MetadataEntityResource> GetMetadataEntity(string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetAdvisorMetadataEntities().Get(name, cancellationToken);
+            return GetMetadataEntities().Get(name, cancellationToken);
         }
     }
 }

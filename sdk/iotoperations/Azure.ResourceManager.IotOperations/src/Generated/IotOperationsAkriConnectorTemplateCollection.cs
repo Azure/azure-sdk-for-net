@@ -8,66 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotOperations
 {
     /// <summary>
     /// A class representing a collection of <see cref="IotOperationsAkriConnectorTemplateResource"/> and their operations.
     /// Each <see cref="IotOperationsAkriConnectorTemplateResource"/> in the collection will belong to the same instance of <see cref="IotOperationsInstanceResource"/>.
-    /// To get a <see cref="IotOperationsAkriConnectorTemplateCollection"/> instance call the GetIotOperationsAkriConnectorTemplates method from an instance of <see cref="IotOperationsInstanceResource"/>.
+    /// To get an <see cref="IotOperationsAkriConnectorTemplateCollection"/> instance call the GetIotOperationsAkriConnectorTemplates method from an instance of <see cref="IotOperationsInstanceResource"/>.
     /// </summary>
     public partial class IotOperationsAkriConnectorTemplateCollection : ArmCollection, IEnumerable<IotOperationsAkriConnectorTemplateResource>, IAsyncEnumerable<IotOperationsAkriConnectorTemplateResource>
     {
-        private readonly ClientDiagnostics _akriConnectorTemplateClientDiagnostics;
-        private readonly AkriConnectorTemplate _akriConnectorTemplateRestClient;
+        private readonly ClientDiagnostics _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics;
+        private readonly AkriConnectorTemplateRestOperations _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient;
 
-        /// <summary> Initializes a new instance of IotOperationsAkriConnectorTemplateCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotOperationsAkriConnectorTemplateCollection"/> class for mocking. </summary>
         protected IotOperationsAkriConnectorTemplateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotOperationsAkriConnectorTemplateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="IotOperationsAkriConnectorTemplateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal IotOperationsAkriConnectorTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(IotOperationsAkriConnectorTemplateResource.ResourceType, out string iotOperationsAkriConnectorTemplateApiVersion);
-            _akriConnectorTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsAkriConnectorTemplateResource.ResourceType.Namespace, Diagnostics);
-            _akriConnectorTemplateRestClient = new AkriConnectorTemplate(_akriConnectorTemplateClientDiagnostics, Pipeline, Endpoint, iotOperationsAkriConnectorTemplateApiVersion ?? "2025-10-01");
-            ValidateResourceId(id);
+            _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsAkriConnectorTemplateResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(IotOperationsAkriConnectorTemplateResource.ResourceType, out string iotOperationsAkriConnectorTemplateAkriConnectorTemplateApiVersion);
+            _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient = new AkriConnectorTemplateRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsAkriConnectorTemplateAkriConnectorTemplateApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != IotOperationsInstanceResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a AkriConnectorTemplateResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AkriConnectorTemplate_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="akriConnectorTemplateName"> Name of AkriConnectorTemplate resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IotOperationsAkriConnectorTemplateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string akriConnectorTemplateName, IotOperationsAkriConnectorTemplateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriConnectorTemplateName, nameof(akriConnectorTemplateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _akriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.CreateOrUpdate");
+            using var scope = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(
-                    new IotOperationsAkriConnectorTemplateOperationSource(Client),
-                    _akriConnectorTemplateClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(new IotOperationsAkriConnectorTemplateOperationSource(Client), _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics, Pipeline, _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.IotOperations
         /// Create a AkriConnectorTemplateResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AkriConnectorTemplate_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="akriConnectorTemplateName"> Name of AkriConnectorTemplate resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IotOperationsAkriConnectorTemplateResource> CreateOrUpdate(WaitUntil waitUntil, string akriConnectorTemplateName, IotOperationsAkriConnectorTemplateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriConnectorTemplateName, nameof(akriConnectorTemplateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _akriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.CreateOrUpdate");
+            using var scope = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(
-                    new IotOperationsAkriConnectorTemplateOperationSource(Client),
-                    _akriConnectorTemplateClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, data, cancellationToken);
+                var operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(new IotOperationsAkriConnectorTemplateOperationSource(Client), _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics, Pipeline, _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.IotOperations
         /// Get a AkriConnectorTemplateResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AkriConnectorTemplate_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="akriConnectorTemplateName"> Name of AkriConnectorTemplate resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         public virtual async Task<Response<IotOperationsAkriConnectorTemplateResource>> GetAsync(string akriConnectorTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriConnectorTemplateName, nameof(akriConnectorTemplateName));
 
-            using DiagnosticScope scope = _akriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.Get");
+            using var scope = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<IotOperationsAkriConnectorTemplateData> response = Response.FromValue(IotOperationsAkriConnectorTemplateData.FromResponse(result), result);
+                var response = await _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new IotOperationsAkriConnectorTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.IotOperations
         /// Get a AkriConnectorTemplateResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AkriConnectorTemplate_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="akriConnectorTemplateName"> Name of AkriConnectorTemplate resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         public virtual Response<IotOperationsAkriConnectorTemplateResource> Get(string akriConnectorTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriConnectorTemplateName, nameof(akriConnectorTemplateName));
 
-            using DiagnosticScope scope = _akriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.Get");
+            using var scope = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<IotOperationsAkriConnectorTemplateData> response = Response.FromValue(IotOperationsAkriConnectorTemplateData.FromResponse(result), result);
+                var response = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new IotOperationsAkriConnectorTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.IotOperations
         /// List AkriConnectorTemplateResource resources by InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AkriConnectorTemplate_ListByInstanceResource. </description>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_ListByInstanceResource</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotOperationsAkriConnectorTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotOperationsAkriConnectorTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotOperationsAkriConnectorTemplateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<IotOperationsAkriConnectorTemplateData, IotOperationsAkriConnectorTemplateResource>(new AkriConnectorTemplateGetByInstanceResourceAsyncCollectionResultOfT(
-                _akriConnectorTemplateRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "IotOperationsAkriConnectorTemplateCollection.GetAll"), data => new IotOperationsAkriConnectorTemplateResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.CreateListByInstanceResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.CreateListByInstanceResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotOperationsAkriConnectorTemplateResource(Client, IotOperationsAkriConnectorTemplateData.DeserializeIotOperationsAkriConnectorTemplateData(e)), _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics, Pipeline, "IotOperationsAkriConnectorTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List AkriConnectorTemplateResource resources by InstanceResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AkriConnectorTemplate_ListByInstanceResource. </description>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_ListByInstanceResource</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.IotOperations
         /// <returns> A collection of <see cref="IotOperationsAkriConnectorTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotOperationsAkriConnectorTemplateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<IotOperationsAkriConnectorTemplateData, IotOperationsAkriConnectorTemplateResource>(new AkriConnectorTemplateGetByInstanceResourceCollectionResultOfT(
-                _akriConnectorTemplateRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "IotOperationsAkriConnectorTemplateCollection.GetAll"), data => new IotOperationsAkriConnectorTemplateResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.CreateListByInstanceResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.CreateListByInstanceResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotOperationsAkriConnectorTemplateResource(Client, IotOperationsAkriConnectorTemplateData.DeserializeIotOperationsAkriConnectorTemplateData(e)), _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics, Pipeline, "IotOperationsAkriConnectorTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AkriConnectorTemplate_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="akriConnectorTemplateName"> Name of AkriConnectorTemplate resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string akriConnectorTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriConnectorTemplateName, nameof(akriConnectorTemplateName));
 
-            using DiagnosticScope scope = _akriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.Exists");
+            using var scope = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<IotOperationsAkriConnectorTemplateData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(IotOperationsAkriConnectorTemplateData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((IotOperationsAkriConnectorTemplateData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.IotOperations
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AkriConnectorTemplate_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="akriConnectorTemplateName"> Name of AkriConnectorTemplate resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         public virtual Response<bool> Exists(string akriConnectorTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriConnectorTemplateName, nameof(akriConnectorTemplateName));
 
-            using DiagnosticScope scope = _akriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.Exists");
+            using var scope = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<IotOperationsAkriConnectorTemplateData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(IotOperationsAkriConnectorTemplateData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((IotOperationsAkriConnectorTemplateData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.IotOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AkriConnectorTemplate_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="akriConnectorTemplateName"> Name of AkriConnectorTemplate resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         public virtual async Task<NullableResponse<IotOperationsAkriConnectorTemplateResource>> GetIfExistsAsync(string akriConnectorTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriConnectorTemplateName, nameof(akriConnectorTemplateName));
 
-            using DiagnosticScope scope = _akriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.GetIfExists");
+            using var scope = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<IotOperationsAkriConnectorTemplateData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(IotOperationsAkriConnectorTemplateData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((IotOperationsAkriConnectorTemplateData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<IotOperationsAkriConnectorTemplateResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new IotOperationsAkriConnectorTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.IotOperations
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AkriConnectorTemplate_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="akriConnectorTemplateName"> Name of AkriConnectorTemplate resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         public virtual NullableResponse<IotOperationsAkriConnectorTemplateResource> GetIfExists(string akriConnectorTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(akriConnectorTemplateName, nameof(akriConnectorTemplateName));
 
-            using DiagnosticScope scope = _akriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.GetIfExists");
+            using var scope = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateClientDiagnostics.CreateScope("IotOperationsAkriConnectorTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _akriConnectorTemplateRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<IotOperationsAkriConnectorTemplateData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(IotOperationsAkriConnectorTemplateData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((IotOperationsAkriConnectorTemplateData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _iotOperationsAkriConnectorTemplateAkriConnectorTemplateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<IotOperationsAkriConnectorTemplateResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new IotOperationsAkriConnectorTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.IotOperations
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<IotOperationsAkriConnectorTemplateResource> IAsyncEnumerable<IotOperationsAkriConnectorTemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

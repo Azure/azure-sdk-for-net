@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class HciClusterSecuritySettingCollection : ArmCollection, IEnumerable<HciClusterSecuritySettingResource>, IAsyncEnumerable<HciClusterSecuritySettingResource>
     {
-        private readonly ClientDiagnostics _securitySettingsClientDiagnostics;
-        private readonly SecuritySettings _securitySettingsRestClient;
+        private readonly ClientDiagnostics _hciClusterSecuritySettingSecuritySettingsClientDiagnostics;
+        private readonly SecuritySettingsRestOperations _hciClusterSecuritySettingSecuritySettingsRestClient;
 
-        /// <summary> Initializes a new instance of HciClusterSecuritySettingCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciClusterSecuritySettingCollection"/> class for mocking. </summary>
         protected HciClusterSecuritySettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciClusterSecuritySettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciClusterSecuritySettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HciClusterSecuritySettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HciClusterSecuritySettingResource.ResourceType, out string hciClusterSecuritySettingApiVersion);
-            _securitySettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterSecuritySettingResource.ResourceType.Namespace, Diagnostics);
-            _securitySettingsRestClient = new SecuritySettings(_securitySettingsClientDiagnostics, Pipeline, Endpoint, hciClusterSecuritySettingApiVersion ?? "2026-04-01-preview");
-            ValidateResourceId(id);
+            _hciClusterSecuritySettingSecuritySettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci", HciClusterSecuritySettingResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HciClusterSecuritySettingResource.ResourceType, out string hciClusterSecuritySettingSecuritySettingsApiVersion);
+            _hciClusterSecuritySettingSecuritySettingsRestClient = new SecuritySettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciClusterSecuritySettingSecuritySettingsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HciClusterResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciClusterResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HciClusterResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a security setting
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.Hci
         /// <param name="securitySettingsName"> Name of security setting. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HciClusterSecuritySettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securitySettingsName, HciClusterSecuritySettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securitySettingsName, nameof(securitySettingsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.CreateOrUpdate");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, HciClusterSecuritySettingData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HciArmOperation<HciClusterSecuritySettingResource> operation = new HciArmOperation<HciClusterSecuritySettingResource>(
-                    new HciClusterSecuritySettingOperationSource(Client),
-                    _securitySettingsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _hciClusterSecuritySettingSecuritySettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettingsName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HciArmOperation<HciClusterSecuritySettingResource>(new HciClusterSecuritySettingOperationSource(Client), _hciClusterSecuritySettingSecuritySettingsClientDiagnostics, Pipeline, _hciClusterSecuritySettingSecuritySettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettingsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.Hci
         /// Create a security setting
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.Hci
         /// <param name="securitySettingsName"> Name of security setting. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HciClusterSecuritySettingResource> CreateOrUpdate(WaitUntil waitUntil, string securitySettingsName, HciClusterSecuritySettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securitySettingsName, nameof(securitySettingsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.CreateOrUpdate");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, HciClusterSecuritySettingData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HciArmOperation<HciClusterSecuritySettingResource> operation = new HciArmOperation<HciClusterSecuritySettingResource>(
-                    new HciClusterSecuritySettingOperationSource(Client),
-                    _securitySettingsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _hciClusterSecuritySettingSecuritySettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettingsName, data, cancellationToken);
+                var operation = new HciArmOperation<HciClusterSecuritySettingResource>(new HciClusterSecuritySettingOperationSource(Client), _hciClusterSecuritySettingSecuritySettingsClientDiagnostics, Pipeline, _hciClusterSecuritySettingSecuritySettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettingsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.Hci
         /// Get a SecuritySetting
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securitySettingsName"> Name of security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         public virtual async Task<Response<HciClusterSecuritySettingResource>> GetAsync(string securitySettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securitySettingsName, nameof(securitySettingsName));
 
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.Get");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HciClusterSecuritySettingData> response = Response.FromValue(HciClusterSecuritySettingData.FromResponse(result), result);
+                var response = await _hciClusterSecuritySettingSecuritySettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettingsName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciClusterSecuritySettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.Hci
         /// Get a SecuritySetting
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securitySettingsName"> Name of security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         public virtual Response<HciClusterSecuritySettingResource> Get(string securitySettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securitySettingsName, nameof(securitySettingsName));
 
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.Get");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HciClusterSecuritySettingData> response = Response.FromValue(HciClusterSecuritySettingData.FromResponse(result), result);
+                var response = _hciClusterSecuritySettingSecuritySettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettingsName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciClusterSecuritySettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.Hci
         /// List SecuritySetting resources by Clusters
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_ListByClusters. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_ListByClusters</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HciClusterSecuritySettingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HciClusterSecuritySettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HciClusterSecuritySettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<HciClusterSecuritySettingData, HciClusterSecuritySettingResource>(new SecuritySettingsGetByClustersAsyncCollectionResultOfT(
-                _securitySettingsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "HciClusterSecuritySettingCollection.GetAll"), data => new HciClusterSecuritySettingResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciClusterSecuritySettingSecuritySettingsRestClient.CreateListByClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciClusterSecuritySettingSecuritySettingsRestClient.CreateListByClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HciClusterSecuritySettingResource(Client, HciClusterSecuritySettingData.DeserializeHciClusterSecuritySettingData(e)), _hciClusterSecuritySettingSecuritySettingsClientDiagnostics, Pipeline, "HciClusterSecuritySettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List SecuritySetting resources by Clusters
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_ListByClusters. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_ListByClusters</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="HciClusterSecuritySettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HciClusterSecuritySettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<HciClusterSecuritySettingData, HciClusterSecuritySettingResource>(new SecuritySettingsGetByClustersCollectionResultOfT(
-                _securitySettingsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "HciClusterSecuritySettingCollection.GetAll"), data => new HciClusterSecuritySettingResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hciClusterSecuritySettingSecuritySettingsRestClient.CreateListByClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hciClusterSecuritySettingSecuritySettingsRestClient.CreateListByClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HciClusterSecuritySettingResource(Client, HciClusterSecuritySettingData.DeserializeHciClusterSecuritySettingData(e)), _hciClusterSecuritySettingSecuritySettingsClientDiagnostics, Pipeline, "HciClusterSecuritySettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securitySettingsName"> Name of security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string securitySettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securitySettingsName, nameof(securitySettingsName));
 
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.Exists");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<HciClusterSecuritySettingData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HciClusterSecuritySettingData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HciClusterSecuritySettingData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _hciClusterSecuritySettingSecuritySettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.Hci
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securitySettingsName"> Name of security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         public virtual Response<bool> Exists(string securitySettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securitySettingsName, nameof(securitySettingsName));
 
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.Exists");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<HciClusterSecuritySettingData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HciClusterSecuritySettingData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HciClusterSecuritySettingData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _hciClusterSecuritySettingSecuritySettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettingsName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.Hci
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securitySettingsName"> Name of security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         public virtual async Task<NullableResponse<HciClusterSecuritySettingResource>> GetIfExistsAsync(string securitySettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securitySettingsName, nameof(securitySettingsName));
 
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.GetIfExists");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<HciClusterSecuritySettingData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HciClusterSecuritySettingData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HciClusterSecuritySettingData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _hciClusterSecuritySettingSecuritySettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<HciClusterSecuritySettingResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciClusterSecuritySettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.Hci
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/securitySettings/{securitySettingsName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySettings_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecuritySettings_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterSecuritySettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securitySettingsName"> Name of security setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securitySettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securitySettingsName"/> is null. </exception>
         public virtual NullableResponse<HciClusterSecuritySettingResource> GetIfExists(string securitySettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securitySettingsName, nameof(securitySettingsName));
 
-            using DiagnosticScope scope = _securitySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.GetIfExists");
+            using var scope = _hciClusterSecuritySettingSecuritySettingsClientDiagnostics.CreateScope("HciClusterSecuritySettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securitySettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<HciClusterSecuritySettingData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HciClusterSecuritySettingData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HciClusterSecuritySettingData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _hciClusterSecuritySettingSecuritySettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securitySettingsName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<HciClusterSecuritySettingResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciClusterSecuritySettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.Hci
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HciClusterSecuritySettingResource> IAsyncEnumerable<HciClusterSecuritySettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

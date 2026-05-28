@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
-    /// <summary></summary>
-    internal partial class EdgeSolutionOperationSource : IOperationSource<EdgeSolutionResource>
+    internal class EdgeSolutionOperationSource : IOperationSource<EdgeSolutionResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal EdgeSolutionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         EdgeSolutionResource IOperationSource<EdgeSolutionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            EdgeSolutionData data = EdgeSolutionData.DeserializeEdgeSolutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<EdgeSolutionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
             return new EdgeSolutionResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<EdgeSolutionResource> IOperationSource<EdgeSolutionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            EdgeSolutionData data = EdgeSolutionData.DeserializeEdgeSolutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new EdgeSolutionResource(_client, data);
+            var data = ModelReaderWriter.Read<EdgeSolutionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadOrchestrationContext.Default);
+            return await Task.FromResult(new EdgeSolutionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public readonly partial struct DependenciesAggregationType : IEquatable<DependenciesAggregationType>
     {
         private readonly string _value;
-        /// <summary> Default behavior: Worst child health state is propagated. </summary>
-        private const string WorstOfValue = "WorstOf";
-        /// <summary> Based on configurable thresholds. </summary>
-        private const string ThresholdsValue = "Thresholds";
 
         /// <summary> Initializes a new instance of <see cref="DependenciesAggregationType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DependenciesAggregationType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string WorstOfValue = "WorstOf";
+        private const string ThresholdsValue = "Thresholds";
 
         /// <summary> Default behavior: Worst child health state is propagated. </summary>
         public static DependenciesAggregationType WorstOf { get; } = new DependenciesAggregationType(WorstOfValue);
-
         /// <summary> Based on configurable thresholds. </summary>
         public static DependenciesAggregationType Thresholds { get; } = new DependenciesAggregationType(ThresholdsValue);
-
         /// <summary> Determines if two <see cref="DependenciesAggregationType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DependenciesAggregationType left, DependenciesAggregationType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DependenciesAggregationType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DependenciesAggregationType left, DependenciesAggregationType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DependenciesAggregationType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DependenciesAggregationType"/>. </summary>
         public static implicit operator DependenciesAggregationType(string value) => new DependenciesAggregationType(value);
 
-        /// <summary> Converts a string to a <see cref="DependenciesAggregationType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DependenciesAggregationType?(string value) => value == null ? null : new DependenciesAggregationType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DependenciesAggregationType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DependenciesAggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

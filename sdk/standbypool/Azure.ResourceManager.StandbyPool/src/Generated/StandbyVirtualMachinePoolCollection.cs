@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.StandbyPool
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.StandbyPool
     /// </summary>
     public partial class StandbyVirtualMachinePoolCollection : ArmCollection, IEnumerable<StandbyVirtualMachinePoolResource>, IAsyncEnumerable<StandbyVirtualMachinePoolResource>
     {
-        private readonly ClientDiagnostics _standbyVirtualMachinePoolsClientDiagnostics;
-        private readonly StandbyVirtualMachinePools _standbyVirtualMachinePoolsRestClient;
+        private readonly ClientDiagnostics _standbyVirtualMachinePoolClientDiagnostics;
+        private readonly StandbyVirtualMachinePoolsRestOperations _standbyVirtualMachinePoolRestClient;
 
-        /// <summary> Initializes a new instance of StandbyVirtualMachinePoolCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StandbyVirtualMachinePoolCollection"/> class for mocking. </summary>
         protected StandbyVirtualMachinePoolCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StandbyVirtualMachinePoolCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal StandbyVirtualMachinePoolCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _standbyVirtualMachinePoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyVirtualMachinePoolResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(StandbyVirtualMachinePoolResource.ResourceType, out string standbyVirtualMachinePoolApiVersion);
-            _standbyVirtualMachinePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyVirtualMachinePoolResource.ResourceType.Namespace, Diagnostics);
-            _standbyVirtualMachinePoolsRestClient = new StandbyVirtualMachinePools(_standbyVirtualMachinePoolsClientDiagnostics, Pipeline, Endpoint, standbyVirtualMachinePoolApiVersion ?? "2025-10-01");
-            ValidateResourceId(id);
+            _standbyVirtualMachinePoolRestClient = new StandbyVirtualMachinePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyVirtualMachinePoolApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a StandbyVirtualMachinePoolResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StandbyVirtualMachinePools_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StandbyVirtualMachinePoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standbyVirtualMachinePoolName, nameof(standbyVirtualMachinePoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _standbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.CreateOrUpdate");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                StandbyPoolArmOperation<StandbyVirtualMachinePoolResource> operation = new StandbyPoolArmOperation<StandbyVirtualMachinePoolResource>(
-                    new StandbyVirtualMachinePoolOperationSource(Client),
-                    _standbyVirtualMachinePoolsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _standbyVirtualMachinePoolRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, standbyVirtualMachinePoolName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new StandbyPoolArmOperation<StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolOperationSource(Client), _standbyVirtualMachinePoolClientDiagnostics, Pipeline, _standbyVirtualMachinePoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, standbyVirtualMachinePoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.StandbyPool
         /// Create a StandbyVirtualMachinePoolResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StandbyVirtualMachinePools_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StandbyVirtualMachinePoolResource> CreateOrUpdate(WaitUntil waitUntil, string standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standbyVirtualMachinePoolName, nameof(standbyVirtualMachinePoolName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _standbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.CreateOrUpdate");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, StandbyVirtualMachinePoolData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                StandbyPoolArmOperation<StandbyVirtualMachinePoolResource> operation = new StandbyPoolArmOperation<StandbyVirtualMachinePoolResource>(
-                    new StandbyVirtualMachinePoolOperationSource(Client),
-                    _standbyVirtualMachinePoolsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _standbyVirtualMachinePoolRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, standbyVirtualMachinePoolName, data, cancellationToken);
+                var operation = new StandbyPoolArmOperation<StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolOperationSource(Client), _standbyVirtualMachinePoolClientDiagnostics, Pipeline, _standbyVirtualMachinePoolRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, standbyVirtualMachinePoolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.StandbyPool
         /// Get a StandbyVirtualMachinePoolResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StandbyVirtualMachinePools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         public virtual async Task<Response<StandbyVirtualMachinePoolResource>> GetAsync(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standbyVirtualMachinePoolName, nameof(standbyVirtualMachinePoolName));
 
-            using DiagnosticScope scope = _standbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.Get");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StandbyVirtualMachinePoolData> response = Response.FromValue(StandbyVirtualMachinePoolData.FromResponse(result), result);
+                var response = await _standbyVirtualMachinePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, standbyVirtualMachinePoolName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.StandbyPool
         /// Get a StandbyVirtualMachinePoolResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StandbyVirtualMachinePools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         public virtual Response<StandbyVirtualMachinePoolResource> Get(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standbyVirtualMachinePoolName, nameof(standbyVirtualMachinePoolName));
 
-            using DiagnosticScope scope = _standbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.Get");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StandbyVirtualMachinePoolData> response = Response.FromValue(StandbyVirtualMachinePoolData.FromResponse(result), result);
+                var response = _standbyVirtualMachinePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, standbyVirtualMachinePoolName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.StandbyPool
         /// List StandbyVirtualMachinePoolResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StandbyVirtualMachinePools_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StandbyVirtualMachinePoolResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StandbyVirtualMachinePoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StandbyVirtualMachinePoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupAsyncCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyVirtualMachinePoolCollection.GetAll"), data => new StandbyVirtualMachinePoolResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyVirtualMachinePoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyVirtualMachinePoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolResource(Client, StandbyVirtualMachinePoolData.DeserializeStandbyVirtualMachinePoolData(e)), _standbyVirtualMachinePoolClientDiagnostics, Pipeline, "StandbyVirtualMachinePoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List StandbyVirtualMachinePoolResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StandbyVirtualMachinePools_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.StandbyPool
         /// <returns> A collection of <see cref="StandbyVirtualMachinePoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StandbyVirtualMachinePoolResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<StandbyVirtualMachinePoolData, StandbyVirtualMachinePoolResource>(new StandbyVirtualMachinePoolsGetByResourceGroupCollectionResultOfT(_standbyVirtualMachinePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "StandbyVirtualMachinePoolCollection.GetAll"), data => new StandbyVirtualMachinePoolResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyVirtualMachinePoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyVirtualMachinePoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolResource(Client, StandbyVirtualMachinePoolData.DeserializeStandbyVirtualMachinePoolData(e)), _standbyVirtualMachinePoolClientDiagnostics, Pipeline, "StandbyVirtualMachinePoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StandbyVirtualMachinePools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standbyVirtualMachinePoolName, nameof(standbyVirtualMachinePoolName));
 
-            using DiagnosticScope scope = _standbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.Exists");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<StandbyVirtualMachinePoolData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StandbyVirtualMachinePoolData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StandbyVirtualMachinePoolData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _standbyVirtualMachinePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, standbyVirtualMachinePoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.StandbyPool
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StandbyVirtualMachinePools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standbyVirtualMachinePoolName, nameof(standbyVirtualMachinePoolName));
 
-            using DiagnosticScope scope = _standbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.Exists");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<StandbyVirtualMachinePoolData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StandbyVirtualMachinePoolData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StandbyVirtualMachinePoolData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _standbyVirtualMachinePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, standbyVirtualMachinePoolName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.StandbyPool
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StandbyVirtualMachinePools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<StandbyVirtualMachinePoolResource>> GetIfExistsAsync(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standbyVirtualMachinePoolName, nameof(standbyVirtualMachinePoolName));
 
-            using DiagnosticScope scope = _standbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.GetIfExists");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<StandbyVirtualMachinePoolData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StandbyVirtualMachinePoolData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StandbyVirtualMachinePoolData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _standbyVirtualMachinePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, standbyVirtualMachinePoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<StandbyVirtualMachinePoolResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.StandbyPool
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/{standbyVirtualMachinePoolName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> StandbyVirtualMachinePools_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>StandbyVirtualMachinePoolResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyVirtualMachinePoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="standbyVirtualMachinePoolName"> Name of the standby virtual machine pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="standbyVirtualMachinePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="standbyVirtualMachinePoolName"/> is null. </exception>
         public virtual NullableResponse<StandbyVirtualMachinePoolResource> GetIfExists(string standbyVirtualMachinePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(standbyVirtualMachinePoolName, nameof(standbyVirtualMachinePoolName));
 
-            using DiagnosticScope scope = _standbyVirtualMachinePoolsClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.GetIfExists");
+            using var scope = _standbyVirtualMachinePoolClientDiagnostics.CreateScope("StandbyVirtualMachinePoolCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _standbyVirtualMachinePoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyVirtualMachinePoolName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<StandbyVirtualMachinePoolData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StandbyVirtualMachinePoolData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StandbyVirtualMachinePoolData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _standbyVirtualMachinePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, standbyVirtualMachinePoolName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<StandbyVirtualMachinePoolResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new StandbyVirtualMachinePoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.StandbyPool
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StandbyVirtualMachinePoolResource> IAsyncEnumerable<StandbyVirtualMachinePoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupItemType : IEquatable<BackupItemType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="BackupItemType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupItemType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string VmValue = "VM";
         private const string FileFolderValue = "FileFolder";
@@ -32,94 +39,55 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SapAseDatabaseValue = "SAPAseDatabase";
         private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
-        /// <summary> Initializes a new instance of <see cref="BackupItemType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupItemType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static BackupItemType Invalid { get; } = new BackupItemType(InvalidValue);
-
-        /// <summary> Gets the Vm. </summary>
+        /// <summary> VM. </summary>
         public static BackupItemType Vm { get; } = new BackupItemType(VmValue);
-
-        /// <summary> Gets the FileFolder. </summary>
+        /// <summary> FileFolder. </summary>
         public static BackupItemType FileFolder { get; } = new BackupItemType(FileFolderValue);
-
-        /// <summary> Gets the AzureSqlDB. </summary>
+        /// <summary> AzureSqlDb. </summary>
         public static BackupItemType AzureSqlDB { get; } = new BackupItemType(AzureSqlDBValue);
-
-        /// <summary> Gets the SqlDB. </summary>
+        /// <summary> SQLDB. </summary>
         public static BackupItemType SqlDB { get; } = new BackupItemType(SqlDBValue);
-
-        /// <summary> Gets the Exchange. </summary>
+        /// <summary> Exchange. </summary>
         public static BackupItemType Exchange { get; } = new BackupItemType(ExchangeValue);
-
-        /// <summary> Gets the Sharepoint. </summary>
+        /// <summary> Sharepoint. </summary>
         public static BackupItemType Sharepoint { get; } = new BackupItemType(SharepointValue);
-
-        /// <summary> Gets the VMwareVm. </summary>
+        /// <summary> VMwareVM. </summary>
         public static BackupItemType VMwareVm { get; } = new BackupItemType(VMwareVmValue);
-
-        /// <summary> Gets the SystemState. </summary>
+        /// <summary> SystemState. </summary>
         public static BackupItemType SystemState { get; } = new BackupItemType(SystemStateValue);
-
-        /// <summary> Gets the Client. </summary>
+        /// <summary> Client. </summary>
         public static BackupItemType Client { get; } = new BackupItemType(ClientValue);
-
-        /// <summary> Gets the GenericDataSource. </summary>
+        /// <summary> GenericDataSource. </summary>
         public static BackupItemType GenericDataSource { get; } = new BackupItemType(GenericDataSourceValue);
-
-        /// <summary> Gets the SqlDatabase. </summary>
+        /// <summary> SQLDataBase. </summary>
         public static BackupItemType SqlDatabase { get; } = new BackupItemType(SqlDatabaseValue);
-
-        /// <summary> Gets the AzureFileShare. </summary>
+        /// <summary> AzureFileShare. </summary>
         public static BackupItemType AzureFileShare { get; } = new BackupItemType(AzureFileShareValue);
-
-        /// <summary> Gets the SapHanaDatabase. </summary>
+        /// <summary> SAPHanaDatabase. </summary>
         public static BackupItemType SapHanaDatabase { get; } = new BackupItemType(SapHanaDatabaseValue);
-
-        /// <summary> Gets the SapAseDatabase. </summary>
+        /// <summary> SAPAseDatabase. </summary>
         public static BackupItemType SapAseDatabase { get; } = new BackupItemType(SapAseDatabaseValue);
-
-        /// <summary> Gets the SapHanaDBInstance. </summary>
+        /// <summary> SAPHanaDBInstance. </summary>
         public static BackupItemType SapHanaDBInstance { get; } = new BackupItemType(SapHanaDBInstanceValue);
-
         /// <summary> Determines if two <see cref="BackupItemType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupItemType left, BackupItemType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BackupItemType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupItemType left, BackupItemType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BackupItemType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupItemType"/>. </summary>
         public static implicit operator BackupItemType(string value) => new BackupItemType(value);
 
-        /// <summary> Converts a string to a <see cref="BackupItemType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BackupItemType?(string value) => value == null ? null : new BackupItemType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupItemType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BackupItemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

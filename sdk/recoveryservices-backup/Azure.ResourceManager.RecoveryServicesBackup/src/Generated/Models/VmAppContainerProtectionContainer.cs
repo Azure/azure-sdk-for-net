@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="VmAppContainerProtectionContainer"/>. </summary>
         public VmAppContainerProtectionContainer()
         {
+            ContainerType = ProtectableContainerType.VmAppContainer;
         }
 
         /// <summary> Initializes a new instance of <see cref="VmAppContainerProtectionContainer"/>. </summary>
@@ -31,14 +32,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceResourceId"> ARM ID of the virtual machine represented by this Azure Workload Container. </param>
         /// <param name="lastUpdatedOn"> Time stamp when this container was updated. </param>
         /// <param name="extendedInfo"> Additional details of a workload container. </param>
         /// <param name="workloadType"> Workload type for which registration was sent. </param>
         /// <param name="operationType"> Re-Do Operation. </param>
-        internal VmAppContainerProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier sourceResourceId, DateTimeOffset? lastUpdatedOn, WorkloadContainerExtendedInfo extendedInfo, BackupWorkloadType? workloadType, WorkloadOperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties, sourceResourceId, lastUpdatedOn, extendedInfo, workloadType, operationType)
+        internal VmAppContainerProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier sourceResourceId, DateTimeOffset? lastUpdatedOn, WorkloadContainerExtendedInfo extendedInfo, BackupWorkloadType? workloadType, WorkloadOperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData, sourceResourceId, lastUpdatedOn, extendedInfo, workloadType, operationType)
         {
+            ContainerType = containerType;
         }
     }
 }

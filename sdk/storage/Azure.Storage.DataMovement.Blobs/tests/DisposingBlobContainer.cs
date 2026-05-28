@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 extern alias BaseBlobs;
+
 using System.Threading.Tasks;
-using Azure.Storage.Test.Shared;
 using BaseBlobs::Azure.Storage.Blobs;
+using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {

@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> The options for query evaluation. </summary>
     public partial class ResourceQueryRequestOptions
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceQueryRequestOptions"/>. </summary>
         public ResourceQueryRequestOptions()
@@ -28,8 +57,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="resultFormat"> Defines in which format query result returned. </param>
         /// <param name="allowPartialScopes"> Only applicable for tenant and management group level queries to decide whether to allow partial scopes for result in case the number of subscriptions exceed allowed limits. </param>
         /// <param name="authorizationScopeFilter"> Defines what level of authorization resources should be returned based on the which subscriptions and management groups are passed as scopes. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceQueryRequestOptions(string skipToken, int? top, int? skip, ResultFormat? resultFormat, bool? allowPartialScopes, AuthorizationScopeFilter? authorizationScopeFilter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceQueryRequestOptions(string skipToken, int? top, int? skip, ResultFormat? resultFormat, bool? allowPartialScopes, AuthorizationScopeFilter? authorizationScopeFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SkipToken = skipToken;
             Top = top;
@@ -37,24 +66,19 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             ResultFormat = resultFormat;
             AllowPartialScopes = allowPartialScopes;
             AuthorizationScopeFilter = authorizationScopeFilter;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </summary>
         public string SkipToken { get; set; }
-
         /// <summary> The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present. </summary>
         public int? Top { get; set; }
-
         /// <summary> The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present. </summary>
         public int? Skip { get; set; }
-
         /// <summary> Defines in which format query result returned. </summary>
         public ResultFormat? ResultFormat { get; set; }
-
         /// <summary> Only applicable for tenant and management group level queries to decide whether to allow partial scopes for result in case the number of subscriptions exceed allowed limits. </summary>
         public bool? AllowPartialScopes { get; set; }
-
         /// <summary> Defines what level of authorization resources should be returned based on the which subscriptions and management groups are passed as scopes. </summary>
         public AuthorizationScopeFilter? AuthorizationScopeFilter { get; set; }
     }

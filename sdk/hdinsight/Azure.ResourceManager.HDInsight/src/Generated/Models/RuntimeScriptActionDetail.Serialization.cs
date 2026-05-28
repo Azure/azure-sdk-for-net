@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.HDInsight;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The execution details of a script action. </summary>
-    public partial class RuntimeScriptActionDetail : RuntimeScriptAction, IJsonModel<RuntimeScriptActionDetail>
+    public partial class RuntimeScriptActionDetail : IUtf8JsonSerializable, IJsonModel<RuntimeScriptActionDetail>
     {
-        /// <summary> Initializes a new instance of <see cref="RuntimeScriptActionDetail"/> for deserialization. </summary>
-        internal RuntimeScriptActionDetail()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuntimeScriptActionDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RuntimeScriptAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRuntimeScriptActionDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RuntimeScriptActionDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RuntimeScriptActionDetail IPersistableModel<RuntimeScriptActionDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => (RuntimeScriptActionDetail)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RuntimeScriptActionDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RuntimeScriptActionDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ScriptExecutionId))
             {
@@ -109,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 writer.WritePropertyName("executionSummary"u8);
                 writer.WriteStartArray();
-                foreach (ScriptActionExecutionSummary item in ExecutionSummary)
+                foreach (var item in ExecutionSummary)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -122,158 +77,179 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RuntimeScriptActionDetail IJsonModel<RuntimeScriptActionDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RuntimeScriptActionDetail)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RuntimeScriptAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RuntimeScriptActionDetail IJsonModel<RuntimeScriptActionDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRuntimeScriptActionDetail(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RuntimeScriptActionDetail DeserializeRuntimeScriptActionDetail(JsonElement element, ModelReaderWriterOptions options)
+        internal static RuntimeScriptActionDetail DeserializeRuntimeScriptActionDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            long? scriptExecutionId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string status = default;
+            string operation = default;
+            IReadOnlyList<ScriptActionExecutionSummary> executionSummary = default;
+            string debugInformation = default;
             string name = default;
             Uri uri = default;
             string parameters = default;
             IList<string> roles = default;
             string applicationName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            long? scriptExecutionId = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
-            string status = default;
-            string operation = default;
-            IReadOnlyList<ScriptActionExecutionSummary> executionSummary = default;
-            string debugInformation = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("scriptExecutionId"u8))
                 {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("uri"u8))
-                {
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
-                if (prop.NameEquals("parameters"u8))
-                {
-                    parameters = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("roles"u8))
-                {
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    roles = array;
-                    continue;
-                }
-                if (prop.NameEquals("applicationName"u8))
-                {
-                    applicationName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("scriptExecutionId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scriptExecutionId = prop.Value.GetInt64();
+                    scriptExecutionId = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("startTime"u8))
+                if (property.NameEquals("startTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("endTime"u8))
+                if (property.NameEquals("endTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("operation"u8))
+                if (property.NameEquals("operation"u8))
                 {
-                    operation = prop.Value.GetString();
+                    operation = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("executionSummary"u8))
+                if (property.NameEquals("executionSummary"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ScriptActionExecutionSummary> array = new List<ScriptActionExecutionSummary>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ScriptActionExecutionSummary.DeserializeScriptActionExecutionSummary(item, options));
                     }
                     executionSummary = array;
                     continue;
                 }
-                if (prop.NameEquals("debugInformation"u8))
+                if (property.NameEquals("debugInformation"u8))
                 {
-                    debugInformation = prop.Value.GetString();
+                    debugInformation = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("uri"u8))
+                {
+                    uri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("parameters"u8))
+                {
+                    parameters = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("roles"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    roles = array;
+                    continue;
+                }
+                if (property.NameEquals("applicationName"u8))
+                {
+                    applicationName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new RuntimeScriptActionDetail(
                 name,
                 uri,
                 parameters,
                 roles,
                 applicationName,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 scriptExecutionId,
-                startOn,
-                endOn,
+                startTime,
+                endTime,
                 status,
                 operation,
                 executionSummary ?? new ChangeTrackingList<ScriptActionExecutionSummary>(),
                 debugInformation);
         }
+
+        BinaryData IPersistableModel<RuntimeScriptActionDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RuntimeScriptActionDetail IPersistableModel<RuntimeScriptActionDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeRuntimeScriptActionDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RuntimeScriptActionDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

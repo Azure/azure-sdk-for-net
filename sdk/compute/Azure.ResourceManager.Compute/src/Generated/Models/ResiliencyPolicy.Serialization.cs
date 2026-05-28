@@ -54,11 +54,6 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("zoneAllocationPolicy"u8);
                 writer.WriteObjectValue(ZoneAllocationPolicy, options);
             }
-            if (Optional.IsDefined(OperationRecoverySettings))
-            {
-                writer.WritePropertyName("operationRecoverySettings"u8);
-                writer.WriteObjectValue(OperationRecoverySettings, options);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,7 +95,6 @@ namespace Azure.ResourceManager.Compute.Models
             ResilientVmDeletionPolicy resilientVmDeletionPolicy = default;
             AutomaticZoneRebalancingPolicy automaticZoneRebalancingPolicy = default;
             ZoneAllocationPolicy zoneAllocationPolicy = default;
-            OperationRecoverySettings operationRecoverySettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,28 +135,13 @@ namespace Azure.ResourceManager.Compute.Models
                     zoneAllocationPolicy = ZoneAllocationPolicy.DeserializeZoneAllocationPolicy(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("operationRecoverySettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    operationRecoverySettings = OperationRecoverySettings.DeserializeOperationRecoverySettings(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResiliencyPolicy(
-                resilientVmCreationPolicy,
-                resilientVmDeletionPolicy,
-                automaticZoneRebalancingPolicy,
-                zoneAllocationPolicy,
-                operationRecoverySettings,
-                serializedAdditionalRawData);
+            return new ResiliencyPolicy(resilientVmCreationPolicy, resilientVmDeletionPolicy, automaticZoneRebalancingPolicy, zoneAllocationPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResiliencyPolicy>.Write(ModelReaderWriterOptions options)

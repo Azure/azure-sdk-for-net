@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Support
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SubscriptionSupportTicketCollection : ArmCollection, IEnumerable<SubscriptionSupportTicketResource>, IAsyncEnumerable<SubscriptionSupportTicketResource>
     {
-        private readonly ClientDiagnostics _subscriptionSupportTicketClientDiagnostics;
-        private readonly SubscriptionSupportTicket _subscriptionSupportTicketRestClient;
+        private readonly ClientDiagnostics _subscriptionSupportTicketSupportTicketsClientDiagnostics;
+        private readonly SupportTicketsRestOperations _subscriptionSupportTicketSupportTicketsRestClient;
 
-        /// <summary> Initializes a new instance of SubscriptionSupportTicketCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSupportTicketCollection"/> class for mocking. </summary>
         protected SubscriptionSupportTicketCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionSupportTicketCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSupportTicketCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SubscriptionSupportTicketCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SubscriptionSupportTicketResource.ResourceType, out string subscriptionSupportTicketApiVersion);
-            _subscriptionSupportTicketClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SubscriptionSupportTicketResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionSupportTicketRestClient = new SubscriptionSupportTicket(_subscriptionSupportTicketClientDiagnostics, Pipeline, Endpoint, subscriptionSupportTicketApiVersion ?? "2025-06-01-preview");
-            ValidateResourceId(id);
+            _subscriptionSupportTicketSupportTicketsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SubscriptionSupportTicketResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SubscriptionSupportTicketResource.ResourceType, out string subscriptionSupportTicketSupportTicketsApiVersion);
+            _subscriptionSupportTicketSupportTicketsRestClient = new SupportTicketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSupportTicketSupportTicketsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
         }
 
         /// <summary>
-        /// Creates a new support ticket for Subscription and Service limits (Quota), Technical, Billing, and Subscription Management issues for the specified subscription. Learn the [prerequisites](https://aka.ms/supportAPI) required to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications API to get the most recent set of services and problem categories required for support ticket creation.&lt;br/&gt;&lt;br/&gt;Adding attachments is not currently supported via the API. To add a file to an existing support ticket, visit the [Manage support ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest) page in the Azure portal, select the support ticket, and use the file upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to share diagnostic information with Azure support is currently not supported via the API. The Azure support engineer working on your ticket will reach out to you for consent if your issue requires gathering diagnostic information from your Azure resources.&lt;br/&gt;&lt;br/&gt;<b>Creating a support ticket for on-behalf-of</b>: Include _x-ms-authorization-auxiliary_ header to provide an auxiliary token as per [documentation](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant). The primary token will be from the tenant for whom a support ticket is being raised against the subscription, i.e. Cloud solution provider (CSP) customer tenant. The auxiliary token will be from the Cloud solution provider (CSP) partner tenant.
+        /// Creates a new support ticket for Subscription and Service limits (Quota), Technical, Billing, and Subscription Management issues for the specified subscription. Learn the [prerequisites](https://aka.ms/supportAPI) required to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications API to get the most recent set of services and problem categories required for support ticket creation.&lt;br/&gt;&lt;br/&gt;Adding attachments is not currently supported via the API. To add a file to an existing support ticket, visit the [Manage support ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest) page in the Azure portal, select the support ticket, and use the file upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to share diagnostic information with Azure support is currently not supported via the API. The Azure support engineer working on your ticket will reach out to you for consent if your issue requires gathering diagnostic information from your Azure resources.&lt;br/&gt;&lt;br/&gt;**Creating a support ticket for on-behalf-of**: Include _x-ms-authorization-auxiliary_ header to provide an auxiliary token as per [documentation](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant). The primary token will be from the tenant for whom a support ticket is being raised against the subscription, i.e. Cloud solution provider (CSP) customer tenant. The auxiliary token will be from the Cloud solution provider (CSP) partner tenant.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SupportTickets_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.Support
         /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="data"> Support ticket request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SubscriptionSupportTicketResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string supportTicketName, SupportTicketData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _subscriptionSupportTicketClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.CreateOrUpdate");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, SupportTicketData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SupportArmOperation<SubscriptionSupportTicketResource> operation = new SupportArmOperation<SubscriptionSupportTicketResource>(
-                    new SubscriptionSupportTicketOperationSource(Client),
-                    _subscriptionSupportTicketClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _subscriptionSupportTicketSupportTicketsRestClient.CreateAsync(Id.SubscriptionId, supportTicketName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SupportArmOperation<SubscriptionSupportTicketResource>(new SubscriptionSupportTicketOperationSource(Client), _subscriptionSupportTicketSupportTicketsClientDiagnostics, Pipeline, _subscriptionSupportTicketSupportTicketsRestClient.CreateCreateRequest(Id.SubscriptionId, supportTicketName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -114,19 +102,23 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
-        /// Creates a new support ticket for Subscription and Service limits (Quota), Technical, Billing, and Subscription Management issues for the specified subscription. Learn the [prerequisites](https://aka.ms/supportAPI) required to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications API to get the most recent set of services and problem categories required for support ticket creation.&lt;br/&gt;&lt;br/&gt;Adding attachments is not currently supported via the API. To add a file to an existing support ticket, visit the [Manage support ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest) page in the Azure portal, select the support ticket, and use the file upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to share diagnostic information with Azure support is currently not supported via the API. The Azure support engineer working on your ticket will reach out to you for consent if your issue requires gathering diagnostic information from your Azure resources.&lt;br/&gt;&lt;br/&gt;<b>Creating a support ticket for on-behalf-of</b>: Include _x-ms-authorization-auxiliary_ header to provide an auxiliary token as per [documentation](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant). The primary token will be from the tenant for whom a support ticket is being raised against the subscription, i.e. Cloud solution provider (CSP) customer tenant. The auxiliary token will be from the Cloud solution provider (CSP) partner tenant.
+        /// Creates a new support ticket for Subscription and Service limits (Quota), Technical, Billing, and Subscription Management issues for the specified subscription. Learn the [prerequisites](https://aka.ms/supportAPI) required to create a support ticket.&lt;br/&gt;&lt;br/&gt;Always call the Services and ProblemClassifications API to get the most recent set of services and problem categories required for support ticket creation.&lt;br/&gt;&lt;br/&gt;Adding attachments is not currently supported via the API. To add a file to an existing support ticket, visit the [Manage support ticket](https://portal.azure.com/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest) page in the Azure portal, select the support ticket, and use the file upload control to add a new file.&lt;br/&gt;&lt;br/&gt;Providing consent to share diagnostic information with Azure support is currently not supported via the API. The Azure support engineer working on your ticket will reach out to you for consent if your issue requires gathering diagnostic information from your Azure resources.&lt;br/&gt;&lt;br/&gt;**Creating a support ticket for on-behalf-of**: Include _x-ms-authorization-auxiliary_ header to provide an auxiliary token as per [documentation](https://docs.microsoft.com/azure/azure-resource-manager/management/authenticate-multi-tenant). The primary token will be from the tenant for whom a support ticket is being raised against the subscription, i.e. Cloud solution provider (CSP) customer tenant. The auxiliary token will be from the Cloud solution provider (CSP) partner tenant.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SupportTickets_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.Support
         /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="data"> Support ticket request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SubscriptionSupportTicketResource> CreateOrUpdate(WaitUntil waitUntil, string supportTicketName, SupportTicketData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _subscriptionSupportTicketClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.CreateOrUpdate");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, SupportTicketData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                SupportArmOperation<SubscriptionSupportTicketResource> operation = new SupportArmOperation<SubscriptionSupportTicketResource>(
-                    new SubscriptionSupportTicketOperationSource(Client),
-                    _subscriptionSupportTicketClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _subscriptionSupportTicketSupportTicketsRestClient.Create(Id.SubscriptionId, supportTicketName, data, cancellationToken);
+                var operation = new SupportArmOperation<SubscriptionSupportTicketResource>(new SubscriptionSupportTicketOperationSource(Client), _subscriptionSupportTicketSupportTicketsClientDiagnostics, Pipeline, _subscriptionSupportTicketSupportTicketsRestClient.CreateCreateRequest(Id.SubscriptionId, supportTicketName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.Support
         /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SupportTickets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         public virtual async Task<Response<SubscriptionSupportTicketResource>> GetAsync(string supportTicketName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
-            using DiagnosticScope scope = _subscriptionSupportTicketClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.Get");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SupportTicketData> response = Response.FromValue(SupportTicketData.FromResponse(result), result);
+                var response = await _subscriptionSupportTicketSupportTicketsRestClient.GetAsync(Id.SubscriptionId, supportTicketName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new SubscriptionSupportTicketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.Support
         /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SupportTickets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         public virtual Response<SubscriptionSupportTicketResource> Get(string supportTicketName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
-            using DiagnosticScope scope = _subscriptionSupportTicketClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.Get");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SupportTicketData> response = Response.FromValue(SupportTicketData.FromResponse(result), result);
+                var response = _subscriptionSupportTicketSupportTicketsRestClient.Get(Id.SubscriptionId, supportTicketName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new SubscriptionSupportTicketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,52 +244,52 @@ namespace Azure.ResourceManager.Support
         /// Lists all the support tickets for an Azure subscription. You can also filter the support tickets by _Status_, _CreatedDate_, _ServiceId_, and _ProblemClassificationId_ using the $filter parameter. Output will be a paged result with _nextLink_, using which you can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SupportTickets_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
         /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals ('eq') operator. For _CreatedDate_ filter, the supported operators are Greater Than ('gt') and Greater Than or Equals ('ge'). When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionSupportTicketResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionSupportTicketResource> GetAllAsync(int? top = default, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionSupportTicketResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionSupportTicketResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SupportTicketData, SubscriptionSupportTicketResource>(new SubscriptionSupportTicketGetAllAsyncCollectionResultOfT(
-                _subscriptionSupportTicketRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                top,
-                filter,
-                context,
-                "SubscriptionSupportTicketCollection.GetAll"), data => new SubscriptionSupportTicketResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSupportTicketSupportTicketsRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSupportTicketSupportTicketsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _subscriptionSupportTicketSupportTicketsClientDiagnostics, Pipeline, "SubscriptionSupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the support tickets for an Azure subscription. You can also filter the support tickets by _Status_, _CreatedDate_, _ServiceId_, and _ProblemClassificationId_ using the $filter parameter. Output will be a paged result with _nextLink_, using which you can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SupportTickets_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,69 +297,47 @@ namespace Azure.ResourceManager.Support
         /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals ('eq') operator. For _CreatedDate_ filter, the supported operators are Greater Than ('gt') and Greater Than or Equals ('ge'). When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionSupportTicketResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionSupportTicketResource> GetAll(int? top = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubscriptionSupportTicketResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SupportTicketData, SubscriptionSupportTicketResource>(new SubscriptionSupportTicketGetAllCollectionResultOfT(
-                _subscriptionSupportTicketRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                top,
-                filter,
-                context,
-                "SubscriptionSupportTicketCollection.GetAll"), data => new SubscriptionSupportTicketResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSupportTicketSupportTicketsRestClient.CreateListRequest(Id.SubscriptionId, top, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSupportTicketSupportTicketsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSupportTicketResource(Client, SupportTicketData.DeserializeSupportTicketData(e)), _subscriptionSupportTicketSupportTicketsClientDiagnostics, Pipeline, "SubscriptionSupportTicketCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SupportTickets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string supportTicketName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
-            using DiagnosticScope scope = _subscriptionSupportTicketClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.Exists");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<SupportTicketData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SupportTicketData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SupportTicketData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _subscriptionSupportTicketSupportTicketsRestClient.GetAsync(Id.SubscriptionId, supportTicketName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,50 +351,36 @@ namespace Azure.ResourceManager.Support
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SupportTickets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         public virtual Response<bool> Exists(string supportTicketName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
-            using DiagnosticScope scope = _subscriptionSupportTicketClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.Exists");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<SupportTicketData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SupportTicketData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SupportTicketData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _subscriptionSupportTicketSupportTicketsRestClient.Get(Id.SubscriptionId, supportTicketName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -459,54 +394,38 @@ namespace Azure.ResourceManager.Support
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SupportTickets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         public virtual async Task<NullableResponse<SubscriptionSupportTicketResource>> GetIfExistsAsync(string supportTicketName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
-            using DiagnosticScope scope = _subscriptionSupportTicketClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.GetIfExists");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<SupportTicketData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SupportTicketData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SupportTicketData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _subscriptionSupportTicketSupportTicketsRestClient.GetAsync(Id.SubscriptionId, supportTicketName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<SubscriptionSupportTicketResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new SubscriptionSupportTicketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -520,54 +439,38 @@ namespace Azure.ResourceManager.Support
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SupportTickets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="supportTicketName"> The name of the SupportTicketDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         public virtual NullableResponse<SubscriptionSupportTicketResource> GetIfExists(string supportTicketName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
-            using DiagnosticScope scope = _subscriptionSupportTicketClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.GetIfExists");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _subscriptionSupportTicketRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<SupportTicketData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SupportTicketData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SupportTicketData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _subscriptionSupportTicketSupportTicketsRestClient.Get(Id.SubscriptionId, supportTicketName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<SubscriptionSupportTicketResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new SubscriptionSupportTicketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -587,7 +490,6 @@ namespace Azure.ResourceManager.Support
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SubscriptionSupportTicketResource> IAsyncEnumerable<SubscriptionSupportTicketResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

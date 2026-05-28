@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct ResourceMoveState : IEquatable<ResourceMoveState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceMoveState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceMoveState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UnknownValue = "Unknown";
         private const string InProgressValue = "InProgress";
         private const string PrepareFailedValue = "PrepareFailed";
@@ -26,76 +33,43 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         private const string CriticalFailureValue = "CriticalFailure";
         private const string PartialSuccessValue = "PartialSuccess";
 
-        /// <summary> Initializes a new instance of <see cref="ResourceMoveState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceMoveState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static ResourceMoveState Unknown { get; } = new ResourceMoveState(UnknownValue);
-
-        /// <summary> Gets the InProgress. </summary>
+        /// <summary> InProgress. </summary>
         public static ResourceMoveState InProgress { get; } = new ResourceMoveState(InProgressValue);
-
-        /// <summary> Gets the PrepareFailed. </summary>
+        /// <summary> PrepareFailed. </summary>
         public static ResourceMoveState PrepareFailed { get; } = new ResourceMoveState(PrepareFailedValue);
-
-        /// <summary> Gets the CommitFailed. </summary>
+        /// <summary> CommitFailed. </summary>
         public static ResourceMoveState CommitFailed { get; } = new ResourceMoveState(CommitFailedValue);
-
-        /// <summary> Gets the PrepareTimedout. </summary>
+        /// <summary> PrepareTimedout. </summary>
         public static ResourceMoveState PrepareTimedout { get; } = new ResourceMoveState(PrepareTimedoutValue);
-
-        /// <summary> Gets the CommitTimedout. </summary>
+        /// <summary> CommitTimedout. </summary>
         public static ResourceMoveState CommitTimedout { get; } = new ResourceMoveState(CommitTimedoutValue);
-
-        /// <summary> Gets the MoveSucceeded. </summary>
+        /// <summary> MoveSucceeded. </summary>
         public static ResourceMoveState MoveSucceeded { get; } = new ResourceMoveState(MoveSucceededValue);
-
-        /// <summary> Gets the Failure. </summary>
+        /// <summary> Failure. </summary>
         public static ResourceMoveState Failure { get; } = new ResourceMoveState(FailureValue);
-
-        /// <summary> Gets the CriticalFailure. </summary>
+        /// <summary> CriticalFailure. </summary>
         public static ResourceMoveState CriticalFailure { get; } = new ResourceMoveState(CriticalFailureValue);
-
-        /// <summary> Gets the PartialSuccess. </summary>
+        /// <summary> PartialSuccess. </summary>
         public static ResourceMoveState PartialSuccess { get; } = new ResourceMoveState(PartialSuccessValue);
-
         /// <summary> Determines if two <see cref="ResourceMoveState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceMoveState left, ResourceMoveState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ResourceMoveState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceMoveState left, ResourceMoveState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ResourceMoveState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceMoveState"/>. </summary>
         public static implicit operator ResourceMoveState(string value) => new ResourceMoveState(value);
 
-        /// <summary> Converts a string to a <see cref="ResourceMoveState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ResourceMoveState?(string value) => value == null ? null : new ResourceMoveState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceMoveState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ResourceMoveState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

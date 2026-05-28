@@ -49,10 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/MgmtTypeSpec/endpoints/", false);
             uri.AppendPath(endpointName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -69,10 +66,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/MgmtTypeSpec/endpoints/", false);
             uri.AppendPath(endpointName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -91,10 +85,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/MgmtTypeSpec/endpoints/", false);
             uri.AppendPath(endpointName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -113,56 +104,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/MgmtTypeSpec/endpoints/", false);
             uri.AppendPath(endpointName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAllRequest(string resourceUri, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/MgmtTypeSpec/endpoints", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string resourceUri, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

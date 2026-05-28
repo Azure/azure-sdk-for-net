@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static Site Database Connection Request Properties resource when patching
-    /// Serialized Name: DatabaseConnectionPatchRequest
-    /// </summary>
+    /// <summary> Static Site Database Connection Request Properties resource when patching. </summary>
     public partial class StaticSiteDatabaseConnectionPatchContent
     {
         /// <summary>
@@ -55,22 +52,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteDatabaseConnectionPatchContent"/>. </summary>
-        /// <param name="resourceId">
-        /// The resource id of the database.
-        /// Serialized Name: DatabaseConnectionPatchRequest.properties.resourceId
-        /// </param>
-        /// <param name="connectionIdentity">
-        /// If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource.
-        /// Serialized Name: DatabaseConnectionPatchRequest.properties.connectionIdentity
-        /// </param>
-        /// <param name="connectionString">
-        /// The connection string to use to connect to the database.
-        /// Serialized Name: DatabaseConnectionPatchRequest.properties.connectionString
-        /// </param>
-        /// <param name="region">
-        /// The region of the database resource.
-        /// Serialized Name: DatabaseConnectionPatchRequest.properties.region
-        /// </param>
+        /// <param name="resourceId"> The resource id of the database. </param>
+        /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
+        /// <param name="connectionString"> The connection string to use to connect to the database. </param>
+        /// <param name="region"> The region of the database resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteDatabaseConnectionPatchContent(ResourceIdentifier resourceId, string connectionIdentity, string connectionString, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -81,28 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource id of the database.
-        /// Serialized Name: DatabaseConnectionPatchRequest.properties.resourceId
-        /// </summary>
+        /// <summary> The resource id of the database. </summary>
         [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
-        /// <summary>
-        /// If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource.
-        /// Serialized Name: DatabaseConnectionPatchRequest.properties.connectionIdentity
-        /// </summary>
+        /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
         [WirePath("properties.connectionIdentity")]
         public string ConnectionIdentity { get; set; }
-        /// <summary>
-        /// The connection string to use to connect to the database.
-        /// Serialized Name: DatabaseConnectionPatchRequest.properties.connectionString
-        /// </summary>
+        /// <summary> The connection string to use to connect to the database. </summary>
         [WirePath("properties.connectionString")]
         public string ConnectionString { get; set; }
-        /// <summary>
-        /// The region of the database resource.
-        /// Serialized Name: DatabaseConnectionPatchRequest.properties.region
-        /// </summary>
+        /// <summary> The region of the database resource. </summary>
         [WirePath("properties.region")]
         public string Region { get; set; }
     }

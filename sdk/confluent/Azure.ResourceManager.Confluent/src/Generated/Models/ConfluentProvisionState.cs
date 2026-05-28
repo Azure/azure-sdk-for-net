@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.Confluent.Models
     public readonly partial struct ConfluentProvisionState : IEquatable<ConfluentProvisionState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ConfluentProvisionState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConfluentProvisionState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AcceptedValue = "Accepted";
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
@@ -25,73 +32,41 @@ namespace Azure.ResourceManager.Confluent.Models
         private const string DeletedValue = "Deleted";
         private const string NotSpecifiedValue = "NotSpecified";
 
-        /// <summary> Initializes a new instance of <see cref="ConfluentProvisionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConfluentProvisionState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Accepted. </summary>
+        /// <summary> Accepted. </summary>
         public static ConfluentProvisionState Accepted { get; } = new ConfluentProvisionState(AcceptedValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static ConfluentProvisionState Creating { get; } = new ConfluentProvisionState(CreatingValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static ConfluentProvisionState Updating { get; } = new ConfluentProvisionState(UpdatingValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static ConfluentProvisionState Deleting { get; } = new ConfluentProvisionState(DeletingValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static ConfluentProvisionState Succeeded { get; } = new ConfluentProvisionState(SucceededValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static ConfluentProvisionState Failed { get; } = new ConfluentProvisionState(FailedValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static ConfluentProvisionState Canceled { get; } = new ConfluentProvisionState(CanceledValue);
-
-        /// <summary> Gets the Deleted. </summary>
+        /// <summary> Deleted. </summary>
         public static ConfluentProvisionState Deleted { get; } = new ConfluentProvisionState(DeletedValue);
-
-        /// <summary> Gets the NotSpecified. </summary>
+        /// <summary> NotSpecified. </summary>
         public static ConfluentProvisionState NotSpecified { get; } = new ConfluentProvisionState(NotSpecifiedValue);
-
         /// <summary> Determines if two <see cref="ConfluentProvisionState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfluentProvisionState left, ConfluentProvisionState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ConfluentProvisionState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfluentProvisionState left, ConfluentProvisionState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ConfluentProvisionState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfluentProvisionState"/>. </summary>
         public static implicit operator ConfluentProvisionState(string value) => new ConfluentProvisionState(value);
 
-        /// <summary> Converts a string to a <see cref="ConfluentProvisionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ConfluentProvisionState?(string value) => value == null ? null : new ConfluentProvisionState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfluentProvisionState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ConfluentProvisionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

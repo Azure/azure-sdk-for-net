@@ -65,7 +65,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                     BatchFileProperties batchFilePropertiesesponse = await client.GetTaskFilePropertiesAsync(jobId, t.Id, outputFileName);
                     Assert.IsNotNull(batchFilePropertiesesponse);
-                    Assert.IsNotNull(batchFilePropertiesesponse.FileUri);
+                    Assert.IsNotEmpty(batchFilePropertiesesponse.FileUrl);
 
                     BinaryData fileContents = await client.GetTaskFileAsync(jobId, t.Id, outputFileName);
                     using (var reader = new StreamReader(fileContents.ToStream()))
@@ -84,8 +84,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(WaitUntil.Started, jobId: jobId);
-                await client.DeletePoolAsync(WaitUntil.Started, poolId);
+                await client.DeleteJobAsync(jobId);
+                await client.DeletePoolAsync(poolId);
             }
         }
 
@@ -127,8 +127,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(WaitUntil.Started, jobId);
-                await client.DeletePoolAsync(WaitUntil.Started, poolId);
+                await client.DeleteJobAsync(jobId);
+                await client.DeletePoolAsync(poolId);
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     BatchFileProperties batchFileProperties = await client.GetNodeFilePropertiesAsync(poolId, item.Id, file);
                     Assert.IsNotNull(batchFileProperties);
-                    Assert.IsNotNull(batchFileProperties.FileUri);
+                    Assert.IsNotEmpty(batchFileProperties.FileUrl);
 
                     BinaryData fileContents = await client.GetNodeFileAsync(poolId, item.Id, file);
                     using (var reader = new StreamReader(fileContents.ToStream()))
@@ -177,8 +177,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobAsync(WaitUntil.Started, jobId);
-                await client.DeletePoolAsync(WaitUntil.Started, poolId);
+                await client.DeleteJobAsync(jobId);
+                await client.DeletePoolAsync(poolId);
             }
         }
     }

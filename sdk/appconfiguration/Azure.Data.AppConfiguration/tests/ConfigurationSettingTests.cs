@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
@@ -38,21 +38,21 @@ namespace Azure.Data.AppConfiguration.Tests
 
             ConfigurationSetting testSettingLowerCase = s_testSetting.Clone();
             testSettingLowerCase.Key = testSettingLowerCase.Key.ToLower();
-            Assert.That(comparer.Equals(testSettingUpperCase, testSettingLowerCase), Is.False);
+            Assert.IsFalse(comparer.Equals(testSettingUpperCase, testSettingLowerCase));
 
             ConfigurationSetting testSettingsameCase = s_testSetting.Clone();
-            Assert.That(comparer.Equals(s_testSetting, testSettingsameCase), Is.True);
+            Assert.IsTrue(comparer.Equals(s_testSetting, testSettingsameCase));
 
             //Etag tests
             ConfigurationSetting testSettingEtagDiff = testSettingsameCase.Clone();
             testSettingsameCase.ETag = new ETag(Guid.NewGuid().ToString());
             testSettingEtagDiff.ETag = new ETag(Guid.NewGuid().ToString());
-            Assert.That(comparer.Equals(testSettingsameCase, testSettingEtagDiff), Is.False);
+            Assert.IsFalse(comparer.Equals(testSettingsameCase, testSettingEtagDiff));
 
             // Different tags
             ConfigurationSetting testSettingDiffTags = s_testSetting.Clone();
             testSettingDiffTags.Tags.Add("tag3", "test_value3");
-            Assert.That(comparer.Equals(s_testSetting, testSettingDiffTags), Is.False);
+            Assert.IsFalse(comparer.Equals(s_testSetting, testSettingDiffTags));
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var comparer = ConfigurationSettingEqualityComparer.Instance;
             var serialized = JsonSerializer.Serialize(s_testSetting);
             var deserialized = JsonSerializer.Deserialize<ConfigurationSetting>(serialized);
-            Assert.That(comparer.Equals(s_testSetting, deserialized), Is.True);
+            Assert.IsTrue(comparer.Equals(s_testSetting, deserialized));
         }
 
         [Test]
@@ -76,20 +76,20 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var serialized = JsonSerializer.Serialize(dict);
             var deserialized = JsonSerializer.Deserialize<IDictionary<string, ConfigurationSetting>>(serialized);
-            Assert.That(deserialized, Is.Not.Empty);
+            CollectionAssert.IsNotEmpty(deserialized);
 
-            Assert.That(comparer.Equals(s_testSetting, deserialized[s_testSetting.Key]), Is.True);
-            Assert.That(deserialized["null_key"], Is.Null);
+            Assert.IsTrue(comparer.Equals(s_testSetting, deserialized[s_testSetting.Key]));
+            Assert.IsNull(deserialized["null_key"]);
         }
 
         [Test]
         public void ConfigurationSettingEtagConstructor()
         {
             var configurationSetting = new ConfigurationSetting("key", "value", "label", new ETag("etag"));
-            Assert.That(configurationSetting.Key, Is.EqualTo("key"));
-            Assert.That(configurationSetting.Value, Is.EqualTo("value"));
-            Assert.That(configurationSetting.Label, Is.EqualTo("label"));
-            Assert.That(configurationSetting.ETag.ToString(), Is.EqualTo("etag"));
+            Assert.AreEqual("key", configurationSetting.Key);
+            Assert.AreEqual("value", configurationSetting.Value);
+            Assert.AreEqual("label", configurationSetting.Label);
+            Assert.AreEqual("etag", configurationSetting.ETag.ToString());
         }
     }
 }

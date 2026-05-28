@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.Confluent.Models
     /// <summary> Details of cluster record. </summary>
     public partial class AccessClusterRecord
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AccessClusterRecord"/>. </summary>
         internal AccessClusterRecord()
@@ -28,8 +57,8 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="displayName"> Display name of the cluster. </param>
         /// <param name="spec"> Specification of the cluster. </param>
         /// <param name="status"> Specification of the cluster. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessClusterRecord(string kind, string id, MetadataEntity metadata, string displayName, ClusterSpecEntity spec, ClusterStatusEntity status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccessClusterRecord(string kind, string id, MetadataEntity metadata, string displayName, ClusterSpecEntity spec, ClusterStatusEntity status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Id = id;
@@ -37,24 +66,19 @@ namespace Azure.ResourceManager.Confluent.Models
             DisplayName = displayName;
             Spec = spec;
             Status = status;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of cluster. </summary>
         public string Kind { get; }
-
         /// <summary> Id of the cluster. </summary>
         public string Id { get; }
-
         /// <summary> Metadata of the record. </summary>
         public MetadataEntity Metadata { get; }
-
         /// <summary> Display name of the cluster. </summary>
         public string DisplayName { get; }
-
         /// <summary> Specification of the cluster. </summary>
         public ClusterSpecEntity Spec { get; }
-
         /// <summary> Specification of the cluster. </summary>
         public ClusterStatusEntity Status { get; }
     }

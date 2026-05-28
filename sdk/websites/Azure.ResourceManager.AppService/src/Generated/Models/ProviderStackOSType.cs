@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ProviderStackOSType.
-    /// Serialized Name: ProviderStackOsType
-    /// </summary>
+    /// <summary> The ProviderStackOSType. </summary>
     public readonly partial struct ProviderStackOSType : IEquatable<ProviderStackOSType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.AppService.Models
         private const string LinuxValue = "Linux";
         private const string AllValue = "All";
 
-        /// <summary>
-        /// Windows
-        /// Serialized Name: ProviderStackOsType.Windows
-        /// </summary>
+        /// <summary> Windows. </summary>
         public static ProviderStackOSType Windows { get; } = new ProviderStackOSType(WindowsValue);
-        /// <summary>
-        /// Linux
-        /// Serialized Name: ProviderStackOsType.Linux
-        /// </summary>
+        /// <summary> Linux. </summary>
         public static ProviderStackOSType Linux { get; } = new ProviderStackOSType(LinuxValue);
-        /// <summary>
-        /// All
-        /// Serialized Name: ProviderStackOsType.All
-        /// </summary>
+        /// <summary> All. </summary>
         public static ProviderStackOSType All { get; } = new ProviderStackOSType(AllValue);
         /// <summary> Determines if two <see cref="ProviderStackOSType"/> values are the same. </summary>
         public static bool operator ==(ProviderStackOSType left, ProviderStackOSType right) => left.Equals(right);

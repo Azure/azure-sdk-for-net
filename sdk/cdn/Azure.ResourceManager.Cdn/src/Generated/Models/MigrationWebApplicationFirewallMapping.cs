@@ -8,15 +8,47 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Web Application Firewall Mapping. </summary>
+    /// <summary>
+    /// Web Application Firewall Mapping
+    /// Serialized Name: MigrationWebApplicationFirewallMapping
+    /// </summary>
     public partial class MigrationWebApplicationFirewallMapping
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MigrationWebApplicationFirewallMapping"/>. </summary>
         public MigrationWebApplicationFirewallMapping()
@@ -24,56 +56,52 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationWebApplicationFirewallMapping"/>. </summary>
-        /// <param name="migratedFrom"> Migration From Waf policy. </param>
-        /// <param name="migratedTo"> Migration to Waf policy. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationWebApplicationFirewallMapping(CdnResourceReference migratedFrom, CdnResourceReference migratedTo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="migratedFrom">
+        /// Migration From Waf policy
+        /// Serialized Name: MigrationWebApplicationFirewallMapping.migratedFrom
+        /// </param>
+        /// <param name="migratedTo">
+        /// Migration to Waf policy
+        /// Serialized Name: MigrationWebApplicationFirewallMapping.migratedTo
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationWebApplicationFirewallMapping(WritableSubResource migratedFrom, WritableSubResource migratedTo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MigratedFrom = migratedFrom;
             MigratedTo = migratedTo;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Migration From Waf policy. </summary>
-        [WirePath("migratedFrom")]
-        internal CdnResourceReference MigratedFrom { get; set; }
-
-        /// <summary> Migration to Waf policy. </summary>
-        [WirePath("migratedTo")]
-        internal CdnResourceReference MigratedTo { get; set; }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("migratedFrom.id")]
+        /// <summary>
+        /// Migration From Waf policy
+        /// Serialized Name: MigrationWebApplicationFirewallMapping.migratedFrom
+        /// </summary>
+        internal WritableSubResource MigratedFrom { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier MigratedFromId
         {
-            get
-            {
-                return MigratedFrom is null ? default : MigratedFrom.Id;
-            }
+            get => MigratedFrom is null ? default : MigratedFrom.Id;
             set
             {
                 if (MigratedFrom is null)
-                {
-                    MigratedFrom = new CdnResourceReference();
-                }
+                    MigratedFrom = new WritableSubResource();
                 MigratedFrom.Id = value;
             }
         }
 
-        /// <summary> Resource ID. </summary>
-        [WirePath("migratedTo.id")]
+        /// <summary>
+        /// Migration to Waf policy
+        /// Serialized Name: MigrationWebApplicationFirewallMapping.migratedTo
+        /// </summary>
+        internal WritableSubResource MigratedTo { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier MigratedToId
         {
-            get
-            {
-                return MigratedTo is null ? default : MigratedTo.Id;
-            }
+            get => MigratedTo is null ? default : MigratedTo.Id;
             set
             {
                 if (MigratedTo is null)
-                {
-                    MigratedTo = new CdnResourceReference();
-                }
+                    MigratedTo = new WritableSubResource();
                 MigratedTo.Id = value;
             }
         }

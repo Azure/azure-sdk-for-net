@@ -8,96 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.FrontDoor;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.FrontDoor.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableFrontDoorResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableFrontDoorResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableFrontDoorResourceGroupResource"/> class for mocking. </summary>
         protected MockableFrontDoorResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableFrontDoorResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableFrontDoorResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableFrontDoorResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of FrontDoors in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of FrontDoors and their operations over a FrontDoorResource. </returns>
-        public virtual FrontDoorCollection GetFrontDoors()
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            return GetCachedClient(client => new FrontDoorCollection(client, Id));
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
 
-        /// <summary>
-        /// Gets a Front Door with the specified Front Door name under the specified subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FrontDoorResource>> GetFrontDoorAsync(string frontDoorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-
-            return await GetFrontDoors().GetAsync(frontDoorName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a Front Door with the specified Front Door name under the specified subscription and resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FrontDoors_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<FrontDoorResource> GetFrontDoor(string frontDoorName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(frontDoorName, nameof(frontDoorName));
-
-            return GetFrontDoors().Get(frontDoorName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of FrontDoorWebApplicationFirewallPolicies in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of FrontDoorWebApplicationFirewallPolicies and their operations over a FrontDoorWebApplicationFirewallPolicyResource. </returns>
+        /// <summary> Gets a collection of FrontDoorWebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of FrontDoorWebApplicationFirewallPolicyResources and their operations over a FrontDoorWebApplicationFirewallPolicyResource. </returns>
         public virtual FrontDoorWebApplicationFirewallPolicyCollection GetFrontDoorWebApplicationFirewallPolicies()
         {
             return GetCachedClient(client => new FrontDoorWebApplicationFirewallPolicyCollection(client, Id));
@@ -107,16 +44,20 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// Retrieve protection policy with specified name within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WebApplicationFirewallPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Policies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,8 +68,6 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorWebApplicationFirewallPolicyResource>> GetFrontDoorWebApplicationFirewallPolicyAsync(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-
             return await GetFrontDoorWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,16 +75,20 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// Retrieve protection policy with specified name within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WebApplicationFirewallPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Policies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,13 +99,80 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         [ForwardsClientCalls]
         public virtual Response<FrontDoorWebApplicationFirewallPolicyResource> GetFrontDoorWebApplicationFirewallPolicy(string policyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
-
             return GetFrontDoorWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FrontDoorNetworkExperimentProfiles in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of FrontDoorNetworkExperimentProfiles and their operations over a FrontDoorNetworkExperimentProfileResource. </returns>
+        /// <summary> Gets a collection of FrontDoorResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of FrontDoorResources and their operations over a FrontDoorResource. </returns>
+        public virtual FrontDoorCollection GetFrontDoors()
+        {
+            return GetCachedClient(client => new FrontDoorCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a Front Door with the specified Front Door name under the specified subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<FrontDoorResource>> GetFrontDoorAsync(string frontDoorName, CancellationToken cancellationToken = default)
+        {
+            return await GetFrontDoors().GetAsync(frontDoorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Front Door with the specified Front Door name under the specified subscription and resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="frontDoorName"> Name of the Front Door which is globally unique. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontDoorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontDoorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<FrontDoorResource> GetFrontDoor(string frontDoorName, CancellationToken cancellationToken = default)
+        {
+            return GetFrontDoors().Get(frontDoorName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of FrontDoorNetworkExperimentProfileResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of FrontDoorNetworkExperimentProfileResources and their operations over a FrontDoorNetworkExperimentProfileResource. </returns>
         public virtual FrontDoorNetworkExperimentProfileCollection GetFrontDoorNetworkExperimentProfiles()
         {
             return GetCachedClient(client => new FrontDoorNetworkExperimentProfileCollection(client, Id));
@@ -172,16 +182,20 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// Gets an NetworkExperiment Profile by ProfileName
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Profiles_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,8 +206,6 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorNetworkExperimentProfileResource>> GetFrontDoorNetworkExperimentProfileAsync(string profileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-
             return await GetFrontDoorNetworkExperimentProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -201,16 +213,20 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// Gets an NetworkExperiment Profile by ProfileName
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Profiles_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>NetworkExperimentProfiles_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,8 +237,6 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         [ForwardsClientCalls]
         public virtual Response<FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfile(string profileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-
             return GetFrontDoorNetworkExperimentProfiles().Get(profileName, cancellationToken);
         }
     }

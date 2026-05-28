@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Paged collection of RoutePolicy items. </summary>
+    /// <summary> List of RoutePolicies. </summary>
     internal partial class RoutePoliciesListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RoutePoliciesListResult"/>. </summary>
-        /// <param name="value"> The RoutePolicy items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RoutePoliciesListResult(IEnumerable<NetworkFabricRoutePolicyData> value)
+        internal RoutePoliciesListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<NetworkFabricRoutePolicyData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutePoliciesListResult"/>. </summary>
-        /// <param name="value"> The RoutePolicy items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> List of RoutePolicy resources. </param>
+        /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoutePoliciesListResult(IReadOnlyList<NetworkFabricRoutePolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RoutePoliciesListResult(IReadOnlyList<NetworkFabricRoutePolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoutePoliciesListResult"/> for deserialization. </summary>
-        internal RoutePoliciesListResult()
-        {
-        }
-
-        /// <summary> The RoutePolicy items on this page. </summary>
+        /// <summary> List of RoutePolicy resources. </summary>
         public IReadOnlyList<NetworkFabricRoutePolicyData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Url to follow for getting next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

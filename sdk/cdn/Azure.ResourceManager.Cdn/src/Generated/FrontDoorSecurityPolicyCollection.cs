@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorSecurityPolicyCollection : ArmCollection, IEnumerable<FrontDoorSecurityPolicyResource>, IAsyncEnumerable<FrontDoorSecurityPolicyResource>
     {
-        private readonly ClientDiagnostics _securityPoliciesClientDiagnostics;
-        private readonly SecurityPolicies _securityPoliciesRestClient;
+        private readonly ClientDiagnostics _frontDoorSecurityPolicyClientDiagnostics;
+        private readonly FrontDoorSecurityPoliciesRestOperations _frontDoorSecurityPolicyRestClient;
 
-        /// <summary> Initializes a new instance of FrontDoorSecurityPolicyCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorSecurityPolicyCollection"/> class for mocking. </summary>
         protected FrontDoorSecurityPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontDoorSecurityPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FrontDoorSecurityPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FrontDoorSecurityPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _frontDoorSecurityPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecurityPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FrontDoorSecurityPolicyResource.ResourceType, out string frontDoorSecurityPolicyApiVersion);
-            _securityPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorSecurityPolicyResource.ResourceType.Namespace, Diagnostics);
-            _securityPoliciesRestClient = new SecurityPolicies(_securityPoliciesClientDiagnostics, Pipeline, Endpoint, frontDoorSecurityPolicyApiVersion ?? "2025-09-01-preview");
-            ValidateResourceId(id);
+            _frontDoorSecurityPolicyRestClient = new FrontDoorSecurityPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecurityPolicyApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ProfileResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProfileResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates a new security policy within the specified profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPolicies_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecurityPolicies_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="data"> The security policy properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorSecurityPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securityPolicyName, FrontDoorSecurityPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _securityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.CreateOrUpdate");
+            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityPolicyName, FrontDoorSecurityPolicyData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CdnArmOperation<FrontDoorSecurityPolicyResource> operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(
-                    new FrontDoorSecurityPolicyOperationSource(Client),
-                    _securityPoliciesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontDoorSecurityPolicyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyOperationSource(Client), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, _frontDoorSecurityPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.Cdn
         /// Creates a new security policy within the specified profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPolicies_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecurityPolicies_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="data"> The security policy properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorSecurityPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string securityPolicyName, FrontDoorSecurityPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _securityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.CreateOrUpdate");
+            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityPolicyName, FrontDoorSecurityPolicyData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                CdnArmOperation<FrontDoorSecurityPolicyResource> operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(
-                    new FrontDoorSecurityPolicyOperationSource(Client),
-                    _securityPoliciesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontDoorSecurityPolicyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken);
+                var operation = new CdnArmOperation<FrontDoorSecurityPolicyResource>(new FrontDoorSecurityPolicyOperationSource(Client), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, _frontDoorSecurityPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.Cdn
         /// Gets an existing security policy within a profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecurityPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorSecurityPolicyResource>> GetAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Get");
+            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FrontDoorSecurityPolicyData> response = Response.FromValue(FrontDoorSecurityPolicyData.FromResponse(result), result);
+                var response = await _frontDoorSecurityPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.Cdn
         /// Gets an existing security policy within a profile.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecurityPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual Response<FrontDoorSecurityPolicyResource> Get(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Get");
+            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FrontDoorSecurityPolicyData> response = Response.FromValue(FrontDoorSecurityPolicyData.FromResponse(result), result);
+                var response = _frontDoorSecurityPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.Cdn
         /// Lists security policies associated with the profile
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPolicies_ListByProfile. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecurityPolicies_ListByProfile</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorSecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorSecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorSecurityPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<FrontDoorSecurityPolicyData, FrontDoorSecurityPolicyResource>(new SecurityPoliciesGetByProfileAsyncCollectionResultOfT(
-                _securityPoliciesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "FrontDoorSecurityPolicyCollection.GetAll"), data => new FrontDoorSecurityPolicyResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecurityPolicyRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecurityPolicyRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecurityPolicyResource(Client, FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(e)), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, "FrontDoorSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists security policies associated with the profile
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPolicies_ListByProfile. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecurityPolicies_ListByProfile</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="FrontDoorSecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorSecurityPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<FrontDoorSecurityPolicyData, FrontDoorSecurityPolicyResource>(new SecurityPoliciesGetByProfileCollectionResultOfT(
-                _securityPoliciesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "FrontDoorSecurityPolicyCollection.GetAll"), data => new FrontDoorSecurityPolicyResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecurityPolicyRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecurityPolicyRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecurityPolicyResource(Client, FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(e)), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, "FrontDoorSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecurityPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Exists");
+            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<FrontDoorSecurityPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorSecurityPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorSecurityPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _frontDoorSecurityPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.Cdn
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecurityPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Exists");
+            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<FrontDoorSecurityPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorSecurityPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorSecurityPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _frontDoorSecurityPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.Cdn
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecurityPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorSecurityPolicyResource>> GetIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.GetIfExists");
+            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<FrontDoorSecurityPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorSecurityPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorSecurityPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _frontDoorSecurityPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<FrontDoorSecurityPolicyResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.Cdn
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/securityPolicies/{securityPolicyName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityPolicies_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecurityPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorSecurityPolicyResource> GetIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using DiagnosticScope scope = _securityPoliciesClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.GetIfExists");
+            using var scope = _frontDoorSecurityPolicyClientDiagnostics.CreateScope("FrontDoorSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityPolicyName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<FrontDoorSecurityPolicyData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FrontDoorSecurityPolicyData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FrontDoorSecurityPolicyData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _frontDoorSecurityPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<FrontDoorSecurityPolicyResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new FrontDoorSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.Cdn
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FrontDoorSecurityPolicyResource> IAsyncEnumerable<FrontDoorSecurityPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

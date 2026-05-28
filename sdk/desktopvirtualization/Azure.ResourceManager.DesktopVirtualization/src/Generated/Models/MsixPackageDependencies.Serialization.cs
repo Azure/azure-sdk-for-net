@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.DesktopVirtualization;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> Schema for MSIX Package Dependencies properties. </summary>
-    public partial class MsixPackageDependencies : IJsonModel<MsixPackageDependencies>
+    public partial class MsixPackageDependencies : IUtf8JsonSerializable, IJsonModel<MsixPackageDependencies>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MsixPackageDependencies PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMsixPackageDependencies(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MsixPackageDependencies>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MsixPackageDependencies>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MsixPackageDependencies IPersistableModel<MsixPackageDependencies>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MsixPackageDependencies>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MsixPackageDependencies>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(DependencyName))
             {
                 writer.WritePropertyName("dependencyName"u8);
@@ -89,15 +50,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("minVersion"u8);
                 writer.WriteStringValue(MinVersion);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,27 +67,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MsixPackageDependencies IJsonModel<MsixPackageDependencies>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MsixPackageDependencies JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MsixPackageDependencies IJsonModel<MsixPackageDependencies>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMsixPackageDependencies(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MsixPackageDependencies DeserializeMsixPackageDependencies(JsonElement element, ModelReaderWriterOptions options)
+        internal static MsixPackageDependencies DeserializeMsixPackageDependencies(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,30 +90,149 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string dependencyName = default;
             string publisher = default;
             string minVersion = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("dependencyName"u8))
+                if (property.NameEquals("dependencyName"u8))
                 {
-                    dependencyName = prop.Value.GetString();
+                    dependencyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("publisher"u8))
+                if (property.NameEquals("publisher"u8))
                 {
-                    publisher = prop.Value.GetString();
+                    publisher = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("minVersion"u8))
+                if (property.NameEquals("minVersion"u8))
                 {
-                    minVersion = prop.Value.GetString();
+                    minVersion = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new MsixPackageDependencies(dependencyName, publisher, minVersion, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MsixPackageDependencies(dependencyName, publisher, minVersion, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DependencyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dependencyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DependencyName))
+                {
+                    builder.Append("  dependencyName: ");
+                    if (DependencyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DependencyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DependencyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Publisher), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  publisher: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Publisher))
+                {
+                    builder.Append("  publisher: ");
+                    if (Publisher.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Publisher}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Publisher}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinVersion))
+                {
+                    builder.Append("  minVersion: ");
+                    if (MinVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MinVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MinVersion}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MsixPackageDependencies>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MsixPackageDependencies IPersistableModel<MsixPackageDependencies>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMsixPackageDependencies(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MsixPackageDependencies>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

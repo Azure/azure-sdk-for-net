@@ -6,35 +6,45 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a ContainerAppManagedEnvironmentDetectorResourceProperty along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// A Class representing a ContainerAppManagedEnvironmentDetectorResourceProperty along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppManagedEnvironmentDetectorResourcePropertyResource method.
     /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource"/> using the GetContainerAppManagedEnvironmentDetectorResourceProperty method.
     /// </summary>
     public partial class ContainerAppManagedEnvironmentDetectorResourcePropertyResource : ArmResource
     {
-        private readonly ClientDiagnostics _managedEnvironmentsDiagnosticsClientDiagnostics;
-        private readonly ManagedEnvironmentsDiagnostics _managedEnvironmentsDiagnosticsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="environmentName"> The environmentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsClientDiagnostics;
+        private readonly ManagedEnvironmentsDiagnosticsRestOperations _containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsRestClient;
         private readonly ContainerAppManagedEnvironmentData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectorProperties";
 
-        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentDetectorResourcePropertyResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> class for mocking. </summary>
         protected ContainerAppManagedEnvironmentDetectorResourcePropertyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentDetectorResourcePropertyResource(ArmClient client, ContainerAppManagedEnvironmentData data) : this(client, data.Id)
@@ -43,92 +53,71 @@ namespace Azure.ResourceManager.AppContainers
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentDetectorResourcePropertyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string containerAppManagedEnvironmentDetectorResourcePropertyApiVersion);
-            _managedEnvironmentsDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _managedEnvironmentsDiagnosticsRestClient = new ManagedEnvironmentsDiagnostics(_managedEnvironmentsDiagnosticsClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentDetectorResourcePropertyApiVersion ?? "2025-10-02-preview");
-            ValidateResourceId(id);
+            _containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsApiVersion);
+            _containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsRestClient = new ManagedEnvironmentsDiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ContainerAppManagedEnvironmentData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="environmentName"> The environmentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get the properties of a Managed Environment used to host container apps.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi/. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentsDiagnostics_GetRoot. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironmentsDiagnostics_GetRoot</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ContainerAppManagedEnvironmentDetectorResourcePropertyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyResource.Get");
+            using var scope = _containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedEnvironmentsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
+                var response = await _containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsRestClient.GetRootAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,41 +131,33 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the properties of a Managed Environment used to host container apps.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi/. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedEnvironmentsDiagnostics_GetRoot. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironmentsDiagnostics_GetRoot</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ContainerAppManagedEnvironmentDetectorResourcePropertyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyResource.Get");
+            using var scope = _containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDetectorResourcePropertyResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedEnvironmentsDiagnosticsRestClient.CreateGetRootRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerAppManagedEnvironmentData> response = Response.FromValue(ContainerAppManagedEnvironmentData.FromResponse(result), result);
+                var response = _containerAppManagedEnvironmentDetectorResourcePropertyManagedEnvironmentsDiagnosticsRestClient.GetRoot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

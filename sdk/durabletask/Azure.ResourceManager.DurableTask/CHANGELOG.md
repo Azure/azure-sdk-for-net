@@ -1,37 +1,18 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.0.0 (2025-10-13)
 
-### Features Added
+First GA release of the Durable Task Scheduler management SDK
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
-
-## 1.1.0 (2026-03-12)
-
-### Features Added
-
-This release contains required changes for durable task scheduler private endpoint support. As part of this schedulers can be configured to disable public network access. Additionally, private endpoint connections can be managed and viewed.
-
-- `DurableTaskSchedulerProperties` now includes `PublicNetworkAccess` to enable or disable public network access.
-- `DurableTaskSchedulerProperties` now also contain a readonly `PrivateEndpointConnections` collection for any private endpoint connections of this scheduler.
-- The `DurableTaskPrivateEndpointConnectionCollection` client allows managing of private endpoint connections, including approving / rejecting connections.
-
-### Other Changes
-
-- Now uses API version `2026-02-01` for all resource management calls.
-
-## 1.0.0 (2025-11-03)
-
-First GA release of the Durable Task Scheduler management SDK
+- All classes have dropped the `DurableTask` name prefix.
+- `DurableTaskHub` classes have been renamed to `SchedulerTaskHub`
 
 ### Other Changes
 
 - Now uses API version `2025-11-01` for all resource manager calls.
-- `DurableTaskSchedulerSkuName` now provides constants for the possible Scheduler SKU values.
+- `SchedulerSkuName` now provides constants for the possible Sku values.
 
 ## 1.0.0-beta.1 (2025-04-24)
 

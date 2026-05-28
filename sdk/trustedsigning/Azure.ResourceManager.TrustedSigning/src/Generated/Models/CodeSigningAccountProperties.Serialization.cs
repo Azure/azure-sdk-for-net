@@ -16,46 +16,6 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     /// <summary> Properties of the trusted signing account. </summary>
     internal partial class CodeSigningAccountProperties : IJsonModel<CodeSigningAccountProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CodeSigningAccountProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CodeSigningAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCodeSigningAccountProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CodeSigningAccountProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CodeSigningAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrustedSigningContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CodeSigningAccountProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CodeSigningAccountProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CodeSigningAccountProperties IPersistableModel<CodeSigningAccountProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CodeSigningAccountProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CodeSigningAccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -143,7 +103,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                     {
                         continue;
                     }
-                    accountUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    accountUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -171,5 +131,45 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             }
             return new CodeSigningAccountProperties(accountUri, sku, provisioningState, additionalBinaryDataProperties);
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CodeSigningAccountProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodeSigningAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrustedSigningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CodeSigningAccountProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CodeSigningAccountProperties IPersistableModel<CodeSigningAccountProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CodeSigningAccountProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CodeSigningAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeCodeSigningAccountProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CodeSigningAccountProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CodeSigningAccountProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

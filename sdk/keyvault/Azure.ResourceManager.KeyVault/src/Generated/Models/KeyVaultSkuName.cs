@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> SKU name to specify whether the key vault is a standard vault or a premium vault. </summary>
     public enum KeyVaultSkuName
     {
-        /// <summary> Standard. </summary>
+        /// <summary> standard. </summary>
         Standard,
-        /// <summary> Premium. </summary>
+        /// <summary> premium. </summary>
         Premium
     }
 }

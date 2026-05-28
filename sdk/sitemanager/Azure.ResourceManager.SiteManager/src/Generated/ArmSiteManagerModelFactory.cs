@@ -8,45 +8,42 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SiteManager;
 
 namespace Azure.ResourceManager.SiteManager.Models
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class ArmSiteManagerModelFactory
     {
-
-        /// <summary> Site as Extension Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <summary> Initializes a new instance of <see cref="SiteManager.EdgeSiteData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="SiteManager.EdgeSiteData"/> instance for mocking. </returns>
-        public static EdgeSiteData EdgeSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeSiteProperties properties = default)
+        public static EdgeSiteData EdgeSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EdgeSiteProperties properties = null)
         {
             return new EdgeSiteData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Site properties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeSiteProperties"/>. </summary>
         /// <param name="displayName"> displayName of Site resource. </param>
         /// <param name="description"> Description of Site resource. </param>
         /// <param name="siteAddress"> Physical address of the site. </param>
         /// <param name="labels"> Key-value pairs for labeling the site resource. </param>
         /// <param name="provisioningState"> Provisioning state of last operation. </param>
         /// <returns> A new <see cref="Models.EdgeSiteProperties"/> instance for mocking. </returns>
-        public static EdgeSiteProperties EdgeSiteProperties(string displayName = default, string description = default, EdgeSiteAddressProperties siteAddress = default, IDictionary<string, string> labels = default, EdgeSiteProvisioningState? provisioningState = default)
+        public static EdgeSiteProperties EdgeSiteProperties(string displayName = null, string description = null, EdgeSiteAddressProperties siteAddress = null, IDictionary<string, string> labels = null, EdgeSiteProvisioningState? provisioningState = null)
         {
-            labels ??= new ChangeTrackingDictionary<string, string>();
+            labels ??= new Dictionary<string, string>();
 
             return new EdgeSiteProperties(
                 displayName,
@@ -54,20 +51,7 @@ namespace Azure.ResourceManager.SiteManager.Models
                 siteAddress,
                 labels,
                 provisioningState,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The updatable properties of the Site. </summary>
-        /// <param name="displayName"> displayName of Site resource. </param>
-        /// <param name="description"> Description of Site resource. </param>
-        /// <param name="siteAddress"> Physical address of the site. </param>
-        /// <param name="labels"> Key-value pairs for labeling the site resource. </param>
-        /// <returns> A new <see cref="Models.EdgeSitePatchProperties"/> instance for mocking. </returns>
-        public static EdgeSitePatchProperties EdgeSitePatchProperties(string displayName = default, string description = default, EdgeSiteAddressProperties siteAddress = default, IDictionary<string, string> labels = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new EdgeSitePatchProperties(displayName, description, siteAddress, labels, additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
     }
 }

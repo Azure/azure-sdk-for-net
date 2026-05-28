@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary></summary>
-    internal partial class JavaComponentOperationSource : IOperationSource<JavaComponentResource>
+    internal class JavaComponentOperationSource : IOperationSource<JavaComponentResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal JavaComponentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         JavaComponentResource IOperationSource<JavaComponentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            JavaComponentData data = JavaComponentData.DeserializeJavaComponentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<JavaComponentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return new JavaComponentResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<JavaComponentResource> IOperationSource<JavaComponentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            JavaComponentData data = JavaComponentData.DeserializeJavaComponentData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new JavaComponentResource(_client, data);
+            var data = ModelReaderWriter.Read<JavaComponentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            return await Task.FromResult(new JavaComponentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The NIC Detail of a device. </summary>
-    public partial class HciEdgeDeviceNicDetail : IJsonModel<HciEdgeDeviceNicDetail>
+    public partial class HciEdgeDeviceNicDetail : IUtf8JsonSerializable, IJsonModel<HciEdgeDeviceNicDetail>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciEdgeDeviceNicDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceNicDetail>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciEdgeDeviceNicDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciEdgeDeviceNicDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciEdgeDeviceNicDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceNicDetail>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HciEdgeDeviceNicDetail)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciEdgeDeviceNicDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciEdgeDeviceNicDetail IPersistableModel<HciEdgeDeviceNicDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciEdgeDeviceNicDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciEdgeDeviceNicDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +30,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceNicDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceNicDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciEdgeDeviceNicDetail)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(AdapterName))
             {
                 writer.WritePropertyName("adapterName"u8);
@@ -113,13 +75,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
-                foreach (string item in DnsServers)
+                foreach (var item in DnsServers)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -129,15 +86,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("defaultIsolationId"u8);
                 writer.WriteStringValue(DefaultIsolationId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -146,27 +103,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciEdgeDeviceNicDetail IJsonModel<HciEdgeDeviceNicDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciEdgeDeviceNicDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciEdgeDeviceNicDetail IJsonModel<HciEdgeDeviceNicDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceNicDetail>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceNicDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciEdgeDeviceNicDetail)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciEdgeDeviceNicDetail(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciEdgeDeviceNicDetail DeserializeHciEdgeDeviceNicDetail(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciEdgeDeviceNicDetail DeserializeHciEdgeDeviceNicDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -175,91 +127,354 @@ namespace Azure.ResourceManager.Hci.Models
             string interfaceDescription = default;
             string componentId = default;
             string driverVersion = default;
-            string iPv4Address = default;
+            string ip4Address = default;
             string subnetMask = default;
             string defaultGateway = default;
             IList<string> dnsServers = default;
             string defaultIsolationId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("adapterName"u8))
+                if (property.NameEquals("adapterName"u8))
                 {
-                    adapterName = prop.Value.GetString();
+                    adapterName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("interfaceDescription"u8))
+                if (property.NameEquals("interfaceDescription"u8))
                 {
-                    interfaceDescription = prop.Value.GetString();
+                    interfaceDescription = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("componentId"u8))
+                if (property.NameEquals("componentId"u8))
                 {
-                    componentId = prop.Value.GetString();
+                    componentId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("driverVersion"u8))
+                if (property.NameEquals("driverVersion"u8))
                 {
-                    driverVersion = prop.Value.GetString();
+                    driverVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ip4Address"u8))
+                if (property.NameEquals("ip4Address"u8))
                 {
-                    iPv4Address = prop.Value.GetString();
+                    ip4Address = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subnetMask"u8))
+                if (property.NameEquals("subnetMask"u8))
                 {
-                    subnetMask = prop.Value.GetString();
+                    subnetMask = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("defaultGateway"u8))
+                if (property.NameEquals("defaultGateway"u8))
                 {
-                    defaultGateway = prop.Value.GetString();
+                    defaultGateway = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dnsServers"u8))
+                if (property.NameEquals("dnsServers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     dnsServers = array;
                     continue;
                 }
-                if (prop.NameEquals("defaultIsolationId"u8))
+                if (property.NameEquals("defaultIsolationId"u8))
                 {
-                    defaultIsolationId = prop.Value.GetString();
+                    defaultIsolationId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new HciEdgeDeviceNicDetail(
                 adapterName,
                 interfaceDescription,
                 componentId,
                 driverVersion,
-                iPv4Address,
+                ip4Address,
                 subnetMask,
                 defaultGateway,
                 dnsServers ?? new ChangeTrackingList<string>(),
                 defaultIsolationId,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdapterName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  adapterName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdapterName))
+                {
+                    builder.Append("  adapterName: ");
+                    if (AdapterName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdapterName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdapterName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InterfaceDescription), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  interfaceDescription: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InterfaceDescription))
+                {
+                    builder.Append("  interfaceDescription: ");
+                    if (InterfaceDescription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InterfaceDescription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InterfaceDescription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComponentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  componentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ComponentId))
+                {
+                    builder.Append("  componentId: ");
+                    if (ComponentId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ComponentId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ComponentId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DriverVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  driverVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DriverVersion))
+                {
+                    builder.Append("  driverVersion: ");
+                    if (DriverVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DriverVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DriverVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv4Address), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ip4Address: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPv4Address))
+                {
+                    builder.Append("  ip4Address: ");
+                    if (IPv4Address.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPv4Address}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPv4Address}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetMask), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subnetMask: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubnetMask))
+                {
+                    builder.Append("  subnetMask: ");
+                    if (SubnetMask.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SubnetMask}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SubnetMask}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultGateway), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultGateway: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultGateway))
+                {
+                    builder.Append("  defaultGateway: ");
+                    if (DefaultGateway.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefaultGateway}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefaultGateway}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsServers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dnsServers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DnsServers))
+                {
+                    if (DnsServers.Any())
+                    {
+                        builder.Append("  dnsServers: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DnsServers)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultIsolationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultIsolationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultIsolationId))
+                {
+                    builder.Append("  defaultIsolationId: ");
+                    if (DefaultIsolationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefaultIsolationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefaultIsolationId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<HciEdgeDeviceNicDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceNicDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(HciEdgeDeviceNicDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HciEdgeDeviceNicDetail IPersistableModel<HciEdgeDeviceNicDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceNicDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHciEdgeDeviceNicDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciEdgeDeviceNicDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciEdgeDeviceNicDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

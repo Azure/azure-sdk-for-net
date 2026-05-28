@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -16,20 +15,22 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class LineChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of <see cref="LineChannel"/>. </summary>
-        public LineChannel() : base("LineChannel")
+        public LineChannel()
         {
+            ChannelName = "LineChannel";
         }
 
         /// <summary> Initializes a new instance of <see cref="LineChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
-        /// <param name="eTag"> Entity Tag of the resource. </param>
+        /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The set of properties specific to line channel resource. </param>
-        internal LineChannel(string channelName, ETag? eTag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, LineChannelProperties properties) : base(channelName, eTag, provisioningState, location, additionalBinaryDataProperties)
+        internal LineChannel(string channelName, ETag? etag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, LineChannelProperties properties) : base(channelName, etag, provisioningState, location, serializedAdditionalRawData)
         {
             Properties = properties;
+            ChannelName = channelName ?? "LineChannel";
         }
 
         /// <summary> The set of properties specific to line channel resource. </summary>

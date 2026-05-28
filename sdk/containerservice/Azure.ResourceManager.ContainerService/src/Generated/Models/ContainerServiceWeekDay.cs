@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -15,82 +14,53 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ContainerServiceWeekDay : IEquatable<ContainerServiceWeekDay>
     {
         private readonly string _value;
-        /// <summary> Represents Sunday. </summary>
-        private const string SundayValue = "Sunday";
-        /// <summary> Represents Monday. </summary>
-        private const string MondayValue = "Monday";
-        /// <summary> Represents Tuesday. </summary>
-        private const string TuesdayValue = "Tuesday";
-        /// <summary> Represents Wednesday. </summary>
-        private const string WednesdayValue = "Wednesday";
-        /// <summary> Represents Thursday. </summary>
-        private const string ThursdayValue = "Thursday";
-        /// <summary> Represents Friday. </summary>
-        private const string FridayValue = "Friday";
-        /// <summary> Represents Saturday. </summary>
-        private const string SaturdayValue = "Saturday";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceWeekDay"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceWeekDay(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Represents Sunday. </summary>
+        private const string SundayValue = "Sunday";
+        private const string MondayValue = "Monday";
+        private const string TuesdayValue = "Tuesday";
+        private const string WednesdayValue = "Wednesday";
+        private const string ThursdayValue = "Thursday";
+        private const string FridayValue = "Friday";
+        private const string SaturdayValue = "Saturday";
+
+        /// <summary> Sunday. </summary>
         public static ContainerServiceWeekDay Sunday { get; } = new ContainerServiceWeekDay(SundayValue);
-
-        /// <summary> Represents Monday. </summary>
+        /// <summary> Monday. </summary>
         public static ContainerServiceWeekDay Monday { get; } = new ContainerServiceWeekDay(MondayValue);
-
-        /// <summary> Represents Tuesday. </summary>
+        /// <summary> Tuesday. </summary>
         public static ContainerServiceWeekDay Tuesday { get; } = new ContainerServiceWeekDay(TuesdayValue);
-
-        /// <summary> Represents Wednesday. </summary>
+        /// <summary> Wednesday. </summary>
         public static ContainerServiceWeekDay Wednesday { get; } = new ContainerServiceWeekDay(WednesdayValue);
-
-        /// <summary> Represents Thursday. </summary>
+        /// <summary> Thursday. </summary>
         public static ContainerServiceWeekDay Thursday { get; } = new ContainerServiceWeekDay(ThursdayValue);
-
-        /// <summary> Represents Friday. </summary>
+        /// <summary> Friday. </summary>
         public static ContainerServiceWeekDay Friday { get; } = new ContainerServiceWeekDay(FridayValue);
-
-        /// <summary> Represents Saturday. </summary>
+        /// <summary> Saturday. </summary>
         public static ContainerServiceWeekDay Saturday { get; } = new ContainerServiceWeekDay(SaturdayValue);
-
         /// <summary> Determines if two <see cref="ContainerServiceWeekDay"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceWeekDay left, ContainerServiceWeekDay right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContainerServiceWeekDay"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceWeekDay left, ContainerServiceWeekDay right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContainerServiceWeekDay"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceWeekDay"/>. </summary>
         public static implicit operator ContainerServiceWeekDay(string value) => new ContainerServiceWeekDay(value);
 
-        /// <summary> Converts a string to a <see cref="ContainerServiceWeekDay"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContainerServiceWeekDay?(string value) => value == null ? null : new ContainerServiceWeekDay(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceWeekDay other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContainerServiceWeekDay other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

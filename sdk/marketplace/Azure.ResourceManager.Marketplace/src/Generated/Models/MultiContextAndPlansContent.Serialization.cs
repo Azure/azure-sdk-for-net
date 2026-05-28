@@ -10,65 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Payload object for upsert offer with multiple context and plans. </summary>
-    public partial class MultiContextAndPlansContent : IJsonModel<MultiContextAndPlansContent>
+    public partial class MultiContextAndPlansContent : IUtf8JsonSerializable, IJsonModel<MultiContextAndPlansContent>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultiContextAndPlansContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiContextAndPlansContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMultiContextAndPlansContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiContextAndPlansContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiContextAndPlansContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MultiContextAndPlansContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MultiContextAndPlansContent IPersistableModel<MultiContextAndPlansContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MultiContextAndPlansContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="multiContextAndPlansContent"> The <see cref="MultiContextAndPlansContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MultiContextAndPlansContent multiContextAndPlansContent)
-        {
-            if (multiContextAndPlansContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(multiContextAndPlansContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MultiContextAndPlansContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -80,25 +28,44 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiContextAndPlansContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MultiContextAndPlansContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Properties))
+
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OfferId))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("offerId"u8);
+                writer.WriteStringValue(OfferId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (Optional.IsDefined(ETag))
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                writer.WritePropertyName("eTag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(PlansContext))
+            {
+                writer.WritePropertyName("plansContext"u8);
+                writer.WriteStartArray();
+                foreach (var item in PlansContext)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -107,50 +74,111 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MultiContextAndPlansContent IJsonModel<MultiContextAndPlansContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultiContextAndPlansContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MultiContextAndPlansContent IJsonModel<MultiContextAndPlansContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiContextAndPlansContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MultiContextAndPlansContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMultiContextAndPlansContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MultiContextAndPlansContent DeserializeMultiContextAndPlansContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static MultiContextAndPlansContent DeserializeMultiContextAndPlansContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MultiContextAndPlansProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string offerId = default;
+            ETag? eTag = default;
+            IList<ContextAndPlansDetails> plansContext = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = MultiContextAndPlansProperties.DeserializeMultiContextAndPlansProperties(prop.Value, options);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("offerId"u8))
+                        {
+                            offerId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("eTag"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            eTag = new ETag(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("plansContext"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ContextAndPlansDetails> array = new List<ContextAndPlansDetails>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ContextAndPlansDetails.DeserializeContextAndPlansDetails(item, options));
+                            }
+                            plansContext = array;
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new MultiContextAndPlansContent(properties, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MultiContextAndPlansContent(offerId, eTag, plansContext ?? new ChangeTrackingList<ContextAndPlansDetails>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MultiContextAndPlansContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MultiContextAndPlansContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MultiContextAndPlansContent IPersistableModel<MultiContextAndPlansContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MultiContextAndPlansContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMultiContextAndPlansContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MultiContextAndPlansContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MultiContextAndPlansContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

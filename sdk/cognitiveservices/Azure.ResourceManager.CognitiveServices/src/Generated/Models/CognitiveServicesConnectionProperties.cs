@@ -8,24 +8,51 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Connection property base schema.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PatAuthTypeConnectionProperties"/>, <see cref="ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="UsernamePasswordAuthTypeConnectionProperties"/>, <see cref="NoneAuthTypeConnectionProperties"/>, <see cref="SASAuthTypeConnectionProperties"/>, <see cref="AccountKeyAuthTypeConnectionProperties"/>, <see cref="ServicePrincipalAuthTypeConnectionProperties"/>, <see cref="AccessKeyAuthTypeConnectionProperties"/>, <see cref="ApiKeyAuthConnectionProperties"/>, <see cref="CustomKeysConnectionProperties"/>, <see cref="OAuth2AuthTypeConnectionProperties"/>, and <see cref="AadAuthTypeConnectionProperties"/>.
+    /// Please note <see cref="CognitiveServicesConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AadAuthTypeConnectionProperties"/>, <see cref="AccessKeyAuthTypeConnectionProperties"/>, <see cref="AccountKeyAuthTypeConnectionProperties"/>, <see cref="ApiKeyAuthConnectionProperties"/>, <see cref="CustomKeysConnectionProperties"/>, <see cref="ManagedIdentityAuthTypeConnectionProperties"/>, <see cref="NoneAuthTypeConnectionProperties"/>, <see cref="OAuth2AuthTypeConnectionProperties"/>, <see cref="PatAuthTypeConnectionProperties"/>, <see cref="SASAuthTypeConnectionProperties"/>, <see cref="ServicePrincipalAuthTypeConnectionProperties"/> and <see cref="UsernamePasswordAuthTypeConnectionProperties"/>.
     /// </summary>
     public abstract partial class CognitiveServicesConnectionProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesConnectionProperties"/>. </summary>
-        /// <param name="authType"> Authentication type of the connection target. </param>
-        private protected CognitiveServicesConnectionProperties(ConnectionAuthType authType)
+        protected CognitiveServicesConnectionProperties()
         {
-            AuthType = authType;
             Metadata = new ChangeTrackingDictionary<string, string>();
             SharedUserList = new ChangeTrackingList<string>();
         }
@@ -44,15 +71,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sharedUserList"></param>
         /// <param name="target"> The connection URL to be used. </param>
         /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? @group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthType = authType;
             Category = category;
             CreatedByWorkspaceArmId = createdByWorkspaceArmId;
             Error = error;
             ExpiryOn = expiryOn;
-            Group = @group;
+            Group = group;
             IsSharedToAll = isSharedToAll;
             Metadata = metadata;
             PeRequirement = peRequirement;
@@ -60,58 +87,45 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             SharedUserList = sharedUserList;
             Target = target;
             UseWorkspaceManagedIdentity = useWorkspaceManagedIdentity;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Authentication type of the connection target. </summary>
-        [WirePath("authType")]
         internal ConnectionAuthType AuthType { get; set; }
-
         /// <summary> Category of the connection. </summary>
         [WirePath("category")]
         public CognitiveServicesConnectionCategory? Category { get; set; }
-
-        /// <summary> Gets the CreatedByWorkspaceArmId. </summary>
+        /// <summary> Gets the created by workspace arm id. </summary>
         [WirePath("createdByWorkspaceArmId")]
         public ResourceIdentifier CreatedByWorkspaceArmId { get; }
-
         /// <summary> Provides the error message if the connection fails. </summary>
         [WirePath("error")]
         public string Error { get; set; }
-
-        /// <summary> Gets or sets the ExpiryOn. </summary>
+        /// <summary> Gets or sets the expiry on. </summary>
         [WirePath("expiryTime")]
         public DateTimeOffset? ExpiryOn { get; set; }
-
         /// <summary> Group based on connection category. </summary>
         [WirePath("group")]
         public CognitiveServicesConnectionGroup? Group { get; }
-
-        /// <summary> Gets or sets the IsSharedToAll. </summary>
+        /// <summary> Gets or sets the is shared to all. </summary>
         [WirePath("isSharedToAll")]
         public bool? IsSharedToAll { get; set; }
-
         /// <summary> Store user metadata for this connection. </summary>
         [WirePath("metadata")]
         public IDictionary<string, string> Metadata { get; }
-
         /// <summary> Specifies how private endpoints are used with this connection: 'Required', 'NotRequired', or 'NotApplicable'. </summary>
         [WirePath("peRequirement")]
         public ManagedPERequirement? PeRequirement { get; set; }
-
         /// <summary> Specifies the status of private endpoints for this connection: 'Inactive', 'Active', or 'NotApplicable'. </summary>
         [WirePath("peStatus")]
         public ManagedPEStatus? PeStatus { get; set; }
-
-        /// <summary> Gets the SharedUserList. </summary>
+        /// <summary> Gets the shared user list. </summary>
         [WirePath("sharedUserList")]
         public IList<string> SharedUserList { get; }
-
         /// <summary> The connection URL to be used. </summary>
         [WirePath("target")]
         public string Target { get; set; }
-
-        /// <summary> Gets or sets the UseWorkspaceManagedIdentity. </summary>
+        /// <summary> Gets or sets the use workspace managed identity. </summary>
         [WirePath("useWorkspaceManagedIdentity")]
         public bool? UseWorkspaceManagedIdentity { get; set; }
     }

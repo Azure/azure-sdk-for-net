@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> and their operations.
-    /// Each <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> in the collection will belong to the same instance of <see cref="DeviceRegistryNamespaceResource"/>.
-    /// To get a <see cref="DeviceRegistryNamespaceDiscoveredDeviceCollection"/> instance call the GetDeviceRegistryNamespaceDiscoveredDevices method from an instance of <see cref="DeviceRegistryNamespaceResource"/>.
+    /// Each <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DeviceRegistryNamespaceDiscoveredDeviceCollection"/> instance call the GetDeviceRegistryNamespaceDiscoveredDevices method from an instance of the parent resource.
     /// </summary>
     public partial class DeviceRegistryNamespaceDiscoveredDeviceCollection : ArmCollection, IEnumerable<DeviceRegistryNamespaceDiscoveredDeviceResource>, IAsyncEnumerable<DeviceRegistryNamespaceDiscoveredDeviceResource>
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryNamespaceDiscoveredDeviceResource.ResourceType, out string deviceRegistryNamespaceDiscoveredDeviceApiVersion);
             _namespaceDiscoveredDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryNamespaceDiscoveredDeviceResource.ResourceType.Namespace, Diagnostics);
-            _namespaceDiscoveredDevicesRestClient = new NamespaceDiscoveredDevices(_namespaceDiscoveredDevicesClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceDiscoveredDeviceApiVersion ?? "2026-03-01-preview");
+            _namespaceDiscoveredDevicesRestClient = new NamespaceDiscoveredDevices(_namespaceDiscoveredDevicesClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceDiscoveredDeviceApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -50,27 +50,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != DeviceRegistryNamespaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceRegistryNamespaceResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceRegistryNamespaceResource.ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Create a NamespaceDiscoveredDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceDiscoveredDevices_CreateOrReplace. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a NamespaceDiscoveredDevice. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="discoveredDeviceName"> The name of the discovered device. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -112,23 +96,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Create a NamespaceDiscoveredDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceDiscoveredDevices_CreateOrReplace. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a NamespaceDiscoveredDevice. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="discoveredDeviceName"> The name of the discovered device. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -170,23 +138,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Get a NamespaceDiscoveredDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceDiscoveredDevices_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a NamespaceDiscoveredDevice. </summary>
         /// <param name="discoveredDeviceName"> The name of the discovered device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredDeviceName"/> is null. </exception>
@@ -219,23 +171,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Get a NamespaceDiscoveredDevice
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceDiscoveredDevices_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a NamespaceDiscoveredDevice. </summary>
         /// <param name="discoveredDeviceName"> The name of the discovered device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredDeviceName"/> is null. </exception>
@@ -268,23 +204,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// List NamespaceDiscoveredDevice resources by Namespace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceDiscoveredDevices_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List NamespaceDiscoveredDevice resources by Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistryNamespaceDiscoveredDeviceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -293,32 +213,10 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryNamespaceDiscoveredDeviceData, DeviceRegistryNamespaceDiscoveredDeviceResource>(new NamespaceDiscoveredDevicesGetByResourceGroupAsyncCollectionResultOfT(
-                _namespaceDiscoveredDevicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DeviceRegistryNamespaceDiscoveredDeviceCollection.GetAll"), data => new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryNamespaceDiscoveredDeviceData, DeviceRegistryNamespaceDiscoveredDeviceResource>(new NamespaceDiscoveredDevicesGetByResourceGroupAsyncCollectionResultOfT(_namespaceDiscoveredDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, data));
         }
 
-        /// <summary>
-        /// List NamespaceDiscoveredDevice resources by Namespace
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceDiscoveredDevices_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List NamespaceDiscoveredDevice resources by Namespace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryNamespaceDiscoveredDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistryNamespaceDiscoveredDeviceResource> GetAll(CancellationToken cancellationToken = default)
@@ -327,32 +225,10 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryNamespaceDiscoveredDeviceData, DeviceRegistryNamespaceDiscoveredDeviceResource>(new NamespaceDiscoveredDevicesGetByResourceGroupCollectionResultOfT(
-                _namespaceDiscoveredDevicesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DeviceRegistryNamespaceDiscoveredDeviceCollection.GetAll"), data => new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, data));
+            return new PageableWrapper<DeviceRegistryNamespaceDiscoveredDeviceData, DeviceRegistryNamespaceDiscoveredDeviceResource>(new NamespaceDiscoveredDevicesGetByResourceGroupCollectionResultOfT(_namespaceDiscoveredDevicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistryNamespaceDiscoveredDeviceResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceDiscoveredDevices_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="discoveredDeviceName"> The name of the discovered device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredDeviceName"/> is null. </exception>
@@ -393,23 +269,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceDiscoveredDevices_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="discoveredDeviceName"> The name of the discovered device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredDeviceName"/> is null. </exception>
@@ -450,23 +310,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceDiscoveredDevices_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="discoveredDeviceName"> The name of the discovered device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredDeviceName"/> is null. </exception>
@@ -511,23 +355,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredDevices/{discoveredDeviceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NamespaceDiscoveredDevices_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="discoveredDeviceName"> The name of the discovered device. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredDeviceName"/> is null. </exception>

@@ -19,12 +19,12 @@ namespace Azure.Data.AppConfiguration.Tests
 
             if (hasName)
             {
-                Assert.That(label.Name, Is.Not.Null);
-                Assert.That(label.Name, Is.EqualTo("testName"));
+                Assert.IsNotNull(label.Name);
+                Assert.AreEqual("testName", label.Name);
             }
             else
             {
-                Assert.That(label.Name, Is.Null);
+                Assert.IsNull(label.Name);
             }
         }
 

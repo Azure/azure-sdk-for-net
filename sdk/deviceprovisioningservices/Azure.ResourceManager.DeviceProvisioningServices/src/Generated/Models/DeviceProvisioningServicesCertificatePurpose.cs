@@ -7,63 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    /// <summary></summary>
+    /// <summary> The DeviceProvisioningServicesCertificatePurpose. </summary>
     public readonly partial struct DeviceProvisioningServicesCertificatePurpose : IEquatable<DeviceProvisioningServicesCertificatePurpose>
     {
         private readonly string _value;
-        private const string ClientAuthenticationValue = "clientAuthentication";
-        private const string ServerAuthenticationValue = "serverAuthentication";
 
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificatePurpose"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeviceProvisioningServicesCertificatePurpose(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the ClientAuthentication. </summary>
+        private const string ClientAuthenticationValue = "clientAuthentication";
+        private const string ServerAuthenticationValue = "serverAuthentication";
+
+        /// <summary> clientAuthentication. </summary>
         public static DeviceProvisioningServicesCertificatePurpose ClientAuthentication { get; } = new DeviceProvisioningServicesCertificatePurpose(ClientAuthenticationValue);
-
-        /// <summary> Gets the ServerAuthentication. </summary>
+        /// <summary> serverAuthentication. </summary>
         public static DeviceProvisioningServicesCertificatePurpose ServerAuthentication { get; } = new DeviceProvisioningServicesCertificatePurpose(ServerAuthenticationValue);
-
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesCertificatePurpose"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceProvisioningServicesCertificatePurpose left, DeviceProvisioningServicesCertificatePurpose right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesCertificatePurpose"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceProvisioningServicesCertificatePurpose left, DeviceProvisioningServicesCertificatePurpose right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesCertificatePurpose"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesCertificatePurpose"/>. </summary>
         public static implicit operator DeviceProvisioningServicesCertificatePurpose(string value) => new DeviceProvisioningServicesCertificatePurpose(value);
 
-        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesCertificatePurpose"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DeviceProvisioningServicesCertificatePurpose?(string value) => value == null ? null : new DeviceProvisioningServicesCertificatePurpose(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceProvisioningServicesCertificatePurpose other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DeviceProvisioningServicesCertificatePurpose other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -25,26 +25,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private readonly IConfiguration _configuration;
         private readonly INameResolver _nameResolver;
         private readonly ILogger _logger;
+        private readonly WebPubSubFunctionsOptions _options;
         private readonly IWebPubSubTriggerDispatcher _dispatcher;
-        private readonly IWebPubSubServiceClientFactory _clientFactory;
-        private readonly IOptionsMonitor<WebPubSubServiceAccessOptions> _accessOptions;
-        private readonly WebPubSubServiceAccessFactory _accessFactory;
 
         public WebPubSubConfigProvider(
+            IOptions<WebPubSubFunctionsOptions> options,
             INameResolver nameResolver,
             ILoggerFactory loggerFactory,
-            IConfiguration configuration,
-            IOptionsMonitor<WebPubSubServiceAccessOptions> accessOptions,
-            IWebPubSubServiceClientFactory clientFactory,
-            WebPubSubServiceAccessFactory accessFactory)
+            IConfiguration configuration)
         {
+            _options = options.Value;
             _logger = loggerFactory.CreateLogger(LogCategories.CreateTriggerCategory("WebPubSub"));
             _nameResolver = nameResolver;
             _configuration = configuration;
-            _accessOptions = accessOptions;
-            _dispatcher = new WebPubSubTriggerDispatcher(_logger);
-            _clientFactory = clientFactory;
-            _accessFactory = accessFactory;
+            _dispatcher = new WebPubSubTriggerDispatcher(_logger, _options);
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -52,6 +46,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             if (context == null)
             {
                 throw new ArgumentNullException(nameof(context));
+            }
+
+            if (string.IsNullOrEmpty(_options.ConnectionString))
+            {
+                _options.ConnectionString = _nameResolver.Resolve(Constants.WebPubSubConnectionStringName);
+            }
+
+            if (string.IsNullOrEmpty(_options.Hub))
+            {
+                _options.Hub = _nameResolver.Resolve(Constants.HubNameStringName);
             }
 
             Exception webhookException = null;
@@ -80,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
             // Trigger binding
             context.AddBindingRule<WebPubSubTriggerAttribute>()
-                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _nameResolver, _accessOptions.CurrentValue, webhookException, _accessFactory, _logger));
+                .BindToTrigger(new WebPubSubTriggerBindingProvider(_dispatcher, _nameResolver, _options, webhookException));
 
             // Input binding
             var webpubsubConnectionAttributeRule = context.AddBindingRule<WebPubSubConnectionAttribute>();
@@ -88,7 +92,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             webpubsubConnectionAttributeRule.BindToInput(GetClientConnection);
 
             var webPubSubRequestAttributeRule = context.AddBindingRule<WebPubSubContextAttribute>();
-            webPubSubRequestAttributeRule.Bind(new WebPubSubContextBindingProvider(_nameResolver, _configuration, _accessOptions.CurrentValue, _accessFactory, _logger));
+            webPubSubRequestAttributeRule.Bind(new WebPubSubContextBindingProvider(_nameResolver, _configuration, _options));
 
             // Output binding
             var webPubSubAttributeRule = context.AddBindingRule<WebPubSubAttribute>();
@@ -103,53 +107,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return _dispatcher.ExecuteAsync(input, cancellationToken);
         }
 
-        internal WebPubSubService GetService(WebPubSubAttribute attribute)
+        private void ValidateWebPubSubConnectionAttributeBinding(WebPubSubConnectionAttribute attribute, Type type)
         {
-            var client = _clientFactory.Create(
+            ValidateConnectionString(
                 attribute.Connection,
-                attribute.Hub);
-            return new WebPubSubService(client);
+                $"{nameof(WebPubSubConnectionAttribute)}.{nameof(WebPubSubConnectionAttribute.Connection)}");
         }
 
         private void ValidateWebPubSubAttributeBinding(WebPubSubAttribute attribute, Type type)
         {
-            ValidateWebPubSubConnectionCore(attribute.Connection, attribute.Hub, "WebPubSub");
+            ValidateConnectionString(
+                attribute.Connection,
+                $"{nameof(WebPubSubAttribute)}.{nameof(WebPubSubAttribute.Connection)}");
         }
 
-        private void ValidateWebPubSubConnectionAttributeBinding(WebPubSubConnectionAttribute attribute, Type type)
+        internal WebPubSubService GetService(WebPubSubAttribute attribute)
         {
-            ValidateWebPubSubConnectionCore(attribute.Connection, attribute.Hub, "WebPubSubConnection");
-        }
-
-        private void ValidateWebPubSubConnectionCore(string attributeConnection, string attributeHub, string extensionType)
-        {
-            var webPubSubAccessExists = true;
-            if (attributeConnection == null)
-            {
-                if (_accessOptions.CurrentValue.WebPubSubAccess == null)
-                {
-                    webPubSubAccessExists = false;
-                }
-            }
-            else
-            {
-                if (!WebPubSubServiceAccessUtil.CanCreateFromIConfiguration(_configuration.GetSection(attributeConnection)))
-                {
-                    webPubSubAccessExists = false;
-                }
-            }
-            if (!webPubSubAccessExists)
-            {
-                throw new InvalidOperationException(
-                 $"Connection must be specified through one of the following:" + Environment.NewLine +
-                $"  * Set '{extensionType}.Connection' property to the name of a config section that contains a Web PubSub connection." + Environment.NewLine +
-                $"  * Set a Web PubSub connection under '{Constants.WebPubSubConnectionStringName}'.");
-            }
-
-            if ((attributeHub ?? _accessOptions.CurrentValue.Hub) is null)
-            {
-                throw new InvalidOperationException($"Resolved 'Hub' value is null for extension '{extensionType}'.");
-            }
+            var connectionString = Utilities.FirstOrDefault(attribute.Connection, _options.ConnectionString);
+            var hubName = Utilities.FirstOrDefault(attribute.Hub, _options.Hub);
+            return new WebPubSubService(connectionString, hubName);
         }
 
         private IAsyncCollector<WebPubSubAction> CreateCollector(WebPubSubAttribute attribute)
@@ -159,11 +135,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         private WebPubSubConnection GetClientConnection(WebPubSubConnectionAttribute attribute)
         {
-            var client = _clientFactory.Create(
-                attribute.Connection,
-                attribute.Hub);
-            var service = new WebPubSubService(client);
+            var hub = Utilities.FirstOrDefault(attribute.Hub, _options.Hub);
+            var service = new WebPubSubService(attribute.Connection, hub);
             return service.GetClientConnection(attribute.UserId, clientProtocol: attribute.ClientProtocol);
+        }
+
+        private void ValidateConnectionString(string attributeConnectionString, string attributeConnectionStringName)
+        {
+            var connectionString = Utilities.FirstOrDefault(attributeConnectionString, _options.ConnectionString);
+
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException($"The Service connection string must be set either via an '{Constants.WebPubSubConnectionStringName}' app setting, via an '{Constants.WebPubSubConnectionStringName}' environment variable, or directly in code via {nameof(WebPubSubFunctionsOptions)}.{nameof(WebPubSubFunctionsOptions.ConnectionString)} or {attributeConnectionStringName}.");
+            }
         }
 
         internal static void RegisterJsonConverter()

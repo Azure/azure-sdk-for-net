@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.DesktopVirtualization;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-    public partial class DesktopVirtualizationPrivateLinkServiceConnectionState : IJsonModel<DesktopVirtualizationPrivateLinkServiceConnectionState>
+    public partial class DesktopVirtualizationPrivateLinkServiceConnectionState : IUtf8JsonSerializable, IJsonModel<DesktopVirtualizationPrivateLinkServiceConnectionState>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DesktopVirtualizationPrivateLinkServiceConnectionState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateLinkServiceConnectionState)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DesktopVirtualizationPrivateLinkServiceConnectionState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateLinkServiceConnectionState)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DesktopVirtualizationPrivateLinkServiceConnectionState IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DesktopVirtualizationPrivateLinkServiceConnectionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateLinkServiceConnectionState)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -89,15 +50,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,27 +67,22 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DesktopVirtualizationPrivateLinkServiceConnectionState IJsonModel<DesktopVirtualizationPrivateLinkServiceConnectionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DesktopVirtualizationPrivateLinkServiceConnectionState JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DesktopVirtualizationPrivateLinkServiceConnectionState IJsonModel<DesktopVirtualizationPrivateLinkServiceConnectionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateLinkServiceConnectionState)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DesktopVirtualizationPrivateLinkServiceConnectionState DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(JsonElement element, ModelReaderWriterOptions options)
+        internal static DesktopVirtualizationPrivateLinkServiceConnectionState DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,34 +90,145 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             DesktopVirtualizationPrivateEndpointServiceConnectionStatus? status = default;
             string description = default;
             string actionsRequired = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new DesktopVirtualizationPrivateEndpointServiceConnectionStatus(prop.Value.GetString());
+                    status = new DesktopVirtualizationPrivateEndpointServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("description"u8))
+                if (property.NameEquals("description"u8))
                 {
-                    description = prop.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("actionsRequired"u8))
+                if (property.NameEquals("actionsRequired"u8))
                 {
-                    actionsRequired = prop.Value.GetString();
+                    actionsRequired = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DesktopVirtualizationPrivateLinkServiceConnectionState(status, description, actionsRequired, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DesktopVirtualizationPrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionsRequired), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  actionsRequired: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionsRequired))
+                {
+                    builder.Append("  actionsRequired: ");
+                    if (ActionsRequired.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ActionsRequired}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ActionsRequired}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateLinkServiceConnectionState)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DesktopVirtualizationPrivateLinkServiceConnectionState IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDesktopVirtualizationPrivateLinkServiceConnectionState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationPrivateLinkServiceConnectionState)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DesktopVirtualizationPrivateLinkServiceConnectionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -18,8 +17,6 @@ namespace Payload.MultiPart._FormData.HttpParts
     public partial class FormDataHttpParts
     {
         protected FormDataHttpParts() => throw null;
-
-        internal FormDataHttpParts(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -8,59 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.ComputeFleet;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary>
-    /// Describes a virtual machines scale set IP Configuration's PublicIPAddress
-    /// configuration
-    /// </summary>
-    public partial class ComputeFleetVmssPublicIPAddressConfigurationProperties : IJsonModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>
+    public partial class ComputeFleetVmssPublicIPAddressConfigurationProperties : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVmssPublicIPAddressConfigurationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeComputeFleetVmssPublicIPAddressConfigurationProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmssPublicIPAddressConfigurationProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmssPublicIPAddressConfigurationProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVmssPublicIPAddressConfigurationProperties IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -72,11 +30,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssPublicIPAddressConfigurationProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
@@ -91,7 +50,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (ComputeFleetVmssIPTag item in IPTags)
+                foreach (var item in IPTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -100,7 +59,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
-                writer.WriteObjectValue(PublicIPPrefix, options);
+                ((IJsonModel<WritableSubResource>)PublicIPPrefix).Write(writer, options);
             }
             if (Optional.IsDefined(PublicIPAddressVersion))
             {
@@ -112,15 +71,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -129,27 +88,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVmssPublicIPAddressConfigurationProperties IJsonModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVmssPublicIPAddressConfigurationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeFleetVmssPublicIPAddressConfigurationProperties IJsonModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssPublicIPAddressConfigurationProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeFleetVmssPublicIPAddressConfigurationProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeFleetVmssPublicIPAddressConfigurationProperties DeserializeComputeFleetVmssPublicIPAddressConfigurationProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeFleetVmssPublicIPAddressConfigurationProperties DeserializeComputeFleetVmssPublicIPAddressConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,76 +111,78 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             int? idleTimeoutInMinutes = default;
             ComputeFleetVmssPublicIPAddressDnsSettings dnsSettings = default;
             IList<ComputeFleetVmssIPTag> ipTags = default;
-            SubResource publicIPPrefix = default;
+            WritableSubResource publicIPPrefix = default;
             ComputeFleetIPVersion? publicIPAddressVersion = default;
             ComputeFleetVmDeleteOption? deleteOption = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("idleTimeoutInMinutes"u8))
+                if (property.NameEquals("idleTimeoutInMinutes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    idleTimeoutInMinutes = prop.Value.GetInt32();
+                    idleTimeoutInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("dnsSettings"u8))
+                if (property.NameEquals("dnsSettings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dnsSettings = ComputeFleetVmssPublicIPAddressDnsSettings.DeserializeComputeFleetVmssPublicIPAddressDnsSettings(prop.Value, options);
+                    dnsSettings = ComputeFleetVmssPublicIPAddressDnsSettings.DeserializeComputeFleetVmssPublicIPAddressDnsSettings(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("ipTags"u8))
+                if (property.NameEquals("ipTags"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ComputeFleetVmssIPTag> array = new List<ComputeFleetVmssIPTag>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ComputeFleetVmssIPTag.DeserializeComputeFleetVmssIPTag(item, options));
                     }
                     ipTags = array;
                     continue;
                 }
-                if (prop.NameEquals("publicIPPrefix"u8))
+                if (property.NameEquals("publicIPPrefix"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicIPPrefix = SubResource.DeserializeSubResource(prop.Value, options);
+                    publicIPPrefix = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeFleetContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("publicIPAddressVersion"u8))
+                if (property.NameEquals("publicIPAddressVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicIPAddressVersion = new ComputeFleetIPVersion(prop.Value.GetString());
+                    publicIPAddressVersion = new ComputeFleetIPVersion(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("deleteOption"u8))
+                if (property.NameEquals("deleteOption"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deleteOption = new ComputeFleetVmDeleteOption(prop.Value.GetString());
+                    deleteOption = new ComputeFleetVmDeleteOption(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeFleetVmssPublicIPAddressConfigurationProperties(
                 idleTimeoutInMinutes,
                 dnsSettings,
@@ -234,7 +190,38 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 publicIPPrefix,
                 publicIPAddressVersion,
                 deleteOption,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetVmssPublicIPAddressConfigurationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ComputeFleetVmssPublicIPAddressConfigurationProperties IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeComputeFleetVmssPublicIPAddressConfigurationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetVmssPublicIPAddressConfigurationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComputeFleetVmssPublicIPAddressConfigurationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

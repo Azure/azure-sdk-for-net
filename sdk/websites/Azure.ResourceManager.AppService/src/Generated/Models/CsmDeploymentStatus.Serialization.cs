@@ -262,7 +262,6 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 type,
                 systemData,
-                kind,
                 deploymentId,
                 status,
                 numberOfInstancesInProgress,
@@ -270,6 +269,7 @@ namespace Azure.ResourceManager.AppService.Models
                 numberOfInstancesFailed,
                 failedInstancesLogs ?? new ChangeTrackingList<string>(),
                 errors ?? new ChangeTrackingList<ResponseError>(),
+                kind,
                 serializedAdditionalRawData);
         }
 

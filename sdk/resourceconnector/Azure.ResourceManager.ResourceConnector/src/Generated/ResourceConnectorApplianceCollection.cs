@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceConnector
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.ResourceConnector
     /// </summary>
     public partial class ResourceConnectorApplianceCollection : ArmCollection, IEnumerable<ResourceConnectorApplianceResource>, IAsyncEnumerable<ResourceConnectorApplianceResource>
     {
-        private readonly ClientDiagnostics _appliancesClientDiagnostics;
-        private readonly Appliances _appliancesRestClient;
+        private readonly ClientDiagnostics _resourceConnectorApplianceAppliancesClientDiagnostics;
+        private readonly AppliancesRestOperations _resourceConnectorApplianceAppliancesRestClient;
 
-        /// <summary> Initializes a new instance of ResourceConnectorApplianceCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceConnectorApplianceCollection"/> class for mocking. </summary>
         protected ResourceConnectorApplianceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceConnectorApplianceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceConnectorApplianceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ResourceConnectorApplianceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceConnectorApplianceResource.ResourceType, out string resourceConnectorApplianceApiVersion);
-            _appliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceConnector", ResourceConnectorApplianceResource.ResourceType.Namespace, Diagnostics);
-            _appliancesRestClient = new Appliances(_appliancesClientDiagnostics, Pipeline, Endpoint, resourceConnectorApplianceApiVersion ?? "2025-03-01-preview");
-            ValidateResourceId(id);
+            _resourceConnectorApplianceAppliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceConnector", ResourceConnectorApplianceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceConnectorApplianceResource.ResourceType, out string resourceConnectorApplianceAppliancesApiVersion);
+            _resourceConnectorApplianceAppliancesRestClient = new AppliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceConnectorApplianceAppliancesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates an Appliance in the specified Subscription and Resource Group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Appliances_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="resourceName"> Appliances name. </param>
         /// <param name="data"> Parameters supplied to create or update an Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceConnectorApplianceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, ResourceConnectorApplianceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.CreateOrUpdate");
+            using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _appliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, ResourceConnectorApplianceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResourceConnectorArmOperation<ResourceConnectorApplianceResource> operation = new ResourceConnectorArmOperation<ResourceConnectorApplianceResource>(
-                    new ResourceConnectorApplianceOperationSource(Client),
-                    _appliancesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _resourceConnectorApplianceAppliancesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourceConnectorArmOperation<ResourceConnectorApplianceResource>(new ResourceConnectorApplianceOperationSource(Client), _resourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, _resourceConnectorApplianceAppliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.ResourceConnector
         /// Creates or updates an Appliance in the specified Subscription and Resource Group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Appliances_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="resourceName"> Appliances name. </param>
         /// <param name="data"> Parameters supplied to create or update an Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ResourceConnectorApplianceResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, ResourceConnectorApplianceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.CreateOrUpdate");
+            using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _appliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, ResourceConnectorApplianceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ResourceConnectorArmOperation<ResourceConnectorApplianceResource> operation = new ResourceConnectorArmOperation<ResourceConnectorApplianceResource>(
-                    new ResourceConnectorApplianceOperationSource(Client),
-                    _appliancesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _resourceConnectorApplianceAppliancesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
+                var operation = new ResourceConnectorArmOperation<ResourceConnectorApplianceResource>(new ResourceConnectorApplianceOperationSource(Client), _resourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, _resourceConnectorApplianceAppliancesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.ResourceConnector
         /// Gets the details of an Appliance with a specified resource group and name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Appliances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Appliances name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<ResourceConnectorApplianceResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.Get");
+            using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
+                var response = await _resourceConnectorApplianceAppliancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.ResourceConnector
         /// Gets the details of an Appliance with a specified resource group and name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Appliances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Appliances name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<ResourceConnectorApplianceResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.Get");
+            using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceConnectorApplianceData> response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
+                var response = _resourceConnectorApplianceAppliancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.ResourceConnector
         /// Gets a list of Appliances in the specified subscription and resource group. The operation returns properties of each Appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Appliances_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceConnectorApplianceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupAsyncCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ResourceConnectorApplianceCollection.GetAll"), data => new ResourceConnectorApplianceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceConnectorApplianceAppliancesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceConnectorApplianceAppliancesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), _resourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "ResourceConnectorApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of Appliances in the specified subscription and resource group. The operation returns properties of each Appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Appliances_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceConnectorApplianceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ResourceConnectorApplianceData, ResourceConnectorApplianceResource>(new AppliancesGetByResourceGroupCollectionResultOfT(_appliancesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ResourceConnectorApplianceCollection.GetAll"), data => new ResourceConnectorApplianceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceConnectorApplianceAppliancesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceConnectorApplianceAppliancesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceConnectorApplianceResource(Client, ResourceConnectorApplianceData.DeserializeResourceConnectorApplianceData(e)), _resourceConnectorApplianceAppliancesClientDiagnostics, Pipeline, "ResourceConnectorApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Appliances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Appliances name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.Exists");
+            using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ResourceConnectorApplianceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ResourceConnectorApplianceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _resourceConnectorApplianceAppliancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.ResourceConnector
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Appliances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Appliances name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.Exists");
+            using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ResourceConnectorApplianceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ResourceConnectorApplianceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _resourceConnectorApplianceAppliancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.ResourceConnector
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Appliances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Appliances name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceConnectorApplianceResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.GetIfExists");
+            using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ResourceConnectorApplianceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ResourceConnectorApplianceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _resourceConnectorApplianceAppliancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ResourceConnectorApplianceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.ResourceConnector
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ResourceConnector/appliances/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Appliances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Appliances_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Appliances name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual NullableResponse<ResourceConnectorApplianceResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _appliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.GetIfExists");
+            using var scope = _resourceConnectorApplianceAppliancesClientDiagnostics.CreateScope("ResourceConnectorApplianceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _appliancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ResourceConnectorApplianceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ResourceConnectorApplianceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ResourceConnectorApplianceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _resourceConnectorApplianceAppliancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ResourceConnectorApplianceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ResourceConnectorApplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.ResourceConnector
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ResourceConnectorApplianceResource> IAsyncEnumerable<ResourceConnectorApplianceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

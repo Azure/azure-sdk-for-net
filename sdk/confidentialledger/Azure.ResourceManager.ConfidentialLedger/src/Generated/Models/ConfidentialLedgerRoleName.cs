@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     public readonly partial struct ConfidentialLedgerRoleName : IEquatable<ConfidentialLedgerRoleName>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerRoleName"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConfidentialLedgerRoleName(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string ReaderValue = "Reader";
         private const string ContributorValue = "Contributor";
         private const string AdministratorValue = "Administrator";
 
-        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerRoleName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConfidentialLedgerRoleName(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Reader. </summary>
+        /// <summary> Reader. </summary>
         public static ConfidentialLedgerRoleName Reader { get; } = new ConfidentialLedgerRoleName(ReaderValue);
-
-        /// <summary> Gets the Contributor. </summary>
+        /// <summary> Contributor. </summary>
         public static ConfidentialLedgerRoleName Contributor { get; } = new ConfidentialLedgerRoleName(ContributorValue);
-
-        /// <summary> Gets the Administrator. </summary>
+        /// <summary> Administrator. </summary>
         public static ConfidentialLedgerRoleName Administrator { get; } = new ConfidentialLedgerRoleName(AdministratorValue);
-
         /// <summary> Determines if two <see cref="ConfidentialLedgerRoleName"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfidentialLedgerRoleName left, ConfidentialLedgerRoleName right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ConfidentialLedgerRoleName"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfidentialLedgerRoleName left, ConfidentialLedgerRoleName right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ConfidentialLedgerRoleName"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialLedgerRoleName"/>. </summary>
         public static implicit operator ConfidentialLedgerRoleName(string value) => new ConfidentialLedgerRoleName(value);
 
-        /// <summary> Converts a string to a <see cref="ConfidentialLedgerRoleName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialLedgerRoleName?(string value) => value == null ? null : new ConfidentialLedgerRoleName(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfidentialLedgerRoleName other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ConfidentialLedgerRoleName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

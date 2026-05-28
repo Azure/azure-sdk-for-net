@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -15,51 +14,35 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     public readonly partial struct AppConfigurationResourceType : IEquatable<AppConfigurationResourceType>
     {
         private readonly string _value;
-        private const string MicrosoftAppConfigurationConfigurationStoresValue = "Microsoft.AppConfiguration/configurationStores";
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppConfigurationResourceType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the MicrosoftAppConfigurationConfigurationStores. </summary>
+        private const string MicrosoftAppConfigurationConfigurationStoresValue = "Microsoft.AppConfiguration/configurationStores";
+
+        /// <summary> Microsoft.AppConfiguration/configurationStores. </summary>
         public static AppConfigurationResourceType MicrosoftAppConfigurationConfigurationStores { get; } = new AppConfigurationResourceType(MicrosoftAppConfigurationConfigurationStoresValue);
-
         /// <summary> Determines if two <see cref="AppConfigurationResourceType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppConfigurationResourceType left, AppConfigurationResourceType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AppConfigurationResourceType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppConfigurationResourceType left, AppConfigurationResourceType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AppConfigurationResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppConfigurationResourceType"/>. </summary>
         public static implicit operator AppConfigurationResourceType(string value) => new AppConfigurationResourceType(value);
 
-        /// <summary> Converts a string to a <see cref="AppConfigurationResourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AppConfigurationResourceType?(string value) => value == null ? null : new AppConfigurationResourceType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppConfigurationResourceType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AppConfigurationResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceNetworking
     public partial class FrontendCollection : ArmCollection, IEnumerable<FrontendResource>, IAsyncEnumerable<FrontendResource>
     {
         private readonly ClientDiagnostics _frontendFrontendsInterfaceClientDiagnostics;
-        private readonly FrontendsInterface _frontendFrontendsInterfaceRestClient;
+        private readonly FrontendsInterfaceRestOperations _frontendFrontendsInterfaceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="FrontendCollection"/> class for mocking. </summary>
         protected FrontendCollection()
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             _frontendFrontendsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", FrontendResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FrontendResource.ResourceType, out string frontendFrontendsInterfaceApiVersion);
-            _frontendFrontendsInterfaceRestClient = new FrontendsInterface(_frontendFrontendsInterfaceClientDiagnostics, Pipeline, Endpoint, frontendFrontendsInterfaceApiVersion);
+            _frontendFrontendsInterfaceRestClient = new FrontendsInterfaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, frontendFrontendsInterfaceApiVersion);
 #if DEBUG
-            ValidateResourceId(Id);
+			ValidateResourceId(Id);
 #endif
         }
 
@@ -88,10 +88,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _frontendFrontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, TrafficControllerFrontendData.ToRequestContent(data.ToTrafficControllerFrontendData()), context);
-                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                var operation = new ServiceNetworkingArmOperation<FrontendResource>(new FrontendOperationSource(Client), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _frontendFrontendsInterfaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, data.ToTrafficControllerFrontendData(), cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceNetworkingArmOperation<FrontendResource>(new FrontendOperationSource(Client), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, _frontendFrontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, data.ToTrafficControllerFrontendData()).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,10 +137,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _frontendFrontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, TrafficControllerFrontendData.ToRequestContent(data.ToTrafficControllerFrontendData()), context);
-                var response = Pipeline.ProcessMessage(message, context);
-                var operation = new ServiceNetworkingArmOperation<FrontendResource>(new FrontendOperationSource(Client), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _frontendFrontendsInterfaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, data.ToTrafficControllerFrontendData(), cancellationToken);
+                var operation = new ServiceNetworkingArmOperation<FrontendResource>(new FrontendOperationSource(Client), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, _frontendFrontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, data.ToTrafficControllerFrontendData()).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -187,10 +183,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _frontendFrontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
-                var result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                var response = Response.FromValue(TrafficControllerFrontendData.FromResponse(result), result);
+                var response = await _frontendFrontendsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontendResource(Client, new FrontendData(response.Value)), response.GetRawResponse());
@@ -235,10 +228,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _frontendFrontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
-                var result = Pipeline.ProcessMessage(message, context);
-                var response = Response.FromValue(TrafficControllerFrontendData.FromResponse(result), result);
+                var response = _frontendFrontendsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new FrontendResource(Client, new FrontendData(response.Value)), response.GetRawResponse());
@@ -275,10 +265,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> An async collection of <see cref="FrontendResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontendResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var context = new RequestContext { CancellationToken = cancellationToken };
-            return new AsyncPageableWrapper<TrafficControllerFrontendData, FrontendResource>(
-                new FrontendsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(_frontendFrontendsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context, "FrontendCollection.GetAll"),
-                data => new FrontendResource(Client, new FrontendData(data)));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontendResource(Client, FrontendData.DeserializeFrontendData(e)), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, "FrontendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -306,10 +295,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> A collection of <see cref="FrontendResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontendResource> GetAll(CancellationToken cancellationToken = default)
         {
-            var context = new RequestContext { CancellationToken = cancellationToken };
-            return new PageableWrapper<TrafficControllerFrontendData, FrontendResource>(
-                new FrontendsInterfaceGetByTrafficControllerCollectionResultOfT(_frontendFrontendsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context, "FrontendCollection.GetAll"),
-                data => new FrontendResource(Client, new FrontendData(data)));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontendFrontendsInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontendResource(Client, FrontendData.DeserializeFrontendData(e)), _frontendFrontendsInterfaceClientDiagnostics, Pipeline, "FrontendCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -345,22 +333,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _frontendFrontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                var result = message.Response;
-                Response<TrafficControllerFrontendData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(TrafficControllerFrontendData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((TrafficControllerFrontendData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _frontendFrontendsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -403,22 +376,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _frontendFrontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                var result = message.Response;
-                Response<TrafficControllerFrontendData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(TrafficControllerFrontendData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((TrafficControllerFrontendData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _frontendFrontendsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -461,22 +419,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _frontendFrontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                var result = message.Response;
-                Response<TrafficControllerFrontendData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(TrafficControllerFrontendData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((TrafficControllerFrontendData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _frontendFrontendsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<FrontendResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontendResource(Client, new FrontendData(response.Value)), response.GetRawResponse());
@@ -521,22 +464,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _frontendFrontendsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                var result = message.Response;
-                Response<TrafficControllerFrontendData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(TrafficControllerFrontendData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((TrafficControllerFrontendData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _frontendFrontendsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<FrontendResource>(response.GetRawResponse());
                 return Response.FromValue(new FrontendResource(Client, new FrontendData(response.Value)), response.GetRawResponse());

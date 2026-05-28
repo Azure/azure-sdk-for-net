@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> CloudVmCluster resource model. </summary>
-    public partial class CloudVmClusterProperties : IJsonModel<CloudVmClusterProperties>
+    public partial class CloudVmClusterProperties : IUtf8JsonSerializable, IJsonModel<CloudVmClusterProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="CloudVmClusterProperties"/> for deserialization. </summary>
-        internal CloudVmClusterProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudVmClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudVmClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCloudVmClusterProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CloudVmClusterProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CloudVmClusterProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloudVmClusterProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudVmClusterProperties IPersistableModel<CloudVmClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloudVmClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudVmClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudVmClusterProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(CloudVmClusterOcid))
             {
                 writer.WritePropertyName("ocid"u8);
@@ -104,7 +58,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("fileSystemConfigurationDetails"u8);
                 writer.WriteStartArray();
-                foreach (FileSystemConfigurationDetails item in FileSystemConfigurationDetails)
+                foreach (var item in FileSystemConfigurationDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -188,13 +142,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             writer.WritePropertyName("sshPublicKeys"u8);
             writer.WriteStartArray();
-            foreach (string item in SshPublicKeys)
+            foreach (var item in SshPublicKeys)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -212,13 +161,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("scanIpIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in ScanIPIds)
+                foreach (var item in ScanIPIds)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -227,13 +171,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("vipIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in VipIds)
+                foreach (var item in VipIds)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -298,7 +237,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("nsgCidrs"u8);
                 writer.WriteStartArray();
-                foreach (CloudVmClusterNsgCidr item in NsgCidrs)
+                foreach (var item in NsgCidrs)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -315,13 +254,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("computeNodes"u8);
                 writer.WriteStartArray();
-                foreach (string item in ComputeNodeOcids)
+                foreach (var item in ComputeNodeOcids)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -340,13 +274,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("dbServers"u8);
                 writer.WriteStartArray();
-                foreach (string item in DBServerOcids)
+                foreach (var item in DBServerOcids)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -376,15 +305,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("storageManagementType"u8);
                 writer.WriteStringValue(StorageManagementType.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -393,32 +322,27 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudVmClusterProperties IJsonModel<CloudVmClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudVmClusterProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CloudVmClusterProperties IJsonModel<CloudVmClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudVmClusterProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudVmClusterProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CloudVmClusterProperties DeserializeCloudVmClusterProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CloudVmClusterProperties DeserializeCloudVmClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string cloudVmClusterOcid = default;
+            string ocid = default;
             long? listenerPort = default;
             int? nodeCount = default;
             int? storageSizeInGbs = default;
@@ -426,10 +350,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             double? dataStorageSizeInTbs = default;
             int? dbNodeStorageSizeInGbs = default;
             int? memorySizeInGbs = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? timeCreated = default;
             string lifecycleDetails = default;
             string timeZone = default;
-            string zoneOcid = default;
+            string zoneId = default;
             string hostname = default;
             string domain = default;
             int cpuCoreCount = default;
@@ -448,488 +372,455 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string scanDnsName = default;
             int? scanListenerPortTcp = default;
             int? scanListenerPortTcpSsl = default;
-            string scanDnsRecordOcid = default;
+            string scanDnsRecordId = default;
             string shape = default;
             OracleDatabaseProvisioningState? provisioningState = default;
             CloudVmClusterLifecycleState? lifecycleState = default;
             ResourceIdentifier vnetId = default;
             string giVersion = default;
-            Uri ociUri = default;
-            Uri nsgUri = default;
+            Uri ociUrl = default;
+            Uri nsgUrl = default;
             ResourceIdentifier subnetId = default;
             string backupSubnetCidr = default;
             IList<CloudVmClusterNsgCidr> nsgCidrs = default;
             DiagnosticCollectionConfig dataCollectionOptions = default;
             string displayName = default;
-            IList<string> computeNodeOcids = default;
+            IList<string> computeNodes = default;
             ExadataIormConfig iormConfigCache = default;
-            string lastUpdateHistoryEntryOcid = default;
-            IList<string> dbServerOcids = default;
-            string compartmentOcid = default;
-            string clusterSubnetOcid = default;
+            string lastUpdateHistoryEntryId = default;
+            IList<string> dbServers = default;
+            string compartmentId = default;
+            string subnetOcid = default;
             OracleDatabaseComputeModel? computeModel = default;
-            ResourceIdentifier exascaleDBStorageVaultOcid = default;
+            ResourceIdentifier exascaleDbStorageVaultId = default;
             ExadataVmClusterStorageManagementType? storageManagementType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("ocid"u8))
+                if (property.NameEquals("ocid"u8))
                 {
-                    cloudVmClusterOcid = prop.Value.GetString();
+                    ocid = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("listenerPort"u8))
+                if (property.NameEquals("listenerPort"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    listenerPort = prop.Value.GetInt64();
+                    listenerPort = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("nodeCount"u8))
+                if (property.NameEquals("nodeCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodeCount = prop.Value.GetInt32();
+                    nodeCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("storageSizeInGbs"u8))
+                if (property.NameEquals("storageSizeInGbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageSizeInGbs = prop.Value.GetInt32();
+                    storageSizeInGbs = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("fileSystemConfigurationDetails"u8))
+                if (property.NameEquals("fileSystemConfigurationDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<FileSystemConfigurationDetails> array = new List<FileSystemConfigurationDetails>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(Models.FileSystemConfigurationDetails.DeserializeFileSystemConfigurationDetails(item, options));
                     }
                     fileSystemConfigurationDetails = array;
                     continue;
                 }
-                if (prop.NameEquals("dataStorageSizeInTbs"u8))
+                if (property.NameEquals("dataStorageSizeInTbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataStorageSizeInTbs = prop.Value.GetDouble();
+                    dataStorageSizeInTbs = property.Value.GetDouble();
                     continue;
                 }
-                if (prop.NameEquals("dbNodeStorageSizeInGbs"u8))
+                if (property.NameEquals("dbNodeStorageSizeInGbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dbNodeStorageSizeInGbs = prop.Value.GetInt32();
+                    dbNodeStorageSizeInGbs = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("memorySizeInGbs"u8))
+                if (property.NameEquals("memorySizeInGbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memorySizeInGbs = prop.Value.GetInt32();
+                    memorySizeInGbs = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("timeCreated"u8))
+                if (property.NameEquals("timeCreated"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    timeCreated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("lifecycleDetails"u8))
+                if (property.NameEquals("lifecycleDetails"u8))
                 {
-                    lifecycleDetails = prop.Value.GetString();
+                    lifecycleDetails = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("timeZone"u8))
+                if (property.NameEquals("timeZone"u8))
                 {
-                    timeZone = prop.Value.GetString();
+                    timeZone = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("zoneId"u8))
+                if (property.NameEquals("zoneId"u8))
                 {
-                    zoneOcid = prop.Value.GetString();
+                    zoneId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("hostname"u8))
+                if (property.NameEquals("hostname"u8))
                 {
-                    hostname = prop.Value.GetString();
+                    hostname = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("domain"u8))
+                if (property.NameEquals("domain"u8))
                 {
-                    domain = prop.Value.GetString();
+                    domain = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("cpuCoreCount"u8))
+                if (property.NameEquals("cpuCoreCount"u8))
                 {
-                    cpuCoreCount = prop.Value.GetInt32();
+                    cpuCoreCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("ocpuCount"u8))
+                if (property.NameEquals("ocpuCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ocpuCount = prop.Value.GetSingle();
+                    ocpuCount = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("clusterName"u8))
+                if (property.NameEquals("clusterName"u8))
                 {
-                    clusterName = prop.Value.GetString();
+                    clusterName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dataStoragePercentage"u8))
+                if (property.NameEquals("dataStoragePercentage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataStoragePercentage = prop.Value.GetInt32();
+                    dataStoragePercentage = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("isLocalBackupEnabled"u8))
+                if (property.NameEquals("isLocalBackupEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isLocalBackupEnabled = prop.Value.GetBoolean();
+                    isLocalBackupEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("cloudExadataInfrastructureId"u8))
+                if (property.NameEquals("cloudExadataInfrastructureId"u8))
                 {
-                    cloudExadataInfrastructureId = new ResourceIdentifier(prop.Value.GetString());
+                    cloudExadataInfrastructureId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("isSparseDiskgroupEnabled"u8))
+                if (property.NameEquals("isSparseDiskgroupEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSparseDiskgroupEnabled = prop.Value.GetBoolean();
+                    isSparseDiskgroupEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("systemVersion"u8))
+                if (property.NameEquals("systemVersion"u8))
                 {
-                    systemVersion = prop.Value.GetString();
+                    systemVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sshPublicKeys"u8))
+                if (property.NameEquals("sshPublicKeys"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     sshPublicKeys = array;
                     continue;
                 }
-                if (prop.NameEquals("licenseModel"u8))
+                if (property.NameEquals("licenseModel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    licenseModel = new OracleLicenseModel(prop.Value.GetString());
+                    licenseModel = new OracleLicenseModel(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("diskRedundancy"u8))
+                if (property.NameEquals("diskRedundancy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskRedundancy = new CloudVmClusterDiskRedundancy(prop.Value.GetString());
+                    diskRedundancy = new CloudVmClusterDiskRedundancy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("scanIpIds"u8))
+                if (property.NameEquals("scanIpIds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     scanIPIds = array;
                     continue;
                 }
-                if (prop.NameEquals("vipIds"u8))
+                if (property.NameEquals("vipIds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     vipIds = array;
                     continue;
                 }
-                if (prop.NameEquals("scanDnsName"u8))
+                if (property.NameEquals("scanDnsName"u8))
                 {
-                    scanDnsName = prop.Value.GetString();
+                    scanDnsName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("scanListenerPortTcp"u8))
+                if (property.NameEquals("scanListenerPortTcp"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scanListenerPortTcp = prop.Value.GetInt32();
+                    scanListenerPortTcp = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("scanListenerPortTcpSsl"u8))
+                if (property.NameEquals("scanListenerPortTcpSsl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scanListenerPortTcpSsl = prop.Value.GetInt32();
+                    scanListenerPortTcpSsl = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("scanDnsRecordId"u8))
+                if (property.NameEquals("scanDnsRecordId"u8))
                 {
-                    scanDnsRecordOcid = prop.Value.GetString();
+                    scanDnsRecordId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("shape"u8))
+                if (property.NameEquals("shape"u8))
                 {
-                    shape = prop.Value.GetString();
+                    shape = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new OracleDatabaseProvisioningState(prop.Value.GetString());
+                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("lifecycleState"u8))
+                if (property.NameEquals("lifecycleState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lifecycleState = new CloudVmClusterLifecycleState(prop.Value.GetString());
+                    lifecycleState = new CloudVmClusterLifecycleState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("vnetId"u8))
+                if (property.NameEquals("vnetId"u8))
                 {
-                    vnetId = new ResourceIdentifier(prop.Value.GetString());
+                    vnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("giVersion"u8))
+                if (property.NameEquals("giVersion"u8))
                 {
-                    giVersion = prop.Value.GetString();
+                    giVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ociUrl"u8))
+                if (property.NameEquals("ociUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ociUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    ociUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("nsgUrl"u8))
+                if (property.NameEquals("nsgUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nsgUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    nsgUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("subnetId"u8))
+                if (property.NameEquals("subnetId"u8))
                 {
-                    subnetId = new ResourceIdentifier(prop.Value.GetString());
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("backupSubnetCidr"u8))
+                if (property.NameEquals("backupSubnetCidr"u8))
                 {
-                    backupSubnetCidr = prop.Value.GetString();
+                    backupSubnetCidr = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("nsgCidrs"u8))
+                if (property.NameEquals("nsgCidrs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CloudVmClusterNsgCidr> array = new List<CloudVmClusterNsgCidr>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(CloudVmClusterNsgCidr.DeserializeCloudVmClusterNsgCidr(item, options));
                     }
                     nsgCidrs = array;
                     continue;
                 }
-                if (prop.NameEquals("dataCollectionOptions"u8))
+                if (property.NameEquals("dataCollectionOptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataCollectionOptions = DiagnosticCollectionConfig.DeserializeDiagnosticCollectionConfig(prop.Value, options);
+                    dataCollectionOptions = DiagnosticCollectionConfig.DeserializeDiagnosticCollectionConfig(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("displayName"u8))
+                if (property.NameEquals("displayName"u8))
                 {
-                    displayName = prop.Value.GetString();
+                    displayName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("computeNodes"u8))
+                if (property.NameEquals("computeNodes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    computeNodeOcids = array;
-                    continue;
-                }
-                if (prop.NameEquals("iormConfigCache"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    iormConfigCache = ExadataIormConfig.DeserializeExadataIormConfig(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("lastUpdateHistoryEntryId"u8))
-                {
-                    lastUpdateHistoryEntryOcid = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("dbServers"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
-                    dbServerOcids = array;
+                    computeNodes = array;
                     continue;
                 }
-                if (prop.NameEquals("compartmentId"u8))
+                if (property.NameEquals("iormConfigCache"u8))
                 {
-                    compartmentOcid = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("subnetOcid"u8))
-                {
-                    clusterSubnetOcid = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("computeModel"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    computeModel = new OracleDatabaseComputeModel(prop.Value.GetString());
+                    iormConfigCache = ExadataIormConfig.DeserializeExadataIormConfig(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("exascaleDbStorageVaultId"u8))
+                if (property.NameEquals("lastUpdateHistoryEntryId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    lastUpdateHistoryEntryId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dbServers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    exascaleDBStorageVaultOcid = new ResourceIdentifier(prop.Value.GetString());
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    dbServers = array;
                     continue;
                 }
-                if (prop.NameEquals("storageManagementType"u8))
+                if (property.NameEquals("compartmentId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    compartmentId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("subnetOcid"u8))
+                {
+                    subnetOcid = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("computeModel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageManagementType = new ExadataVmClusterStorageManagementType(prop.Value.GetString());
+                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("exascaleDbStorageVaultId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    exascaleDbStorageVaultId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageManagementType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageManagementType = new ExadataVmClusterStorageManagementType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new CloudVmClusterProperties(
-                cloudVmClusterOcid,
+                ocid,
                 listenerPort,
                 nodeCount,
                 storageSizeInGbs,
@@ -937,10 +828,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 dataStorageSizeInTbs,
                 dbNodeStorageSizeInGbs,
                 memorySizeInGbs,
-                createdOn,
+                timeCreated,
                 lifecycleDetails,
                 timeZone,
-                zoneOcid,
+                zoneId,
                 hostname,
                 domain,
                 cpuCoreCount,
@@ -959,29 +850,60 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 scanDnsName,
                 scanListenerPortTcp,
                 scanListenerPortTcpSsl,
-                scanDnsRecordOcid,
+                scanDnsRecordId,
                 shape,
                 provisioningState,
                 lifecycleState,
                 vnetId,
                 giVersion,
-                ociUri,
-                nsgUri,
+                ociUrl,
+                nsgUrl,
                 subnetId,
                 backupSubnetCidr,
                 nsgCidrs ?? new ChangeTrackingList<CloudVmClusterNsgCidr>(),
                 dataCollectionOptions,
                 displayName,
-                computeNodeOcids ?? new ChangeTrackingList<string>(),
+                computeNodes ?? new ChangeTrackingList<string>(),
                 iormConfigCache,
-                lastUpdateHistoryEntryOcid,
-                dbServerOcids ?? new ChangeTrackingList<string>(),
-                compartmentOcid,
-                clusterSubnetOcid,
+                lastUpdateHistoryEntryId,
+                dbServers ?? new ChangeTrackingList<string>(),
+                compartmentId,
+                subnetOcid,
                 computeModel,
-                exascaleDBStorageVaultOcid,
+                exascaleDbStorageVaultId,
                 storageManagementType,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudVmClusterProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CloudVmClusterProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudVmClusterProperties IPersistableModel<CloudVmClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCloudVmClusterProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudVmClusterProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudVmClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -19,17 +19,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
-
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
-            StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
-            Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResults(projectName, trainedModelLabel, stringIndexType);
 
-            foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results)
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+            StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
+            Pageable<UtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResults(
+                stringIndexType: stringIndexType
+            );
+
+            foreach (UtteranceEvaluationResult result in results)
             {
                 Console.WriteLine($"Text: {result.Text}");
                 Console.WriteLine($"Language: {result.Language}");
@@ -62,18 +64,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
-            ConversationAuthoringTrainedModel trainedModelClient = client.GetConversationAuthoringTrainedModelClient();
-
             string projectName = "{projectName}";
             string trainedModelLabel = "{trainedModelLabel}";
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
-            AsyncPageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResultsAsync(projectName, trainedModelLabel, stringIndexType);
+            AsyncPageable<UtteranceEvaluationResult> results = trainedModelClient.GetModelEvaluationResultsAsync(
+                stringIndexType: stringIndexType
+            );
 
-            await foreach (AnalyzeConversationAuthoringUtteranceEvaluationResult result in results)
+            await foreach (UtteranceEvaluationResult result in results)
             {
                 Console.WriteLine($"Text: {result.Text}");
                 Console.WriteLine($"Language: {result.Language}");

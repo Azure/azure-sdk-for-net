@@ -46,11 +46,6 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryLimitsInMB))
-            {
-                writer.WritePropertyName("supportedMemoryLimitsMB"u8);
-                writer.WriteObjectValue(SupportedMemoryLimitsInMB, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(SupportedMemorySizesInGB))
             {
                 writer.WritePropertyName("supportedMemorySizesInGB"u8);
@@ -180,7 +175,6 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string name = default;
             int? value = default;
-            MaxLimitRangeCapability supportedMemoryLimitsMB = default;
             MaxLimitRangeCapability supportedMemorySizesInGB = default;
             MaxSizeCapability includedMaxSize = default;
             IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes = default;
@@ -213,15 +207,6 @@ namespace Azure.ResourceManager.Sql.Models
                         continue;
                     }
                     value = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("supportedMemoryLimitsMB"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    supportedMemoryLimitsMB = MaxLimitRangeCapability.DeserializeMaxLimitRangeCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("supportedMemorySizesInGB"u8))
@@ -383,7 +368,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceVcoresCapability(
                 name,
                 value,
-                supportedMemoryLimitsMB,
                 supportedMemorySizesInGB,
                 includedMaxSize,
                 supportedStorageSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
@@ -449,21 +433,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     builder.Append("  value: ");
                     builder.AppendLine($"{Value.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMemoryLimitsInMB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  supportedMemoryLimitsMB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SupportedMemoryLimitsInMB))
-                {
-                    builder.Append("  supportedMemoryLimitsMB: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SupportedMemoryLimitsInMB, options, 2, false, "  supportedMemoryLimitsMB: ");
                 }
             }
 

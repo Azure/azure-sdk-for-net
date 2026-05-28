@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeUpdateOperation : IEquatable<DataBoxEdgeUpdateOperation>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUpdateOperation"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeUpdateOperation(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NoneValue = "None";
         private const string ScanValue = "Scan";
         private const string DownloadValue = "Download";
         private const string InstallValue = "Install";
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUpdateOperation"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeUpdateOperation(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static DataBoxEdgeUpdateOperation None { get; } = new DataBoxEdgeUpdateOperation(NoneValue);
-
-        /// <summary> Gets the Scan. </summary>
+        /// <summary> Scan. </summary>
         public static DataBoxEdgeUpdateOperation Scan { get; } = new DataBoxEdgeUpdateOperation(ScanValue);
-
-        /// <summary> Gets the Download. </summary>
+        /// <summary> Download. </summary>
         public static DataBoxEdgeUpdateOperation Download { get; } = new DataBoxEdgeUpdateOperation(DownloadValue);
-
-        /// <summary> Gets the Install. </summary>
+        /// <summary> Install. </summary>
         public static DataBoxEdgeUpdateOperation Install { get; } = new DataBoxEdgeUpdateOperation(InstallValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateOperation"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeUpdateOperation left, DataBoxEdgeUpdateOperation right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateOperation"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeUpdateOperation left, DataBoxEdgeUpdateOperation right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeUpdateOperation"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeUpdateOperation"/>. </summary>
         public static implicit operator DataBoxEdgeUpdateOperation(string value) => new DataBoxEdgeUpdateOperation(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeUpdateOperation"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeUpdateOperation?(string value) => value == null ? null : new DataBoxEdgeUpdateOperation(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeUpdateOperation other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeUpdateOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

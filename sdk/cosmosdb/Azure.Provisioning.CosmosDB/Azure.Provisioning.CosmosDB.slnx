@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.CosmosDB.csproj" />
-  <Project Path="tests/Azure.Provisioning.CosmosDB.Tests.csproj" />
-</Solution>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -20,14 +19,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public CloudHsmClusterBackupContent(Uri azureStorageBlobContainerUri) : base(azureStorageBlobContainerUri)
         {
             Argument.AssertNotNull(azureStorageBlobContainerUri, nameof(azureStorageBlobContainerUri));
-
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterBackupContent"/>. </summary>
         /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the backup. </param>
         /// <param name="token"> The SAS token pointing to an Azure blob storage container. This property is reserved for Azure Backup Service. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudHsmClusterBackupContent(Uri azureStorageBlobContainerUri, string token, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(azureStorageBlobContainerUri, token, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudHsmClusterBackupContent(Uri azureStorageBlobContainerUri, string token, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(azureStorageBlobContainerUri, token, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterBackupContent"/> for deserialization. </summary>
+        internal CloudHsmClusterBackupContent()
         {
         }
     }

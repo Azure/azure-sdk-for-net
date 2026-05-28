@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,67 +14,47 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct TemplateDeploymentPreflightOption : IEquatable<TemplateDeploymentPreflightOption>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPreflightOption"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TemplateDeploymentPreflightOption(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NoneValue = "None";
         private const string ValidationRequestsValue = "ValidationRequests";
         private const string DeploymentRequestsValue = "DeploymentRequests";
         private const string TestOnlyValue = "TestOnly";
         private const string RegisteredOnlyValue = "RegisteredOnly";
 
-        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPreflightOption"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TemplateDeploymentPreflightOption(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static TemplateDeploymentPreflightOption None { get; } = new TemplateDeploymentPreflightOption(NoneValue);
-
-        /// <summary> Gets the ValidationRequests. </summary>
+        /// <summary> ValidationRequests. </summary>
         public static TemplateDeploymentPreflightOption ValidationRequests { get; } = new TemplateDeploymentPreflightOption(ValidationRequestsValue);
-
-        /// <summary> Gets the DeploymentRequests. </summary>
+        /// <summary> DeploymentRequests. </summary>
         public static TemplateDeploymentPreflightOption DeploymentRequests { get; } = new TemplateDeploymentPreflightOption(DeploymentRequestsValue);
-
-        /// <summary> Gets the TestOnly. </summary>
+        /// <summary> TestOnly. </summary>
         public static TemplateDeploymentPreflightOption TestOnly { get; } = new TemplateDeploymentPreflightOption(TestOnlyValue);
-
-        /// <summary> Gets the RegisteredOnly. </summary>
+        /// <summary> RegisteredOnly. </summary>
         public static TemplateDeploymentPreflightOption RegisteredOnly { get; } = new TemplateDeploymentPreflightOption(RegisteredOnlyValue);
-
         /// <summary> Determines if two <see cref="TemplateDeploymentPreflightOption"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TemplateDeploymentPreflightOption left, TemplateDeploymentPreflightOption right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="TemplateDeploymentPreflightOption"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TemplateDeploymentPreflightOption left, TemplateDeploymentPreflightOption right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="TemplateDeploymentPreflightOption"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TemplateDeploymentPreflightOption"/>. </summary>
         public static implicit operator TemplateDeploymentPreflightOption(string value) => new TemplateDeploymentPreflightOption(value);
 
-        /// <summary> Converts a string to a <see cref="TemplateDeploymentPreflightOption"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator TemplateDeploymentPreflightOption?(string value) => value == null ? null : new TemplateDeploymentPreflightOption(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TemplateDeploymentPreflightOption other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(TemplateDeploymentPreflightOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

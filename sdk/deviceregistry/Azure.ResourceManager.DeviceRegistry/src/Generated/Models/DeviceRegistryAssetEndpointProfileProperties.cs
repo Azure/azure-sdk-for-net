@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
             get
             {
-                return Status is null ? default : Status.Errors;
+                return Status.Errors;
             }
         }
     }

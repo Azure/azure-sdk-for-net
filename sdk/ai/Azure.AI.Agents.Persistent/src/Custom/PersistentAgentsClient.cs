@@ -5,9 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
@@ -61,7 +60,7 @@ namespace Azure.AI.Agents.Persistent
                 toolChoice: options.ToolChoice,
                 responseFormat: options.ResponseFormat,
                 parallelToolCalls: options.ParallelToolCalls,
-                metadata: options.Metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                metadata: options.Metadata,
                 cancellationToken: cancellationToken
             );
         }
@@ -84,14 +83,14 @@ namespace Azure.AI.Agents.Persistent
                 toolChoice: options.ToolChoice,
                 responseFormat: options.ResponseFormat,
                 parallelToolCalls: options.ParallelToolCalls,
-                metadata: options.Metadata?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                metadata: options.Metadata,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
         }
 
         public PersistentAgentsAdministrationClient Administration { get => _client; }
         public PersistentAgentsFiles Files { get => _client.GetPersistentAgentsFilesClient(); }
-        public ThreadMessages Messages { get => _client.GetThreadMessagesClient(); }
+        public ThreadMessages Messages { get => _client.GetThreadMessagesClient();}
         public Threads Threads { get => _client.GetThreadsClient(); }
         public ThreadRuns Runs { get => _client.GetThreadRunsClient(); }
         public VectorStores VectorStores { get => _client.GetVectorStoresClient(); }

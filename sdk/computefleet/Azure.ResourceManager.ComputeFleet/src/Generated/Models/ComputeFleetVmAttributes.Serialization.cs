@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ComputeFleet;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> VMAttributes that will be used to filter VMSizes which will be used to build Fleet. </summary>
-    public partial class ComputeFleetVmAttributes : IJsonModel<ComputeFleetVmAttributes>
+    public partial class ComputeFleetVmAttributes : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmAttributes>
     {
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetVmAttributes"/> for deserialization. </summary>
-        internal ComputeFleetVmAttributes()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmAttributes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVmAttributes PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeComputeFleetVmAttributes(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmAttributes)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmAttributes)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeFleetVmAttributes>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVmAttributes IPersistableModel<ComputeFleetVmAttributes>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeFleetVmAttributes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetVmAttributes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmAttributes)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("vCpuCount"u8);
             writer.WriteObjectValue(VCpuCount, options);
             writer.WritePropertyName("memoryInGiB"u8);
@@ -102,7 +57,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("localStorageDiskTypes"u8);
                 writer.WriteStartArray();
-                foreach (LocalStorageDiskType item in LocalStorageDiskTypes)
+                foreach (var item in LocalStorageDiskTypes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -142,7 +97,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("acceleratorManufacturers"u8);
                 writer.WriteStartArray();
-                foreach (AcceleratorManufacturer item in AcceleratorManufacturers)
+                foreach (var item in AcceleratorManufacturers)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -152,7 +107,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("acceleratorTypes"u8);
                 writer.WriteStartArray();
-                foreach (AcceleratorType item in AcceleratorTypes)
+                foreach (var item in AcceleratorTypes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -167,7 +122,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("vmCategories"u8);
                 writer.WriteStartArray();
-                foreach (ComputeFleetVmCategory item in VmCategories)
+                foreach (var item in VmCategories)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -177,7 +132,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("architectureTypes"u8);
                 writer.WriteStartArray();
-                foreach (ArchitectureType item in ArchitectureTypes)
+                foreach (var item in ArchitectureTypes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -187,7 +142,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("cpuManufacturers"u8);
                 writer.WriteStartArray();
-                foreach (CpuManufacturer item in CpuManufacturers)
+                foreach (var item in CpuManufacturers)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -202,26 +157,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("excludedVMSizes"u8);
                 writer.WriteStartArray();
-                foreach (string item in ExcludedVmSizes)
+                foreach (var item in ExcludedVmSizes)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -230,27 +180,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVmAttributes IJsonModel<ComputeFleetVmAttributes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVmAttributes JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeFleetVmAttributes IJsonModel<ComputeFleetVmAttributes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmAttributes)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeFleetVmAttributes(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeFleetVmAttributes DeserializeComputeFleetVmAttributes(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeFleetVmAttributes DeserializeComputeFleetVmAttributes(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -275,228 +220,223 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             IList<CpuManufacturer> cpuManufacturers = default;
             ComputeFleetVmAttributeSupport? burstableSupport = default;
             IList<string> excludedVmSizes = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("vCpuCount"u8))
+                if (property.NameEquals("vCpuCount"u8))
                 {
-                    vCpuCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(prop.Value, options);
+                    vCpuCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("memoryInGiB"u8))
+                if (property.NameEquals("memoryInGiB"u8))
                 {
-                    memoryInGiB = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(prop.Value, options);
+                    memoryInGiB = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("memoryInGiBPerVCpu"u8))
+                if (property.NameEquals("memoryInGiBPerVCpu"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryInGiBPerVCpu = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(prop.Value, options);
+                    memoryInGiBPerVCpu = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("localStorageSupport"u8))
+                if (property.NameEquals("localStorageSupport"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    localStorageSupport = new ComputeFleetVmAttributeSupport(prop.Value.GetString());
+                    localStorageSupport = new ComputeFleetVmAttributeSupport(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("localStorageInGiB"u8))
+                if (property.NameEquals("localStorageInGiB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    localStorageInGiB = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(prop.Value, options);
+                    localStorageInGiB = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("localStorageDiskTypes"u8))
+                if (property.NameEquals("localStorageDiskTypes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<LocalStorageDiskType> array = new List<LocalStorageDiskType>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new LocalStorageDiskType(item.GetString()));
                     }
                     localStorageDiskTypes = array;
                     continue;
                 }
-                if (prop.NameEquals("dataDiskCount"u8))
+                if (property.NameEquals("dataDiskCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataDiskCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(prop.Value, options);
+                    dataDiskCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("networkInterfaceCount"u8))
+                if (property.NameEquals("networkInterfaceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkInterfaceCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(prop.Value, options);
+                    networkInterfaceCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("networkBandwidthInMbps"u8))
+                if (property.NameEquals("networkBandwidthInMbps"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkBandwidthInMbps = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(prop.Value, options);
+                    networkBandwidthInMbps = ComputeFleetVmAttributeMinMaxDouble.DeserializeComputeFleetVmAttributeMinMaxDouble(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("rdmaSupport"u8))
+                if (property.NameEquals("rdmaSupport"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rdmaSupport = new ComputeFleetVmAttributeSupport(prop.Value.GetString());
+                    rdmaSupport = new ComputeFleetVmAttributeSupport(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("rdmaNetworkInterfaceCount"u8))
+                if (property.NameEquals("rdmaNetworkInterfaceCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rdmaNetworkInterfaceCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(prop.Value, options);
+                    rdmaNetworkInterfaceCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("acceleratorSupport"u8))
+                if (property.NameEquals("acceleratorSupport"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    acceleratorSupport = new ComputeFleetVmAttributeSupport(prop.Value.GetString());
+                    acceleratorSupport = new ComputeFleetVmAttributeSupport(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("acceleratorManufacturers"u8))
+                if (property.NameEquals("acceleratorManufacturers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AcceleratorManufacturer> array = new List<AcceleratorManufacturer>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new AcceleratorManufacturer(item.GetString()));
                     }
                     acceleratorManufacturers = array;
                     continue;
                 }
-                if (prop.NameEquals("acceleratorTypes"u8))
+                if (property.NameEquals("acceleratorTypes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AcceleratorType> array = new List<AcceleratorType>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new AcceleratorType(item.GetString()));
                     }
                     acceleratorTypes = array;
                     continue;
                 }
-                if (prop.NameEquals("acceleratorCount"u8))
+                if (property.NameEquals("acceleratorCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    acceleratorCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(prop.Value, options);
+                    acceleratorCount = ComputeFleetVmAttributeMinMaxInteger.DeserializeComputeFleetVmAttributeMinMaxInteger(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("vmCategories"u8))
+                if (property.NameEquals("vmCategories"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ComputeFleetVmCategory> array = new List<ComputeFleetVmCategory>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new ComputeFleetVmCategory(item.GetString()));
                     }
                     vmCategories = array;
                     continue;
                 }
-                if (prop.NameEquals("architectureTypes"u8))
+                if (property.NameEquals("architectureTypes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ArchitectureType> array = new List<ArchitectureType>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new ArchitectureType(item.GetString()));
                     }
                     architectureTypes = array;
                     continue;
                 }
-                if (prop.NameEquals("cpuManufacturers"u8))
+                if (property.NameEquals("cpuManufacturers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CpuManufacturer> array = new List<CpuManufacturer>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new CpuManufacturer(item.GetString()));
                     }
                     cpuManufacturers = array;
                     continue;
                 }
-                if (prop.NameEquals("burstableSupport"u8))
+                if (property.NameEquals("burstableSupport"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    burstableSupport = new ComputeFleetVmAttributeSupport(prop.Value.GetString());
+                    burstableSupport = new ComputeFleetVmAttributeSupport(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("excludedVMSizes"u8))
+                if (property.NameEquals("excludedVMSizes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     excludedVmSizes = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeFleetVmAttributes(
                 vCpuCount,
                 memoryInGiB,
@@ -518,7 +458,38 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 cpuManufacturers ?? new ChangeTrackingList<CpuManufacturer>(),
                 burstableSupport,
                 excludedVmSizes ?? new ChangeTrackingList<string>(),
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ComputeFleetVmAttributes>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetVmAttributes)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ComputeFleetVmAttributes IPersistableModel<ComputeFleetVmAttributes>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmAttributes>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeComputeFleetVmAttributes(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetVmAttributes)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComputeFleetVmAttributes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -3,8 +3,7 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {

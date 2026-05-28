@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The BackupResourceEncryptionConfig. </summary>
-    public partial class BackupResourceEncryptionConfig : IJsonModel<BackupResourceEncryptionConfig>
+    public partial class BackupResourceEncryptionConfig : IUtf8JsonSerializable, IJsonModel<BackupResourceEncryptionConfig>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupResourceEncryptionConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBackupResourceEncryptionConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupResourceEncryptionConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupResourceEncryptionConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupResourceEncryptionConfig IPersistableModel<BackupResourceEncryptionConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupResourceEncryptionConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupResourceEncryptionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(EncryptionAtRestType))
             {
                 writer.WritePropertyName("encryptionAtRestType"u8);
@@ -99,15 +59,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("infrastructureEncryptionState"u8);
                 writer.WriteStringValue(InfrastructureEncryptionState.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,27 +76,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupResourceEncryptionConfig IJsonModel<BackupResourceEncryptionConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupResourceEncryptionConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BackupResourceEncryptionConfig IJsonModel<BackupResourceEncryptionConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBackupResourceEncryptionConfig(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupResourceEncryptionConfig DeserializeBackupResourceEncryptionConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static BackupResourceEncryptionConfig DeserializeBackupResourceEncryptionConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,62 +101,95 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string subscriptionId = default;
             LastUpdateStatus? lastUpdateStatus = default;
             InfrastructureEncryptionState? infrastructureEncryptionState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("encryptionAtRestType"u8))
+                if (property.NameEquals("encryptionAtRestType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptionAtRestType = new BackupEncryptionAtRestType(prop.Value.GetString());
+                    encryptionAtRestType = new BackupEncryptionAtRestType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("keyUri"u8))
+                if (property.NameEquals("keyUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    keyUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("subscriptionId"u8))
+                if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = prop.Value.GetString();
+                    subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lastUpdateStatus"u8))
+                if (property.NameEquals("lastUpdateStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastUpdateStatus = new LastUpdateStatus(prop.Value.GetString());
+                    lastUpdateStatus = new LastUpdateStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("infrastructureEncryptionState"u8))
+                if (property.NameEquals("infrastructureEncryptionState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    infrastructureEncryptionState = new InfrastructureEncryptionState(prop.Value.GetString());
+                    infrastructureEncryptionState = new InfrastructureEncryptionState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupResourceEncryptionConfig(
                 encryptionAtRestType,
                 keyUri,
                 subscriptionId,
                 lastUpdateStatus,
                 infrastructureEncryptionState,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupResourceEncryptionConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupResourceEncryptionConfig IPersistableModel<BackupResourceEncryptionConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBackupResourceEncryptionConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupResourceEncryptionConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

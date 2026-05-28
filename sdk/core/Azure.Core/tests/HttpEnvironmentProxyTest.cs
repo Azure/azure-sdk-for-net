@@ -3,8 +3,8 @@
 
 // Adapted from https://raw.githubusercontent.com/dotnet/corefx/master/src/System.Net.Http/src/System/Net/Http/SocketsHttpHandler/HttpEnvironmentProxy.cs
 
-using System.Collections.Generic;
 using Azure.Core.Pipeline;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace System.Net.Http.Tests

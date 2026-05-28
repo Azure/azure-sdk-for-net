@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core.Pipeline;
 using Routes._PathParameters.MatrixExpansion.Explode;
 using Routes._PathParameters.MatrixExpansion.Standard;
@@ -15,8 +14,6 @@ namespace Routes._PathParameters.MatrixExpansion
     public partial class PathParametersMatrixExpansion
     {
         protected PathParametersMatrixExpansion() => throw null;
-
-        internal PathParametersMatrixExpansion(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

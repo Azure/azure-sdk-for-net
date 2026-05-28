@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Suggested utterances where the detector can be applicable
-    /// Serialized Name: QueryUtterancesResults
-    /// </summary>
+    /// <summary> Suggested utterances where the detector can be applicable. </summary>
     public partial class QueryUtterancesResults
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryUtterancesResults"/>. </summary>
-        /// <param name="query">
-        /// Search Query.
-        /// Serialized Name: QueryUtterancesResults.query
-        /// </param>
-        /// <param name="results">
-        /// Array of utterance results for search query.
-        /// Serialized Name: QueryUtterancesResults.results
-        /// </param>
+        /// <param name="query"> Search Query. </param>
+        /// <param name="results"> Array of utterance results for search query. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QueryUtterancesResults(string query, IList<QueryUtterancesResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Search Query.
-        /// Serialized Name: QueryUtterancesResults.query
-        /// </summary>
+        /// <summary> Search Query. </summary>
         [WirePath("query")]
         public string Query { get; set; }
-        /// <summary>
-        /// Array of utterance results for search query.
-        /// Serialized Name: QueryUtterancesResults.results
-        /// </summary>
+        /// <summary> Array of utterance results for search query. </summary>
         [WirePath("results")]
         public IList<QueryUtterancesResult> Results { get; }
     }

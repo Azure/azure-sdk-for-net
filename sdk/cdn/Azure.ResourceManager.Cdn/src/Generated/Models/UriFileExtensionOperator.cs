@@ -7,14 +7,24 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: UrlFileExtensionOperator
+    /// </summary>
     public readonly partial struct UriFileExtensionOperator : IEquatable<UriFileExtensionOperator>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="UriFileExtensionOperator"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public UriFileExtensionOperator(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AnyValue = "Any";
         private const string EqualValue = "Equal";
         private const string ContainsValue = "Contains";
@@ -26,76 +36,73 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Initializes a new instance of <see cref="UriFileExtensionOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UriFileExtensionOperator(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: UrlFileExtensionOperator.Any
+        /// </summary>
         public static UriFileExtensionOperator Any { get; } = new UriFileExtensionOperator(AnyValue);
-
-        /// <summary> Gets the Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: UrlFileExtensionOperator.Equal
+        /// </summary>
         public static UriFileExtensionOperator Equal { get; } = new UriFileExtensionOperator(EqualValue);
-
-        /// <summary> Gets the Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: UrlFileExtensionOperator.Contains
+        /// </summary>
         public static UriFileExtensionOperator Contains { get; } = new UriFileExtensionOperator(ContainsValue);
-
-        /// <summary> Gets the BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: UrlFileExtensionOperator.BeginsWith
+        /// </summary>
         public static UriFileExtensionOperator BeginsWith { get; } = new UriFileExtensionOperator(BeginsWithValue);
-
-        /// <summary> Gets the EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: UrlFileExtensionOperator.EndsWith
+        /// </summary>
         public static UriFileExtensionOperator EndsWith { get; } = new UriFileExtensionOperator(EndsWithValue);
-
-        /// <summary> Gets the LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: UrlFileExtensionOperator.LessThan
+        /// </summary>
         public static UriFileExtensionOperator LessThan { get; } = new UriFileExtensionOperator(LessThanValue);
-
-        /// <summary> Gets the LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: UrlFileExtensionOperator.LessThanOrEqual
+        /// </summary>
         public static UriFileExtensionOperator LessThanOrEqual { get; } = new UriFileExtensionOperator(LessThanOrEqualValue);
-
-        /// <summary> Gets the GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: UrlFileExtensionOperator.GreaterThan
+        /// </summary>
         public static UriFileExtensionOperator GreaterThan { get; } = new UriFileExtensionOperator(GreaterThanValue);
-
-        /// <summary> Gets the GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: UrlFileExtensionOperator.GreaterThanOrEqual
+        /// </summary>
         public static UriFileExtensionOperator GreaterThanOrEqual { get; } = new UriFileExtensionOperator(GreaterThanOrEqualValue);
-
-        /// <summary> Gets the RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: UrlFileExtensionOperator.RegEx
+        /// </summary>
         public static UriFileExtensionOperator RegEx { get; } = new UriFileExtensionOperator(RegExValue);
-
         /// <summary> Determines if two <see cref="UriFileExtensionOperator"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UriFileExtensionOperator left, UriFileExtensionOperator right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="UriFileExtensionOperator"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UriFileExtensionOperator left, UriFileExtensionOperator right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="UriFileExtensionOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UriFileExtensionOperator"/>. </summary>
         public static implicit operator UriFileExtensionOperator(string value) => new UriFileExtensionOperator(value);
 
-        /// <summary> Converts a string to a <see cref="UriFileExtensionOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator UriFileExtensionOperator?(string value) => value == null ? null : new UriFileExtensionOperator(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UriFileExtensionOperator other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(UriFileExtensionOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

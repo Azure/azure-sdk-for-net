@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a ObjectReplicationPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ObjectReplicationPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetObjectReplicationPolicies method.
+    /// A Class representing an ObjectReplicationPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ObjectReplicationPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetObjectReplicationPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageAccountResource"/> using the GetObjectReplicationPolicy method.
     /// </summary>
     public partial class ObjectReplicationPolicyResource : ArmResource
     {
-        private readonly ClientDiagnostics _objectReplicationPoliciesClientDiagnostics;
-        private readonly ObjectReplicationPolicies _objectReplicationPoliciesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="ObjectReplicationPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="objectReplicationPolicyId"> The objectReplicationPolicyId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string objectReplicationPolicyId)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _objectReplicationPolicyClientDiagnostics;
+        private readonly ObjectReplicationPoliciesRestOperations _objectReplicationPolicyRestClient;
         private readonly ObjectReplicationPolicyData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Storage/storageAccounts/objectReplicationPolicies";
 
-        /// <summary> Initializes a new instance of ObjectReplicationPolicyResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ObjectReplicationPolicyResource"/> class for mocking. </summary>
         protected ObjectReplicationPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ObjectReplicationPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ObjectReplicationPolicyResource(ArmClient client, ObjectReplicationPolicyData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.Storage
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ObjectReplicationPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ObjectReplicationPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _objectReplicationPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string objectReplicationPolicyApiVersion);
-            _objectReplicationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _objectReplicationPoliciesRestClient = new ObjectReplicationPolicies(_objectReplicationPoliciesClientDiagnostics, Pipeline, Endpoint, objectReplicationPolicyApiVersion ?? "2025-08-01");
-            ValidateResourceId(id);
+            _objectReplicationPolicyRestClient = new ObjectReplicationPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, objectReplicationPolicyApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ObjectReplicationPolicyData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="objectReplicationPolicyId"> The objectReplicationPolicyId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string objectReplicationPolicyId)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get the object replication policy of the storage account by policy ID.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ObjectReplicationPolicyOperationGroup_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ObjectReplicationPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ObjectReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ObjectReplicationPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _objectReplicationPoliciesClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Get");
+            using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _objectReplicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ObjectReplicationPolicyData> response = Response.FromValue(ObjectReplicationPolicyData.FromResponse(result), result);
+                var response = await _objectReplicationPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ObjectReplicationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +132,33 @@ namespace Azure.ResourceManager.Storage
         /// Get the object replication policy of the storage account by policy ID.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ObjectReplicationPolicyOperationGroup_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ObjectReplicationPolicies_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ObjectReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ObjectReplicationPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _objectReplicationPoliciesClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Get");
+            using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _objectReplicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ObjectReplicationPolicyData> response = Response.FromValue(ObjectReplicationPolicyData.FromResponse(result), result);
+                var response = _objectReplicationPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ObjectReplicationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +172,20 @@ namespace Azure.ResourceManager.Storage
         /// Deletes the object replication policy associated with the specified storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ObjectReplicationPolicyOperationGroup_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>ObjectReplicationPolicies_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ObjectReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,23 +193,16 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _objectReplicationPoliciesClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Delete");
+            using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _objectReplicationPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageArmOperation operation = new StorageArmOperation(response, rehydrationToken);
+                var response = await _objectReplicationPolicyRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _objectReplicationPolicyRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -242,20 +216,20 @@ namespace Azure.ResourceManager.Storage
         /// Deletes the object replication policy associated with the specified storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ObjectReplicationPolicyOperationGroup_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>ObjectReplicationPolicies_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ObjectReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,23 +237,16 @@ namespace Azure.ResourceManager.Storage
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _objectReplicationPoliciesClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Delete");
+            using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _objectReplicationPoliciesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageArmOperation operation = new StorageArmOperation(response, rehydrationToken);
+                var response = _objectReplicationPolicyRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _objectReplicationPolicyRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -290,23 +257,23 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Update a ObjectReplicationPolicy.
+        /// Create or update the object replication policy of the storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ObjectReplicationPolicyOperationGroup_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ObjectReplicationPolicies_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ObjectReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,24 +285,16 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _objectReplicationPoliciesClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Update");
+            using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _objectReplicationPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ObjectReplicationPolicyData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ObjectReplicationPolicyData> response = Response.FromValue(ObjectReplicationPolicyData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageArmOperation<ObjectReplicationPolicyResource> operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _objectReplicationPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _objectReplicationPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -346,23 +305,23 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Update a ObjectReplicationPolicy.
+        /// Create or update the object replication policy of the storage account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/objectReplicationPolicies/{objectReplicationPolicyId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ObjectReplicationPolicyOperationGroup_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ObjectReplicationPolicies_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ObjectReplicationPolicyResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ObjectReplicationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,24 +333,16 @@ namespace Azure.ResourceManager.Storage
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _objectReplicationPoliciesClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Update");
+            using var scope = _objectReplicationPolicyClientDiagnostics.CreateScope("ObjectReplicationPolicyResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _objectReplicationPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ObjectReplicationPolicyData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ObjectReplicationPolicyData> response = Response.FromValue(ObjectReplicationPolicyData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                StorageArmOperation<ObjectReplicationPolicyResource> operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _objectReplicationPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _objectReplicationPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct RegisteredServerAgentVersionStatus : IEquatable<RegisteredServerAgentVersionStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RegisteredServerAgentVersionStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RegisteredServerAgentVersionStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string OkValue = "Ok";
         private const string NearExpiryValue = "NearExpiry";
         private const string ExpiredValue = "Expired";
         private const string BlockedValue = "Blocked";
 
-        /// <summary> Initializes a new instance of <see cref="RegisteredServerAgentVersionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RegisteredServerAgentVersionStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Ok. </summary>
+        /// <summary> Ok. </summary>
         public static RegisteredServerAgentVersionStatus Ok { get; } = new RegisteredServerAgentVersionStatus(OkValue);
-
-        /// <summary> Gets the NearExpiry. </summary>
+        /// <summary> NearExpiry. </summary>
         public static RegisteredServerAgentVersionStatus NearExpiry { get; } = new RegisteredServerAgentVersionStatus(NearExpiryValue);
-
-        /// <summary> Gets the Expired. </summary>
+        /// <summary> Expired. </summary>
         public static RegisteredServerAgentVersionStatus Expired { get; } = new RegisteredServerAgentVersionStatus(ExpiredValue);
-
-        /// <summary> Gets the Blocked. </summary>
+        /// <summary> Blocked. </summary>
         public static RegisteredServerAgentVersionStatus Blocked { get; } = new RegisteredServerAgentVersionStatus(BlockedValue);
-
         /// <summary> Determines if two <see cref="RegisteredServerAgentVersionStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RegisteredServerAgentVersionStatus left, RegisteredServerAgentVersionStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RegisteredServerAgentVersionStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RegisteredServerAgentVersionStatus left, RegisteredServerAgentVersionStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RegisteredServerAgentVersionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RegisteredServerAgentVersionStatus"/>. </summary>
         public static implicit operator RegisteredServerAgentVersionStatus(string value) => new RegisteredServerAgentVersionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="RegisteredServerAgentVersionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RegisteredServerAgentVersionStatus?(string value) => value == null ? null : new RegisteredServerAgentVersionStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RegisteredServerAgentVersionStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RegisteredServerAgentVersionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -5,14 +5,12 @@
       "path": "pwsh ./eng/scripts/Invoke-GenerateAndBuildV2.ps1",
       "logPrefix": ".Net",
       "stderr": {
-        "showInComment": ".*(\\[ERROR\\]|\\[WARNING\\]|ExternalError).*",
-        "scriptError": "\\[ERROR\\]",
-        "scriptWarning": "\\[WARNING\\]"
+        "showInComment": ".*(\\[ERROR\\]|ExternalError).*",
+        "scriptError": "\\[ERROR\\]"
       },
       "stdout": {
-        "showInComment": ".*(Start to|\\[ERROR\\]|\\[WARNING\\]|: error|(?!0\\b)\\d+ Error\\(s\\)).*",
-        "scriptError": "\\[ERROR\\]",
-        "scriptWarning": "\\[WARNING\\]"
+        "showInComment": ".*(Start to|\\[ERROR\\]|: error|(?!0\\b)\\d+ Error\\(s\\)).*",
+        "scriptError": "\\[ERROR\\]"
       }
     }
   },
@@ -25,10 +23,7 @@
   "packageOptions": {
     "packageFolderFromFileSearch": false,
     "buildScript": {
-      "command": "dotnet build {packagePath}/src"
-    },
-    "updateMetadataScript": {
-      "path": "./eng/scripts/Export-API.ps1"
+      "command": "dotnet build {packagePath}"
     }
   }
 }

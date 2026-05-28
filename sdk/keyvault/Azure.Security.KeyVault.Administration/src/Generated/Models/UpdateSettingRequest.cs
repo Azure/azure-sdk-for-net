@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -17,8 +18,11 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/>. </summary>
         /// <param name="value"> The value of the pool setting. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpdateSettingRequest(string value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
             Value = value;
         }
 

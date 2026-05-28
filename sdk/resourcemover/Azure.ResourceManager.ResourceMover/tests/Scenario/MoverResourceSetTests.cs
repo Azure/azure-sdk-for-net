@@ -130,8 +130,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             {
                 ++count;
                 unresolvedDependencyId = dependency.Id;
-            }
-            ;
+            };
             Assert.AreEqual(count, 0);
 
             // Prepare, initiate, discard and commit the move for the Vnet.

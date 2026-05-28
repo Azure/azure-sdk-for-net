@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> VolumeClaimResourceRequirements properties. </summary>
-    public partial class VolumeClaimResourceRequirements : IJsonModel<VolumeClaimResourceRequirements>
+    public partial class VolumeClaimResourceRequirements : IUtf8JsonSerializable, IJsonModel<VolumeClaimResourceRequirements>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VolumeClaimResourceRequirements PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeClaimResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVolumeClaimResourceRequirements(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VolumeClaimResourceRequirements)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VolumeClaimResourceRequirements>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeClaimResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VolumeClaimResourceRequirements)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VolumeClaimResourceRequirements>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VolumeClaimResourceRequirements IPersistableModel<VolumeClaimResourceRequirements>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VolumeClaimResourceRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VolumeClaimResourceRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeClaimResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VolumeClaimResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VolumeClaimResourceRequirements)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
@@ -81,11 +41,6 @@ namespace Azure.ResourceManager.IotOperations.Models
                 foreach (var item in Limits)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -97,11 +52,6 @@ namespace Azure.ResourceManager.IotOperations.Models
                 foreach (var item in Requests)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -110,21 +60,21 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteStartArray();
-                foreach (VolumeClaimResourceRequirementsClaims item in Claims)
+                foreach (var item in Claims)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -133,27 +83,22 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VolumeClaimResourceRequirements IJsonModel<VolumeClaimResourceRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VolumeClaimResourceRequirements JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VolumeClaimResourceRequirements IJsonModel<VolumeClaimResourceRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeClaimResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VolumeClaimResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VolumeClaimResourceRequirements)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVolumeClaimResourceRequirements(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VolumeClaimResourceRequirements DeserializeVolumeClaimResourceRequirements(JsonElement element, ModelReaderWriterOptions options)
+        internal static VolumeClaimResourceRequirements DeserializeVolumeClaimResourceRequirements(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -161,59 +106,46 @@ namespace Azure.ResourceManager.IotOperations.Models
             IDictionary<string, string> limits = default;
             IDictionary<string, string> requests = default;
             IList<VolumeClaimResourceRequirementsClaims> claims = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("limits"u8))
+                if (property.NameEquals("limits"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     limits = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("requests"u8))
+                if (property.NameEquals("requests"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     requests = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("claims"u8))
+                if (property.NameEquals("claims"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VolumeClaimResourceRequirementsClaims> array = new List<VolumeClaimResourceRequirementsClaims>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(VolumeClaimResourceRequirementsClaims.DeserializeVolumeClaimResourceRequirementsClaims(item, options));
                     }
@@ -222,10 +154,42 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new VolumeClaimResourceRequirements(limits ?? new ChangeTrackingDictionary<string, string>(), requests ?? new ChangeTrackingDictionary<string, string>(), claims ?? new ChangeTrackingList<VolumeClaimResourceRequirementsClaims>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VolumeClaimResourceRequirements(limits ?? new ChangeTrackingDictionary<string, string>(), requests ?? new ChangeTrackingDictionary<string, string>(), claims ?? new ChangeTrackingList<VolumeClaimResourceRequirementsClaims>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VolumeClaimResourceRequirements>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VolumeClaimResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VolumeClaimResourceRequirements)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VolumeClaimResourceRequirements IPersistableModel<VolumeClaimResourceRequirements>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VolumeClaimResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVolumeClaimResourceRequirements(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VolumeClaimResourceRequirements)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VolumeClaimResourceRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

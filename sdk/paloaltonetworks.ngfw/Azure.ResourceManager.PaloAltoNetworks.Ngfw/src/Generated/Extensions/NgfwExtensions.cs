@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
@@ -20,38 +17,35 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// <summary> A class to add extension methods to Azure.ResourceManager.PaloAltoNetworks.Ngfw. </summary>
     public static partial class NgfwExtensions
     {
-        /// <param name="client"></param>
         private static MockablePaloAltoNetworksNgfwArmClient GetMockablePaloAltoNetworksNgfwArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockablePaloAltoNetworksNgfwArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockablePaloAltoNetworksNgfwArmClient(client0));
         }
 
-        /// <param name="resourceGroupResource"></param>
-        private static MockablePaloAltoNetworksNgfwResourceGroupResource GetMockablePaloAltoNetworksNgfwResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockablePaloAltoNetworksNgfwResourceGroupResource GetMockablePaloAltoNetworksNgfwResourceGroupResource(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockablePaloAltoNetworksNgfwResourceGroupResource(client, resourceGroupResource.Id));
+            return resource.GetCachedClient(client => new MockablePaloAltoNetworksNgfwResourceGroupResource(client, resource.Id));
         }
 
-        /// <param name="subscriptionResource"></param>
-        private static MockablePaloAltoNetworksNgfwSubscriptionResource GetMockablePaloAltoNetworksNgfwSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockablePaloAltoNetworksNgfwSubscriptionResource GetMockablePaloAltoNetworksNgfwSubscriptionResource(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockablePaloAltoNetworksNgfwSubscriptionResource(client, subscriptionResource.Id));
+            return resource.GetCachedClient(client => new MockablePaloAltoNetworksNgfwSubscriptionResource(client, resource.Id));
         }
 
-        /// <param name="tenantResource"></param>
-        private static MockablePaloAltoNetworksNgfwTenantResource GetMockablePaloAltoNetworksNgfwTenantResource(TenantResource tenantResource)
+        private static MockablePaloAltoNetworksNgfwTenantResource GetMockablePaloAltoNetworksNgfwTenantResource(ArmResource resource)
         {
-            return tenantResource.GetCachedClient(client => new MockablePaloAltoNetworksNgfwTenantResource(client, tenantResource.Id));
+            return resource.GetCachedClient(client => new MockablePaloAltoNetworksNgfwTenantResource(client, resource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GlobalRulestackResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="GlobalRulestackResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalRulestackResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetGlobalRulestackResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetGlobalRulestackResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="GlobalRulestackResource"/> object. </returns>
@@ -63,13 +57,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GlobalRulestackCertificateObjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="GlobalRulestackCertificateObjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalRulestackCertificateObjectResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackCertificateObjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetGlobalRulestackCertificateObjectResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetGlobalRulestackCertificateObjectResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="GlobalRulestackCertificateObjectResource"/> object. </returns>
@@ -81,13 +76,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GlobalRulestackFqdnResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="GlobalRulestackFqdnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalRulestackFqdnResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackFqdnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetGlobalRulestackFqdnResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetGlobalRulestackFqdnResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="GlobalRulestackFqdnResource"/> object. </returns>
@@ -99,13 +95,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostRulestackRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="PostRulestackRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostRulestackRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostRulestackRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetPostRulestackRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetPostRulestackRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="PostRulestackRuleResource"/> object. </returns>
@@ -117,13 +114,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GlobalRulestackPrefixResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="GlobalRulestackPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalRulestackPrefixResource.CreateResourceIdentifier" /> to create a <see cref="GlobalRulestackPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetGlobalRulestackPrefixResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetGlobalRulestackPrefixResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="GlobalRulestackPrefixResource"/> object. </returns>
@@ -135,13 +133,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PreRulestackRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="PreRulestackRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PreRulestackRuleResource.CreateResourceIdentifier" /> to create a <see cref="PreRulestackRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetPreRulestackRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetPreRulestackRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="PreRulestackRuleResource"/> object. </returns>
@@ -153,13 +152,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PaloAltoNetworksFirewallResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="PaloAltoNetworksFirewallResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PaloAltoNetworksFirewallResource.CreateResourceIdentifier" /> to create a <see cref="PaloAltoNetworksFirewallResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetPaloAltoNetworksFirewallResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetPaloAltoNetworksFirewallResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="PaloAltoNetworksFirewallResource"/> object. </returns>
@@ -171,13 +171,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LocalRulestackResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="LocalRulestackResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLocalRulestackResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLocalRulestackResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="LocalRulestackResource"/> object. </returns>
@@ -189,31 +190,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MetricsObjectFirewallResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="PaloAltoNetworksFirewallStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PaloAltoNetworksFirewallStatusResource.CreateResourceIdentifier" /> to create a <see cref="PaloAltoNetworksFirewallStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetMetricsObjectFirewallResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetPaloAltoNetworksFirewallStatusResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MetricsObjectFirewallResource"/> object. </returns>
-        public static MetricsObjectFirewallResource GetMetricsObjectFirewallResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockablePaloAltoNetworksNgfwArmClient(client).GetMetricsObjectFirewallResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PaloAltoNetworksFirewallStatusResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetPaloAltoNetworksFirewallStatusResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource"/> object. </returns>
@@ -225,13 +209,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LocalRulestackCertificateObjectResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="LocalRulestackCertificateObjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackCertificateObjectResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackCertificateObjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLocalRulestackCertificateObjectResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLocalRulestackCertificateObjectResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="LocalRulestackCertificateObjectResource"/> object. </returns>
@@ -243,13 +228,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LocalRulestackFqdnResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="LocalRulestackFqdnResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackFqdnResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackFqdnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLocalRulestackFqdnResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLocalRulestackFqdnResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="LocalRulestackFqdnResource"/> object. </returns>
@@ -261,13 +247,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LocalRulestackRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="LocalRulestackRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackRuleResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLocalRulestackRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLocalRulestackRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="LocalRulestackRuleResource"/> object. </returns>
@@ -279,13 +266,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LocalRulestackPrefixResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="LocalRulestackPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LocalRulestackPrefixResource.CreateResourceIdentifier" /> to create a <see cref="LocalRulestackPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLocalRulestackPrefixResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLocalRulestackPrefixResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="LocalRulestackPrefixResource"/> object. </returns>
@@ -297,15 +285,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets a collection of PaloAltoNetworksFirewalls in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of PaloAltoNetworksFirewallResources in the ResourceGroupResource.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetPaloAltoNetworksFirewalls()"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetPaloAltoNetworksFirewalls()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of PaloAltoNetworksFirewalls and their operations over a PaloAltoNetworksFirewallResource. </returns>
+        /// <returns> An object representing collection of PaloAltoNetworksFirewallResources and their operations over a PaloAltoNetworksFirewallResource. </returns>
         public static PaloAltoNetworksFirewallCollection GetPaloAltoNetworksFirewalls(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -315,15 +303,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary>
         /// Get a FirewallResource
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetPaloAltoNetworksFirewallAsync(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Firewalls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetPaloAltoNetworksFirewallAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="firewallName"> Firewall resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="firewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PaloAltoNetworksFirewallResource>> GetPaloAltoNetworksFirewallAsync(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
         {
@@ -334,15 +341,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary>
         /// Get a FirewallResource
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetPaloAltoNetworksFirewall(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Firewalls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetPaloAltoNetworksFirewall(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="firewallName"> Firewall resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="firewallName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewall(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
         {
@@ -352,15 +378,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Gets a collection of LocalRulestacks in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of LocalRulestackResources in the ResourceGroupResource.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetLocalRulestacks()"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetLocalRulestacks()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of LocalRulestacks and their operations over a LocalRulestackResource. </returns>
+        /// <returns> An object representing collection of LocalRulestackResources and their operations over a LocalRulestackResource. </returns>
         public static LocalRulestackCollection GetLocalRulestacks(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -370,15 +396,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary>
         /// Get a LocalRulestackResource
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetLocalRulestackAsync(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetLocalRulestackAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="localRulestackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<LocalRulestackResource>> GetLocalRulestackAsync(this ResourceGroupResource resourceGroupResource, string localRulestackName, CancellationToken cancellationToken = default)
         {
@@ -389,15 +434,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary>
         /// Get a LocalRulestackResource
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetLocalRulestack(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRulestacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwResourceGroupResource.GetLocalRulestack(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="localRulestackName"> LocalRulestack resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="localRulestackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<LocalRulestackResource> GetLocalRulestack(this ResourceGroupResource resourceGroupResource, string localRulestackName, CancellationToken cancellationToken = default)
         {
@@ -408,15 +472,33 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary>
         /// List FirewallResource resources by subscription ID
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetPaloAltoNetworksFirewallsAsync(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/firewalls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Firewalls_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetPaloAltoNetworksFirewalls(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewallsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -426,12 +508,30 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary>
         /// List FirewallResource resources by subscription ID
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetPaloAltoNetworksFirewalls(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/firewalls</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Firewalls_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetPaloAltoNetworksFirewalls(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
@@ -444,15 +544,33 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary>
         /// List LocalRulestackResource resources by subscription ID
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetLocalRulestacksAsync(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRulestacks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetLocalRulestacks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LocalRulestackResource> GetLocalRulestacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -462,12 +580,30 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary>
         /// List LocalRulestackResource resources by subscription ID
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetLocalRulestacks(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocalRulestacks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetLocalRulestacks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
@@ -479,151 +615,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// CreateProductSerialNumber
+        /// Gets a collection of GlobalRulestackResources in the TenantResource.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.CreateProductSerialNumberAsync(CancellationToken)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.GetGlobalRulestacks()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ProductSerialNumberRequestStatus>> CreateProductSerialNumberAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).CreateProductSerialNumberAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// CreateProductSerialNumber
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.CreateProductSerialNumber(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ProductSerialNumberRequestStatus> CreateProductSerialNumber(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).CreateProductSerialNumber(cancellationToken);
-        }
-
-        /// <summary>
-        /// GetCloudManagerTenants
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetCloudManagerTenantsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CloudManagerTenantList>> GetCloudManagerTenantsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetCloudManagerTenantsAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// GetCloudManagerTenants
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetCloudManagerTenants(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CloudManagerTenantList> GetCloudManagerTenants(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetCloudManagerTenants(cancellationToken);
-        }
-
-        /// <summary>
-        /// GetProductSerialNumberStatus
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetProductSerialNumberStatusAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ProductSerialNumberStatus>> GetProductSerialNumberStatusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetProductSerialNumberStatusAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// GetProductSerialNumberStatus
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetProductSerialNumberStatus(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ProductSerialNumberStatus> GetProductSerialNumberStatus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetProductSerialNumberStatus(cancellationToken);
-        }
-
-        /// <summary>
-        /// GetSupportInfo
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetSupportInfoAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<SupportInfoModel>> GetSupportInfoAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetSupportInfoAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// GetSupportInfo
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetSupportInfo(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<SupportInfoModel> GetSupportInfo(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetSupportInfo(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of GlobalRulestacks in the <see cref="TenantResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.GetGlobalRulestacks()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of GlobalRulestacks and their operations over a GlobalRulestackResource. </returns>
+        /// <returns> An object representing collection of GlobalRulestackResources and their operations over a GlobalRulestackResource. </returns>
         public static GlobalRulestackCollection GetGlobalRulestacks(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -633,15 +633,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary>
         /// Get a GlobalRulestackResource
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.GetGlobalRulestackAsync(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalRulestack_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.GetGlobalRulestackAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="globalRulestackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<GlobalRulestackResource>> GetGlobalRulestackAsync(this TenantResource tenantResource, string globalRulestackName, CancellationToken cancellationToken = default)
         {
@@ -652,15 +671,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary>
         /// Get a GlobalRulestackResource
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.GetGlobalRulestack(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GlobalRulestack_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GlobalRulestackResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwTenantResource.GetGlobalRulestack(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="globalRulestackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<GlobalRulestackResource> GetGlobalRulestack(this TenantResource tenantResource, string globalRulestackName, CancellationToken cancellationToken = default)
         {

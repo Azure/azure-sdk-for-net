@@ -7,15 +7,46 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Output of check resource usage API. </summary>
+    /// <summary>
+    /// Output of check resource usage API.
+    /// Serialized Name: ResourceUsage
+    /// </summary>
     public partial class CdnUsage
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CdnUsage"/>. </summary>
         internal CdnUsage()
@@ -23,34 +54,51 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnUsage"/>. </summary>
-        /// <param name="resourceType"> Resource type for which the usage is provided. </param>
-        /// <param name="unit"> Unit of the usage. e.g. count. </param>
-        /// <param name="currentValue"> Actual value of usage on the specified resource type. </param>
-        /// <param name="limit"> Quota of the specified resource type. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CdnUsage(string resourceType, CdnUsageUnit? unit, int? currentValue, int? limit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="resourceType">
+        /// Resource type for which the usage is provided.
+        /// Serialized Name: ResourceUsage.resourceType
+        /// </param>
+        /// <param name="unit">
+        /// Unit of the usage. e.g. count.
+        /// Serialized Name: ResourceUsage.unit
+        /// </param>
+        /// <param name="currentValue">
+        /// Actual value of usage on the specified resource type.
+        /// Serialized Name: ResourceUsage.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// Quota of the specified resource type.
+        /// Serialized Name: ResourceUsage.limit
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnUsage(string resourceType, CdnUsageUnit? unit, int? currentValue, int? limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource type for which the usage is provided. </summary>
-        [WirePath("resourceType")]
+        /// <summary>
+        /// Resource type for which the usage is provided.
+        /// Serialized Name: ResourceUsage.resourceType
+        /// </summary>
         public string ResourceType { get; }
-
-        /// <summary> Unit of the usage. e.g. count. </summary>
-        [WirePath("unit")]
+        /// <summary>
+        /// Unit of the usage. e.g. count.
+        /// Serialized Name: ResourceUsage.unit
+        /// </summary>
         public CdnUsageUnit? Unit { get; }
-
-        /// <summary> Actual value of usage on the specified resource type. </summary>
-        [WirePath("currentValue")]
+        /// <summary>
+        /// Actual value of usage on the specified resource type.
+        /// Serialized Name: ResourceUsage.currentValue
+        /// </summary>
         public int? CurrentValue { get; }
-
-        /// <summary> Quota of the specified resource type. </summary>
-        [WirePath("limit")]
+        /// <summary>
+        /// Quota of the specified resource type.
+        /// Serialized Name: ResourceUsage.limit
+        /// </summary>
         public int? Limit { get; }
     }
 }

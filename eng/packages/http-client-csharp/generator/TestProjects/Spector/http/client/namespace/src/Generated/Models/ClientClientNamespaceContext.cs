@@ -6,8 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Client.Clientnamespace.First;
-using Client.Clientnamespace.Second;
+using client.clientnamespace.first;
+using client.clientnamespace.second;
 
 namespace Client.ClientNamespace
 {

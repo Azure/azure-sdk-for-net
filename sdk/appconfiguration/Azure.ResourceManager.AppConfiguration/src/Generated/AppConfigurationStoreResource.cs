@@ -7,37 +7,48 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
-    /// A class representing a AppConfigurationStore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AppConfigurationStoreResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppConfigurationStores method.
+    /// A Class representing an AppConfigurationStore along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppConfigurationStoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppConfigurationStoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppConfigurationStore method.
     /// </summary>
     public partial class AppConfigurationStoreResource : ArmResource
     {
-        private readonly ClientDiagnostics _configurationStoresClientDiagnostics;
-        private readonly ConfigurationStores _configurationStoresRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="AppConfigurationStoreResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="configStoreName"> The configStoreName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configStoreName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _appConfigurationStoreConfigurationStoresClientDiagnostics;
+        private readonly ConfigurationStoresRestOperations _appConfigurationStoreConfigurationStoresRestClient;
         private readonly AppConfigurationStoreData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores";
 
-        /// <summary> Initializes a new instance of AppConfigurationStoreResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationStoreResource"/> class for mocking. </summary>
         protected AppConfigurationStoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppConfigurationStoreResource(ArmClient client, AppConfigurationStoreData data) : this(client, data.Id)
@@ -46,92 +57,416 @@ namespace Azure.ResourceManager.AppConfiguration
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppConfigurationStoreResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string appConfigurationStoreApiVersion);
-            _configurationStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, Diagnostics);
-            _configurationStoresRestClient = new ConfigurationStores(_configurationStoresClientDiagnostics, Pipeline, Endpoint, appConfigurationStoreApiVersion ?? "2025-06-01-preview");
-            ValidateResourceId(id);
+            _appConfigurationStoreConfigurationStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string appConfigurationStoreConfigurationStoresApiVersion);
+            _appConfigurationStoreConfigurationStoresRestClient = new ConfigurationStoresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appConfigurationStoreConfigurationStoresApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AppConfigurationStoreData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="configStoreName"> The configStoreName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configStoreName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of AppConfigurationPrivateEndpointConnectionResources in the AppConfigurationStore. </summary>
+        /// <returns> An object representing collection of AppConfigurationPrivateEndpointConnectionResources and their operations over a AppConfigurationPrivateEndpointConnectionResource. </returns>
+        public virtual AppConfigurationPrivateEndpointConnectionCollection GetAppConfigurationPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new AppConfigurationPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified private endpoint connection associated with the configuration store.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationPrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AppConfigurationPrivateEndpointConnectionResource>> GetAppConfigurationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetAppConfigurationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified private endpoint connection associated with the configuration store.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationPrivateEndpointConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppConfigurationPrivateEndpointConnectionResource> GetAppConfigurationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            return GetAppConfigurationPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AppConfigurationPrivateLinkResources in the AppConfigurationStore. </summary>
+        /// <returns> An object representing collection of AppConfigurationPrivateLinkResources and their operations over a AppConfigurationPrivateLinkResource. </returns>
+        public virtual AppConfigurationPrivateLinkResourceCollection GetAppConfigurationPrivateLinkResources()
+        {
+            return GetCachedClient(client => new AppConfigurationPrivateLinkResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a private link resource that need to be created for a configuration store.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationPrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The name of the private link resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AppConfigurationPrivateLinkResource>> GetAppConfigurationPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
+        {
+            return await GetAppConfigurationPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a private link resource that need to be created for a configuration store.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationPrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The name of the private link resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppConfigurationPrivateLinkResource> GetAppConfigurationPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
+        {
+            return GetAppConfigurationPrivateLinkResources().Get(groupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AppConfigurationKeyValueResources in the AppConfigurationStore. </summary>
+        /// <returns> An object representing collection of AppConfigurationKeyValueResources and their operations over a AppConfigurationKeyValueResource. </returns>
+        public virtual AppConfigurationKeyValueCollection GetAppConfigurationKeyValues()
+        {
+            return GetCachedClient(client => new AppConfigurationKeyValueCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AppConfigurationKeyValueResource>> GetAppConfigurationKeyValueAsync(string keyValueName, CancellationToken cancellationToken = default)
+        {
+            return await GetAppConfigurationKeyValues().GetAsync(keyValueName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/keyValues/{keyValueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KeyValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppConfigurationKeyValueResource> GetAppConfigurationKeyValue(string keyValueName, CancellationToken cancellationToken = default)
+        {
+            return GetAppConfigurationKeyValues().Get(keyValueName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AppConfigurationReplicaResources in the AppConfigurationStore. </summary>
+        /// <returns> An object representing collection of AppConfigurationReplicaResources and their operations over a AppConfigurationReplicaResource. </returns>
+        public virtual AppConfigurationReplicaCollection GetAppConfigurationReplicas()
+        {
+            return GetCachedClient(client => new AppConfigurationReplicaCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified replica.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/replicas/{replicaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Replicas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="replicaName"> The name of the replica. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AppConfigurationReplicaResource>> GetAppConfigurationReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
+        {
+            return await GetAppConfigurationReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified replica.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/replicas/{replicaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Replicas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="replicaName"> The name of the replica. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppConfigurationReplicaResource> GetAppConfigurationReplica(string replicaName, CancellationToken cancellationToken = default)
+        {
+            return GetAppConfigurationReplicas().Get(replicaName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AppConfigurationSnapshotResources in the AppConfigurationStore. </summary>
+        /// <returns> An object representing collection of AppConfigurationSnapshotResources and their operations over a AppConfigurationSnapshotResource. </returns>
+        public virtual AppConfigurationSnapshotCollection GetAppConfigurationSnapshots()
+        {
+            return GetCachedClient(client => new AppConfigurationSnapshotCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified snapshot. NOTE: This operation is intended for use in Azure Resource Manager (ARM) Template deployments. For all other scenarios involving App Configuration snapshots the data plane API should be used instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotName"> The name of the snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AppConfigurationSnapshotResource>> GetAppConfigurationSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            return await GetAppConfigurationSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified snapshot. NOTE: This operation is intended for use in Azure Resource Manager (ARM) Template deployments. For all other scenarios involving App Configuration snapshots the data plane API should be used instead.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotName"> The name of the snapshot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppConfigurationSnapshotResource> GetAppConfigurationSnapshot(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            return GetAppConfigurationSnapshots().Get(snapshotName, cancellationToken);
         }
 
         /// <summary>
         /// Gets the properties of the specified configuration store.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStores_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppConfigurationStoreResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppConfigurationStoreResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Get");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppConfigurationStoreData> response = Response.FromValue(AppConfigurationStoreData.FromResponse(result), result);
+                var response = await _appConfigurationStoreConfigurationStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,42 +480,118 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Gets the properties of the specified configuration store.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStores_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppConfigurationStoreResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppConfigurationStoreResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Get");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppConfigurationStoreData> response = Response.FromValue(AppConfigurationStoreData.FromResponse(result), result);
+                var response = _appConfigurationStoreConfigurationStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a configuration store.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _appConfigurationStoreConfigurationStoresRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation(_appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a configuration store.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _appConfigurationStoreConfigurationStoresRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AppConfigurationArmOperation(_appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -193,20 +604,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Updates a configuration store with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStores_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppConfigurationStoreResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,27 +629,14 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Update");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configurationStoresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppConfigurationStorePatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppConfigurationArmOperation<AppConfigurationStoreResource> operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(
-                    new AppConfigurationStoreOperationSource(Client),
-                    _configurationStoresClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _appConfigurationStoreConfigurationStoresRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -252,20 +650,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Updates a configuration store with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStores_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppConfigurationStoreResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,125 +675,14 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Update");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configurationStoresRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppConfigurationStorePatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppConfigurationArmOperation<AppConfigurationStoreResource> operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(
-                    new AppConfigurationStoreOperationSource(Client),
-                    _configurationStoresClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _appConfigurationStoreConfigurationStoresRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new AppConfigurationArmOperation<AppConfigurationStoreResource>(new AppConfigurationStoreOperationSource(Client), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, _appConfigurationStoreConfigurationStoresRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a configuration store.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStores_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppConfigurationStoreResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configurationStoresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppConfigurationArmOperation operation = new AppConfigurationArmOperation(_configurationStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a configuration store.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStores_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppConfigurationStoreResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configurationStoresRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppConfigurationArmOperation operation = new AppConfigurationArmOperation(_configurationStoresClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -409,100 +696,82 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Lists the access key for the specified configuration store.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeys. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeys</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStores_ListKeys. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_ListKeys</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppConfigurationStoreResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppConfigurationStoreApiKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppConfigurationStoreApiKey> GetKeysAsync(string skipToken = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppConfigurationStoreApiKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppConfigurationStoreApiKey> GetKeysAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ConfigurationStoresGetKeysAsyncCollectionResultOfT(
-                _configurationStoresRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                skipToken,
-                context,
-                "AppConfigurationStoreResource.GetKeys");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(e), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists the access key for the specified configuration store.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeys. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/listKeys</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStores_ListKeys. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_ListKeys</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppConfigurationStoreResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppConfigurationStoreApiKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppConfigurationStoreApiKey> GetKeys(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<AppConfigurationStoreApiKey> GetKeys(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ConfigurationStoresGetKeysCollectionResultOfT(
-                _configurationStoresRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                skipToken,
-                context,
-                "AppConfigurationStoreResource.GetKeys");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(e), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Regenerates an access key for the specified configuration store.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/regenerateKey. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/regenerateKey</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStores_RegenerateKey. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_RegenerateKey</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppConfigurationStoreResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,21 +782,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RegenerateKey");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RegenerateKey");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configurationStoresRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppConfigurationRegenerateKeyContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppConfigurationStoreApiKey> response = Response.FromValue(AppConfigurationStoreApiKey.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _appConfigurationStoreConfigurationStoresRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -541,20 +800,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// Regenerates an access key for the specified configuration store.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/regenerateKey. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/regenerateKey</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConfigurationStores_RegenerateKey. </description>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_RegenerateKey</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppConfigurationStoreResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -565,21 +824,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RegenerateKey");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RegenerateKey");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _configurationStoresRestClient.CreateRegenerateKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AppConfigurationRegenerateKeyContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppConfigurationStoreApiKey> response = Response.FromValue(AppConfigurationStoreApiKey.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _appConfigurationStoreConfigurationStoresRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -589,7 +838,27 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -599,34 +868,28 @@ namespace Azure.ResourceManager.AppConfiguration
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.AddTag");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AppConfigurationStoreData> response = Response.FromValue(AppConfigurationStoreData.FromResponse(result), result);
-                    return Response.FromValue(new AppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _appConfigurationStoreConfigurationStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AppConfigurationStoreData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AppConfigurationStorePatch patch = new AppConfigurationStorePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new AppConfigurationStorePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<AppConfigurationStoreResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -637,7 +900,27 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -647,34 +930,28 @@ namespace Azure.ResourceManager.AppConfiguration
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.AddTag");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AppConfigurationStoreData> response = Response.FromValue(AppConfigurationStoreData.FromResponse(result), result);
-                    return Response.FromValue(new AppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _appConfigurationStoreConfigurationStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AppConfigurationStoreData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AppConfigurationStorePatch patch = new AppConfigurationStorePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new AppConfigurationStorePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<AppConfigurationStoreResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -685,39 +962,53 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AppConfigurationStoreResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.SetTags");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AppConfigurationStoreData> response = Response.FromValue(AppConfigurationStoreData.FromResponse(result), result);
-                    return Response.FromValue(new AppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _appConfigurationStoreConfigurationStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AppConfigurationStoreData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AppConfigurationStorePatch patch = new AppConfigurationStorePatch();
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new AppConfigurationStorePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<AppConfigurationStoreResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -728,39 +1019,53 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AppConfigurationStoreResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.SetTags");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AppConfigurationStoreData> response = Response.FromValue(AppConfigurationStoreData.FromResponse(result), result);
-                    return Response.FromValue(new AppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _appConfigurationStoreConfigurationStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AppConfigurationStoreData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AppConfigurationStorePatch patch = new AppConfigurationStorePatch();
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new AppConfigurationStorePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<AppConfigurationStoreResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -771,7 +1076,27 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -779,34 +1104,28 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RemoveTag");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AppConfigurationStoreData> response = Response.FromValue(AppConfigurationStoreData.FromResponse(result), result);
-                    return Response.FromValue(new AppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _appConfigurationStoreConfigurationStoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AppConfigurationStoreData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AppConfigurationStorePatch patch = new AppConfigurationStorePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new AppConfigurationStorePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<AppConfigurationStoreResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -817,7 +1136,27 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -825,34 +1164,28 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _configurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RemoveTag");
+            using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _configurationStoresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AppConfigurationStoreData> response = Response.FromValue(AppConfigurationStoreData.FromResponse(result), result);
-                    return Response.FromValue(new AppConfigurationStoreResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _appConfigurationStoreConfigurationStoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new AppConfigurationStoreResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    AppConfigurationStoreData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AppConfigurationStorePatch patch = new AppConfigurationStorePatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new AppConfigurationStorePatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<AppConfigurationStoreResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -861,171 +1194,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of AppConfigurationPrivateEndpointConnections in the <see cref="AppConfigurationStoreResource"/>. </summary>
-        /// <returns> An object representing collection of AppConfigurationPrivateEndpointConnections and their operations over a AppConfigurationPrivateEndpointConnectionResource. </returns>
-        public virtual AppConfigurationPrivateEndpointConnectionCollection GetAppConfigurationPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new AppConfigurationPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary> Gets the specified private endpoint connection associated with the configuration store. </summary>
-        /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AppConfigurationPrivateEndpointConnectionResource>> GetAppConfigurationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetAppConfigurationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the specified private endpoint connection associated with the configuration store. </summary>
-        /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AppConfigurationPrivateEndpointConnectionResource> GetAppConfigurationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return GetAppConfigurationPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AppConfigurationPrivateLinkResources in the <see cref="AppConfigurationStoreResource"/>. </summary>
-        /// <returns> An object representing collection of AppConfigurationPrivateLinkResources and their operations over a AppConfigurationPrivateLinkResource. </returns>
-        public virtual AppConfigurationPrivateLinkResourceCollection GetAppConfigurationPrivateLinkResources()
-        {
-            return GetCachedClient(client => new AppConfigurationPrivateLinkResourceCollection(client, Id));
-        }
-
-        /// <summary> Gets a private link resource that need to be created for a configuration store. </summary>
-        /// <param name="groupName"> The name of the private link resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AppConfigurationPrivateLinkResource>> GetAppConfigurationPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-
-            return await GetAppConfigurationPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a private link resource that need to be created for a configuration store. </summary>
-        /// <param name="groupName"> The name of the private link resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AppConfigurationPrivateLinkResource> GetAppConfigurationPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-
-            return GetAppConfigurationPrivateLinkResources().Get(groupName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AppConfigurationKeyValues in the <see cref="AppConfigurationStoreResource"/>. </summary>
-        /// <returns> An object representing collection of AppConfigurationKeyValues and their operations over a AppConfigurationKeyValueResource. </returns>
-        public virtual AppConfigurationKeyValueCollection GetAppConfigurationKeyValues()
-        {
-            return GetCachedClient(client => new AppConfigurationKeyValueCollection(client, Id));
-        }
-
-        /// <summary> Gets the properties of the specified key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead. </summary>
-        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AppConfigurationKeyValueResource>> GetAppConfigurationKeyValueAsync(string keyValueName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
-
-            return await GetAppConfigurationKeyValues().GetAsync(keyValueName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the properties of the specified key-value. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration key-values the data plane API should be used instead. </summary>
-        /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AppConfigurationKeyValueResource> GetAppConfigurationKeyValue(string keyValueName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
-
-            return GetAppConfigurationKeyValues().Get(keyValueName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AppConfigurationReplicas in the <see cref="AppConfigurationStoreResource"/>. </summary>
-        /// <returns> An object representing collection of AppConfigurationReplicas and their operations over a AppConfigurationReplicaResource. </returns>
-        public virtual AppConfigurationReplicaCollection GetAppConfigurationReplicas()
-        {
-            return GetCachedClient(client => new AppConfigurationReplicaCollection(client, Id));
-        }
-
-        /// <summary> Gets the properties of the specified replica. </summary>
-        /// <param name="replicaName"> The name of the replica. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AppConfigurationReplicaResource>> GetAppConfigurationReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
-
-            return await GetAppConfigurationReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the properties of the specified replica. </summary>
-        /// <param name="replicaName"> The name of the replica. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AppConfigurationReplicaResource> GetAppConfigurationReplica(string replicaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
-
-            return GetAppConfigurationReplicas().Get(replicaName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AppConfigurationSnapshots in the <see cref="AppConfigurationStoreResource"/>. </summary>
-        /// <returns> An object representing collection of AppConfigurationSnapshots and their operations over a AppConfigurationSnapshotResource. </returns>
-        public virtual AppConfigurationSnapshotCollection GetAppConfigurationSnapshots()
-        {
-            return GetCachedClient(client => new AppConfigurationSnapshotCollection(client, Id));
-        }
-
-        /// <summary> Gets the properties of the specified snapshot. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration snapshots the data plane API should be used instead. </summary>
-        /// <param name="snapshotName"> The name of the snapshot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AppConfigurationSnapshotResource>> GetAppConfigurationSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-
-            return await GetAppConfigurationSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the properties of the specified snapshot. NOTE: This operation is intended for use in ARM Template deployments. For all other scenarios involving App Configuration snapshots the data plane API should be used instead. </summary>
-        /// <param name="snapshotName"> The name of the snapshot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AppConfigurationSnapshotResource> GetAppConfigurationSnapshot(string snapshotName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
-
-            return GetAppConfigurationSnapshots().Get(snapshotName, cancellationToken);
         }
     }
 }

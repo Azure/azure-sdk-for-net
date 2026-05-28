@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LoadTesting
@@ -26,84 +25,73 @@ namespace Azure.ResourceManager.LoadTesting
     /// </summary>
     public partial class LoadTestingResourceCollection : ArmCollection, IEnumerable<LoadTestingResource>, IAsyncEnumerable<LoadTestingResource>
     {
-        private readonly ClientDiagnostics _loadTestsClientDiagnostics;
-        private readonly LoadTests _loadTestsRestClient;
+        private readonly ClientDiagnostics _loadTestingResourceLoadTestsClientDiagnostics;
+        private readonly LoadTestsRestOperations _loadTestingResourceLoadTestsRestClient;
 
-        /// <summary> Initializes a new instance of LoadTestingResourceCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LoadTestingResourceCollection"/> class for mocking. </summary>
         protected LoadTestingResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTestingResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LoadTestingResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal LoadTestingResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(LoadTestingResource.ResourceType, out string loadTestingResourceApiVersion);
-            _loadTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestingResource.ResourceType.Namespace, Diagnostics);
-            _loadTestsRestClient = new LoadTests(_loadTestsClientDiagnostics, Pipeline, Endpoint, loadTestingResourceApiVersion ?? "2024-12-01-preview");
-            ValidateResourceId(id);
+            _loadTestingResourceLoadTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestingResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(LoadTestingResource.ResourceType, out string loadTestingResourceLoadTestsApiVersion);
+            _loadTestingResourceLoadTestsRestClient = new LoadTestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestingResourceLoadTestsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
-        /// Create a LoadTestResource
+        /// Create or update LoadTest resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="loadTestName"> Load Test name. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="data"> LoadTest resource data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LoadTestingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loadTestName, LoadTestingResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.CreateOrUpdate");
+            using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _loadTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, LoadTestingResourceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                LoadTestingArmOperation<LoadTestingResource> operation = new LoadTestingArmOperation<LoadTestingResource>(
-                    new LoadTestingResourceOperationSource(Client),
-                    _loadTestsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _loadTestingResourceLoadTestsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new LoadTestingArmOperation<LoadTestingResource>(new LoadTestingResourceOperationSource(Client), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -114,54 +102,45 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary>
-        /// Create a LoadTestResource
+        /// Create or update LoadTest resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="loadTestName"> Load Test name. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="data"> LoadTest resource data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LoadTestingResource> CreateOrUpdate(WaitUntil waitUntil, string loadTestName, LoadTestingResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.CreateOrUpdate");
+            using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _loadTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, LoadTestingResourceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                LoadTestingArmOperation<LoadTestingResource> operation = new LoadTestingArmOperation<LoadTestingResource>(
-                    new LoadTestingResourceOperationSource(Client),
-                    _loadTestsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _loadTestingResourceLoadTestsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, data, cancellationToken);
+                var operation = new LoadTestingArmOperation<LoadTestingResource>(new LoadTestingResourceOperationSource(Client), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, _loadTestingResourceLoadTestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -172,45 +151,41 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary>
-        /// Get a LoadTestResource
+        /// Get a LoadTest resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadTestName"> Load Test name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual async Task<Response<LoadTestingResource>> GetAsync(string loadTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
 
-            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Get");
+            using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
+                var response = await _loadTestingResourceLoadTestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -221,45 +196,41 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary>
-        /// Get a LoadTestResource
+        /// Get a LoadTest resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadTestName"> Load Test name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual Response<LoadTestingResource> Get(string loadTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
 
-            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Get");
+            using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LoadTestingResourceData> response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
+                var response = _loadTestingResourceLoadTestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -270,47 +241,53 @@ namespace Azure.ResourceManager.LoadTesting
         }
 
         /// <summary>
-        /// List LoadTestResource resources by resource group
+        /// Lists loadtest resources in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LoadTestingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestsGetByResourceGroupAsyncCollectionResultOfT(_loadTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LoadTestingResourceCollection.GetAll"), data => new LoadTestingResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List LoadTestResource resources by resource group
+        /// Lists loadtest resources in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> A collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LoadTestingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<LoadTestingResourceData, LoadTestingResource>(new LoadTestsGetByResourceGroupCollectionResultOfT(_loadTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LoadTestingResourceCollection.GetAll"), data => new LoadTestingResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadTestName"> Load Test name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string loadTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
 
-            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Exists");
+            using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<LoadTestingResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LoadTestingResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _loadTestingResourceLoadTestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.LoadTesting
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadTestName"> Load Test name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual Response<bool> Exists(string loadTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
 
-            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Exists");
+            using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<LoadTestingResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LoadTestingResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _loadTestingResourceLoadTestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.LoadTesting
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadTestName"> Load Test name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual async Task<NullableResponse<LoadTestingResource>> GetIfExistsAsync(string loadTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
 
-            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetIfExists");
+            using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<LoadTestingResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LoadTestingResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _loadTestingResourceLoadTestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<LoadTestingResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.LoadTesting
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LoadTests_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>LoadTests_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LoadTestingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loadTestName"> Load Test name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         public virtual NullableResponse<LoadTestingResource> GetIfExists(string loadTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loadTestName, nameof(loadTestName));
 
-            using DiagnosticScope scope = _loadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetIfExists");
+            using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _loadTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, loadTestName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<LoadTestingResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LoadTestingResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LoadTestingResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _loadTestingResourceLoadTestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, loadTestName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<LoadTestingResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new LoadTestingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.LoadTesting
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<LoadTestingResource> IAsyncEnumerable<LoadTestingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

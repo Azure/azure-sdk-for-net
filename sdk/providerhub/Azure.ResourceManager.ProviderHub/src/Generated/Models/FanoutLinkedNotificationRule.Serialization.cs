@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ProviderHub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The FanoutLinkedNotificationRule. </summary>
-    public partial class FanoutLinkedNotificationRule : IJsonModel<FanoutLinkedNotificationRule>
+    public partial class FanoutLinkedNotificationRule : IUtf8JsonSerializable, IJsonModel<FanoutLinkedNotificationRule>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FanoutLinkedNotificationRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FanoutLinkedNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFanoutLinkedNotificationRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FanoutLinkedNotificationRule)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FanoutLinkedNotificationRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FanoutLinkedNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FanoutLinkedNotificationRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FanoutLinkedNotificationRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FanoutLinkedNotificationRule IPersistableModel<FanoutLinkedNotificationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FanoutLinkedNotificationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FanoutLinkedNotificationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FanoutLinkedNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FanoutLinkedNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FanoutLinkedNotificationRule)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(TokenAuthConfiguration))
             {
                 writer.WritePropertyName("tokenAuthConfiguration"u8);
@@ -83,13 +43,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
-                foreach (string item in Actions)
+                foreach (var item in Actions)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -98,7 +53,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (ResourceProviderEndpoint item in Endpoints)
+                foreach (var item in Endpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -109,15 +64,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("dstsConfiguration"u8);
                 writer.WriteObjectValue(DstsConfiguration, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,27 +81,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FanoutLinkedNotificationRule IJsonModel<FanoutLinkedNotificationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FanoutLinkedNotificationRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FanoutLinkedNotificationRule IJsonModel<FanoutLinkedNotificationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FanoutLinkedNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FanoutLinkedNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FanoutLinkedNotificationRule)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFanoutLinkedNotificationRule(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FanoutLinkedNotificationRule DeserializeFanoutLinkedNotificationRule(JsonElement element, ModelReaderWriterOptions options)
+        internal static FanoutLinkedNotificationRule DeserializeFanoutLinkedNotificationRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,68 +105,94 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<string> actions = default;
             IList<ResourceProviderEndpoint> endpoints = default;
             ProviderDstsConfiguration dstsConfiguration = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("tokenAuthConfiguration"u8))
+                if (property.NameEquals("tokenAuthConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tokenAuthConfiguration = TokenAuthConfiguration.DeserializeTokenAuthConfiguration(prop.Value, options);
+                    tokenAuthConfiguration = TokenAuthConfiguration.DeserializeTokenAuthConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("actions"u8))
+                if (property.NameEquals("actions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     actions = array;
                     continue;
                 }
-                if (prop.NameEquals("endpoints"u8))
+                if (property.NameEquals("endpoints"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceProviderEndpoint> array = new List<ResourceProviderEndpoint>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ResourceProviderEndpoint.DeserializeResourceProviderEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
                 }
-                if (prop.NameEquals("dstsConfiguration"u8))
+                if (property.NameEquals("dstsConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
+                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new FanoutLinkedNotificationRule(tokenAuthConfiguration, actions ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(), dstsConfiguration, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FanoutLinkedNotificationRule(tokenAuthConfiguration, actions ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(), dstsConfiguration, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FanoutLinkedNotificationRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FanoutLinkedNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FanoutLinkedNotificationRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FanoutLinkedNotificationRule IPersistableModel<FanoutLinkedNotificationRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FanoutLinkedNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeFanoutLinkedNotificationRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FanoutLinkedNotificationRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FanoutLinkedNotificationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

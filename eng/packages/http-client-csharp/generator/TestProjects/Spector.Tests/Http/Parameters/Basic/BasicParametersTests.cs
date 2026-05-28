@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Parameters.Basic;
-using Parameters.Basic._ExplicitBody;
+using Parameters.Basic.Models;
 
 namespace TestProjects.Spector.Tests.Http.Parameters.Basic
 {

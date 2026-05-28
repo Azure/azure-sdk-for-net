@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.DevCenter.Tests
             DevBoxDefinitionResource createdResource
                 = (await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, devBoxDefinitionData)).Value;
 
-            Assert.That(createdResource, Is.Not.Null);
-            Assert.That(createdResource.Data, Is.Not.Null);
+            Assert.NotNull(createdResource);
+            Assert.NotNull(createdResource.Data);
 
             // List
             List<DevBoxDefinitionResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
             Response<DevBoxDefinitionResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
-            Assert.That(retrievedResource.Value, Is.Not.Null);
-            Assert.That(retrievedResource.Value.Data, Is.Not.Null);
+            Assert.NotNull(retrievedResource.Value);
+            Assert.NotNull(retrievedResource.Value.Data);
 
             // Update
             var updateRequest = new DevBoxDefinitionPatch()

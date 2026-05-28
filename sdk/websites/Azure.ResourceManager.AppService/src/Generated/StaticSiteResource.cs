@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,71 +157,6 @@ namespace Azure.ResourceManager.AppService
         public virtual Response<StaticSitePrivateEndpointConnectionResource> GetStaticSitePrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             return GetStaticSitePrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StaticSiteBasicAuthPropertyResources in the StaticSite. </summary>
-        /// <returns> An object representing collection of StaticSiteBasicAuthPropertyResources and their operations over a StaticSiteBasicAuthPropertyResource. </returns>
-        public virtual StaticSiteBasicAuthPropertyCollection GetStaticSiteBasicAuthProperties()
-        {
-            return GetCachedClient(client => new StaticSiteBasicAuthPropertyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Description for Gets the basic auth properties for a static site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBasicAuth</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="basicAuthName"> name of the basic auth entry. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StaticSiteBasicAuthPropertyResource>> GetStaticSiteBasicAuthPropertyAsync(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
-        {
-            return await GetStaticSiteBasicAuthProperties().GetAsync(basicAuthName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Description for Gets the basic auth properties for a static site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetBasicAuth</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="basicAuthName"> name of the basic auth entry. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<StaticSiteBasicAuthPropertyResource> GetStaticSiteBasicAuthProperty(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
-        {
-            return GetStaticSiteBasicAuthProperties().Get(basicAuthName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StaticSiteBuildResources in the StaticSite. </summary>
@@ -244,7 +179,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,7 +210,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,7 +248,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,7 +279,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,75 +295,6 @@ namespace Azure.ResourceManager.AppService
         public virtual Response<StaticSiteDatabaseConnectionResource> GetStaticSiteDatabaseConnection(string databaseConnectionName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteDatabaseConnections().Get(databaseConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StaticSiteLinkedBackendResources in the StaticSite. </summary>
-        /// <returns> An object representing collection of StaticSiteLinkedBackendResources and their operations over a StaticSiteLinkedBackendResource. </returns>
-        public virtual StaticSiteLinkedBackendCollection GetStaticSiteLinkedBackends()
-        {
-            return GetCachedClient(client => new StaticSiteLinkedBackendCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns the details of a linked backend linked to a static site by name
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackend</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<StaticSiteLinkedBackendResource>> GetStaticSiteLinkedBackendAsync(string linkedBackendName, CancellationToken cancellationToken = default)
-        {
-            return await GetStaticSiteLinkedBackends().GetAsync(linkedBackendName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns the details of a linked backend linked to a static site by name
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackend</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<StaticSiteLinkedBackendResource> GetStaticSiteLinkedBackend(string linkedBackendName, CancellationToken cancellationToken = default)
-        {
-            return GetStaticSiteLinkedBackends().Get(linkedBackendName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StaticSiteUserProvidedFunctionAppResources in the StaticSite. </summary>
@@ -451,7 +317,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -482,7 +348,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -498,6 +364,71 @@ namespace Azure.ResourceManager.AppService
         public virtual Response<StaticSiteUserProvidedFunctionAppResource> GetStaticSiteUserProvidedFunctionApp(string functionAppName, CancellationToken cancellationToken = default)
         {
             return GetStaticSiteUserProvidedFunctionApps().Get(functionAppName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of StaticSiteBasicAuthPropertyResources in the StaticSite. </summary>
+        /// <returns> An object representing collection of StaticSiteBasicAuthPropertyResources and their operations over a StaticSiteBasicAuthPropertyResource. </returns>
+        public virtual StaticSiteBasicAuthPropertyCollection GetStaticSiteBasicAuthProperties()
+        {
+            return GetCachedClient(client => new StaticSiteBasicAuthPropertyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Description for Gets the basic auth properties for a static site.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetBasicAuth</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="basicAuthName"> name of the basic auth entry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StaticSiteBasicAuthPropertyResource>> GetStaticSiteBasicAuthPropertyAsync(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
+        {
+            return await GetStaticSiteBasicAuthProperties().GetAsync(basicAuthName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Description for Gets the basic auth properties for a static site.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/basicAuth/{basicAuthName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetBasicAuth</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteBasicAuthPropertyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="basicAuthName"> name of the basic auth entry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<StaticSiteBasicAuthPropertyResource> GetStaticSiteBasicAuthProperty(StaticSiteBasicAuthName basicAuthName, CancellationToken cancellationToken = default)
+        {
+            return GetStaticSiteBasicAuthProperties().Get(basicAuthName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StaticSiteCustomDomainOverviewResources in the StaticSite. </summary>
@@ -520,7 +451,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -551,7 +482,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -569,6 +500,75 @@ namespace Azure.ResourceManager.AppService
             return GetStaticSiteCustomDomainOverviews().Get(domainName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of StaticSiteLinkedBackendResources in the StaticSite. </summary>
+        /// <returns> An object representing collection of StaticSiteLinkedBackendResources and their operations over a StaticSiteLinkedBackendResource. </returns>
+        public virtual StaticSiteLinkedBackendCollection GetStaticSiteLinkedBackends()
+        {
+            return GetCachedClient(client => new StaticSiteLinkedBackendCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Returns the details of a linked backend linked to a static site by name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetLinkedBackend</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StaticSiteLinkedBackendResource>> GetStaticSiteLinkedBackendAsync(string linkedBackendName, CancellationToken cancellationToken = default)
+        {
+            return await GetStaticSiteLinkedBackends().GetAsync(linkedBackendName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the details of a linked backend linked to a static site by name
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_GetLinkedBackend</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StaticSiteLinkedBackendResource> GetStaticSiteLinkedBackend(string linkedBackendName, CancellationToken cancellationToken = default)
+        {
+            return GetStaticSiteLinkedBackends().Get(linkedBackendName, cancellationToken);
+        }
+
         /// <summary>
         /// Description for Gets the details of a static site.
         /// <list type="bullet">
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -818,6 +818,236 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Gets the list of users of a static site.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/listUsers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteUsers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authprovider"> The auth provider for the users. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> is null. </exception>
+        /// <returns> An async collection of <see cref="StaticSiteUser"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StaticSiteUser> GetUsersAsync(string authprovider, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteUsersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteUsersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StaticSiteUser.DeserializeStaticSiteUser(e), _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Gets the list of users of a static site.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/listUsers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_ListStaticSiteUsers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authprovider"> The auth provider for the users. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> is null. </exception>
+        /// <returns> A collection of <see cref="StaticSiteUser"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StaticSiteUser> GetUsers(string authprovider, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteUsersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteUsersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StaticSiteUser.DeserializeStaticSiteUser(e), _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Description for Deletes the user entry from the static site.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_DeleteStaticSiteUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authprovider"> The auth provider for this user. </param>
+        /// <param name="userid"> The user id of the user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> or <paramref name="userid"/> is null. </exception>
+        public virtual async Task<Response> DeleteUserAsync(string authprovider, string userid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
+
+            using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.DeleteUser");
+            scope.Start();
+            try
+            {
+                var response = await _staticSiteRestClient.DeleteStaticSiteUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Deletes the user entry from the static site.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_DeleteStaticSiteUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authprovider"> The auth provider for this user. </param>
+        /// <param name="userid"> The user id of the user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> or <paramref name="userid"/> is null. </exception>
+        public virtual Response DeleteUser(string authprovider, string userid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
+
+            using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.DeleteUser");
+            scope.Start();
+            try
+            {
+                var response = _staticSiteRestClient.DeleteStaticSiteUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates a user entry with the listed roles
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_UpdateStaticSiteUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authprovider"> The auth provider for this user. </param>
+        /// <param name="userid"> The user id of the user. </param>
+        /// <param name="staticSiteUserEnvelope"> A JSON representation of the StaticSiteUser properties. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/>, <paramref name="userid"/> or <paramref name="staticSiteUserEnvelope"/> is null. </exception>
+        public virtual async Task<Response<StaticSiteUser>> UpdateUserAsync(string authprovider, string userid, StaticSiteUser staticSiteUserEnvelope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
+            Argument.AssertNotNull(staticSiteUserEnvelope, nameof(staticSiteUserEnvelope));
+
+            using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.UpdateUser");
+            scope.Start();
+            try
+            {
+                var response = await _staticSiteRestClient.UpdateStaticSiteUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, staticSiteUserEnvelope, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Updates a user entry with the listed roles
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StaticSites_UpdateStaticSiteUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authprovider"> The auth provider for this user. </param>
+        /// <param name="userid"> The user id of the user. </param>
+        /// <param name="staticSiteUserEnvelope"> A JSON representation of the StaticSiteUser properties. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/>, <paramref name="userid"/> or <paramref name="staticSiteUserEnvelope"/> is null. </exception>
+        public virtual Response<StaticSiteUser> UpdateUser(string authprovider, string userid, StaticSiteUser staticSiteUserEnvelope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
+            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
+            Argument.AssertNotNull(staticSiteUserEnvelope, nameof(staticSiteUserEnvelope));
+
+            using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.UpdateUser");
+            scope.Start();
+            try
+            {
+                var response = _staticSiteRestClient.UpdateStaticSiteUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, staticSiteUserEnvelope, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Description for Creates or updates the app settings of a static site.
         /// <list type="bullet">
         /// <item>
@@ -830,7 +1060,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -868,7 +1098,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -906,7 +1136,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -944,7 +1174,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -982,7 +1212,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1024,7 +1254,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1066,7 +1296,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1108,7 +1338,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1150,7 +1380,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1180,7 +1410,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1210,7 +1440,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1248,7 +1478,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1286,7 +1516,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1324,7 +1554,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1362,7 +1592,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1400,7 +1630,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1438,7 +1668,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1476,7 +1706,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1514,7 +1744,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1543,7 +1773,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1572,7 +1802,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1614,7 +1844,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1656,7 +1886,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1686,7 +1916,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1716,7 +1946,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1762,7 +1992,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2024-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1787,236 +2017,6 @@ namespace Azure.ResourceManager.AppService
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Gets the list of users of a static site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/staticSites/{name}/authproviders/{authprovider}/listUsers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_ListStaticSiteUsers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authprovider"> The auth provider for the users. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StaticSiteUser"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StaticSiteUser> GetUsersAsync(string authprovider, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteUsersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteUsersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StaticSiteUser.DeserializeStaticSiteUser(e), _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Gets the list of users of a static site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/staticSites/{name}/authproviders/{authprovider}/listUsers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_ListStaticSiteUsers</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authprovider"> The auth provider for the users. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> is null. </exception>
-        /// <returns> A collection of <see cref="StaticSiteUser"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StaticSiteUser> GetUsers(string authprovider, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteRestClient.CreateListStaticSiteUsersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteRestClient.CreateListStaticSiteUsersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StaticSiteUser.DeserializeStaticSiteUser(e), _staticSiteClientDiagnostics, Pipeline, "StaticSiteResource.GetUsers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Updates a user entry with the listed roles
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_UpdateStaticSiteUser</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authprovider"> The <see cref="string"/> to use. </param>
-        /// <param name="userid"> The <see cref="string"/> to use. </param>
-        /// <param name="staticSiteUserEnvelope"> A JSON representation of the StaticSiteUser properties. See example. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/>, <paramref name="userid"/> or <paramref name="staticSiteUserEnvelope"/> is null. </exception>
-        public virtual async Task<Response<StaticSiteUser>> UpdateUserAsync(string authprovider, string userid, StaticSiteUser staticSiteUserEnvelope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
-            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
-            Argument.AssertNotNull(staticSiteUserEnvelope, nameof(staticSiteUserEnvelope));
-
-            using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.UpdateUser");
-            scope.Start();
-            try
-            {
-                var response = await _staticSiteRestClient.UpdateStaticSiteUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, staticSiteUserEnvelope, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Updates a user entry with the listed roles
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_UpdateStaticSiteUser</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authprovider"> The <see cref="string"/> to use. </param>
-        /// <param name="userid"> The <see cref="string"/> to use. </param>
-        /// <param name="staticSiteUserEnvelope"> A JSON representation of the StaticSiteUser properties. See example. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/>, <paramref name="userid"/> or <paramref name="staticSiteUserEnvelope"/> is null. </exception>
-        public virtual Response<StaticSiteUser> UpdateUser(string authprovider, string userid, StaticSiteUser staticSiteUserEnvelope, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
-            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
-            Argument.AssertNotNull(staticSiteUserEnvelope, nameof(staticSiteUserEnvelope));
-
-            using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.UpdateUser");
-            scope.Start();
-            try
-            {
-                var response = _staticSiteRestClient.UpdateStaticSiteUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, staticSiteUserEnvelope, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Deletes the user entry from the static site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_DeleteStaticSiteUser</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authprovider"> The <see cref="string"/> to use. </param>
-        /// <param name="userid"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> or <paramref name="userid"/> is null. </exception>
-        public virtual async Task<Response> DeleteUserAsync(string authprovider, string userid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
-            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
-
-            using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.DeleteUser");
-            scope.Start();
-            try
-            {
-                var response = await _staticSiteRestClient.DeleteStaticSiteUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Deletes the user entry from the static site.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Web/staticSites/{name}/authproviders/{authprovider}/users/{userid}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_DeleteStaticSiteUser</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="authprovider"> The <see cref="string"/> to use. </param>
-        /// <param name="userid"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authprovider"/> or <paramref name="userid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="authprovider"/> or <paramref name="userid"/> is null. </exception>
-        public virtual Response DeleteUser(string authprovider, string userid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authprovider, nameof(authprovider));
-            Argument.AssertNotNullOrEmpty(userid, nameof(userid));
-
-            using var scope = _staticSiteClientDiagnostics.CreateScope("StaticSiteResource.DeleteUser");
-            scope.Start();
-            try
-            {
-                var response = _staticSiteRestClient.DeleteStaticSiteUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authprovider, userid, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct AcceleratorType : IEquatable<AcceleratorType>
     {
         private readonly string _value;
-        /// <summary> GPU Accelerator. </summary>
-        private const string GPUValue = "GPU";
-        /// <summary> FPGA Accelerator. </summary>
-        private const string FPGAValue = "FPGA";
 
         /// <summary> Initializes a new instance of <see cref="AcceleratorType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcceleratorType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string GPUValue = "GPU";
+        private const string FPGAValue = "FPGA";
 
         /// <summary> GPU Accelerator. </summary>
         public static AcceleratorType GPU { get; } = new AcceleratorType(GPUValue);
-
         /// <summary> FPGA Accelerator. </summary>
         public static AcceleratorType FPGA { get; } = new AcceleratorType(FPGAValue);
-
         /// <summary> Determines if two <see cref="AcceleratorType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcceleratorType left, AcceleratorType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AcceleratorType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcceleratorType left, AcceleratorType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AcceleratorType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AcceleratorType"/>. </summary>
         public static implicit operator AcceleratorType(string value) => new AcceleratorType(value);
 
-        /// <summary> Converts a string to a <see cref="AcceleratorType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AcceleratorType?(string value) => value == null ? null : new AcceleratorType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcceleratorType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AcceleratorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

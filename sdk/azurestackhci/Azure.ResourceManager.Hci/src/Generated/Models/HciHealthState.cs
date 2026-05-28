@@ -7,85 +7,57 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Overall health state for update-specific health checks. Indicates whether the system is functioning correctly, has warnings or errors, or is undergoing a health evaluation. </summary>
+    /// <summary> The HciHealthState. </summary>
     public readonly partial struct HciHealthState : IEquatable<HciHealthState>
     {
         private readonly string _value;
-        /// <summary> The health state is not known or cannot be determined. </summary>
-        private const string UnknownValue = "Unknown";
-        /// <summary> The health check completed successfully and the system is healthy. </summary>
-        private const string SuccessValue = "Success";
-        /// <summary> The health check failed, indicating a critical issue. </summary>
-        private const string FailureValue = "Failure";
-        /// <summary> The health check detected a non-critical issue that may require attention. </summary>
-        private const string WarningValue = "Warning";
-        /// <summary> An error occurred during the health check process. </summary>
-        private const string ErrorValue = "Error";
-        /// <summary> The health check is currently in progress. </summary>
-        private const string InProgressValue = "InProgress";
 
         /// <summary> Initializes a new instance of <see cref="HciHealthState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciHealthState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The health state is not known or cannot be determined. </summary>
+        private const string UnknownValue = "Unknown";
+        private const string SuccessValue = "Success";
+        private const string FailureValue = "Failure";
+        private const string WarningValue = "Warning";
+        private const string ErrorValue = "Error";
+        private const string InProgressValue = "InProgress";
+
+        /// <summary> Unknown. </summary>
         public static HciHealthState Unknown { get; } = new HciHealthState(UnknownValue);
-
-        /// <summary> The health check completed successfully and the system is healthy. </summary>
+        /// <summary> Success. </summary>
         public static HciHealthState Success { get; } = new HciHealthState(SuccessValue);
-
-        /// <summary> The health check failed, indicating a critical issue. </summary>
+        /// <summary> Failure. </summary>
         public static HciHealthState Failure { get; } = new HciHealthState(FailureValue);
-
-        /// <summary> The health check detected a non-critical issue that may require attention. </summary>
+        /// <summary> Warning. </summary>
         public static HciHealthState Warning { get; } = new HciHealthState(WarningValue);
-
-        /// <summary> An error occurred during the health check process. </summary>
+        /// <summary> Error. </summary>
         public static HciHealthState Error { get; } = new HciHealthState(ErrorValue);
-
-        /// <summary> The health check is currently in progress. </summary>
+        /// <summary> InProgress. </summary>
         public static HciHealthState InProgress { get; } = new HciHealthState(InProgressValue);
-
         /// <summary> Determines if two <see cref="HciHealthState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciHealthState left, HciHealthState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="HciHealthState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciHealthState left, HciHealthState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="HciHealthState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciHealthState"/>. </summary>
         public static implicit operator HciHealthState(string value) => new HciHealthState(value);
 
-        /// <summary> Converts a string to a <see cref="HciHealthState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HciHealthState?(string value) => value == null ? null : new HciHealthState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciHealthState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(HciHealthState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -12,11 +12,6 @@
       "crossLanguageDefinitionId": "Authentication.Http.Custom.InvalidAuth",
       "usage": "Json,Exception",
       "decorators": [],
-      "serializationOptions": {
-        "json": {
-          "name": "InvalidAuth"
-        }
-      },
       "properties": [
         {
           "$id": "2",
@@ -74,8 +69,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -85,8 +79,7 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.Http.Custom.valid",
-            "decorators": [],
-            "namespace": "Authentication.Http.Custom"
+            "decorators": []
           },
           "parameters": [],
           "response": {},
@@ -115,8 +108,7 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false,
-                "serializationOptions": {}
+                "isErrorResponse": false
               }
             ],
             "httpMethod": "GET",
@@ -126,8 +118,7 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Authentication.Http.Custom.invalid",
-            "decorators": [],
-            "namespace": "Authentication.Http.Custom"
+            "decorators": []
           },
           "parameters": [],
           "response": {},
@@ -169,11 +160,9 @@
           "crossLanguageDefinitionId": "Authentication.Http.Custom.endpoint"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.Http.Custom",
-      "apiVersions": [],
-      "isMultiServiceClient": false
+      "apiVersions": []
     }
   ],
   "auth": {

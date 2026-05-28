@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider  "cognitiveservices/data-plane/LUIS/Authoring" -AutoRestVersion "latest"

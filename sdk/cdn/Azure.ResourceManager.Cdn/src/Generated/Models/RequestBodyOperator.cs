@@ -7,14 +7,24 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: RequestBodyOperator
+    /// </summary>
     public readonly partial struct RequestBodyOperator : IEquatable<RequestBodyOperator>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RequestBodyOperator"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RequestBodyOperator(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AnyValue = "Any";
         private const string EqualValue = "Equal";
         private const string ContainsValue = "Contains";
@@ -26,76 +36,73 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Initializes a new instance of <see cref="RequestBodyOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RequestBodyOperator(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: RequestBodyOperator.Any
+        /// </summary>
         public static RequestBodyOperator Any { get; } = new RequestBodyOperator(AnyValue);
-
-        /// <summary> Gets the Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: RequestBodyOperator.Equal
+        /// </summary>
         public static RequestBodyOperator Equal { get; } = new RequestBodyOperator(EqualValue);
-
-        /// <summary> Gets the Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: RequestBodyOperator.Contains
+        /// </summary>
         public static RequestBodyOperator Contains { get; } = new RequestBodyOperator(ContainsValue);
-
-        /// <summary> Gets the BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: RequestBodyOperator.BeginsWith
+        /// </summary>
         public static RequestBodyOperator BeginsWith { get; } = new RequestBodyOperator(BeginsWithValue);
-
-        /// <summary> Gets the EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: RequestBodyOperator.EndsWith
+        /// </summary>
         public static RequestBodyOperator EndsWith { get; } = new RequestBodyOperator(EndsWithValue);
-
-        /// <summary> Gets the LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: RequestBodyOperator.LessThan
+        /// </summary>
         public static RequestBodyOperator LessThan { get; } = new RequestBodyOperator(LessThanValue);
-
-        /// <summary> Gets the LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: RequestBodyOperator.LessThanOrEqual
+        /// </summary>
         public static RequestBodyOperator LessThanOrEqual { get; } = new RequestBodyOperator(LessThanOrEqualValue);
-
-        /// <summary> Gets the GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: RequestBodyOperator.GreaterThan
+        /// </summary>
         public static RequestBodyOperator GreaterThan { get; } = new RequestBodyOperator(GreaterThanValue);
-
-        /// <summary> Gets the GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: RequestBodyOperator.GreaterThanOrEqual
+        /// </summary>
         public static RequestBodyOperator GreaterThanOrEqual { get; } = new RequestBodyOperator(GreaterThanOrEqualValue);
-
-        /// <summary> Gets the RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: RequestBodyOperator.RegEx
+        /// </summary>
         public static RequestBodyOperator RegEx { get; } = new RequestBodyOperator(RegExValue);
-
         /// <summary> Determines if two <see cref="RequestBodyOperator"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RequestBodyOperator left, RequestBodyOperator right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RequestBodyOperator"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RequestBodyOperator left, RequestBodyOperator right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RequestBodyOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestBodyOperator"/>. </summary>
         public static implicit operator RequestBodyOperator(string value) => new RequestBodyOperator(value);
 
-        /// <summary> Converts a string to a <see cref="RequestBodyOperator"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RequestBodyOperator?(string value) => value == null ? null : new RequestBodyOperator(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RequestBodyOperator other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RequestBodyOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

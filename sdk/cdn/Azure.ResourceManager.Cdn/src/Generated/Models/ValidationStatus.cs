@@ -7,71 +7,66 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The validation status. </summary>
+    /// <summary>
+    /// The validation status.
+    /// Serialized Name: Status
+    /// </summary>
     public readonly partial struct ValidationStatus : IEquatable<ValidationStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ValidationStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ValidationStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string ValidValue = "Valid";
         private const string InvalidValue = "Invalid";
         private const string AccessDeniedValue = "AccessDenied";
         private const string CertificateExpiredValue = "CertificateExpired";
 
-        /// <summary> Initializes a new instance of <see cref="ValidationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ValidationStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Valid. </summary>
+        /// <summary>
+        /// Valid
+        /// Serialized Name: Status.Valid
+        /// </summary>
         public static ValidationStatus Valid { get; } = new ValidationStatus(ValidValue);
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: Status.Invalid
+        /// </summary>
         public static ValidationStatus Invalid { get; } = new ValidationStatus(InvalidValue);
-
-        /// <summary> Gets the AccessDenied. </summary>
+        /// <summary>
+        /// AccessDenied
+        /// Serialized Name: Status.AccessDenied
+        /// </summary>
         public static ValidationStatus AccessDenied { get; } = new ValidationStatus(AccessDeniedValue);
-
-        /// <summary> Gets the CertificateExpired. </summary>
+        /// <summary>
+        /// CertificateExpired
+        /// Serialized Name: Status.CertificateExpired
+        /// </summary>
         public static ValidationStatus CertificateExpired { get; } = new ValidationStatus(CertificateExpiredValue);
-
         /// <summary> Determines if two <see cref="ValidationStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ValidationStatus left, ValidationStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ValidationStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ValidationStatus left, ValidationStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ValidationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ValidationStatus"/>. </summary>
         public static implicit operator ValidationStatus(string value) => new ValidationStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ValidationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ValidationStatus?(string value) => value == null ? null : new ValidationStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ValidationStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

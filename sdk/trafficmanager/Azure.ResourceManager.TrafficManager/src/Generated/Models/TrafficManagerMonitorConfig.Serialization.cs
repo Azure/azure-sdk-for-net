@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.TrafficManager;
+using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    /// <summary> Class containing endpoint monitoring settings in a Traffic Manager profile. </summary>
-    public partial class TrafficManagerMonitorConfig : IJsonModel<TrafficManagerMonitorConfig>
+    public partial class TrafficManagerMonitorConfig : IUtf8JsonSerializable, IJsonModel<TrafficManagerMonitorConfig>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrafficManagerMonitorConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeTrafficManagerMonitorConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerMonitorConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrafficManagerMonitorConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficManagerMonitorConfig IPersistableModel<TrafficManagerMonitorConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrafficManagerMonitorConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TrafficManagerMonitorConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ProfileMonitorStatus))
             {
                 writer.WritePropertyName("profileMonitorStatus"u8);
@@ -113,7 +73,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartArray();
-                foreach (TrafficManagerMonitorConfigCustomHeaderInfo item in CustomHeaders)
+                foreach (var item in CustomHeaders)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -123,21 +83,21 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 writer.WritePropertyName("expectedStatusCodeRanges"u8);
                 writer.WriteStartArray();
-                foreach (ExpectedStatusCodeRangeInfo item in ExpectedStatusCodeRanges)
+                foreach (var item in ExpectedStatusCodeRanges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -146,27 +106,22 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficManagerMonitorConfig IJsonModel<TrafficManagerMonitorConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TrafficManagerMonitorConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TrafficManagerMonitorConfig IJsonModel<TrafficManagerMonitorConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTrafficManagerMonitorConfig(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TrafficManagerMonitorConfig DeserializeTrafficManagerMonitorConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static TrafficManagerMonitorConfig DeserializeTrafficManagerMonitorConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -180,90 +135,91 @@ namespace Azure.ResourceManager.TrafficManager.Models
             long? toleratedNumberOfFailures = default;
             IList<TrafficManagerMonitorConfigCustomHeaderInfo> customHeaders = default;
             IList<ExpectedStatusCodeRangeInfo> expectedStatusCodeRanges = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("profileMonitorStatus"u8))
+                if (property.NameEquals("profileMonitorStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    profileMonitorStatus = new TrafficManagerProfileMonitorStatus(prop.Value.GetString());
+                    profileMonitorStatus = new TrafficManagerProfileMonitorStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("protocol"u8))
+                if (property.NameEquals("protocol"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protocol = new TrafficManagerMonitorProtocol(prop.Value.GetString());
+                    protocol = new TrafficManagerMonitorProtocol(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("port"u8))
+                if (property.NameEquals("port"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    port = prop.Value.GetInt64();
+                    port = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("path"u8))
+                if (property.NameEquals("path"u8))
                 {
-                    path = prop.Value.GetString();
+                    path = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("intervalInSeconds"u8))
+                if (property.NameEquals("intervalInSeconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    intervalInSeconds = prop.Value.GetInt64();
+                    intervalInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("timeoutInSeconds"u8))
+                if (property.NameEquals("timeoutInSeconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeoutInSeconds = prop.Value.GetInt64();
+                    timeoutInSeconds = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("toleratedNumberOfFailures"u8))
+                if (property.NameEquals("toleratedNumberOfFailures"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    toleratedNumberOfFailures = prop.Value.GetInt64();
+                    toleratedNumberOfFailures = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("customHeaders"u8))
+                if (property.NameEquals("customHeaders"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<TrafficManagerMonitorConfigCustomHeaderInfo> array = new List<TrafficManagerMonitorConfigCustomHeaderInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(TrafficManagerMonitorConfigCustomHeaderInfo.DeserializeTrafficManagerMonitorConfigCustomHeaderInfo(item, options));
                     }
                     customHeaders = array;
                     continue;
                 }
-                if (prop.NameEquals("expectedStatusCodeRanges"u8))
+                if (property.NameEquals("expectedStatusCodeRanges"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ExpectedStatusCodeRangeInfo> array = new List<ExpectedStatusCodeRangeInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ExpectedStatusCodeRangeInfo.DeserializeExpectedStatusCodeRangeInfo(item, options));
                     }
@@ -272,9 +228,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new TrafficManagerMonitorConfig(
                 profileMonitorStatus,
                 protocol,
@@ -285,7 +242,38 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 toleratedNumberOfFailures,
                 customHeaders ?? new ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo>(),
                 expectedStatusCodeRanges ?? new ChangeTrackingList<ExpectedStatusCodeRangeInfo>(),
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TrafficManagerMonitorConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TrafficManagerMonitorConfig IPersistableModel<TrafficManagerMonitorConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeTrafficManagerMonitorConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TrafficManagerMonitorConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

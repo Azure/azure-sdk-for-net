@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Peering
 {
-    /// <summary></summary>
     public partial class PeeringResource : IJsonModel<PeeringData>
     {
-        private static IJsonModel<PeeringData> s_dataDeserializationInstance;
+        private static PeeringData s_dataDeserializationInstance;
+        private static PeeringData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<PeeringData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PeeringData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PeeringData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PeeringData IJsonModel<PeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        PeeringData IJsonModel<PeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PeeringData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PeeringData>(Data, options, AzureResourceManagerPeeringContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         PeeringData IPersistableModel<PeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PeeringData>(data, options, AzureResourceManagerPeeringContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<PeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PeeringData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

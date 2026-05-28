@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Peering;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The details of the event associated with a prefix. </summary>
-    public partial class PeeringServicePrefixEvent : IJsonModel<PeeringServicePrefixEvent>
+    public partial class PeeringServicePrefixEvent : IUtf8JsonSerializable, IJsonModel<PeeringServicePrefixEvent>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringServicePrefixEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePeeringServicePrefixEvent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringServicePrefixEvent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PeeringServicePrefixEvent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PeeringServicePrefixEvent IPersistableModel<PeeringServicePrefixEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PeeringServicePrefixEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeeringServicePrefixEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
                 writer.WritePropertyName("eventTimestamp"u8);
@@ -99,15 +59,15 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("eventDescription"u8);
                 writer.WriteStringValue(EventDescription);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,27 +76,22 @@ namespace Azure.ResourceManager.Peering.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PeeringServicePrefixEvent IJsonModel<PeeringServicePrefixEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PeeringServicePrefixEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PeeringServicePrefixEvent IJsonModel<PeeringServicePrefixEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePeeringServicePrefixEvent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PeeringServicePrefixEvent DeserializePeeringServicePrefixEvent(JsonElement element, ModelReaderWriterOptions options)
+        internal static PeeringServicePrefixEvent DeserializePeeringServicePrefixEvent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,50 +101,83 @@ namespace Azure.ResourceManager.Peering.Models
             string eventSummary = default;
             string eventLevel = default;
             string eventDescription = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("eventTimestamp"u8))
+                if (property.NameEquals("eventTimestamp"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eventTimestamp = prop.Value.GetDateTimeOffset("O");
+                    eventTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("eventType"u8))
+                if (property.NameEquals("eventType"u8))
                 {
-                    eventType = prop.Value.GetString();
+                    eventType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("eventSummary"u8))
+                if (property.NameEquals("eventSummary"u8))
                 {
-                    eventSummary = prop.Value.GetString();
+                    eventSummary = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("eventLevel"u8))
+                if (property.NameEquals("eventLevel"u8))
                 {
-                    eventLevel = prop.Value.GetString();
+                    eventLevel = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("eventDescription"u8))
+                if (property.NameEquals("eventDescription"u8))
                 {
-                    eventDescription = prop.Value.GetString();
+                    eventDescription = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new PeeringServicePrefixEvent(
                 eventTimestamp,
                 eventType,
                 eventSummary,
                 eventLevel,
                 eventDescription,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PeeringServicePrefixEvent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PeeringServicePrefixEvent IPersistableModel<PeeringServicePrefixEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePeeringServicePrefixEvent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PeeringServicePrefixEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

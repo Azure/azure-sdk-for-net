@@ -1,0 +1,22 @@
+{
+  "matrix": {
+    "Agent": {
+      "Windows": {
+        "Pool": "env:WINDOWSPOOL",
+        "OSVmImage": "env:WINDOWSVMIMAGE"
+      }
+    },
+    "TestTargetFramework": ["net462", "net8.0", "net9.0"]
+  },
+  "include": [
+    {
+      "Agent": {
+        "Ubuntu": {
+          "Pool": "env:LINUXPOOL",
+          "OSVmImage": "env:LINUXVMIMAGE"
+        }
+      },
+      "TestTargetFramework": "net8.0"
+    }
+  ]
+}

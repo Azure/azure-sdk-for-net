@@ -9,7 +9,7 @@ using Generator.Model;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class ContainerServiceSpecification() :
-    Specification("ContainerService", typeof(ContainerServiceExtensions), ignorePropertiesWithoutPath: true, serviceDirectory: "containerservice")
+    Specification("ContainerService", typeof(ContainerServiceExtensions))
 {
     protected override void Customize()
     {

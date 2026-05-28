@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using Azure.Core;
+using System.Text.Json;
 
 namespace Azure.Core.Tests
 {

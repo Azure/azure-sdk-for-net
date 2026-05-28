@@ -117,9 +117,7 @@ public class ClientRetryPolicy : PipelinePolicy
 
             if (shouldRetry)
             {
-                // Increment the retry count here to account for the initial (non-retry)
-                // attempt because the delay calculation expects the total try count.
-                TimeSpan delay = GetNextDelay(message, message.RetryCount + 1);
+                TimeSpan delay = GetNextDelay(message, message.RetryCount);
                 if (delay > TimeSpan.Zero)
                 {
                     if (async)

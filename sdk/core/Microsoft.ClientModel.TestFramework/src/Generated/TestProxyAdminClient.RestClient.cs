@@ -20,11 +20,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 
         internal PipelineMessage CreateSetMatcherRequest(string matcherType, BinaryContent content, RequestOptions options)
         {
+            PipelineMessage message = Pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier200;
+            PipelineRequest request = message.Request;
+            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/Admin/SetMatcher", false);
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
+            request.Uri = uri.ToUri();
             request.Headers.Set("x-abstraction-identifier", matcherType);
             if ("application/json" != null)
             {
@@ -38,11 +41,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 
         internal PipelineMessage CreateAddSanitizersRequest(BinaryContent content, string recordingId, RequestOptions options)
         {
+            PipelineMessage message = Pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier200;
+            PipelineRequest request = message.Request;
+            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/Admin/AddSanitizers", false);
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
+            request.Uri = uri.ToUri();
             if (recordingId != null)
             {
                 request.Headers.Set("x-recording-id", recordingId);
@@ -56,11 +62,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 
         internal PipelineMessage CreateRemoveSanitizersRequest(BinaryContent content, string recordingId, RequestOptions options)
         {
+            PipelineMessage message = Pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier200;
+            PipelineRequest request = message.Request;
+            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/Admin/RemoveSanitizers", false);
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
+            request.Uri = uri.ToUri();
             if (recordingId != null)
             {
                 request.Headers.Set("x-recording-id", recordingId);
@@ -74,11 +83,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 
         internal PipelineMessage CreateSetRecordingOptionsRequest(BinaryContent content, string recordingId, RequestOptions options)
         {
+            PipelineMessage message = Pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier200;
+            PipelineRequest request = message.Request;
+            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/Admin/SetRecordingOptions", false);
-            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
-            PipelineRequest request = message.Request;
+            request.Uri = uri.ToUri();
             if (recordingId != null)
             {
                 request.Headers.Set("x-recording-id", recordingId);

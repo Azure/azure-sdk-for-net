@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the WorkflowVersion data model.
     /// The workflow version.
-    /// Serialized Name: WorkflowVersion
     /// </summary>
     public partial class WorkflowVersionData : TrackedResourceData
     {
@@ -66,54 +65,18 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state.
-        /// Serialized Name: WorkflowVersion.properties.provisioningState
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets the created time.
-        /// Serialized Name: WorkflowVersion.properties.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// Gets the changed time.
-        /// Serialized Name: WorkflowVersion.properties.changedTime
-        /// </param>
-        /// <param name="state">
-        /// The state.
-        /// Serialized Name: WorkflowVersion.properties.state
-        /// </param>
-        /// <param name="version">
-        /// Gets the version.
-        /// Serialized Name: WorkflowVersion.properties.version
-        /// </param>
-        /// <param name="accessEndpoint">
-        /// Gets the access endpoint.
-        /// Serialized Name: WorkflowVersion.properties.accessEndpoint
-        /// </param>
-        /// <param name="endpointsConfiguration">
-        /// The endpoints configuration.
-        /// Serialized Name: WorkflowVersion.properties.endpointsConfiguration
-        /// </param>
-        /// <param name="accessControl">
-        /// The access control configuration.
-        /// Serialized Name: WorkflowVersion.properties.accessControl
-        /// </param>
-        /// <param name="sku">
-        /// The sku.
-        /// Serialized Name: WorkflowVersion.properties.sku
-        /// </param>
-        /// <param name="integrationAccount">
-        /// The integration account.
-        /// Serialized Name: WorkflowVersion.properties.integrationAccount
-        /// </param>
-        /// <param name="definition">
-        /// The definition.
-        /// Serialized Name: WorkflowVersion.properties.definition
-        /// </param>
-        /// <param name="parameters">
-        /// The parameters.
-        /// Serialized Name: WorkflowVersion.properties.parameters
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="createdOn"> Gets the created time. </param>
+        /// <param name="changedOn"> Gets the changed time. </param>
+        /// <param name="state"> The state. </param>
+        /// <param name="version"> Gets the version. </param>
+        /// <param name="accessEndpoint"> Gets the access endpoint. </param>
+        /// <param name="endpointsConfiguration"> The endpoints configuration. </param>
+        /// <param name="accessControl"> The access control configuration. </param>
+        /// <param name="sku"> The sku. </param>
+        /// <param name="integrationAccount"> The integration account. </param>
+        /// <param name="definition"> The definition. </param>
+        /// <param name="parameters"> The parameters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, WorkflowResourceReference integrationAccount, BinaryData definition, IDictionary<string, WorkflowContent> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -137,69 +100,38 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary>
-        /// The provisioning state.
-        /// Serialized Name: WorkflowVersion.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public WorkflowProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Gets the created time.
-        /// Serialized Name: WorkflowVersion.properties.createdTime
-        /// </summary>
+        /// <summary> Gets the created time. </summary>
         [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Gets the changed time.
-        /// Serialized Name: WorkflowVersion.properties.changedTime
-        /// </summary>
+        /// <summary> Gets the changed time. </summary>
         [WirePath("properties.changedTime")]
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary>
-        /// The state.
-        /// Serialized Name: WorkflowVersion.properties.state
-        /// </summary>
+        /// <summary> The state. </summary>
         [WirePath("properties.state")]
         public WorkflowState? State { get; set; }
-        /// <summary>
-        /// Gets the version.
-        /// Serialized Name: WorkflowVersion.properties.version
-        /// </summary>
+        /// <summary> Gets the version. </summary>
         [WirePath("properties.version")]
         public string Version { get; }
-        /// <summary>
-        /// Gets the access endpoint.
-        /// Serialized Name: WorkflowVersion.properties.accessEndpoint
-        /// </summary>
+        /// <summary> Gets the access endpoint. </summary>
         [WirePath("properties.accessEndpoint")]
         public string AccessEndpoint { get; }
-        /// <summary>
-        /// The endpoints configuration.
-        /// Serialized Name: WorkflowVersion.properties.endpointsConfiguration
-        /// </summary>
+        /// <summary> The endpoints configuration. </summary>
         [WirePath("properties.endpointsConfiguration")]
         public FlowEndpointsConfiguration EndpointsConfiguration { get; set; }
-        /// <summary>
-        /// The access control configuration.
-        /// Serialized Name: WorkflowVersion.properties.accessControl
-        /// </summary>
+        /// <summary> The access control configuration. </summary>
         [WirePath("properties.accessControl")]
         public FlowAccessControlConfiguration AccessControl { get; set; }
-        /// <summary>
-        /// The sku.
-        /// Serialized Name: WorkflowVersion.properties.sku
-        /// </summary>
+        /// <summary> The sku. </summary>
         [WirePath("properties.sku")]
         public WorkflowSku Sku { get; }
-        /// <summary>
-        /// The integration account.
-        /// Serialized Name: WorkflowVersion.properties.integrationAccount
-        /// </summary>
+        /// <summary> The integration account. </summary>
         [WirePath("properties.integrationAccount")]
         public WorkflowResourceReference IntegrationAccount { get; set; }
         /// <summary>
         /// The definition.
-        /// Serialized Name: WorkflowVersion.properties.definition
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -230,10 +162,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.definition")]
         public BinaryData Definition { get; set; }
-        /// <summary>
-        /// The parameters.
-        /// Serialized Name: WorkflowVersion.properties.parameters
-        /// </summary>
+        /// <summary> The parameters. </summary>
         [WirePath("properties.parameters")]
         public IDictionary<string, WorkflowContent> Parameters { get; }
     }

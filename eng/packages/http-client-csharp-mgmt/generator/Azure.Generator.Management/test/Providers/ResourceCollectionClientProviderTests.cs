@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Providers;
@@ -17,7 +17,7 @@ namespace Azure.Generator.Management.Tests.Providers
         {
             ResourceCollectionClientProvider resourceProvider = GetResourceCollectionClientProvider();
             var method = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == methodName);
-            Assert.That(method, Is.Not.Null);
+            Assert.NotNull(method);
             return method!;
         }
 
@@ -26,7 +26,7 @@ namespace Azure.Generator.Management.Tests.Providers
             var (client, models) = InputResourceData.ClientWithResource();
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
-            Assert.That(resourceProvider, Is.Not.Null);
+            Assert.NotNull(resourceProvider);
             return resourceProvider!;
         }
 
@@ -37,17 +37,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
-            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Response<>)));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.NotNull(bodyStatements);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.That(bodyStatements, Is.EqualTo(exptected));
+            Assert.AreEqual(exptected, bodyStatements);
         }
 
         [TestCase]
@@ -57,17 +57,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
-            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.NotNull(bodyStatements);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.That(bodyStatements, Is.EqualTo(exptected));
+            Assert.AreEqual(exptected, bodyStatements);
         }
 
         [TestCase]
@@ -77,17 +77,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
-            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Response<>)));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.NotNull(bodyStatements);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.That(bodyStatements, Is.EqualTo(exptected));
+            Assert.AreEqual(exptected, bodyStatements);
         }
 
         [TestCase]
@@ -97,17 +97,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
-            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.NotNull(bodyStatements);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.That(bodyStatements, Is.EqualTo(exptected));
+            Assert.AreEqual(exptected, bodyStatements);
         }
 
         [TestCase]
@@ -117,17 +117,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
-            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(NullableResponse<>)));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(NullableResponse<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.NotNull(bodyStatements);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.That(bodyStatements, Is.EqualTo(exptected));
+            Assert.AreEqual(exptected, bodyStatements);
         }
 
         [TestCase]
@@ -137,17 +137,17 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
-            Assert.That(signature.Parameters.Count, Is.EqualTo(2));
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
+            Assert.AreEqual(2, signature.Parameters.Count);
+            Assert.AreEqual(typeof(string), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[1].Type.FrameworkType);
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.NotNull(bodyStatements);
             var exptected = Helpers.GetExpectedFromFile();
-            Assert.That(bodyStatements, Is.EqualTo(exptected));
+            Assert.AreEqual(exptected, bodyStatements);
         }
 
         [TestCase]
@@ -159,22 +159,20 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = createOrUpdateMethod.Signature;
-            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
             // the createOrUpdate method is a fake LRO, therefore it has 4 parameters
-            Assert.That(signature.Parameters.Count, Is.EqualTo(4));
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[2].Type.Name.EndsWith("Data"), Is.True);
-            // Body parameter for PUT operations must be required (no default value)
-            Assert.That(signature.Parameters[2].DefaultValue, Is.Null, "Body parameter should be required for PUT operations");
-            Assert.That(signature.Parameters[3].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+            Assert.AreEqual(4, signature.Parameters.Count);
+            Assert.AreEqual(typeof(WaitUntil), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(string), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsTrue(signature.Parameters[2].Type.Name.EndsWith("Data"));
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[3].Type.FrameworkType);
+            Assert.AreEqual(typeof(ArmOperation<>), signature.ReturnType?.FrameworkType);
 
             // verify the method body
             var bodyStatements = createOrUpdateMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.NotNull(bodyStatements);
             var expected = Helpers.GetExpectedFromFile();
-            Assert.That(bodyStatements, Is.EqualTo(expected));
+            Assert.AreEqual(expected, bodyStatements);
         }
 
         [TestCase]
@@ -184,191 +182,21 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = createOrUpdateMethod.Signature;
-            Assert.That(signature.Modifiers, Is.EqualTo(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
+            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
             // the createOrUpdate method is a fake LRO, therefore it has 4 parameters
-            Assert.That(signature.Parameters.Count, Is.EqualTo(4));
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[2].Type.Name.EndsWith("Data"), Is.True);
-            // Body parameter for PUT operations must be required (no default value)
-            Assert.That(signature.Parameters[2].DefaultValue, Is.Null, "Body parameter should be required for PUT operations");
-            Assert.That(signature.Parameters[3].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
-            Assert.That(signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+            Assert.AreEqual(4, signature.Parameters.Count);
+            Assert.AreEqual(typeof(WaitUntil), signature.Parameters[0].Type.FrameworkType);
+            Assert.AreEqual(typeof(string), signature.Parameters[1].Type.FrameworkType);
+            Assert.IsTrue(signature.Parameters[2].Type.Name.EndsWith("Data"));
+            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[3].Type.FrameworkType);
+            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
+            Assert.AreEqual(typeof(ArmOperation<>), signature.ReturnType?.Arguments[0].FrameworkType);
 
             // verify the method body
             var bodyStatements = createOrUpdateMethod.BodyStatements?.ToDisplayString();
-            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.NotNull(bodyStatements);
             var expected = Helpers.GetExpectedFromFile();
-            Assert.That(bodyStatements, Is.EqualTo(expected));
-        }
-
-        [TestCase]
-        public void Verify_PutBodyParameterIsRequiredEvenWhenOptionalInSpec()
-        {
-            var (client, models) = InputResourceData.ClientWithResourceOptionalBody();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
-            Assert.That(resourceProvider, Is.Not.Null);
-
-            var createOrUpdate = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "CreateOrUpdate");
-            Assert.That(createOrUpdate, Is.Not.Null);
-            var signature = createOrUpdate!.Signature;
-
-            // Body parameter (Data) should be required even though it's optional in the spec
-            var dataParam = signature.Parameters.FirstOrDefault(p => p.Type.Name.EndsWith("Data"));
-            Assert.That(dataParam, Is.Not.Null, "Body parameter should exist");
-            Assert.That(dataParam!.DefaultValue, Is.Null, "PUT body parameter should be required (no default value) even when optional in spec");
-        }
-
-        [TestCase]
-        public void Verify_PatchBodyParameterIsRequiredEvenWhenOptionalInSpec()
-        {
-            var (client, models) = InputResourceData.ClientWithResourceOptionalBody();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceClientProvider) as ResourceClientProvider;
-            Assert.That(resourceProvider, Is.Not.Null);
-
-            var update = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "Update");
-            Assert.That(update, Is.Not.Null);
-            var signature = update!.Signature;
-
-            // Body parameter should be required even though it's optional in the spec
-            var bodyParam = signature.Parameters.FirstOrDefault(p => p.Location == ParameterLocation.Body);
-            Assert.That(bodyParam, Is.Not.Null, "Body parameter should exist");
-            Assert.That(bodyParam!.DefaultValue, Is.Null, "PATCH body parameter should be required (no default value) even when optional in spec");
-        }
-
-        [TestCase]
-        public void Verify_ExistsReturnType_WhenGetIsLro()
-        {
-            var (client, models) = InputResourceData.ClientWithResourceLroGet();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
-            Assert.That(resourceProvider, Is.Not.Null);
-
-            var existsMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "Exists");
-            Assert.That(existsMethod, Is.Not.Null);
-            var signature = existsMethod!.Signature;
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Response<>)),
-                "Exists should return Response<bool> even when Get is an LRO");
-            // Verify no WaitUntil parameter and correct parameter shape
-            Assert.That(signature.Parameters.Count, Is.EqualTo(2), "Exists should have 2 parameters (testName, cancellationToken)");
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))), Is.False,
-                "Exists should not have a WaitUntil parameter even when Get is an LRO");
-        }
-
-        [TestCase]
-        public void Verify_ExistsAsyncReturnType_WhenGetIsLro()
-        {
-            var (client, models) = InputResourceData.ClientWithResourceLroGet();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
-            Assert.That(resourceProvider, Is.Not.Null);
-
-            var existsAsyncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "ExistsAsync");
-            Assert.That(existsAsyncMethod, Is.Not.Null);
-            var signature = existsAsyncMethod!.Signature;
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)),
-                "ExistsAsync should return Task<Response<bool>> even when Get is an LRO");
-            Assert.That(signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(Response<>)),
-                "ExistsAsync inner type should be Response<bool> even when Get is an LRO");
-            // Verify no WaitUntil parameter and correct parameter shape
-            Assert.That(signature.Parameters.Count, Is.EqualTo(2), "ExistsAsync should have 2 parameters (testName, cancellationToken)");
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))), Is.False,
-                "ExistsAsync should not have a WaitUntil parameter even when Get is an LRO");
-        }
-
-        [TestCase]
-        public void Verify_GetIfExistsReturnType_WhenGetIsLro()
-        {
-            var (client, models) = InputResourceData.ClientWithResourceLroGet();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
-            Assert.That(resourceProvider, Is.Not.Null);
-
-            var getIfExistsMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "GetIfExists");
-            Assert.That(getIfExistsMethod, Is.Not.Null);
-            var signature = getIfExistsMethod!.Signature;
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(NullableResponse<>)),
-                "GetIfExists should return NullableResponse<> even when Get is an LRO");
-            // Verify no WaitUntil parameter and correct parameter shape
-            Assert.That(signature.Parameters.Count, Is.EqualTo(2), "GetIfExists should have 2 parameters (testName, cancellationToken)");
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))), Is.False,
-                "GetIfExists should not have a WaitUntil parameter even when Get is an LRO");
-        }
-
-        [TestCase]
-        public void Verify_GetIfExistsAsyncReturnType_WhenGetIsLro()
-        {
-            var (client, models) = InputResourceData.ClientWithResourceLroGet();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
-            Assert.That(resourceProvider, Is.Not.Null);
-
-            var getIfExistsAsyncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "GetIfExistsAsync");
-            Assert.That(getIfExistsAsyncMethod, Is.Not.Null);
-            var signature = getIfExistsAsyncMethod!.Signature;
-            Assert.That(signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)),
-                "GetIfExistsAsync should return Task<NullableResponse<>> even when Get is an LRO");
-            Assert.That(signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(NullableResponse<>)),
-                "GetIfExistsAsync inner type should be NullableResponse<> even when Get is an LRO");
-            // Verify no WaitUntil parameter and correct parameter shape
-            Assert.That(signature.Parameters.Count, Is.EqualTo(2), "GetIfExistsAsync should have 2 parameters (testName, cancellationToken)");
-            Assert.That(signature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(string)));
-            Assert.That(signature.Parameters[1].Type.FrameworkType, Is.EqualTo(typeof(CancellationToken)));
-            Assert.That(signature.Parameters.Any(p => p.Type.Equals(typeof(WaitUntil))), Is.False,
-                "GetIfExistsAsync should not have a WaitUntil parameter even when Get is an LRO");
-        }
-
-        // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/59242
-        // The collection class must only declare REST client / diagnostics fields for operation
-        // groups whose methods are actually emitted on the collection. Methods whose operation
-        // group only contributes to the resource class (e.g. Actions) must not leak fields onto
-        // the collection.
-        [TestCase]
-        public void CollectionDoesNotEmitFieldsForActionOnlyOperationGroup()
-        {
-            var (mainClient, actionClient, models) = InputResourceData.ClientWithResourceActionInDifferentClient();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [mainClient, actionClient]);
-
-            var collection = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceCollectionClientProvider>().FirstOrDefault();
-            Assert.That(collection, Is.Not.Null);
-
-            // ActionClient's REST client type is named "ActionClient" -> field name "_actionClientRestClient".
-            // The bug being guarded against would have emitted this field on the collection because
-            // CreateClientInfosMap iterated the full resource metadata methods list, including the
-            // action method.
-            var fieldNames = collection!.Fields.Select(f => f.Name).ToArray();
-            Assert.That(fieldNames, Does.Not.Contain("_actionClientRestClient"),
-                "Collection must not declare a REST client field for an operation group whose methods are only emitted on the resource class.");
-            Assert.That(fieldNames, Does.Not.Contain("_actionClientClientDiagnostics"),
-                "Collection must not declare a diagnostics field for an operation group whose methods are only emitted on the resource class.");
-        }
-
-        [TestCase]
-        public void ResourceStillEmitsFieldsForActionOnlyOperationGroup()
-        {
-            // Companion to CollectionDoesNotEmitFieldsForActionOnlyOperationGroup: the resource
-            // class IS allowed (and required) to keep the ActionClient field, since the action
-            // method is emitted on the resource.
-            var (mainClient, actionClient, models) = InputResourceData.ClientWithResourceActionInDifferentClient();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [mainClient, actionClient]);
-
-            var resource = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().FirstOrDefault();
-            Assert.That(resource, Is.Not.Null);
-
-            var fieldNames = resource!.Fields.Select(f => f.Name).ToArray();
-            Assert.That(fieldNames, Does.Contain("_actionClientRestClient"),
-                "Resource must declare a REST client field for the action's operation group.");
-            Assert.That(fieldNames, Does.Contain("_actionClientClientDiagnostics"),
-                "Resource must declare a diagnostics field for the action's operation group.");
+            Assert.AreEqual(expected, bodyStatements);
         }
     }
 }

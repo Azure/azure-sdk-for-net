@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ComputeFleet.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -19,32 +17,30 @@ namespace Azure.ResourceManager.ComputeFleet
     /// <summary> A class to add extension methods to Azure.ResourceManager.ComputeFleet. </summary>
     public static partial class ComputeFleetExtensions
     {
-        /// <param name="client"></param>
         private static MockableComputeFleetArmClient GetMockableComputeFleetArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableComputeFleetArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableComputeFleetArmClient(client0));
         }
 
-        /// <param name="resourceGroupResource"></param>
-        private static MockableComputeFleetResourceGroupResource GetMockableComputeFleetResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableComputeFleetResourceGroupResource GetMockableComputeFleetResourceGroupResource(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockableComputeFleetResourceGroupResource(client, resourceGroupResource.Id));
+            return resource.GetCachedClient(client => new MockableComputeFleetResourceGroupResource(client, resource.Id));
         }
 
-        /// <param name="subscriptionResource"></param>
-        private static MockableComputeFleetSubscriptionResource GetMockableComputeFleetSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockableComputeFleetSubscriptionResource GetMockableComputeFleetSubscriptionResource(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockableComputeFleetSubscriptionResource(client, subscriptionResource.Id));
+            return resource.GetCachedClient(client => new MockableComputeFleetSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ComputeFleetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ComputeFleetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ComputeFleetResource.CreateResourceIdentifier" /> to create a <see cref="ComputeFleetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeFleetArmClient.GetComputeFleetResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeFleetArmClient.GetComputeFleetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ComputeFleetResource"/> object. </returns>
@@ -56,15 +52,15 @@ namespace Azure.ResourceManager.ComputeFleet
         }
 
         /// <summary>
-        /// Gets a collection of ComputeFleets in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ComputeFleetResources in the ResourceGroupResource.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.GetComputeFleets()"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.GetComputeFleets()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ComputeFleets and their operations over a ComputeFleetResource. </returns>
+        /// <returns> An object representing collection of ComputeFleetResources and their operations over a ComputeFleetResource. </returns>
         public static ComputeFleetCollection GetComputeFleets(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -74,15 +70,34 @@ namespace Azure.ResourceManager.ComputeFleet
 
         /// <summary>
         /// Get a Fleet
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.GetComputeFleetAsync(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.GetComputeFleetAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fleetName"> The name of the Compute Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ComputeFleetResource>> GetComputeFleetAsync(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
@@ -93,15 +108,34 @@ namespace Azure.ResourceManager.ComputeFleet
 
         /// <summary>
         /// Get a Fleet
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.GetComputeFleet(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeFleetResourceGroupResource.GetComputeFleet(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="fleetName"> The name of the Compute Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fleetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ComputeFleetResource> GetComputeFleet(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
@@ -112,15 +146,33 @@ namespace Azure.ResourceManager.ComputeFleet
 
         /// <summary>
         /// List Fleet resources by subscription ID
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeFleetSubscriptionResource.GetComputeFleetsAsync(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureFleet/fleets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeFleetSubscriptionResource.GetComputeFleets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ComputeFleetResource> GetComputeFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -130,12 +182,30 @@ namespace Azure.ResourceManager.ComputeFleet
 
         /// <summary>
         /// List Fleet resources by subscription ID
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeFleetSubscriptionResource.GetComputeFleets(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzureFleet/fleets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableComputeFleetSubscriptionResource.GetComputeFleets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>

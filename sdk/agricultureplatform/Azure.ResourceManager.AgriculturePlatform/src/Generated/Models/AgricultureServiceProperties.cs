@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         {
             get
             {
-                return ManagedOnBehalfOfConfiguration is null ? default : ManagedOnBehalfOfConfiguration.MoboBrokerResources;
+                return ManagedOnBehalfOfConfiguration.MoboBrokerResources;
             }
         }
     }

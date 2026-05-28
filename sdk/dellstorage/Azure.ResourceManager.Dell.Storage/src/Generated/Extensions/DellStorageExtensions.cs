@@ -37,13 +37,7 @@ namespace Azure.ResourceManager.Dell.Storage
             return subscriptionResource.GetCachedClient(client => new MockableDellStorageSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DellFileSystemResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDellStorageArmClient.GetDellFileSystemResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DellFileSystemResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -55,13 +49,7 @@ namespace Azure.ResourceManager.Dell.Storage
             return GetMockableDellStorageArmClient(client).GetDellFileSystemResource(id);
         }
 
-        /// <summary>
-        /// Gets a collection of DellFileSystems in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDellStorageResourceGroupResource.GetDellFileSystems()"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> Gets a collection of DellFileSystems in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DellFileSystems and their operations over a DellFileSystemResource. </returns>
@@ -72,13 +60,7 @@ namespace Azure.ResourceManager.Dell.Storage
             return GetMockableDellStorageResourceGroupResource(resourceGroupResource).GetDellFileSystems();
         }
 
-        /// <summary>
-        /// Get a FileSystemResource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDellStorageResourceGroupResource.GetDellFileSystemAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> Get a FileSystemResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -91,13 +73,7 @@ namespace Azure.ResourceManager.Dell.Storage
             return await GetMockableDellStorageResourceGroupResource(resourceGroupResource).GetDellFileSystemAsync(filesystemName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get a FileSystemResource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDellStorageResourceGroupResource.GetDellFileSystem(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> Get a FileSystemResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,13 +86,7 @@ namespace Azure.ResourceManager.Dell.Storage
             return GetMockableDellStorageResourceGroupResource(resourceGroupResource).GetDellFileSystem(filesystemName, cancellationToken);
         }
 
-        /// <summary>
-        /// List FileSystemResource resources by subscription ID
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDellStorageSubscriptionResource.GetDellFileSystemsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> List FileSystemResource resources by subscription ID. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -128,13 +98,7 @@ namespace Azure.ResourceManager.Dell.Storage
             return GetMockableDellStorageSubscriptionResource(subscriptionResource).GetDellFileSystemsAsync(cancellationToken);
         }
 
-        /// <summary>
-        /// List FileSystemResource resources by subscription ID
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDellStorageSubscriptionResource.GetDellFileSystems(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> List FileSystemResource resources by subscription ID. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

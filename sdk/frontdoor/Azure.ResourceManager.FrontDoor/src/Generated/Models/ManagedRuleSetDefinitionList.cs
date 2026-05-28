@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> List of managed rule set definitions available for use in a policy. </summary>
     internal partial class ManagedRuleSetDefinitionList
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinitionList"/>. </summary>
         internal ManagedRuleSetDefinitionList()
@@ -24,22 +52,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetDefinitionList"/>. </summary>
-        /// <param name="value"> The ManagedRuleSetDefinition items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSetDefinitionList(IReadOnlyList<ManagedRuleSetDefinition> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="value"> List of managed rule set definitions. </param>
+        /// <param name="nextLink"> URL to retrieve next set of managed rule set definitions. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleSetDefinitionList(IReadOnlyList<ManagedRuleSetDefinition> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The ManagedRuleSetDefinition items on this page. </summary>
-        [WirePath("value")]
+        /// <summary> List of managed rule set definitions. </summary>
         public IReadOnlyList<ManagedRuleSetDefinition> Value { get; }
-
-        /// <summary> The link to the next page of items. </summary>
-        [WirePath("nextLink")]
-        public Uri NextLink { get; }
+        /// <summary> URL to retrieve next set of managed rule set definitions. </summary>
+        public string NextLink { get; }
     }
 }

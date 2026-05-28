@@ -14,16 +14,18 @@ namespace Azure.ResourceManager.StorageMover.Models
     public partial class AzureStorageNfsFileShareEndpointUpdateProperties : EndpointBaseUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureStorageNfsFileShareEndpointUpdateProperties"/>. </summary>
-        public AzureStorageNfsFileShareEndpointUpdateProperties() : base(EndpointType.AzureStorageNfsFileShare)
+        public AzureStorageNfsFileShareEndpointUpdateProperties()
         {
+            EndpointType = EndpointType.AzureStorageNfsFileShare;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureStorageNfsFileShareEndpointUpdateProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureStorageNfsFileShareEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(endpointType, description, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureStorageNfsFileShareEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endpointType, description, serializedAdditionalRawData)
         {
+            EndpointType = endpointType;
         }
     }
 }

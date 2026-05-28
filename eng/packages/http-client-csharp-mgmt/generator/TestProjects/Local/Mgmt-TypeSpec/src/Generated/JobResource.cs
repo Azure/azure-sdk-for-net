@@ -89,31 +89,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Gets information about the specified job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="JobResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets information about the specified job. </summary>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<JobResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
@@ -142,27 +122,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary>
-        /// Gets information about the specified job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobResources_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="JobResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets information about the specified job. </summary>
         /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<JobResource> Get(string expand = default, CancellationToken cancellationToken = default)
@@ -191,35 +151,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary>
-        /// Update a JobResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobResources_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="JobResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a JobResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
-        /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<JobResource>> UpdateAsync(WaitUntil waitUntil, JobResourceCustomUpdate properties, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<JobResource>> UpdateAsync(WaitUntil waitUntil, JobResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _jobResourcesClientDiagnostics.CreateScope("JobResource.Update");
             scope.Start();
@@ -229,7 +168,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, JobResourceCustomUpdate.ToRequestContent(properties), ifMatch, context);
+                HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, JobResourcePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<JobResource> operation = new TestsArmOperation<JobResource>(
                     new JobResourceOperationSource(Client),
@@ -237,8 +176,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location,
-                    true);
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -252,35 +190,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary>
-        /// Update a JobResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/jobs/{jobName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> JobResources_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="JobResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Update a JobResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
-        /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<JobResource> Update(WaitUntil waitUntil, JobResourceCustomUpdate properties, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<JobResource> Update(WaitUntil waitUntil, JobResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _jobResourcesClientDiagnostics.CreateScope("JobResource.Update");
             scope.Start();
@@ -290,7 +207,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, JobResourceCustomUpdate.ToRequestContent(properties), ifMatch, context);
+                HttpMessage message = _jobResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, JobResourcePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<JobResource> operation = new TestsArmOperation<JobResource>(
                     new JobResourceOperationSource(Client),
@@ -298,8 +215,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location,
-                    true);
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -336,7 +252,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<JobResourceData> response = Response.FromValue(JobResourceData.FromResponse(result), result);
                     return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
@@ -344,13 +260,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -384,7 +300,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<JobResourceData> response = Response.FromValue(JobResourceData.FromResponse(result), result);
                     return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
@@ -392,13 +308,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -431,7 +347,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<JobResourceData> response = Response.FromValue(JobResourceData.FromResponse(result), result);
                     return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
@@ -439,9 +355,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -474,7 +390,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<JobResourceData> response = Response.FromValue(JobResourceData.FromResponse(result), result);
                     return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
@@ -482,9 +398,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -516,7 +432,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<JobResourceData> response = Response.FromValue(JobResourceData.FromResponse(result), result);
                     return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
@@ -524,13 +440,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<JobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -562,7 +478,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    HttpMessage message = _jobResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<JobResourceData> response = Response.FromValue(JobResourceData.FromResponse(result), result);
                     return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
@@ -570,13 +486,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     JobResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    JobResourceCustomUpdate patch = new JobResourceCustomUpdate();
+                    JobResourcePatch patch = new JobResourcePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<JobResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

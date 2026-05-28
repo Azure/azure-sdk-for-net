@@ -37,13 +37,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             return subscriptionResource.GetCachedClient(client => new MockablePlanetaryComputerSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="PlanetaryComputerGeoCatalogResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePlanetaryComputerArmClient.GetPlanetaryComputerGeoCatalogResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PlanetaryComputerGeoCatalogResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -55,13 +49,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             return GetMockablePlanetaryComputerArmClient(client).GetPlanetaryComputerGeoCatalogResource(id);
         }
 
-        /// <summary>
-        /// Gets a collection of PlanetaryComputerGeoCatalogs in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePlanetaryComputerResourceGroupResource.GetPlanetaryComputerGeoCatalogs()"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> Gets a collection of PlanetaryComputerGeoCatalogs in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of PlanetaryComputerGeoCatalogs and their operations over a PlanetaryComputerGeoCatalogResource. </returns>
@@ -72,13 +60,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             return GetMockablePlanetaryComputerResourceGroupResource(resourceGroupResource).GetPlanetaryComputerGeoCatalogs();
         }
 
-        /// <summary>
-        /// Get a GeoCatalog
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePlanetaryComputerResourceGroupResource.GetPlanetaryComputerGeoCatalogAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> Get a GeoCatalog. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -91,13 +73,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             return await GetMockablePlanetaryComputerResourceGroupResource(resourceGroupResource).GetPlanetaryComputerGeoCatalogAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get a GeoCatalog
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePlanetaryComputerResourceGroupResource.GetPlanetaryComputerGeoCatalog(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> Get a GeoCatalog. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="catalogName"> The name of the catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -110,13 +86,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             return GetMockablePlanetaryComputerResourceGroupResource(resourceGroupResource).GetPlanetaryComputerGeoCatalog(catalogName, cancellationToken);
         }
 
-        /// <summary>
-        /// List GeoCatalog resources by subscription ID
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogsAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> List GeoCatalog resources by subscription ID. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -128,13 +98,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             return GetMockablePlanetaryComputerSubscriptionResource(subscriptionResource).GetPlanetaryComputerGeoCatalogsAsync(cancellationToken);
         }
 
-        /// <summary>
-        /// List GeoCatalog resources by subscription ID
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePlanetaryComputerSubscriptionResource.GetPlanetaryComputerGeoCatalogs(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
+        /// <summary> List GeoCatalog resources by subscription ID. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

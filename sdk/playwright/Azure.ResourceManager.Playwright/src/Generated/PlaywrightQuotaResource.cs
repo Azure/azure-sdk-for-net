@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Playwright
         {
             TryGetApiVersion(ResourceType, out string playwrightQuotaApiVersion);
             _playwrightQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", ResourceType.Namespace, Diagnostics);
-            _playwrightQuotasRestClient = new PlaywrightQuotas(_playwrightQuotasClientDiagnostics, Pipeline, Endpoint, playwrightQuotaApiVersion ?? "2026-02-01-preview");
+            _playwrightQuotasRestClient = new PlaywrightQuotas(_playwrightQuotasClientDiagnostics, Pipeline, Endpoint, playwrightQuotaApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -88,31 +88,11 @@ namespace Azure.ResourceManager.Playwright
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Gets a subscription-level location-based Playwright quota resource by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/playwrightQuotas/{playwrightQuotaName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightQuotas_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PlaywrightQuotaResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a subscription-level location-based Playwright quota resource by name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PlaywrightQuotaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -140,27 +120,7 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary>
-        /// Gets a subscription-level location-based Playwright quota resource by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/playwrightQuotas/{playwrightQuotaName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PlaywrightQuotas_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PlaywrightQuotaResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a subscription-level location-based Playwright quota resource by name. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PlaywrightQuotaResource> Get(CancellationToken cancellationToken = default)
         {

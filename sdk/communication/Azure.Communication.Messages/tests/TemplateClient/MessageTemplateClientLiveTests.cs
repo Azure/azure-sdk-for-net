@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.Messages.Models.Channels;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.Communication.Messages.Tests
 {
@@ -28,14 +28,14 @@ namespace Azure.Communication.Messages.Tests
             AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
 
             // Assert
-            Assert.That(templates, Is.Not.Null);
+            Assert.IsNotNull(templates);
             List<MessageTemplateItem> templatesEnumerable = templates.ToEnumerableAsync().Result;
-            Assert.That(templatesEnumerable, Is.Not.Empty);
+            Assert.IsNotEmpty(templatesEnumerable);
             foreach (WhatsAppMessageTemplateItem template in templatesEnumerable.Cast<WhatsAppMessageTemplateItem>())
             {
-                Assert.That(template.Name, Is.Not.Null);
-                Assert.That(template.Language, Is.Not.Null);
-                Assert.That(template.Content, Is.Not.Null);
+                Assert.IsNotNull(template.Name);
+                Assert.IsNotNull(template.Language);
+                Assert.IsNotNull(template.Content);
             }
 
             return Task.CompletedTask;
@@ -52,14 +52,14 @@ namespace Azure.Communication.Messages.Tests
             AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
 
             // Assert
-            Assert.That(templates, Is.Not.Null);
+            Assert.IsNotNull(templates);
             List<MessageTemplateItem> templatesEnumerable = templates.ToEnumerableAsync().Result;
-            Assert.That(templatesEnumerable, Is.Not.Empty);
+            Assert.IsNotEmpty(templatesEnumerable);
             foreach (WhatsAppMessageTemplateItem template in templatesEnumerable.Cast<WhatsAppMessageTemplateItem>())
             {
-                Assert.That(template.Name, Is.Not.Null);
-                Assert.That(template.Language, Is.Not.Null);
-                Assert.That(template.Content, Is.Not.Null);
+                Assert.IsNotNull(template.Name);
+                Assert.IsNotNull(template.Language);
+                Assert.IsNotNull(template.Content);
             }
 
             return Task.CompletedTask;

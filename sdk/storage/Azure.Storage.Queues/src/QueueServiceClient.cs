@@ -967,83 +967,7 @@ namespace Azure.Storage.Queues
 
         #region GetUserDelegationKey
         /// <summary>
-        /// The <see cref="GetUserDelegationKey(QueueGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
-        /// key that can be used to delegate Active Directory authorization to
-        /// shared access signatures created with <see cref="Sas.QueueSasBuilder"/>.
-        /// </summary>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobServiceStatistics}"/> describing
-        /// the service replication statistics.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
-        /// containing each failure instance.
-        /// </remarks>
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
-        public virtual Response<UserDelegationKey> GetUserDelegationKey(
-            QueueGetUserDelegationKeyOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetUserDelegationKeyInternal(
-                options.StartsOn,
-                options.ExpiresOn,
-                options.DelegatedUserTenantId,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
-        }
-
-        /// <summary>
-        /// The <see cref="GetUserDelegationKeyAsync(QueueGetUserDelegationKeyOptions, CancellationToken)"/> operation retrieves a
-        /// key that can be used to delegate Active Directory authorization to
-        /// shared access signatures created with <see cref="Sas.QueueSasBuilder"/>.
-        /// </summary>
-        /// <param name="options">
-        /// Optional parameters.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobServiceStatistics}"/> describing
-        /// the service replication statistics.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
-        /// containing each failure instance.
-        /// </remarks>
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
-        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
-            QueueGetUserDelegationKeyOptions options,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return await GetUserDelegationKeyInternal(
-                options.StartsOn,
-                options.ExpiresOn,
-                options.DelegatedUserTenantId,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The <see cref="GetUserDelegationKey(DateTimeOffset?, DateTimeOffset, CancellationToken)"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKey"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.QueueSasBuilder"/>.
         /// </summary>
@@ -1074,23 +998,19 @@ namespace Azure.Storage.Queues
         /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
-            CancellationToken cancellationToken) =>
+            CancellationToken cancellationToken = default) =>
             GetUserDelegationKeyInternal(
                 startsOn,
                 expiresOn,
-                default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetUserDelegationKeyAsync(DateTimeOffset?, DateTimeOffset, CancellationToken)"/> operation retrieves a
+        /// The <see cref="GetUserDelegationKeyAsync"/> operation retrieves a
         /// key that can be used to delegate Active Directory authorization to
         /// shared access signatures created with <see cref="Sas.QueueSasBuilder"/>.
         /// </summary>
@@ -1121,17 +1041,13 @@ namespace Azure.Storage.Queues
         /// containing each failure instance.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called 'cancellationToken' or a RequestContext parameter called 'context'.
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
-            CancellationToken cancellationToken) =>
+            CancellationToken cancellationToken = default) =>
             await GetUserDelegationKeyInternal(
                 startsOn,
                 expiresOn,
-                default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1153,9 +1069,6 @@ namespace Azure.Storage.Queues
         /// Expiration of the key's validity.  The time should be specified
         /// in UTC.
         /// </param>
-        /// <param name="delegatedUserTenantId">
-        /// The delegated user tenant id in Azure AD.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1174,7 +1087,6 @@ namespace Azure.Storage.Queues
         private async Task<Response<UserDelegationKey>> GetUserDelegationKeyInternal(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
-            string delegatedUserTenantId,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1200,8 +1112,7 @@ namespace Azure.Storage.Queues
 
                     KeyInfo keyInfo = new KeyInfo(expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture))
                     {
-                        Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
-                        DelegatedUserTid = delegatedUserTenantId
+                        Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture)
                     };
 
                     ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;

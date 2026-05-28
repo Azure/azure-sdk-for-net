@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    /// <summary> Properties of an environment type. </summary>
     public partial class DevCenterEnvironmentType
     {
         /// <summary>

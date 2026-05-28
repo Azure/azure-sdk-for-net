@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerThrottlingInfo.
-    /// Serialized Name: ContainerThrottlingData
-    /// </summary>
+    /// <summary> The ContainerThrottlingInfo. </summary>
     public partial class ContainerThrottlingInfo
     {
         /// <summary>
@@ -54,9 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerThrottlingInfo"/>. </summary>
-        /// <param name="periods"> Serialized Name: ContainerThrottlingData.periods. </param>
-        /// <param name="throttledPeriods"> Serialized Name: ContainerThrottlingData.throttledPeriods. </param>
-        /// <param name="throttledTime"> Serialized Name: ContainerThrottlingData.throttledTime. </param>
+        /// <param name="periods"></param>
+        /// <param name="throttledPeriods"></param>
+        /// <param name="throttledTime"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerThrottlingInfo(int? periods, int? throttledPeriods, int? throttledTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,13 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: ContainerThrottlingData.periods. </summary>
+        /// <summary> Gets or sets the periods. </summary>
         [WirePath("periods")]
         public int? Periods { get; set; }
-        /// <summary> Serialized Name: ContainerThrottlingData.throttledPeriods. </summary>
+        /// <summary> Gets or sets the throttled periods. </summary>
         [WirePath("throttledPeriods")]
         public int? ThrottledPeriods { get; set; }
-        /// <summary> Serialized Name: ContainerThrottlingData.throttledTime. </summary>
+        /// <summary> Gets or sets the throttled time. </summary>
         [WirePath("throttledTime")]
         public int? ThrottledTime { get; set; }
     }

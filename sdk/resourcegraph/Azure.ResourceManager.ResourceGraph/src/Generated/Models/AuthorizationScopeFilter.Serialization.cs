@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     internal static partial class AuthorizationScopeFilterExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AuthorizationScopeFilter value) => value switch
         {
             AuthorizationScopeFilter.AtScopeAndBelow => "AtScopeAndBelow",
@@ -21,25 +20,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthorizationScopeFilter value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static AuthorizationScopeFilter ToAuthorizationScopeFilter(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeAndBelow"))
-            {
-                return AuthorizationScopeFilter.AtScopeAndBelow;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeAndAbove"))
-            {
-                return AuthorizationScopeFilter.AtScopeAndAbove;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeExact"))
-            {
-                return AuthorizationScopeFilter.AtScopeExact;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeAboveAndBelow"))
-            {
-                return AuthorizationScopeFilter.AtScopeAboveAndBelow;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeAndBelow")) return AuthorizationScopeFilter.AtScopeAndBelow;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeAndAbove")) return AuthorizationScopeFilter.AtScopeAndAbove;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeExact")) return AuthorizationScopeFilter.AtScopeExact;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeAboveAndBelow")) return AuthorizationScopeFilter.AtScopeAboveAndBelow;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthorizationScopeFilter value.");
         }
     }

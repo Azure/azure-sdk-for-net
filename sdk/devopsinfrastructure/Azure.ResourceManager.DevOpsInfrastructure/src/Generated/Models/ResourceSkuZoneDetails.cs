@@ -14,14 +14,47 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     /// <summary> Describes The zonal capabilities of a SKU. </summary>
     public partial class ResourceSkuZoneDetails
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceSkuZoneDetails"/>. </summary>
         /// <param name="name"> Gets the set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="capabilities"/> is null. </exception>
         internal ResourceSkuZoneDetails(IEnumerable<string> name, IEnumerable<ResourceSkuCapabilities> capabilities)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(capabilities, nameof(capabilities));
+
             Name = name.ToList();
             Capabilities = capabilities.ToList();
         }
@@ -29,18 +62,22 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <summary> Initializes a new instance of <see cref="ResourceSkuZoneDetails"/>. </summary>
         /// <param name="name"> Gets the set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceSkuZoneDetails(IList<string> name, IList<ResourceSkuCapabilities> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<ResourceSkuCapabilities> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capabilities = capabilities;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceSkuZoneDetails"/> for deserialization. </summary>
+        internal ResourceSkuZoneDetails()
+        {
         }
 
         /// <summary> Gets the set of zones that the SKU is available in with the specified capabilities. </summary>
-        public IList<string> Name { get; }
-
+        public IReadOnlyList<string> Name { get; }
         /// <summary> A list of capabilities that are available for the SKU in the specified list of zones. </summary>
-        public IList<ResourceSkuCapabilities> Capabilities { get; }
+        public IReadOnlyList<ResourceSkuCapabilities> Capabilities { get; }
     }
 }

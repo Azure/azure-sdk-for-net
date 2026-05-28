@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
-    /// <summary></summary>
-    internal partial class ConnectedClusterStorageClassOperationSource : IOperationSource<ConnectedClusterStorageClassResource>
+    internal class ConnectedClusterStorageClassOperationSource : IOperationSource<ConnectedClusterStorageClassResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ConnectedClusterStorageClassOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ConnectedClusterStorageClassResource IOperationSource<ConnectedClusterStorageClassResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ConnectedClusterStorageClassData data = ConnectedClusterStorageClassData.DeserializeConnectedClusterStorageClassData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ConnectedClusterStorageClassData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
             return new ConnectedClusterStorageClassResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ConnectedClusterStorageClassResource> IOperationSource<ConnectedClusterStorageClassResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ConnectedClusterStorageClassData data = ConnectedClusterStorageClassData.DeserializeConnectedClusterStorageClassData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ConnectedClusterStorageClassResource(_client, data);
+            var data = ModelReaderWriter.Read<ConnectedClusterStorageClassData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+            return await Task.FromResult(new ConnectedClusterStorageClassResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

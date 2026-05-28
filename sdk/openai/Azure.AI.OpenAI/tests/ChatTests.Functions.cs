@@ -17,8 +17,7 @@ namespace Azure.AI.OpenAI.Tests;
 public partial class ChatTests
 {
     [Obsolete]
-    private static readonly ChatFunction FUNCTION_TEMPERATURE = new("get_future_temperature")
-    {
+    private static readonly ChatFunction FUNCTION_TEMPERATURE = new("get_future_temperature") {
         FunctionDescription = "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
         FunctionParameters = BinaryData.FromString(
             """
@@ -35,8 +34,7 @@ public partial class ChatTests
                     }
                 }
             }
-            """)
-    };
+            """)};
 
     public enum FunctionCallTestType
     {
@@ -193,7 +191,7 @@ public partial class ChatTests
             if (update.FunctionCallUpdate != null)
             {
                 Assert.That(update.FunctionCallUpdate.FunctionName, Is.Null.Or.EqualTo(FUNCTION_TEMPERATURE.FunctionName));
-                functionName ??= update.FunctionCallUpdate.FunctionName;
+                functionName ??= update.FunctionCallUpdate.FunctionName; 
 
                 Assert.That(update.FunctionCallUpdate.FunctionArgumentsUpdate, Is.Not.Null);
                 if (!update.FunctionCallUpdate.FunctionArgumentsUpdate.ToMemory().IsEmpty)

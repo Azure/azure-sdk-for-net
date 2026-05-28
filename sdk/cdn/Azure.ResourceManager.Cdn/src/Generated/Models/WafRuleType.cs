@@ -7,67 +7,60 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary></summary>
+    /// <summary>
+    /// The WafRuleType.
+    /// Serialized Name: WafRuleType
+    /// </summary>
     public readonly partial struct WafRuleType : IEquatable<WafRuleType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="WafRuleType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WafRuleType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string ManagedValue = "managed";
         private const string CustomValue = "custom";
         private const string BotValue = "bot";
 
-        /// <summary> Initializes a new instance of <see cref="WafRuleType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WafRuleType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Managed. </summary>
+        /// <summary>
+        /// managed
+        /// Serialized Name: WafRuleType.managed
+        /// </summary>
         public static WafRuleType Managed { get; } = new WafRuleType(ManagedValue);
-
-        /// <summary> Gets the Custom. </summary>
+        /// <summary>
+        /// custom
+        /// Serialized Name: WafRuleType.custom
+        /// </summary>
         public static WafRuleType Custom { get; } = new WafRuleType(CustomValue);
-
-        /// <summary> Gets the Bot. </summary>
+        /// <summary>
+        /// bot
+        /// Serialized Name: WafRuleType.bot
+        /// </summary>
         public static WafRuleType Bot { get; } = new WafRuleType(BotValue);
-
         /// <summary> Determines if two <see cref="WafRuleType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WafRuleType left, WafRuleType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="WafRuleType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WafRuleType left, WafRuleType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="WafRuleType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WafRuleType"/>. </summary>
         public static implicit operator WafRuleType(string value) => new WafRuleType(value);
 
-        /// <summary> Converts a string to a <see cref="WafRuleType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator WafRuleType?(string value) => value == null ? null : new WafRuleType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WafRuleType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(WafRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

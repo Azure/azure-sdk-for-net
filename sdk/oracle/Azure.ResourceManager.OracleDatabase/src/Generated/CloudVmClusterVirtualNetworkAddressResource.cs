@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
     /// <summary>
-    /// A class representing a CloudVmClusterVirtualNetworkAddress along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CloudVmClusterVirtualNetworkAddressResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CloudVmClusterResource"/> using the GetCloudVmClusterVirtualNetworkAddresses method.
+    /// A Class representing a CloudVmClusterVirtualNetworkAddress along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CloudVmClusterVirtualNetworkAddressResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCloudVmClusterVirtualNetworkAddressResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CloudVmClusterResource"/> using the GetCloudVmClusterVirtualNetworkAddress method.
     /// </summary>
     public partial class CloudVmClusterVirtualNetworkAddressResource : ArmResource
     {
-        private readonly ClientDiagnostics _virtualNetworkAddressesClientDiagnostics;
-        private readonly VirtualNetworkAddresses _virtualNetworkAddressesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="CloudVmClusterVirtualNetworkAddressResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cloudvmclustername"> The cloudvmclustername. </param>
+        /// <param name="virtualnetworkaddressname"> The virtualnetworkaddressname. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics;
+        private readonly VirtualNetworkAddressesRestOperations _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient;
         private readonly CloudVmClusterVirtualNetworkAddressData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Oracle.Database/cloudVmClusters/virtualNetworkAddresses";
 
-        /// <summary> Initializes a new instance of CloudVmClusterVirtualNetworkAddressResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudVmClusterVirtualNetworkAddressResource"/> class for mocking. </summary>
         protected CloudVmClusterVirtualNetworkAddressResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudVmClusterVirtualNetworkAddressResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudVmClusterVirtualNetworkAddressResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CloudVmClusterVirtualNetworkAddressResource(ArmClient client, CloudVmClusterVirtualNetworkAddressData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.OracleDatabase
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudVmClusterVirtualNetworkAddressResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudVmClusterVirtualNetworkAddressResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CloudVmClusterVirtualNetworkAddressResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string cloudVmClusterVirtualNetworkAddressApiVersion);
-            _virtualNetworkAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _virtualNetworkAddressesRestClient = new VirtualNetworkAddresses(_virtualNetworkAddressesClientDiagnostics, Pipeline, Endpoint, cloudVmClusterVirtualNetworkAddressApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesApiVersion);
+            _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient = new VirtualNetworkAddressesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CloudVmClusterVirtualNetworkAddressData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="cloudvmclustername"> The cloudvmclustername. </param>
-        /// <param name="virtualnetworkaddressname"> The virtualnetworkaddressname. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudvmclustername, string virtualnetworkaddressname)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a VirtualNetworkAddress
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VirtualNetworkAddresses_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkAddress_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CloudVmClusterVirtualNetworkAddressResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterVirtualNetworkAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CloudVmClusterVirtualNetworkAddressResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Get");
+            using var scope = _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _virtualNetworkAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CloudVmClusterVirtualNetworkAddressData> response = Response.FromValue(CloudVmClusterVirtualNetworkAddressData.FromResponse(result), result);
+                var response = await _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudVmClusterVirtualNetworkAddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +132,33 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a VirtualNetworkAddress
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VirtualNetworkAddresses_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkAddress_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CloudVmClusterVirtualNetworkAddressResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterVirtualNetworkAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CloudVmClusterVirtualNetworkAddressResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Get");
+            using var scope = _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _virtualNetworkAddressesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CloudVmClusterVirtualNetworkAddressData> response = Response.FromValue(CloudVmClusterVirtualNetworkAddressData.FromResponse(result), result);
+                var response = _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudVmClusterVirtualNetworkAddressResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +172,20 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Delete a VirtualNetworkAddress
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VirtualNetworkAddresses_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkAddress_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CloudVmClusterVirtualNetworkAddressResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterVirtualNetworkAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,21 +193,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Delete");
+            using var scope = _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _virtualNetworkAddressesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_virtualNetworkAddressesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation(_cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics, Pipeline, _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +214,20 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Delete a VirtualNetworkAddress
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VirtualNetworkAddresses_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkAddress_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CloudVmClusterVirtualNetworkAddressResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterVirtualNetworkAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,21 +235,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _virtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Delete");
+            using var scope = _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _virtualNetworkAddressesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OracleDatabaseArmOperation operation = new OracleDatabaseArmOperation(_virtualNetworkAddressesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new OracleDatabaseArmOperation(_cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics, Pipeline, _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -286,23 +253,23 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// Update a CloudVmClusterVirtualNetworkAddress.
+        /// Create a VirtualNetworkAddress
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VirtualNetworkAddresses_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkAddress_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CloudVmClusterVirtualNetworkAddressResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterVirtualNetworkAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,27 +281,14 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _virtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Update");
+            using var scope = _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _virtualNetworkAddressesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CloudVmClusterVirtualNetworkAddressData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource> operation = new OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource>(
-                    new CloudVmClusterVirtualNetworkAddressOperationSource(Client),
-                    _virtualNetworkAddressesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource>(new CloudVmClusterVirtualNetworkAddressOperationSource(Client), _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics, Pipeline, _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -345,23 +299,23 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// Update a CloudVmClusterVirtualNetworkAddress.
+        /// Create a VirtualNetworkAddress
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/virtualNetworkAddresses/{virtualnetworkaddressname}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VirtualNetworkAddresses_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>VirtualNetworkAddress_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CloudVmClusterVirtualNetworkAddressResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterVirtualNetworkAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,27 +327,14 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _virtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Update");
+            using var scope = _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics.CreateScope("CloudVmClusterVirtualNetworkAddressResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _virtualNetworkAddressesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CloudVmClusterVirtualNetworkAddressData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource> operation = new OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource>(
-                    new CloudVmClusterVirtualNetworkAddressOperationSource(Client),
-                    _virtualNetworkAddressesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource>(new CloudVmClusterVirtualNetworkAddressOperationSource(Client), _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesClientDiagnostics, Pipeline, _cloudVmClusterVirtualNetworkAddressVirtualNetworkAddressesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

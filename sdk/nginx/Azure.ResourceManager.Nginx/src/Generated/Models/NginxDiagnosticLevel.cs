@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.Nginx.Models
     public readonly partial struct NginxDiagnosticLevel : IEquatable<NginxDiagnosticLevel>
     {
         private readonly string _value;
-        private const string InfoValue = "Info";
-        private const string WarningValue = "Warning";
 
         /// <summary> Initializes a new instance of <see cref="NginxDiagnosticLevel"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NginxDiagnosticLevel(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Info. </summary>
+        private const string InfoValue = "Info";
+        private const string WarningValue = "Warning";
+
+        /// <summary> Info. </summary>
         public static NginxDiagnosticLevel Info { get; } = new NginxDiagnosticLevel(InfoValue);
-
-        /// <summary> Gets the Warning. </summary>
+        /// <summary> Warning. </summary>
         public static NginxDiagnosticLevel Warning { get; } = new NginxDiagnosticLevel(WarningValue);
-
         /// <summary> Determines if two <see cref="NginxDiagnosticLevel"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NginxDiagnosticLevel left, NginxDiagnosticLevel right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NginxDiagnosticLevel"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NginxDiagnosticLevel left, NginxDiagnosticLevel right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NginxDiagnosticLevel"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NginxDiagnosticLevel"/>. </summary>
         public static implicit operator NginxDiagnosticLevel(string value) => new NginxDiagnosticLevel(value);
 
-        /// <summary> Converts a string to a <see cref="NginxDiagnosticLevel"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NginxDiagnosticLevel?(string value) => value == null ? null : new NginxDiagnosticLevel(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NginxDiagnosticLevel other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NginxDiagnosticLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -5,10 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.JobPlan;
 using NUnit.Framework;
+using Azure.Storage.DataMovement.JobPlan;
 using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -90,7 +89,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Ctor()
         {
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(default);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(default);
 
             Assert.NotNull(transferCheckpointer);
         }
@@ -99,7 +98,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void Ctor_CustomPath()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory(Guid.NewGuid().ToString());
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             Assert.NotNull(transferCheckpointer);
         }
@@ -119,7 +118,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Arrange
             string transferId = GetNewTransferId();
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             // Act
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -135,7 +134,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             // Arrange
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -151,7 +150,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange / Act
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             int jobCount = 3;
             List<string> expectedTransferIds = new();
@@ -176,7 +175,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -203,7 +202,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferId: transferId,
                     partNumber: partNumber);
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
@@ -235,7 +234,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferId: transferId,
                     partNumber: partNumber);
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
@@ -280,7 +279,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferId: transferId,
                     partNumber: 3);
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
@@ -321,7 +320,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferId: transferId,
                     partNumber: 1);
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
@@ -348,7 +347,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryRemoveStoredTransferAsync()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -362,7 +361,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task TryRemoveStoredTransferAsync_Error()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
 
@@ -376,7 +375,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             int partNumber = 0;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
@@ -397,7 +396,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
@@ -416,7 +415,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
             // Arrange
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             int jobCount = 3;
             List<string> expectedTransferIds = new();
@@ -443,7 +442,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange - populate checkpointer directory with existing jobs
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             string transferId2 = GetNewTransferId();
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -495,7 +494,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
@@ -518,7 +517,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferId: transferId,
                     partNumber: partNumber);
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
@@ -554,7 +553,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferId: transferId,
                     partNumber: 3);
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
@@ -590,7 +589,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             // Act / Assert
             Assert.CatchAsync<ArgumentException>(
@@ -602,7 +601,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -627,7 +626,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -664,7 +663,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferId: transferId,
                     partNumber: partNumber);
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
             await transferCheckpointer.AddNewJobPartAsync(
@@ -685,7 +684,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             // Act
             Assert.CatchAsync<ArgumentException>(
@@ -701,7 +700,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -749,7 +748,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             string transferId = GetNewTransferId();
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             // Act / Assert
             byte[] bytes = { 0x00 };
@@ -760,7 +759,7 @@ namespace Azure.Storage.DataMovement.Tests
                     buffer: bytes,
                     bufferOffset: 0,
                     length: 1));
-        }
+            }
 
         [Test]
         public async Task SetJobTransferStatusAsync()
@@ -771,7 +770,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             TransferStatus newStatus = PausedStatus;
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             await AddJobToCheckpointer(transferCheckpointer, transferId);
 
             // Act
@@ -799,7 +798,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             TransferStatus newStatus = SuccessfulCompletedStatus;
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             // Act / Assert
             Assert.CatchAsync<ArgumentException>(
@@ -820,7 +819,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferId: transferId,
                     partNumber: partNumber);
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             await AddJobToCheckpointer(transferCheckpointer, transferId);
             await transferCheckpointer.AddNewJobPartAsync(
@@ -850,7 +849,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferId: transferId,
                     partNumber: partNumber);
 
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
             // Act / Assert
             Assert.CatchAsync<ArgumentException>(
@@ -861,7 +860,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task JobDeletedOnComplete()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            using LocalTransferCheckpointer transferCheckpointer = new(test.DirectoryPath);
+            LocalTransferCheckpointer transferCheckpointer = new(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -877,7 +876,7 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task JobUncachedOnPause()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            using LocalTransferCheckpointer transferCheckpointer = new(test.DirectoryPath);
+            LocalTransferCheckpointer transferCheckpointer = new(test.DirectoryPath);
 
             string transferId = GetNewTransferId();
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -889,218 +888,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.That(transferCheckpointer._transferStates.ContainsKey(transferId), Is.False);
             Assert.That(await transferCheckpointer.GetJobStatusAsync(transferId), Is.Not.Null);
             Assert.That(transferCheckpointer._transferStates.ContainsKey(transferId), Is.True);
-        }
-
-        [Test]
-        public async Task TryRemoveStoredTransferAsync_ShouldReleaseFileHandles()
-        {
-            // This test verifies that after removing a transfer, all file handles
-            // and resources (like SemaphoreSlim) are properly released.
-            // If not disposed properly, the directory deletion will fail on Windows.
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            string checkpointerPath = test.DirectoryPath;
-
-            // Arrange - Create checkpointer and add a job with multiple parts
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(checkpointerPath);
-
-            string transferId = GetNewTransferId();
-            await AddJobToCheckpointer(transferCheckpointer, transferId);
-
-            // Add multiple job parts to increase the chance of detecting resource leaks
-            for (int partNumber = 0; partNumber < 5; partNumber++)
-            {
-                JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
-                    transferId: transferId,
-                    partNumber: partNumber);
-                await transferCheckpointer.AddNewJobPartAsync(transferId, partNumber, header);
-            }
-
-            // Verify files were created
-            string[] filesBeforeRemove = Directory.GetFiles(checkpointerPath);
-            Assert.AreEqual(6, filesBeforeRemove.Length); // 1 job file + 5 part files
-
-            // Act - Remove the transfer (this should dispose all resources)
-            bool removeResult = await transferCheckpointer.TryRemoveStoredTransferAsync(transferId);
-            Assert.IsTrue(removeResult);
-
-            // Assert - Verify all files were deleted
-            string[] filesAfterRemove = Directory.GetFiles(checkpointerPath);
-            Assert.AreEqual(0, filesAfterRemove.Length, "All checkpointer files should be deleted");
-
-            // Critical test: Try to delete the checkpointer directory itself.
-            // If file handles are still held, this will throw IOException on Windows.
-            Assert.DoesNotThrow(() =>
-            {
-                // Create a new file in the directory to verify we have full access
-                string testFilePath = Path.Combine(checkpointerPath, "test-access.tmp");
-                File.WriteAllText(testFilePath, "test");
-                File.Delete(testFilePath);
-            }, "Should be able to write/delete files in checkpointer directory after transfer removal");
-        }
-
-        [Test]
-        public async Task TryRemoveStoredTransferAsync_SemaphoreDisposed()
-        {
-            // This test verifies that the SemaphoreSlim in JobPlanFile and JobPartPlanFile
-            // are properly disposed after removing a transfer.
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-
-            // Arrange
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
-
-            string transferId = GetNewTransferId();
-            await AddJobToCheckpointer(transferCheckpointer, transferId);
-
-            int partNumber = 0;
-            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
-                transferId: transferId,
-                partNumber: partNumber);
-            await transferCheckpointer.AddNewJobPartAsync(transferId, partNumber, header);
-
-            // Get reference to the internal state before removal
-            // (This requires InternalsVisibleTo or the test being in the same assembly)
-            Assert.IsTrue(transferCheckpointer._transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile));
-            Assert.IsTrue(jobPlanFile.JobParts.TryGetValue(partNumber, out JobPartPlanFile jobPartPlanFile));
-
-            // Store references to the semaphores
-            SemaphoreSlim jobPlanWriteLock = jobPlanFile.WriteLock;
-            SemaphoreSlim jobPartWriteLock = jobPartPlanFile.WriteLock;
-
-            // Act - Remove the transfer
-            await transferCheckpointer.TryRemoveStoredTransferAsync(transferId);
-
-            // Assert - Verify the semaphores are disposed
-            // A disposed SemaphoreSlim will throw ObjectDisposedException when accessed
-            Assert.Throws<ObjectDisposedException>(() => jobPlanWriteLock.Wait(0),
-                "JobPlanFile.WriteLock should be disposed after transfer removal");
-            Assert.Throws<ObjectDisposedException>(() => jobPartWriteLock.Wait(0),
-                "JobPartPlanFile.WriteLock should be disposed after transfer removal");
-        }
-
-        [Test]
-        public async Task RefreshCache_ShouldDisposeExistingResources()
-        {
-            // This test verifies that when RefreshCache is called, existing cached
-            // JobPlanFile and JobPartPlanFile instances are properly disposed.
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-
-            // Arrange
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
-
-            string transferId = GetNewTransferId();
-            await AddJobToCheckpointer(transferCheckpointer, transferId);
-
-            int partNumber = 0;
-            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
-                transferId: transferId,
-                partNumber: partNumber);
-            await transferCheckpointer.AddNewJobPartAsync(transferId, partNumber, header);
-
-            // Get reference to the internal state before refresh
-            Assert.IsTrue(transferCheckpointer._transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile));
-            Assert.IsTrue(jobPlanFile.JobParts.TryGetValue(partNumber, out JobPartPlanFile jobPartPlanFile));
-
-            // Store references to the semaphores
-            SemaphoreSlim jobPlanWriteLock = jobPlanFile.WriteLock;
-            SemaphoreSlim jobPartWriteLock = jobPartPlanFile.WriteLock;
-
-            // Act - Force a refresh by calling GetStoredTransfersAsync which calls RefreshCache
-            await transferCheckpointer.GetStoredTransfersAsync();
-
-            // Assert - The old semaphores should be disposed (they are replaced with new instances)
-            Assert.Throws<ObjectDisposedException>(() => jobPlanWriteLock.Wait(0),
-                "Old JobPlanFile.WriteLock should be disposed after RefreshCache");
-            Assert.Throws<ObjectDisposedException>(() => jobPartWriteLock.Wait(0),
-                "Old JobPartPlanFile.WriteLock should be disposed after RefreshCache");
-        }
-
-        [Test]
-        public async Task SetJobTransferStatusAsync_Paused_ShouldDisposeResources()
-        {
-            // This test verifies that when a job is paused and removed from memory cache,
-            // the resources are properly disposed.
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-
-            // Arrange
-            using LocalTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
-
-            string transferId = GetNewTransferId();
-            await AddJobToCheckpointer(transferCheckpointer, transferId);
-
-            int partNumber = 0;
-            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
-                transferId: transferId,
-                partNumber: partNumber);
-            await transferCheckpointer.AddNewJobPartAsync(transferId, partNumber, header);
-
-            // Get reference to the internal state before status change
-            Assert.IsTrue(transferCheckpointer._transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile));
-            SemaphoreSlim jobPlanWriteLock = jobPlanFile.WriteLock;
-
-            // Act - Set status to Paused (this removes from memory cache but keeps file)
-            await transferCheckpointer.SetJobTransferStatusAsync(transferId, PausedStatus);
-
-            // Assert - The transfer should be removed from cache
-            Assert.IsFalse(transferCheckpointer._transferStates.ContainsKey(transferId),
-                "Transfer should be removed from memory cache when paused");
-
-            // The semaphore should be disposed
-            Assert.Throws<ObjectDisposedException>(() => jobPlanWriteLock.Wait(0),
-                "JobPlanFile.WriteLock should be disposed when transfer is paused");
-
-            // But the file should still exist for resume
-            string expectedFilePath = Path.Combine(test.DirectoryPath, $"{transferId}.ndm");
-            Assert.IsTrue(File.Exists(expectedFilePath), "Job plan file should still exist for resume");
-        }
-
-        [Test]
-        public async Task MultipleCheckpointerInstances_ShouldNotConflict()
-        {
-            // This test verifies that creating multiple checkpointer instances
-            // pointing to the same directory doesn't cause resource conflicts
-            // due to undisposed semaphores or file handles.
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-
-            string transferId = GetNewTransferId();
-
-            // First checkpointer - add and remove a transfer
-            {
-                using LocalTransferCheckpointer checkpointer1 = new LocalTransferCheckpointer(test.DirectoryPath);
-                await AddJobToCheckpointer(checkpointer1, transferId);
-
-                JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
-                    transferId: transferId,
-                    partNumber: 0);
-                await checkpointer1.AddNewJobPartAsync(transferId, 0, header);
-
-                // Set to paused (removes from cache but keeps files)
-                await checkpointer1.SetJobTransferStatusAsync(transferId, PausedStatus);
-            }
-            // checkpointer1 is properly disposed here
-
-            // Second checkpointer - should be able to load and work with the same transfer
-            {
-                using LocalTransferCheckpointer checkpointer2 = new LocalTransferCheckpointer(test.DirectoryPath);
-
-                // Should be able to read the transfer
-                List<string> transfers = await checkpointer2.GetStoredTransfersAsync();
-                Assert.AreEqual(1, transfers.Count);
-                Assert.AreEqual(transferId, transfers[0]);
-
-                // Should be able to read the job plan file
-                using Stream jobPlanStream = await checkpointer2.ReadJobPlanFileAsync(
-                    transferId,
-                    offset: 0,
-                    length: DataMovementConstants.JobPlanFile.VariableLengthStartIndex);
-                Assert.IsNotNull(jobPlanStream);
-
-                // Should be able to remove it
-                bool removed = await checkpointer2.TryRemoveStoredTransferAsync(transferId);
-                Assert.IsTrue(removed, "Second checkpointer should be able to remove the transfer");
-            }
-
-            // Final verification - directory should be empty and accessible
-            Assert.AreEqual(0, Directory.GetFiles(test.DirectoryPath).Length);
         }
     }
 }

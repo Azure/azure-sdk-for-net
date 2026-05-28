@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Http Route Config properties. </summary>
     public partial class ContainerAppHttpRouteConfigProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRouteConfigProperties"/>. </summary>
         public ContainerAppHttpRouteConfigProperties()
@@ -26,39 +54,35 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRouteConfigProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the Http Route Config in cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the Http Route Config. </param>
         /// <param name="provisioningErrors"> List of errors when trying to reconcile http routes. </param>
         /// <param name="fqdn"> FQDN of the route resource. </param>
-        /// <param name="customDomains"> Custom domain bindings for http Routes' hostnames. </param>
-        /// <param name="rules"> Routing Rules for http route resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppHttpRouteConfigProperties(ContainerAppHttpRouteProvisioningState? provisioningState, IReadOnlyList<ContainerAppHttpRouteProvisioningErrors> provisioningErrors, string fqdn, IList<ContainerAppCustomDomain> customDomains, IList<ContainerAppHttpRouteRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="customDomains"> Custom domain bindings for Http Routes' hostnames. </param>
+        /// <param name="rules"> Routing Rules for the Http Route resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppHttpRouteConfigProperties(ContainerAppHttpRouteProvisioningState? provisioningState, IReadOnlyList<ContainerAppHttpRouteProvisioningErrors> provisioningErrors, string fqdn, IList<ContainerAppCustomDomain> customDomains, IList<ContainerAppHttpRouteRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ProvisioningErrors = provisioningErrors;
             Fqdn = fqdn;
             CustomDomains = customDomains;
             Rules = rules;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the Http Route Config in cluster. </summary>
+        /// <summary> The provisioning state of the Http Route Config. </summary>
         [WirePath("provisioningState")]
         public ContainerAppHttpRouteProvisioningState? ProvisioningState { get; }
-
         /// <summary> List of errors when trying to reconcile http routes. </summary>
         [WirePath("provisioningErrors")]
         public IReadOnlyList<ContainerAppHttpRouteProvisioningErrors> ProvisioningErrors { get; }
-
         /// <summary> FQDN of the route resource. </summary>
         [WirePath("fqdn")]
         public string Fqdn { get; }
-
-        /// <summary> Custom domain bindings for http Routes' hostnames. </summary>
+        /// <summary> Custom domain bindings for Http Routes' hostnames. </summary>
         [WirePath("customDomains")]
         public IList<ContainerAppCustomDomain> CustomDomains { get; }
-
-        /// <summary> Routing Rules for http route resource. </summary>
+        /// <summary> Routing Rules for the Http Route resource. </summary>
         [WirePath("rules")]
         public IList<ContainerAppHttpRouteRule> Rules { get; }
     }

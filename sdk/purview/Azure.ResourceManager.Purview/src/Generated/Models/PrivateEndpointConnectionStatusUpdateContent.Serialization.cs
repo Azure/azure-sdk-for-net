@@ -10,65 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> A private endpoint connection status update request class. </summary>
-    public partial class PrivateEndpointConnectionStatusUpdateContent : IJsonModel<PrivateEndpointConnectionStatusUpdateContent>
+    public partial class PrivateEndpointConnectionStatusUpdateContent : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionStatusUpdateContent>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateEndpointConnectionStatusUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePrivateEndpointConnectionStatusUpdateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionStatusUpdateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionStatusUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionStatusUpdateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateEndpointConnectionStatusUpdateContent IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="privateEndpointConnectionStatusUpdateContent"> The <see cref="PrivateEndpointConnectionStatusUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PrivateEndpointConnectionStatusUpdateContent privateEndpointConnectionStatusUpdateContent)
-        {
-            if (privateEndpointConnectionStatusUpdateContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(privateEndpointConnectionStatusUpdateContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PrivateEndpointConnectionStatusUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -80,11 +28,12 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PrivateEndpointConnectionStatusUpdateContent)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(PrivateEndpointId))
             {
                 writer.WritePropertyName("privateEndpointId"u8);
@@ -95,15 +44,15 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -112,52 +61,80 @@ namespace Azure.ResourceManager.Purview.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateEndpointConnectionStatusUpdateContent IJsonModel<PrivateEndpointConnectionStatusUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrivateEndpointConnectionStatusUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PrivateEndpointConnectionStatusUpdateContent IJsonModel<PrivateEndpointConnectionStatusUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PrivateEndpointConnectionStatusUpdateContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePrivateEndpointConnectionStatusUpdateContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrivateEndpointConnectionStatusUpdateContent DeserializePrivateEndpointConnectionStatusUpdateContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrivateEndpointConnectionStatusUpdateContent DeserializePrivateEndpointConnectionStatusUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string privateEndpointId = default;
             string status = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("privateEndpointId"u8))
+                if (property.NameEquals("privateEndpointId"u8))
                 {
-                    privateEndpointId = prop.Value.GetString();
+                    privateEndpointId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionStatusUpdateContent(privateEndpointId, status, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PrivateEndpointConnectionStatusUpdateContent(privateEndpointId, status, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionStatusUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PrivateEndpointConnectionStatusUpdateContent IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePrivateEndpointConnectionStatusUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionStatusUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrivateEndpointConnectionStatusUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

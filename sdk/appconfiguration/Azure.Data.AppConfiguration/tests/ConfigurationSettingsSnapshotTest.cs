@@ -26,7 +26,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 new ETag());
 
             var retentionPeriod = settingSnapshot.RetentionPeriod;
-            Assert.That(TimeSpan.FromSeconds(10675199), Is.EqualTo(retentionPeriod));
+            Assert.AreEqual(retentionPeriod, TimeSpan.FromSeconds(10675199));
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var settingSnapshot = new ConfigurationSnapshot(filters);
             settingSnapshot.RetentionPeriod = TimeSpan.FromSeconds(10675199);
 
-            Assert.That(TimeSpan.FromSeconds(10675199), Is.EqualTo(settingSnapshot.RetentionPeriod));
+            Assert.AreEqual(settingSnapshot.RetentionPeriod, TimeSpan.FromSeconds(10675199));
         }
     }
 }

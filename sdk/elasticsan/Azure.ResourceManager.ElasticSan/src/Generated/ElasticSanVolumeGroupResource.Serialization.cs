@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary></summary>
     public partial class ElasticSanVolumeGroupResource : IJsonModel<ElasticSanVolumeGroupData>
     {
-        private static IJsonModel<ElasticSanVolumeGroupData> s_dataDeserializationInstance;
+        private static ElasticSanVolumeGroupData s_dataDeserializationInstance;
+        private static ElasticSanVolumeGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<ElasticSanVolumeGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ElasticSanVolumeGroupData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticSanVolumeGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanVolumeGroupData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticSanVolumeGroupData IJsonModel<ElasticSanVolumeGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ElasticSanVolumeGroupData IJsonModel<ElasticSanVolumeGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanVolumeGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ElasticSanVolumeGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticSanVolumeGroupData>(Data, options, AzureResourceManagerElasticSanContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ElasticSanVolumeGroupData IPersistableModel<ElasticSanVolumeGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticSanVolumeGroupData>(data, options, AzureResourceManagerElasticSanContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ElasticSanVolumeGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ElasticSanVolumeGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanVolumeGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

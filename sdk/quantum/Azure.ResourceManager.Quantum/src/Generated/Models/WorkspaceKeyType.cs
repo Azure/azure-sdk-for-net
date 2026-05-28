@@ -7,65 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> The API key type. </summary>
+    /// <summary> The WorkspaceKeyType. </summary>
     public readonly partial struct WorkspaceKeyType : IEquatable<WorkspaceKeyType>
     {
         private readonly string _value;
-        /// <summary> The primary API key. </summary>
-        private const string PrimaryValue = "Primary";
-        /// <summary> The secondary API key. </summary>
-        private const string SecondaryValue = "Secondary";
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceKeyType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkspaceKeyType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The primary API key. </summary>
+        private const string PrimaryValue = "Primary";
+        private const string SecondaryValue = "Secondary";
+
+        /// <summary> Primary. </summary>
         public static WorkspaceKeyType Primary { get; } = new WorkspaceKeyType(PrimaryValue);
-
-        /// <summary> The secondary API key. </summary>
+        /// <summary> Secondary. </summary>
         public static WorkspaceKeyType Secondary { get; } = new WorkspaceKeyType(SecondaryValue);
-
         /// <summary> Determines if two <see cref="WorkspaceKeyType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkspaceKeyType left, WorkspaceKeyType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="WorkspaceKeyType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkspaceKeyType left, WorkspaceKeyType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="WorkspaceKeyType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkspaceKeyType"/>. </summary>
         public static implicit operator WorkspaceKeyType(string value) => new WorkspaceKeyType(value);
 
-        /// <summary> Converts a string to a <see cref="WorkspaceKeyType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator WorkspaceKeyType?(string value) => value == null ? null : new WorkspaceKeyType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkspaceKeyType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(WorkspaceKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

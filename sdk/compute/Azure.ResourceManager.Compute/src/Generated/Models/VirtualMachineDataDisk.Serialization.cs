@@ -70,11 +70,6 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(StorageFaultDomainAlignment))
-            {
-                writer.WritePropertyName("storageFaultDomainAlignment"u8);
-                writer.WriteStringValue(StorageFaultDomainAlignment.Value.ToString());
-            }
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
@@ -90,12 +85,12 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("toBeDetached"u8);
                 writer.WriteBooleanValue(ToBeDetached.Value);
             }
-            if (Optional.IsDefined(DiskIopsReadWrite))
+            if (options.Format != "W" && Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (Optional.IsDefined(DiskMBpsReadWrite))
+            if (options.Format != "W" && Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
@@ -155,7 +150,6 @@ namespace Azure.ResourceManager.Compute.Models
             bool? writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
-            StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default;
             VirtualMachineManagedDisk managedDisk = default;
             WritableSubResource sourceResource = default;
             bool? toBeDetached = default;
@@ -225,15 +219,6 @@ namespace Azure.ResourceManager.Compute.Models
                         continue;
                     }
                     diskSizeGB = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("storageFaultDomainAlignment"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageFaultDomainAlignment = new StorageFaultDomainAlignmentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("managedDisk"u8))
@@ -314,7 +299,6 @@ namespace Azure.ResourceManager.Compute.Models
                 writeAcceleratorEnabled,
                 createOption,
                 diskSizeGB,
-                storageFaultDomainAlignment,
                 managedDisk,
                 sourceResource,
                 toBeDetached,

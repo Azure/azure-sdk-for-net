@@ -4,8 +4,6 @@
 
 ### Features Added
 
-- Make `Azure.ResourceManager.DeviceProvisioningServices` AOT-compatible.
-
 ### Breaking Changes
 
 ### Bugs Fixed

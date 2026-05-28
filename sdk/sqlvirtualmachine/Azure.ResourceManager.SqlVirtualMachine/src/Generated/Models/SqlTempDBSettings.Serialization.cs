@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.SqlVirtualMachine;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    /// <summary> Set tempDb storage settings for SQL Server. </summary>
-    public partial class SqlTempDBSettings : IJsonModel<SqlTempDBSettings>
+    public partial class SqlTempDBSettings : IUtf8JsonSerializable, IJsonModel<SqlTempDBSettings>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlTempDBSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSqlTempDBSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlTempDBSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SqlTempDBSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SqlTempDBSettings IPersistableModel<SqlTempDBSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SqlTempDBSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlTempDBSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(DataFileSize))
             {
                 writer.WritePropertyName("dataFileSize"u8);
@@ -113,7 +73,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
-                foreach (int item in LogicalUnitNumbers)
+                foreach (var item in LogicalUnitNumbers)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -124,20 +84,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);
             }
-            if (Optional.IsDefined(UseStoragePool))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("useStoragePool"u8);
-                writer.WriteBooleanValue(UseStoragePool.Value);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -146,27 +101,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SqlTempDBSettings IJsonModel<SqlTempDBSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SqlTempDBSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SqlTempDBSettings IJsonModel<SqlTempDBSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlTempDBSettings(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SqlTempDBSettings DeserializeSqlTempDBSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static SqlTempDBSettings DeserializeSqlTempDBSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -178,104 +128,96 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             int? dataFileCount = default;
             bool? persistFolder = default;
             string persistFolderPath = default;
-            IList<int> logicalUnitNumbers = default;
+            IList<int> luns = default;
             string defaultFilePath = default;
-            bool? useStoragePool = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("dataFileSize"u8))
+                if (property.NameEquals("dataFileSize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataFileSize = prop.Value.GetInt32();
+                    dataFileSize = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("dataGrowth"u8))
+                if (property.NameEquals("dataGrowth"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataGrowth = prop.Value.GetInt32();
+                    dataGrowth = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("logFileSize"u8))
+                if (property.NameEquals("logFileSize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    logFileSize = prop.Value.GetInt32();
+                    logFileSize = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("logGrowth"u8))
+                if (property.NameEquals("logGrowth"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    logGrowth = prop.Value.GetInt32();
+                    logGrowth = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("dataFileCount"u8))
+                if (property.NameEquals("dataFileCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataFileCount = prop.Value.GetInt32();
+                    dataFileCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("persistFolder"u8))
+                if (property.NameEquals("persistFolder"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    persistFolder = prop.Value.GetBoolean();
+                    persistFolder = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("persistFolderPath"u8))
+                if (property.NameEquals("persistFolderPath"u8))
                 {
-                    persistFolderPath = prop.Value.GetString();
+                    persistFolderPath = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("luns"u8))
+                if (property.NameEquals("luns"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<int> array = new List<int>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetInt32());
                     }
-                    logicalUnitNumbers = array;
+                    luns = array;
                     continue;
                 }
-                if (prop.NameEquals("defaultFilePath"u8))
+                if (property.NameEquals("defaultFilePath"u8))
                 {
-                    defaultFilePath = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("useStoragePool"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    useStoragePool = prop.Value.GetBoolean();
+                    defaultFilePath = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlTempDBSettings(
                 dataFileSize,
                 dataGrowth,
@@ -284,10 +226,40 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 dataFileCount,
                 persistFolder,
                 persistFolderPath,
-                logicalUnitNumbers ?? new ChangeTrackingList<int>(),
+                luns ?? new ChangeTrackingList<int>(),
                 defaultFilePath,
-                useStoragePool,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlTempDBSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlVirtualMachineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlTempDBSettings IPersistableModel<SqlTempDBSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSqlTempDBSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlTempDBSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

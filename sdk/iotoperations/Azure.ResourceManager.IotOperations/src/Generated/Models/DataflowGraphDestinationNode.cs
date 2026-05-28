@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -18,22 +17,29 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="name"> Name of the node. </param>
         /// <param name="destinationSettings"> Destination configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="destinationSettings"/> is null. </exception>
-        public DataflowGraphDestinationNode(string name, DataflowGraphDestinationNodeSettings destinationSettings) : base(name, DataflowGraphNodeType.Destination)
+        public DataflowGraphDestinationNode(string name, DataflowGraphDestinationNodeSettings destinationSettings) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(destinationSettings, nameof(destinationSettings));
 
             DestinationSettings = destinationSettings;
+            NodeType = DataflowGraphNodeType.Destination;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphDestinationNode"/>. </summary>
         /// <param name="name"> Name of the node. </param>
         /// <param name="nodeType"> Type of the node. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="destinationSettings"> Destination configuration. </param>
-        internal DataflowGraphDestinationNode(string name, DataflowGraphNodeType nodeType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataflowGraphDestinationNodeSettings destinationSettings) : base(name, nodeType, additionalBinaryDataProperties)
+        internal DataflowGraphDestinationNode(string name, DataflowGraphNodeType nodeType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataflowGraphDestinationNodeSettings destinationSettings) : base(name, nodeType, serializedAdditionalRawData)
         {
             DestinationSettings = destinationSettings;
+            NodeType = nodeType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataflowGraphDestinationNode"/> for deserialization. </summary>
+        internal DataflowGraphDestinationNode()
+        {
         }
 
         /// <summary> Destination configuration. </summary>

@@ -2,24 +2,23 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
+
 using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using BaseShares::Azure.Storage.Files.Shares;
-using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using DMShare::Azure.Storage.Files.Shares;
 using Moq;
 using NUnit.Framework;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
     [NonParallelizable]
     public class ShareDirectoryClientExtensionsTests
     {
-        private readonly Uri _defaultUri = new Uri("https://fakeaccount.file.core.windows.net/fakeshare/fakedirectory");
-
         private Mock<TransferManager> ExtensionMockTransferManager { get; set; }
 
         // temporarily stores the static value that was in the extensions class
@@ -62,7 +61,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
             string localPath = Path.GetTempPath();
             Mock<ShareDirectoryClient> clientMock = new();
-            clientMock.Setup(b => b.Uri).Returns(_defaultUri);
 
             await ShareDirectoryClientExtensions.UploadDirectoryAsync(
                 clientMock.Object,
@@ -97,7 +95,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             };
             string localPath = Path.GetTempPath();
             Mock<ShareDirectoryClient> clientMock = new();
-            clientMock.Setup(b => b.Uri).Returns(_defaultUri);
 
             await ShareDirectoryClientExtensions.DownloadToDirectoryAsync(
                 clientMock.Object,

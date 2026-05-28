@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary></summary>
-    internal partial class ContainerAppOperationSource : IOperationSource<ContainerAppResource>
+    internal class ContainerAppOperationSource : IOperationSource<ContainerAppResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ContainerAppOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ContainerAppResource IOperationSource<ContainerAppResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ContainerAppData data = ContainerAppData.DeserializeContainerAppData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ContainerAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
             return new ContainerAppResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ContainerAppResource> IOperationSource<ContainerAppResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ContainerAppData data = ContainerAppData.DeserializeContainerAppData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ContainerAppResource(_client, data);
+            var data = ModelReaderWriter.Read<ContainerAppData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            return await Task.FromResult(new ContainerAppResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

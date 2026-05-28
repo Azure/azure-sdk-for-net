@@ -1,5 +1,0 @@
-<Project>
-  <ItemGroup>
-    <PackageVersion Include="Microsoft.Extensions.AI.Abstractions" Version="10.4.0"/>
-  </ItemGroup>
-</Project>

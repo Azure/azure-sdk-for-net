@@ -13,11 +13,43 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> Represents an attached NetworkConnection. </summary>
+    /// <summary>
+    /// A class representing the AttachedNetworkConnection data model.
+    /// Represents an attached NetworkConnection.
+    /// </summary>
     public partial class AttachedNetworkConnectionData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AttachedNetworkConnectionData"/>. </summary>
         public AttachedNetworkConnectionData()
@@ -25,72 +57,35 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Initializes a new instance of <see cref="AttachedNetworkConnectionData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Attached NetworkConnection properties. </param>
-        internal AttachedNetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AttachedNetworkConnectionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="networkConnectionId"> The resource ID of the NetworkConnection you want to attach. </param>
+        /// <param name="networkConnectionLocation"> The geo-location where the NetworkConnection resource specified in 'networkConnectionResourceId' property lives. </param>
+        /// <param name="healthCheckStatus"> Health check status values. </param>
+        /// <param name="domainJoinType"> AAD Join type of the network. This is populated based on the referenced Network Connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttachedNetworkConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterProvisioningState? provisioningState, ResourceIdentifier networkConnectionId, AzureLocation? networkConnectionLocation, DevCenterHealthCheckStatus? healthCheckStatus, DomainJoinType? domainJoinType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            ProvisioningState = provisioningState;
+            NetworkConnectionId = networkConnectionId;
+            NetworkConnectionLocation = networkConnectionLocation;
+            HealthCheckStatus = healthCheckStatus;
+            DomainJoinType = domainJoinType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Attached NetworkConnection properties. </summary>
-        internal AttachedNetworkConnectionProperties Properties { get; set; }
 
         /// <summary> The provisioning state of the resource. </summary>
-        public DevCenterProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
+        public DevCenterProvisioningState? ProvisioningState { get; }
         /// <summary> The resource ID of the NetworkConnection you want to attach. </summary>
-        public ResourceIdentifier NetworkConnectionId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NetworkConnectionId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AttachedNetworkConnectionProperties();
-                }
-                Properties.NetworkConnectionId = value;
-            }
-        }
-
+        public ResourceIdentifier NetworkConnectionId { get; set; }
         /// <summary> The geo-location where the NetworkConnection resource specified in 'networkConnectionResourceId' property lives. </summary>
-        public AzureLocation? NetworkConnectionLocation
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NetworkConnectionLocation;
-            }
-        }
-
+        public AzureLocation? NetworkConnectionLocation { get; }
         /// <summary> Health check status values. </summary>
-        public DevCenterHealthCheckStatus? HealthCheckStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.HealthCheckStatus;
-            }
-        }
-
+        public DevCenterHealthCheckStatus? HealthCheckStatus { get; }
         /// <summary> AAD Join type of the network. This is populated based on the referenced Network Connection. </summary>
-        public DomainJoinType? DomainJoinType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DomainJoinType;
-            }
-        }
+        public DomainJoinType? DomainJoinType { get; }
     }
 }

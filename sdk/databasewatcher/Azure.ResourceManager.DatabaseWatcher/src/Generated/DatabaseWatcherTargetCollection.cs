@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DatabaseWatcher
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.DatabaseWatcher
     /// </summary>
     public partial class DatabaseWatcherTargetCollection : ArmCollection, IEnumerable<DatabaseWatcherTargetResource>, IAsyncEnumerable<DatabaseWatcherTargetResource>
     {
-        private readonly ClientDiagnostics _targetsClientDiagnostics;
-        private readonly Targets _targetsRestClient;
+        private readonly ClientDiagnostics _databaseWatcherTargetTargetsClientDiagnostics;
+        private readonly TargetsRestOperations _databaseWatcherTargetTargetsRestClient;
 
-        /// <summary> Initializes a new instance of DatabaseWatcherTargetCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseWatcherTargetCollection"/> class for mocking. </summary>
         protected DatabaseWatcherTargetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherTargetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DatabaseWatcherTargetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal DatabaseWatcherTargetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DatabaseWatcherTargetResource.ResourceType, out string databaseWatcherTargetApiVersion);
-            _targetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherTargetResource.ResourceType.Namespace, Diagnostics);
-            _targetsRestClient = new Targets(_targetsClientDiagnostics, Pipeline, Endpoint, databaseWatcherTargetApiVersion ?? "2025-01-02");
-            ValidateResourceId(id);
+            _databaseWatcherTargetTargetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", DatabaseWatcherTargetResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DatabaseWatcherTargetResource.ResourceType, out string databaseWatcherTargetTargetsApiVersion);
+            _databaseWatcherTargetTargetsRestClient = new TargetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherTargetTargetsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DatabaseWatcherResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DatabaseWatcherResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a Target
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="targetName"> The target resource name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DatabaseWatcherTargetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string targetName, DatabaseWatcherTargetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.CreateOrUpdate");
+            using var scope = _databaseWatcherTargetTargetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetName, DatabaseWatcherTargetData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DatabaseWatcherTargetData> response = Response.FromValue(DatabaseWatcherTargetData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DatabaseWatcherArmOperation<DatabaseWatcherTargetResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherTargetResource>(Response.FromValue(new DatabaseWatcherTargetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _databaseWatcherTargetTargetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _databaseWatcherTargetTargetsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DatabaseWatcherArmOperation<DatabaseWatcherTargetResource>(Response.FromValue(new DatabaseWatcherTargetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Create a Target
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <param name="targetName"> The target resource name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DatabaseWatcherTargetResource> CreateOrUpdate(WaitUntil waitUntil, string targetName, DatabaseWatcherTargetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.CreateOrUpdate");
+            using var scope = _databaseWatcherTargetTargetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetName, DatabaseWatcherTargetData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DatabaseWatcherTargetData> response = Response.FromValue(DatabaseWatcherTargetData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                DatabaseWatcherArmOperation<DatabaseWatcherTargetResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherTargetResource>(Response.FromValue(new DatabaseWatcherTargetResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _databaseWatcherTargetTargetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetName, data, cancellationToken);
+                var uri = _databaseWatcherTargetTargetsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DatabaseWatcherArmOperation<DatabaseWatcherTargetResource>(Response.FromValue(new DatabaseWatcherTargetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Get a Target
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> The target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual async Task<Response<DatabaseWatcherTargetResource>> GetAsync(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.Get");
+            using var scope = _databaseWatcherTargetTargetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DatabaseWatcherTargetData> response = Response.FromValue(DatabaseWatcherTargetData.FromResponse(result), result);
+                var response = await _databaseWatcherTargetTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DatabaseWatcherTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Get a Target
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> The target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual Response<DatabaseWatcherTargetResource> Get(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.Get");
+            using var scope = _databaseWatcherTargetTargetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DatabaseWatcherTargetData> response = Response.FromValue(DatabaseWatcherTargetData.FromResponse(result), result);
+                var response = _databaseWatcherTargetTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DatabaseWatcherTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,50 +247,50 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// List Target resources by Watcher
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_ListByWatcher. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_ListByWatcher</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatabaseWatcherTargetResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatabaseWatcherTargetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseWatcherTargetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DatabaseWatcherTargetData, DatabaseWatcherTargetResource>(new TargetsGetByWatcherAsyncCollectionResultOfT(
-                _targetsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DatabaseWatcherTargetCollection.GetAll"), data => new DatabaseWatcherTargetResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseWatcherTargetTargetsRestClient.CreateListByWatcherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseWatcherTargetTargetsRestClient.CreateListByWatcherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatabaseWatcherTargetResource(Client, DatabaseWatcherTargetData.DeserializeDatabaseWatcherTargetData(e)), _databaseWatcherTargetTargetsClientDiagnostics, Pipeline, "DatabaseWatcherTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Target resources by Watcher
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_ListByWatcher. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_ListByWatcher</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,67 +298,45 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// <returns> A collection of <see cref="DatabaseWatcherTargetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseWatcherTargetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DatabaseWatcherTargetData, DatabaseWatcherTargetResource>(new TargetsGetByWatcherCollectionResultOfT(
-                _targetsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DatabaseWatcherTargetCollection.GetAll"), data => new DatabaseWatcherTargetResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseWatcherTargetTargetsRestClient.CreateListByWatcherRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseWatcherTargetTargetsRestClient.CreateListByWatcherNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatabaseWatcherTargetResource(Client, DatabaseWatcherTargetData.DeserializeDatabaseWatcherTargetData(e)), _databaseWatcherTargetTargetsClientDiagnostics, Pipeline, "DatabaseWatcherTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> The target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.Exists");
+            using var scope = _databaseWatcherTargetTargetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DatabaseWatcherTargetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DatabaseWatcherTargetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DatabaseWatcherTargetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _databaseWatcherTargetTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,50 +350,36 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> The target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual Response<bool> Exists(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.Exists");
+            using var scope = _databaseWatcherTargetTargetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DatabaseWatcherTargetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DatabaseWatcherTargetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DatabaseWatcherTargetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _databaseWatcherTargetTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -448,54 +393,38 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> The target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual async Task<NullableResponse<DatabaseWatcherTargetResource>> GetIfExistsAsync(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.GetIfExists");
+            using var scope = _databaseWatcherTargetTargetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<DatabaseWatcherTargetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DatabaseWatcherTargetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DatabaseWatcherTargetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _databaseWatcherTargetTargetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DatabaseWatcherTargetResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DatabaseWatcherTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -509,54 +438,38 @@ namespace Azure.ResourceManager.DatabaseWatcher
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DatabaseWatcher/watchers/{watcherName}/targets/{targetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Target_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseWatcherTargetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="targetName"> The target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
         public virtual NullableResponse<DatabaseWatcherTargetResource> GetIfExists(string targetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
-            using DiagnosticScope scope = _targetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.GetIfExists");
+            using var scope = _databaseWatcherTargetTargetsClientDiagnostics.CreateScope("DatabaseWatcherTargetCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _targetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, targetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<DatabaseWatcherTargetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(DatabaseWatcherTargetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((DatabaseWatcherTargetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _databaseWatcherTargetTargetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, targetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<DatabaseWatcherTargetResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new DatabaseWatcherTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -576,7 +489,6 @@ namespace Azure.ResourceManager.DatabaseWatcher
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DatabaseWatcherTargetResource> IAsyncEnumerable<DatabaseWatcherTargetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

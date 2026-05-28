@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
@@ -26,54 +25,56 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class MigrationConfigurationCollection : ArmCollection, IEnumerable<MigrationConfigurationResource>, IAsyncEnumerable<MigrationConfigurationResource>
     {
-        private readonly ClientDiagnostics _migrationConfigsClientDiagnostics;
-        private readonly MigrationConfigs _migrationConfigsRestClient;
+        private readonly ClientDiagnostics _migrationConfigurationMigrationConfigsClientDiagnostics;
+        private readonly MigrationConfigsRestOperations _migrationConfigurationMigrationConfigsRestClient;
 
-        /// <summary> Initializes a new instance of MigrationConfigurationCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MigrationConfigurationCollection"/> class for mocking. </summary>
         protected MigrationConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MigrationConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MigrationConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MigrationConfigurationResource.ResourceType, out string migrationConfigurationApiVersion);
-            _migrationConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", MigrationConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _migrationConfigsRestClient = new MigrationConfigs(_migrationConfigsClientDiagnostics, Pipeline, Endpoint, migrationConfigurationApiVersion ?? "2025-05-01-preview");
-            ValidateResourceId(id);
+            _migrationConfigurationMigrationConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", MigrationConfigurationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MigrationConfigurationResource.ResourceType, out string migrationConfigurationMigrationConfigsApiVersion);
+            _migrationConfigurationMigrationConfigsRestClient = new MigrationConfigsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, migrationConfigurationMigrationConfigsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ServiceBusNamespaceResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespaceResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceBusNamespaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates Migration configuration and starts migration of entities from Standard to Premium namespace
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MigrationConfigs_CreateAndStartMigration. </description>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_CreateAndStartMigration</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configName"> The configuration name. Should always be $default. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="data"> Parameters required to create Migration Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -81,27 +82,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _migrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.CreateOrUpdate");
+            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _migrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName.ToString(), MigrationConfigurationData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ServiceBusArmOperation<MigrationConfigurationResource> operation = new ServiceBusArmOperation<MigrationConfigurationResource>(
-                    new MigrationConfigurationOperationSource(Client),
-                    _migrationConfigsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _migrationConfigurationMigrationConfigsRestClient.CreateAndStartMigrationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceBusArmOperation<MigrationConfigurationResource>(new MigrationConfigurationOperationSource(Client), _migrationConfigurationMigrationConfigsClientDiagnostics, Pipeline, _migrationConfigurationMigrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -115,21 +103,25 @@ namespace Azure.ResourceManager.ServiceBus
         /// Creates Migration configuration and starts migration of entities from Standard to Premium namespace
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MigrationConfigs_CreateAndStartMigration. </description>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_CreateAndStartMigration</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configName"> The configuration name. Should always be $default. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="data"> Parameters required to create Migration Configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -137,27 +129,14 @@ namespace Azure.ResourceManager.ServiceBus
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _migrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.CreateOrUpdate");
+            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _migrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName.ToString(), MigrationConfigurationData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ServiceBusArmOperation<MigrationConfigurationResource> operation = new ServiceBusArmOperation<MigrationConfigurationResource>(
-                    new MigrationConfigurationOperationSource(Client),
-                    _migrationConfigsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _migrationConfigurationMigrationConfigsRestClient.CreateAndStartMigration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data, cancellationToken);
+                var operation = new ServiceBusArmOperation<MigrationConfigurationResource>(new MigrationConfigurationOperationSource(Client), _migrationConfigurationMigrationConfigsClientDiagnostics, Pipeline, _migrationConfigurationMigrationConfigsRestClient.CreateCreateAndStartMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -171,38 +150,34 @@ namespace Azure.ResourceManager.ServiceBus
         /// Retrieves Migration Config
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MigrationConfigs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configName"> The configuration name. Should always be $default. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<MigrationConfigurationResource>> GetAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.Get");
+            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _migrationConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName.ToString(), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MigrationConfigurationData> response = Response.FromValue(MigrationConfigurationData.FromResponse(result), result);
+                var response = await _migrationConfigurationMigrationConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MigrationConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -216,38 +191,34 @@ namespace Azure.ResourceManager.ServiceBus
         /// Retrieves Migration Config
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MigrationConfigs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configName"> The configuration name. Should always be $default. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<MigrationConfigurationResource> Get(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.Get");
+            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _migrationConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName.ToString(), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MigrationConfigurationData> response = Response.FromValue(MigrationConfigurationData.FromResponse(result), result);
+                var response = _migrationConfigurationMigrationConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MigrationConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,50 +232,50 @@ namespace Azure.ResourceManager.ServiceBus
         /// Gets all migrationConfigurations
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MigrationConfigs_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MigrationConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MigrationConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MigrationConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MigrationConfigurationData, MigrationConfigurationResource>(new MigrationConfigsGetAllAsyncCollectionResultOfT(
-                _migrationConfigsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "MigrationConfigurationCollection.GetAll"), data => new MigrationConfigurationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationConfigurationMigrationConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationConfigurationMigrationConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationConfigurationResource(Client, MigrationConfigurationData.DeserializeMigrationConfigurationData(e)), _migrationConfigurationMigrationConfigsClientDiagnostics, Pipeline, "MigrationConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets all migrationConfigurations
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MigrationConfigs_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,63 +283,41 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> A collection of <see cref="MigrationConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MigrationConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MigrationConfigurationData, MigrationConfigurationResource>(new MigrationConfigsGetAllCollectionResultOfT(
-                _migrationConfigsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "MigrationConfigurationCollection.GetAll"), data => new MigrationConfigurationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _migrationConfigurationMigrationConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _migrationConfigurationMigrationConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationConfigurationResource(Client, MigrationConfigurationData.DeserializeMigrationConfigurationData(e)), _migrationConfigurationMigrationConfigsClientDiagnostics, Pipeline, "MigrationConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MigrationConfigs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configName"> The configuration name. Should always be $default. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.Exists");
+            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _migrationConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName.ToString(), context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MigrationConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MigrationConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MigrationConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _migrationConfigurationMigrationConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -382,46 +331,32 @@ namespace Azure.ResourceManager.ServiceBus
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MigrationConfigs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configName"> The configuration name. Should always be $default. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.Exists");
+            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _migrationConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName.ToString(), context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MigrationConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MigrationConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MigrationConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _migrationConfigurationMigrationConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,50 +370,34 @@ namespace Azure.ResourceManager.ServiceBus
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MigrationConfigs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configName"> The configuration name. Should always be $default. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<MigrationConfigurationResource>> GetIfExistsAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.GetIfExists");
+            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _migrationConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName.ToString(), context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MigrationConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MigrationConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MigrationConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _migrationConfigurationMigrationConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MigrationConfigurationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MigrationConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -492,50 +411,34 @@ namespace Azure.ResourceManager.ServiceBus
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/migrationConfigurations/{configName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MigrationConfigs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MigrationConfigs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MigrationConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configName"> The configuration name. Should always be $default. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<MigrationConfigurationResource> GetIfExists(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _migrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.GetIfExists");
+            using var scope = _migrationConfigurationMigrationConfigsClientDiagnostics.CreateScope("MigrationConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _migrationConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configName.ToString(), context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MigrationConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MigrationConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MigrationConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _migrationConfigurationMigrationConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MigrationConfigurationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MigrationConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -555,7 +458,6 @@ namespace Azure.ResourceManager.ServiceBus
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MigrationConfigurationResource> IAsyncEnumerable<MigrationConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -10,70 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> The ExecuteHibernateRequest request for executeHibernate operations. </summary>
-    public partial class ExecuteHibernateContent : IJsonModel<ExecuteHibernateContent>
+    public partial class ExecuteHibernateContent : IUtf8JsonSerializable, IJsonModel<ExecuteHibernateContent>
     {
-        /// <summary> Initializes a new instance of <see cref="ExecuteHibernateContent"/> for deserialization. </summary>
-        internal ExecuteHibernateContent()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteHibernateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExecuteHibernateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteHibernateContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExecuteHibernateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExecuteHibernateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteHibernateContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExecuteHibernateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExecuteHibernateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExecuteHibernateContent IPersistableModel<ExecuteHibernateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExecuteHibernateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="executeHibernateContent"> The <see cref="ExecuteHibernateContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ExecuteHibernateContent executeHibernateContent)
-        {
-            if (executeHibernateContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(executeHibernateContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExecuteHibernateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -85,26 +28,27 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteHibernateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExecuteHibernateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExecuteHibernateContent)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("executionParameters"u8);
             writer.WriteObjectValue(ExecutionParameters, options);
             writer.WritePropertyName("resources"u8);
             writer.WriteObjectValue(Resources, options);
             writer.WritePropertyName("correlationid"u8);
             writer.WriteStringValue(CorrelationId);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -113,58 +57,86 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExecuteHibernateContent IJsonModel<ExecuteHibernateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExecuteHibernateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExecuteHibernateContent IJsonModel<ExecuteHibernateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExecuteHibernateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExecuteHibernateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExecuteHibernateContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExecuteHibernateContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExecuteHibernateContent DeserializeExecuteHibernateContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExecuteHibernateContent DeserializeExecuteHibernateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ScheduledActionExecutionParameterDetail executionParameters = default;
             UserRequestResources resources = default;
-            string correlationId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string correlationid = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("executionParameters"u8))
+                if (property.NameEquals("executionParameters"u8))
                 {
-                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(prop.Value, options);
+                    executionParameters = ScheduledActionExecutionParameterDetail.DeserializeScheduledActionExecutionParameterDetail(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("resources"u8))
+                if (property.NameEquals("resources"u8))
                 {
-                    resources = UserRequestResources.DeserializeUserRequestResources(prop.Value, options);
+                    resources = UserRequestResources.DeserializeUserRequestResources(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("correlationid"u8))
+                if (property.NameEquals("correlationid"u8))
                 {
-                    correlationId = prop.Value.GetString();
+                    correlationid = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ExecuteHibernateContent(executionParameters, resources, correlationId, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExecuteHibernateContent(executionParameters, resources, correlationid, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExecuteHibernateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExecuteHibernateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExecuteHibernateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExecuteHibernateContent IPersistableModel<ExecuteHibernateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExecuteHibernateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeExecuteHibernateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExecuteHibernateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExecuteHibernateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

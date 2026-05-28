@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,14 +7,10 @@ using Azure.AI.Language.Conversations;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core;
 using Azure.Core.Extensions;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary>
-    /// Extension methods to add <see cref="ConversationAnalysisClient"/> to the Azure client builder.
-    /// </summary>
-    [CodeGenType("LanguageConversationsClientBuilderExtensions")]
+    [CodeGenModel("AILanguageConversationsClientBuilderExtensions")]
     public static partial class ConversationAnalysisClientExtensions
     {
         /// <summary> Registers a <see cref="ConversationAuthoringClient"/> instance. </summary>

@@ -63,7 +63,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("from"));
+                Assert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -81,7 +81,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("recipients"));
+                Assert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }
@@ -99,7 +99,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("from"));
+                Assert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -117,7 +117,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("recipients"));
+                Assert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }
@@ -135,7 +135,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("from"));
+                Assert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -153,7 +153,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("recipients"));
+                Assert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }
@@ -171,7 +171,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("from"));
+                Assert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -189,7 +189,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("recipients"));
+                Assert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }
@@ -207,7 +207,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("from"));
+                Assert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -225,7 +225,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("recipients"));
+                Assert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }
@@ -243,7 +243,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("from"));
+                Assert.AreEqual("from", ex.ParamName);
                 return;
             }
         }
@@ -261,7 +261,7 @@ namespace Azure.Communication.Sms.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.That(ex.ParamName, Is.EqualTo("recipients"));
+                Assert.AreEqual("recipients", ex.ParamName);
                 return;
             }
         }

@@ -30,14 +30,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
-        /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, string saasResourceId, OfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, OfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             SubscriptionStatus = subscriptionStatus;
-            SaasResourceId = saasResourceId;
             OfferDetails = offerDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,10 +47,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Marketplace subscription status. </summary>
         [WirePath("subscriptionStatus")]
         public MarketplaceSubscriptionStatus? SubscriptionStatus { get; }
-
-        /// <summary> Marketplace SaaS Resource Id. </summary>
-        [WirePath("saasResourceId")]
-        public string SaasResourceId { get; set; }
 
         /// <summary> Offer details for the marketplace that is selected by the user. </summary>
         [WirePath("offerDetails")]

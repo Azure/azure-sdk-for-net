@@ -1,14 +1,14 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Cdn.Models;
-using Azure.ResourceManager.Cdn.Tests.Helper;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Cdn.Models;
+using Azure.ResourceManager.Cdn.Tests.Helper;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Tests
 {
@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.Cdn.Tests
             {
                 Properties = new SecurityPolicyWebApplicationFirewall
                 {
-                    WafPolicyId = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/azure_cli_test/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/azureCliTest")
+                    WafPolicy = new WritableSubResource
+                    {
+                        Id = new ResourceIdentifier("/subscriptions/27cafca8-b9a4-4264-b399-45d0c9cca1ab/resourceGroups/azure_cli_test/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/azureCliTest")
+                    }
                 }
             };
             SecurityPolicyWebApplicationFirewallAssociation securityPolicyWebApplicationFirewallAssociation = new SecurityPolicyWebApplicationFirewallAssociation();

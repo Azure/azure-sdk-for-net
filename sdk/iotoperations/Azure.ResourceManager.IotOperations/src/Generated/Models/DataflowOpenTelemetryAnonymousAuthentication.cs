@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -17,20 +16,27 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryAnonymousAuthentication"/>. </summary>
         /// <param name="anonymousSettings"> Settings for the anonymous connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="anonymousSettings"/> is null. </exception>
-        public DataflowOpenTelemetryAnonymousAuthentication(DataflowEndpointAuthenticationAnonymous anonymousSettings) : base(DataflowOpenTelemetryAuthenticationMethod.Anonymous)
+        public DataflowOpenTelemetryAnonymousAuthentication(DataflowEndpointAuthenticationAnonymous anonymousSettings)
         {
             Argument.AssertNotNull(anonymousSettings, nameof(anonymousSettings));
 
             AnonymousSettings = anonymousSettings;
+            Method = DataflowOpenTelemetryAuthenticationMethod.Anonymous;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryAnonymousAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="anonymousSettings"> Settings for the anonymous connection. </param>
-        internal DataflowOpenTelemetryAnonymousAuthentication(DataflowOpenTelemetryAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataflowEndpointAuthenticationAnonymous anonymousSettings) : base(@method, additionalBinaryDataProperties)
+        internal DataflowOpenTelemetryAnonymousAuthentication(DataflowOpenTelemetryAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData, DataflowEndpointAuthenticationAnonymous anonymousSettings) : base(method, serializedAdditionalRawData)
         {
             AnonymousSettings = anonymousSettings;
+            Method = method;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryAnonymousAuthentication"/> for deserialization. </summary>
+        internal DataflowOpenTelemetryAnonymousAuthentication()
+        {
         }
 
         /// <summary> Settings for the anonymous connection. </summary>

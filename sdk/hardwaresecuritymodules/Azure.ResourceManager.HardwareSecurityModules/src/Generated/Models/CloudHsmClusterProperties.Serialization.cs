@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.HardwareSecurityModules;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> Properties of a Cloud HSM Cluster. </summary>
-    public partial class CloudHsmClusterProperties : IJsonModel<CloudHsmClusterProperties>
+    public partial class CloudHsmClusterProperties : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudHsmClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCloudHsmClusterProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloudHsmClusterProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudHsmClusterProperties IPersistableModel<CloudHsmClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloudHsmClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudHsmClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudHsmClusterProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(ActivationState))
             {
                 writer.WritePropertyName("activationState"u8);
@@ -88,7 +48,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 writer.WritePropertyName("hsms"u8);
                 writer.WriteStartArray();
-                foreach (CloudHsmProperties item in Hsms)
+                foreach (var item in Hsms)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +58,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (CloudHsmClusterPrivateEndpointConnectionData item in PrivateEndpointConnections)
+                foreach (var item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -119,15 +79,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -136,27 +96,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CloudHsmClusterProperties IJsonModel<CloudHsmClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloudHsmClusterProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CloudHsmClusterProperties IJsonModel<CloudHsmClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudHsmClusterProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudHsmClusterProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CloudHsmClusterProperties DeserializeCloudHsmClusterProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CloudHsmClusterProperties DeserializeCloudHsmClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -168,83 +123,85 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             CloudHsmClusterProvisioningState? provisioningState = default;
             CloudHsmClusterPublicNetworkAccess? publicNetworkAccess = default;
             string statusMessage = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("activationState"u8))
+                if (property.NameEquals("activationState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    activationState = new SecurityDomainActivationState(prop.Value.GetString());
+                    activationState = new SecurityDomainActivationState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("autoGeneratedDomainNameLabelScope"u8))
+                if (property.NameEquals("autoGeneratedDomainNameLabelScope"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoGeneratedDomainNameLabelScope = new AutoGeneratedDomainNameLabelScope(prop.Value.GetString());
+                    autoGeneratedDomainNameLabelScope = new AutoGeneratedDomainNameLabelScope(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("hsms"u8))
+                if (property.NameEquals("hsms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CloudHsmProperties> array = new List<CloudHsmProperties>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(CloudHsmProperties.DeserializeCloudHsmProperties(item, options));
                     }
                     hsms = array;
                     continue;
                 }
-                if (prop.NameEquals("privateEndpointConnections"u8))
+                if (property.NameEquals("privateEndpointConnections"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CloudHsmClusterPrivateEndpointConnectionData> array = new List<CloudHsmClusterPrivateEndpointConnectionData>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(CloudHsmClusterPrivateEndpointConnectionData.DeserializeCloudHsmClusterPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new CloudHsmClusterProvisioningState(prop.Value.GetString());
+                    provisioningState = new CloudHsmClusterProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("publicNetworkAccess"u8))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicNetworkAccess = new CloudHsmClusterPublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new CloudHsmClusterPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("statusMessage"u8))
+                if (property.NameEquals("statusMessage"u8))
                 {
-                    statusMessage = prop.Value.GetString();
+                    statusMessage = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new CloudHsmClusterProperties(
                 activationState,
                 autoGeneratedDomainNameLabelScope,
@@ -253,7 +210,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 provisioningState,
                 publicNetworkAccess,
                 statusMessage,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudHsmClusterProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudHsmClusterProperties IPersistableModel<CloudHsmClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCloudHsmClusterProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudHsmClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -25,7 +25,6 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         private readonly CancellationTokenSource _cancellationToken;
         private bool _disposed;
 
-        internal Task PollingTask => _pollingTask;
         /// <summary>
         /// Creates a new instance of <see cref="AzureKeyVaultConfigurationProvider"/>.
         /// </summary>
@@ -121,14 +120,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         {
             while (!_cancellationToken.IsCancellationRequested)
             {
-                try
-                {
-                    await WaitForReload().ConfigureAwait(false);
-                }
-                catch (OperationCanceledException) when (_cancellationToken.IsCancellationRequested)
-                {
-                    break;
-                }
+                await WaitForReload().ConfigureAwait(false);
                 try
                 {
                     await LoadAsync().ConfigureAwait(false);

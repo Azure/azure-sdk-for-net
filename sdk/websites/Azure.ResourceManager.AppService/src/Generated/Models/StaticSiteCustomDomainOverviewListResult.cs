@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of static site custom domains.
-    /// Serialized Name: StaticSiteCustomDomainOverviewCollection
-    /// </summary>
+    /// <summary> Collection of static site custom domains. </summary>
     internal partial class StaticSiteCustomDomainOverviewListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewListResult"/>. </summary>
-        /// <param name="value">
-        /// The StaticSiteCustomDomainOverviewARMResource items on this page
-        /// Serialized Name: StaticSiteCustomDomainOverviewCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteCustomDomainOverviewListResult(IEnumerable<StaticSiteCustomDomainOverviewData> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteCustomDomainOverviewListResult"/>. </summary>
-        /// <param name="value">
-        /// The StaticSiteCustomDomainOverviewARMResource items on this page
-        /// Serialized Name: StaticSiteCustomDomainOverviewCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: StaticSiteCustomDomainOverviewCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteCustomDomainOverviewListResult(IReadOnlyList<StaticSiteCustomDomainOverviewData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StaticSiteCustomDomainOverviewListResult(IReadOnlyList<StaticSiteCustomDomainOverviewData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The StaticSiteCustomDomainOverviewARMResource items on this page
-        /// Serialized Name: StaticSiteCustomDomainOverviewCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<StaticSiteCustomDomainOverviewData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: StaticSiteCustomDomainOverviewCollection.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

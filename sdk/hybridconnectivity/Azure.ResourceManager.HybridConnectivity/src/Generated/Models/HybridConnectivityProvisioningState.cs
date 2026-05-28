@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -15,67 +14,47 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     public readonly partial struct HybridConnectivityProvisioningState : IEquatable<HybridConnectivityProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="HybridConnectivityProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public HybridConnectivityProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string SucceededValue = "Succeeded";
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="HybridConnectivityProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HybridConnectivityProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static HybridConnectivityProvisioningState Succeeded { get; } = new HybridConnectivityProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static HybridConnectivityProvisioningState Creating { get; } = new HybridConnectivityProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static HybridConnectivityProvisioningState Updating { get; } = new HybridConnectivityProvisioningState(UpdatingValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static HybridConnectivityProvisioningState Failed { get; } = new HybridConnectivityProvisioningState(FailedValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static HybridConnectivityProvisioningState Canceled { get; } = new HybridConnectivityProvisioningState(CanceledValue);
-
         /// <summary> Determines if two <see cref="HybridConnectivityProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridConnectivityProvisioningState left, HybridConnectivityProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="HybridConnectivityProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridConnectivityProvisioningState left, HybridConnectivityProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="HybridConnectivityProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridConnectivityProvisioningState"/>. </summary>
         public static implicit operator HybridConnectivityProvisioningState(string value) => new HybridConnectivityProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="HybridConnectivityProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HybridConnectivityProvisioningState?(string value) => value == null ? null : new HybridConnectivityProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridConnectivityProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(HybridConnectivityProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

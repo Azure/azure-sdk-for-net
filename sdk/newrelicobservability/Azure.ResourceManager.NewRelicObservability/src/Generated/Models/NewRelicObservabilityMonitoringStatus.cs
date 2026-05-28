@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public readonly partial struct NewRelicObservabilityMonitoringStatus : IEquatable<NewRelicObservabilityMonitoringStatus>
     {
         private readonly string _value;
-        /// <summary> monitoring is enabled. </summary>
-        private const string IsEnabledValue = "Enabled";
-        /// <summary> monitoring is disabled. </summary>
-        private const string IsDisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityMonitoringStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NewRelicObservabilityMonitoringStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string IsEnabledValue = "Enabled";
+        private const string IsDisabledValue = "Disabled";
 
         /// <summary> monitoring is enabled. </summary>
         public static NewRelicObservabilityMonitoringStatus IsEnabled { get; } = new NewRelicObservabilityMonitoringStatus(IsEnabledValue);
-
         /// <summary> monitoring is disabled. </summary>
         public static NewRelicObservabilityMonitoringStatus IsDisabled { get; } = new NewRelicObservabilityMonitoringStatus(IsDisabledValue);
-
         /// <summary> Determines if two <see cref="NewRelicObservabilityMonitoringStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NewRelicObservabilityMonitoringStatus left, NewRelicObservabilityMonitoringStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NewRelicObservabilityMonitoringStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NewRelicObservabilityMonitoringStatus left, NewRelicObservabilityMonitoringStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NewRelicObservabilityMonitoringStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilityMonitoringStatus"/>. </summary>
         public static implicit operator NewRelicObservabilityMonitoringStatus(string value) => new NewRelicObservabilityMonitoringStatus(value);
 
-        /// <summary> Converts a string to a <see cref="NewRelicObservabilityMonitoringStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicObservabilityMonitoringStatus?(string value) => value == null ? null : new NewRelicObservabilityMonitoringStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NewRelicObservabilityMonitoringStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NewRelicObservabilityMonitoringStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

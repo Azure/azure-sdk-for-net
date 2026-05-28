@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task ApplyNetworkConfigurationUpdates()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -52,7 +51,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task Backup_Restore()
         {
             // Backup
@@ -72,7 +70,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task Get()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -81,7 +78,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetAvailableApiManagementServiceSkus()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -90,7 +86,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetNetworkStatusByLocation()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -99,7 +94,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetNetworkStatuses()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -108,7 +102,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetOutboundNetworkDependenciesEndpoints()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -117,7 +110,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetPolicyDescriptions()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -125,15 +117,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetPortalSettings()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
-            Assert.DoesNotThrow(() => apiManagementService.GetPortalSettingsAsync());
+            Assert.DoesNotThrow(()=>apiManagementService.GetPortalSettingsAsync());
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetProductsByTags()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -142,7 +132,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetQuotaByCounterKeys()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -150,7 +139,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetQuotaByPeriodKey()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -158,7 +146,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetRegions()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -167,7 +154,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByApi()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -176,7 +162,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByGeo()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -185,7 +170,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByOperation()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -194,7 +178,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByProduct()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -203,7 +186,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByRequest()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -212,7 +194,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsBySubscription()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -221,7 +202,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByTime()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -230,7 +210,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetReportsByUser()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -239,7 +218,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetSsoToken()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -248,7 +226,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetTagResources()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -257,7 +234,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetTenantAccessInfo()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -266,7 +242,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task GetTenantConfigurationSyncState()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -288,7 +263,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task TenantConfiguration_Deploy_Save_Get()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -302,7 +276,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task UpdateQuotaByCounterKeys()
         {
             var apiManagementService = await GetApiManagementServiceAsync();
@@ -315,7 +288,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        [Ignore("Recording mismatch - needs re-recording. See https://github.com/Azure/azure-sdk-for-net/issues/57247")]
         public async Task UpdateQuotaByPeriodKey()
         {
             var apiManagementService = await GetApiManagementServiceAsync();

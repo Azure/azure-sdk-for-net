@@ -10,14 +10,18 @@ using System;
 namespace Azure.ResourceManager.ContainerRegistry
 {
     [AttributeUsage(AttributeTargets.Property)]
-    internal partial class WirePathAttribute : Attribute
+    internal class WirePathAttribute : Attribute
     {
         private string _wirePath;
 
-        /// <param name="wirePath"> The wire path. </param>
         public WirePathAttribute(string wirePath)
         {
             _wirePath = wirePath;
+        }
+
+        public override string ToString()
+        {
+            return _wirePath;
         }
     }
 }

@@ -15,7 +15,6 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
-using Azure.Storage.Shared;
 
 namespace Azure.Storage.Blobs
 {
@@ -23,27 +22,6 @@ namespace Azure.Storage.Blobs
     {
         private const string _operationName = nameof(BlobBaseClient) + "." + nameof(BlobBaseClient.DownloadTo);
         private const string _innerOperationName = nameof(BlobBaseClient) + "." + nameof(BlobBaseClient.DownloadStreaming);
-
-        private const int Crc64Len = Constants.StorageCrc64SizeInBytes;
-
-        /// <summary>
-        /// Holds the result of downloading and buffering a single range into memory.
-        /// The caller is responsible for disposing BufferedStream, which returns its
-        /// rented ArrayPool buffers.
-        /// </summary>
-        private readonly struct BufferedDownloadResult
-        {
-            public readonly PooledMemoryStream BufferedStream;
-            public readonly byte[] PartitionChecksum;
-            public readonly long ContentLength;
-
-            public BufferedDownloadResult(PooledMemoryStream bufferedStream, byte[] partitionChecksum, long contentLength)
-            {
-                BufferedStream = bufferedStream;
-                PartitionChecksum = partitionChecksum;
-                ContentLength = contentLength;
-            }
-        }
 
         /// <summary>
         /// The client used to download the blob.
@@ -71,13 +49,12 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private readonly StorageChecksumAlgorithm _validationAlgorithm;
         private readonly int _checksumSize;
-
         private bool UseMasterCrc => _validationAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64;
-        private StorageCrc64HashAlgorithm _masterCrcCalculator;
+        private StorageCrc64HashAlgorithm _masterCrcCalculator = null;
 
         /// <summary>
         /// The validation options to send to individual download requests.
-        /// Tells the client not to perform the responseChecksum validation, leaving
+        /// Tells the client not to perform the checksum validation, leaving
         /// it to this class to perform that work.
         /// </summary>
         private DownloadTransferValidationOptions ValidationOptions
@@ -90,8 +67,6 @@ namespace Azure.Storage.Blobs
         private readonly IProgress<long> _progress;
 
         private readonly ArrayPool<byte> _arrayPool;
-
-        private readonly int DefaultConcurrentTransfersCount = Math.Min(Math.Max(Environment.ProcessorCount * 2, 8), 32);
 
         public PartitionedDownloader(
             BlobBaseClient client,
@@ -111,9 +86,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _maxWorkerCount = CompatSwitches.UseLegacyDefaultConcurrency
-                    ? Constants.Blob.Block.LegacyDefaultConcurrentTransfersCount
-                    : DefaultConcurrentTransfersCount;
+                _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
             }
 
             // Set _rangeSize
@@ -151,7 +124,6 @@ namespace Azure.Storage.Blobs
 
             _validationAlgorithm = transferValidation.ChecksumAlgorithm;
             _checksumSize = ContentHasher.GetHashSizeInBytes(_validationAlgorithm);
-            _masterCrcCalculator = UseMasterCrc ? StorageCrc64HashAlgorithm.Create() : null;
             _progress = progress;
 
             /* Unlike partitioned upload, download cannot tell ahead of time if it will split and/or parallelize
@@ -171,15 +143,9 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            using DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope(_operationName);
-
-            conditions.ValidateConditionsNotPresent(
-                invalidConditions:
-                    BlobRequestConditionProperty.AccessTierIfModifiedSince
-                    | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
-                operationName: nameof(BlobBaseClient.DownloadTo),
-                parameterName: nameof(conditions));
-
+            DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope(_operationName);
+            using DisposableBucket disposables = new DisposableBucket();
+            Queue<Task<Response<BlobDownloadStreamingResult>>> runningTasks = null;
             try
             {
                 scope.Start();
@@ -254,27 +220,20 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Destination wrapped in master crc step if needed (must wait until after encryption wrap check)
+                Memory<byte> composedCrc = default;
                 if (UseMasterCrc)
                 {
+                    _masterCrcCalculator = StorageCrc64HashAlgorithm.Create();
                     destination = ChecksumCalculatingStream.GetWriteStream(destination, _masterCrcCalculator.Append);
+                    disposables.Add(_arrayPool.RentAsMemoryDisposable(
+                        Constants.StorageCrc64SizeInBytes, out composedCrc));
+                    composedCrc.Span.Clear();
                 }
 
                 // If the first segment was the entire blob, we'll copy that to
                 // the output stream and finish now
-                long initialLength;
-                long totalLength;
-                // Get blob content length downloaded from content range when available to handle transit encoding
-                if (string.IsNullOrWhiteSpace(initialResponse.Value.Details.ContentRange))
-                {
-                    initialLength = initialResponse.Value.Details.ContentLength;
-                    totalLength = 0;
-                }
-                else
-                {
-                    ContentRange recievedRange = ContentRange.Parse(initialResponse.Value.Details.ContentRange);
-                    initialLength = recievedRange.GetRangeLength();
-                    totalLength = recievedRange.TotalResourceLength.Value;
-                }
+                long initialLength = initialResponse.Value.Details.ContentLength;
+                long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
                 if (initialLength == totalLength)
                 {
                     await HandleOneShotDownload(initialResponse, destination, async, cancellationToken)
@@ -287,169 +246,145 @@ namespace Azure.Storage.Blobs
                 // downloading the remaining segments
                 ETag etag = initialResponse.Value.Details.ETag;
                 BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
-                IEnumerable<HttpRange> ranges = GetRanges(initialLength, totalLength);
 
-                // Rule checker cannot understand this section, but this
-                // massively reduces code duplication.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                                // Rule checker cannot understand this section, but this
+                                // massively reduces code duplication.
                 int effectiveWorkerCount = async ? _maxWorkerCount : 1;
                 if (effectiveWorkerCount > 1)
                 {
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    await ParallelDownloadToAsync(
-                        destination, effectiveWorkerCount, initialResponse, ranges, conditionsWithEtag, cancellationToken)
-                        .ConfigureAwait(false);
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                    runningTasks = new();
+                    runningTasks.Enqueue(Task.FromResult(initialResponse));
                 }
                 else
                 {
-                    await SequentialDownloadToInternal(
-                        destination, initialResponse, ranges, conditionsWithEtag, async, cancellationToken)
-                        .ConfigureAwait(false);
+                    using (_arrayPool.RentAsMemoryDisposable(_checksumSize, out Memory<byte> partitionChecksum))
+                    {
+                        await CopyToInternal(initialResponse, destination, partitionChecksum, async, cancellationToken).ConfigureAwait(false);
+                        if (UseMasterCrc)
+                        {
+                            StorageCrc64Composer.Compose(
+                                (composedCrc.ToArray(), 0L),
+                                (partitionChecksum.ToArray(), initialResponse.Value.Details.ContentLength)
+                            ).CopyTo(composedCrc);
+                        }
+                    }
                 }
 
+                // Fill the queue with tasks to download each of the remaining
+                // ranges in the blob
+                foreach (HttpRange httpRange in GetRanges(initialLength, totalLength))
+                {
+                    ValueTask<Response<BlobDownloadStreamingResult>> responseValueTask = _client
+                        .DownloadStreamingInternal(
+                            httpRange,
+                            conditionsWithEtag,
+                            ValidationOptions,
+                            _progress,
+                            _innerOperationName,
+                            async,
+                            cancellationToken);
+                    if (runningTasks != null)
+                    {
+                        // Add the next Task (which will start the download but
+                        // return before it's completed downloading)
+                        runningTasks.Enqueue(responseValueTask.AsTask());
+
+                        // If we have fewer tasks than alotted workers, then just
+                        // continue adding tasks until we have effectiveWorkerCount
+                        // running in parallel
+                        if (runningTasks.Count < effectiveWorkerCount)
+                        {
+                            continue;
+                        }
+
+                        // Once all the workers are busy, wait for the first
+                        // segment to finish downloading before we create more work
+                        await ConsumeQueuedTask().ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        Response<BlobDownloadStreamingResult> result = await responseValueTask.ConfigureAwait(false);
+                        using (_arrayPool.RentAsMemoryDisposable(_checksumSize, out Memory<byte> partitionChecksum))
+                        {
+                            await CopyToInternal(result, destination, partitionChecksum, async, cancellationToken).ConfigureAwait(false);
+                            if (UseMasterCrc)
+                            {
+                                StorageCrc64Composer.Compose(
+                                    (composedCrc.ToArray(), 0L),
+                                    (partitionChecksum.ToArray(), result.Value.Details.ContentLength)
+                                ).CopyTo(composedCrc);
+                            }
+                        }
+                    }
+                }
+
+                // Wait for all of the remaining segments to download
+                if (runningTasks != null)
+                {
+                    while (runningTasks.Count > 0)
+                    {
+                        await ConsumeQueuedTask().ConfigureAwait(false);
+                    }
+                }
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+
+                await FinalizeDownloadInternal(destination, composedCrc, async, cancellationToken)
+                    .ConfigureAwait(false);
                 return initialResponse.GetRawResponse();
+
+                // Wait for the first segment in the queue of tasks to complete
+                // downloading and copy it to the destination stream
+                async Task ConsumeQueuedTask()
+                {
+                    // Don't need to worry about 304s here because the ETag
+                    // condition will turn into a 412 and throw a proper
+                    // RequestFailedException
+                    Response<BlobDownloadStreamingResult> response =
+                        await runningTasks.Dequeue().ConfigureAwait(false);
+
+                    // Even though the BlobDownloadInfo is returned immediately,
+                    // CopyToAsync causes ConsumeQueuedTask to wait until the
+                    // download is complete
+
+                    using (_arrayPool.RentAsMemoryDisposable(_checksumSize, out Memory<byte> partitionChecksum))
+                    {
+                        await CopyToInternal(
+                            response,
+                            destination,
+                            partitionChecksum,
+                            async,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                            if (UseMasterCrc)
+                            {
+                                StorageCrc64Composer.Compose(
+                                    (composedCrc.ToArray(), 0L),
+                                    (partitionChecksum.ToArray(), response.Value.Details.ContentLength)
+                                ).CopyTo(composedCrc);
+                            }
+                    }
+                }
             }
             catch (Exception ex)
             {
                 scope.Failed(ex);
                 throw;
             }
-        }
-
-        private async Task ParallelDownloadToAsync(
-            Stream destination,
-            int parallel,
-            Response<BlobDownloadStreamingResult> initialResponse,
-            IEnumerable<HttpRange> ranges,
-            BlobRequestConditions conditionsWithEtag,
-            CancellationToken cancellationToken)
-        {
-            BlobErrors.VerifyParallelismGreaterThanOne(parallel);
-
-            Queue<Task<BufferedDownloadResult>> bufferedTasks = new();
-
-            // Easiest to rent whether or not we need it. It's just 8 bytes.
-            using IDisposable _ = _arrayPool.RentDisposable(Crc64Len, out byte[] composedCrcBuf);
-            composedCrcBuf.Clear();
-
-            // Kick off downloads for subsequent ranges immediately.
-            // They will download and buffer in the background while we stream the initial response below.
-            // It is okay if some of these complete before we finish streaming the initial response. Due to
-            // the sequential nature of this download, we cannot consume their output or begin new buffers
-            // until we are done with the initial response.
-            using IEnumerator<HttpRange> remainingRanges = ranges.GetEnumerator();
-            // -1 makes space for the initial response handles separately
-            while (bufferedTasks.Count < parallel-1 && remainingRanges.MoveNext())
+            finally
             {
-                bufferedTasks.Enqueue(DownloadAndBufferAsync(
-                    remainingRanges.Current, conditionsWithEtag, cancellationToken));
-            }
-
-            // Stream the initial response directly to the destination
-            // without buffering content into a rented array.
-            using (_arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum))
-            {
-                await CopyToInternal(
-                    response: initialResponse,
-                    destination: destination,
-                    checksumBuffer: new(partitionChecksum, 0, _checksumSize),
-                    async: true,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-                if (UseMasterCrc)
+#pragma warning disable AZC0110
+                if (runningTasks != null)
                 {
-                    StorageCrc64Composer.Compose(
-                        (composedCrcBuf, 0L),
-                        (partitionChecksum, initialResponse.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
-                            ?? initialResponse.Value.Details.ContentLength)
-                    ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
-                }
-            }
-
-            // Fill the queue with tasks to download each of the remaining
-            // ranges in the blob
-            while (remainingRanges.MoveNext())
-            {
-                while (bufferedTasks.Count >= parallel)
-                {
-                    await ConsumeBufferedTask().ConfigureAwait(false);
-                }
-                bufferedTasks.Enqueue(DownloadAndBufferAsync(
-                    remainingRanges.Current, conditionsWithEtag, cancellationToken));
-            }
-
-            while (bufferedTasks.Count > 0)
-            {
-                await ConsumeBufferedTask().ConfigureAwait(false);
-            }
-
-            await FinalizeDownloadInternal(destination, composedCrcBuf?.AsMemory(0, Crc64Len) ?? default, async: true, cancellationToken)
-                .ConfigureAwait(false);
-
-            // Wait for the first buffered segment in the queue to complete,
-            // write its data to the destination, and return buffers to the pool
-            async Task ConsumeBufferedTask()
-            {
-                BufferedDownloadResult result = await bufferedTasks.Dequeue().ConfigureAwait(false);
-                try
-                {
-                    // Write the fully-buffered data to the destination stream.
-                    // Since the data is already in memory, this is very fast
-                    // compared to streaming from the network.
-                    result.BufferedStream.Position = 0;
-                    await result.BufferedStream.CopyToInternal(destination, async: true, cancellationToken).ConfigureAwait(false);
-
-                    if (UseMasterCrc && result.PartitionChecksum != null)
+                    async Task DisposeStreamAsync(Task<Response<BlobDownloadStreamingResult>> task)
                     {
-                        StorageCrc64Composer.Compose(
-                            (composedCrcBuf, 0L),
-                            (result.PartitionChecksum, result.ContentLength)
-                        ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
+                        Response<BlobDownloadStreamingResult> response = await task.ConfigureAwait(false);
+                        response.Value.Content.Dispose();
                     }
+                    await Task.WhenAll(runningTasks.Select(DisposeStreamAsync)).ConfigureAwait(false);
                 }
-                finally
-                {
-                    result.BufferedStream.Dispose();
-                }
-            }
-        }
-
-        private async Task SequentialDownloadToInternal(
-            Stream destination,
-            Response<BlobDownloadStreamingResult> initialResponse,
-            IEnumerable<HttpRange> ranges,
-            BlobRequestConditions conditionsWithEtag,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            // Easiest to rent whether or not we need it. It's just 8 bytes.
-            using IDisposable _composedCrc = _arrayPool.RentDisposable(Crc64Len, out byte[] composedCrcBuf);
-            using IDisposable _partition = _arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum);
-            composedCrcBuf.Clear();
-
-            List<Func<Task<Response<BlobDownloadStreamingResult>>>> allResponses = [() => Task.FromResult(initialResponse)];
-            allResponses.AddRange(ranges.Select<HttpRange, Func<Task<Response<BlobDownloadStreamingResult>>>>(
-                range => async () => await _client.DownloadStreamingInternal(
-                    range,
-                    conditionsWithEtag,
-                    ValidationOptions,
-                    _progress,
-                    _innerOperationName,
-                    async,
-                    cancellationToken).ConfigureAwait(false)
-                ));
-
-            foreach (Func<Task<Response<BlobDownloadStreamingResult>>> getResponse in allResponses)
-            {
-                partitionChecksum.Clear();
-                await CopyToInternal(await getResponse().ConfigureAwait(false), destination, new(partitionChecksum, 0, _checksumSize), async, cancellationToken).ConfigureAwait(false);
-                if (UseMasterCrc)
-                {
-                    StorageCrc64Composer.Compose(
-                        (composedCrcBuf, 0L),
-                        (partitionChecksum, initialResponse.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
-                            ?? initialResponse.Value.Details.ContentLength)
-                    ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
-                }
+#pragma warning restore AZC0110
+                scope.Dispose();
             }
         }
 
@@ -474,7 +409,7 @@ namespace Azure.Storage.Blobs
 
         private async Task FinalizeDownloadInternal(
             Stream destination,
-            ReadOnlyMemory<byte> composedCrc,
+            Memory<byte> composedCrc,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -490,6 +425,20 @@ namespace Azure.Storage.Blobs
             }
         }
 
+        private static long ParseRangeTotalLength(string range)
+        {
+            if (range == null)
+            {
+                return 0;
+            }
+            int lengthSeparator = range.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
+            if (lengthSeparator == -1)
+            {
+                throw BlobErrors.ParsingFullHttpRangeFailed(range);
+            }
+            return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
+        }
+
         private async Task CopyToInternal(
             Response<BlobDownloadStreamingResult> response,
             Stream destination,
@@ -498,9 +447,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            // if structured message, this crc is validated in the decoding process. don't decode it here.
-            bool structuredMessage = response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader);
-            using IHasher hasher = structuredMessage ? null : ContentHasher.GetHasherFromAlgorithmId(_validationAlgorithm);
+            using IHasher hasher = ContentHasher.GetHasherFromAlgorithmId(_validationAlgorithm);
             using Stream rawSource = response.Value.Content;
             using Stream source = hasher != null
                 ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
@@ -512,13 +459,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken)
                 .ConfigureAwait(false);
 
-            // with structured message, the message integrity will already be validated,
-            // but we can still get the responseChecksum out of the response object
-            if (structuredMessage)
-            {
-                response.Value.Details.ContentCrc?.CopyTo(checksumBuffer.Span);
-            }
-            else if (hasher != null)
+            if (hasher != null)
             {
                 hasher.GetFinalHash(checksumBuffer.Span);
                 (ReadOnlyMemory<byte> checksum, StorageChecksumAlgorithm _)
@@ -527,104 +468,6 @@ namespace Azure.Storage.Blobs
                 {
                     throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Downloads a range and buffers the full response body into memory,
-        /// performing responseChecksum validation during the read. This enables true
-        /// parallel network I/O since each task fully consumes its HTTP response.
-        /// </summary>
-        private async Task<BufferedDownloadResult> DownloadAndBufferAsync(
-            HttpRange range,
-            BlobRequestConditions conditions,
-            CancellationToken cancellationToken)
-        {
-            Response<BlobDownloadStreamingResult> response = await _client.DownloadStreamingInternal(
-                range,
-                conditions,
-                ValidationOptions,
-                _progress,
-                _innerOperationName,
-                async: true,
-                cancellationToken).ConfigureAwait(false);
-
-            return await BufferResponseAsync(response, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Reads a download response fully into a <see cref="PooledMemoryStream"/> and
-        /// validates its responseChecksum. The caller is responsible for disposing the
-        /// returned stream, which returns its rented ArrayPool buffers.
-        /// </summary>
-        private async Task<BufferedDownloadResult> BufferResponseAsync(
-            Response<BlobDownloadStreamingResult> response,
-            CancellationToken cancellationToken)
-        {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-
-            bool structuredMessage = response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader);
-            using IHasher hasher = structuredMessage ? null : ContentHasher.GetHasherFromAlgorithmId(_validationAlgorithm);
-            using Stream rawSource = response.Value.Content;
-            using Stream source = hasher != null
-                ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
-                : rawSource;
-
-            long contentLen = response.Value.Details.ContentLength;
-            PooledMemoryStream bufferedStream = new PooledMemoryStream(_arrayPool, Constants.MB);
-            byte[] partitionChecksum = _checksumSize > 0 ? new byte[_checksumSize] : null;
-
-            try
-            {
-                await source.CopyToExactInternal(
-                    dst: bufferedStream,
-                    count: contentLen,
-                    async: true,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-
-                // Ensure there is no additional data beyond the declared Content-Length.
-                // Probe into a tiny dedicated buffer (not the data buffer) so that an upstream
-                // bug returning a stale extraByte count can't silently corrupt payload bytes.
-                using (_arrayPool.RentDisposable(1, out byte[] extraBuffer))
-                {
-                    int extraByte = await source.ReadAsync(
-                        buffer: extraBuffer,
-                        offset: 0,
-                        count: 1,
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                    BlobErrors.VerifyNoExtraData(extraByte);
-                }
-
-                // Calculate and validate per-chunk responseChecksum
-                if (structuredMessage)
-                {
-                    if (partitionChecksum != null)
-                    {
-                        response.Value.Details.ContentCrc?.CopyTo(partitionChecksum.AsSpan());
-                    }
-                }
-                else if (hasher != null && partitionChecksum != null)
-                {
-                    hasher.GetFinalHash(partitionChecksum.AsSpan(0, _checksumSize));
-                    (ReadOnlyMemory<byte> responseChecksum, StorageChecksumAlgorithm _)
-                        = ContentHasher.GetResponseChecksumOrDefault(response.GetRawResponse());
-                    if (!partitionChecksum.AsSpan(0, _checksumSize).SequenceEqual(responseChecksum.Span))
-                    {
-                        throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
-                    }
-                }
-
-                long chunkContentLength = response.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
-                    ?? response.Value.Details.ContentLength;
-
-                return new BufferedDownloadResult(bufferedStream, partitionChecksum, chunkContentLength);
-            }
-            catch
-            {
-                bufferedStream.Dispose();
-                throw;
             }
         }
 

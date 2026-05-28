@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> The private endpoint resource. </summary>
+    /// <summary> The Private Endpoint resource. </summary>
     internal partial class PrivateEndpoint
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpoint"/>. </summary>
         public PrivateEndpoint()
@@ -23,15 +51,15 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpoint"/>. </summary>
-        /// <param name="id"> The resource identifier of the private endpoint. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpoint(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="stringId"> The ARM identifier for Private Endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpoint(string stringId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            StringId = stringId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource identifier of the private endpoint. </summary>
-        public ResourceIdentifier Id { get; }
+        /// <summary> The ARM identifier for Private Endpoint. </summary>
+        public string StringId { get; }
     }
 }

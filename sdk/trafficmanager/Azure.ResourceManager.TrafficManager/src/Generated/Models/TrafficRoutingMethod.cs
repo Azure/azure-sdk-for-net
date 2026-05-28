@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
     public readonly partial struct TrafficRoutingMethod : IEquatable<TrafficRoutingMethod>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficRoutingMethod"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TrafficRoutingMethod(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string PerformanceValue = "Performance";
         private const string PriorityValue = "Priority";
         private const string WeightedValue = "Weighted";
@@ -22,64 +29,35 @@ namespace Azure.ResourceManager.TrafficManager.Models
         private const string MultiValueValue = "MultiValue";
         private const string SubnetValue = "Subnet";
 
-        /// <summary> Initializes a new instance of <see cref="TrafficRoutingMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TrafficRoutingMethod(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Performance. </summary>
+        /// <summary> Performance. </summary>
         public static TrafficRoutingMethod Performance { get; } = new TrafficRoutingMethod(PerformanceValue);
-
-        /// <summary> Gets the Priority. </summary>
+        /// <summary> Priority. </summary>
         public static TrafficRoutingMethod Priority { get; } = new TrafficRoutingMethod(PriorityValue);
-
-        /// <summary> Gets the Weighted. </summary>
+        /// <summary> Weighted. </summary>
         public static TrafficRoutingMethod Weighted { get; } = new TrafficRoutingMethod(WeightedValue);
-
-        /// <summary> Gets the Geographic. </summary>
+        /// <summary> Geographic. </summary>
         public static TrafficRoutingMethod Geographic { get; } = new TrafficRoutingMethod(GeographicValue);
-
-        /// <summary> Gets the MultiValue. </summary>
+        /// <summary> MultiValue. </summary>
         public static TrafficRoutingMethod MultiValue { get; } = new TrafficRoutingMethod(MultiValueValue);
-
-        /// <summary> Gets the Subnet. </summary>
+        /// <summary> Subnet. </summary>
         public static TrafficRoutingMethod Subnet { get; } = new TrafficRoutingMethod(SubnetValue);
-
         /// <summary> Determines if two <see cref="TrafficRoutingMethod"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrafficRoutingMethod left, TrafficRoutingMethod right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="TrafficRoutingMethod"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrafficRoutingMethod left, TrafficRoutingMethod right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="TrafficRoutingMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficRoutingMethod"/>. </summary>
         public static implicit operator TrafficRoutingMethod(string value) => new TrafficRoutingMethod(value);
 
-        /// <summary> Converts a string to a <see cref="TrafficRoutingMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator TrafficRoutingMethod?(string value) => value == null ? null : new TrafficRoutingMethod(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrafficRoutingMethod other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(TrafficRoutingMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -8,97 +8,91 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Elastic
 {
     /// <summary>
     /// A class representing a collection of <see cref="ElasticTagRuleResource"/> and their operations.
     /// Each <see cref="ElasticTagRuleResource"/> in the collection will belong to the same instance of <see cref="ElasticMonitorResource"/>.
-    /// To get a <see cref="ElasticTagRuleCollection"/> instance call the GetElasticTagRules method from an instance of <see cref="ElasticMonitorResource"/>.
+    /// To get an <see cref="ElasticTagRuleCollection"/> instance call the GetElasticTagRules method from an instance of <see cref="ElasticMonitorResource"/>.
     /// </summary>
     public partial class ElasticTagRuleCollection : ArmCollection, IEnumerable<ElasticTagRuleResource>, IAsyncEnumerable<ElasticTagRuleResource>
     {
-        private readonly ClientDiagnostics _tagRulesClientDiagnostics;
-        private readonly TagRules _tagRulesRestClient;
+        private readonly ClientDiagnostics _elasticTagRuleTagRulesClientDiagnostics;
+        private readonly TagRulesRestOperations _elasticTagRuleTagRulesRestClient;
 
-        /// <summary> Initializes a new instance of ElasticTagRuleCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticTagRuleCollection"/> class for mocking. </summary>
         protected ElasticTagRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticTagRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ElasticTagRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ElasticTagRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ElasticTagRuleResource.ResourceType, out string elasticTagRuleApiVersion);
-            _tagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticTagRuleResource.ResourceType.Namespace, Diagnostics);
-            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Endpoint, elasticTagRuleApiVersion ?? "2025-06-01");
-            ValidateResourceId(id);
+            _elasticTagRuleTagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticTagRuleResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ElasticTagRuleResource.ResourceType, out string elasticTagRuleTagRulesApiVersion);
+            _elasticTagRuleTagRulesRestClient = new TagRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticTagRuleTagRulesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ElasticMonitorResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticMonitorResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ElasticMonitorResource.ResourceType), nameof(id));
         }
 
         /// <summary>
-        /// Create or update a tag rule set for a given Elastic monitor resource, enabling fine-grained control over observability based on resource tags.
+        /// Create or update a tag rule set for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagRules_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleSetName"></param>
+        /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
         /// <param name="data"> request body of MonitoringTagRules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ElasticTagRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleSetName, ElasticTagRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.CreateOrUpdate");
+            using var scope = _elasticTagRuleTagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, ElasticTagRuleData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ElasticArmOperation<ElasticTagRuleResource> operation = new ElasticArmOperation<ElasticTagRuleResource>(Response.FromValue(new ElasticTagRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _elasticTagRuleTagRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _elasticTagRuleTagRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ElasticArmOperation<ElasticTagRuleResource>(Response.FromValue(new ElasticTagRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -109,50 +103,47 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Create or update a tag rule set for a given Elastic monitor resource, enabling fine-grained control over observability based on resource tags.
+        /// Create or update a tag rule set for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagRules_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleSetName"></param>
+        /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
         /// <param name="data"> request body of MonitoringTagRules. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ElasticTagRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleSetName, ElasticTagRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.CreateOrUpdate");
+            using var scope = _elasticTagRuleTagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, ElasticTagRuleData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ElasticArmOperation<ElasticTagRuleResource> operation = new ElasticArmOperation<ElasticTagRuleResource>(Response.FromValue(new ElasticTagRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _elasticTagRuleTagRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data, cancellationToken);
+                var uri = _elasticTagRuleTagRulesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ElasticArmOperation<ElasticTagRuleResource>(Response.FromValue(new ElasticTagRuleResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -163,45 +154,41 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get detailed information about a tag rule set for a given Elastic monitor resource.
+        /// Get a tag rule set for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<Response<ElasticTagRuleResource>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.Get");
+            using var scope = _elasticTagRuleTagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
+                var response = await _elasticTagRuleTagRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ElasticTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,45 +199,41 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// Get detailed information about a tag rule set for a given Elastic monitor resource.
+        /// Get a tag rule set for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<ElasticTagRuleResource> Get(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.Get");
+            using var scope = _elasticTagRuleTagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ElasticTagRuleData> response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
+                var response = _elasticTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ElasticTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,53 +244,53 @@ namespace Azure.ResourceManager.Elastic
         }
 
         /// <summary>
-        /// List all tag rules for a given Elastic monitor resource, helping you manage fine-grained control over observability based on resource tags.
+        /// List the tag rules for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagRules_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ElasticTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticTagRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new TagRulesGetAllAsyncCollectionResultOfT(
-                _tagRulesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ElasticTagRuleCollection.GetAll"), data => new ElasticTagRuleResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticTagRuleResource(Client, ElasticTagRuleData.DeserializeElasticTagRuleData(e)), _elasticTagRuleTagRulesClientDiagnostics, Pipeline, "ElasticTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List all tag rules for a given Elastic monitor resource, helping you manage fine-grained control over observability based on resource tags.
+        /// List the tag rules for a given monitor resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagRules_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,67 +298,45 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> A collection of <see cref="ElasticTagRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticTagRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ElasticTagRuleData, ElasticTagRuleResource>(new TagRulesGetAllCollectionResultOfT(
-                _tagRulesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ElasticTagRuleCollection.GetAll"), data => new ElasticTagRuleResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticTagRuleResource(Client, ElasticTagRuleData.DeserializeElasticTagRuleData(e)), _elasticTagRuleTagRulesClientDiagnostics, Pipeline, "ElasticTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.Exists");
+            using var scope = _elasticTagRuleTagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ElasticTagRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ElasticTagRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _elasticTagRuleTagRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,50 +350,36 @@ namespace Azure.ResourceManager.Elastic
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.Exists");
+            using var scope = _elasticTagRuleTagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ElasticTagRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ElasticTagRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _elasticTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -446,54 +393,38 @@ namespace Azure.ResourceManager.Elastic
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<NullableResponse<ElasticTagRuleResource>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.GetIfExists");
+            using var scope = _elasticTagRuleTagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ElasticTagRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ElasticTagRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _elasticTagRuleTagRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ElasticTagRuleResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ElasticTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -507,54 +438,38 @@ namespace Azure.ResourceManager.Elastic
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}/tagRules/{ruleSetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TagRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>TagRules_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticTagRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleSetName"> Tag Rule Set resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual NullableResponse<ElasticTagRuleResource> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
-            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.GetIfExists");
+            using var scope = _elasticTagRuleTagRulesClientDiagnostics.CreateScope("ElasticTagRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleSetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ElasticTagRuleData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ElasticTagRuleData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ElasticTagRuleData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _elasticTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ElasticTagRuleResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ElasticTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -574,7 +489,6 @@ namespace Azure.ResourceManager.Elastic
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ElasticTagRuleResource> IAsyncEnumerable<ElasticTagRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

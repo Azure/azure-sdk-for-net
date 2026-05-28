@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.NotificationHubs;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Description of a NotificationHub WnsCredential. </summary>
-    public partial class NotificationHubWnsCredential : IJsonModel<NotificationHubWnsCredential>
+    public partial class NotificationHubWnsCredential : IUtf8JsonSerializable, IJsonModel<NotificationHubWnsCredential>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NotificationHubWnsCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubWnsCredential>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNotificationHubWnsCredential(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubWnsCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubWnsCredential>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NotificationHubWnsCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NotificationHubWnsCredential IPersistableModel<NotificationHubWnsCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NotificationHubWnsCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NotificationHubWnsCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,22 +28,49 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubWnsCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubWnsCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PackageSid))
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                writer.WritePropertyName("packageSid"u8);
+                writer.WriteStringValue(PackageSid);
+            }
+            if (Optional.IsDefined(SecretKey))
+            {
+                writer.WritePropertyName("secretKey"u8);
+                writer.WriteStringValue(SecretKey);
+            }
+            if (Optional.IsDefined(WindowsLiveEndpoint))
+            {
+                writer.WritePropertyName("windowsLiveEndpoint"u8);
+                writer.WriteStringValue(WindowsLiveEndpoint.AbsoluteUri);
+            }
+            if (Optional.IsDefined(CertificateKey))
+            {
+                writer.WritePropertyName("certificateKey"u8);
+                writer.WriteStringValue(CertificateKey);
+            }
+            if (Optional.IsDefined(WnsCertificate))
+            {
+                writer.WritePropertyName("wnsCertificate"u8);
+                writer.WriteStringValue(WnsCertificate);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -93,46 +79,120 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NotificationHubWnsCredential IJsonModel<NotificationHubWnsCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NotificationHubWnsCredential JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NotificationHubWnsCredential IJsonModel<NotificationHubWnsCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationHubWnsCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubWnsCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNotificationHubWnsCredential(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NotificationHubWnsCredential DeserializeNotificationHubWnsCredential(JsonElement element, ModelReaderWriterOptions options)
+        internal static NotificationHubWnsCredential DeserializeNotificationHubWnsCredential(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            WnsCredentialProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string packageSid = default;
+            string secretKey = default;
+            Uri windowsLiveEndpoint = default;
+            string certificateKey = default;
+            string wnsCertificate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    properties = WnsCredentialProperties.DeserializeWnsCredentialProperties(prop.Value, options);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("packageSid"u8))
+                        {
+                            packageSid = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("secretKey"u8))
+                        {
+                            secretKey = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("windowsLiveEndpoint"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            windowsLiveEndpoint = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("certificateKey"u8))
+                        {
+                            certificateKey = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("wnsCertificate"u8))
+                        {
+                            wnsCertificate = property0.Value.GetString();
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new NotificationHubWnsCredential(properties, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NotificationHubWnsCredential(
+                packageSid,
+                secretKey,
+                windowsLiveEndpoint,
+                certificateKey,
+                wnsCertificate,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NotificationHubWnsCredential>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubWnsCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NotificationHubWnsCredential IPersistableModel<NotificationHubWnsCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NotificationHubWnsCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeNotificationHubWnsCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NotificationHubWnsCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

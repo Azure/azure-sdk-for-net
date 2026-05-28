@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerReplicationRole : IEquatable<MySqlFlexibleServerReplicationRole>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerReplicationRole"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MySqlFlexibleServerReplicationRole(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NoneValue = "None";
         private const string SourceValue = "Source";
         private const string ReplicaValue = "Replica";
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerReplicationRole"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MySqlFlexibleServerReplicationRole(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static MySqlFlexibleServerReplicationRole None { get; } = new MySqlFlexibleServerReplicationRole(NoneValue);
-
-        /// <summary> Gets the Source. </summary>
+        /// <summary> Source. </summary>
         public static MySqlFlexibleServerReplicationRole Source { get; } = new MySqlFlexibleServerReplicationRole(SourceValue);
-
-        /// <summary> Gets the Replica. </summary>
+        /// <summary> Replica. </summary>
         public static MySqlFlexibleServerReplicationRole Replica { get; } = new MySqlFlexibleServerReplicationRole(ReplicaValue);
-
         /// <summary> Determines if two <see cref="MySqlFlexibleServerReplicationRole"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerReplicationRole left, MySqlFlexibleServerReplicationRole right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="MySqlFlexibleServerReplicationRole"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerReplicationRole left, MySqlFlexibleServerReplicationRole right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerReplicationRole"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerReplicationRole"/>. </summary>
         public static implicit operator MySqlFlexibleServerReplicationRole(string value) => new MySqlFlexibleServerReplicationRole(value);
 
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerReplicationRole"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerReplicationRole?(string value) => value == null ? null : new MySqlFlexibleServerReplicationRole(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerReplicationRole other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(MySqlFlexibleServerReplicationRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

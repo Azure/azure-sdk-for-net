@@ -91,11 +91,6 @@ namespace Azure.Data.Tables.Tests
                 "The constructor should accept an http url.");
 
             Assert.That(
-                () => new TableServiceClient(new Uri("http://localhost:8902/"), new TableSharedKeyCredential("localhost", string.Empty)),
-                Throws.Nothing,
-                "The constructor should accept a loopback url without account name in path.");
-
-            Assert.That(
                 () => new TableServiceClient((string)null),
                 Throws.InstanceOf<ArgumentNullException>(),
                 "The constructor should validate the connectionString");
@@ -181,7 +176,7 @@ namespace Azure.Data.Tables.Tests
 
             var actualSas = client.GenerateSasUri(permissions, resourceTypes, expires);
 
-            Assert.That(actualSas.Query, Is.EqualTo("?" + expectedSas));
+            Assert.AreEqual("?" + expectedSas, actualSas.Query);
         }
 
         [Test]
@@ -233,11 +228,11 @@ namespace Azure.Data.Tables.Tests
         {
             var client = new TableServiceClient(connString, new TableClientOptions());
 
-            Assert.That(client.AccountName, Is.EqualTo(accountName));
+            Assert.AreEqual(accountName, client.AccountName);
 
             var tableClient = client.GetTableClient("someTable");
 
-            Assert.That(tableClient.AccountName, Is.EqualTo(accountName));
+            Assert.AreEqual(accountName, tableClient.AccountName);
         }
 
         private static IEnumerable<object[]> TableClientsWithTableNameInUri()
@@ -309,7 +304,7 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(TableServiceClientsAllCtors))]
         public void UriPropertyIsPopulated(TableServiceClient client)
         {
-            Assert.That(client.Uri.AbsoluteUri, Is.EqualTo(_url.AbsoluteUri));
+            Assert.AreEqual(_url.AbsoluteUri, client.Uri.AbsoluteUri);
             Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
         }
 

@@ -7,63 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary></summary>
+    /// <summary> The DataProtectionAksVolumeType. </summary>
     public readonly partial struct DataProtectionAksVolumeType : IEquatable<DataProtectionAksVolumeType>
     {
         private readonly string _value;
-        private const string AzureDiskValue = "AzureDisk";
-        private const string AzureFileShareSMBValue = "AzureFileShareSMB";
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionAksVolumeType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataProtectionAksVolumeType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the AzureDisk. </summary>
+        private const string AzureDiskValue = "AzureDisk";
+        private const string AzureFileShareSMBValue = "AzureFileShareSMB";
+
+        /// <summary> AzureDisk. </summary>
         public static DataProtectionAksVolumeType AzureDisk { get; } = new DataProtectionAksVolumeType(AzureDiskValue);
-
-        /// <summary> Gets the AzureFileShareSMB. </summary>
+        /// <summary> AzureFileShareSMB. </summary>
         public static DataProtectionAksVolumeType AzureFileShareSMB { get; } = new DataProtectionAksVolumeType(AzureFileShareSMBValue);
-
         /// <summary> Determines if two <see cref="DataProtectionAksVolumeType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataProtectionAksVolumeType left, DataProtectionAksVolumeType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataProtectionAksVolumeType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataProtectionAksVolumeType left, DataProtectionAksVolumeType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataProtectionAksVolumeType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataProtectionAksVolumeType"/>. </summary>
         public static implicit operator DataProtectionAksVolumeType(string value) => new DataProtectionAksVolumeType(value);
 
-        /// <summary> Converts a string to a <see cref="DataProtectionAksVolumeType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataProtectionAksVolumeType?(string value) => value == null ? null : new DataProtectionAksVolumeType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataProtectionAksVolumeType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataProtectionAksVolumeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

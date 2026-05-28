@@ -6,24 +6,18 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Specs.Azure.Core.Page
+namespace _Specs_.Azure.Core.Page
 {
     public partial class PageClient
     {
         public PageClient() : this(new Uri("http://localhost:3000"), new PageClientOptions()) => throw null;
 
-        internal PageClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PageClientOptions options) => throw null;
-
-        public PageClient(Uri endpoint, PageClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public PageClient(PageClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public PageClient(Uri endpoint, PageClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
@@ -58,14 +52,6 @@ namespace Specs.Azure.Core.Page
         public virtual Pageable<User> WithParameterizedNextLink(string @select, bool? includePending = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual AsyncPageable<User> WithParameterizedNextLinkAsync(string @select, bool? includePending = default, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Pageable<BinaryData> WithRelativeNextLink(RequestContext context) => throw null;
-
-        public virtual AsyncPageable<BinaryData> WithRelativeNextLinkAsync(RequestContext context) => throw null;
-
-        public virtual Pageable<User> WithRelativeNextLink(CancellationToken cancellationToken = default) => throw null;
-
-        public virtual AsyncPageable<User> WithRelativeNextLinkAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual TwoModelsAsPageItem GetTwoModelsAsPageItemClient() => throw null;
     }

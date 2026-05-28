@@ -68,11 +68,11 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
             catch (FunctionIndexingException e)
             {
                 string functionName = typeof(TProgram).Name + "." + methodName;
-                Assert.That(e.Message, Is.EqualTo("Error indexing method '" + functionName + "'"));
-                Assert.That(e.InnerException.Message.Contains(expectedErrorMessage), Is.True);
+                Assert.AreEqual("Error indexing method '" + functionName + "'", e.Message);
+                Assert.True(e.InnerException.Message.Contains(expectedErrorMessage));
                 return;
             }
-            Assert.That(false, Is.True, "Invoker should have failed");
+            Assert.True(false, "Invoker should have failed");
         }
     }
 

@@ -21,7 +21,6 @@ namespace Azure.Storage.Queues.Models
             DateTimeOffset signedExpiresOn = default;
             string signedService = default;
             string signedVersion = default;
-            string signedDelegatedUserTenantId = default;
             string value = default;
             if (element.Element("SignedOid") is XElement signedOidElement)
             {
@@ -47,10 +46,6 @@ namespace Azure.Storage.Queues.Models
             {
                 signedVersion = (string)signedVersionElement;
             }
-            if (element.Element("SignedDelegatedUserTid") is XElement signedDelegatedUserTidElement)
-            {
-                signedDelegatedUserTenantId = (string)signedDelegatedUserTidElement;
-            }
             if (element.Element("Value") is XElement valueElement)
             {
                 value = (string)valueElement;
@@ -62,7 +57,6 @@ namespace Azure.Storage.Queues.Models
                 signedExpiresOn,
                 signedService,
                 signedVersion,
-                signedDelegatedUserTenantId,
                 value);
         }
     }

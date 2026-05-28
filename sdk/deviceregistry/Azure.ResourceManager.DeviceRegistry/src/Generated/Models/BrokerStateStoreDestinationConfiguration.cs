@@ -12,7 +12,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The configuration for a MQTT broker state store destination. </summary>
-    internal partial class BrokerStateStoreDestinationConfiguration
+    public partial class BrokerStateStoreDestinationConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

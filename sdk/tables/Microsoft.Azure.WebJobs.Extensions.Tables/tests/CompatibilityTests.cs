@@ -319,21 +319,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 return s.Replace("+00:00", "Z");
             }
 
-            Assert.That(
-                NormalizeDates(Sort(b).ToString()),
-                Is.EqualTo(NormalizeDates(Sort(a).ToString())));
+            Assert.AreEqual(
+                NormalizeDates(Sort(a).ToString()),
+                NormalizeDates(Sort(b).ToString()));
         }
 
         private void AssertAreEqual(object a, object b)
         {
-            Assert.That(b.GetType(), Is.EqualTo(a.GetType()));
+            Assert.AreEqual(a.GetType(), b.GetType());
             foreach (var property in a.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 if (property.Name is nameof(ITableEntity.Timestamp) or nameof(ITableEntity.ETag) or nameof(TestEntity.NestedEntity)) continue;
 
                 var av = property.GetValue(a);
                 var bv = property.GetValue(b);
-                Assert.That(bv, Is.EqualTo(av), property.Name);
+                Assert.AreEqual(av, bv, property.Name);
             }
         }
 

@@ -155,7 +155,7 @@ namespace Azure.Search.Documents.Tests
                         results[i] = ResponseTransformer(results[i]);
                     }
                     response = Response.FromValue(
-                        SearchModelFactory.IndexDocumentsResult(results),
+                        new IndexDocumentsResult(results),
                         response.GetRawResponse());
                 }
                 return response;
@@ -657,7 +657,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchIndexingBufferedSenderOptions<SimpleDocument>()
                     {
                         AutoFlushInterval = interval != null ?
-                            (TimeSpan?)TimeSpan.FromMilliseconds(interval.Value) :
+                            (TimeSpan?) TimeSpan.FromMilliseconds(interval.Value) :
                             null
                     });
             AssertNoFailures(indexer);
@@ -1247,7 +1247,7 @@ namespace Azure.Search.Documents.Tests
             client.ResponseTransformer = (IndexingResult result) =>
             {
                 client.ResponseTransformer = null;
-                return SearchModelFactory.IndexingResult(result.Key, null, false, status);
+                return new IndexingResult(result.Key, false, status);
             };
             AssertNoFailures(indexer);
             int sent = 0;
@@ -1274,7 +1274,7 @@ namespace Azure.Search.Documents.Tests
 
             // Keep 503ing to count the retries
             client.ResponseTransformer = (IndexingResult result) =>
-                SearchModelFactory.IndexingResult(result.Key, null, false, 503);
+                new IndexingResult(result.Key, false, 503);
 
             int attempts = 0;
             indexer.ActionSent += e => { attempts++; return Task.CompletedTask; };
@@ -1303,7 +1303,7 @@ namespace Azure.Search.Documents.Tests
 
             // Keep 503ing to trigger delays
             client.ResponseTransformer = (IndexingResult result) =>
-                SearchModelFactory.IndexingResult(result.Key, null, false, 503);
+                new IndexingResult(result.Key, false, 503);
 
             watch.Start();
             await indexer.MergeOrUploadDocumentsAsync(data);
@@ -1342,7 +1342,7 @@ namespace Azure.Search.Documents.Tests
 
             // Keep 503ing to trigger delays
             client.ResponseTransformer = (IndexingResult result) =>
-                SearchModelFactory.IndexingResult(result.Key, null, false, 503);
+                new IndexingResult(result.Key, false, 503);
 
             watch.Start();
             await indexer.MergeOrUploadDocumentsAsync(data);

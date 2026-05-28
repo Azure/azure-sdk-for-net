@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary></summary>
-    internal partial class PlacementPolicyOperationSource : IOperationSource<PlacementPolicyResource>
+    internal class PlacementPolicyOperationSource : IOperationSource<PlacementPolicyResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal PlacementPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         PlacementPolicyResource IOperationSource<PlacementPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            PlacementPolicyData data = PlacementPolicyData.DeserializePlacementPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<PlacementPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new PlacementPolicyResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<PlacementPolicyResource> IOperationSource<PlacementPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            PlacementPolicyData data = PlacementPolicyData.DeserializePlacementPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PlacementPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<PlacementPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            return await Task.FromResult(new PlacementPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

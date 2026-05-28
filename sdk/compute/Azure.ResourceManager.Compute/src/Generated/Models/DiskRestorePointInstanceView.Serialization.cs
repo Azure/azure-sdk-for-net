@@ -39,11 +39,6 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(SnapshotAccessState))
-            {
-                writer.WritePropertyName("snapshotAccessState"u8);
-                writer.WriteStringValue(SnapshotAccessState.Value.ToString());
-            }
             if (Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
@@ -87,7 +82,6 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string id = default;
-            SnapshotAccessState? snapshotAccessState = default;
             DiskRestorePointReplicationStatus replicationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -96,15 +90,6 @@ namespace Azure.ResourceManager.Compute.Models
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("snapshotAccessState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    snapshotAccessState = new SnapshotAccessState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("replicationStatus"u8))
@@ -122,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiskRestorePointInstanceView(id, snapshotAccessState, replicationStatus, serializedAdditionalRawData);
+            return new DiskRestorePointInstanceView(id, replicationStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskRestorePointInstanceView>.Write(ModelReaderWriterOptions options)

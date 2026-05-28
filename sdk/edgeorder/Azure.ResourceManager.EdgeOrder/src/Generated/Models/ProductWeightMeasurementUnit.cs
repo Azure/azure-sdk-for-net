@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct ProductWeightMeasurementUnit : IEquatable<ProductWeightMeasurementUnit>
     {
         private readonly string _value;
-        /// <summary> Pounds. </summary>
-        private const string LbsValue = "LBS";
-        /// <summary> Kilograms. </summary>
-        private const string KgsValue = "KGS";
 
         /// <summary> Initializes a new instance of <see cref="ProductWeightMeasurementUnit"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProductWeightMeasurementUnit(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string LbsValue = "LBS";
+        private const string KgsValue = "KGS";
 
         /// <summary> Pounds. </summary>
         public static ProductWeightMeasurementUnit Lbs { get; } = new ProductWeightMeasurementUnit(LbsValue);
-
         /// <summary> Kilograms. </summary>
         public static ProductWeightMeasurementUnit Kgs { get; } = new ProductWeightMeasurementUnit(KgsValue);
-
         /// <summary> Determines if two <see cref="ProductWeightMeasurementUnit"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProductWeightMeasurementUnit left, ProductWeightMeasurementUnit right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ProductWeightMeasurementUnit"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProductWeightMeasurementUnit left, ProductWeightMeasurementUnit right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ProductWeightMeasurementUnit"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProductWeightMeasurementUnit"/>. </summary>
         public static implicit operator ProductWeightMeasurementUnit(string value) => new ProductWeightMeasurementUnit(value);
 
-        /// <summary> Converts a string to a <see cref="ProductWeightMeasurementUnit"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ProductWeightMeasurementUnit?(string value) => value == null ? null : new ProductWeightMeasurementUnit(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProductWeightMeasurementUnit other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ProductWeightMeasurementUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

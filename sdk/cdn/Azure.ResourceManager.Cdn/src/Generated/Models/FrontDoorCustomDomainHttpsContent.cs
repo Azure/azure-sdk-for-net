@@ -8,74 +8,128 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The JSON object that contains the properties to secure a domain. </summary>
+    /// <summary>
+    /// The JSON object that contains the properties to secure a domain.
+    /// Serialized Name: AFDDomainHttpsParameters
+    /// </summary>
     public partial class FrontDoorCustomDomainHttpsContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/>. </summary>
-        /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
+        /// <param name="certificateType">
+        /// Defines the source of the SSL certificate.
+        /// Serialized Name: AFDDomainHttpsParameters.certificateType
+        /// </param>
         public FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType)
         {
             CertificateType = certificateType;
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/>. </summary>
-        /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
-        /// <param name="cipherSuiteSetType"> cipher suite set type that will be used for Https. </param>
-        /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https when cipherSuiteSetType is Customized. </param>
-        /// <param name="customizedCipherSuiteSet"> Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized. </param>
-        /// <param name="secret"> Resource reference to the secret. ie. subs/rg/profile/secret. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, AfdCipherSuiteSetType? cipherSuiteSetType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet, CdnResourceReference secret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="certificateType">
+        /// Defines the source of the SSL certificate.
+        /// Serialized Name: AFDDomainHttpsParameters.certificateType
+        /// </param>
+        /// <param name="cipherSuiteSetType">
+        /// cipher suite set type that will be used for Https
+        /// Serialized Name: AFDDomainHttpsParameters.cipherSuiteSetType
+        /// </param>
+        /// <param name="minimumTlsVersion">
+        /// TLS protocol version that will be used for Https when cipherSuiteSetType is Customized.
+        /// Serialized Name: AFDDomainHttpsParameters.minimumTlsVersion
+        /// </param>
+        /// <param name="customizedCipherSuiteSet">
+        /// Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized.
+        /// Serialized Name: AFDDomainHttpsParameters.customizedCipherSuiteSet
+        /// </param>
+        /// <param name="secret">
+        /// Resource reference to the secret. ie. subs/rg/profile/secret
+        /// Serialized Name: AFDDomainHttpsParameters.secret
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, AfdCipherSuiteSetType? cipherSuiteSetType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet, WritableSubResource secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateType = certificateType;
             CipherSuiteSetType = cipherSuiteSetType;
             MinimumTlsVersion = minimumTlsVersion;
             CustomizedCipherSuiteSet = customizedCipherSuiteSet;
             Secret = secret;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Defines the source of the SSL certificate. </summary>
-        [WirePath("certificateType")]
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/> for deserialization. </summary>
+        internal FrontDoorCustomDomainHttpsContent()
+        {
+        }
+
+        /// <summary>
+        /// Defines the source of the SSL certificate.
+        /// Serialized Name: AFDDomainHttpsParameters.certificateType
+        /// </summary>
         public FrontDoorCertificateType CertificateType { get; set; }
-
-        /// <summary> cipher suite set type that will be used for Https. </summary>
-        [WirePath("cipherSuiteSetType")]
+        /// <summary>
+        /// cipher suite set type that will be used for Https
+        /// Serialized Name: AFDDomainHttpsParameters.cipherSuiteSetType
+        /// </summary>
         public AfdCipherSuiteSetType? CipherSuiteSetType { get; set; }
-
-        /// <summary> TLS protocol version that will be used for Https when cipherSuiteSetType is Customized. </summary>
-        [WirePath("minimumTlsVersion")]
+        /// <summary>
+        /// TLS protocol version that will be used for Https when cipherSuiteSetType is Customized.
+        /// Serialized Name: AFDDomainHttpsParameters.minimumTlsVersion
+        /// </summary>
         public FrontDoorMinimumTlsVersion? MinimumTlsVersion { get; set; }
-
-        /// <summary> Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized. </summary>
-        [WirePath("customizedCipherSuiteSet")]
+        /// <summary>
+        /// Customized cipher suites object that will be used for Https when cipherSuiteSetType is Customized.
+        /// Serialized Name: AFDDomainHttpsParameters.customizedCipherSuiteSet
+        /// </summary>
         public FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet CustomizedCipherSuiteSet { get; set; }
-
-        /// <summary> Resource reference to the secret. ie. subs/rg/profile/secret. </summary>
-        [WirePath("secret")]
-        internal CdnResourceReference Secret { get; set; }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("secret.id")]
+        /// <summary>
+        /// Resource reference to the secret. ie. subs/rg/profile/secret
+        /// Serialized Name: AFDDomainHttpsParameters.secret
+        /// </summary>
+        internal WritableSubResource Secret { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SecretId
         {
-            get
-            {
-                return Secret is null ? default : Secret.Id;
-            }
+            get => Secret is null ? default : Secret.Id;
             set
             {
                 if (Secret is null)
-                {
-                    Secret = new CdnResourceReference();
-                }
+                    Secret = new WritableSubResource();
                 Secret.Id = value;
             }
         }

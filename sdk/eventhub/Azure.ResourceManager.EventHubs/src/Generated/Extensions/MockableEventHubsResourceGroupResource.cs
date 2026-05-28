@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EventHubs;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHubs.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableEventHubsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableEventHubsResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableEventHubsResourceGroupResource"/> class for mocking. </summary>
         protected MockableEventHubsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableEventHubsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableEventHubsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableEventHubsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of EventHubsClusters in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EventHubsClusters and their operations over a EventHubsClusterResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of EventHubsClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EventHubsClusterResources and their operations over a EventHubsClusterResource. </returns>
         public virtual EventHubsClusterCollection GetEventHubsClusters()
         {
             return GetCachedClient(client => new EventHubsClusterCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// Gets the resource description of the specified Event Hubs Cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubsClusterResource>> GetEventHubsClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
             return await GetEventHubsClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// Gets the resource description of the specified Event Hubs Cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Clusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,13 +99,11 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         [ForwardsClientCalls]
         public virtual Response<EventHubsClusterResource> GetEventHubsCluster(string clusterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
             return GetEventHubsClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventHubsNamespaces in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of EventHubsNamespaces and their operations over a EventHubsNamespaceResource. </returns>
+        /// <summary> Gets a collection of EventHubsNamespaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of EventHubsNamespaceResources and their operations over a EventHubsNamespaceResource. </returns>
         public virtual EventHubsNamespaceCollection GetEventHubsNamespaces()
         {
             return GetCachedClient(client => new EventHubsNamespaceCollection(client, Id));
@@ -107,16 +113,20 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// Gets the description of the specified namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EHNamespaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,8 +137,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EventHubsNamespaceResource>> GetEventHubsNamespaceAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-
             return await GetEventHubsNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,16 +144,20 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// Gets the description of the specified namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EHNamespaces_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,8 +168,6 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         [ForwardsClientCalls]
         public virtual Response<EventHubsNamespaceResource> GetEventHubsNamespace(string namespaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-
             return GetEventHubsNamespaces().Get(namespaceName, cancellationToken);
         }
     }

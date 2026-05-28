@@ -22,8 +22,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <summary> Initializes a new instance of ScalingPlanData. </summary>
         /// <param name="location"> The location. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ScalingPlanData(AzureLocation location) : this(location, DefaultTimeZone)
+        public ScalingPlanData(AzureLocation location) : base(location)
         {
+            TimeZone = DefaultTimeZone;
+            Schedules = new ChangeTrackingList<ScalingSchedule>();
+            HostPoolReferences = new ChangeTrackingList<ScalingHostPoolReference>();
         }
 
         /// <summary> HostPool type for desktop. </summary>

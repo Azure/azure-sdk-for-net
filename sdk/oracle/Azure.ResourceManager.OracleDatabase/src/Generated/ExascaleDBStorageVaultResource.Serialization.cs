@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    /// <summary></summary>
     public partial class ExascaleDBStorageVaultResource : IJsonModel<ExascaleDBStorageVaultData>
     {
-        private static IJsonModel<ExascaleDBStorageVaultData> s_dataDeserializationInstance;
+        private static ExascaleDBStorageVaultData s_dataDeserializationInstance;
+        private static ExascaleDBStorageVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<ExascaleDBStorageVaultData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExascaleDBStorageVaultData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExascaleDBStorageVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExascaleDBStorageVaultData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExascaleDBStorageVaultData IJsonModel<ExascaleDBStorageVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ExascaleDBStorageVaultData IJsonModel<ExascaleDBStorageVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExascaleDBStorageVaultData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ExascaleDBStorageVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExascaleDBStorageVaultData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ExascaleDBStorageVaultData IPersistableModel<ExascaleDBStorageVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExascaleDBStorageVaultData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExascaleDBStorageVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ExascaleDBStorageVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExascaleDBStorageVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

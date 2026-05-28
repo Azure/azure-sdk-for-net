@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SelfHelp
 {
-    /// <summary></summary>
-    internal partial class SelfHelpSolutionOperationSource : IOperationSource<SelfHelpSolutionResource>
+    internal class SelfHelpSolutionOperationSource : IOperationSource<SelfHelpSolutionResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal SelfHelpSolutionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         SelfHelpSolutionResource IOperationSource<SelfHelpSolutionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SelfHelpSolutionData data = SelfHelpSolutionData.DeserializeSelfHelpSolutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<SelfHelpSolutionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSelfHelpContext.Default);
             return new SelfHelpSolutionResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<SelfHelpSolutionResource> IOperationSource<SelfHelpSolutionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SelfHelpSolutionData data = SelfHelpSolutionData.DeserializeSelfHelpSolutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SelfHelpSolutionResource(_client, data);
+            var data = ModelReaderWriter.Read<SelfHelpSolutionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSelfHelpContext.Default);
+            return await Task.FromResult(new SelfHelpSolutionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

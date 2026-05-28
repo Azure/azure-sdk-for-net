@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Tests
 {
-    public class ArcSettingOperationTests : HciManagementTestBase
+    public class ArcSettingOperationTests: HciManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private ArcSettingResource _arcSetting;
@@ -45,13 +45,14 @@ namespace Azure.ResourceManager.Hci.Tests
 
             var patch = new ArcSettingPatch()
             {
-                Properties = new ArcSettingsPatchProperties()
+                ConnectivityProperties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
-                    ConnectivityProperties = BinaryData.FromObjectAsJson(new { enabled = false })
-                }
+                    { "enabled", false }
+                })
             };
             ArcSettingResource arcSettingFromUpdate = await arcSetting.UpdateAsync(patch);
-            Assert.NotNull(arcSettingFromUpdate.Data.ConnectivityProperties);
+            var properties = arcSettingFromUpdate.Data.ConnectivityProperties.ToObjectFromJson() as Dictionary<string, object>;
+            Assert.False((bool)properties["enabled"]);
 
             ArcSettingResource arcSettingFromGet = await arcSettingFromUpdate.GetAsync();
             Assert.AreEqual(arcSettingFromGet.Data.Name, arcSettingName);

@@ -51,9 +51,15 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 SnapshotName = Recording.GenerateAssetName("testapp-snapshot");
                 AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData()
                 {
+                    Filters =
+                    {
+                        new SnapshotKeyValueFilter("key1/*")
+                        {
+                            Label = "app1"
+                        }
+                    },
                     RetentionPeriod = 3600,
                 };
-                snapshotData.Filters.Add(new SnapshotKeyValueFilter("key1/*") { Label = "app1" });
                 Snapshot = (await ConfigStore.GetAppConfigurationSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, SnapshotName, snapshotData)).Value;
             }
         }
@@ -63,8 +69,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             AppConfigurationSnapshotResource snapshot = await Snapshot.GetAsync();
 
-            Assert.That(snapshot.Data.Name.Equals(SnapshotName), Is.True);
-            Assert.That(snapshot.Data.Filters.FirstOrDefault().Key.Equals("key1/*"), Is.True);
+            Assert.IsTrue(snapshot.Data.Name.Equals(SnapshotName));
+            Assert.IsTrue(snapshot.Data.Filters.FirstOrDefault().Key.Equals("key1/*"));
         }
     }
 }

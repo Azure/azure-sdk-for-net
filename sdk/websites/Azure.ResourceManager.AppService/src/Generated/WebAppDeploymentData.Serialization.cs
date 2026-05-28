@@ -243,7 +243,6 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
-                kind,
                 status,
                 message,
                 author,
@@ -253,6 +252,7 @@ namespace Azure.ResourceManager.AppService
                 endTime,
                 active,
                 details,
+                kind,
                 serializedAdditionalRawData);
         }
 

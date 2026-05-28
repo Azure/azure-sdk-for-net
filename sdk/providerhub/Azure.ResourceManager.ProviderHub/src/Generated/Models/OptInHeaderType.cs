@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct OptInHeaderType : IEquatable<OptInHeaderType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="OptInHeaderType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public OptInHeaderType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NotSpecifiedValue = "NotSpecified";
         private const string SignedUserTokenValue = "SignedUserToken";
         private const string ClientGroupMembershipValue = "ClientGroupMembership";
@@ -28,82 +35,47 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ClientPrincipalNameEncodedValue = "ClientPrincipalNameEncoded";
         private const string MSIResourceIdEncodedValue = "MSIResourceIdEncoded";
 
-        /// <summary> Initializes a new instance of <see cref="OptInHeaderType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OptInHeaderType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NotSpecified. </summary>
+        /// <summary> NotSpecified. </summary>
         public static OptInHeaderType NotSpecified { get; } = new OptInHeaderType(NotSpecifiedValue);
-
-        /// <summary> Gets the SignedUserToken. </summary>
+        /// <summary> SignedUserToken. </summary>
         public static OptInHeaderType SignedUserToken { get; } = new OptInHeaderType(SignedUserTokenValue);
-
-        /// <summary> Gets the ClientGroupMembership. </summary>
+        /// <summary> ClientGroupMembership. </summary>
         public static OptInHeaderType ClientGroupMembership { get; } = new OptInHeaderType(ClientGroupMembershipValue);
-
-        /// <summary> Gets the SignedAuxiliaryTokens. </summary>
+        /// <summary> SignedAuxiliaryTokens. </summary>
         public static OptInHeaderType SignedAuxiliaryTokens { get; } = new OptInHeaderType(SignedAuxiliaryTokensValue);
-
-        /// <summary> Gets the UnboundedClientGroupMembership. </summary>
+        /// <summary> UnboundedClientGroupMembership. </summary>
         public static OptInHeaderType UnboundedClientGroupMembership { get; } = new OptInHeaderType(UnboundedClientGroupMembershipValue);
-
-        /// <summary> Gets the PrivateLinkId. </summary>
+        /// <summary> PrivateLinkId. </summary>
         public static OptInHeaderType PrivateLinkId { get; } = new OptInHeaderType(PrivateLinkIdValue);
-
-        /// <summary> Gets the PrivateLinkResourceId. </summary>
+        /// <summary> PrivateLinkResourceId. </summary>
         public static OptInHeaderType PrivateLinkResourceId { get; } = new OptInHeaderType(PrivateLinkResourceIdValue);
-
-        /// <summary> Gets the ManagementGroupAncestorsEncoded. </summary>
+        /// <summary> ManagementGroupAncestorsEncoded. </summary>
         public static OptInHeaderType ManagementGroupAncestorsEncoded { get; } = new OptInHeaderType(ManagementGroupAncestorsEncodedValue);
-
-        /// <summary> Gets the PrivateLinkVnetTrafficTag. </summary>
+        /// <summary> PrivateLinkVnetTrafficTag. </summary>
         public static OptInHeaderType PrivateLinkVnetTrafficTag { get; } = new OptInHeaderType(PrivateLinkVnetTrafficTagValue);
-
-        /// <summary> Gets the ResourceGroupLocation. </summary>
+        /// <summary> ResourceGroupLocation. </summary>
         public static OptInHeaderType ResourceGroupLocation { get; } = new OptInHeaderType(ResourceGroupLocationValue);
-
-        /// <summary> Gets the ClientPrincipalNameEncoded. </summary>
+        /// <summary> ClientPrincipalNameEncoded. </summary>
         public static OptInHeaderType ClientPrincipalNameEncoded { get; } = new OptInHeaderType(ClientPrincipalNameEncodedValue);
-
-        /// <summary> Gets the MSIResourceIdEncoded. </summary>
+        /// <summary> MSIResourceIdEncoded. </summary>
         public static OptInHeaderType MSIResourceIdEncoded { get; } = new OptInHeaderType(MSIResourceIdEncodedValue);
-
         /// <summary> Determines if two <see cref="OptInHeaderType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OptInHeaderType left, OptInHeaderType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="OptInHeaderType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OptInHeaderType left, OptInHeaderType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="OptInHeaderType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OptInHeaderType"/>. </summary>
         public static implicit operator OptInHeaderType(string value) => new OptInHeaderType(value);
 
-        /// <summary> Converts a string to a <see cref="OptInHeaderType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator OptInHeaderType?(string value) => value == null ? null : new OptInHeaderType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OptInHeaderType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(OptInHeaderType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

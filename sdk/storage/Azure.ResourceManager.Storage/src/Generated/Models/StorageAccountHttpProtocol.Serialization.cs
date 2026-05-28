@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal static partial class StorageAccountHttpProtocolExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageAccountHttpProtocol value) => value switch
         {
             StorageAccountHttpProtocol.HttpsHttp => "https,http",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.Storage.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountHttpProtocol value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static StorageAccountHttpProtocol ToStorageAccountHttpProtocol(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "https,http"))
-            {
-                return StorageAccountHttpProtocol.HttpsHttp;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "https"))
-            {
-                return StorageAccountHttpProtocol.Https;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "https,http")) return StorageAccountHttpProtocol.HttpsHttp;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "https")) return StorageAccountHttpProtocol.Https;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageAccountHttpProtocol value.");
         }
     }

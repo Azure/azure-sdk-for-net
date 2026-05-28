@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Qumulo
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.Qumulo
     /// </summary>
     public partial class QumuloFileSystemResourceCollection : ArmCollection, IEnumerable<QumuloFileSystemResource>, IAsyncEnumerable<QumuloFileSystemResource>
     {
-        private readonly ClientDiagnostics _fileSystemsClientDiagnostics;
-        private readonly FileSystems _fileSystemsRestClient;
+        private readonly ClientDiagnostics _qumuloFileSystemResourceFileSystemsClientDiagnostics;
+        private readonly FileSystemsRestOperations _qumuloFileSystemResourceFileSystemsRestClient;
 
-        /// <summary> Initializes a new instance of QumuloFileSystemResourceCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="QumuloFileSystemResourceCollection"/> class for mocking. </summary>
         protected QumuloFileSystemResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="QumuloFileSystemResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal QumuloFileSystemResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(QumuloFileSystemResource.ResourceType, out string qumuloFileSystemResourceApiVersion);
-            _fileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", QumuloFileSystemResource.ResourceType.Namespace, Diagnostics);
-            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Endpoint, qumuloFileSystemResourceApiVersion ?? "2024-06-19");
-            ValidateResourceId(id);
+            _qumuloFileSystemResourceFileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", QumuloFileSystemResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(QumuloFileSystemResource.ResourceType, out string qumuloFileSystemResourceFileSystemsApiVersion);
+            _qumuloFileSystemResourceFileSystemsRestClient = new FileSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, qumuloFileSystemResourceFileSystemsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a FileSystemResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<QumuloFileSystemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fileSystemName, QumuloFileSystemResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.CreateOrUpdate");
+            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, QumuloFileSystemResourceData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                QumuloArmOperation<QumuloFileSystemResource> operation = new QumuloArmOperation<QumuloFileSystemResource>(
-                    new QumuloFileSystemResourceOperationSource(Client),
-                    _fileSystemsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _qumuloFileSystemResourceFileSystemsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new QumuloArmOperation<QumuloFileSystemResource>(new QumuloFileSystemResourceOperationSource(Client), _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, _qumuloFileSystemResourceFileSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.Qumulo
         /// Create a FileSystemResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<QumuloFileSystemResource> CreateOrUpdate(WaitUntil waitUntil, string fileSystemName, QumuloFileSystemResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.CreateOrUpdate");
+            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, QumuloFileSystemResourceData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                QumuloArmOperation<QumuloFileSystemResource> operation = new QumuloArmOperation<QumuloFileSystemResource>(
-                    new QumuloFileSystemResourceOperationSource(Client),
-                    _fileSystemsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _qumuloFileSystemResourceFileSystemsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, data, cancellationToken);
+                var operation = new QumuloArmOperation<QumuloFileSystemResource>(new QumuloFileSystemResourceOperationSource(Client), _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, _qumuloFileSystemResourceFileSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.Qumulo
         /// Get a FileSystemResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual async Task<Response<QumuloFileSystemResource>> GetAsync(string fileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
-            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Get");
+            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<QumuloFileSystemResourceData> response = Response.FromValue(QumuloFileSystemResourceData.FromResponse(result), result);
+                var response = await _qumuloFileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.Qumulo
         /// Get a FileSystemResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual Response<QumuloFileSystemResource> Get(string fileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
-            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Get");
+            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<QumuloFileSystemResourceData> response = Response.FromValue(QumuloFileSystemResourceData.FromResponse(result), result);
+                var response = _qumuloFileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.Qumulo
         /// List FileSystemResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QumuloFileSystemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetByResourceGroupAsyncCollectionResultOfT(_fileSystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "QumuloFileSystemResourceCollection.GetAll"), data => new QumuloFileSystemResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "QumuloFileSystemResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List FileSystemResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.Qumulo
         /// <returns> A collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QumuloFileSystemResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<QumuloFileSystemResourceData, QumuloFileSystemResource>(new FileSystemsGetByResourceGroupCollectionResultOfT(_fileSystemsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "QumuloFileSystemResourceCollection.GetAll"), data => new QumuloFileSystemResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _qumuloFileSystemResourceFileSystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new QumuloFileSystemResource(Client, QumuloFileSystemResourceData.DeserializeQumuloFileSystemResourceData(e)), _qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, "QumuloFileSystemResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
-            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Exists");
+            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<QumuloFileSystemResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(QumuloFileSystemResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((QumuloFileSystemResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _qumuloFileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.Qumulo
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual Response<bool> Exists(string fileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
-            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Exists");
+            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<QumuloFileSystemResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(QumuloFileSystemResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((QumuloFileSystemResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _qumuloFileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.Qumulo
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual async Task<NullableResponse<QumuloFileSystemResource>> GetIfExistsAsync(string fileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
-            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.GetIfExists");
+            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<QumuloFileSystemResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(QumuloFileSystemResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((QumuloFileSystemResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _qumuloFileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<QumuloFileSystemResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.Qumulo
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Qumulo.Storage/fileSystems/{fileSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-19. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-19</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QumuloFileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fileSystemName"> Name of the File System resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileSystemName"/> is null. </exception>
         public virtual NullableResponse<QumuloFileSystemResource> GetIfExists(string fileSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileSystemName, nameof(fileSystemName));
 
-            using DiagnosticScope scope = _fileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.GetIfExists");
+            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fileSystemsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<QumuloFileSystemResourceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(QumuloFileSystemResourceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((QumuloFileSystemResourceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _qumuloFileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fileSystemName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<QumuloFileSystemResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.Qumulo
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<QumuloFileSystemResource> IAsyncEnumerable<QumuloFileSystemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

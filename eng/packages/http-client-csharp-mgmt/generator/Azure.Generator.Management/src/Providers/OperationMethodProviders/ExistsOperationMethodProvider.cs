@@ -16,21 +16,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     internal class ExistsOperationMethodProvider(
         ResourceCollectionClientProvider collection,
-        OperationContext operationContext,
+        RequestPathPattern contextualPath,
         RestClientInfo restClientInfo,
         InputServiceMethod method,
         bool isAsync)
         : ResourceOperationMethodProvider(
             collection,
-            operationContext,
+            contextualPath,
             restClientInfo,
             method,
             isAsync,
             methodName: isAsync ? "ExistsAsync" : "Exists",
             description: $"Checks to see if the resource exists in azure.")
     {
-        protected override bool ShouldApplyLroHandling => false;
-
         protected override CSharpType BuildReturnType()
         {
             return new CSharpType(typeof(Response<>), typeof(bool))

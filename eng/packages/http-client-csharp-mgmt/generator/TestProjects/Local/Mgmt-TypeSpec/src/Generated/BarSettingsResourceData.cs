@@ -24,24 +24,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="anotherPropertyLeft"> enabled. </param>
         /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
         /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
-        /// <param name="middleProp2"> Gets the MiddleProp2. </param>
-        /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="discriminatorProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="propertyLeft"/>, <paramref name="anotherPropertyLeft"/>, <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="discriminatorProperty"/> is null. </exception>
-        public BarSettingsResourceData(string propertyLeft, string anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2, LimitJsonObject discriminatorProperty)
+        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> or <paramref name="discriminatorProperty"/> is null. </exception>
+        public BarSettingsResourceData(int? propertyLeft, int? anotherPropertyLeft, string innerProp2, int middleProp1, int prop2, LimitJsonObject discriminatorProperty)
         {
-            Argument.AssertNotNull(propertyLeft, nameof(propertyLeft));
-            Argument.AssertNotNull(anotherPropertyLeft, nameof(anotherPropertyLeft));
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
-            Argument.AssertNotNull(middleProp2, nameof(middleProp2));
-            Argument.AssertNotNull(prop1, nameof(prop1));
-            Argument.AssertNotNull(discriminatorProperty, nameof(discriminatorProperty));
 
             StringArray = new ChangeTrackingList<string>();
-            Property = new BarQuotaProperties(propertyLeft);
-            AnotherProperty = new BarQuotaProperties(anotherPropertyLeft);
-            FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, middleProp2, prop1, prop2);
+            PropertyLeft = propertyLeft;
+            AnotherPropertyLeft = anotherPropertyLeft;
+            InnerProp2 = innerProp2;
+            MiddleProp1 = middleProp1;
+            Prop2 = prop2;
             DiscriminatorProperty = discriminatorProperty;
         }
 
@@ -110,7 +105,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> enabled. </summary>
         [WirePath("property.left")]
-        public string PropertyLeft
+        public int? PropertyLeft
         {
             get
             {
@@ -118,13 +113,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
-                Property = new BarQuotaProperties(value);
+                Property = value.HasValue ? new BarQuotaProperties(value.Value) : default;
             }
         }
 
         /// <summary> enabled. </summary>
         [WirePath("anotherProperty.left")]
-        public string AnotherPropertyLeft
+        public int? AnotherPropertyLeft
         {
             get
             {
@@ -132,7 +127,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
-                AnotherProperty = new BarQuotaProperties(value);
+                AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
             }
         }
 
@@ -150,7 +145,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FlattenedNestedProperty = new BarNestedQuotaProperties();
                 }
-                FlattenedNestedProperty.InnerProp1 = value;
+                FlattenedNestedProperty.InnerProp1 = value.Value;
             }
         }
 
@@ -242,11 +237,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                if (OptionalFlattenProperty is null)
-                {
-                    OptionalFlattenProperty = new OptionalFlattenPropertyType();
-                }
-                return OptionalFlattenProperty.RandomCollectionProp;
+                return OptionalFlattenProperty is null ? default : OptionalFlattenProperty.RandomCollectionProp;
+            }
+            set
+            {
+                OptionalFlattenProperty = new OptionalFlattenPropertyType(value);
             }
         }
     }

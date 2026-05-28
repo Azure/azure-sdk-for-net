@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Astro
 {
-    /// <summary></summary>
-    internal partial class AstroOrganizationOperationSource : IOperationSource<AstroOrganizationResource>
+    internal class AstroOrganizationOperationSource : IOperationSource<AstroOrganizationResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal AstroOrganizationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         AstroOrganizationResource IOperationSource<AstroOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AstroOrganizationData data = AstroOrganizationData.DeserializeAstroOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<AstroOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAstroContext.Default);
             return new AstroOrganizationResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<AstroOrganizationResource> IOperationSource<AstroOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AstroOrganizationData data = AstroOrganizationData.DeserializeAstroOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AstroOrganizationResource(_client, data);
+            var data = ModelReaderWriter.Read<AstroOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAstroContext.Default);
+            return await Task.FromResult(new AstroOrganizationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -6,45 +6,38 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
+    /// <summary> A class to add extension methods to ArmClient. </summary>
     public partial class MockableRedisEnterpriseArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableRedisEnterpriseArmClient for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableRedisEnterpriseArmClient"/> class for mocking. </summary>
         protected MockableRedisEnterpriseArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableRedisEnterpriseArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableRedisEnterpriseArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRedisEnterpriseArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="RedisEnterpriseDatabaseResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisEnterpriseDatabaseResource"/> object. </returns>
-        public virtual RedisEnterpriseDatabaseResource GetRedisEnterpriseDatabaseResource(ResourceIdentifier id)
+        internal MockableRedisEnterpriseArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
         {
-            RedisEnterpriseDatabaseResource.ValidateResourceId(id);
-            return new RedisEnterpriseDatabaseResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> object. </returns>
-        public virtual RedisEnterprisePrivateEndpointConnectionResource GetRedisEnterprisePrivateEndpointConnectionResource(ResourceIdentifier id)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            RedisEnterprisePrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new RedisEnterprisePrivateEndpointConnectionResource(Client, id);
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
 
-        /// <summary> Gets an object representing a <see cref="RedisEnterpriseClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RedisEnterpriseClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisEnterpriseClusterResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterpriseClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RedisEnterpriseClusterResource"/> object. </returns>
         public virtual RedisEnterpriseClusterResource GetRedisEnterpriseClusterResource(ResourceIdentifier id)
@@ -53,7 +46,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
             return new RedisEnterpriseClusterResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AccessPolicyAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RedisEnterpriseDatabaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisEnterpriseDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterpriseDatabaseResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RedisEnterpriseDatabaseResource"/> object. </returns>
+        public virtual RedisEnterpriseDatabaseResource GetRedisEnterpriseDatabaseResource(ResourceIdentifier id)
+        {
+            RedisEnterpriseDatabaseResource.ValidateResourceId(id);
+            return new RedisEnterpriseDatabaseResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="AccessPolicyAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AccessPolicyAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AccessPolicyAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AccessPolicyAssignmentResource"/> object. </returns>
         public virtual AccessPolicyAssignmentResource GetAccessPolicyAssignmentResource(ResourceIdentifier id)
@@ -62,13 +70,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
             return new AccessPolicyAssignmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RedisEnterpriseMigrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisEnterprisePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisEnterpriseMigrationResource"/> object. </returns>
-        public virtual RedisEnterpriseMigrationResource GetRedisEnterpriseMigrationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> object. </returns>
+        public virtual RedisEnterprisePrivateEndpointConnectionResource GetRedisEnterprisePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            RedisEnterpriseMigrationResource.ValidateResourceId(id);
-            return new RedisEnterpriseMigrationResource(Client, id);
+            RedisEnterprisePrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new RedisEnterprisePrivateEndpointConnectionResource(Client, id);
         }
     }
 }

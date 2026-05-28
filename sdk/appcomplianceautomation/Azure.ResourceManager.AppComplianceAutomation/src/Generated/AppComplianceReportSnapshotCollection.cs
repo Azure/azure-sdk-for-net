@@ -8,92 +8,86 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
+using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
     /// A class representing a collection of <see cref="AppComplianceReportSnapshotResource"/> and their operations.
     /// Each <see cref="AppComplianceReportSnapshotResource"/> in the collection will belong to the same instance of <see cref="AppComplianceReportResource"/>.
-    /// To get a <see cref="AppComplianceReportSnapshotCollection"/> instance call the GetAppComplianceReportSnapshots method from an instance of <see cref="AppComplianceReportResource"/>.
+    /// To get an <see cref="AppComplianceReportSnapshotCollection"/> instance call the GetAppComplianceReportSnapshots method from an instance of <see cref="AppComplianceReportResource"/>.
     /// </summary>
     public partial class AppComplianceReportSnapshotCollection : ArmCollection, IEnumerable<AppComplianceReportSnapshotResource>, IAsyncEnumerable<AppComplianceReportSnapshotResource>
     {
-        private readonly ClientDiagnostics _snapshotClientDiagnostics;
-        private readonly Snapshot _snapshotRestClient;
+        private readonly ClientDiagnostics _appComplianceReportSnapshotSnapshotClientDiagnostics;
+        private readonly SnapshotRestOperations _appComplianceReportSnapshotSnapshotRestClient;
 
-        /// <summary> Initializes a new instance of AppComplianceReportSnapshotCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportSnapshotCollection"/> class for mocking. </summary>
         protected AppComplianceReportSnapshotCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppComplianceReportSnapshotCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportSnapshotCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AppComplianceReportSnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AppComplianceReportSnapshotResource.ResourceType, out string appComplianceReportSnapshotApiVersion);
-            _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportSnapshotResource.ResourceType.Namespace, Diagnostics);
-            _snapshotRestClient = new Snapshot(_snapshotClientDiagnostics, Pipeline, Endpoint, appComplianceReportSnapshotApiVersion ?? "2024-06-27");
-            ValidateResourceId(id);
+            _appComplianceReportSnapshotSnapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportSnapshotResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppComplianceReportSnapshotResource.ResourceType, out string appComplianceReportSnapshotSnapshotApiVersion);
+            _appComplianceReportSnapshotSnapshotRestClient = new SnapshotRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportSnapshotSnapshotApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AppComplianceReportResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppComplianceReportResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppComplianceReportResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get the AppComplianceAutomation snapshot and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshot_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<Response<AppComplianceReportSnapshotResource>> GetAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.Get");
+            using var scope = _appComplianceReportSnapshotSnapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppComplianceReportSnapshotData> response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
+                var response = await _appComplianceReportSnapshotSnapshotRestClient.GetAsync(Id.Name, snapshotName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppComplianceReportSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -107,42 +101,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation snapshot and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshot_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<AppComplianceReportSnapshotResource> Get(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.Get");
+            using var scope = _appComplianceReportSnapshotSnapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppComplianceReportSnapshotData> response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
+                var response = _appComplianceReportSnapshotSnapshotRestClient.Get(Id.Name, snapshotName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppComplianceReportSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -156,142 +146,102 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation snapshot list.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshot_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="maxCount"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="orderby"> OData order by query option. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppComplianceReportSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppComplianceReportSnapshotResource> GetAllAsync(string skipToken = default, int? maxCount = default, string @select = default, string filter = default, string @orderby = default, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppComplianceReportSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppComplianceReportSnapshotResource> GetAllAsync(AppComplianceReportSnapshotCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<AppComplianceReportSnapshotData, AppComplianceReportSnapshotResource>(new SnapshotGetAllAsyncCollectionResultOfT(
-                _snapshotRestClient,
-                Id.Name,
-                skipToken,
-                maxCount,
-                @select,
-                filter,
-                @orderby,
-                offerGuid,
-                reportCreatorTenantId,
-                context,
-                "AppComplianceReportSnapshotCollection.GetAll"), data => new AppComplianceReportSnapshotResource(Client, data));
+            options ??= new AppComplianceReportSnapshotCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appComplianceReportSnapshotSnapshotRestClient.CreateListRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appComplianceReportSnapshotSnapshotRestClient.CreateListNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppComplianceReportSnapshotResource(Client, AppComplianceReportSnapshotData.DeserializeAppComplianceReportSnapshotData(e)), _appComplianceReportSnapshotSnapshotClientDiagnostics, Pipeline, "AppComplianceReportSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the AppComplianceAutomation snapshot list.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshot_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> Skip over when retrieving results. </param>
-        /// <param name="maxCount"> Number of elements to return when retrieving results. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="orderby"> OData order by query option. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppComplianceReportSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppComplianceReportSnapshotResource> GetAll(string skipToken = default, int? maxCount = default, string @select = default, string filter = default, string @orderby = default, string offerGuid = default, string reportCreatorTenantId = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<AppComplianceReportSnapshotResource> GetAll(AppComplianceReportSnapshotCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<AppComplianceReportSnapshotData, AppComplianceReportSnapshotResource>(new SnapshotGetAllCollectionResultOfT(
-                _snapshotRestClient,
-                Id.Name,
-                skipToken,
-                maxCount,
-                @select,
-                filter,
-                @orderby,
-                offerGuid,
-                reportCreatorTenantId,
-                context,
-                "AppComplianceReportSnapshotCollection.GetAll"), data => new AppComplianceReportSnapshotResource(Client, data));
+            options ??= new AppComplianceReportSnapshotCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appComplianceReportSnapshotSnapshotRestClient.CreateListRequest(Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appComplianceReportSnapshotSnapshotRestClient.CreateListNextPageRequest(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.Filter, options.Orderby, options.OfferGuid, options.ReportCreatorTenantId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppComplianceReportSnapshotResource(Client, AppComplianceReportSnapshotData.DeserializeAppComplianceReportSnapshotData(e)), _appComplianceReportSnapshotSnapshotClientDiagnostics, Pipeline, "AppComplianceReportSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshot_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.Exists");
+            using var scope = _appComplianceReportSnapshotSnapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<AppComplianceReportSnapshotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AppComplianceReportSnapshotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _appComplianceReportSnapshotSnapshotRestClient.GetAsync(Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,50 +255,36 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshot_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual Response<bool> Exists(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.Exists");
+            using var scope = _appComplianceReportSnapshotSnapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<AppComplianceReportSnapshotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AppComplianceReportSnapshotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _appComplianceReportSnapshotSnapshotRestClient.Get(Id.Name, snapshotName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -362,54 +298,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshot_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppComplianceReportSnapshotResource>> GetIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.GetIfExists");
+            using var scope = _appComplianceReportSnapshotSnapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<AppComplianceReportSnapshotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AppComplianceReportSnapshotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _appComplianceReportSnapshotSnapshotRestClient.GetAsync(Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<AppComplianceReportSnapshotResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppComplianceReportSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -423,54 +343,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Snapshot_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         public virtual NullableResponse<AppComplianceReportSnapshotResource> GetIfExists(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using DiagnosticScope scope = _snapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.GetIfExists");
+            using var scope = _appComplianceReportSnapshotSnapshotClientDiagnostics.CreateScope("AppComplianceReportSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _snapshotRestClient.CreateGetRequest(Id.Name, snapshotName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<AppComplianceReportSnapshotData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(AppComplianceReportSnapshotData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((AppComplianceReportSnapshotData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _appComplianceReportSnapshotSnapshotRestClient.Get(Id.Name, snapshotName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<AppComplianceReportSnapshotResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppComplianceReportSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -482,18 +386,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         IEnumerator<AppComplianceReportSnapshotResource> IEnumerable<AppComplianceReportSnapshotResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AppComplianceReportSnapshotResource> IAsyncEnumerable<AppComplianceReportSnapshotResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

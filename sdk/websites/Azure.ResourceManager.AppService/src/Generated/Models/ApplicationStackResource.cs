@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// ARM resource for a ApplicationStack.
-    /// Serialized Name: ApplicationStackResource
-    /// </summary>
+    /// <summary> ARM resource for a ApplicationStack. </summary>
     public partial class ApplicationStackResource : ResourceData
     {
         /// <summary>
@@ -63,34 +60,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="stackName">
-        /// Application stack name.
-        /// Serialized Name: ApplicationStackResource.properties.name
-        /// </param>
-        /// <param name="display">
-        /// Application stack display name.
-        /// Serialized Name: ApplicationStackResource.properties.display
-        /// </param>
-        /// <param name="dependency">
-        /// Application stack dependency.
-        /// Serialized Name: ApplicationStackResource.properties.dependency
-        /// </param>
-        /// <param name="majorVersions">
-        /// List of major versions available.
-        /// Serialized Name: ApplicationStackResource.properties.majorVersions
-        /// </param>
-        /// <param name="frameworks">
-        /// List of frameworks associated with application stack.
-        /// Serialized Name: ApplicationStackResource.properties.frameworks
-        /// </param>
-        /// <param name="isDeprecated">
-        /// &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: ApplicationStackResource.properties.isDeprecated
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="stackName"> Application stack name. </param>
+        /// <param name="display"> Application stack display name. </param>
+        /// <param name="dependency"> Application stack dependency. </param>
+        /// <param name="majorVersions"> List of major versions available. </param>
+        /// <param name="frameworks"> List of frameworks associated with application stack. </param>
+        /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ApplicationStackResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string stackName, string display, string dependency, IList<StackMajorVersion> majorVersions, IList<ApplicationStack> frameworks, IList<ApplicationStack> isDeprecated, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -104,46 +80,25 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Application stack name.
-        /// Serialized Name: ApplicationStackResource.properties.name
-        /// </summary>
+        /// <summary> Application stack name. </summary>
         [WirePath("properties.name")]
         public string StackName { get; set; }
-        /// <summary>
-        /// Application stack display name.
-        /// Serialized Name: ApplicationStackResource.properties.display
-        /// </summary>
+        /// <summary> Application stack display name. </summary>
         [WirePath("properties.display")]
         public string Display { get; set; }
-        /// <summary>
-        /// Application stack dependency.
-        /// Serialized Name: ApplicationStackResource.properties.dependency
-        /// </summary>
+        /// <summary> Application stack dependency. </summary>
         [WirePath("properties.dependency")]
         public string Dependency { get; set; }
-        /// <summary>
-        /// List of major versions available.
-        /// Serialized Name: ApplicationStackResource.properties.majorVersions
-        /// </summary>
+        /// <summary> List of major versions available. </summary>
         [WirePath("properties.majorVersions")]
         public IList<StackMajorVersion> MajorVersions { get; }
-        /// <summary>
-        /// List of frameworks associated with application stack.
-        /// Serialized Name: ApplicationStackResource.properties.frameworks
-        /// </summary>
+        /// <summary> List of frameworks associated with application stack. </summary>
         [WirePath("properties.frameworks")]
         public IList<ApplicationStack> Frameworks { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: ApplicationStackResource.properties.isDeprecated
-        /// </summary>
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         [WirePath("properties.isDeprecated")]
         public IList<ApplicationStack> IsDeprecated { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

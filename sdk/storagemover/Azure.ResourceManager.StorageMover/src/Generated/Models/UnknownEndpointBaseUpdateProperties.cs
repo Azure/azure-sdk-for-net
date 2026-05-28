@@ -10,13 +10,20 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
+    /// <summary> Unknown version of EndpointBaseUpdateProperties. </summary>
     internal partial class UnknownEndpointBaseUpdateProperties : EndpointBaseUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEndpointBaseUpdateProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEndpointBaseUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(endpointType != default ? endpointType : "unknown", description, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEndpointBaseUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endpointType, description, serializedAdditionalRawData)
+        {
+            EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownEndpointBaseUpdateProperties"/> for deserialization. </summary>
+        internal UnknownEndpointBaseUpdateProperties()
         {
         }
     }

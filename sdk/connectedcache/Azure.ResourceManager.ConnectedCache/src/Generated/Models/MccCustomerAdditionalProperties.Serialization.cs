@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ConnectedCache;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
-    /// <summary> Model representing customer for connected cache resource. </summary>
-    public partial class MccCustomerAdditionalProperties : IJsonModel<MccCustomerAdditionalProperties>
+    public partial class MccCustomerAdditionalProperties : IUtf8JsonSerializable, IJsonModel<MccCustomerAdditionalProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MccCustomerAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCustomerAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMccCustomerAdditionalProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MccCustomerAdditionalProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MccCustomerAdditionalProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCustomerAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MccCustomerAdditionalProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MccCustomerAdditionalProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MccCustomerAdditionalProperties IPersistableModel<MccCustomerAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MccCustomerAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MccCustomerAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCustomerAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MccCustomerAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MccCustomerAdditionalProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(CustomerPropertiesOverviewCacheEfficiency))
             {
                 writer.WritePropertyName("customerPropertiesOverviewCacheEfficiency"u8);
@@ -224,15 +184,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("optionalProperty5"u8);
                 writer.WriteStringValue(OptionalProperty5);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -241,27 +201,22 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MccCustomerAdditionalProperties IJsonModel<MccCustomerAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MccCustomerAdditionalProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MccCustomerAdditionalProperties IJsonModel<MccCustomerAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCustomerAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MccCustomerAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MccCustomerAdditionalProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMccCustomerAdditionalProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MccCustomerAdditionalProperties DeserializeMccCustomerAdditionalProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static MccCustomerAdditionalProperties DeserializeMccCustomerAdditionalProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -270,9 +225,9 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             float? customerPropertiesOverviewAverageEgressMbps = default;
             float? customerPropertiesOverviewAverageMissMbps = default;
             float? customerPropertiesOverviewEgressMbpsMax = default;
-            DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxOn = default;
+            DateTimeOffset? customerPropertiesOverviewEgressMbpsMaxDateTime = default;
             float? customerPropertiesOverviewMissMbpsMax = default;
-            DateTimeOffset? customerPropertiesOverviewMissMbpsMaxOn = default;
+            DateTimeOffset? customerPropertiesOverviewMissMbpsMaxDateTime = default;
             int? customerPropertiesOverviewCacheNodesHealthyCount = default;
             int? customerPropertiesOverviewCacheNodesUnhealthyCount = default;
             bool? signupStatus = default;
@@ -280,7 +235,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             string signupStatusText = default;
             int? signupPhaseStatusCode = default;
             string signupPhaseStatusText = default;
-            DateTimeOffset? peeringDBLastUpdatedOn = default;
+            DateTimeOffset? peeringDbLastUpdateDate = default;
             string customerOrgName = default;
             string customerEmail = default;
             string customerTransitAsn = default;
@@ -290,242 +245,244 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             string customerEntitlementSkuId = default;
             string customerEntitlementSkuGuid = default;
             string customerEntitlementSkuName = default;
-            DateTimeOffset? customerEntitlementExpiryOn = default;
+            DateTimeOffset? customerEntitlementExpiration = default;
             string optionalProperty1 = default;
             string optionalProperty2 = default;
             string optionalProperty3 = default;
             string optionalProperty4 = default;
             string optionalProperty5 = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("customerPropertiesOverviewCacheEfficiency"u8))
+                if (property.NameEquals("customerPropertiesOverviewCacheEfficiency"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerPropertiesOverviewCacheEfficiency = prop.Value.GetSingle();
+                    customerPropertiesOverviewCacheEfficiency = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("customerPropertiesOverviewAverageEgressMbps"u8))
+                if (property.NameEquals("customerPropertiesOverviewAverageEgressMbps"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerPropertiesOverviewAverageEgressMbps = prop.Value.GetSingle();
+                    customerPropertiesOverviewAverageEgressMbps = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("customerPropertiesOverviewAverageMissMbps"u8))
+                if (property.NameEquals("customerPropertiesOverviewAverageMissMbps"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerPropertiesOverviewAverageMissMbps = prop.Value.GetSingle();
+                    customerPropertiesOverviewAverageMissMbps = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("customerPropertiesOverviewEgressMbpsMax"u8))
+                if (property.NameEquals("customerPropertiesOverviewEgressMbpsMax"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerPropertiesOverviewEgressMbpsMax = prop.Value.GetSingle();
+                    customerPropertiesOverviewEgressMbpsMax = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("customerPropertiesOverviewEgressMbpsMaxDateTime"u8))
+                if (property.NameEquals("customerPropertiesOverviewEgressMbpsMaxDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerPropertiesOverviewEgressMbpsMaxOn = prop.Value.GetDateTimeOffset("O");
+                    customerPropertiesOverviewEgressMbpsMaxDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("customerPropertiesOverviewMissMbpsMax"u8))
+                if (property.NameEquals("customerPropertiesOverviewMissMbpsMax"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerPropertiesOverviewMissMbpsMax = prop.Value.GetSingle();
+                    customerPropertiesOverviewMissMbpsMax = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("customerPropertiesOverviewMissMbpsMaxDateTime"u8))
+                if (property.NameEquals("customerPropertiesOverviewMissMbpsMaxDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerPropertiesOverviewMissMbpsMaxOn = prop.Value.GetDateTimeOffset("O");
+                    customerPropertiesOverviewMissMbpsMaxDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("customerPropertiesOverviewCacheNodesHealthyCount"u8))
+                if (property.NameEquals("customerPropertiesOverviewCacheNodesHealthyCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerPropertiesOverviewCacheNodesHealthyCount = prop.Value.GetInt32();
+                    customerPropertiesOverviewCacheNodesHealthyCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("customerPropertiesOverviewCacheNodesUnhealthyCount"u8))
+                if (property.NameEquals("customerPropertiesOverviewCacheNodesUnhealthyCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerPropertiesOverviewCacheNodesUnhealthyCount = prop.Value.GetInt32();
+                    customerPropertiesOverviewCacheNodesUnhealthyCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("signupStatus"u8))
+                if (property.NameEquals("signupStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signupStatus = prop.Value.GetBoolean();
+                    signupStatus = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("signupStatusCode"u8))
+                if (property.NameEquals("signupStatusCode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signupStatusCode = prop.Value.GetInt32();
+                    signupStatusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("signupStatusText"u8))
+                if (property.NameEquals("signupStatusText"u8))
                 {
-                    signupStatusText = prop.Value.GetString();
+                    signupStatusText = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("signupPhaseStatusCode"u8))
+                if (property.NameEquals("signupPhaseStatusCode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signupPhaseStatusCode = prop.Value.GetInt32();
+                    signupPhaseStatusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("signupPhaseStatusText"u8))
+                if (property.NameEquals("signupPhaseStatusText"u8))
                 {
-                    signupPhaseStatusText = prop.Value.GetString();
+                    signupPhaseStatusText = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("peeringDbLastUpdateDate"u8))
+                if (property.NameEquals("peeringDbLastUpdateDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    peeringDBLastUpdatedOn = prop.Value.GetDateTimeOffset("O");
+                    peeringDbLastUpdateDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("customerOrgName"u8))
+                if (property.NameEquals("customerOrgName"u8))
                 {
-                    customerOrgName = prop.Value.GetString();
+                    customerOrgName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customerEmail"u8))
+                if (property.NameEquals("customerEmail"u8))
                 {
-                    customerEmail = prop.Value.GetString();
+                    customerEmail = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customerTransitAsn"u8))
+                if (property.NameEquals("customerTransitAsn"u8))
                 {
-                    customerTransitAsn = prop.Value.GetString();
+                    customerTransitAsn = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customerTransitState"u8))
+                if (property.NameEquals("customerTransitState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerTransitState = new CustomerTransitState(prop.Value.GetString());
+                    customerTransitState = new CustomerTransitState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("customerAsn"u8))
+                if (property.NameEquals("customerAsn"u8))
                 {
-                    customerAsn = prop.Value.GetString();
+                    customerAsn = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customerAsnEstimatedEgressPeekGbps"u8))
+                if (property.NameEquals("customerAsnEstimatedEgressPeekGbps"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerAsnEstimatedEgressPeekGbps = prop.Value.GetSingle();
+                    customerAsnEstimatedEgressPeekGbps = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("customerEntitlementSkuId"u8))
+                if (property.NameEquals("customerEntitlementSkuId"u8))
                 {
-                    customerEntitlementSkuId = prop.Value.GetString();
+                    customerEntitlementSkuId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customerEntitlementSkuGuid"u8))
+                if (property.NameEquals("customerEntitlementSkuGuid"u8))
                 {
-                    customerEntitlementSkuGuid = prop.Value.GetString();
+                    customerEntitlementSkuGuid = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customerEntitlementSkuName"u8))
+                if (property.NameEquals("customerEntitlementSkuName"u8))
                 {
-                    customerEntitlementSkuName = prop.Value.GetString();
+                    customerEntitlementSkuName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customerEntitlementExpiration"u8))
+                if (property.NameEquals("customerEntitlementExpiration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerEntitlementExpiryOn = prop.Value.GetDateTimeOffset("O");
+                    customerEntitlementExpiration = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty1"u8))
+                if (property.NameEquals("optionalProperty1"u8))
                 {
-                    optionalProperty1 = prop.Value.GetString();
+                    optionalProperty1 = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty2"u8))
+                if (property.NameEquals("optionalProperty2"u8))
                 {
-                    optionalProperty2 = prop.Value.GetString();
+                    optionalProperty2 = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty3"u8))
+                if (property.NameEquals("optionalProperty3"u8))
                 {
-                    optionalProperty3 = prop.Value.GetString();
+                    optionalProperty3 = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty4"u8))
+                if (property.NameEquals("optionalProperty4"u8))
                 {
-                    optionalProperty4 = prop.Value.GetString();
+                    optionalProperty4 = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty5"u8))
+                if (property.NameEquals("optionalProperty5"u8))
                 {
-                    optionalProperty5 = prop.Value.GetString();
+                    optionalProperty5 = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new MccCustomerAdditionalProperties(
                 customerPropertiesOverviewCacheEfficiency,
                 customerPropertiesOverviewAverageEgressMbps,
                 customerPropertiesOverviewAverageMissMbps,
                 customerPropertiesOverviewEgressMbpsMax,
-                customerPropertiesOverviewEgressMbpsMaxOn,
+                customerPropertiesOverviewEgressMbpsMaxDateTime,
                 customerPropertiesOverviewMissMbpsMax,
-                customerPropertiesOverviewMissMbpsMaxOn,
+                customerPropertiesOverviewMissMbpsMaxDateTime,
                 customerPropertiesOverviewCacheNodesHealthyCount,
                 customerPropertiesOverviewCacheNodesUnhealthyCount,
                 signupStatus,
@@ -533,7 +490,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 signupStatusText,
                 signupPhaseStatusCode,
                 signupPhaseStatusText,
-                peeringDBLastUpdatedOn,
+                peeringDbLastUpdateDate,
                 customerOrgName,
                 customerEmail,
                 customerTransitAsn,
@@ -543,13 +500,44 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 customerEntitlementSkuId,
                 customerEntitlementSkuGuid,
                 customerEntitlementSkuName,
-                customerEntitlementExpiryOn,
+                customerEntitlementExpiration,
                 optionalProperty1,
                 optionalProperty2,
                 optionalProperty3,
                 optionalProperty4,
                 optionalProperty5,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MccCustomerAdditionalProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MccCustomerAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MccCustomerAdditionalProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MccCustomerAdditionalProperties IPersistableModel<MccCustomerAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MccCustomerAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMccCustomerAdditionalProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MccCustomerAdditionalProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MccCustomerAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

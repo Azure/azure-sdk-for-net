@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Description of an operation available for Microsoft.Web resource provider.
-    /// Serialized Name: CsmOperationDescription
-    /// </summary>
+    /// <summary> Description of an operation available for Microsoft.Web resource provider. </summary>
     public partial class CsmOperationDescription
     {
         /// <summary>
@@ -54,17 +51,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CsmOperationDescription"/>. </summary>
-        /// <param name="name"> Serialized Name: CsmOperationDescription.name. </param>
-        /// <param name="isDataAction"> Serialized Name: CsmOperationDescription.isDataAction. </param>
-        /// <param name="display">
-        /// Meta data about operation used for display in portal.
-        /// Serialized Name: CsmOperationDescription.display
-        /// </param>
-        /// <param name="origin"> Serialized Name: CsmOperationDescription.origin. </param>
-        /// <param name="properties">
-        /// Properties available for a Microsoft.Web resource provider operation.
-        /// Serialized Name: CsmOperationDescription.properties
-        /// </param>
+        /// <param name="name"></param>
+        /// <param name="isDataAction"></param>
+        /// <param name="display"> Meta data about operation used for display in portal. </param>
+        /// <param name="origin"></param>
+        /// <param name="properties"> Properties available for a Microsoft.Web resource provider operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CsmOperationDescription(string name, bool? isDataAction, CsmOperationDisplay display, string origin, CsmOperationDescriptionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,30 +67,21 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: CsmOperationDescription.name. </summary>
+        /// <summary> Gets the name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Serialized Name: CsmOperationDescription.isDataAction. </summary>
+        /// <summary> Gets the is data action. </summary>
         [WirePath("isDataAction")]
         public bool? IsDataAction { get; }
-        /// <summary>
-        /// Meta data about operation used for display in portal.
-        /// Serialized Name: CsmOperationDescription.display
-        /// </summary>
+        /// <summary> Meta data about operation used for display in portal. </summary>
         [WirePath("display")]
         public CsmOperationDisplay Display { get; }
-        /// <summary> Serialized Name: CsmOperationDescription.origin. </summary>
+        /// <summary> Gets the origin. </summary>
         [WirePath("origin")]
         public string Origin { get; }
-        /// <summary>
-        /// Properties available for a Microsoft.Web resource provider operation.
-        /// Serialized Name: CsmOperationDescription.properties
-        /// </summary>
+        /// <summary> Properties available for a Microsoft.Web resource provider operation. </summary>
         internal CsmOperationDescriptionProperties Properties { get; }
-        /// <summary>
-        /// Resource metrics service provided by Microsoft.Insights resource provider.
-        /// Serialized Name: CsmOperationDescriptionProperties.serviceSpecification
-        /// </summary>
+        /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
         [WirePath("properties.serviceSpecification")]
         public ServiceSpecification CsmOperationDescriptionServiceSpecification
         {

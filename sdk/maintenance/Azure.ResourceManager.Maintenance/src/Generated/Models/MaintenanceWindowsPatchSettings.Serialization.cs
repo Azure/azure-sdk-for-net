@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Maintenance;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Input properties for patching a Windows machine. </summary>
-    public partial class MaintenanceWindowsPatchSettings : IJsonModel<MaintenanceWindowsPatchSettings>
+    public partial class MaintenanceWindowsPatchSettings : IUtf8JsonSerializable, IJsonModel<MaintenanceWindowsPatchSettings>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenanceWindowsPatchSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMaintenanceWindowsPatchSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceWindowsPatchSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaintenanceWindowsPatchSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceWindowsPatchSettings IPersistableModel<MaintenanceWindowsPatchSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaintenanceWindowsPatchSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MaintenanceWindowsPatchSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,37 +28,28 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(KBNumbersToExclude))
+
+            if (Optional.IsCollectionDefined(KbNumbersToExclude))
             {
                 writer.WritePropertyName("kbNumbersToExclude"u8);
                 writer.WriteStartArray();
-                foreach (string item in KBNumbersToExclude)
+                foreach (var item in KbNumbersToExclude)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(KBNumbersToInclude))
+            if (Optional.IsCollectionDefined(KbNumbersToInclude))
             {
                 writer.WritePropertyName("kbNumbersToInclude"u8);
                 writer.WriteStartArray();
-                foreach (string item in KBNumbersToInclude)
+                foreach (var item in KbNumbersToInclude)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -108,13 +58,8 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
-                foreach (string item in ClassificationsToInclude)
+                foreach (var item in ClassificationsToInclude)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -124,15 +69,15 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WritePropertyName("excludeKbsRequiringReboot"u8);
                 writer.WriteBooleanValue(IsExcludeKbsRebootRequired.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -141,27 +86,22 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceWindowsPatchSettings IJsonModel<MaintenanceWindowsPatchSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenanceWindowsPatchSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MaintenanceWindowsPatchSettings IJsonModel<MaintenanceWindowsPatchSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMaintenanceWindowsPatchSettings(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MaintenanceWindowsPatchSettings DeserializeMaintenanceWindowsPatchSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static MaintenanceWindowsPatchSettings DeserializeMaintenanceWindowsPatchSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -169,88 +109,100 @@ namespace Azure.ResourceManager.Maintenance.Models
             IList<string> kbNumbersToExclude = default;
             IList<string> kbNumbersToInclude = default;
             IList<string> classificationsToInclude = default;
-            bool? isExcludeKbsRebootRequired = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            bool? excludeKbsRequiringReboot = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("kbNumbersToExclude"u8))
+                if (property.NameEquals("kbNumbersToExclude"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     kbNumbersToExclude = array;
                     continue;
                 }
-                if (prop.NameEquals("kbNumbersToInclude"u8))
+                if (property.NameEquals("kbNumbersToInclude"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     kbNumbersToInclude = array;
                     continue;
                 }
-                if (prop.NameEquals("classificationsToInclude"u8))
+                if (property.NameEquals("classificationsToInclude"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     classificationsToInclude = array;
                     continue;
                 }
-                if (prop.NameEquals("excludeKbsRequiringReboot"u8))
+                if (property.NameEquals("excludeKbsRequiringReboot"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isExcludeKbsRebootRequired = prop.Value.GetBoolean();
+                    excludeKbsRequiringReboot = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new MaintenanceWindowsPatchSettings(kbNumbersToExclude ?? new ChangeTrackingList<string>(), kbNumbersToInclude ?? new ChangeTrackingList<string>(), classificationsToInclude ?? new ChangeTrackingList<string>(), isExcludeKbsRebootRequired, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MaintenanceWindowsPatchSettings(kbNumbersToExclude ?? new ChangeTrackingList<string>(), kbNumbersToInclude ?? new ChangeTrackingList<string>(), classificationsToInclude ?? new ChangeTrackingList<string>(), excludeKbsRequiringReboot, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MaintenanceWindowsPatchSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MaintenanceWindowsPatchSettings IPersistableModel<MaintenanceWindowsPatchSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMaintenanceWindowsPatchSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MaintenanceWindowsPatchSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

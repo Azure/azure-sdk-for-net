@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary></summary>
-    internal partial class ElasticSanPrivateEndpointConnectionOperationSource : IOperationSource<ElasticSanPrivateEndpointConnectionResource>
+    internal class ElasticSanPrivateEndpointConnectionOperationSource : IOperationSource<ElasticSanPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ElasticSanPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ElasticSanPrivateEndpointConnectionResource IOperationSource<ElasticSanPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ElasticSanPrivateEndpointConnectionData data = ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ElasticSanPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
             return new ElasticSanPrivateEndpointConnectionResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ElasticSanPrivateEndpointConnectionResource> IOperationSource<ElasticSanPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ElasticSanPrivateEndpointConnectionData data = ElasticSanPrivateEndpointConnectionData.DeserializeElasticSanPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ElasticSanPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<ElasticSanPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerElasticSanContext.Default);
+            return await Task.FromResult(new ElasticSanPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

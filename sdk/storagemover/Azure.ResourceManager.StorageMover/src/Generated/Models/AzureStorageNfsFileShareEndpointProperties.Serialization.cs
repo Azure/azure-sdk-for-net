@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The properties of Azure Storage NFS file share endpoint. </summary>
-    public partial class AzureStorageNfsFileShareEndpointProperties : EndpointBaseProperties, IJsonModel<AzureStorageNfsFileShareEndpointProperties>
+    public partial class AzureStorageNfsFileShareEndpointProperties : IUtf8JsonSerializable, IJsonModel<AzureStorageNfsFileShareEndpointProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureStorageNfsFileShareEndpointProperties"/> for deserialization. </summary>
-        internal AzureStorageNfsFileShareEndpointProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStorageNfsFileShareEndpointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override EndpointBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureStorageNfsFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureStorageNfsFileShareEndpointProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureStorageNfsFileShareEndpointProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureStorageNfsFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureStorageNfsFileShareEndpointProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureStorageNfsFileShareEndpointProperties IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureStorageNfsFileShareEndpointProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureStorageNfsFileShareEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureStorageNfsFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageNfsFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureStorageNfsFileShareEndpointProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("storageAccountResourceId"u8);
             writer.WriteStringValue(StorageAccountResourceId);
@@ -87,91 +41,108 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStringValue(FileShareName);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureStorageNfsFileShareEndpointProperties IJsonModel<AzureStorageNfsFileShareEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureStorageNfsFileShareEndpointProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override EndpointBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureStorageNfsFileShareEndpointProperties IJsonModel<AzureStorageNfsFileShareEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureStorageNfsFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageNfsFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureStorageNfsFileShareEndpointProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureStorageNfsFileShareEndpointProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureStorageNfsFileShareEndpointProperties DeserializeAzureStorageNfsFileShareEndpointProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureStorageNfsFileShareEndpointProperties DeserializeAzureStorageNfsFileShareEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            EndpointType endpointType = default;
-            string description = default;
-            StorageMoverEndpointKind? endpointKind = default;
-            StorageMoverProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier storageAccountResourceId = default;
             string fileShareName = default;
-            foreach (var prop in element.EnumerateObject())
+            EndpointType endpointType = default;
+            string description = default;
+            StorageMoverProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("endpointType"u8))
+                if (property.NameEquals("storageAccountResourceId"u8))
                 {
-                    endpointType = new EndpointType(prop.Value.GetString());
+                    storageAccountResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("description"u8))
+                if (property.NameEquals("fileShareName"u8))
                 {
-                    description = prop.Value.GetString();
+                    fileShareName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("endpointKind"u8))
+                if (property.NameEquals("endpointType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    endpointType = new EndpointType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endpointKind = new StorageMoverEndpointKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("provisioningState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new StorageMoverProvisioningState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("storageAccountResourceId"u8))
-                {
-                    storageAccountResourceId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("fileShareName"u8))
-                {
-                    fileShareName = prop.Value.GetString();
+                    provisioningState = new StorageMoverProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureStorageNfsFileShareEndpointProperties(
                 endpointType,
                 description,
-                endpointKind,
                 provisioningState,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 storageAccountResourceId,
                 fileShareName);
         }
+
+        BinaryData IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageNfsFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureStorageNfsFileShareEndpointProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureStorageNfsFileShareEndpointProperties IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageNfsFileShareEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAzureStorageNfsFileShareEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureStorageNfsFileShareEndpointProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureStorageNfsFileShareEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -1,23 +1,14 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- Upgraded API version to `2025-05-01-preview`
-- Migrated from Swagger/AutoRest to TypeSpec-based generation
-- Added new enum value `EventHubsTlsVersion.Tls1_3`
-- Added implicit nullable string-to-enum conversion operators on all extensible enum types
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
-
-- `EventHubsNetworkSecurityPerimeterConfiguration` is now a proper ARM resource with `EventHubsNetworkSecurityPerimeterConfigurationResource`, `EventHubsNetworkSecurityPerimeterConfigurationData`, and `EventHubsNetworkSecurityPerimeterConfigurationCollection`
-
-## 1.3.0-beta.1 (2025-11-27)
-
-### Features Added
-
-- Updated api version to '2025-05-01-preview'.
 
 ## 1.2.1 (2025-09-23)
 

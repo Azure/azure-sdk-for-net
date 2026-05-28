@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Endpoint addresses. </summary>
     public partial class AvsPrivateCloudEndpoints
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEndpoints"/>. </summary>
         internal AvsPrivateCloudEndpoints()
@@ -28,8 +57,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="nsxtManagerIP"> Endpoint IP for the NSX-T Data Center manager. </param>
         /// <param name="vcenterIP"> Endpoint IP for Virtual Center Server Appliance. </param>
         /// <param name="hcxCloudManagerIP"> Endpoint IP for the HCX Cloud Manager. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager, string nsxtManagerIP, string vcenterIP, string hcxCloudManagerIP, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager, string nsxtManagerIP, string vcenterIP, string hcxCloudManagerIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NsxtManager = nsxtManager;
             Vcsa = vcsa;
@@ -37,24 +66,19 @@ namespace Azure.ResourceManager.Avs.Models
             NsxtManagerIP = nsxtManagerIP;
             VcenterIP = vcenterIP;
             HcxCloudManagerIP = hcxCloudManagerIP;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Endpoint FQDN for the NSX-T Data Center manager. </summary>
         public string NsxtManager { get; }
-
         /// <summary> Endpoint FQDN for Virtual Center Server Appliance. </summary>
         public string Vcsa { get; }
-
         /// <summary> Endpoint FQDN for the HCX Cloud Manager. </summary>
         public string HcxCloudManager { get; }
-
         /// <summary> Endpoint IP for the NSX-T Data Center manager. </summary>
         public string NsxtManagerIP { get; }
-
         /// <summary> Endpoint IP for Virtual Center Server Appliance. </summary>
         public string VcenterIP { get; }
-
         /// <summary> Endpoint IP for the HCX Cloud Manager. </summary>
         public string HcxCloudManagerIP { get; }
     }

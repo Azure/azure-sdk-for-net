@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using Client.Clientnamespace.First;
-using Client.Clientnamespace.Second;
-using Client.Clientnamespace.Second.Sub;
+using client.clientnamespace.first;
+using client.clientnamespace.second;
+using client.clientnamespace.second.sub;
 
 namespace Client.ClientNamespace
 {

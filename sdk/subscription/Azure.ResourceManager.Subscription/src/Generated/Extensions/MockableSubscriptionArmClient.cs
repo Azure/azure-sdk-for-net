@@ -6,27 +6,38 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
+    /// <summary> A class to add extension methods to ArmClient. </summary>
     public partial class MockableSubscriptionArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableSubscriptionArmClient for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableSubscriptionArmClient"/> class for mocking. </summary>
         protected MockableSubscriptionArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableSubscriptionArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableSubscriptionArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSubscriptionArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="SubscriptionAliasResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        internal MockableSubscriptionArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
+        {
+        }
+
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionAliasResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionAliasResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionAliasResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SubscriptionAliasResource"/> object. </returns>
         public virtual SubscriptionAliasResource GetSubscriptionAliasResource(ResourceIdentifier id)
@@ -35,7 +46,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
             return new SubscriptionAliasResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="TenantPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantPolicyResource.CreateResourceIdentifier" /> to create a <see cref="TenantPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public virtual TenantPolicyResource GetTenantPolicyResource(ResourceIdentifier id)
@@ -44,30 +58,16 @@ namespace Azure.ResourceManager.Subscription.Mocking
             return new TenantPolicyResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="BillingAccountPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="BillingAccountPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
         public virtual BillingAccountPolicyResource GetBillingAccountPolicyResource(ResourceIdentifier id)
         {
             BillingAccountPolicyResource.ValidateResourceId(id);
             return new BillingAccountPolicyResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="BillingAccountPolicyResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
-        public virtual BillingAccountPolicyResource GetBillingAccountPolicy(ResourceIdentifier scope)
-        {
-            return new BillingAccountPolicyResource(Client, scope.AppendProviderResource("Microsoft.Subscription", "policies", "default"));
-        }
-
-        /// <summary> Gets an object representing a <see cref="TargetDirectoryResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TargetDirectoryResultResource"/> object. </returns>
-        public virtual TargetDirectoryResultResource GetTargetDirectoryResultResource(ResourceIdentifier id)
-        {
-            TargetDirectoryResultResource.ValidateResourceId(id);
-            return new TargetDirectoryResultResource(Client, id);
         }
     }
 }

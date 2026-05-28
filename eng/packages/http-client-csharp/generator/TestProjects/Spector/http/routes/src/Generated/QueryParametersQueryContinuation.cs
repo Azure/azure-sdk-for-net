@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core.Pipeline;
 using Routes._QueryParameters.QueryContinuation.Explode;
 using Routes._QueryParameters.QueryContinuation.Standard;
@@ -15,8 +14,6 @@ namespace Routes._QueryParameters.QueryContinuation
     public partial class QueryParametersQueryContinuation
     {
         protected QueryParametersQueryContinuation() => throw null;
-
-        internal QueryParametersQueryContinuation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -90,33 +90,7 @@ public abstract class BicepValue : IBicepValue
     public override string ToString() => Compile().ToString();
 
     /// <inheritdoc />
-    public BicepExpression Compile()
-    {
-        if (_kind == BicepValueKind.Expression)
-        {
-            return _expression!;
-        }
-        if (_kind == BicepValueKind.Literal)
-        {
-            return CompileLiteralValue();
-        }
-        if (_self is not null)
-        {
-            return _self.GetReference();
-        }
-        if (_source is not null)
-        {
-            return _source.GetReference();
-        }
-        if (_kind is BicepValueKind.Unset)
-        {
-            return BicepSyntax.Null();
-        }
-
-        throw new InvalidOperationException($"Cannot convert {this} to a Bicep expression.");
-    }
-
-    private protected abstract BicepExpression CompileLiteralValue();
+    public BicepExpression Compile() => BicepTypeMapping.ToBicep(this, Format);
 
     /// <inheritdoc />
     void IBicepValue.Assign(IBicepValue source) => Assign(source);
@@ -126,8 +100,7 @@ public abstract class BicepValue : IBicepValue
     {
         // TODO: Do we want to add a more explicit notion of readonly
         // (especially for expr ref resources)?
-        if (_isOutput)
-        { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
+        if (_isOutput) { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
 
         // Track the source so we can correctly link references across modules
         _source = source?.Self;

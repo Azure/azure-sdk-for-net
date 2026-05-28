@@ -3,14 +3,19 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
+    /// <summary>
+    /// Replication status
+    /// </summary>
     public partial class NetAppVolumeReplicationStatus
     {
-        // Backward-compat: GA exposed RelationshipStatus. The spec now generates
-        // VolumeReplicationRelationshipStatus directly, so keep the old property as an alias.
         /// <summary> Status of the mirror relationship. </summary>
-        public NetAppRelationshipStatus? RelationshipStatus =>
-            VolumeReplicationRelationshipStatus.HasValue ? new NetAppRelationshipStatus(VolumeReplicationRelationshipStatus.Value.ToString()) : null;
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public NetAppRelationshipStatus? RelationshipStatus { get; }
     }
 }

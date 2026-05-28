@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
-    /// <summary></summary>
-    internal partial class DataReplicationProtectedItemOperationSource : IOperationSource<DataReplicationProtectedItemResource>
+    internal class DataReplicationProtectedItemOperationSource : IOperationSource<DataReplicationProtectedItemResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DataReplicationProtectedItemOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DataReplicationProtectedItemResource IOperationSource<DataReplicationProtectedItemResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DataReplicationProtectedItemData data = DataReplicationProtectedItemData.DeserializeDataReplicationProtectedItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DataReplicationProtectedItemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
             return new DataReplicationProtectedItemResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DataReplicationProtectedItemResource> IOperationSource<DataReplicationProtectedItemResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DataReplicationProtectedItemData data = DataReplicationProtectedItemData.DeserializeDataReplicationProtectedItemData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DataReplicationProtectedItemResource(_client, data);
+            var data = ModelReaderWriter.Read<DataReplicationProtectedItemData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+            return await Task.FromResult(new DataReplicationProtectedItemResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -18,8 +17,6 @@ namespace Client.Naming.EnumConflict
     public partial class FirstOperations
     {
         protected FirstOperations() => throw null;
-
-        internal FirstOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -5,43 +5,33 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal abstract partial class MonitorDomain
+    /// <summary> The abstract common base of all domains. </summary>
+    internal partial class MonitorDomain
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="MonitorDomain"/>. </summary>
         /// <param name="version"> Schema version. </param>
-        private protected MonitorDomain(int version)
+        public MonitorDomain(int version)
         {
             Version = version;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorDomain"/>. </summary>
         /// <param name="version"> Schema version. </param>
-        /// <param name="kind"> Discriminator property to identify the specific telemetry data type. </param>
-        /// <param name="additionalProperties"></param>
-        internal MonitorDomain(int version, MonitorDomainKind kind, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal MonitorDomain(int version, IDictionary<string, object> additionalProperties)
         {
             Version = version;
-            Kind = kind;
-            _additionalBinaryDataProperties = additionalProperties;
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Schema version. </summary>
-        public int Version { get; set; }
-
-        /// <summary> Discriminator property to identify the specific telemetry data type. </summary>
-        internal MonitorDomainKind Kind { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        public int Version { get; }
+        /// <summary> Additional Properties. </summary>
+        public IDictionary<string, object> AdditionalProperties { get; }
     }
 }

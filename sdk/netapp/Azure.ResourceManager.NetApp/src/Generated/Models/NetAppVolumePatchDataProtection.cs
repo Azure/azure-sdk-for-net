@@ -14,8 +14,37 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
     public partial class NetAppVolumePatchDataProtection
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
         public NetAppVolumePatchDataProtection()
@@ -25,56 +54,27 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
         /// <param name="backup"> Backup Properties. </param>
         /// <param name="snapshot"> Snapshot properties. </param>
-        /// <param name="ransomwareProtection"> Advanced Ransomware Protection updatable settings. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumePatchDataProtection(NetAppVolumeBackupConfiguration backup, VolumeSnapshotProperties snapshot, RansomwareProtectionPatchSettings ransomwareProtection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumePatchDataProtection(NetAppVolumeBackupConfiguration backup, VolumeSnapshotProperties snapshot, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Backup = backup;
             Snapshot = snapshot;
-            RansomwareProtection = ransomwareProtection;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Backup Properties. </summary>
         public NetAppVolumeBackupConfiguration Backup { get; set; }
-
         /// <summary> Snapshot properties. </summary>
         internal VolumeSnapshotProperties Snapshot { get; set; }
-
-        /// <summary> Advanced Ransomware Protection updatable settings. </summary>
-        internal RansomwareProtectionPatchSettings RansomwareProtection { get; set; }
-
         /// <summary> Snapshot Policy ResourceId. </summary>
         public ResourceIdentifier SnapshotPolicyId
         {
-            get
-            {
-                return Snapshot is null ? default : Snapshot.SnapshotPolicyId;
-            }
+            get => Snapshot is null ? default : Snapshot.SnapshotPolicyId;
             set
             {
                 if (Snapshot is null)
-                {
                     Snapshot = new VolumeSnapshotProperties();
-                }
                 Snapshot.SnapshotPolicyId = value;
-            }
-        }
-
-        /// <summary> The desired value of the ARP feature state available to the volume. </summary>
-        public DesiredRansomwareProtectionState? DesiredRansomwareProtectionState
-        {
-            get
-            {
-                return RansomwareProtection is null ? default : RansomwareProtection.DesiredRansomwareProtectionState;
-            }
-            set
-            {
-                if (RansomwareProtection is null)
-                {
-                    RansomwareProtection = new RansomwareProtectionPatchSettings();
-                }
-                RansomwareProtection.DesiredRansomwareProtectionState = value;
             }
         }
     }

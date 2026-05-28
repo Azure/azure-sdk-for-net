@@ -15,7 +15,7 @@ namespace Azure.Projects.Foundry
     /// <summary>
     /// The AI Foundry client.
     /// </summary>
-    public class AIFoundryClient : ClientConnectionProvider
+    public class AIFoundryClient : ConnectionProvider
     {
         /// <summary>
         /// Protects the <see cref="Connections"/> collection from concurrent access. Separated from <see cref="_connectionCacheLock"/> to reduce contention.
@@ -33,17 +33,16 @@ namespace Azure.Projects.Foundry
         /// Subclient connections.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ClientConnectionCollection Connections { get; } = [];
+        public ConnectionCollection Connections { get; } = [];
 
-        private readonly AIProjectConnectionsOperations _connectionsClient;
+        private readonly ConnectionsClient _connectionsClient;
 
-        private readonly Dictionary<ConnectionType, AIProjectConnection> _connectionCache = new();
+        private readonly Dictionary<ConnectionType, ConnectionResponse> _connectionCache = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AIFoundryClient"/> class for mocking purposes.
         /// </summary>
         protected AIFoundryClient()
-            : base(maxCacheSize: 100)
         {
         }
 
@@ -51,23 +50,19 @@ namespace Azure.Projects.Foundry
         /// <summary>
         /// Initializes a new instance of the <see cref="AIFoundryClient"/> class.
         /// </summary>
-        /// <param name="endpoint">The project endpoint URL.
-        /// Format: https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;
-        /// Find it in your Azure AI Foundry Project overview page.</param>
+        /// <param name="connectionString">The connection string for the AI Foundry client.</param>
         /// <param name="credential">The token credential (optional).</param>
-        public AIFoundryClient(Uri endpoint, TokenCredential credential = default)
+        public AIFoundryClient(string connectionString, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-            : base(maxCacheSize: 100)
         {
-            if (endpoint == null)
+            if (string.IsNullOrEmpty(connectionString))
             {
-                throw new ArgumentNullException(nameof(endpoint));
+                throw new ArgumentException("Connection string cannot be null or empty.", nameof(connectionString));
             }
 
             // Initialize with a basic connection for AIProjectClient.
-            Connections.Add(new ClientConnection(typeof(AIProjectClient).FullName, endpoint.AbsoluteUri));
-            var aiProjectClient = new AIProjectClient(endpoint, Credential);
-            _connectionsClient = aiProjectClient.Connections;
+            Connections.Add(new ClientConnection(typeof(AIProjectClient).FullName, connectionString));
+            _connectionsClient = new ConnectionsClient(connectionString, Credential);
         }
 
         /// <summary>
@@ -97,7 +92,7 @@ namespace Azure.Projects.Foundry
             ConnectionType connectionType = GetConnectionTypeFromId(connectionId);
 
             // Check if the connection details are already cached (read lock).
-            AIProjectConnection connection = null;
+            ConnectionResponse connection = null;
             _connectionCacheLock.EnterReadLock();
             try
             {
@@ -117,7 +112,7 @@ namespace Azure.Projects.Foundry
                     // Double-check in case another thread already added it.
                     if (!_connectionCache.TryGetValue(connectionType, out connection))
                     {
-                        connection = _connectionsClient.GetDefaultConnection(connectionType, includeCredentials: true);
+                        connection = _connectionsClient.GetDefaultConnection(connectionType, true);
                         _connectionCache[connectionType] = connection;
                     }
                 }
@@ -128,21 +123,22 @@ namespace Azure.Projects.Foundry
             }
 
             // If the connection uses API key auth, validate and add if needed.
-            if (connection.Credentials is AIProjectConnectionApiKeyCredential apiKeyAuthProperties)
+            if (connection.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
             {
-                if (string.IsNullOrWhiteSpace(connection.Target))
+                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
                 {
                     throw new ArgumentException(
                         $"The API key authentication target URI is missing or invalid for {connectionId}.");
                 }
 
-                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.ApiKey))
+                if (apiKeyAuthProperties.Credentials == null
+                    || string.IsNullOrWhiteSpace(apiKeyAuthProperties.Credentials.Key))
                 {
                     throw new ArgumentException($"The API key is missing or invalid for {connectionId}.");
                 }
 
                 // Build the new connection object.
-                var newConnection = new ClientConnection(connectionId, connection.Target, apiKeyAuthProperties.ApiKey, CredentialKind.ApiKeyString);
+                var newConnection = new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key);
 
                 // Now we need to re-check and possibly add to Connections under a write lock.
                 _connectionsLock.EnterUpgradeableReadLock();
@@ -219,7 +215,7 @@ namespace Azure.Projects.Foundry
                 // Inference
                 case "Azure.AI.Inference.ChatCompletionsClient":
                 case "Azure.AI.Inference.EmbeddingsClient":
-                    return ConnectionType.APIKey;
+                    return ConnectionType.Serverless;
 
                 // AzureAISearch
                 case "Azure.Search.Documents.SearchClient":
@@ -238,7 +234,7 @@ namespace Azure.Projects.Foundry
             {
                 credential = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID") switch
                 {
-                    string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(clientId)),
+                    string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(clientId),
                     _ => new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential())
                 };
             }

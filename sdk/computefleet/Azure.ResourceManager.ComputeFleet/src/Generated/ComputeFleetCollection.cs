@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeFleet
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.ComputeFleet
     /// </summary>
     public partial class ComputeFleetCollection : ArmCollection, IEnumerable<ComputeFleetResource>, IAsyncEnumerable<ComputeFleetResource>
     {
-        private readonly ClientDiagnostics _fleetsClientDiagnostics;
-        private readonly Fleets _fleetsRestClient;
+        private readonly ClientDiagnostics _computeFleetFleetsClientDiagnostics;
+        private readonly FleetsRestOperations _computeFleetFleetsRestClient;
 
-        /// <summary> Initializes a new instance of ComputeFleetCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ComputeFleetCollection"/> class for mocking. </summary>
         protected ComputeFleetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeFleetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ComputeFleetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ComputeFleetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ComputeFleetResource.ResourceType, out string computeFleetApiVersion);
-            _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeFleet", ComputeFleetResource.ResourceType.Namespace, Diagnostics);
-            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Endpoint, computeFleetApiVersion ?? "2025-07-01-preview");
-            ValidateResourceId(id);
+            _computeFleetFleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeFleet", ComputeFleetResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ComputeFleetResource.ResourceType, out string computeFleetFleetsApiVersion);
+            _computeFleetFleetsRestClient = new FleetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, computeFleetFleetsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a Fleet
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <param name="fleetName"> The name of the Compute Fleet. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ComputeFleetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fleetName, ComputeFleetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("ComputeFleetCollection.CreateOrUpdate");
+            using var scope = _computeFleetFleetsClientDiagnostics.CreateScope("ComputeFleetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, ComputeFleetData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeFleetArmOperation<ComputeFleetResource> operation = new ComputeFleetArmOperation<ComputeFleetResource>(
-                    new ComputeFleetOperationSource(Client),
-                    _fleetsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _computeFleetFleetsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, fleetName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeFleetArmOperation<ComputeFleetResource>(new ComputeFleetOperationSource(Client), _computeFleetFleetsClientDiagnostics, Pipeline, _computeFleetFleetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fleetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.ComputeFleet
         /// Create a Fleet
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <param name="fleetName"> The name of the Compute Fleet. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ComputeFleetResource> CreateOrUpdate(WaitUntil waitUntil, string fleetName, ComputeFleetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("ComputeFleetCollection.CreateOrUpdate");
+            using var scope = _computeFleetFleetsClientDiagnostics.CreateScope("ComputeFleetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, ComputeFleetData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ComputeFleetArmOperation<ComputeFleetResource> operation = new ComputeFleetArmOperation<ComputeFleetResource>(
-                    new ComputeFleetOperationSource(Client),
-                    _fleetsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _computeFleetFleetsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, fleetName, data, cancellationToken);
+                var operation = new ComputeFleetArmOperation<ComputeFleetResource>(new ComputeFleetOperationSource(Client), _computeFleetFleetsClientDiagnostics, Pipeline, _computeFleetFleetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, fleetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.ComputeFleet
         /// Get a Fleet
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Compute Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         public virtual async Task<Response<ComputeFleetResource>> GetAsync(string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("ComputeFleetCollection.Get");
+            using var scope = _computeFleetFleetsClientDiagnostics.CreateScope("ComputeFleetCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputeFleetData> response = Response.FromValue(ComputeFleetData.FromResponse(result), result);
+                var response = await _computeFleetFleetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, fleetName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ComputeFleetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.ComputeFleet
         /// Get a Fleet
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Compute Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         public virtual Response<ComputeFleetResource> Get(string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("ComputeFleetCollection.Get");
+            using var scope = _computeFleetFleetsClientDiagnostics.CreateScope("ComputeFleetCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputeFleetData> response = Response.FromValue(ComputeFleetData.FromResponse(result), result);
+                var response = _computeFleetFleetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fleetName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ComputeFleetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.ComputeFleet
         /// List Fleet resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ComputeFleetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetByResourceGroupAsyncCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ComputeFleetCollection.GetAll"), data => new ComputeFleetResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _computeFleetFleetsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeFleetFleetsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComputeFleetResource(Client, ComputeFleetData.DeserializeComputeFleetData(e)), _computeFleetFleetsClientDiagnostics, Pipeline, "ComputeFleetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Fleet resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.ComputeFleet
         /// <returns> A collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ComputeFleetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ComputeFleetData, ComputeFleetResource>(new FleetsGetByResourceGroupCollectionResultOfT(_fleetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ComputeFleetCollection.GetAll"), data => new ComputeFleetResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _computeFleetFleetsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeFleetFleetsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComputeFleetResource(Client, ComputeFleetData.DeserializeComputeFleetData(e)), _computeFleetFleetsClientDiagnostics, Pipeline, "ComputeFleetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Compute Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("ComputeFleetCollection.Exists");
+            using var scope = _computeFleetFleetsClientDiagnostics.CreateScope("ComputeFleetCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ComputeFleetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ComputeFleetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ComputeFleetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _computeFleetFleetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, fleetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.ComputeFleet
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Compute Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         public virtual Response<bool> Exists(string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("ComputeFleetCollection.Exists");
+            using var scope = _computeFleetFleetsClientDiagnostics.CreateScope("ComputeFleetCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ComputeFleetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ComputeFleetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ComputeFleetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _computeFleetFleetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fleetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.ComputeFleet
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Compute Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         public virtual async Task<NullableResponse<ComputeFleetResource>> GetIfExistsAsync(string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("ComputeFleetCollection.GetIfExists");
+            using var scope = _computeFleetFleetsClientDiagnostics.CreateScope("ComputeFleetCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ComputeFleetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ComputeFleetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ComputeFleetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _computeFleetFleetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, fleetName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ComputeFleetResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ComputeFleetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.ComputeFleet
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Fleet_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetName"> The name of the Compute Fleet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         public virtual NullableResponse<ComputeFleetResource> GetIfExists(string fleetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
 
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("ComputeFleetCollection.GetIfExists");
+            using var scope = _computeFleetFleetsClientDiagnostics.CreateScope("ComputeFleetCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, fleetName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ComputeFleetData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ComputeFleetData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ComputeFleetData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _computeFleetFleetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, fleetName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ComputeFleetResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ComputeFleetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.ComputeFleet
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ComputeFleetResource> IAsyncEnumerable<ComputeFleetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.DataBox.Models
     public readonly partial struct DataCenterCode : IEquatable<DataCenterCode>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataCenterCode"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataCenterCode(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string BY2Value = "BY2";
         private const string BY1Value = "BY1";
@@ -75,7 +82,7 @@ namespace Azure.ResourceManager.DataBox.Models
         private const string SN6Value = "SN6";
         private const string BJS20Value = "BJS20";
         private const string BL24Value = "BL24";
-        private const string IDC5Value = "IDC5";
+        private const string IdC5Value = "IDC5";
         private const string TYO23Value = "TYO23";
         private const string NTG20Value = "NTG20";
         private const string DXB23Value = "DXB23";
@@ -84,250 +91,159 @@ namespace Azure.ResourceManager.DataBox.Models
         private const string CPQ21Value = "CPQ21";
         private const string OSA23Value = "OSA23";
 
-        /// <summary> Initializes a new instance of <see cref="DataCenterCode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataCenterCode(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static DataCenterCode Invalid { get; } = new DataCenterCode(InvalidValue);
-
-        /// <summary> Gets the BY2. </summary>
+        /// <summary> BY2. </summary>
         public static DataCenterCode BY2 { get; } = new DataCenterCode(BY2Value);
-
-        /// <summary> Gets the BY1. </summary>
+        /// <summary> BY1. </summary>
         public static DataCenterCode BY1 { get; } = new DataCenterCode(BY1Value);
-
-        /// <summary> Gets the ORK70. </summary>
+        /// <summary> ORK70. </summary>
         public static DataCenterCode ORK70 { get; } = new DataCenterCode(ORK70Value);
-
-        /// <summary> Gets the AM2. </summary>
+        /// <summary> AM2. </summary>
         public static DataCenterCode AM2 { get; } = new DataCenterCode(AM2Value);
-
-        /// <summary> Gets the AMS20. </summary>
+        /// <summary> AMS20. </summary>
         public static DataCenterCode AMS20 { get; } = new DataCenterCode(AMS20Value);
-
-        /// <summary> Gets the BY21. </summary>
+        /// <summary> BY21. </summary>
         public static DataCenterCode BY21 { get; } = new DataCenterCode(BY21Value);
-
-        /// <summary> Gets the BY24. </summary>
+        /// <summary> BY24. </summary>
         public static DataCenterCode BY24 { get; } = new DataCenterCode(BY24Value);
-
-        /// <summary> Gets the MWH01. </summary>
+        /// <summary> MWH01. </summary>
         public static DataCenterCode MWH01 { get; } = new DataCenterCode(MWH01Value);
-
-        /// <summary> Gets the AMS06. </summary>
+        /// <summary> AMS06. </summary>
         public static DataCenterCode AMS06 { get; } = new DataCenterCode(AMS06Value);
-
-        /// <summary> Gets the SSE90. </summary>
+        /// <summary> SSE90. </summary>
         public static DataCenterCode SSE90 { get; } = new DataCenterCode(SSE90Value);
-
-        /// <summary> Gets the SYD03. </summary>
+        /// <summary> SYD03. </summary>
         public static DataCenterCode SYD03 { get; } = new DataCenterCode(SYD03Value);
-
-        /// <summary> Gets the SYD23. </summary>
+        /// <summary> SYD23. </summary>
         public static DataCenterCode SYD23 { get; } = new DataCenterCode(SYD23Value);
-
-        /// <summary> Gets the CBR20. </summary>
+        /// <summary> CBR20. </summary>
         public static DataCenterCode CBR20 { get; } = new DataCenterCode(CBR20Value);
-
-        /// <summary> Gets the YTO20. </summary>
+        /// <summary> YTO20. </summary>
         public static DataCenterCode YTO20 { get; } = new DataCenterCode(YTO20Value);
-
-        /// <summary> Gets the CWL20. </summary>
+        /// <summary> CWL20. </summary>
         public static DataCenterCode CWL20 { get; } = new DataCenterCode(CWL20Value);
-
-        /// <summary> Gets the LON24. </summary>
+        /// <summary> LON24. </summary>
         public static DataCenterCode LON24 { get; } = new DataCenterCode(LON24Value);
-
-        /// <summary> Gets the BOM01. </summary>
+        /// <summary> BOM01. </summary>
         public static DataCenterCode BOM01 { get; } = new DataCenterCode(BOM01Value);
-
-        /// <summary> Gets the BL20. </summary>
+        /// <summary> BL20. </summary>
         public static DataCenterCode BL20 { get; } = new DataCenterCode(BL20Value);
-
-        /// <summary> Gets the BL7. </summary>
+        /// <summary> BL7. </summary>
         public static DataCenterCode BL7 { get; } = new DataCenterCode(BL7Value);
-
-        /// <summary> Gets the SEL20. </summary>
+        /// <summary> SEL20. </summary>
         public static DataCenterCode SEL20 { get; } = new DataCenterCode(SEL20Value);
-
-        /// <summary> Gets the TYO01. </summary>
+        /// <summary> TYO01. </summary>
         public static DataCenterCode TYO01 { get; } = new DataCenterCode(TYO01Value);
-
-        /// <summary> Gets the BN1. </summary>
+        /// <summary> BN1. </summary>
         public static DataCenterCode BN1 { get; } = new DataCenterCode(BN1Value);
-
-        /// <summary> Gets the SN5. </summary>
+        /// <summary> SN5. </summary>
         public static DataCenterCode SN5 { get; } = new DataCenterCode(SN5Value);
-
-        /// <summary> Gets the CYS04. </summary>
+        /// <summary> CYS04. </summary>
         public static DataCenterCode CYS04 { get; } = new DataCenterCode(CYS04Value);
-
-        /// <summary> Gets the TYO22. </summary>
+        /// <summary> TYO22. </summary>
         public static DataCenterCode TYO22 { get; } = new DataCenterCode(TYO22Value);
-
-        /// <summary> Gets the YTO21. </summary>
+        /// <summary> YTO21. </summary>
         public static DataCenterCode YTO21 { get; } = new DataCenterCode(YTO21Value);
-
-        /// <summary> Gets the YQB20. </summary>
+        /// <summary> YQB20. </summary>
         public static DataCenterCode YQB20 { get; } = new DataCenterCode(YQB20Value);
-
-        /// <summary> Gets the FRA22. </summary>
+        /// <summary> FRA22. </summary>
         public static DataCenterCode FRA22 { get; } = new DataCenterCode(FRA22Value);
-
-        /// <summary> Gets the MAA01. </summary>
+        /// <summary> MAA01. </summary>
         public static DataCenterCode MAA01 { get; } = new DataCenterCode(MAA01Value);
-
-        /// <summary> Gets the CPQ02. </summary>
+        /// <summary> CPQ02. </summary>
         public static DataCenterCode CPQ02 { get; } = new DataCenterCode(CPQ02Value);
-
-        /// <summary> Gets the CPQ20. </summary>
+        /// <summary> CPQ20. </summary>
         public static DataCenterCode CPQ20 { get; } = new DataCenterCode(CPQ20Value);
-
-        /// <summary> Gets the SIN20. </summary>
+        /// <summary> SIN20. </summary>
         public static DataCenterCode SIN20 { get; } = new DataCenterCode(SIN20Value);
-
-        /// <summary> Gets the HKG20. </summary>
+        /// <summary> HKG20. </summary>
         public static DataCenterCode HKG20 { get; } = new DataCenterCode(HKG20Value);
-
-        /// <summary> Gets the SG2. </summary>
+        /// <summary> SG2. </summary>
         public static DataCenterCode SG2 { get; } = new DataCenterCode(SG2Value);
-
-        /// <summary> Gets the MEL23. </summary>
+        /// <summary> MEL23. </summary>
         public static DataCenterCode MEL23 { get; } = new DataCenterCode(MEL23Value);
-
-        /// <summary> Gets the SEL21. </summary>
+        /// <summary> SEL21. </summary>
         public static DataCenterCode SEL21 { get; } = new DataCenterCode(SEL21Value);
-
-        /// <summary> Gets the OSA20. </summary>
+        /// <summary> OSA20. </summary>
         public static DataCenterCode OSA20 { get; } = new DataCenterCode(OSA20Value);
-
-        /// <summary> Gets the SHA03. </summary>
+        /// <summary> SHA03. </summary>
         public static DataCenterCode SHA03 { get; } = new DataCenterCode(SHA03Value);
-
-        /// <summary> Gets the BJB. </summary>
+        /// <summary> BJB. </summary>
         public static DataCenterCode BJB { get; } = new DataCenterCode(BJBValue);
-
-        /// <summary> Gets the JNB22. </summary>
+        /// <summary> JNB22. </summary>
         public static DataCenterCode JNB22 { get; } = new DataCenterCode(JNB22Value);
-
-        /// <summary> Gets the JNB21. </summary>
+        /// <summary> JNB21. </summary>
         public static DataCenterCode JNB21 { get; } = new DataCenterCode(JNB21Value);
-
-        /// <summary> Gets the MNZ21. </summary>
+        /// <summary> MNZ21. </summary>
         public static DataCenterCode MNZ21 { get; } = new DataCenterCode(MNZ21Value);
-
-        /// <summary> Gets the SN8. </summary>
+        /// <summary> SN8. </summary>
         public static DataCenterCode SN8 { get; } = new DataCenterCode(SN8Value);
-
-        /// <summary> Gets the AUH20. </summary>
+        /// <summary> AUH20. </summary>
         public static DataCenterCode AUH20 { get; } = new DataCenterCode(AUH20Value);
-
-        /// <summary> Gets the ZRH20. </summary>
+        /// <summary> ZRH20. </summary>
         public static DataCenterCode ZRH20 { get; } = new DataCenterCode(ZRH20Value);
-
-        /// <summary> Gets the PUS20. </summary>
+        /// <summary> PUS20. </summary>
         public static DataCenterCode PUS20 { get; } = new DataCenterCode(PUS20Value);
-
-        /// <summary> Gets the AdHoc. </summary>
+        /// <summary> AdHoc. </summary>
         public static DataCenterCode AdHoc { get; } = new DataCenterCode(AdHocValue);
-
-        /// <summary> Gets the CH1. </summary>
+        /// <summary> CH1. </summary>
         public static DataCenterCode CH1 { get; } = new DataCenterCode(CH1Value);
-
-        /// <summary> Gets the DSM05. </summary>
+        /// <summary> DSM05. </summary>
         public static DataCenterCode DSM05 { get; } = new DataCenterCode(DSM05Value);
-
-        /// <summary> Gets the DUB07. </summary>
+        /// <summary> DUB07. </summary>
         public static DataCenterCode DUB07 { get; } = new DataCenterCode(DUB07Value);
-
-        /// <summary> Gets the PNQ01. </summary>
+        /// <summary> PNQ01. </summary>
         public static DataCenterCode PNQ01 { get; } = new DataCenterCode(PNQ01Value);
-
-        /// <summary> Gets the SVG20. </summary>
+        /// <summary> SVG20. </summary>
         public static DataCenterCode SVG20 { get; } = new DataCenterCode(SVG20Value);
-
-        /// <summary> Gets the OSA02. </summary>
+        /// <summary> OSA02. </summary>
         public static DataCenterCode OSA02 { get; } = new DataCenterCode(OSA02Value);
-
-        /// <summary> Gets the OSA22. </summary>
+        /// <summary> OSA22. </summary>
         public static DataCenterCode OSA22 { get; } = new DataCenterCode(OSA22Value);
-
-        /// <summary> Gets the PAR22. </summary>
+        /// <summary> PAR22. </summary>
         public static DataCenterCode PAR22 { get; } = new DataCenterCode(PAR22Value);
-
-        /// <summary> Gets the BN7. </summary>
+        /// <summary> BN7. </summary>
         public static DataCenterCode BN7 { get; } = new DataCenterCode(BN7Value);
-
-        /// <summary> Gets the SN6. </summary>
+        /// <summary> SN6. </summary>
         public static DataCenterCode SN6 { get; } = new DataCenterCode(SN6Value);
-
-        /// <summary> Gets the BJS20. </summary>
+        /// <summary> BJS20. </summary>
         public static DataCenterCode BJS20 { get; } = new DataCenterCode(BJS20Value);
-
-        /// <summary> Gets the BL24. </summary>
+        /// <summary> BL24. </summary>
         public static DataCenterCode BL24 { get; } = new DataCenterCode(BL24Value);
-
-        /// <summary> Gets the IDC5. </summary>
-        public static DataCenterCode IDC5 { get; } = new DataCenterCode(IDC5Value);
-
-        /// <summary> Gets the TYO23. </summary>
+        /// <summary> IDC5. </summary>
+        public static DataCenterCode IdC5 { get; } = new DataCenterCode(IdC5Value);
+        /// <summary> TYO23. </summary>
         public static DataCenterCode TYO23 { get; } = new DataCenterCode(TYO23Value);
-
-        /// <summary> Gets the NTG20. </summary>
+        /// <summary> NTG20. </summary>
         public static DataCenterCode NTG20 { get; } = new DataCenterCode(NTG20Value);
-
-        /// <summary> Gets the DXB23. </summary>
+        /// <summary> DXB23. </summary>
         public static DataCenterCode DXB23 { get; } = new DataCenterCode(DXB23Value);
-
-        /// <summary> Gets the DSM11. </summary>
+        /// <summary> DSM11. </summary>
         public static DataCenterCode DSM11 { get; } = new DataCenterCode(DSM11Value);
-
-        /// <summary> Gets the AMS25. </summary>
+        /// <summary> AMS25. </summary>
         public static DataCenterCode AMS25 { get; } = new DataCenterCode(AMS25Value);
-
-        /// <summary> Gets the CPQ21. </summary>
+        /// <summary> CPQ21. </summary>
         public static DataCenterCode CPQ21 { get; } = new DataCenterCode(CPQ21Value);
-
-        /// <summary> Gets the OSA23. </summary>
+        /// <summary> OSA23. </summary>
         public static DataCenterCode OSA23 { get; } = new DataCenterCode(OSA23Value);
-
         /// <summary> Determines if two <see cref="DataCenterCode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataCenterCode left, DataCenterCode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataCenterCode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataCenterCode left, DataCenterCode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataCenterCode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataCenterCode"/>. </summary>
         public static implicit operator DataCenterCode(string value) => new DataCenterCode(value);
 
-        /// <summary> Converts a string to a <see cref="DataCenterCode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataCenterCode?(string value) => value == null ? null : new DataCenterCode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataCenterCode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataCenterCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

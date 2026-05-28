@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary>
     /// Custom action to be executed
     /// when an auto heal rule is triggered.
-    /// Serialized Name: AutoHealCustomAction
     /// </summary>
     public partial class AutoHealCustomAction
     {
@@ -55,14 +54,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoHealCustomAction"/>. </summary>
-        /// <param name="exe">
-        /// Executable to be run.
-        /// Serialized Name: AutoHealCustomAction.exe
-        /// </param>
-        /// <param name="parameters">
-        /// Parameters for the executable.
-        /// Serialized Name: AutoHealCustomAction.parameters
-        /// </param>
+        /// <param name="exe"> Executable to be run. </param>
+        /// <param name="parameters"> Parameters for the executable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutoHealCustomAction(string exe, string parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,16 +64,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Executable to be run.
-        /// Serialized Name: AutoHealCustomAction.exe
-        /// </summary>
+        /// <summary> Executable to be run. </summary>
         [WirePath("exe")]
         public string Exe { get; set; }
-        /// <summary>
-        /// Parameters for the executable.
-        /// Serialized Name: AutoHealCustomAction.parameters
-        /// </summary>
+        /// <summary> Parameters for the executable. </summary>
         [WirePath("parameters")]
         public string Parameters { get; set; }
     }

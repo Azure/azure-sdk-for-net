@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Communication.Messages.Models.Channels;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.Messages.Tests
@@ -32,7 +32,7 @@ namespace Azure.Communication.Messages.Tests
         [Test]
         public void Constructor_InvalidConnectionString_ShouldThrow()
         {
-            Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient((string)null));
+            Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient(null));
             Assert.Throws<ArgumentException>(() => new MessageTemplateClient(string.Empty));
             Assert.Throws<ArgumentException>(() => new MessageTemplateClient(""));
             Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient("  "));
@@ -55,7 +55,7 @@ namespace Azure.Communication.Messages.Tests
             catch (RequestFailedException requestFailedException)
             {
                 //assert
-                Assert.That(requestFailedException.Status, Is.EqualTo(400));
+                Assert.AreEqual(400, requestFailedException.Status);
             }
 
             return Task.CompletedTask;
@@ -74,10 +74,10 @@ namespace Azure.Communication.Messages.Tests
             //assert
             await foreach (MessageTemplateItem template in templates)
             {
-                Assert.That(template.Name, Is.Not.Null);
-                Assert.That(template.Language, Is.Not.Null);
-                Assert.That(template.Status, Is.Not.Null);
-                Assert.That(template is WhatsAppMessageTemplateItem, Is.True);
+                Assert.IsNotNull(template.Name);
+                Assert.IsNotNull(template.Language);
+                Assert.IsNotNull(template.Status);
+                Assert.IsTrue(template is WhatsAppMessageTemplateItem);
             }
         }
 

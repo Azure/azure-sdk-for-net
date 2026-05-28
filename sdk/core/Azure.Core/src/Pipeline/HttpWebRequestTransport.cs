@@ -3,7 +3,6 @@
 
 using System;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -14,10 +13,9 @@ namespace Azure.Core.Pipeline
     /// </summary>
     internal partial class HttpWebRequestTransport : HttpPipelineTransport
     {
-        internal volatile Action<HttpWebRequest> _configureRequest;
+        private readonly Action<HttpWebRequest> _configureRequest;
         public static readonly HttpWebRequestTransport Shared = new HttpWebRequestTransport();
         private readonly IWebProxy? _environmentProxy;
-        internal Func<HttpPipelineTransportOptions, HttpWebRequestTransport>? TransportFactory { get; set; }
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpWebRequestTransport"/>
@@ -37,19 +35,6 @@ namespace Azure.Core.Pipeline
             {
                 _environmentProxy = webProxy;
             }
-        }
-
-        /// <inheritdoc />
-        public override void Update(HttpPipelineTransportOptions options)
-        {
-            if (this == Shared)
-            {
-                throw new InvalidOperationException("Cannot update the shared HttpWebRequestTransport instance.");
-            }
-
-            Action<HttpWebRequest> newConfigureRequest = req => ApplyOptionsToRequest(req, options);
-
-            Interlocked.Exchange(ref _configureRequest, newConfigureRequest);
         }
 
         /// <inheritdoc />

@@ -5,7 +5,6 @@ using System;
 using System.Globalization;
 using System.Net;
 using System.Text;
-using Azure.Core;
 
 namespace Azure.Storage.Sas
 {
@@ -32,9 +31,6 @@ namespace Azure.Storage.Sas
 
         // skv
         internal string Version { get; set; }
-
-        // skdutid
-        public string DelegatedUserTenantId { get; set; }
 
         /// <summary>
         /// Builds up the UserDelegationKey portion of the SAS query parameter string.
@@ -69,11 +65,6 @@ namespace Azure.Storage.Sas
             if (!string.IsNullOrWhiteSpace(Version))
             {
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyVersion, Version);
-            }
-
-            if (!string.IsNullOrWhiteSpace(DelegatedUserTenantId))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyDelegatedUserTenantId, DelegatedUserTenantId);
             }
         }
     }

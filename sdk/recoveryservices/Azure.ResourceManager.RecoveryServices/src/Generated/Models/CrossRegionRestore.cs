@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct CrossRegionRestore : IEquatable<CrossRegionRestore>
     {
         private readonly string _value;
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="CrossRegionRestore"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CrossRegionRestore(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
+
+        /// <summary> Enabled. </summary>
         public static CrossRegionRestore Enabled { get; } = new CrossRegionRestore(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static CrossRegionRestore Disabled { get; } = new CrossRegionRestore(DisabledValue);
-
         /// <summary> Determines if two <see cref="CrossRegionRestore"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CrossRegionRestore left, CrossRegionRestore right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CrossRegionRestore"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CrossRegionRestore left, CrossRegionRestore right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CrossRegionRestore"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CrossRegionRestore"/>. </summary>
         public static implicit operator CrossRegionRestore(string value) => new CrossRegionRestore(value);
 
-        /// <summary> Converts a string to a <see cref="CrossRegionRestore"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CrossRegionRestore?(string value) => value == null ? null : new CrossRegionRestore(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CrossRegionRestore other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CrossRegionRestore other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

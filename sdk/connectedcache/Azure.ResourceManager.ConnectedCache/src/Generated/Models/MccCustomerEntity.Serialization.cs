@@ -10,55 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ConnectedCache;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
-    /// <summary> Model representing Customer resource for ConnectedCache resource. </summary>
-    public partial class MccCustomerEntity : IJsonModel<MccCustomerEntity>
+    public partial class MccCustomerEntity : IUtf8JsonSerializable, IJsonModel<MccCustomerEntity>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MccCustomerEntity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCustomerEntity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMccCustomerEntity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MccCustomerEntity)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MccCustomerEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCustomerEntity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MccCustomerEntity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MccCustomerEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MccCustomerEntity IPersistableModel<MccCustomerEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MccCustomerEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MccCustomerEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,11 +28,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCustomerEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MccCustomerEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MccCustomerEntity)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(FullyQualifiedResourceId))
             {
                 writer.WritePropertyName("fullyQualifiedResourceId"u8);
@@ -165,15 +124,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("verifySignupPhrase"u8);
                 writer.WriteStringValue(VerifySignupPhrase);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -182,27 +141,22 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MccCustomerEntity IJsonModel<MccCustomerEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MccCustomerEntity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MccCustomerEntity IJsonModel<MccCustomerEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCustomerEntity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MccCustomerEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MccCustomerEntity)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMccCustomerEntity(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MccCustomerEntity DeserializeMccCustomerEntity(JsonElement element, ModelReaderWriterOptions options)
+        internal static MccCustomerEntity DeserializeMccCustomerEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -219,146 +173,148 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             string deleteAsyncOperationId = default;
             string clientTenantId = default;
             int? synchWithAzureAttemptsCount = default;
-            DateTimeOffset? lastSyncedWithAzureOn = default;
+            DateTimeOffset? lastSyncWithAzureTimestamp = default;
             bool? isEnterpriseManaged = default;
             bool? shouldMigrate = default;
             bool? resendSignupCode = default;
             bool? verifySignupCode = default;
             string verifySignupPhrase = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("fullyQualifiedResourceId"u8))
+                if (property.NameEquals("fullyQualifiedResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullyQualifiedResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    fullyQualifiedResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("customerId"u8))
+                if (property.NameEquals("customerId"u8))
                 {
-                    customerId = prop.Value.GetString();
+                    customerId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customerName"u8))
+                if (property.NameEquals("customerName"u8))
                 {
-                    customerName = prop.Value.GetString();
+                    customerName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("contactEmail"u8))
+                if (property.NameEquals("contactEmail"u8))
                 {
-                    contactEmail = prop.Value.GetString();
+                    contactEmail = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("contactPhone"u8))
+                if (property.NameEquals("contactPhone"u8))
                 {
-                    contactPhone = prop.Value.GetString();
+                    contactPhone = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("contactName"u8))
+                if (property.NameEquals("contactName"u8))
                 {
-                    contactName = prop.Value.GetString();
+                    contactName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isEntitled"u8))
+                if (property.NameEquals("isEntitled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isEntitled = prop.Value.GetBoolean();
+                    isEntitled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("releaseVersion"u8))
+                if (property.NameEquals("releaseVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    releaseVersion = prop.Value.GetInt32();
+                    releaseVersion = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("createAsyncOperationId"u8))
+                if (property.NameEquals("createAsyncOperationId"u8))
                 {
-                    createAsyncOperationId = prop.Value.GetString();
+                    createAsyncOperationId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deleteAsyncOperationId"u8))
+                if (property.NameEquals("deleteAsyncOperationId"u8))
                 {
-                    deleteAsyncOperationId = prop.Value.GetString();
+                    deleteAsyncOperationId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("clientTenantId"u8))
+                if (property.NameEquals("clientTenantId"u8))
                 {
-                    clientTenantId = prop.Value.GetString();
+                    clientTenantId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("synchWithAzureAttemptsCount"u8))
+                if (property.NameEquals("synchWithAzureAttemptsCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    synchWithAzureAttemptsCount = prop.Value.GetInt32();
+                    synchWithAzureAttemptsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("lastSyncWithAzureTimestamp"u8))
+                if (property.NameEquals("lastSyncWithAzureTimestamp"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSyncedWithAzureOn = prop.Value.GetDateTimeOffset("O");
+                    lastSyncWithAzureTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("isEnterpriseManaged"u8))
+                if (property.NameEquals("isEnterpriseManaged"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isEnterpriseManaged = prop.Value.GetBoolean();
+                    isEnterpriseManaged = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("shouldMigrate"u8))
+                if (property.NameEquals("shouldMigrate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    shouldMigrate = prop.Value.GetBoolean();
+                    shouldMigrate = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("resendSignupCode"u8))
+                if (property.NameEquals("resendSignupCode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resendSignupCode = prop.Value.GetBoolean();
+                    resendSignupCode = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("verifySignupCode"u8))
+                if (property.NameEquals("verifySignupCode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    verifySignupCode = prop.Value.GetBoolean();
+                    verifySignupCode = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("verifySignupPhrase"u8))
+                if (property.NameEquals("verifySignupPhrase"u8))
                 {
-                    verifySignupPhrase = prop.Value.GetString();
+                    verifySignupPhrase = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new MccCustomerEntity(
                 fullyQualifiedResourceId,
                 customerId,
@@ -372,13 +328,44 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 deleteAsyncOperationId,
                 clientTenantId,
                 synchWithAzureAttemptsCount,
-                lastSyncedWithAzureOn,
+                lastSyncWithAzureTimestamp,
                 isEnterpriseManaged,
                 shouldMigrate,
                 resendSignupCode,
                 verifySignupCode,
                 verifySignupPhrase,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MccCustomerEntity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MccCustomerEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MccCustomerEntity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MccCustomerEntity IPersistableModel<MccCustomerEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MccCustomerEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMccCustomerEntity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MccCustomerEntity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MccCustomerEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

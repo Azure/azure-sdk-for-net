@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    /// <summary></summary>
-    internal partial class ExadbVmClusterOperationSource : IOperationSource<ExadbVmClusterResource>
+    internal class ExadbVmClusterOperationSource : IOperationSource<ExadbVmClusterResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ExadbVmClusterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ExadbVmClusterResource IOperationSource<ExadbVmClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ExadbVmClusterData data = ExadbVmClusterData.DeserializeExadbVmClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ExadbVmClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new ExadbVmClusterResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ExadbVmClusterResource> IOperationSource<ExadbVmClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ExadbVmClusterData data = ExadbVmClusterData.DeserializeExadbVmClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ExadbVmClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<ExadbVmClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
+            return await Task.FromResult(new ExadbVmClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

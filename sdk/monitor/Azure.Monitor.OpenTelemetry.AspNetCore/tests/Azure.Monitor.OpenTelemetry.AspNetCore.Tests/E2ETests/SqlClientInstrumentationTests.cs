@@ -72,12 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             var activities = new List<Activity>();
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddOpenTelemetry()
-                .UseAzureMonitor(x =>
-                {
-                    x.ConnectionString = testConnectionString;
-                    x.SamplingRatio = 1.0f; // Ensure 100% sampling for tests
-                    x.TracesPerSecond = null; // Disable rate limiting sampler
-                })
+                .UseAzureMonitor(x => x.ConnectionString = testConnectionString)
                 .WithTracing(x => x.AddInMemoryExporter(activities))
                 // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
                 .ConfigureResource(x => x.AddAttributes(SharedTestVars.TestResourceAttributes));
@@ -177,12 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             var activities = new List<Activity>();
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddOpenTelemetry()
-                .UseAzureMonitor(x =>
-                {
-                    x.ConnectionString = testConnectionString;
-                    x.SamplingRatio = 1.0f; // Ensure 100% sampling for tests
-                    x.TracesPerSecond = null; // Disable rate limited sampler
-                })
+                .UseAzureMonitor(x => x.ConnectionString = testConnectionString)
                 .WithTracing(x => x.AddInMemoryExporter(activities))
                 // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
                 .ConfigureResource(x => x.AddAttributes(SharedTestVars.TestResourceAttributes));

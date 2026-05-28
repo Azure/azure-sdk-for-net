@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -793,22 +792,12 @@ namespace Azure.Data.Tables
                 {
                     return new NoValueResponse<T>(response);
                 }
-
-                Dictionary<string, object> dictionary;
-                try
+                else
                 {
-                    dictionary = SerializationHelpers.ResponseToDictionary(response);
+                    var dictionary = SerializationHelpers.ResponseToDictionary(response);
+                    var result = dictionary.ToTableEntity<T>();
+                    return Response.FromValue(result, response);
                 }
-                catch (Exception ex) when (ex is ArgumentNullException or JsonException)
-                {
-                    throw new RequestFailedException(
-                        response.Status,
-                        $"The response body was unexpectedly missing or malformed, so the entity could not be read from the response. HTTP {response.Status} ({response.ReasonPhrase}).",
-                        ex);
-                }
-
-                var result = dictionary.ToTableEntity<T>();
-                return Response.FromValue(result, response);
             }
             catch (Exception ex)
             {
@@ -1080,7 +1069,17 @@ namespace Azure.Data.Tables
             IEnumerable<string> select = null,
             CancellationToken cancellationToken = default) where T : class, ITableEntity
         {
-            return QueryAsync<T>(Bind(filter), maxPerPage, select, cancellationToken);
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return QueryAsync<T>(Bind(filter), maxPerPage, select, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1117,7 +1116,17 @@ namespace Azure.Data.Tables
             IEnumerable<string> select = null,
             CancellationToken cancellationToken = default) where T : class, ITableEntity
         {
-            return Query<T>(Bind(filter), maxPerPage, select, cancellationToken);
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return Query<T>(Bind(filter), maxPerPage, select, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>

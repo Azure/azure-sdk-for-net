@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
-    /// <summary></summary>
-    internal partial class NewRelicObservabilityTagRuleOperationSource : IOperationSource<NewRelicObservabilityTagRuleResource>
+    internal class NewRelicObservabilityTagRuleOperationSource : IOperationSource<NewRelicObservabilityTagRuleResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal NewRelicObservabilityTagRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         NewRelicObservabilityTagRuleResource IOperationSource<NewRelicObservabilityTagRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NewRelicObservabilityTagRuleData data = NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNewRelicObservabilityContext.Default);
             return new NewRelicObservabilityTagRuleResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<NewRelicObservabilityTagRuleResource> IOperationSource<NewRelicObservabilityTagRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NewRelicObservabilityTagRuleData data = NewRelicObservabilityTagRuleData.DeserializeNewRelicObservabilityTagRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NewRelicObservabilityTagRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<NewRelicObservabilityTagRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNewRelicObservabilityContext.Default);
+            return await Task.FromResult(new NewRelicObservabilityTagRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

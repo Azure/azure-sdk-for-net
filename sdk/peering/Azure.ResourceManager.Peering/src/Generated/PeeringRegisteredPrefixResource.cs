@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Peering
 {
     /// <summary>
-    /// A class representing a PeeringRegisteredPrefix along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PeeringRegisteredPrefixResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PeeringResource"/> using the GetPeeringRegisteredPrefixes method.
+    /// A Class representing a PeeringRegisteredPrefix along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PeeringRegisteredPrefixResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPeeringRegisteredPrefixResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PeeringResource"/> using the GetPeeringRegisteredPrefix method.
     /// </summary>
     public partial class PeeringRegisteredPrefixResource : ArmResource
     {
-        private readonly ClientDiagnostics _registeredPrefixesClientDiagnostics;
-        private readonly RegisteredPrefixes _registeredPrefixesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="PeeringRegisteredPrefixResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="peeringName"> The peeringName. </param>
+        /// <param name="registeredPrefixName"> The registeredPrefixName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics;
+        private readonly RegisteredPrefixesRestOperations _peeringRegisteredPrefixRegisteredPrefixesRestClient;
         private readonly PeeringRegisteredPrefixData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Peering/peerings/registeredPrefixes";
 
-        /// <summary> Initializes a new instance of PeeringRegisteredPrefixResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PeeringRegisteredPrefixResource"/> class for mocking. </summary>
         protected PeeringRegisteredPrefixResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PeeringRegisteredPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PeeringRegisteredPrefixResource(ArmClient client, PeeringRegisteredPrefixData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.Peering
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeeringRegisteredPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PeeringRegisteredPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PeeringRegisteredPrefixResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string peeringRegisteredPrefixApiVersion);
-            _registeredPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            _registeredPrefixesRestClient = new RegisteredPrefixes(_registeredPrefixesClientDiagnostics, Pipeline, Endpoint, peeringRegisteredPrefixApiVersion ?? "2025-05-01");
-            ValidateResourceId(id);
+            _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string peeringRegisteredPrefixRegisteredPrefixesApiVersion);
+            _peeringRegisteredPrefixRegisteredPrefixesRestClient = new RegisteredPrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, peeringRegisteredPrefixRegisteredPrefixesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PeeringRegisteredPrefixData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="peeringName"> The peeringName. </param>
-        /// <param name="registeredPrefixName"> The registeredPrefixName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string peeringName, string registeredPrefixName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets an existing registered prefix with the specified name under the given subscription, resource group and peering.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PeeringRegisteredPrefixes_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PeeringRegisteredPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PeeringRegisteredPrefixResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registeredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Get");
+            using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredPrefixesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PeeringRegisteredPrefixData> response = Response.FromValue(PeeringRegisteredPrefixData.FromResponse(result), result);
+                var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +132,33 @@ namespace Azure.ResourceManager.Peering
         /// Gets an existing registered prefix with the specified name under the given subscription, resource group and peering.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PeeringRegisteredPrefixes_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PeeringRegisteredPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PeeringRegisteredPrefixResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registeredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Get");
+            using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredPrefixesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PeeringRegisteredPrefixData> response = Response.FromValue(PeeringRegisteredPrefixData.FromResponse(result), result);
+                var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +172,20 @@ namespace Azure.ResourceManager.Peering
         /// Deletes an existing registered prefix with the specified name under the given subscription, resource group and peering.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PeeringRegisteredPrefixes_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PeeringRegisteredPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,23 +193,16 @@ namespace Azure.ResourceManager.Peering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registeredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Delete");
+            using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredPrefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                PeeringArmOperation operation = new PeeringArmOperation(response, rehydrationToken);
+                var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -242,20 +216,20 @@ namespace Azure.ResourceManager.Peering
         /// Deletes an existing registered prefix with the specified name under the given subscription, resource group and peering.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PeeringRegisteredPrefixes_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PeeringRegisteredPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,23 +237,16 @@ namespace Azure.ResourceManager.Peering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registeredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Delete");
+            using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredPrefixesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                PeeringArmOperation operation = new PeeringArmOperation(response, rehydrationToken);
+                var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -290,119 +257,23 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
-        /// Validates an existing registered prefix with the specified name under the given subscription, resource group and peering.
+        /// Creates a new registered prefix with the specified name under the given subscription, resource group and peering.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}/validate. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PeeringRegisteredPrefixes_Validate. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PeeringRegisteredPrefixResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PeeringRegisteredPrefixResource>> ValidateAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _registeredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Validate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredPrefixesRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PeeringRegisteredPrefixData> response = Response.FromValue(PeeringRegisteredPrefixData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validates an existing registered prefix with the specified name under the given subscription, resource group and peering.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}/validate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PeeringRegisteredPrefixes_Validate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PeeringRegisteredPrefixResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PeeringRegisteredPrefixResource> Validate(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _registeredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Validate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredPrefixesRestClient.CreateValidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PeeringRegisteredPrefixData> response = Response.FromValue(PeeringRegisteredPrefixData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a PeeringRegisteredPrefix.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PeeringRegisteredPrefixes_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PeeringRegisteredPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,24 +285,16 @@ namespace Azure.ResourceManager.Peering
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _registeredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Update");
+            using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredPrefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, PeeringRegisteredPrefixData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PeeringRegisteredPrefixData> response = Response.FromValue(PeeringRegisteredPrefixData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                PeeringArmOperation<PeeringRegisteredPrefixResource> operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -442,23 +305,23 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary>
-        /// Update a PeeringRegisteredPrefix.
+        /// Creates a new registered prefix with the specified name under the given subscription, resource group and peering.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PeeringRegisteredPrefixes_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PeeringRegisteredPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,25 +333,93 @@ namespace Azure.ResourceManager.Peering
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _registeredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Update");
+            using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredPrefixesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, PeeringRegisteredPrefixData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PeeringRegisteredPrefixData> response = Response.FromValue(PeeringRegisteredPrefixData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                PeeringArmOperation<PeeringRegisteredPrefixResource> operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _peeringRegisteredPrefixRegisteredPrefixesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PeeringArmOperation<PeeringRegisteredPrefixResource>(Response.FromValue(new PeeringRegisteredPrefixResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates an existing registered prefix with the specified name under the given subscription, resource group and peering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredPrefixResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PeeringRegisteredPrefixResource>> ValidateAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Validate");
+            scope.Start();
+            try
+            {
+                var response = await _peeringRegisteredPrefixRegisteredPrefixesRestClient.ValidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates an existing registered prefix with the specified name under the given subscription, resource group and peering.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/registeredPrefixes/{registeredPrefixName}/validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredPrefixes_Validate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringRegisteredPrefixResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PeeringRegisteredPrefixResource> Validate(CancellationToken cancellationToken = default)
+        {
+            using var scope = _peeringRegisteredPrefixRegisteredPrefixesClientDiagnostics.CreateScope("PeeringRegisteredPrefixResource.Validate");
+            scope.Start();
+            try
+            {
+                var response = _peeringRegisteredPrefixRegisteredPrefixesRestClient.Validate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new PeeringRegisteredPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

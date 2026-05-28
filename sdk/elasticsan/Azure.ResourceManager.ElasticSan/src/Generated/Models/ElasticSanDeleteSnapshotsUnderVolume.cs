@@ -7,63 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary></summary>
+    /// <summary> The ElasticSanDeleteSnapshotsUnderVolume. </summary>
     public readonly partial struct ElasticSanDeleteSnapshotsUnderVolume : IEquatable<ElasticSanDeleteSnapshotsUnderVolume>
     {
         private readonly string _value;
-        private const string TrueValue = "true";
-        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanDeleteSnapshotsUnderVolume"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ElasticSanDeleteSnapshotsUnderVolume(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the True. </summary>
+        private const string TrueValue = "true";
+        private const string FalseValue = "false";
+
+        /// <summary> true. </summary>
         public static ElasticSanDeleteSnapshotsUnderVolume True { get; } = new ElasticSanDeleteSnapshotsUnderVolume(TrueValue);
-
-        /// <summary> Gets the False. </summary>
+        /// <summary> false. </summary>
         public static ElasticSanDeleteSnapshotsUnderVolume False { get; } = new ElasticSanDeleteSnapshotsUnderVolume(FalseValue);
-
         /// <summary> Determines if two <see cref="ElasticSanDeleteSnapshotsUnderVolume"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticSanDeleteSnapshotsUnderVolume left, ElasticSanDeleteSnapshotsUnderVolume right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ElasticSanDeleteSnapshotsUnderVolume"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticSanDeleteSnapshotsUnderVolume left, ElasticSanDeleteSnapshotsUnderVolume right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ElasticSanDeleteSnapshotsUnderVolume"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticSanDeleteSnapshotsUnderVolume"/>. </summary>
         public static implicit operator ElasticSanDeleteSnapshotsUnderVolume(string value) => new ElasticSanDeleteSnapshotsUnderVolume(value);
 
-        /// <summary> Converts a string to a <see cref="ElasticSanDeleteSnapshotsUnderVolume"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ElasticSanDeleteSnapshotsUnderVolume?(string value) => value == null ? null : new ElasticSanDeleteSnapshotsUnderVolume(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticSanDeleteSnapshotsUnderVolume other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ElasticSanDeleteSnapshotsUnderVolume other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerOrchestratorRuntime;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
-    /// <summary> Details of the StorageClass StorageClass. </summary>
-    public partial class ConnectedClusterStorageClassProperties : IJsonModel<ConnectedClusterStorageClassProperties>
+    public partial class ConnectedClusterStorageClassProperties : IUtf8JsonSerializable, IJsonModel<ConnectedClusterStorageClassProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectedClusterStorageClassProperties"/> for deserialization. </summary>
-        internal ConnectedClusterStorageClassProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedClusterStorageClassProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConnectedClusterStorageClassProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterStorageClassProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeConnectedClusterStorageClassProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConnectedClusterStorageClassProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterStorageClassProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConnectedClusterStorageClassProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConnectedClusterStorageClassProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectedClusterStorageClassProperties IPersistableModel<ConnectedClusterStorageClassProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConnectedClusterStorageClassProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectedClusterStorageClassProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterStorageClassProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterStorageClassProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectedClusterStorageClassProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(AllowVolumeExpansion))
             {
                 writer.WritePropertyName("allowVolumeExpansion"u8);
@@ -88,13 +43,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStartArray();
-                foreach (string item in MountOptions)
+                foreach (var item in MountOptions)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -113,7 +63,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             {
                 writer.WritePropertyName("accessModes"u8);
                 writer.WriteStartArray();
-                foreach (StorageClassAccessMode item in AccessModes)
+                foreach (var item in AccessModes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -133,13 +83,8 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             {
                 writer.WritePropertyName("limitations"u8);
                 writer.WriteStartArray();
-                foreach (string item in Limitations)
+                foreach (var item in Limitations)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -161,15 +106,15 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -178,27 +123,22 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectedClusterStorageClassProperties IJsonModel<ConnectedClusterStorageClassProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConnectedClusterStorageClassProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConnectedClusterStorageClassProperties IJsonModel<ConnectedClusterStorageClassProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterStorageClassProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterStorageClassProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConnectedClusterStorageClassProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConnectedClusterStorageClassProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConnectedClusterStorageClassProperties DeserializeConnectedClusterStorageClassProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConnectedClusterStorageClassProperties DeserializeConnectedClusterStorageClassProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -215,143 +155,131 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             long? priority = default;
             StorageClassTypeProperties typeProperties = default;
             ContainerOrchestratorProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("allowVolumeExpansion"u8))
+                if (property.NameEquals("allowVolumeExpansion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allowVolumeExpansion = new VolumeExpansion(prop.Value.GetString());
+                    allowVolumeExpansion = new VolumeExpansion(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("mountOptions"u8))
+                if (property.NameEquals("mountOptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     mountOptions = array;
                     continue;
                 }
-                if (prop.NameEquals("provisioner"u8))
+                if (property.NameEquals("provisioner"u8))
                 {
-                    provisioner = prop.Value.GetString();
+                    provisioner = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("volumeBindingMode"u8))
+                if (property.NameEquals("volumeBindingMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    volumeBindingMode = new VolumeBindingMode(prop.Value.GetString());
+                    volumeBindingMode = new VolumeBindingMode(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("accessModes"u8))
+                if (property.NameEquals("accessModes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<StorageClassAccessMode> array = new List<StorageClassAccessMode>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new StorageClassAccessMode(item.GetString()));
                     }
                     accessModes = array;
                     continue;
                 }
-                if (prop.NameEquals("dataResilience"u8))
+                if (property.NameEquals("dataResilience"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataResilience = new DataResilienceTier(prop.Value.GetString());
+                    dataResilience = new DataResilienceTier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("failoverSpeed"u8))
+                if (property.NameEquals("failoverSpeed"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failoverSpeed = new FailoverTier(prop.Value.GetString());
+                    failoverSpeed = new FailoverTier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("limitations"u8))
+                if (property.NameEquals("limitations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     limitations = array;
                     continue;
                 }
-                if (prop.NameEquals("performance"u8))
+                if (property.NameEquals("performance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    performance = new PerformanceTier(prop.Value.GetString());
+                    performance = new PerformanceTier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("priority"u8))
+                if (property.NameEquals("priority"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    priority = prop.Value.GetInt64();
+                    priority = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("typeProperties"u8))
+                if (property.NameEquals("typeProperties"u8))
                 {
-                    typeProperties = StorageClassTypeProperties.DeserializeStorageClassTypeProperties(prop.Value, options);
+                    typeProperties = StorageClassTypeProperties.DeserializeStorageClassTypeProperties(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new ContainerOrchestratorProvisioningState(prop.Value.GetString());
+                    provisioningState = new ContainerOrchestratorProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectedClusterStorageClassProperties(
                 allowVolumeExpansion,
                 mountOptions ?? new ChangeTrackingList<string>(),
@@ -365,7 +293,38 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 priority,
                 typeProperties,
                 provisioningState,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectedClusterStorageClassProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterStorageClassProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectedClusterStorageClassProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectedClusterStorageClassProperties IPersistableModel<ConnectedClusterStorageClassProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedClusterStorageClassProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeConnectedClusterStorageClassProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectedClusterStorageClassProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectedClusterStorageClassProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -14,7 +14,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
     {
         [Test]
         [AsyncOnly]
-        public async Task CustomEntitiesLROTask()
+        public async Task CustomEntitiesOperationAction()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
@@ -60,19 +60,19 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 new CustomEntitiesOperationAction
                 {
                     Name = "CustomEntitiesOperationActionSample", // Optional string for humans to identify action by name.
-                    Parameters = customEntitiesActionContent
+                    ActionContent = customEntitiesActionContent
                 },
             };
 
-            Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextJobState analyzeTextJobState = response.Value;
+            AnalyzeTextOperationState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
             {
-                if (taskResult is CustomEntityRecognitionOperationResult)
+                if (analyzeTextLROResult is CustomEntityRecognitionOperationResult)
                 {
-                    CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)taskResult;
+                    CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)analyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
                     foreach (CustomEntityActionResult entitiesDocument in customClassificationResult.Results.Documents)

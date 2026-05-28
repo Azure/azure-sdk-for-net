@@ -14,15 +14,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public partial class SingletonPartitionScheme : ManagedServicePartitionScheme
     {
         /// <summary> Initializes a new instance of <see cref="SingletonPartitionScheme"/>. </summary>
-        public SingletonPartitionScheme() : base(PartitionScheme.Singleton)
+        public SingletonPartitionScheme()
         {
+            PartitionScheme = PartitionScheme.Singleton;
         }
 
         /// <summary> Initializes a new instance of <see cref="SingletonPartitionScheme"/>. </summary>
         /// <param name="partitionScheme"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SingletonPartitionScheme(PartitionScheme partitionScheme, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(partitionScheme, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SingletonPartitionScheme(PartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(partitionScheme, serializedAdditionalRawData)
         {
+            PartitionScheme = partitionScheme;
         }
     }
 }

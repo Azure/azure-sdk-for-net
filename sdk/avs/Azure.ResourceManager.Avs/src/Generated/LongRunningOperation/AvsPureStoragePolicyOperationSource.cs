@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary></summary>
-    internal partial class AvsPureStoragePolicyOperationSource : IOperationSource<AvsPureStoragePolicyResource>
+    internal class AvsPureStoragePolicyOperationSource : IOperationSource<AvsPureStoragePolicyResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal AvsPureStoragePolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         AvsPureStoragePolicyResource IOperationSource<AvsPureStoragePolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AvsPureStoragePolicyData data = AvsPureStoragePolicyData.DeserializeAvsPureStoragePolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<AvsPureStoragePolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new AvsPureStoragePolicyResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<AvsPureStoragePolicyResource> IOperationSource<AvsPureStoragePolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AvsPureStoragePolicyData data = AvsPureStoragePolicyData.DeserializeAvsPureStoragePolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AvsPureStoragePolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<AvsPureStoragePolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            return await Task.FromResult(new AvsPureStoragePolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

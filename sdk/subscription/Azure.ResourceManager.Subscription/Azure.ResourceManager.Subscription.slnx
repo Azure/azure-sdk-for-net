@@ -1,5 +1,0 @@
-﻿
-<Solution>
-  <Project Path="src/Azure.ResourceManager.Subscription.csproj" />
-  <Project Path="tests/Azure.ResourceManager.Subscription.Tests.csproj" />
-</Solution>

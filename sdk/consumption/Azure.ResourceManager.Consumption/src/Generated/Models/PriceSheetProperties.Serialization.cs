@@ -10,55 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The properties of the price sheet. </summary>
-    public partial class PriceSheetProperties : IJsonModel<PriceSheetProperties>
+    public partial class PriceSheetProperties : IUtf8JsonSerializable, IJsonModel<PriceSheetProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PriceSheetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePriceSheetProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PriceSheetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PriceSheetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PriceSheetProperties IPersistableModel<PriceSheetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PriceSheetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PriceSheetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,11 +28,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
             {
                 writer.WritePropertyName("billingPeriodId"u8);
@@ -120,20 +79,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SavingsPlan))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("savingsPlan"u8);
-                writer.WriteObjectValue(SavingsPlan, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -142,27 +96,22 @@ namespace Azure.ResourceManager.Consumption.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PriceSheetProperties IJsonModel<PriceSheetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PriceSheetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PriceSheetProperties IJsonModel<PriceSheetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePriceSheetProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PriceSheetProperties DeserializePriceSheetProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static PriceSheetProperties DeserializePriceSheetProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -176,89 +125,81 @@ namespace Azure.ResourceManager.Consumption.Models
             decimal? unitPrice = default;
             string currencyCode = default;
             string offerId = default;
-            SavingsPlan savingsPlan = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("billingPeriodId"u8))
+                if (property.NameEquals("billingPeriodId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
-                    billingPeriodId = new ResourceIdentifier(prop.Value.GetString());
+                    billingPeriodId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("meterId"u8))
+                if (property.NameEquals("meterId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
-                    meterId = new Guid(prop.Value.GetString());
+                    meterId = property.Value.GetGuid();
                     continue;
                 }
-                if (prop.NameEquals("meterDetails"u8))
+                if (property.NameEquals("meterDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    meterDetails = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(prop.Value, options);
+                    meterDetails = ConsumptionMeterDetails.DeserializeConsumptionMeterDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("unitOfMeasure"u8))
+                if (property.NameEquals("unitOfMeasure"u8))
                 {
-                    unitOfMeasure = prop.Value.GetString();
+                    unitOfMeasure = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("includedQuantity"u8))
+                if (property.NameEquals("includedQuantity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    includedQuantity = prop.Value.GetDecimal();
+                    includedQuantity = property.Value.GetDecimal();
                     continue;
                 }
-                if (prop.NameEquals("partNumber"u8))
+                if (property.NameEquals("partNumber"u8))
                 {
-                    partNumber = prop.Value.GetString();
+                    partNumber = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("unitPrice"u8))
+                if (property.NameEquals("unitPrice"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unitPrice = prop.Value.GetDecimal();
+                    unitPrice = property.Value.GetDecimal();
                     continue;
                 }
-                if (prop.NameEquals("currencyCode"u8))
+                if (property.NameEquals("currencyCode"u8))
                 {
-                    currencyCode = prop.Value.GetString();
+                    currencyCode = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("offerId"u8))
+                if (property.NameEquals("offerId"u8))
                 {
-                    offerId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("savingsPlan"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    savingsPlan = SavingsPlan.DeserializeSavingsPlan(prop.Value, options);
+                    offerId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new PriceSheetProperties(
                 billingPeriodId,
                 meterId,
@@ -269,8 +210,38 @@ namespace Azure.ResourceManager.Consumption.Models
                 unitPrice,
                 currencyCode,
                 offerId,
-                savingsPlan,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PriceSheetProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PriceSheetProperties IPersistableModel<PriceSheetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePriceSheetProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PriceSheetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

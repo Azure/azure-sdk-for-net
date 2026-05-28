@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Confluent
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.Confluent
     /// </summary>
     public partial class ConfluentOrganizationCollection : ArmCollection, IEnumerable<ConfluentOrganizationResource>, IAsyncEnumerable<ConfluentOrganizationResource>
     {
-        private readonly ClientDiagnostics _confluentOrganizationClientDiagnostics;
-        private readonly ConfluentOrganization _confluentOrganizationRestClient;
+        private readonly ClientDiagnostics _confluentOrganizationOrganizationClientDiagnostics;
+        private readonly OrganizationRestOperations _confluentOrganizationOrganizationRestClient;
 
-        /// <summary> Initializes a new instance of ConfluentOrganizationCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConfluentOrganizationCollection"/> class for mocking. </summary>
         protected ConfluentOrganizationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConfluentOrganizationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ConfluentOrganizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ConfluentOrganizationResource.ResourceType, out string confluentOrganizationApiVersion);
-            _confluentOrganizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _confluentOrganizationRestClient = new ConfluentOrganization(_confluentOrganizationClientDiagnostics, Pipeline, Endpoint, confluentOrganizationApiVersion ?? "2025-08-18-preview");
-            ValidateResourceId(id);
+            _confluentOrganizationOrganizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentOrganizationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ConfluentOrganizationResource.ResourceType, out string confluentOrganizationOrganizationApiVersion);
+            _confluentOrganizationOrganizationRestClient = new OrganizationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, confluentOrganizationOrganizationApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create Organization resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrganizationResources_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>Organization_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,33 +77,21 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConfluentOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.CreateOrUpdate");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _confluentOrganizationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ConfluentArmOperation<ConfluentOrganizationResource> operation = new ConfluentArmOperation<ConfluentOrganizationResource>(
-                    new ConfluentOrganizationOperationSource(Client),
-                    _confluentOrganizationClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _confluentOrganizationOrganizationRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ConfluentArmOperation<ConfluentOrganizationResource>(new ConfluentOrganizationOperationSource(Client), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, _confluentOrganizationOrganizationRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +105,20 @@ namespace Azure.ResourceManager.Confluent
         /// Create Organization resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrganizationResources_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>Organization_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,33 +126,21 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="data"> Organization resource model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConfluentOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.CreateOrUpdate");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _confluentOrganizationRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, ConfluentOrganizationData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ConfluentArmOperation<ConfluentOrganizationResource> operation = new ConfluentArmOperation<ConfluentOrganizationResource>(
-                    new ConfluentOrganizationOperationSource(Client),
-                    _confluentOrganizationClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _confluentOrganizationOrganizationRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data, cancellationToken);
+                var operation = new ConfluentArmOperation<ConfluentOrganizationResource>(new ConfluentOrganizationOperationSource(Client), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, _confluentOrganizationOrganizationRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, organizationName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -173,42 +154,38 @@ namespace Azure.ResourceManager.Confluent
         /// Get the properties of a specific Organization resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrganizationResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Organization_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual async Task<Response<ConfluentOrganizationResource>> GetAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Get");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
+                var response = await _confluentOrganizationOrganizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -222,42 +199,38 @@ namespace Azure.ResourceManager.Confluent
         /// Get the properties of a specific Organization resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrganizationResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Organization_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual Response<ConfluentOrganizationResource> Get(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Get");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConfluentOrganizationData> response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
+                var response = _confluentOrganizationOrganizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,44 +244,50 @@ namespace Azure.ResourceManager.Confluent
         /// List all Organizations under the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrganizationResources_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Organization_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfluentOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupAsyncCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConfluentOrganizationCollection.GetAll"), data => new ConfluentOrganizationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all Organizations under the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrganizationResources_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Organization_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,61 +295,45 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfluentOrganizationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ConfluentOrganizationData, ConfluentOrganizationResource>(new ConfluentOrganizationGetByResourceGroupCollectionResultOfT(_confluentOrganizationRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ConfluentOrganizationCollection.GetAll"), data => new ConfluentOrganizationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrganizationResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Organization_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Exists");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ConfluentOrganizationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConfluentOrganizationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _confluentOrganizationOrganizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -384,50 +347,36 @@ namespace Azure.ResourceManager.Confluent
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrganizationResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Organization_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual Response<bool> Exists(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Exists");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ConfluentOrganizationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConfluentOrganizationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _confluentOrganizationOrganizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -441,54 +390,38 @@ namespace Azure.ResourceManager.Confluent
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrganizationResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Organization_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConfluentOrganizationResource>> GetIfExistsAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetIfExists");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ConfluentOrganizationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConfluentOrganizationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _confluentOrganizationOrganizationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ConfluentOrganizationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -502,54 +435,38 @@ namespace Azure.ResourceManager.Confluent
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OrganizationResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Organization_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         public virtual NullableResponse<ConfluentOrganizationResource> GetIfExists(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetIfExists");
+            using var scope = _confluentOrganizationOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ConfluentOrganizationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ConfluentOrganizationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ConfluentOrganizationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _confluentOrganizationOrganizationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, organizationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ConfluentOrganizationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ConfluentOrganizationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -569,7 +486,6 @@ namespace Azure.ResourceManager.Confluent
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ConfluentOrganizationResource> IAsyncEnumerable<ConfluentOrganizationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

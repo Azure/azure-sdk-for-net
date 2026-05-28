@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Cdn;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> settings for security policy patterns to match. </summary>
-    public partial class SecurityPolicyWebApplicationFirewallAssociation : IJsonModel<SecurityPolicyWebApplicationFirewallAssociation>
+    public partial class SecurityPolicyWebApplicationFirewallAssociation : IUtf8JsonSerializable, IJsonModel<SecurityPolicyWebApplicationFirewallAssociation>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecurityPolicyWebApplicationFirewallAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSecurityPolicyWebApplicationFirewallAssociation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewallAssociation)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyWebApplicationFirewallAssociation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewallAssociation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityPolicyWebApplicationFirewallAssociation IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityPolicyWebApplicationFirewallAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,16 +28,17 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewallAssociation)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(Domains))
             {
                 writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();
-                foreach (FrontDoorActivatedResourceInfo item in Domains)
+                foreach (var item in Domains)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,26 +48,21 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
-                foreach (string item in PatternsToMatch)
+                foreach (var item in PatternsToMatch)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,77 +71,98 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SecurityPolicyWebApplicationFirewallAssociation IJsonModel<SecurityPolicyWebApplicationFirewallAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecurityPolicyWebApplicationFirewallAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityPolicyWebApplicationFirewallAssociation IJsonModel<SecurityPolicyWebApplicationFirewallAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewallAssociation)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityPolicyWebApplicationFirewallAssociation(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SecurityPolicyWebApplicationFirewallAssociation DeserializeSecurityPolicyWebApplicationFirewallAssociation(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityPolicyWebApplicationFirewallAssociation DeserializeSecurityPolicyWebApplicationFirewallAssociation(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<FrontDoorActivatedResourceInfo> domains = default;
             IList<string> patternsToMatch = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("domains"u8))
+                if (property.NameEquals("domains"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<FrontDoorActivatedResourceInfo> array = new List<FrontDoorActivatedResourceInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(FrontDoorActivatedResourceInfo.DeserializeFrontDoorActivatedResourceInfo(item, options));
                     }
                     domains = array;
                     continue;
                 }
-                if (prop.NameEquals("patternsToMatch"u8))
+                if (property.NameEquals("patternsToMatch"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     patternsToMatch = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SecurityPolicyWebApplicationFirewallAssociation(domains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(), patternsToMatch ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityPolicyWebApplicationFirewallAssociation(domains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(), patternsToMatch ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewallAssociation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityPolicyWebApplicationFirewallAssociation IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSecurityPolicyWebApplicationFirewallAssociation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewallAssociation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityPolicyWebApplicationFirewallAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

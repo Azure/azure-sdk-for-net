@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.HDInsight;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The vm size property. </summary>
-    public partial class HDInsightVmSizeProperty : IJsonModel<HDInsightVmSizeProperty>
+    public partial class HDInsightVmSizeProperty : IUtf8JsonSerializable, IJsonModel<HDInsightVmSizeProperty>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HDInsightVmSizeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHDInsightVmSizeProperty(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightVmSizeProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HDInsightVmSizeProperty>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HDInsightVmSizeProperty IPersistableModel<HDInsightVmSizeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HDInsightVmSizeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HDInsightVmSizeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -124,15 +84,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("webWorkerResourceDiskSizeInMb"u8);
                 writer.WriteNumberValue(WebWorkerResourceDiskSizeInMB.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -141,27 +101,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HDInsightVmSizeProperty IJsonModel<HDInsightVmSizeProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HDInsightVmSizeProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HDInsightVmSizeProperty IJsonModel<HDInsightVmSizeProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHDInsightVmSizeProperty(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HDInsightVmSizeProperty DeserializeHDInsightVmSizeProperty(JsonElement element, ModelReaderWriterOptions options)
+        internal static HDInsightVmSizeProperty DeserializeHDInsightVmSizeProperty(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -172,96 +127,98 @@ namespace Azure.ResourceManager.HDInsight.Models
             string label = default;
             long? maxDataDiskCount = default;
             long? memoryInMB = default;
-            bool? isSupportedByVirtualMachines = default;
-            bool? isSupportedByWebWorkerRoles = default;
+            bool? supportedByVirtualMachines = default;
+            bool? supportedByWebWorkerRoles = default;
             long? virtualMachineResourceDiskSizeInMB = default;
             long? webWorkerResourceDiskSizeInMB = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("cores"u8))
+                if (property.NameEquals("cores"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cores = prop.Value.GetInt32();
+                    cores = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("dataDiskStorageTier"u8))
+                if (property.NameEquals("dataDiskStorageTier"u8))
                 {
-                    dataDiskStorageTier = prop.Value.GetString();
+                    dataDiskStorageTier = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("label"u8))
+                if (property.NameEquals("label"u8))
                 {
-                    label = prop.Value.GetString();
+                    label = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("maxDataDiskCount"u8))
+                if (property.NameEquals("maxDataDiskCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxDataDiskCount = prop.Value.GetInt64();
+                    maxDataDiskCount = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("memoryInMb"u8))
+                if (property.NameEquals("memoryInMb"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryInMB = prop.Value.GetInt64();
+                    memoryInMB = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("supportedByVirtualMachines"u8))
+                if (property.NameEquals("supportedByVirtualMachines"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSupportedByVirtualMachines = prop.Value.GetBoolean();
+                    supportedByVirtualMachines = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("supportedByWebWorkerRoles"u8))
+                if (property.NameEquals("supportedByWebWorkerRoles"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSupportedByWebWorkerRoles = prop.Value.GetBoolean();
+                    supportedByWebWorkerRoles = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("virtualMachineResourceDiskSizeInMb"u8))
+                if (property.NameEquals("virtualMachineResourceDiskSizeInMb"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    virtualMachineResourceDiskSizeInMB = prop.Value.GetInt64();
+                    virtualMachineResourceDiskSizeInMB = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("webWorkerResourceDiskSizeInMb"u8))
+                if (property.NameEquals("webWorkerResourceDiskSizeInMb"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    webWorkerResourceDiskSizeInMB = prop.Value.GetInt64();
+                    webWorkerResourceDiskSizeInMB = property.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightVmSizeProperty(
                 name,
                 cores,
@@ -269,11 +226,42 @@ namespace Azure.ResourceManager.HDInsight.Models
                 label,
                 maxDataDiskCount,
                 memoryInMB,
-                isSupportedByVirtualMachines,
-                isSupportedByWebWorkerRoles,
+                supportedByVirtualMachines,
+                supportedByWebWorkerRoles,
                 virtualMachineResourceDiskSizeInMB,
                 webWorkerResourceDiskSizeInMB,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightVmSizeProperty>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HDInsightVmSizeProperty IPersistableModel<HDInsightVmSizeProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHDInsightVmSizeProperty(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HDInsightVmSizeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

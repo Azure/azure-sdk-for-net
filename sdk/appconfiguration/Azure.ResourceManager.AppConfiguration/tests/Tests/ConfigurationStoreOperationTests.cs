@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             AppConfigurationStoreResource configurationStore = await ConfigStore.GetAsync();
 
-            Assert.That(ConfigurationStoreName.Equals(configurationStore.Data.Name), Is.True);
-            Assert.That(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled, Is.True);
+            Assert.IsTrue(ConfigurationStoreName.Equals(configurationStore.Data.Name));
+            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             IEnumerable<AzureLocation> locations = (await ConfigStore.GetAvailableLocationsAsync()).Value;
 
-            Assert.That(locations.Count() >= 0, Is.True);
+            Assert.IsTrue(locations.Count() >= 0);
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await ConfigStore.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(ConfigurationStoreName); });
 
-            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.AreEqual(404, exception.Status);
         }
 
         [TestCase(true)]
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(ConfigurationStoreName);
             KeyValuePair<string, string> tag = configurationStore.Data.Tags.FirstOrDefault();
 
-            Assert.That("key1".Equals(tag.Key), Is.True);
-            Assert.That("value1".Equals(tag.Value), Is.True);
+            Assert.IsTrue("key1".Equals(tag.Key));
+            Assert.IsTrue("value1".Equals(tag.Value));
         }
 
         [TestCase(true)]
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await ConfigStore.SetTagsAsync(tags);
             AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(ConfigurationStoreName);
 
-            Assert.That(configurationStore.Data.Tags.Count == 2, Is.True);
+            Assert.IsTrue(configurationStore.Data.Tags.Count == 2);
         }
 
         [TestCase(true)]
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await ConfigStore.RemoveTagAsync("key1");
             AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(ConfigurationStoreName);
 
-            Assert.That(configurationStore.Data.Tags.ContainsKey("key1"), Is.False);
-            Assert.That(configurationStore.Data.Tags.ContainsKey("key2"), Is.True);
+            Assert.IsFalse(configurationStore.Data.Tags.ContainsKey("key1"));
+            Assert.IsTrue(configurationStore.Data.Tags.ContainsKey("key2"));
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             AppConfigurationStoreApiKey configurationStore = await ConfigStore.RegenerateKeyAsync(regenerateKeyOptions);
             keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
 
-            Assert.That(keys.Where(x => x.Name == orignalKey.Name).FirstOrDefault().Value != orignalKey.Value, Is.True);
+            Assert.IsTrue(keys.Where(x => x.Name == orignalKey.Name).FirstOrDefault().Value != orignalKey.Value);
         }
 
         [Ignore("Need data plan to create key")]
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task GetKeyValueTest()
         {
             AppConfigurationKeyValueResource keyValue = (await ConfigStore.GetAppConfigurationKeyValues().ToEnumerableAsync()).FirstOrDefault();
-            Assert.That(keyValue.Data.Key.Equals("Primary"), Is.True);
+            Assert.IsTrue(keyValue.Data.Key.Equals("Primary"));
         }
 
         [Test]
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             List<AppConfigurationStoreApiKey> keys = await ConfigStore.GetKeysAsync().ToEnumerableAsync();
 
-            Assert.That(keys.Count >= 1, Is.True);
+            Assert.IsTrue(keys.Count >= 1);
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             AppConfigurationStorePatch PatchableconfigurationStoreData = new AppConfigurationStorePatch() { PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Enabled };
             AppConfigurationStoreResource configurationStore = (await ConfigStore.UpdateAsync(WaitUntil.Completed, PatchableconfigurationStoreData)).Value;
 
-            Assert.That(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Enabled, Is.True);
+            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Enabled);
         }
     }
 }

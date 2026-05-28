@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.OnlineExperimentation.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -19,32 +17,30 @@ namespace Azure.ResourceManager.OnlineExperimentation
     /// <summary> A class to add extension methods to Azure.ResourceManager.OnlineExperimentation. </summary>
     public static partial class OnlineExperimentationExtensions
     {
-        /// <param name="client"></param>
         private static MockableOnlineExperimentationArmClient GetMockableOnlineExperimentationArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableOnlineExperimentationArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableOnlineExperimentationArmClient(client0));
         }
 
-        /// <param name="resourceGroupResource"></param>
-        private static MockableOnlineExperimentationResourceGroupResource GetMockableOnlineExperimentationResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableOnlineExperimentationResourceGroupResource GetMockableOnlineExperimentationResourceGroupResource(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockableOnlineExperimentationResourceGroupResource(client, resourceGroupResource.Id));
+            return resource.GetCachedClient(client => new MockableOnlineExperimentationResourceGroupResource(client, resource.Id));
         }
 
-        /// <param name="subscriptionResource"></param>
-        private static MockableOnlineExperimentationSubscriptionResource GetMockableOnlineExperimentationSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockableOnlineExperimentationSubscriptionResource GetMockableOnlineExperimentationSubscriptionResource(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockableOnlineExperimentationSubscriptionResource(client, subscriptionResource.Id));
+            return resource.GetCachedClient(client => new MockableOnlineExperimentationSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="OnlineExperimentationWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing an <see cref="OnlineExperimentationWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OnlineExperimentationWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="OnlineExperimentationWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOnlineExperimentationArmClient.GetOnlineExperimentationWorkspaceResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOnlineExperimentationArmClient.GetOnlineExperimentationWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="OnlineExperimentationWorkspaceResource"/> object. </returns>
@@ -56,51 +52,15 @@ namespace Azure.ResourceManager.OnlineExperimentation
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="OnlineExperimentationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets a collection of OnlineExperimentationWorkspaceResources in the ResourceGroupResource.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOnlineExperimentationArmClient.GetOnlineExperimentationPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOnlineExperimentationResourceGroupResource.GetOnlineExperimentationWorkspaces()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OnlineExperimentationPrivateEndpointConnectionResource"/> object. </returns>
-        public static OnlineExperimentationPrivateEndpointConnectionResource GetOnlineExperimentationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableOnlineExperimentationArmClient(client).GetOnlineExperimentationPrivateEndpointConnectionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="OnlineExperimentationPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOnlineExperimentationArmClient.GetOnlineExperimentationPrivateLinkResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OnlineExperimentationPrivateLinkResource"/> object. </returns>
-        public static OnlineExperimentationPrivateLinkResource GetOnlineExperimentationPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableOnlineExperimentationArmClient(client).GetOnlineExperimentationPrivateLinkResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of OnlineExperimentationWorkspaces in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOnlineExperimentationResourceGroupResource.GetOnlineExperimentationWorkspaces()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of OnlineExperimentationWorkspaces and their operations over a OnlineExperimentationWorkspaceResource. </returns>
+        /// <returns> An object representing collection of OnlineExperimentationWorkspaceResources and their operations over a OnlineExperimentationWorkspaceResource. </returns>
         public static OnlineExperimentationWorkspaceCollection GetOnlineExperimentationWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -110,15 +70,34 @@ namespace Azure.ResourceManager.OnlineExperimentation
 
         /// <summary>
         /// Gets an online experimentation workspace.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOnlineExperimentationResourceGroupResource.GetOnlineExperimentationWorkspaceAsync(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOnlineExperimentationResourceGroupResource.GetOnlineExperimentationWorkspaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<OnlineExperimentationWorkspaceResource>> GetOnlineExperimentationWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
@@ -129,15 +108,34 @@ namespace Azure.ResourceManager.OnlineExperimentation
 
         /// <summary>
         /// Gets an online experimentation workspace.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOnlineExperimentationResourceGroupResource.GetOnlineExperimentationWorkspace(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOnlineExperimentationResourceGroupResource.GetOnlineExperimentationWorkspace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="workspaceName"> The name of the OnlineExperimentationWorkspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<OnlineExperimentationWorkspaceResource> GetOnlineExperimentationWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
@@ -148,15 +146,33 @@ namespace Azure.ResourceManager.OnlineExperimentation
 
         /// <summary>
         /// Gets all online experimentation workspaces in the specified subscription.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentationWorkspacesAsync(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OnlineExperimentation/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentationWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OnlineExperimentationWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OnlineExperimentationWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OnlineExperimentationWorkspaceResource> GetOnlineExperimentationWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -166,12 +182,30 @@ namespace Azure.ResourceManager.OnlineExperimentation
 
         /// <summary>
         /// Gets all online experimentation workspaces in the specified subscription.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentationWorkspaces(CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OnlineExperimentation/workspaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OnlineExperimentationWorkspace_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-31-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableOnlineExperimentationSubscriptionResource.GetOnlineExperimentationWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="OnlineExperimentationWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>

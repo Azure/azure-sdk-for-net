@@ -8,40 +8,41 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServices;
 using Azure.ResourceManager.RecoveryServices.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServices.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableRecoveryServicesResourceGroupResource : ArmResource
     {
         private ClientDiagnostics _recoveryServicesOperationGroupClientDiagnostics;
-        private RecoveryServicesOperationGroup _recoveryServicesOperationGroupRestClient;
+        private RecoveryServicesOperationGroupRestOperations _recoveryServicesOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of MockableRecoveryServicesResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesResourceGroupResource"/> class for mocking. </summary>
         protected MockableRecoveryServicesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableRecoveryServicesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableRecoveryServicesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private RecoveryServicesOperationGroupRestOperations RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private RecoveryServicesOperationGroup RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroup(RecoveryServicesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
 
-        /// <summary> Gets a collection of RecoveryServicesVaults in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of RecoveryServicesVaults and their operations over a RecoveryServicesVaultResource. </returns>
+        /// <summary> Gets a collection of RecoveryServicesVaultResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of RecoveryServicesVaultResources and their operations over a RecoveryServicesVaultResource. </returns>
         public virtual RecoveryServicesVaultCollection GetRecoveryServicesVaults()
         {
             return GetCachedClient(client => new RecoveryServicesVaultCollection(client, Id));
@@ -51,16 +52,20 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// Get the Vault details.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vaults_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -71,8 +76,6 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<RecoveryServicesVaultResource>> GetRecoveryServicesVaultAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
             return await GetRecoveryServicesVaults().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -80,16 +83,20 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// Get the Vault details.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Vaults_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,8 +107,6 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         [ForwardsClientCalls]
         public virtual Response<RecoveryServicesVaultResource> GetRecoveryServicesVault(string vaultName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-
             return GetRecoveryServicesVaults().Get(vaultName, cancellationToken);
         }
 
@@ -111,16 +116,16 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/locations/{location}/checkNameAvailability. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/locations/{location}/checkNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RecoveryServicesOperationGroup_CheckNameAvailability. </description>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServicesOperationGroup_CheckRecoveryServicesNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,21 +137,11 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = RecoveryServicesOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.CheckRecoveryServicesNameAvailability");
+            using var scope = RecoveryServicesOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.CheckRecoveryServicesNameAvailability");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateCheckRecoveryServicesNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, location, RecoveryServicesNameAvailabilityContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RecoveryServicesNameAvailabilityResult> response = Response.FromValue(RecoveryServicesNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await RecoveryServicesOperationGroupRestClient.CheckRecoveryServicesNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -162,16 +157,16 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/locations/{location}/checkNameAvailability. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/locations/{location}/checkNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RecoveryServicesOperationGroup_CheckNameAvailability. </description>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryServicesOperationGroup_CheckRecoveryServicesNameAvailability</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,21 +178,11 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = RecoveryServicesOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.CheckRecoveryServicesNameAvailability");
+            using var scope = RecoveryServicesOperationGroupClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.CheckRecoveryServicesNameAvailability");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateCheckRecoveryServicesNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, location, RecoveryServicesNameAvailabilityContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<RecoveryServicesNameAvailabilityResult> response = Response.FromValue(RecoveryServicesNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = RecoveryServicesOperationGroupRestClient.CheckRecoveryServicesNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, location, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

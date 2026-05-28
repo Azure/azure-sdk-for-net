@@ -10,55 +10,14 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure.ResourceManager.Peering;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The properties that define an exchange peering facility. </summary>
-    public partial class ExchangePeeringFacility : IJsonModel<ExchangePeeringFacility>
+    public partial class ExchangePeeringFacility : IUtf8JsonSerializable, IJsonModel<ExchangePeeringFacility>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExchangePeeringFacility PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeExchangePeeringFacility(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExchangePeeringFacility>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExchangePeeringFacility>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExchangePeeringFacility IPersistableModel<ExchangePeeringFacility>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExchangePeeringFacility>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExchangePeeringFacility>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,11 +29,12 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ExchangeName))
             {
                 writer.WritePropertyName("exchangeName"u8);
@@ -115,15 +75,15 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("peeringDBFacilityLink"u8);
                 writer.WriteStringValue(PeeringDBFacilityLink);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -132,27 +92,22 @@ namespace Azure.ResourceManager.Peering.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExchangePeeringFacility IJsonModel<ExchangePeeringFacility>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExchangePeeringFacility JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExchangePeeringFacility IJsonModel<ExchangePeeringFacility>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExchangePeeringFacility(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExchangePeeringFacility DeserializeExchangePeeringFacility(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExchangePeeringFacility DeserializeExchangePeeringFacility(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -165,70 +120,72 @@ namespace Azure.ResourceManager.Peering.Models
             string facilityIPv6Prefix = default;
             int? peeringDBFacilityId = default;
             string peeringDBFacilityLink = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("exchangeName"u8))
+                if (property.NameEquals("exchangeName"u8))
                 {
-                    exchangeName = prop.Value.GetString();
+                    exchangeName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("bandwidthInMbps"u8))
+                if (property.NameEquals("bandwidthInMbps"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bandwidthInMbps = prop.Value.GetInt32();
+                    bandwidthInMbps = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("microsoftIPv4Address"u8))
+                if (property.NameEquals("microsoftIPv4Address"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
-                    microsoftIPv4Address = IPAddress.Parse(prop.Value.GetString());
+                    microsoftIPv4Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("microsoftIPv6Address"u8))
+                if (property.NameEquals("microsoftIPv6Address"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }
-                    microsoftIPv6Address = IPAddress.Parse(prop.Value.GetString());
+                    microsoftIPv6Address = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("facilityIPv4Prefix"u8))
+                if (property.NameEquals("facilityIPv4Prefix"u8))
                 {
-                    facilityIPv4Prefix = prop.Value.GetString();
+                    facilityIPv4Prefix = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("facilityIPv6Prefix"u8))
+                if (property.NameEquals("facilityIPv6Prefix"u8))
                 {
-                    facilityIPv6Prefix = prop.Value.GetString();
+                    facilityIPv6Prefix = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("peeringDBFacilityId"u8))
+                if (property.NameEquals("peeringDBFacilityId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    peeringDBFacilityId = prop.Value.GetInt32();
+                    peeringDBFacilityId = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("peeringDBFacilityLink"u8))
+                if (property.NameEquals("peeringDBFacilityLink"u8))
                 {
-                    peeringDBFacilityLink = prop.Value.GetString();
+                    peeringDBFacilityLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExchangePeeringFacility(
                 exchangeName,
                 bandwidthInMbps,
@@ -238,7 +195,38 @@ namespace Azure.ResourceManager.Peering.Models
                 facilityIPv6Prefix,
                 peeringDBFacilityId,
                 peeringDBFacilityLink,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExchangePeeringFacility>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExchangePeeringFacility IPersistableModel<ExchangePeeringFacility>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringFacility>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeExchangePeeringFacility(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExchangePeeringFacility)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExchangePeeringFacility>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

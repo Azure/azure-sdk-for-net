@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary> Autonomous Database From Backup Timestamp resource model. </summary>
-    public partial class AutonomousDatabaseFromBackupTimestampProperties : AutonomousDatabaseBaseProperties, IJsonModel<AutonomousDatabaseFromBackupTimestampProperties>
+    public partial class AutonomousDatabaseFromBackupTimestampProperties : IUtf8JsonSerializable, IJsonModel<AutonomousDatabaseFromBackupTimestampProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseFromBackupTimestampProperties"/> for deserialization. </summary>
-        internal AutonomousDatabaseFromBackupTimestampProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutonomousDatabaseFromBackupTimestampProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AutonomousDatabaseBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAutonomousDatabaseFromBackupTimestampProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutonomousDatabaseFromBackupTimestampProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AutonomousDatabaseFromBackupTimestampProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AutonomousDatabaseFromBackupTimestampProperties IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutonomousDatabaseFromBackupTimestampProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutonomousDatabaseFromBackupTimestampProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutonomousDatabaseFromBackupTimestampProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
@@ -99,37 +53,37 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AutonomousDatabaseFromBackupTimestampProperties IJsonModel<AutonomousDatabaseFromBackupTimestampProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AutonomousDatabaseFromBackupTimestampProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AutonomousDatabaseBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AutonomousDatabaseFromBackupTimestampProperties IJsonModel<AutonomousDatabaseFromBackupTimestampProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutonomousDatabaseFromBackupTimestampProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutonomousDatabaseFromBackupTimestampProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AutonomousDatabaseFromBackupTimestampProperties DeserializeAutonomousDatabaseFromBackupTimestampProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static AutonomousDatabaseFromBackupTimestampProperties DeserializeAutonomousDatabaseFromBackupTimestampProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            AutonomousDatabaseSourceType source = default;
+            ResourceIdentifier sourceId = default;
+            AutonomousDatabaseCloneType cloneType = default;
+            DateTimeOffset? timestamp = default;
+            bool? useLatestAvailableBackupTimeStamp = default;
             string adminPassword = default;
             OracleDataBaseType dataBaseType = default;
             AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default;
             string characterSet = default;
             float? computeCount = default;
-            OracleDatabaseComputeModel? databaseComputeModel = default;
+            OracleDatabaseComputeModel? computeModel = default;
             int? cpuCoreCount = default;
             IList<OracleCustomerContact> customerContacts = default;
             int? dataStorageSizeInTbs = default;
@@ -139,14 +93,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string displayName = default;
             bool? isAutoScalingEnabled = default;
             bool? isAutoScalingForStorageEnabled = default;
-            IReadOnlyList<string> peerDBIds = default;
-            string peerDBId = default;
+            IReadOnlyList<string> peerDbIds = default;
+            string peerDbId = default;
             bool? isLocalDataGuardEnabled = default;
             bool? isRemoteDataGuardEnabled = default;
             DisasterRecoveryType? localDisasterRecoveryType = default;
-            DateTimeOffset? disasterRecoveryRoleChangedOn = default;
+            DateTimeOffset? timeDisasterRecoveryRoleChanged = default;
             DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = default;
-            AutonomousDatabaseStandbySummary localStandbyDB = default;
+            AutonomousDatabaseStandbySummary localStandbyDb = default;
             int? failedDataRecoveryInSeconds = default;
             bool? isMtlsConnectionRequired = default;
             bool? isPreviewVersionWithServiceTermsAccepted = default;
@@ -158,12 +112,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IList<ScheduledOperationsType> scheduledOperationsList = default;
             string privateEndpointIP = default;
             string privateEndpointLabel = default;
-            Uri ociUri = default;
+            Uri ociUrl = default;
             ResourceIdentifier subnetId = default;
             ResourceIdentifier vnetId = default;
-            DateTimeOffset? createdOn = default;
-            DateTimeOffset? maintenanceBeginOn = default;
-            DateTimeOffset? maintenanceEndOn = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? timeMaintenanceBegin = default;
+            DateTimeOffset? timeMaintenanceEnd = default;
             double? actualUsedDataStorageSizeInTbs = default;
             double? allocatedStorageSizeInTbs = default;
             OracleApexDetailsType apexDetails = default;
@@ -174,7 +128,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OracleDatabaseEditionType? databaseEdition = default;
             ResourceIdentifier autonomousDatabaseId = default;
             int? inMemoryAreaInGbs = default;
-            DateTimeOffset? nextLongTermBackupCreatedOn = default;
+            DateTimeOffset? nextLongTermBackupTimeStamp = default;
             LongTermBackUpScheduleDetails longTermBackupSchedule = default;
             bool? isPreview = default;
             int? localAdgAutoFailoverMaxDataLossLimit = default;
@@ -185,779 +139,748 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string privateEndpoint = default;
             IReadOnlyList<int> provisionableCpus = default;
             DataGuardRoleType? role = default;
-            Uri serviceConsoleUri = default;
-            Uri sqlWebDeveloperUri = default;
+            Uri serviceConsoleUrl = default;
+            Uri sqlWebDeveloperUrl = default;
             IReadOnlyList<string> supportedRegionsToCloneTo = default;
-            DateTimeOffset? dataGuardRoleChangedOn = default;
-            DateTimeOffset? freeAutonomousDatabaseDeletedOn = default;
+            DateTimeOffset? timeDataGuardRoleChanged = default;
+            DateTimeOffset? timeDeletionOfFreeAutonomousDatabase = default;
             string timeLocalDataGuardEnabled = default;
-            DateTimeOffset? lastFailoverHappenedOn = default;
-            DateTimeOffset? lastRefreshHappenedOn = default;
-            DateTimeOffset? lastRefreshPointTimestamp = default;
-            DateTimeOffset? lastSwitchoverHappenedOn = default;
-            DateTimeOffset? freeAutonomousDatabaseStoppedOn = default;
+            DateTimeOffset? timeOfLastFailover = default;
+            DateTimeOffset? timeOfLastRefresh = default;
+            DateTimeOffset? timeOfLastRefreshPoint = default;
+            DateTimeOffset? timeOfLastSwitchover = default;
+            DateTimeOffset? timeReclamationOfFreeAutonomousDatabase = default;
             int? usedDataStorageSizeInGbs = default;
             int? usedDataStorageSizeInTbs = default;
-            string databaseOcid = default;
+            string ocid = default;
             int? backupRetentionPeriodInDays = default;
             IList<string> whitelistedIPs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AutonomousDatabaseSourceType source = default;
-            ResourceIdentifier sourceId = default;
-            AutonomousDatabaseCloneType cloneType = default;
-            DateTimeOffset? timestamp = default;
-            bool? useLatestAvailableBackupTimeStamp = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("adminPassword"u8))
+                if (property.NameEquals("source"u8))
                 {
-                    adminPassword = prop.Value.GetString();
+                    source = new AutonomousDatabaseSourceType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("dataBaseType"u8))
+                if (property.NameEquals("sourceId"u8))
                 {
-                    dataBaseType = new OracleDataBaseType(prop.Value.GetString());
+                    sourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("autonomousMaintenanceScheduleType"u8))
+                if (property.NameEquals("cloneType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    cloneType = new AutonomousDatabaseCloneType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("timestamp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autonomousMaintenanceScheduleType = new AutonomousMaintenanceScheduleType(prop.Value.GetString());
+                    timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("characterSet"u8))
+                if (property.NameEquals("useLatestAvailableBackupTimeStamp"u8))
                 {
-                    characterSet = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("computeCount"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    computeCount = prop.Value.GetSingle();
+                    useLatestAvailableBackupTimeStamp = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("computeModel"u8))
+                if (property.NameEquals("adminPassword"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    adminPassword = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataBaseType"u8))
+                {
+                    dataBaseType = new OracleDataBaseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("autonomousMaintenanceScheduleType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    databaseComputeModel = new OracleDatabaseComputeModel(prop.Value.GetString());
+                    autonomousMaintenanceScheduleType = new AutonomousMaintenanceScheduleType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("cpuCoreCount"u8))
+                if (property.NameEquals("characterSet"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    characterSet = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("computeCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cpuCoreCount = prop.Value.GetInt32();
+                    computeCount = property.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("customerContacts"u8))
+                if (property.NameEquals("computeModel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("cpuCoreCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cpuCoreCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("customerContacts"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<OracleCustomerContact> array = new List<OracleCustomerContact>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(OracleCustomerContact.DeserializeOracleCustomerContact(item, options));
                     }
                     customerContacts = array;
                     continue;
                 }
-                if (prop.NameEquals("dataStorageSizeInTbs"u8))
+                if (property.NameEquals("dataStorageSizeInTbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataStorageSizeInTbs = prop.Value.GetInt32();
+                    dataStorageSizeInTbs = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("dataStorageSizeInGbs"u8))
+                if (property.NameEquals("dataStorageSizeInGbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataStorageSizeInGbs = prop.Value.GetInt32();
+                    dataStorageSizeInGbs = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("dbVersion"u8))
+                if (property.NameEquals("dbVersion"u8))
                 {
-                    dbVersion = prop.Value.GetString();
+                    dbVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dbWorkload"u8))
+                if (property.NameEquals("dbWorkload"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dbWorkload = new AutonomousDatabaseWorkloadType(prop.Value.GetString());
+                    dbWorkload = new AutonomousDatabaseWorkloadType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("displayName"u8))
+                if (property.NameEquals("displayName"u8))
                 {
-                    displayName = prop.Value.GetString();
+                    displayName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isAutoScalingEnabled"u8))
+                if (property.NameEquals("isAutoScalingEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAutoScalingEnabled = prop.Value.GetBoolean();
+                    isAutoScalingEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isAutoScalingForStorageEnabled"u8))
+                if (property.NameEquals("isAutoScalingForStorageEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAutoScalingForStorageEnabled = prop.Value.GetBoolean();
+                    isAutoScalingForStorageEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("peerDbIds"u8))
+                if (property.NameEquals("peerDbIds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
-                    peerDBIds = array;
+                    peerDbIds = array;
                     continue;
                 }
-                if (prop.NameEquals("peerDbId"u8))
+                if (property.NameEquals("peerDbId"u8))
                 {
-                    peerDBId = prop.Value.GetString();
+                    peerDbId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isLocalDataGuardEnabled"u8))
+                if (property.NameEquals("isLocalDataGuardEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isLocalDataGuardEnabled = prop.Value.GetBoolean();
+                    isLocalDataGuardEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isRemoteDataGuardEnabled"u8))
+                if (property.NameEquals("isRemoteDataGuardEnabled"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isRemoteDataGuardEnabled = prop.Value.GetBoolean();
+                    isRemoteDataGuardEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("localDisasterRecoveryType"u8))
+                if (property.NameEquals("localDisasterRecoveryType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    localDisasterRecoveryType = new DisasterRecoveryType(prop.Value.GetString());
+                    localDisasterRecoveryType = new DisasterRecoveryType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("timeDisasterRecoveryRoleChanged"u8))
+                if (property.NameEquals("timeDisasterRecoveryRoleChanged"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disasterRecoveryRoleChangedOn = prop.Value.GetDateTimeOffset("O");
+                    timeDisasterRecoveryRoleChanged = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("remoteDisasterRecoveryConfiguration"u8))
+                if (property.NameEquals("remoteDisasterRecoveryConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    remoteDisasterRecoveryConfiguration = DisasterRecoveryConfigurationDetails.DeserializeDisasterRecoveryConfigurationDetails(prop.Value, options);
+                    remoteDisasterRecoveryConfiguration = DisasterRecoveryConfigurationDetails.DeserializeDisasterRecoveryConfigurationDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("localStandbyDb"u8))
+                if (property.NameEquals("localStandbyDb"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    localStandbyDB = AutonomousDatabaseStandbySummary.DeserializeAutonomousDatabaseStandbySummary(prop.Value, options);
+                    localStandbyDb = AutonomousDatabaseStandbySummary.DeserializeAutonomousDatabaseStandbySummary(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("failedDataRecoveryInSeconds"u8))
+                if (property.NameEquals("failedDataRecoveryInSeconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failedDataRecoveryInSeconds = prop.Value.GetInt32();
+                    failedDataRecoveryInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("isMtlsConnectionRequired"u8))
+                if (property.NameEquals("isMtlsConnectionRequired"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isMtlsConnectionRequired = prop.Value.GetBoolean();
+                    isMtlsConnectionRequired = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isPreviewVersionWithServiceTermsAccepted"u8))
+                if (property.NameEquals("isPreviewVersionWithServiceTermsAccepted"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isPreviewVersionWithServiceTermsAccepted = prop.Value.GetBoolean();
+                    isPreviewVersionWithServiceTermsAccepted = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("licenseModel"u8))
+                if (property.NameEquals("licenseModel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    licenseModel = new OracleLicenseModel(prop.Value.GetString());
+                    licenseModel = new OracleLicenseModel(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("ncharacterSet"u8))
+                if (property.NameEquals("ncharacterSet"u8))
                 {
-                    ncharacterSet = prop.Value.GetString();
+                    ncharacterSet = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lifecycleDetails"u8))
+                if (property.NameEquals("lifecycleDetails"u8))
                 {
-                    lifecycleDetails = prop.Value.GetString();
+                    lifecycleDetails = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new OracleDatabaseProvisioningState(prop.Value.GetString());
+                    provisioningState = new OracleDatabaseProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("lifecycleState"u8))
+                if (property.NameEquals("lifecycleState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lifecycleState = new AutonomousDatabaseLifecycleState(prop.Value.GetString());
+                    lifecycleState = new AutonomousDatabaseLifecycleState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("scheduledOperationsList"u8))
+                if (property.NameEquals("scheduledOperationsList"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ScheduledOperationsType> array = new List<ScheduledOperationsType>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ScheduledOperationsType.DeserializeScheduledOperationsType(item, options));
                     }
                     scheduledOperationsList = array;
                     continue;
                 }
-                if (prop.NameEquals("privateEndpointIp"u8))
+                if (property.NameEquals("privateEndpointIp"u8))
                 {
-                    privateEndpointIP = prop.Value.GetString();
+                    privateEndpointIP = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("privateEndpointLabel"u8))
+                if (property.NameEquals("privateEndpointLabel"u8))
                 {
-                    privateEndpointLabel = prop.Value.GetString();
+                    privateEndpointLabel = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ociUrl"u8))
+                if (property.NameEquals("ociUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ociUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    ociUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("subnetId"u8))
+                if (property.NameEquals("subnetId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subnetId = new ResourceIdentifier(prop.Value.GetString());
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("vnetId"u8))
+                if (property.NameEquals("vnetId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vnetId = new ResourceIdentifier(prop.Value.GetString());
+                    vnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("timeCreated"u8))
+                if (property.NameEquals("timeCreated"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    timeCreated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("timeMaintenanceBegin"u8))
+                if (property.NameEquals("timeMaintenanceBegin"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maintenanceBeginOn = prop.Value.GetDateTimeOffset("O");
+                    timeMaintenanceBegin = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("timeMaintenanceEnd"u8))
+                if (property.NameEquals("timeMaintenanceEnd"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maintenanceEndOn = prop.Value.GetDateTimeOffset("O");
+                    timeMaintenanceEnd = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("actualUsedDataStorageSizeInTbs"u8))
+                if (property.NameEquals("actualUsedDataStorageSizeInTbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    actualUsedDataStorageSizeInTbs = prop.Value.GetDouble();
+                    actualUsedDataStorageSizeInTbs = property.Value.GetDouble();
                     continue;
                 }
-                if (prop.NameEquals("allocatedStorageSizeInTbs"u8))
+                if (property.NameEquals("allocatedStorageSizeInTbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allocatedStorageSizeInTbs = prop.Value.GetDouble();
+                    allocatedStorageSizeInTbs = property.Value.GetDouble();
                     continue;
                 }
-                if (prop.NameEquals("apexDetails"u8))
+                if (property.NameEquals("apexDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    apexDetails = OracleApexDetailsType.DeserializeOracleApexDetailsType(prop.Value, options);
+                    apexDetails = OracleApexDetailsType.DeserializeOracleApexDetailsType(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("availableUpgradeVersions"u8))
+                if (property.NameEquals("availableUpgradeVersions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     availableUpgradeVersions = array;
                     continue;
                 }
-                if (prop.NameEquals("connectionStrings"u8))
+                if (property.NameEquals("connectionStrings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectionStrings = AutonomousDatabaseConnectionStrings.DeserializeAutonomousDatabaseConnectionStrings(prop.Value, options);
+                    connectionStrings = AutonomousDatabaseConnectionStrings.DeserializeAutonomousDatabaseConnectionStrings(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("connectionUrls"u8))
+                if (property.NameEquals("connectionUrls"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectionUrls = AutonomousDatabaseConnectionUrls.DeserializeAutonomousDatabaseConnectionUrls(prop.Value, options);
+                    connectionUrls = AutonomousDatabaseConnectionUrls.DeserializeAutonomousDatabaseConnectionUrls(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("dataSafeStatus"u8))
+                if (property.NameEquals("dataSafeStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataSafeStatus = new DataSafeStatusType(prop.Value.GetString());
+                    dataSafeStatus = new DataSafeStatusType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("databaseEdition"u8))
+                if (property.NameEquals("databaseEdition"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    databaseEdition = new OracleDatabaseEditionType(prop.Value.GetString());
+                    databaseEdition = new OracleDatabaseEditionType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("autonomousDatabaseId"u8))
+                if (property.NameEquals("autonomousDatabaseId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autonomousDatabaseId = new ResourceIdentifier(prop.Value.GetString());
+                    autonomousDatabaseId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("inMemoryAreaInGbs"u8))
+                if (property.NameEquals("inMemoryAreaInGbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    inMemoryAreaInGbs = prop.Value.GetInt32();
+                    inMemoryAreaInGbs = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("nextLongTermBackupTimeStamp"u8))
+                if (property.NameEquals("nextLongTermBackupTimeStamp"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nextLongTermBackupCreatedOn = prop.Value.GetDateTimeOffset("O");
+                    nextLongTermBackupTimeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("longTermBackupSchedule"u8))
+                if (property.NameEquals("longTermBackupSchedule"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    longTermBackupSchedule = LongTermBackUpScheduleDetails.DeserializeLongTermBackUpScheduleDetails(prop.Value, options);
+                    longTermBackupSchedule = LongTermBackUpScheduleDetails.DeserializeLongTermBackUpScheduleDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("isPreview"u8))
+                if (property.NameEquals("isPreview"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isPreview = prop.Value.GetBoolean();
+                    isPreview = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("localAdgAutoFailoverMaxDataLossLimit"u8))
+                if (property.NameEquals("localAdgAutoFailoverMaxDataLossLimit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    localAdgAutoFailoverMaxDataLossLimit = prop.Value.GetInt32();
+                    localAdgAutoFailoverMaxDataLossLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("memoryPerOracleComputeUnitInGbs"u8))
+                if (property.NameEquals("memoryPerOracleComputeUnitInGbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryPerOracleComputeUnitInGbs = prop.Value.GetInt32();
+                    memoryPerOracleComputeUnitInGbs = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("openMode"u8))
+                if (property.NameEquals("openMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    openMode = new AutonomousDatabaseModeType(prop.Value.GetString());
+                    openMode = new AutonomousDatabaseModeType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("operationsInsightsStatus"u8))
+                if (property.NameEquals("operationsInsightsStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operationsInsightsStatus = new OperationsInsightsStatusType(prop.Value.GetString());
+                    operationsInsightsStatus = new OperationsInsightsStatusType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("permissionLevel"u8))
+                if (property.NameEquals("permissionLevel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    permissionLevel = new AutonomousDatabasePermissionLevelType(prop.Value.GetString());
+                    permissionLevel = new AutonomousDatabasePermissionLevelType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("privateEndpoint"u8))
+                if (property.NameEquals("privateEndpoint"u8))
                 {
-                    privateEndpoint = prop.Value.GetString();
+                    privateEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisionableCpus"u8))
+                if (property.NameEquals("provisionableCpus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<int> array = new List<int>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetInt32());
                     }
                     provisionableCpus = array;
                     continue;
                 }
-                if (prop.NameEquals("role"u8))
+                if (property.NameEquals("role"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    role = new DataGuardRoleType(prop.Value.GetString());
+                    role = new DataGuardRoleType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("serviceConsoleUrl"u8))
+                if (property.NameEquals("serviceConsoleUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    serviceConsoleUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    serviceConsoleUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sqlWebDeveloperUrl"u8))
+                if (property.NameEquals("sqlWebDeveloperUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sqlWebDeveloperUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    sqlWebDeveloperUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("supportedRegionsToCloneTo"u8))
+                if (property.NameEquals("supportedRegionsToCloneTo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     supportedRegionsToCloneTo = array;
                     continue;
                 }
-                if (prop.NameEquals("timeDataGuardRoleChanged"u8))
+                if (property.NameEquals("timeDataGuardRoleChanged"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataGuardRoleChangedOn = prop.Value.GetDateTimeOffset("O");
+                    timeDataGuardRoleChanged = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("timeDeletionOfFreeAutonomousDatabase"u8))
+                if (property.NameEquals("timeDeletionOfFreeAutonomousDatabase"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    freeAutonomousDatabaseDeletedOn = prop.Value.GetDateTimeOffset("O");
+                    timeDeletionOfFreeAutonomousDatabase = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("timeLocalDataGuardEnabled"u8))
+                if (property.NameEquals("timeLocalDataGuardEnabled"u8))
                 {
-                    timeLocalDataGuardEnabled = prop.Value.GetString();
+                    timeLocalDataGuardEnabled = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("timeOfLastFailover"u8))
+                if (property.NameEquals("timeOfLastFailover"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastFailoverHappenedOn = prop.Value.GetDateTimeOffset("O");
+                    timeOfLastFailover = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("timeOfLastRefresh"u8))
+                if (property.NameEquals("timeOfLastRefresh"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRefreshHappenedOn = prop.Value.GetDateTimeOffset("O");
+                    timeOfLastRefresh = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("timeOfLastRefreshPoint"u8))
+                if (property.NameEquals("timeOfLastRefreshPoint"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRefreshPointTimestamp = prop.Value.GetDateTimeOffset("O");
+                    timeOfLastRefreshPoint = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("timeOfLastSwitchover"u8))
+                if (property.NameEquals("timeOfLastSwitchover"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSwitchoverHappenedOn = prop.Value.GetDateTimeOffset("O");
+                    timeOfLastSwitchover = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("timeReclamationOfFreeAutonomousDatabase"u8))
+                if (property.NameEquals("timeReclamationOfFreeAutonomousDatabase"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    freeAutonomousDatabaseStoppedOn = prop.Value.GetDateTimeOffset("O");
+                    timeReclamationOfFreeAutonomousDatabase = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("usedDataStorageSizeInGbs"u8))
+                if (property.NameEquals("usedDataStorageSizeInGbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    usedDataStorageSizeInGbs = prop.Value.GetInt32();
+                    usedDataStorageSizeInGbs = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("usedDataStorageSizeInTbs"u8))
+                if (property.NameEquals("usedDataStorageSizeInTbs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    usedDataStorageSizeInTbs = prop.Value.GetInt32();
+                    usedDataStorageSizeInTbs = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("ocid"u8))
+                if (property.NameEquals("ocid"u8))
                 {
-                    databaseOcid = prop.Value.GetString();
+                    ocid = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("backupRetentionPeriodInDays"u8))
+                if (property.NameEquals("backupRetentionPeriodInDays"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupRetentionPeriodInDays = prop.Value.GetInt32();
+                    backupRetentionPeriodInDays = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("whitelistedIps"u8))
+                if (property.NameEquals("whitelistedIps"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     whitelistedIPs = array;
                     continue;
                 }
-                if (prop.NameEquals("source"u8))
-                {
-                    source = new AutonomousDatabaseSourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("sourceId"u8))
-                {
-                    sourceId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("cloneType"u8))
-                {
-                    cloneType = new AutonomousDatabaseCloneType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("timestamp"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("useLatestAvailableBackupTimeStamp"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    useLatestAvailableBackupTimeStamp = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutonomousDatabaseFromBackupTimestampProperties(
                 adminPassword,
                 dataBaseType,
                 autonomousMaintenanceScheduleType,
                 characterSet,
                 computeCount,
-                databaseComputeModel,
+                computeModel,
                 cpuCoreCount,
                 customerContacts ?? new ChangeTrackingList<OracleCustomerContact>(),
                 dataStorageSizeInTbs,
@@ -967,14 +890,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDBIds ?? new ChangeTrackingList<string>(),
-                peerDBId,
+                peerDbIds ?? new ChangeTrackingList<string>(),
+                peerDbId,
                 isLocalDataGuardEnabled,
                 isRemoteDataGuardEnabled,
                 localDisasterRecoveryType,
-                disasterRecoveryRoleChangedOn,
+                timeDisasterRecoveryRoleChanged,
                 remoteDisasterRecoveryConfiguration,
-                localStandbyDB,
+                localStandbyDb,
                 failedDataRecoveryInSeconds,
                 isMtlsConnectionRequired,
                 isPreviewVersionWithServiceTermsAccepted,
@@ -986,12 +909,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 scheduledOperationsList ?? new ChangeTrackingList<ScheduledOperationsType>(),
                 privateEndpointIP,
                 privateEndpointLabel,
-                ociUri,
+                ociUrl,
                 subnetId,
                 vnetId,
-                createdOn,
-                maintenanceBeginOn,
-                maintenanceEndOn,
+                timeCreated,
+                timeMaintenanceBegin,
+                timeMaintenanceEnd,
                 actualUsedDataStorageSizeInTbs,
                 allocatedStorageSizeInTbs,
                 apexDetails,
@@ -1002,7 +925,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 databaseEdition,
                 autonomousDatabaseId,
                 inMemoryAreaInGbs,
-                nextLongTermBackupCreatedOn,
+                nextLongTermBackupTimeStamp,
                 longTermBackupSchedule,
                 isPreview,
                 localAdgAutoFailoverMaxDataLossLimit,
@@ -1013,28 +936,59 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 privateEndpoint,
                 provisionableCpus ?? new ChangeTrackingList<int>(),
                 role,
-                serviceConsoleUri,
-                sqlWebDeveloperUri,
+                serviceConsoleUrl,
+                sqlWebDeveloperUrl,
                 supportedRegionsToCloneTo ?? new ChangeTrackingList<string>(),
-                dataGuardRoleChangedOn,
-                freeAutonomousDatabaseDeletedOn,
+                timeDataGuardRoleChanged,
+                timeDeletionOfFreeAutonomousDatabase,
                 timeLocalDataGuardEnabled,
-                lastFailoverHappenedOn,
-                lastRefreshHappenedOn,
-                lastRefreshPointTimestamp,
-                lastSwitchoverHappenedOn,
-                freeAutonomousDatabaseStoppedOn,
+                timeOfLastFailover,
+                timeOfLastRefresh,
+                timeOfLastRefreshPoint,
+                timeOfLastSwitchover,
+                timeReclamationOfFreeAutonomousDatabase,
                 usedDataStorageSizeInGbs,
                 usedDataStorageSizeInTbs,
-                databaseOcid,
+                ocid,
                 backupRetentionPeriodInDays,
                 whitelistedIPs ?? new ChangeTrackingList<string>(),
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 source,
                 sourceId,
                 cloneType,
                 timestamp,
                 useLatestAvailableBackupTimeStamp);
         }
+
+        BinaryData IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutonomousDatabaseFromBackupTimestampProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutonomousDatabaseFromBackupTimestampProperties IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAutonomousDatabaseFromBackupTimestampProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutonomousDatabaseFromBackupTimestampProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutonomousDatabaseFromBackupTimestampProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

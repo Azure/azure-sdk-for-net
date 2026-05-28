@@ -7,15 +7,46 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The RankingsResponseTablesItem. </summary>
+    /// <summary>
+    /// The RankingsResponseTablesItem.
+    /// Serialized Name: RankingsResponseTablesItem
+    /// </summary>
     public partial class RankingsResponseTablesItem
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesItem"/>. </summary>
         internal RankingsResponseTablesItem()
@@ -24,22 +55,19 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesItem"/>. </summary>
-        /// <param name="ranking"></param>
-        /// <param name="data"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RankingsResponseTablesItem(string ranking, IReadOnlyList<RankingsResponseTablesPropertiesItemsItem> data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="ranking"> Serialized Name: RankingsResponseTablesItem.ranking. </param>
+        /// <param name="data"> Serialized Name: RankingsResponseTablesItem.data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RankingsResponseTablesItem(string ranking, IReadOnlyList<RankingsResponseTablesPropertiesItemsItem> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ranking = ranking;
             Data = data;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the Ranking. </summary>
-        [WirePath("ranking")]
+        /// <summary> Serialized Name: RankingsResponseTablesItem.ranking. </summary>
         public string Ranking { get; }
-
-        /// <summary> Gets the Data. </summary>
-        [WirePath("data")]
+        /// <summary> Serialized Name: RankingsResponseTablesItem.data. </summary>
         public IReadOnlyList<RankingsResponseTablesPropertiesItemsItem> Data { get; }
     }
 }

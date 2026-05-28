@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> The settings of Client Config. </summary>
-    public partial class BrokerClientConfig : IJsonModel<BrokerClientConfig>
+    public partial class BrokerClientConfig : IUtf8JsonSerializable, IJsonModel<BrokerClientConfig>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerClientConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerClientConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerClientConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerClientConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BrokerClientConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerClientConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BrokerClientConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrokerClientConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerClientConfig IPersistableModel<BrokerClientConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BrokerClientConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerClientConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerClientConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerClientConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerClientConfig)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(MaxSessionExpirySeconds))
             {
                 writer.WritePropertyName("maxSessionExpirySeconds"u8);
@@ -104,15 +64,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("maxKeepAliveSeconds"u8);
                 writer.WriteNumberValue(MaxKeepAliveSeconds.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +81,22 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerClientConfig IJsonModel<BrokerClientConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerClientConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BrokerClientConfig IJsonModel<BrokerClientConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerClientConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerClientConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerClientConfig)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBrokerClientConfig(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BrokerClientConfig DeserializeBrokerClientConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static BrokerClientConfig DeserializeBrokerClientConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -152,68 +107,70 @@ namespace Azure.ResourceManager.IotOperations.Models
             SubscriberQueueLimit subscriberQueueLimit = default;
             int? maxReceiveMaximum = default;
             int? maxKeepAliveSeconds = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("maxSessionExpirySeconds"u8))
+                if (property.NameEquals("maxSessionExpirySeconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxSessionExpirySeconds = prop.Value.GetInt32();
+                    maxSessionExpirySeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("maxMessageExpirySeconds"u8))
+                if (property.NameEquals("maxMessageExpirySeconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxMessageExpirySeconds = prop.Value.GetInt32();
+                    maxMessageExpirySeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("maxPacketSizeBytes"u8))
+                if (property.NameEquals("maxPacketSizeBytes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxPacketSizeBytes = prop.Value.GetInt32();
+                    maxPacketSizeBytes = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("subscriberQueueLimit"u8))
+                if (property.NameEquals("subscriberQueueLimit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subscriberQueueLimit = SubscriberQueueLimit.DeserializeSubscriberQueueLimit(prop.Value, options);
+                    subscriberQueueLimit = SubscriberQueueLimit.DeserializeSubscriberQueueLimit(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("maxReceiveMaximum"u8))
+                if (property.NameEquals("maxReceiveMaximum"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxReceiveMaximum = prop.Value.GetInt32();
+                    maxReceiveMaximum = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("maxKeepAliveSeconds"u8))
+                if (property.NameEquals("maxKeepAliveSeconds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxKeepAliveSeconds = prop.Value.GetInt32();
+                    maxKeepAliveSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new BrokerClientConfig(
                 maxSessionExpirySeconds,
                 maxMessageExpirySeconds,
@@ -221,7 +178,38 @@ namespace Azure.ResourceManager.IotOperations.Models
                 subscriberQueueLimit,
                 maxReceiveMaximum,
                 maxKeepAliveSeconds,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BrokerClientConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerClientConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BrokerClientConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BrokerClientConfig IPersistableModel<BrokerClientConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerClientConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBrokerClientConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerClientConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BrokerClientConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

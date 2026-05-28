@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.WorkloadsSapVirtualInstance;
+using Azure.Core;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    /// <summary> The recommended configuration for a single server SAP system. </summary>
-    public partial class SingleServerRecommendationResult : SapSizingRecommendationResult, IJsonModel<SingleServerRecommendationResult>
+    public partial class SingleServerRecommendationResult : IUtf8JsonSerializable, IJsonModel<SingleServerRecommendationResult>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SapSizingRecommendationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleServerRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSingleServerRecommendationResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleServerRecommendationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleServerRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SingleServerRecommendationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SingleServerRecommendationResult IPersistableModel<SingleServerRecommendationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (SingleServerRecommendationResult)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SingleServerRecommendationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SingleServerRecommendationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleServerRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(VmSku))
             {
@@ -82,52 +42,80 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SingleServerRecommendationResult IJsonModel<SingleServerRecommendationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SingleServerRecommendationResult)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SapSizingRecommendationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SingleServerRecommendationResult IJsonModel<SingleServerRecommendationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SingleServerRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSingleServerRecommendationResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SingleServerRecommendationResult DeserializeSingleServerRecommendationResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static SingleServerRecommendationResult DeserializeSingleServerRecommendationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SapDeploymentType deploymentType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string vmSku = default;
-            foreach (var prop in element.EnumerateObject())
+            SapDeploymentType deploymentType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("deploymentType"u8))
+                if (property.NameEquals("vmSku"u8))
                 {
-                    deploymentType = new SapDeploymentType(prop.Value.GetString());
+                    vmSku = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("vmSku"u8))
+                if (property.NameEquals("deploymentType"u8))
                 {
-                    vmSku = prop.Value.GetString();
+                    deploymentType = new SapDeploymentType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SingleServerRecommendationResult(deploymentType, additionalBinaryDataProperties, vmSku);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SingleServerRecommendationResult(deploymentType, serializedAdditionalRawData, vmSku);
         }
+
+        BinaryData IPersistableModel<SingleServerRecommendationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SingleServerRecommendationResult IPersistableModel<SingleServerRecommendationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SingleServerRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSingleServerRecommendationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SingleServerRecommendationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

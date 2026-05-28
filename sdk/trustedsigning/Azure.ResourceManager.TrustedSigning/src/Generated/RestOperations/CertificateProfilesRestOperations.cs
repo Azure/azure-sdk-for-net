@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.TrustedSigning
             uri.AppendPath(accountName, true);
             uri.AppendPath("/certificateProfiles/", false);
             uri.AppendPath(profileName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.TrustedSigning
             uri.AppendPath(accountName, true);
             uri.AppendPath("/certificateProfiles/", false);
             uri.AppendPath(profileName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,10 +97,7 @@ namespace Azure.ResourceManager.TrustedSigning
             uri.AppendPath(accountName, true);
             uri.AppendPath("/certificateProfiles/", false);
             uri.AppendPath(profileName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -125,10 +116,7 @@ namespace Azure.ResourceManager.TrustedSigning
             uri.AppendPath("/providers/Microsoft.CodeSigning/codeSigningAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/certificateProfiles", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -140,18 +128,7 @@ namespace Azure.ResourceManager.TrustedSigning
         internal HttpMessage CreateNextGetByCodeSigningAccountRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string accountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -173,10 +150,7 @@ namespace Azure.ResourceManager.TrustedSigning
             uri.AppendPath("/certificateProfiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/revokeCertificate", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

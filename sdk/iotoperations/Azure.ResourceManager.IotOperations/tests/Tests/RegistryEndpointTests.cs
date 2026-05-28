@@ -5,8 +5,8 @@ using System; // for InvalidOperationException
 using System.Threading.Tasks;
 using Azure; // for RequestFailedException, WaitUntil
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.IotOperations.Models;
 using NUnit.Framework;
+using Azure.ResourceManager.IotOperations.Models;
 
 namespace Azure.ResourceManager.IotOperations.Tests
 {
@@ -60,8 +60,15 @@ namespace Azure.ResourceManager.IotOperations.Tests
         {
             return new IotOperationsRegistryEndpointData
             {
-                Properties = new IotOperationsRegistryEndpointProperties("contoso.azurecr.io", new RegistryEndpointAnonymousAuthentication(new RegistryEndpointAnonymousSettings())),
-                ExtendedLocation = new IotOperationsExtendedLocation(ExtendedLocation, IotOperationsExtendedLocationType.CustomLocation)
+                Properties = new IotOperationsRegistryEndpointProperties
+                {
+                    Host = "contoso.azurecr.io",
+                    Authentication = new RegistryEndpointAnonymousAuthentication(new RegistryEndpointAnonymousSettings())
+                },
+                ExtendedLocation = new IotOperationsExtendedLocation(
+                    ExtendedLocation,
+                    IotOperationsExtendedLocationType.CustomLocation
+                ),
             };
         }
     }

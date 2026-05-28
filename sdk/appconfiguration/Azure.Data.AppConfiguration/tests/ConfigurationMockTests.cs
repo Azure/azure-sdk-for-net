@@ -71,9 +71,9 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}"));
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting), Is.True);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}", request.Uri.ToString());
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
 
         [Test]
@@ -89,9 +89,9 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting), Is.True);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.GetConfigurationSettingAsync(key: s_testSetting.Key);
             });
 
-            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.AreEqual(404, exception.Status);
         }
 
         // This test validates that the client throws an exception with the expected error message when it receives a
@@ -125,9 +125,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.GetConfigurationSettingAsync(key: s_testSetting.Key);
             });
 
-            Assert.That(exception.Status, Is.EqualTo(statusCode));
+            Assert.AreEqual(statusCode, exception.Status);
 
-            Assert.That(exception?.Message.Contains(s_troubleshootingLink), Is.True);
+            Assert.True(exception?.Message.Contains(s_troubleshootingLink));
         }
 
         [Test]
@@ -148,18 +148,18 @@ namespace Azure.Data.AppConfiguration.Tests
             Response<ConfigurationSetting> response = await service.GetConfigurationSettingAsync(requestSetting, onlyIfChanged: true);
 
             // TODO: Should this be response.Status?
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.AreEqual(200, response.GetRawResponse().Status);
             ConfigurationSetting setting = new ConfigurationSetting();
             Assert.DoesNotThrow(() => { setting = response; });
 
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch), Is.True);
-            Assert.That(ifNoneMatch, Is.EqualTo("\"v1\""));
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(responseSetting, setting), Is.True);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
+            Assert.AreEqual("\"v1\"", ifNoneMatch);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(responseSetting, setting));
         }
 
         [Test]
@@ -176,11 +176,11 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch), Is.True);
-            Assert.That(ifNoneMatch, Is.EqualTo("\"v1\""));
-            Assert.That(response.GetRawResponse().Status, Is.EqualTo(304));
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
+            Assert.AreEqual("\"v1\"", ifNoneMatch);
+            Assert.AreEqual(304, response.GetRawResponse().Status);
             bool throws = false;
             try
             {
@@ -191,7 +191,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 throws = true;
             }
 
-            Assert.That(throws, Is.True);
+            Assert.True(throws);
         }
 
         [Test]
@@ -208,12 +208,12 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(request.Headers.TryGetValue("Accept-Datetime", out var acceptDateTime), Is.True);
-            Assert.That(acceptDateTime, Is.EqualTo(DateTimeOffset.MaxValue.UtcDateTime.ToString("R", CultureInfo.InvariantCulture)));
-            Assert.That(request.Headers.TryGetValue("If-Match", out var ifMatch), Is.False);
-            Assert.That(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch), Is.False);
+            Assert.AreEqual(RequestMethod.Get, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("Accept-Datetime", out var acceptDateTime));
+            Assert.AreEqual(DateTimeOffset.MaxValue.UtcDateTime.ToString("R", CultureInfo.InvariantCulture), acceptDateTime);
+            Assert.False(request.Headers.TryGetValue("If-Match", out var ifMatch));
+            Assert.False(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
         }
 
         [Test]
@@ -229,12 +229,12 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Put));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch), Is.True);
-            Assert.That(ifNoneMatch, Is.EqualTo("*"));
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
+            Assert.AreEqual("*", ifNoneMatch);
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting), Is.True);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
 
         [Test]
@@ -249,7 +249,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 ConfigurationSetting setting = await service.AddConfigurationSettingAsync(s_testSetting);
             });
-            Assert.That(exception.Status, Is.EqualTo(412));
+            Assert.AreEqual(412, exception.Status);
         }
 
         [Test]
@@ -265,10 +265,10 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Put));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting), Is.True);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
         }
 
         [Test]
@@ -283,7 +283,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 ConfigurationSetting setting = await service.SetConfigurationSettingAsync(s_testSetting);
             });
-            Assert.That(exception.Status, Is.EqualTo(409));
+            Assert.AreEqual(409, exception.Status);
         }
 
         [Test]
@@ -305,12 +305,12 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Put));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(request.Headers.TryGetValue("If-Match", out var ifMatch), Is.True);
-            Assert.That(ifMatch, Is.EqualTo("\"v1\""));
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
+            Assert.AreEqual("\"v1\"", ifMatch);
             AssertContent(SerializationHelpers.Serialize(requestSetting, SerializeRequestSetting), request);
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(responseSetting, setting), Is.True);
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(responseSetting, setting));
         }
 
         [Test]
@@ -332,15 +332,15 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 Response<ConfigurationSetting> response = await service.SetConfigurationSettingAsync(requestSetting, onlyIfUnchanged: true);
             });
-            Assert.That(exception.Status, Is.EqualTo(412));
+            Assert.AreEqual(412, exception.Status);
 
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Put));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(request.Headers.TryGetValue("If-Match", out var ifMatch), Is.True);
-            Assert.That(ifMatch, Is.EqualTo("\"v1\""));
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
+            Assert.AreEqual("\"v1\"", ifMatch);
         }
 
         [Test]
@@ -356,8 +356,8 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Delete));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}"));
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}", request.Uri.ToString());
         }
 
         [Test]
@@ -373,8 +373,8 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Delete));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
         }
 
         [Test]
@@ -389,7 +389,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.DeleteConfigurationSettingAsync(s_testSetting.Key);
             });
 
-            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
@@ -402,7 +402,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 Response response = await service.DeleteConfigurationSettingAsync(s_testSetting);
             });
-            Assert.That(exception.Status, Is.EqualTo(409));
+            Assert.AreEqual(409, exception.Status);
         }
 
         [Test]
@@ -424,11 +424,11 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Delete));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(request.Headers.TryGetValue("If-Match", out var ifMatch), Is.True);
-            Assert.That(ifMatch, Is.EqualTo("\"v1\""));
-            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
+            Assert.AreEqual("\"v1\"", ifMatch);
+            Assert.AreEqual(200, response.Status);
         }
 
         [Test]
@@ -450,15 +450,15 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 Response response = await service.DeleteConfigurationSettingAsync(requestSetting, onlyIfUnchanged: true);
             });
-            Assert.That(exception.Status, Is.EqualTo(412));
+            Assert.AreEqual(412, exception.Status);
 
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Delete));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(request.Headers.TryGetValue("If-Match", out var ifMatch), Is.True);
-            Assert.That(ifMatch, Is.EqualTo("\"v1\""));
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
+            Assert.AreEqual("\"v1\"", ifMatch);
         }
 
         [Test]
@@ -489,20 +489,20 @@ namespace Azure.Data.AppConfiguration.Tests
 
             await foreach (ConfigurationSetting value in service.GetConfigurationSettingsAsync(query, CancellationToken.None))
             {
-                Assert.That(value.Key, Is.EqualTo("key" + keyIndex));
+                Assert.AreEqual("key" + keyIndex, value.Key);
                 keyIndex++;
             }
 
-            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+            Assert.AreEqual(2, mockTransport.Requests.Count);
 
             MockRequest request1 = mockTransport.Requests[0];
-            Assert.That(request1.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request1.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv?api-version={s_version}"));
+            Assert.AreEqual(RequestMethod.Get, request1.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv?api-version={s_version}", request1.Uri.ToString());
             AssertRequestCommon(request1);
 
             MockRequest request2 = mockTransport.Requests[1];
-            Assert.That(request2.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request2.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv?after=5&api-version={s_version}"));
+            Assert.AreEqual(RequestMethod.Get, request2.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv?after=5&api-version={s_version}", request2.Uri.ToString());
             AssertRequestCommon(request1);
         }
 
@@ -544,22 +544,22 @@ namespace Azure.Data.AppConfiguration.Tests
 
             await foreach (ConfigurationSetting value in service.GetConfigurationSettingsAsync(query, CancellationToken.None))
             {
-                Assert.That(value.Key, Is.EqualTo("key" + keyIndex));
-                Assert.That(value.Tags, Is.EqualTo(mockTags));
+                Assert.AreEqual("key" + keyIndex, value.Key);
+                Assert.AreEqual(mockTags, value.Tags);
                 keyIndex++;
             }
 
-            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+            Assert.AreEqual(2, mockTransport.Requests.Count);
 
             MockRequest request1 = mockTransport.Requests[0];
             var expectedTagsQuery = string.Join("&tags=", parsedTags.Select(Uri.EscapeDataString));
-            Assert.That(request1.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request1.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv?api-version={s_version}&tags={expectedTagsQuery}"));
+            Assert.AreEqual(RequestMethod.Get, request1.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv?api-version={s_version}&tags={expectedTagsQuery}", request1.Uri.ToString());
             AssertRequestCommon(request1);
 
             MockRequest request2 = mockTransport.Requests[1];
-            Assert.That(request2.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request2.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv?after=5&api-version={s_version}"));
+            Assert.AreEqual(RequestMethod.Get, request2.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/kv?after=5&api-version={s_version}", request2.Uri.ToString());
             AssertRequestCommon(request1);
         }
 
@@ -578,8 +578,8 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationClient client = CreateClient<ConfigurationClient>(s_connectionString, options);
 
             ConfigurationSetting setting = await client.GetConfigurationSettingAsync(s_testSetting.Key);
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting), Is.True);
-            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(s_testSetting, setting));
+            Assert.AreEqual(2, mockTransport.Requests.Count);
         }
 
         [Test]
@@ -594,7 +594,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting setting = await service.AddConfigurationSettingAsync(s_testSetting);
             MockRequest request = mockTransport.SingleRequest;
 
-            Assert.That(request.Uri.ToUri().ToString(), Does.Contain("api-version"));
+            StringAssert.Contains("api-version", request.Uri.ToUri().ToString());
         }
 
         [Test]
@@ -613,7 +613,7 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting setting = await client.AddConfigurationSettingAsync(s_testSetting);
             MockRequest request = mockTransport.SingleRequest;
 
-            Assert.That(request.Uri.ToUri().ToString(), Does.Contain("api-version=1.0"));
+            StringAssert.Contains("api-version=1.0", request.Uri.ToUri().ToString());
         }
 
         [Test]
@@ -634,12 +634,12 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest retriedRequest = mockTransport.Requests[1];
 
             const string expectedApiString = "api-version=1.0";
-            Assert.That(request.Uri.Query, Does.Contain(expectedApiString));
-            Assert.That(retriedRequest.Uri.Query, Does.Contain(expectedApiString));
+            StringAssert.Contains(expectedApiString, request.Uri.Query);
+            StringAssert.Contains(expectedApiString, retriedRequest.Uri.Query);
 
             var apiStringFirstIndex = retriedRequest.Uri.Query.IndexOf(expectedApiString, StringComparison.Ordinal);
             var apiStringLastIndex = retriedRequest.Uri.Query.LastIndexOf(expectedApiString, StringComparison.Ordinal);
-            Assert.That(apiStringLastIndex, Is.EqualTo(apiStringFirstIndex));
+            Assert.AreEqual(apiStringFirstIndex, apiStringLastIndex);
         }
 
         [Test]
@@ -657,9 +657,9 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Headers.TryGetValue("Authorization", out var authHeader), Is.True);
+            Assert.True(request.Headers.TryGetValue("Authorization", out var authHeader));
 
-            Assert.That(Regex.IsMatch(authHeader, expectedSyntax), Is.True);
+            Assert.True(Regex.IsMatch(authHeader, expectedSyntax));
         }
 
         [Test]
@@ -686,9 +686,9 @@ namespace Azure.Data.AppConfiguration.Tests
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Put));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}"));
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToString());
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
         }
 
         [Test]
@@ -715,9 +715,9 @@ namespace Azure.Data.AppConfiguration.Tests
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Put));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+            Assert.AreEqual(RequestMethod.Put, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
         }
 
         [Test]
@@ -732,7 +732,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetReadOnlyAsync(s_testSetting.Key, true);
             });
 
-            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
@@ -759,9 +759,9 @@ namespace Azure.Data.AppConfiguration.Tests
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Delete));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}"));
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}", request.Uri.ToString());
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
         }
 
         [Test]
@@ -788,9 +788,9 @@ namespace Azure.Data.AppConfiguration.Tests
             var request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Delete));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}&label=test_label"));
-            Assert.That(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting), Is.True);
+            Assert.AreEqual(RequestMethod.Delete, request.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/locks/test_key?api-version={s_version}&label=test_label", request.Uri.ToString());
+            Assert.True(ConfigurationSettingEqualityComparer.Instance.Equals(testSetting, setting));
         }
 
         [Test]
@@ -805,7 +805,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetReadOnlyAsync(s_testSetting.Key, false);
             });
 
-            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
@@ -836,20 +836,20 @@ namespace Azure.Data.AppConfiguration.Tests
 
             await foreach (SettingLabel label in service.GetLabelsAsync(query, CancellationToken.None))
             {
-                Assert.That(label.Name, Is.EqualTo("label" + keyIndex));
+                Assert.AreEqual("label" + keyIndex, label.Name);
                 keyIndex++;
             }
 
-            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
+            Assert.AreEqual(2, mockTransport.Requests.Count);
 
             MockRequest request1 = mockTransport.Requests[0];
-            Assert.That(request1.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request1.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?api-version={s_version}"));
+            Assert.AreEqual(RequestMethod.Get, request1.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/labels?api-version={s_version}", request1.Uri.ToString());
             AssertRequestCommon(request1);
 
             MockRequest request2 = mockTransport.Requests[1];
-            Assert.That(request2.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request2.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/labels?after=5&api-version={s_version}"));
+            Assert.AreEqual(RequestMethod.Get, request2.Method);
+            Assert.AreEqual($"https://contoso.appconfig.io/labels?after=5&api-version={s_version}", request2.Uri.ToString());
             AssertRequestCommon(request1);
         }
 
@@ -876,14 +876,14 @@ namespace Azure.Data.AppConfiguration.Tests
             MockRequest request = mockTransport.SingleRequest;
 
             AssertRequestCommon(request);
-            Assert.That(request.Headers.TryGetValue("x-ms-client-request-id", out string clientRequestId), Is.True);
-            Assert.That(request.Headers.TryGetValue("x-ms-correlation-request-id", out string correlationRequestId), Is.True);
-            Assert.That(request.Headers.TryGetValue("correlation-context", out string correlationContext), Is.True);
-            Assert.That(request.Headers.TryGetValue("x-ms-random-id", out string randomId), Is.False);
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-client-request-id", out string clientRequestId));
+            Assert.IsTrue(request.Headers.TryGetValue("x-ms-correlation-request-id", out string correlationRequestId));
+            Assert.IsTrue(request.Headers.TryGetValue("correlation-context", out string correlationContext));
+            Assert.IsFalse(request.Headers.TryGetValue("x-ms-random-id", out string randomId));
 
-            Assert.That(clientRequestId, Is.EqualTo("CustomRequestId"));
-            Assert.That(correlationRequestId, Is.EqualTo("CorrelationRequestId"));
-            Assert.That(correlationContext, Is.EqualTo("CorrelationContextValue1,CorrelationContextValue2"));
+            Assert.AreEqual(clientRequestId, "CustomRequestId");
+            Assert.AreEqual(correlationRequestId, "CorrelationRequestId");
+            Assert.AreEqual(correlationContext, "CorrelationContextValue1,CorrelationContextValue2");
         }
 
         [Test]
@@ -900,12 +900,12 @@ namespace Azure.Data.AppConfiguration.Tests
             var retriedRequest = mockTransport.Requests[1];
 
             AssertRequestCommon(retriedRequest);
-            Assert.That(retriedRequest.Headers.TryGetValues("Date", out var dateHeaders), Is.True);
-            Assert.That(retriedRequest.Headers.TryGetValues("x-ms-content-sha256", out var contentHashHeaders), Is.True);
-            Assert.That(retriedRequest.Headers.TryGetValues("Authorization", out var authorizationHeaders), Is.True);
-            Assert.That(dateHeaders.Count(), Is.EqualTo(1));
-            Assert.That(contentHashHeaders.Count(), Is.EqualTo(1));
-            Assert.That(authorizationHeaders.Count(), Is.EqualTo(1));
+            Assert.True(retriedRequest.Headers.TryGetValues("Date", out var dateHeaders));
+            Assert.True(retriedRequest.Headers.TryGetValues("x-ms-content-sha256", out var contentHashHeaders));
+            Assert.True(retriedRequest.Headers.TryGetValues("Authorization", out var authorizationHeaders));
+            Assert.AreEqual(1, dateHeaders.Count());
+            Assert.AreEqual(1, contentHashHeaders.Count());
+            Assert.AreEqual(1, authorizationHeaders.Count());
         }
 
         [Test]
@@ -931,14 +931,14 @@ namespace Azure.Data.AppConfiguration.Tests
             var retriedRequest = mockTransport.Requests[1];
 
             AssertRequestCommon(retriedRequest);
-            Assert.That(retriedRequest.Headers.TryGetValues("x-ms-client-request-id", out var clientRequestIds), Is.True);
-            Assert.That(retriedRequest.Headers.TryGetValues("x-ms-correlation-request-id", out var correlationRequestIds), Is.True);
-            Assert.That(retriedRequest.Headers.TryGetValues("correlation-context", out var correlationContexts), Is.True);
-            Assert.That(retriedRequest.Headers.TryGetValues("x-ms-random-id", out var randomId), Is.False);
+            Assert.IsTrue(retriedRequest.Headers.TryGetValues("x-ms-client-request-id", out var clientRequestIds));
+            Assert.IsTrue(retriedRequest.Headers.TryGetValues("x-ms-correlation-request-id", out var correlationRequestIds));
+            Assert.IsTrue(retriedRequest.Headers.TryGetValues("correlation-context", out var correlationContexts));
+            Assert.IsFalse(retriedRequest.Headers.TryGetValues("x-ms-random-id", out var randomId));
 
-            Assert.That(clientRequestIds.Count(), Is.EqualTo(1));
-            Assert.That(correlationRequestIds.Count(), Is.EqualTo(1));
-            Assert.That(correlationContexts.Count(), Is.EqualTo(1));
+            Assert.AreEqual(1, clientRequestIds.Count());
+            Assert.AreEqual(1, correlationRequestIds.Count());
+            Assert.AreEqual(1, correlationContexts.Count());
         }
 
         [Test]
@@ -956,8 +956,8 @@ namespace Azure.Data.AppConfiguration.Tests
             var request = mockTransport.Requests[0];
 
             AssertRequestCommon(request);
-            Assert.That(request.Headers.TryGetValue("Sync-Token", out var syncToken), Is.True);
-            Assert.That(syncToken, Is.EqualTo("syncToken1=val1"));
+            Assert.True(request.Headers.TryGetValue("Sync-Token", out var syncToken));
+            Assert.AreEqual("syncToken1=val1", syncToken);
         }
 
         [Test]
@@ -977,9 +977,9 @@ namespace Azure.Data.AppConfiguration.Tests
             var request = mockTransport.Requests[0];
 
             AssertRequestCommon(request);
-            Assert.That(request.Headers.TryGetValues("Sync-Token", out var syncTokens), Is.True);
-            Assert.That(syncTokens, Has.Member("syncToken2=val3"));
-            Assert.That(syncTokens, Has.Member("syncToken1=val2"));
+            Assert.True(request.Headers.TryGetValues("Sync-Token", out var syncTokens));
+            CollectionAssert.Contains(syncTokens, "syncToken2=val3");
+            CollectionAssert.Contains(syncTokens, "syncToken1=val2");
         }
 
         [Test]
@@ -993,94 +993,34 @@ namespace Azure.Data.AppConfiguration.Tests
 
             var setting = await service.GetConfigurationSettingAsync(".appconfig.featureflag/flagtest");
             var feature = (FeatureFlagConfigurationSetting)setting.Value;
-            Assert.That(feature.ClientFilters, Is.Empty);
+            Assert.IsEmpty(feature.ClientFilters);
         }
 
         [Test]
-        public async Task QueryParametersAreSorted()
+        public async Task SupportsCustomTransportUse()
         {
-            var response1 = new MockResponse(200);
-            var mockTags = new Dictionary<string, string>
-            {
-                { "tag2", "value2" },
-                { "tag1", "value1" }
-            };
-            ConfigurationSetting testSetting = CreateSetting(0, mockTags);
-            response1.SetContent(SerializationHelpers.Serialize((Settings: new[] { testSetting }, NextLink: $"/kv?key=key%2A&label=label&tags=tag2%3Dvalue2&tags=tag1%3Dvalue1&after=test_after&api-version={s_version}"), SerializeBatch));
+            var expectedKey = "abc";
+            var expectedValue = "ghi";
+            var expectedLabel = "def";
+            var expectedContent = @$"{{""key"":""{expectedKey}"",""label"":""{expectedLabel}"",""value"":""{expectedValue}""}}";
 
-            var response2 = new MockResponse(200);
-            var testSetting2 = CreateSetting(1, mockTags);
-            response2.SetContent(SerializationHelpers.Serialize((Settings: new[] { testSetting2 }, NextLink: (string)null), SerializeBatch));
+            var client = new ConfigurationClient(
+                s_connectionString,
+                new ConfigurationClientOptions
+                {
+                    Transport = new HttpClientTransport(new EchoHttpMessageHandler(expectedContent))
+                }
+            );
 
-            var mockTransport = new MockTransport(response1, response2);
-            ConfigurationClient service = CreateTestService(mockTransport);
+            var result = await client.GetConfigurationSettingAsync("doesnt-matter");
+            Assert.AreEqual(expectedKey, result.Value.Key);
+            Assert.AreEqual(expectedValue, result.Value.Value);
+            Assert.AreEqual(expectedLabel, result.Value.Label);
 
-            var query = new SettingSelector
-            {
-                KeyFilter = "key*",
-                LabelFilter = "label"
-            };
-            foreach (var tag in mockTags)
-            {
-                query.TagsFilter.Add($"{tag.Key}={tag.Value}");
-            }
-
-            await foreach (ConfigurationSetting value in service.GetConfigurationSettingsAsync(query, CancellationToken.None))
-            {
-                continue;
-            }
-
-            Assert.That(mockTransport.Requests.Count, Is.EqualTo(2));
-
-            // Verify the first request has sorted query parameters (lowercase, alphabetically ordered)
-            MockRequest request1 = mockTransport.Requests[0];
-            var expectedUri1 = $"https://contoso.appconfig.io/kv?api-version={s_version}&key=key%2A&label=label&tags=tag2%3Dvalue2&tags=tag1%3Dvalue1";
-            Assert.That(request1.Uri.ToString(), Is.EqualTo(expectedUri1));
-
-            // Verify the next link request has sorted query parameters including "after"
-            MockRequest request2 = mockTransport.Requests[1];
-            var expectedUri2 = $"https://contoso.appconfig.io/kv?after=test_after&api-version={s_version}&key=key%2A&label=label&tags=tag2%3Dvalue2&tags=tag1%3Dvalue1";
-            Assert.That(request2.Uri.ToString(), Is.EqualTo(expectedUri2));
-        }
-
-        [Test]
-        public async Task GetSnapshot()
-        {
-            var mockResponse = new MockResponse(200);
-            // Minimal snapshot payload; we only validate the request URI
-            mockResponse.SetContent("{\"name\":\"test-snapshot\"}");
-
-            var mockTransport = new MockTransport(mockResponse);
-            ConfigurationClient service = CreateTestService(mockTransport);
-
-            await service.GetSnapshotAsync("test-snapshot");
-
-            MockRequest request = mockTransport.SingleRequest;
-            AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/snapshots/test-snapshot?api-version={s_version}"));
-        }
-
-        [Test]
-        public async Task GetConfigurationSettingsForSnapshot()
-        {
-            var mockResponse = new MockResponse(200);
-            // Reuse existing batch serialization helper for key-values
-            var settings = new[] { s_testSetting };
-            mockResponse.SetContent(SerializationHelpers.Serialize((Settings: settings, NextLink: (string)null), SerializeBatch));
-
-            var mockTransport = new MockTransport(mockResponse);
-            ConfigurationClient service = CreateTestService(mockTransport);
-
-            await foreach (ConfigurationSetting setting in service.GetConfigurationSettingsForSnapshotAsync("test-snapshot", CancellationToken.None))
-            {
-                break;
-            }
-
-            MockRequest request = mockTransport.SingleRequest;
-            AssertRequestCommon(request);
-            Assert.That(request.Method, Is.EqualTo(RequestMethod.Get));
-            Assert.That(request.Uri.ToString(), Is.EqualTo($"https://contoso.appconfig.io/kv?api-version={s_version}&snapshot=test-snapshot"));
+            var result2 = await client.SetConfigurationSettingAsync("whatever", "somevalue");
+            Assert.AreEqual(expectedKey, result.Value.Key);
+            Assert.AreEqual(expectedValue, result.Value.Value);
+            Assert.AreEqual(expectedLabel, result.Value.Label);
         }
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
@@ -1090,20 +1030,20 @@ namespace Azure.Data.AppConfiguration.Tests
                 request.Content.WriteTo(stream, CancellationToken.None);
                 if (compareAsString)
                 {
-                    Assert.That(Encoding.UTF8.GetString(stream.ToArray()), Is.EqualTo(Encoding.UTF8.GetString(expected)));
+                    Assert.AreEqual(Encoding.UTF8.GetString(expected), Encoding.UTF8.GetString(stream.ToArray()));
                 }
                 else
                 {
-                    Assert.That(stream.ToArray(), Is.EqualTo(expected).AsCollection);
+                    CollectionAssert.AreEqual(expected, stream.ToArray());
                 }
             }
         }
 
         private void AssertRequestCommon(MockRequest request)
         {
-            Assert.That(request.Headers.TryGetValue("User-Agent", out var value), Is.True);
+            Assert.True(request.Headers.TryGetValue("User-Agent", out var value));
             Version version = typeof(ConfigurationClient).Assembly.GetName().Version;
-            Assert.That(value, Does.Contain($"azsdk-net-Data.AppConfiguration/{version.Major}.{version.Minor}.{version.Build}"));
+            StringAssert.Contains($"azsdk-net-Data.AppConfiguration/{version.Major}.{version.Minor}.{version.Build}", value);
         }
 
         private static ConfigurationSetting CreateSetting(int i, IDictionary<string, string> tags = null)

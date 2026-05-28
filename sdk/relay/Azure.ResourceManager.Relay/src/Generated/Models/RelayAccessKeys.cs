@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.Relay.Models
     /// <summary> Namespace/Relay Connection String. </summary>
     public partial class RelayAccessKeys
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RelayAccessKeys"/>. </summary>
         internal RelayAccessKeys()
@@ -27,29 +56,25 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
         /// <param name="secondaryKey"> A base64-encoded 256-bit secondary key for signing and validating the SAS token. </param>
         /// <param name="keyName"> A string that describes the authorization rule. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelayAccessKeys(string primaryConnectionString, string secondaryConnectionString, string primaryKey, string secondaryKey, string keyName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelayAccessKeys(string primaryConnectionString, string secondaryConnectionString, string primaryKey, string secondaryKey, string keyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             KeyName = keyName;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Primary connection string of the created namespace authorization rule. </summary>
         public string PrimaryConnectionString { get; }
-
         /// <summary> Secondary connection string of the created namespace authorization rule. </summary>
         public string SecondaryConnectionString { get; }
-
         /// <summary> A base64-encoded 256-bit primary key for signing and validating the SAS token. </summary>
         public string PrimaryKey { get; }
-
         /// <summary> A base64-encoded 256-bit secondary key for signing and validating the SAS token. </summary>
         public string SecondaryKey { get; }
-
         /// <summary> A string that describes the authorization rule. </summary>
         public string KeyName { get; }
     }

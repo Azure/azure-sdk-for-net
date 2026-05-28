@@ -6,13 +6,11 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -23,49 +21,51 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppVolumeGroupCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _volumeGroupsClientDiagnostics;
-        private readonly VolumeGroups _volumeGroupsRestClient;
+        private readonly ClientDiagnostics _netAppVolumeGroupVolumeGroupsClientDiagnostics;
+        private readonly VolumeGroupsRestOperations _netAppVolumeGroupVolumeGroupsRestClient;
 
-        /// <summary> Initializes a new instance of NetAppVolumeGroupCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppVolumeGroupCollection"/> class for mocking. </summary>
         protected NetAppVolumeGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppVolumeGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal NetAppVolumeGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetAppVolumeGroupResource.ResourceType, out string netAppVolumeGroupApiVersion);
-            _volumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppVolumeGroupResource.ResourceType.Namespace, Diagnostics);
-            _volumeGroupsRestClient = new VolumeGroups(_volumeGroupsClientDiagnostics, Pipeline, Endpoint, netAppVolumeGroupApiVersion ?? "2026-01-15-preview");
-            ValidateResourceId(id);
+            _netAppVolumeGroupVolumeGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppVolumeGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetAppVolumeGroupResource.ResourceType, out string netAppVolumeGroupVolumeGroupsApiVersion);
+            _netAppVolumeGroupVolumeGroupsRestClient = new VolumeGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeGroupVolumeGroupsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetAppAccountResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetAppAccountResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetAppAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a volume group along with specified volumes
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VolumeGroups_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>VolumeGroups_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,34 +73,21 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="data"> Volume Group object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetAppVolumeGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeGroupName, NetAppVolumeGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.CreateOrUpdate");
+            using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _volumeGroupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, volumeGroupName, NetAppVolumeGroupData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetAppArmOperation<NetAppVolumeGroupResource> operation = new NetAppArmOperation<NetAppVolumeGroupResource>(
-                    new NetAppVolumeGroupOperationSource(Client),
-                    _volumeGroupsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _netAppVolumeGroupVolumeGroupsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation<NetAppVolumeGroupResource>(new NetAppVolumeGroupOperationSource(Client), _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _netAppVolumeGroupVolumeGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -114,16 +101,20 @@ namespace Azure.ResourceManager.NetApp
         /// Create a volume group along with specified volumes
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VolumeGroups_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>VolumeGroups_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,34 +122,21 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="data"> Volume Group object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetAppVolumeGroupResource> CreateOrUpdate(WaitUntil waitUntil, string volumeGroupName, NetAppVolumeGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.CreateOrUpdate");
+            using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _volumeGroupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, volumeGroupName, NetAppVolumeGroupData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NetAppArmOperation<NetAppVolumeGroupResource> operation = new NetAppArmOperation<NetAppVolumeGroupResource>(
-                    new NetAppVolumeGroupOperationSource(Client),
-                    _volumeGroupsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _netAppVolumeGroupVolumeGroupsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, data, cancellationToken);
+                var operation = new NetAppArmOperation<NetAppVolumeGroupResource>(new NetAppVolumeGroupOperationSource(Client), _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, _netAppVolumeGroupVolumeGroupsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -172,42 +150,38 @@ namespace Azure.ResourceManager.NetApp
         /// Get details of the specified volume group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VolumeGroups_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VolumeGroups_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual async Task<Response<NetAppVolumeGroupResource>> GetAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
-            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Get");
+            using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, volumeGroupName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NetAppVolumeGroupData> response = Response.FromValue(NetAppVolumeGroupData.FromResponse(result), result);
+                var response = await _netAppVolumeGroupVolumeGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new NetAppVolumeGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -221,42 +195,38 @@ namespace Azure.ResourceManager.NetApp
         /// Get details of the specified volume group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VolumeGroups_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VolumeGroups_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual Response<NetAppVolumeGroupResource> Get(string volumeGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
-            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Get");
+            using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, volumeGroupName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<NetAppVolumeGroupData> response = Response.FromValue(NetAppVolumeGroupData.FromResponse(result), result);
+                var response = _netAppVolumeGroupVolumeGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new NetAppVolumeGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -270,50 +240,36 @@ namespace Azure.ResourceManager.NetApp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VolumeGroups_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VolumeGroups_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
-            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Exists");
+            using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, volumeGroupName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<NetAppVolumeGroupData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(NetAppVolumeGroupData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((NetAppVolumeGroupData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _netAppVolumeGroupVolumeGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -327,50 +283,36 @@ namespace Azure.ResourceManager.NetApp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VolumeGroups_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VolumeGroups_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string volumeGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
-            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Exists");
+            using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, volumeGroupName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<NetAppVolumeGroupData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(NetAppVolumeGroupData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((NetAppVolumeGroupData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _netAppVolumeGroupVolumeGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -384,54 +326,38 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VolumeGroups_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VolumeGroups_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetAppVolumeGroupResource>> GetIfExistsAsync(string volumeGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
-            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.GetIfExists");
+            using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, volumeGroupName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<NetAppVolumeGroupData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(NetAppVolumeGroupData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((NetAppVolumeGroupData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _netAppVolumeGroupVolumeGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<NetAppVolumeGroupResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new NetAppVolumeGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -445,54 +371,38 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> VolumeGroups_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>VolumeGroups_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeGroupName"> The name of the volumeGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
         public virtual NullableResponse<NetAppVolumeGroupResource> GetIfExists(string volumeGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
 
-            using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.GetIfExists");
+            using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _volumeGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, volumeGroupName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<NetAppVolumeGroupData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(NetAppVolumeGroupData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((NetAppVolumeGroupData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _netAppVolumeGroupVolumeGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, volumeGroupName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<NetAppVolumeGroupResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new NetAppVolumeGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

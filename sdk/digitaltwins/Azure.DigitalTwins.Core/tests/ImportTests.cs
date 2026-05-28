@@ -41,15 +41,15 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // validate CREATE job
                 var createResponse = await client.ImportGraphAsync(jobId, importJob).ConfigureAwait(false);
-                Assert.That(createResponse, Is.Not.Null);
+                Assert.IsNotNull(createResponse);
                 var rawCreateResponse = createResponse.GetRawResponse();
-                Assert.That(rawCreateResponse.Status, Is.EqualTo((int)HttpStatusCode.Created));
+                Assert.AreEqual((int)HttpStatusCode.Created, rawCreateResponse.Status);
 
                 // Validate GET job
                 var getResponse = await client.GetImportJobAsync(jobId).ConfigureAwait(false);
-                Assert.That(getResponse, Is.Not.Null);
+                Assert.IsNotNull(getResponse);
                 var rawGetResponse = getResponse.GetRawResponse();
-                Assert.That(rawGetResponse.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.AreEqual((int)HttpStatusCode.OK, rawGetResponse.Status);
 
                 // validate LIST all jobs
                 var importJobList = client.GetImportJobsAsync();
@@ -66,9 +66,9 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // validate CANCEL job
                 var cancelResponse = await client.CancelImportJobAsync(jobId).ConfigureAwait(false);
-                Assert.That(cancelResponse, Is.Not.Null);
+                Assert.IsNotNull(cancelResponse);
                 var rawCancelResponse = cancelResponse.GetRawResponse();
-                Assert.That(rawCancelResponse.Status, Is.EqualTo((int)HttpStatusCode.OK));
+                Assert.AreEqual((int)HttpStatusCode.OK, rawCancelResponse.Status);
 
                 //Check if job has reached terminal state
                 do
@@ -79,8 +79,8 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // validate DELETE job
                 var deleteResponse = await client.DeleteImportJobAsync(jobId).ConfigureAwait(false);
-                Assert.That(deleteResponse, Is.Not.Null);
-                Assert.That(deleteResponse.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
+                Assert.IsNotNull(deleteResponse);
+                Assert.AreEqual((int)HttpStatusCode.NoContent, deleteResponse.Status);
 
                 // validate GET job after deletion - should fail
                 Func<Task> act = async () => await client.GetImportJobAsync(jobId).ConfigureAwait(false);
@@ -110,9 +110,9 @@ namespace Azure.DigitalTwins.Core.Tests
                 var createResponse = await client.ImportGraphAsync(jobId, importJob).ConfigureAwait(false);
 
                 // Validation
-                Assert.That(createResponse, Is.Not.Null);
+                Assert.IsNotNull(createResponse);
                 var rawCreateResponse = createResponse.GetRawResponse();
-                Assert.That(rawCreateResponse.Status, Is.EqualTo((int)HttpStatusCode.Created));
+                Assert.AreEqual((int)HttpStatusCode.Created, rawCreateResponse.Status);
 
                 // Create import job again
                 Func<Task> act = async () => await client.ImportGraphAsync(jobId, importJob).ConfigureAwait(false);

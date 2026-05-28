@@ -4,7 +4,6 @@
 # Version : Version to add or replace in change log
 # Unreleased: Default is true. If it is set to false, then today's date will be set in verion title. If it is True then title will show "Unreleased"
 # ReplaceLatestEntryTitle: Replaces the latest changelog entry title.
-# GroupId: Optional. The group ID for the package. Used for filtering packages in languages that support group identifiers (e.g., Java).
 
 [CmdletBinding()]
 param (
@@ -15,8 +14,7 @@ param (
   [Boolean]$Unreleased = $true,
   [Boolean]$ReplaceLatestEntryTitle = $false,
   [String]$ChangelogPath,
-  [String]$ReleaseDate,
-  [String]$GroupId
+  [String]$ReleaseDate
 )
 Set-StrictMode -Version 3
 
@@ -61,7 +59,7 @@ if ($null -eq [AzureEngSemanticVersion]::ParseVersionString($Version))
 
 if ([string]::IsNullOrEmpty($ChangelogPath))
 {
-    $pkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory -GroupId $GroupId
+    $pkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
     $ChangelogPath = $pkgProperties.ChangeLogPath
 }
 

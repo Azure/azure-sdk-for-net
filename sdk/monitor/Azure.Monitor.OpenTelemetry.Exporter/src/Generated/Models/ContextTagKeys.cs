@@ -10,187 +10,120 @@ using System.ComponentModel;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
+    /// <summary> The context tag keys. </summary>
     internal readonly partial struct ContextTagKeys : IEquatable<ContextTagKeys>
     {
         private readonly string _value;
-        /// <summary> Application version. </summary>
-        private const string AiApplicationVerValue = "ai.application.ver";
-        /// <summary> Device ID. </summary>
-        private const string AiDeviceIdValue = "ai.device.id";
-        /// <summary> Device locale. </summary>
-        private const string AiDeviceLocaleValue = "ai.device.locale";
-        /// <summary> Device model. </summary>
-        private const string AiDeviceModelValue = "ai.device.model";
-        /// <summary> Device OEM name. </summary>
-        private const string AiDeviceOemNameValue = "ai.device.oemName";
-        /// <summary> Device OS version. </summary>
-        private const string AiDeviceOSVersionValue = "ai.device.osVersion";
-        /// <summary> Device type. </summary>
-        private const string AiDeviceTypeValue = "ai.device.type";
-        /// <summary> Location IP. </summary>
-        private const string AiLocationIpValue = "ai.location.ip";
-        /// <summary> Location country. </summary>
-        private const string AiLocationCountryValue = "ai.location.country";
-        /// <summary> Location province. </summary>
-        private const string AiLocationProvinceValue = "ai.location.province";
-        /// <summary> Location city. </summary>
-        private const string AiLocationCityValue = "ai.location.city";
-        /// <summary> Operation ID. </summary>
-        private const string AiOperationIdValue = "ai.operation.id";
-        /// <summary> Operation name. </summary>
-        private const string AiOperationNameValue = "ai.operation.name";
-        /// <summary> Operation parent ID. </summary>
-        private const string AiOperationParentIdValue = "ai.operation.parentId";
-        /// <summary> Operation synthetic source. </summary>
-        private const string AiOperationSyntheticSourceValue = "ai.operation.syntheticSource";
-        /// <summary> Operation correlation vector. </summary>
-        private const string AiOperationCorrelationVectorValue = "ai.operation.correlationVector";
-        /// <summary> Session ID. </summary>
-        private const string AiSessionIdValue = "ai.session.id";
-        /// <summary> If session is the first one. </summary>
-        private const string AiSessionIsFirstValue = "ai.session.isFirst";
-        /// <summary> User account ID. </summary>
-        private const string AiUserAccountIdValue = "ai.user.accountId";
-        /// <summary> User ID. </summary>
-        private const string AiUserIdValue = "ai.user.id";
-        /// <summary> Authenticated user ID. </summary>
-        private const string AiUserAuthUserIdValue = "ai.user.authUserId";
-        /// <summary> Cloud role. </summary>
-        private const string AiCloudRoleValue = "ai.cloud.role";
-        /// <summary> Cloud role version. </summary>
-        private const string AiCloudRoleVerValue = "ai.cloud.roleVer";
-        /// <summary> Cloud role instance. </summary>
-        private const string AiCloudRoleInstanceValue = "ai.cloud.roleInstance";
-        /// <summary> Cloud location. </summary>
-        private const string AiCloudLocationValue = "ai.cloud.location";
-        /// <summary> Internal SDK version. </summary>
-        private const string AiInternalSdkVersionValue = "ai.internal.sdkVersion";
-        /// <summary> Internal agent version. </summary>
-        private const string AiInternalAgentVersionValue = "ai.internal.agentVersion";
-        /// <summary> Internal node name. </summary>
-        private const string AiInternalNodeNameValue = "ai.internal.nodeName";
 
         /// <summary> Initializes a new instance of <see cref="ContextTagKeys"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContextTagKeys(string value)
         {
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Application version. </summary>
+        private const string AiApplicationVerValue = "ai.application.ver";
+        private const string AiDeviceIdValue = "ai.device.id";
+        private const string AiDeviceLocaleValue = "ai.device.locale";
+        private const string AiDeviceModelValue = "ai.device.model";
+        private const string AiDeviceOemNameValue = "ai.device.oemName";
+        private const string AiDeviceOsVersionValue = "ai.device.osVersion";
+        private const string AiDeviceTypeValue = "ai.device.type";
+        private const string AiLocationIpValue = "ai.location.ip";
+        private const string AiLocationCountryValue = "ai.location.country";
+        private const string AiLocationProvinceValue = "ai.location.province";
+        private const string AiLocationCityValue = "ai.location.city";
+        private const string AiOperationIdValue = "ai.operation.id";
+        private const string AiOperationNameValue = "ai.operation.name";
+        private const string AiOperationParentIdValue = "ai.operation.parentId";
+        private const string AiOperationSyntheticSourceValue = "ai.operation.syntheticSource";
+        private const string AiOperationCorrelationVectorValue = "ai.operation.correlationVector";
+        private const string AiSessionIdValue = "ai.session.id";
+        private const string AiSessionIsFirstValue = "ai.session.isFirst";
+        private const string AiUserAccountIdValue = "ai.user.accountId";
+        private const string AiUserIdValue = "ai.user.id";
+        private const string AiUserAuthUserIdValue = "ai.user.authUserId";
+        private const string AiCloudRoleValue = "ai.cloud.role";
+        private const string AiCloudRoleVerValue = "ai.cloud.roleVer";
+        private const string AiCloudRoleInstanceValue = "ai.cloud.roleInstance";
+        private const string AiCloudLocationValue = "ai.cloud.location";
+        private const string AiInternalSdkVersionValue = "ai.internal.sdkVersion";
+        private const string AiInternalAgentVersionValue = "ai.internal.agentVersion";
+        private const string AiInternalNodeNameValue = "ai.internal.nodeName";
+
+        /// <summary> ai.application.ver. </summary>
         public static ContextTagKeys AiApplicationVer { get; } = new ContextTagKeys(AiApplicationVerValue);
-
-        /// <summary> Device ID. </summary>
+        /// <summary> ai.device.id. </summary>
         public static ContextTagKeys AiDeviceId { get; } = new ContextTagKeys(AiDeviceIdValue);
-
-        /// <summary> Device locale. </summary>
+        /// <summary> ai.device.locale. </summary>
         public static ContextTagKeys AiDeviceLocale { get; } = new ContextTagKeys(AiDeviceLocaleValue);
-
-        /// <summary> Device model. </summary>
+        /// <summary> ai.device.model. </summary>
         public static ContextTagKeys AiDeviceModel { get; } = new ContextTagKeys(AiDeviceModelValue);
-
-        /// <summary> Device OEM name. </summary>
+        /// <summary> ai.device.oemName. </summary>
         public static ContextTagKeys AiDeviceOemName { get; } = new ContextTagKeys(AiDeviceOemNameValue);
-
-        /// <summary> Device OS version. </summary>
-        public static ContextTagKeys AiDeviceOSVersion { get; } = new ContextTagKeys(AiDeviceOSVersionValue);
-
-        /// <summary> Device type. </summary>
+        /// <summary> ai.device.osVersion. </summary>
+        public static ContextTagKeys AiDeviceOsVersion { get; } = new ContextTagKeys(AiDeviceOsVersionValue);
+        /// <summary> ai.device.type. </summary>
         public static ContextTagKeys AiDeviceType { get; } = new ContextTagKeys(AiDeviceTypeValue);
-
-        /// <summary> Location IP. </summary>
+        /// <summary> ai.location.ip. </summary>
         public static ContextTagKeys AiLocationIp { get; } = new ContextTagKeys(AiLocationIpValue);
-
-        /// <summary> Location country. </summary>
+        /// <summary> ai.location.country. </summary>
         public static ContextTagKeys AiLocationCountry { get; } = new ContextTagKeys(AiLocationCountryValue);
-
-        /// <summary> Location province. </summary>
+        /// <summary> ai.location.province. </summary>
         public static ContextTagKeys AiLocationProvince { get; } = new ContextTagKeys(AiLocationProvinceValue);
-
-        /// <summary> Location city. </summary>
+        /// <summary> ai.location.city. </summary>
         public static ContextTagKeys AiLocationCity { get; } = new ContextTagKeys(AiLocationCityValue);
-
-        /// <summary> Operation ID. </summary>
+        /// <summary> ai.operation.id. </summary>
         public static ContextTagKeys AiOperationId { get; } = new ContextTagKeys(AiOperationIdValue);
-
-        /// <summary> Operation name. </summary>
+        /// <summary> ai.operation.name. </summary>
         public static ContextTagKeys AiOperationName { get; } = new ContextTagKeys(AiOperationNameValue);
-
-        /// <summary> Operation parent ID. </summary>
+        /// <summary> ai.operation.parentId. </summary>
         public static ContextTagKeys AiOperationParentId { get; } = new ContextTagKeys(AiOperationParentIdValue);
-
-        /// <summary> Operation synthetic source. </summary>
+        /// <summary> ai.operation.syntheticSource. </summary>
         public static ContextTagKeys AiOperationSyntheticSource { get; } = new ContextTagKeys(AiOperationSyntheticSourceValue);
-
-        /// <summary> Operation correlation vector. </summary>
+        /// <summary> ai.operation.correlationVector. </summary>
         public static ContextTagKeys AiOperationCorrelationVector { get; } = new ContextTagKeys(AiOperationCorrelationVectorValue);
-
-        /// <summary> Session ID. </summary>
+        /// <summary> ai.session.id. </summary>
         public static ContextTagKeys AiSessionId { get; } = new ContextTagKeys(AiSessionIdValue);
-
-        /// <summary> If session is the first one. </summary>
+        /// <summary> ai.session.isFirst. </summary>
         public static ContextTagKeys AiSessionIsFirst { get; } = new ContextTagKeys(AiSessionIsFirstValue);
-
-        /// <summary> User account ID. </summary>
+        /// <summary> ai.user.accountId. </summary>
         public static ContextTagKeys AiUserAccountId { get; } = new ContextTagKeys(AiUserAccountIdValue);
-
-        /// <summary> User ID. </summary>
+        /// <summary> ai.user.id. </summary>
         public static ContextTagKeys AiUserId { get; } = new ContextTagKeys(AiUserIdValue);
-
-        /// <summary> Authenticated user ID. </summary>
+        /// <summary> ai.user.authUserId. </summary>
         public static ContextTagKeys AiUserAuthUserId { get; } = new ContextTagKeys(AiUserAuthUserIdValue);
-
-        /// <summary> Cloud role. </summary>
+        /// <summary> ai.cloud.role. </summary>
         public static ContextTagKeys AiCloudRole { get; } = new ContextTagKeys(AiCloudRoleValue);
-
-        /// <summary> Cloud role version. </summary>
+        /// <summary> ai.cloud.roleVer. </summary>
         public static ContextTagKeys AiCloudRoleVer { get; } = new ContextTagKeys(AiCloudRoleVerValue);
-
-        /// <summary> Cloud role instance. </summary>
+        /// <summary> ai.cloud.roleInstance. </summary>
         public static ContextTagKeys AiCloudRoleInstance { get; } = new ContextTagKeys(AiCloudRoleInstanceValue);
-
-        /// <summary> Cloud location. </summary>
+        /// <summary> ai.cloud.location. </summary>
         public static ContextTagKeys AiCloudLocation { get; } = new ContextTagKeys(AiCloudLocationValue);
-
-        /// <summary> Internal SDK version. </summary>
+        /// <summary> ai.internal.sdkVersion. </summary>
         public static ContextTagKeys AiInternalSdkVersion { get; } = new ContextTagKeys(AiInternalSdkVersionValue);
-
-        /// <summary> Internal agent version. </summary>
+        /// <summary> ai.internal.agentVersion. </summary>
         public static ContextTagKeys AiInternalAgentVersion { get; } = new ContextTagKeys(AiInternalAgentVersionValue);
-
-        /// <summary> Internal node name. </summary>
+        /// <summary> ai.internal.nodeName. </summary>
         public static ContextTagKeys AiInternalNodeName { get; } = new ContextTagKeys(AiInternalNodeNameValue);
-
         /// <summary> Determines if two <see cref="ContextTagKeys"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContextTagKeys left, ContextTagKeys right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ContextTagKeys"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContextTagKeys left, ContextTagKeys right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ContextTagKeys"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContextTagKeys"/>. </summary>
         public static implicit operator ContextTagKeys(string value) => new ContextTagKeys(value);
 
-        /// <summary> Converts a string to a <see cref="ContextTagKeys"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ContextTagKeys?(string value) => value == null ? null : new ContextTagKeys(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContextTagKeys other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ContextTagKeys other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

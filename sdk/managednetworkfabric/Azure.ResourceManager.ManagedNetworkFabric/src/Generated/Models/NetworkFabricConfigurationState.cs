@@ -32,36 +32,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string DeprovisionedValue = "Deprovisioned";
         private const string ErrorDeprovisioningValue = "ErrorDeprovisioning";
         private const string DeferredControlValue = "DeferredControl";
-        private const string ProvisioningValue = "Provisioning";
-        private const string PendingCommitValue = "PendingCommit";
-        private const string PendingAdministrativeUpdateValue = "PendingAdministrativeUpdate";
 
-        /// <summary> Success Configuration State. </summary>
+        /// <summary> Succeeded. </summary>
         public static NetworkFabricConfigurationState Succeeded { get; } = new NetworkFabricConfigurationState(SucceededValue);
-        /// <summary> Failed Configuration State. </summary>
+        /// <summary> Failed. </summary>
         public static NetworkFabricConfigurationState Failed { get; } = new NetworkFabricConfigurationState(FailedValue);
-        /// <summary> Rejected Configuration State. </summary>
+        /// <summary> Rejected. </summary>
         public static NetworkFabricConfigurationState Rejected { get; } = new NetworkFabricConfigurationState(RejectedValue);
-        /// <summary> Accepted Configuration State. </summary>
+        /// <summary> Accepted. </summary>
         public static NetworkFabricConfigurationState Accepted { get; } = new NetworkFabricConfigurationState(AcceptedValue);
-        /// <summary> Provisioned Configuration State. </summary>
+        /// <summary> Provisioned. </summary>
         public static NetworkFabricConfigurationState Provisioned { get; } = new NetworkFabricConfigurationState(ProvisionedValue);
-        /// <summary> ErrorProvisioning Configuration State. </summary>
+        /// <summary> ErrorProvisioning. </summary>
         public static NetworkFabricConfigurationState ErrorProvisioning { get; } = new NetworkFabricConfigurationState(ErrorProvisioningValue);
-        /// <summary> Deprovisioning Configuration State. </summary>
+        /// <summary> Deprovisioning. </summary>
         public static NetworkFabricConfigurationState Deprovisioning { get; } = new NetworkFabricConfigurationState(DeprovisioningValue);
-        /// <summary> Deprovisioned Configuration State. </summary>
+        /// <summary> Deprovisioned. </summary>
         public static NetworkFabricConfigurationState Deprovisioned { get; } = new NetworkFabricConfigurationState(DeprovisionedValue);
-        /// <summary> ErrorDeprovisioning Configuration State. </summary>
+        /// <summary> ErrorDeprovisioning. </summary>
         public static NetworkFabricConfigurationState ErrorDeprovisioning { get; } = new NetworkFabricConfigurationState(ErrorDeprovisioningValue);
-        /// <summary> DeferredControl Configuration State. </summary>
+        /// <summary> DeferredControl. </summary>
         public static NetworkFabricConfigurationState DeferredControl { get; } = new NetworkFabricConfigurationState(DeferredControlValue);
-        /// <summary> Provisioning Configuration State. </summary>
-        public static NetworkFabricConfigurationState Provisioning { get; } = new NetworkFabricConfigurationState(ProvisioningValue);
-        /// <summary> PendingCommit Configuration State. </summary>
-        public static NetworkFabricConfigurationState PendingCommit { get; } = new NetworkFabricConfigurationState(PendingCommitValue);
-        /// <summary> PendingAdministrativeUpdate State. </summary>
-        public static NetworkFabricConfigurationState PendingAdministrativeUpdate { get; } = new NetworkFabricConfigurationState(PendingAdministrativeUpdateValue);
         /// <summary> Determines if two <see cref="NetworkFabricConfigurationState"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricConfigurationState left, NetworkFabricConfigurationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkFabricConfigurationState"/> values are not the same. </summary>

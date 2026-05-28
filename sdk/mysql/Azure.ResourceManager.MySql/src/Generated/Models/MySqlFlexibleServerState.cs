@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerState : IEquatable<MySqlFlexibleServerState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MySqlFlexibleServerState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string ReadyValue = "Ready";
         private const string DroppingValue = "Dropping";
         private const string DisabledValue = "Disabled";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         private const string StoppedValue = "Stopped";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MySqlFlexibleServerState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Ready. </summary>
+        /// <summary> Ready. </summary>
         public static MySqlFlexibleServerState Ready { get; } = new MySqlFlexibleServerState(ReadyValue);
-
-        /// <summary> Gets the Dropping. </summary>
+        /// <summary> Dropping. </summary>
         public static MySqlFlexibleServerState Dropping { get; } = new MySqlFlexibleServerState(DroppingValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static MySqlFlexibleServerState Disabled { get; } = new MySqlFlexibleServerState(DisabledValue);
-
-        /// <summary> Gets the Starting. </summary>
+        /// <summary> Starting. </summary>
         public static MySqlFlexibleServerState Starting { get; } = new MySqlFlexibleServerState(StartingValue);
-
-        /// <summary> Gets the Stopping. </summary>
+        /// <summary> Stopping. </summary>
         public static MySqlFlexibleServerState Stopping { get; } = new MySqlFlexibleServerState(StoppingValue);
-
-        /// <summary> Gets the Stopped. </summary>
+        /// <summary> Stopped. </summary>
         public static MySqlFlexibleServerState Stopped { get; } = new MySqlFlexibleServerState(StoppedValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static MySqlFlexibleServerState Updating { get; } = new MySqlFlexibleServerState(UpdatingValue);
-
         /// <summary> Determines if two <see cref="MySqlFlexibleServerState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerState left, MySqlFlexibleServerState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="MySqlFlexibleServerState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerState left, MySqlFlexibleServerState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerState"/>. </summary>
         public static implicit operator MySqlFlexibleServerState(string value) => new MySqlFlexibleServerState(value);
 
-        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator MySqlFlexibleServerState?(string value) => value == null ? null : new MySqlFlexibleServerState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(MySqlFlexibleServerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

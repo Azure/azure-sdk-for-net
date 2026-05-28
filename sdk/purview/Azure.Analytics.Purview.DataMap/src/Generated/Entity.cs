@@ -10,17 +10,26 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.DataMap
 {
+    // Data plane generated sub-client.
     /// <summary> The Entity sub-client. </summary>
     public partial class Entity
     {
+        private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
+        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of Entity for mocking. </summary>
         protected Entity()
@@ -28,39 +37,30 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Initializes a new instance of Entity. </summary>
-        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal Entity(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        internal Entity(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-            Pipeline = pipeline;
             _apiVersion = apiVersion;
         }
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
         /// <summary>
-        /// [Protocol Method] Create or update an entity.
+        /// Create or update an entity.
         /// Existing entity is matched using its unique guid if
         /// supplied or by its unique attributes eg: qualifiedName.
         /// Map and array of
         /// collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string,
         /// int&gt;&gt;.
         /// For each contact type, the maximum number of contacts is 20.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="businessAttributeUpdateBehavior">
         /// Used to define the update behavior for business attributes when updating
         /// entities.
@@ -69,71 +69,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// The collection where entities will be moved to. Only specify a value if you
         /// need to move an entity to another collection.
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateOrUpdate(RequestContent content, string businessAttributeUpdateBehavior = default, string collectionId = default, RequestContext context = null)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdateAsync(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)']/*" />
+        public virtual async Task<Response<EntityMutationResult>> CreateOrUpdateAsync(AtlasEntityWithExtInfo body, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(body, nameof(body));
 
-                using HttpMessage message = CreateCreateOrUpdateRequest(content, businessAttributeUpdateBehavior, collectionId, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create or update an entity.
-        /// Existing entity is matched using its unique guid if
-        /// supplied or by its unique attributes eg: qualifiedName.
-        /// Map and array of
-        /// collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string,
-        /// int&gt;&gt;.
-        /// For each contact type, the maximum number of contacts is 20.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="businessAttributeUpdateBehavior">
-        /// Used to define the update behavior for business attributes when updating
-        /// entities.
-        /// </param>
-        /// <param name="collectionId">
-        /// The collection where entities will be moved to. Only specify a value if you
-        /// need to move an entity to another collection.
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, string businessAttributeUpdateBehavior = default, string collectionId = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateCreateOrUpdateRequest(content, businessAttributeUpdateBehavior, collectionId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateOrUpdateAsync(content, businessAttributeUpdateBehavior?.ToString(), collectionId, context).ConfigureAwait(false);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -154,71 +100,64 @@ namespace Azure.Analytics.Purview.DataMap
         /// The collection where entities will be moved to. Only specify a value if you
         /// need to move an entity to another collection.
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> CreateOrUpdate(AtlasEntityWithExtInfo body, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, string collectionId = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdate(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> CreateOrUpdate(AtlasEntityWithExtInfo body, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, string collectionId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateOrUpdate(body, businessAttributeUpdateBehavior?.ToString(), collectionId, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateOrUpdate(content, businessAttributeUpdateBehavior?.ToString(), collectionId, context);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
         /// <summary>
-        /// Create or update an entity.
+        /// [Protocol Method] Create or update an entity.
         /// Existing entity is matched using its unique guid if
         /// supplied or by its unique attributes eg: qualifiedName.
         /// Map and array of
         /// collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string,
         /// int&gt;&gt;.
         /// For each contact type, the maximum number of contacts is 20.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrUpdateAsync(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="body"> Body parameter. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="businessAttributeUpdateBehavior">
         /// Used to define the update behavior for business attributes when updating
-        /// entities.
+        /// entities. Allowed values: "ignore" | "replace" | "merge"
         /// </param>
         /// <param name="collectionId">
         /// The collection where entities will be moved to. Only specify a value if you
         /// need to move an entity to another collection.
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> CreateOrUpdateAsync(AtlasEntityWithExtInfo body, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, string collectionId = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = await CreateOrUpdateAsync(body, businessAttributeUpdateBehavior?.ToString(), collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] List entities in bulk identified by its GUIDs.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> An array of GUIDs of entities to list. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetByIds(IEnumerable<string> guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdateAsync(RequestContent,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, string businessAttributeUpdateBehavior = null, string collectionId = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetByIds");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.CreateOrUpdate");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(guid, nameof(guid));
-
-                using HttpMessage message = CreateGetByIdsRequest(guid, minExtInfo, ignoreRelationships, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateCreateOrUpdateRequest(content, businessAttributeUpdateBehavior, collectionId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -228,106 +167,123 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
+        /// [Protocol Method] Create or update an entity.
+        /// Existing entity is matched using its unique guid if
+        /// supplied or by its unique attributes eg: qualifiedName.
+        /// Map and array of
+        /// collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string,
+        /// int&gt;&gt;.
+        /// For each contact type, the maximum number of contacts is 20.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrUpdate(AtlasEntityWithExtInfo,BusinessAttributeUpdateBehavior?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="businessAttributeUpdateBehavior">
+        /// Used to define the update behavior for business attributes when updating
+        /// entities. Allowed values: "ignore" | "replace" | "merge"
+        /// </param>
+        /// <param name="collectionId">
+        /// The collection where entities will be moved to. Only specify a value if you
+        /// need to move an entity to another collection.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='CreateOrUpdate(RequestContent,string,string,RequestContext)']/*" />
+        public virtual Response CreateOrUpdate(RequestContent content, string businessAttributeUpdateBehavior = null, string collectionId = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(content, businessAttributeUpdateBehavior, collectionId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List entities in bulk identified by its GUIDs. </summary>
+        /// <param name="guid"> An array of GUIDs of entities to list. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByIdsAsync(IEnumerable{string},bool?,bool?,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasEntitiesWithExtInfo>> GetByIdsAsync(IEnumerable<string> guid, bool? minExtInfo = null, bool? ignoreRelationships = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetByIdsAsync(guid, minExtInfo, ignoreRelationships, context).ConfigureAwait(false);
+            return Response.FromValue(AtlasEntitiesWithExtInfo.FromResponse(response), response);
+        }
+
+        /// <summary> List entities in bulk identified by its GUIDs. </summary>
+        /// <param name="guid"> An array of GUIDs of entities to list. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByIds(IEnumerable{string},bool?,bool?,CancellationToken)']/*" />
+        public virtual Response<AtlasEntitiesWithExtInfo> GetByIds(IEnumerable<string> guid, bool? minExtInfo = null, bool? ignoreRelationships = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetByIds(guid, minExtInfo, ignoreRelationships, context);
+            return Response.FromValue(AtlasEntitiesWithExtInfo.FromResponse(response), response);
+        }
+
+        /// <summary>
         /// [Protocol Method] List entities in bulk identified by its GUIDs.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetByIdsAsync(IEnumerable{string},bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> An array of GUIDs of entities to list. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
         /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByIdsAsync(IEnumerable{string},bool?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> GetByIdsAsync(IEnumerable<string> guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetByIds");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetByIds");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(guid, nameof(guid));
-
                 using HttpMessage message = CreateGetByIdsRequest(guid, minExtInfo, ignoreRelationships, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> List entities in bulk identified by its GUIDs. </summary>
-        /// <param name="guid"> An array of GUIDs of entities to list. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasEntitiesWithExtInfo> GetByIds(IEnumerable<string> guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(guid, nameof(guid));
-
-            Response result = GetByIds(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasEntitiesWithExtInfo)result, result);
-        }
-
-        /// <summary> List entities in bulk identified by its GUIDs. </summary>
-        /// <param name="guid"> An array of GUIDs of entities to list. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasEntitiesWithExtInfo>> GetByIdsAsync(IEnumerable<string> guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(guid, nameof(guid));
-
-            Response result = await GetByIdsAsync(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasEntitiesWithExtInfo)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create or update entities in bulk.
-        /// Existing entity is matched using its unique
-        /// guid if supplied or by its unique attributes eg: qualifiedName.
-        /// Map and array
-        /// of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;,
-        /// array&lt;map&lt;string, int&gt;&gt;.
-        /// For each contact type, the maximum number of contacts
-        /// is 20.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="collectionId">
-        /// The collection where entities will be moved to. Only specify a value if you
-        /// need to move an entity to another collection.
-        /// </param>
-        /// <param name="businessAttributeUpdateBehavior">
-        /// Used to define the update behavior for business attributes when updating
-        /// entities.
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response BatchCreateOrUpdate(RequestContent content, string collectionId = default, string businessAttributeUpdateBehavior = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchCreateOrUpdate");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateBatchCreateOrUpdateRequest(content, collectionId, businessAttributeUpdateBehavior, context);
-                return Pipeline.ProcessMessage(message, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -337,43 +293,38 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update entities in bulk.
-        /// Existing entity is matched using its unique
-        /// guid if supplied or by its unique attributes eg: qualifiedName.
-        /// Map and array
-        /// of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;,
-        /// array&lt;map&lt;string, int&gt;&gt;.
-        /// For each contact type, the maximum number of contacts
-        /// is 20.
+        /// [Protocol Method] List entities in bulk identified by its GUIDs.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetByIds(IEnumerable{string},bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="collectionId">
-        /// The collection where entities will be moved to. Only specify a value if you
-        /// need to move an entity to another collection.
-        /// </param>
-        /// <param name="businessAttributeUpdateBehavior">
-        /// Used to define the update behavior for business attributes when updating
-        /// entities.
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="guid"> An array of GUIDs of entities to list. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> BatchCreateOrUpdateAsync(RequestContent content, string collectionId = default, string businessAttributeUpdateBehavior = default, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByIds(IEnumerable{string},bool?,bool?,RequestContext)']/*" />
+        public virtual Response GetByIds(IEnumerable<string> guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchCreateOrUpdate");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetByIds");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateBatchCreateOrUpdateRequest(content, collectionId, businessAttributeUpdateBehavior, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetByIdsRequest(guid, minExtInfo, ignoreRelationships, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -401,15 +352,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// Used to define the update behavior for business attributes when updating
         /// entities.
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> BatchCreateOrUpdate(AtlasEntitiesWithExtInfo body, string collectionId = default, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)']/*" />
+        public virtual async Task<Response<EntityMutationResult>> BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo body, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = BatchCreateOrUpdate(body, collectionId, businessAttributeUpdateBehavior?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await BatchCreateOrUpdateAsync(content, collectionId, businessAttributeUpdateBehavior?.ToString(), context).ConfigureAwait(false);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -431,41 +384,65 @@ namespace Azure.Analytics.Purview.DataMap
         /// Used to define the update behavior for business attributes when updating
         /// entities.
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo body, string collectionId = default, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdate(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> BatchCreateOrUpdate(AtlasEntitiesWithExtInfo body, string collectionId = null, BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await BatchCreateOrUpdateAsync(body, collectionId, businessAttributeUpdateBehavior?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = BatchCreateOrUpdate(content, collectionId, businessAttributeUpdateBehavior?.ToString(), context);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a list of entities in bulk identified by their GUIDs or unique
-        /// attributes.
+        /// [Protocol Method] Create or update entities in bulk.
+        /// Existing entity is matched using its unique
+        /// guid if supplied or by its unique attributes eg: qualifiedName.
+        /// Map and array
+        /// of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;,
+        /// array&lt;map&lt;string, int&gt;&gt;.
+        /// For each contact type, the maximum number of contacts
+        /// is 20.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="BatchCreateOrUpdateAsync(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> An array of GUIDs of entities to delete. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="collectionId">
+        /// The collection where entities will be moved to. Only specify a value if you
+        /// need to move an entity to another collection.
+        /// </param>
+        /// <param name="businessAttributeUpdateBehavior">
+        /// Used to define the update behavior for business attributes when updating
+        /// entities. Allowed values: "ignore" | "replace" | "merge"
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response BatchDelete(IEnumerable<string> guid, RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdateAsync(RequestContent,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> BatchCreateOrUpdateAsync(RequestContent content, string collectionId = null, string businessAttributeUpdateBehavior = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchDelete");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.BatchCreateOrUpdate");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(guid, nameof(guid));
-
-                using HttpMessage message = CreateBatchDeleteRequest(guid, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateBatchCreateOrUpdateRequest(content, collectionId, businessAttributeUpdateBehavior, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -475,29 +452,51 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a list of entities in bulk identified by their GUIDs or unique
-        /// attributes.
+        /// [Protocol Method] Create or update entities in bulk.
+        /// Existing entity is matched using its unique
+        /// guid if supplied or by its unique attributes eg: qualifiedName.
+        /// Map and array
+        /// of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;,
+        /// array&lt;map&lt;string, int&gt;&gt;.
+        /// For each contact type, the maximum number of contacts
+        /// is 20.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="BatchCreateOrUpdate(AtlasEntitiesWithExtInfo,string,BusinessAttributeUpdateBehavior?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> An array of GUIDs of entities to delete. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="collectionId">
+        /// The collection where entities will be moved to. Only specify a value if you
+        /// need to move an entity to another collection.
+        /// </param>
+        /// <param name="businessAttributeUpdateBehavior">
+        /// Used to define the update behavior for business attributes when updating
+        /// entities. Allowed values: "ignore" | "replace" | "merge"
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> BatchDeleteAsync(IEnumerable<string> guid, RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchCreateOrUpdate(RequestContent,string,string,RequestContext)']/*" />
+        public virtual Response BatchCreateOrUpdate(RequestContent content, string collectionId = null, string businessAttributeUpdateBehavior = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchDelete");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.BatchCreateOrUpdate");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(guid, nameof(guid));
-
-                using HttpMessage message = CreateBatchDeleteRequest(guid, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateBatchCreateOrUpdateRequest(content, collectionId, businessAttributeUpdateBehavior, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -511,56 +510,67 @@ namespace Azure.Analytics.Purview.DataMap
         /// attributes.
         /// </summary>
         /// <param name="guid"> An array of GUIDs of entities to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> BatchDelete(IEnumerable<string> guid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(guid, nameof(guid));
-
-            Response result = BatchDelete(guid, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
-        }
-
-        /// <summary>
-        /// Delete a list of entities in bulk identified by their GUIDs or unique
-        /// attributes.
-        /// </summary>
-        /// <param name="guid"> An array of GUIDs of entities to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchDeleteAsync(IEnumerable{string},CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> BatchDeleteAsync(IEnumerable<string> guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(guid, nameof(guid));
 
-            Response result = await BatchDeleteAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await BatchDeleteAsync(guid, context).ConfigureAwait(false);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Associate a classification to multiple entities in bulk.
+        /// Delete a list of entities in bulk identified by their GUIDs or unique
+        /// attributes.
+        /// </summary>
+        /// <param name="guid"> An array of GUIDs of entities to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchDelete(IEnumerable{string},CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> BatchDelete(IEnumerable<string> guid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = BatchDelete(guid, context);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete a list of entities in bulk identified by their GUIDs or unique
+        /// attributes.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="BatchDeleteAsync(IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="guid"> An array of GUIDs of entities to delete. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AddClassification(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchDeleteAsync(IEnumerable{string},RequestContext)']/*" />
+        public virtual async Task<Response> BatchDeleteAsync(IEnumerable<string> guid, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddClassification");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.BatchDelete");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAddClassificationRequest(content, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateBatchDeleteRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -570,28 +580,37 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Associate a classification to multiple entities in bulk.
+        /// [Protocol Method] Delete a list of entities in bulk identified by their GUIDs or unique
+        /// attributes.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="BatchDelete(IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="guid"> An array of GUIDs of entities to delete. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddClassificationAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchDelete(IEnumerable{string},RequestContext)']/*" />
+        public virtual Response BatchDelete(IEnumerable<string> guid, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddClassification");
+            Argument.AssertNotNull(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.BatchDelete");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAddClassificationRequest(content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateBatchDeleteRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -602,230 +621,228 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddClassification(ClassificationAssociateConfig body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            return AddClassification(body, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Associate a classification to multiple entities in bulk. </summary>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)']/*" />
         public virtual async Task<Response> AddClassificationAsync(ClassificationAssociateConfig body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return await AddClassificationAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AddClassificationAsync(content, context).ConfigureAwait(false);
+            return response;
         }
 
-        /// <summary>
-        /// [Protocol Method] Get complete definition of an entity given its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetEntity(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
+        /// <summary> Associate a classification to multiple entities in bulk. </summary>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassification(ClassificationAssociateConfig,CancellationToken)']/*" />
+        public virtual Response AddClassification(ClassificationAssociateConfig body, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetEntity");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-                using HttpMessage message = CreateGetEntityRequest(guid, minExtInfo, ignoreRelationships, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get complete definition of an entity given its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEntityAsync(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetEntity");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-                using HttpMessage message = CreateGetEntityRequest(guid, minExtInfo, ignoreRelationships, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get complete definition of an entity given its GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasEntityWithExtInfo> GetEntity(string guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            Response result = GetEntity(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasEntityWithExtInfo)result, result);
-        }
-
-        /// <summary> Get complete definition of an entity given its GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasEntityWithExtInfo>> GetEntityAsync(string guid, bool? minExtInfo = default, bool? ignoreRelationships = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            Response result = await GetEntityAsync(guid, minExtInfo, ignoreRelationships, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasEntityWithExtInfo)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update entity partially - create or update entity attribute identified by its
-        /// GUID.
-        /// Supports only primitive attribute type and entity references.
-        /// It does not support updating complex types like arrays, and maps.
-        /// Null updates are not possible.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="name"> The name of the attribute. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateAttributeById(string guid, string name, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateAttributeById");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateAttributeByIdRequest(guid, name, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update entity partially - create or update entity attribute identified by its
-        /// GUID.
-        /// Supports only primitive attribute type and entity references.
-        /// It does not support updating complex types like arrays, and maps.
-        /// Null updates are not possible.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="name"> The name of the attribute. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateAttributeByIdAsync(string guid, string name, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateAttributeById");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(name, nameof(name));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateAttributeByIdRequest(guid, name, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update entity partially - create or update entity attribute identified by its
-        /// GUID.
-        /// Supports only primitive attribute type and entity references.
-        /// It does not support updating complex types like arrays, and maps.
-        /// Null updates are not possible.
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="name"> The name of the attribute. </param>
-        /// <param name="body"> The value of the attribute. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> UpdateAttributeById(string guid, string name, BinaryData body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = UpdateAttributeById(guid, name, RequestContent.Create(body), cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AddClassification(content, context);
+            return response;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Associate a classification to multiple entities in bulk.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> AddClassificationAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddClassification");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddClassificationRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Associate a classification to multiple entities in bulk.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddClassification(ClassificationAssociateConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassification(RequestContent,RequestContext)']/*" />
+        public virtual Response AddClassification(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddClassification");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddClassificationRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get complete definition of an entity given its GUID. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetEntityAsync(string,bool?,bool?,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasEntityWithExtInfo>> GetEntityAsync(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetEntityAsync(guid, minExtInfo, ignoreRelationships, context).ConfigureAwait(false);
+            return Response.FromValue(AtlasEntityWithExtInfo.FromResponse(response), response);
+        }
+
+        /// <summary> Get complete definition of an entity given its GUID. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetEntity(string,bool?,bool?,CancellationToken)']/*" />
+        public virtual Response<AtlasEntityWithExtInfo> GetEntity(string guid, bool? minExtInfo = null, bool? ignoreRelationships = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetEntity(guid, minExtInfo, ignoreRelationships, context);
+            return Response.FromValue(AtlasEntityWithExtInfo.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get complete definition of an entity given its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetEntityAsync(string,bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetEntityAsync(string,bool?,bool?,RequestContext)']/*" />
+        public virtual async Task<Response> GetEntityAsync(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetEntity");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEntityRequest(guid, minExtInfo, ignoreRelationships, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get complete definition of an entity given its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetEntity(string,bool?,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetEntity(string,bool?,bool?,RequestContext)']/*" />
+        public virtual Response GetEntity(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetEntity");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEntityRequest(guid, minExtInfo, ignoreRelationships, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -838,334 +855,322 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="name"> The name of the attribute. </param>
         /// <param name="body"> The value of the attribute. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateAttributeByIdAsync(string,string,BinaryData,CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> UpdateAttributeByIdAsync(string guid, string name, BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await UpdateAttributeByIdAsync(guid, name, RequestContent.Create(body), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            using RequestContent content = RequestContentHelper.FromObject(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpdateAttributeByIdAsync(guid, name, content, context).ConfigureAwait(false);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Delete an entity identified by its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
+        /// Update entity partially - create or update entity attribute identified by its
+        /// GUID.
+        /// Supports only primitive attribute type and entity references.
+        /// It does not support updating complex types like arrays, and maps.
+        /// Null updates are not possible.
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <param name="name"> The name of the attribute. </param>
+        /// <param name="body"> The value of the attribute. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response Delete(string guid, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.Delete");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-                using HttpMessage message = CreateDeleteRequest(guid, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Delete an entity identified by its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(string guid, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.Delete");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-                using HttpMessage message = CreateDeleteRequest(guid, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete an entity identified by its GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> Delete(string guid, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateAttributeById(string,string,BinaryData,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> UpdateAttributeById(string guid, string name, BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Delete(guid, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            using RequestContent content = RequestContentHelper.FromObject(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpdateAttributeById(guid, name, content, context);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update entity partially - create or update entity attribute identified by its
+        /// GUID.
+        /// Supports only primitive attribute type and entity references.
+        /// It does not support updating complex types like arrays, and maps.
+        /// Null updates are not possible.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateAttributeByIdAsync(string,string,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="name"> The name of the attribute. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateAttributeByIdAsync(string,string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateAttributeByIdAsync(string guid, string name, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.UpdateAttributeById");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateAttributeByIdRequest(guid, name, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update entity partially - create or update entity attribute identified by its
+        /// GUID.
+        /// Supports only primitive attribute type and entity references.
+        /// It does not support updating complex types like arrays, and maps.
+        /// Null updates are not possible.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateAttributeById(string,string,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="name"> The name of the attribute. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateAttributeById(string,string,RequestContent,RequestContext)']/*" />
+        public virtual Response UpdateAttributeById(string guid, string name, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.UpdateAttributeById");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateAttributeByIdRequest(guid, name, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete an entity identified by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> DeleteAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await DeleteAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DeleteAsync(guid, context).ConfigureAwait(false);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// [Protocol Method] Get classification for a given entity represented by a GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Delete an entity identified by its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetClassification(string guid, string classificationName, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetClassification");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
-
-                using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get classification for a given entity represented by a GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetClassification");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
-
-                using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get classification for a given entity represented by a GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasClassification> GetClassification(string guid, string classificationName, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='Delete(string,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> Delete(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            Response result = GetClassification(guid, classificationName, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasClassification)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Delete(guid, context);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete an entity identified by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteAsync(string guid, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delete an entity identified by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Delete(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
+        public virtual Response Delete(string guid, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.Delete");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get classification for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassificationAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasClassification>> GetClassificationAsync(string guid, string classificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            Response result = await GetClassificationAsync(guid, classificationName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasClassification)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetClassificationAsync(guid, classificationName, context).ConfigureAwait(false);
+            return Response.FromValue(AtlasClassification.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// [Protocol Method] Delete a given classification from an existing entity represented by a GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get classification for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response RemoveClassification(string guid, string classificationName, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveClassification");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
-
-                using HttpMessage message = CreateRemoveClassificationRequest(guid, classificationName, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Delete a given classification from an existing entity represented by a GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveClassificationAsync(string guid, string classificationName, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveClassification");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
-
-                using HttpMessage message = CreateRemoveClassificationRequest(guid, classificationName, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete a given classification from an existing entity represented by a GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RemoveClassification(string guid, string classificationName, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassification(string,string,CancellationToken)']/*" />
+        public virtual Response<AtlasClassification> GetClassification(string guid, string classificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
 
-            return RemoveClassification(guid, classificationName, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Delete a given classification from an existing entity represented by a GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveClassificationAsync(string guid, string classificationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
-
-            return await RemoveClassificationAsync(guid, classificationName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetClassification(guid, classificationName, context);
+            return Response.FromValue(AtlasClassification.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] List classifications for a given entity represented by a GUID.
+        /// [Protocol Method] Get classification for a given entity represented by a GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetClassificationAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="classificationName"> The name of the classification. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetClassifications(string guid, RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassificationAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetClassificationAsync(string guid, string classificationName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetClassifications");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetClassification");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-                using HttpMessage message = CreateGetClassificationsRequest(guid, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1175,29 +1180,115 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] List classifications for a given entity represented by a GUID.
+        /// [Protocol Method] Get classification for a given entity represented by a GUID.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetClassification(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="classificationName"> The name of the classification. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassification(string,string,RequestContext)']/*" />
+        public virtual Response GetClassification(string guid, string classificationName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetClassifications");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetClassification");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+                using HttpMessage message = CreateGetClassificationRequest(guid, classificationName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-                using HttpMessage message = CreateGetClassificationsRequest(guid, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Delete a given classification from an existing entity represented by a GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="classificationName"> The name of the classification. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveClassificationAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> RemoveClassificationAsync(string guid, string classificationName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveClassification");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveClassificationRequest(guid, classificationName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Delete a given classification from an existing entity represented by a GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="classificationName"> The name of the classification. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="classificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveClassification(string,string,RequestContext)']/*" />
+        public virtual Response RemoveClassification(string guid, string classificationName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveClassification");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRemoveClassificationRequest(guid, classificationName, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1208,272 +1299,304 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasClassifications> GetClassifications(string guid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            Response result = GetClassifications(guid, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasClassifications)result, result);
-        }
-
-        /// <summary> List classifications for a given entity represented by a GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassificationsAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasClassifications>> GetClassificationsAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await GetClassificationsAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasClassifications)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetClassificationsAsync(guid, context).ConfigureAwait(false);
+            return Response.FromValue(AtlasClassifications.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// [Protocol Method] Add classifications to an existing entity represented by a GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List classifications for a given entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response AddClassifications(string guid, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddClassifications");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAddClassificationsRequest(guid, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add classifications to an existing entity represented by a GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddClassifications");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAddClassificationsRequest(guid, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add classifications to an existing entity represented by a GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="body"> An array of classifications to be added. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddClassifications(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassifications(string,CancellationToken)']/*" />
+        public virtual Response<AtlasClassifications> GetClassifications(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return AddClassifications(guid, content, cancellationToken.ToRequestContext());
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetClassifications(guid, context);
+            return Response.FromValue(AtlasClassifications.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List classifications for a given entity represented by a GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetClassificationsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassificationsAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetClassificationsAsync(string guid, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetClassifications");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetClassificationsRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List classifications for a given entity represented by a GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetClassifications(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetClassifications(string,RequestContext)']/*" />
+        public virtual Response GetClassifications(string guid, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetClassifications");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetClassificationsRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Add classifications to an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> An array of classifications to be added. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsAsync(string,IEnumerable{AtlasClassification},CancellationToken)']/*" />
         public virtual async Task<Response> AddClassificationsAsync(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await AddClassificationsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AddClassificationsAsync(guid, content, context).ConfigureAwait(false);
+            return response;
         }
 
-        /// <summary>
-        /// [Protocol Method] Update classifications to an existing entity represented by a guid.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add classifications to an existing entity represented by a GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateClassifications(string guid, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateClassifications");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update classifications to an existing entity represented by a guid.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateClassifications");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Update classifications to an existing entity represented by a guid. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="body"> An array of classifications to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="body"> An array of classifications to be added. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response UpdateClassifications(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassifications(string,IEnumerable{AtlasClassification},CancellationToken)']/*" />
+        public virtual Response AddClassifications(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return UpdateClassifications(guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AddClassifications(guid, content, context);
+            return response;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Add classifications to an existing entity represented by a GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddClassificationsAsync(string,IEnumerable{AtlasClassification},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> AddClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddClassifications");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddClassificationsRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Add classifications to an existing entity represented by a GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddClassifications(string,IEnumerable{AtlasClassification},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassifications(string,RequestContent,RequestContext)']/*" />
+        public virtual Response AddClassifications(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddClassifications");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAddClassificationsRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update classifications to an existing entity represented by a guid. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> An array of classifications to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsAsync(string,IEnumerable{AtlasClassification},CancellationToken)']/*" />
         public virtual async Task<Response> UpdateClassificationsAsync(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await UpdateClassificationsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpdateClassificationsAsync(guid, content, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Update classifications to an existing entity represented by a guid. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="body"> An array of classifications to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassifications(string,IEnumerable{AtlasClassification},CancellationToken)']/*" />
+        public virtual Response UpdateClassifications(string guid, IEnumerable<AtlasClassification> body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpdateClassifications(guid, content, context);
+            return response;
         }
 
         /// <summary>
-        /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
-        /// In
-        /// addition to the typeName path parameter, attribute key-value pair(s) can be
-        /// provided in the following format:
-        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// NOTE: The
-        /// attrName and attrValue should be unique across entities, eg.
-        /// qualifiedName.
-        /// The REST request would look something like this:
-        /// GET
-        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
+        /// [Protocol Method] Update classifications to an existing entity represented by a guid.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateClassificationsAsync(string,IEnumerable{AtlasClassification},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetByUniqueAttribute(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attribute, RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateClassificationsAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.UpdateClassifications");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-                using HttpMessage message = CreateGetByUniqueAttributeRequest(typeName, minExtInfo, ignoreRelationships, attribute, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1483,20 +1606,144 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
+        /// [Protocol Method] Update classifications to an existing entity represented by a guid.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateClassifications(string,IEnumerable{AtlasClassification},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassifications(string,RequestContent,RequestContext)']/*" />
+        public virtual Response UpdateClassifications(string guid, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.UpdateClassifications");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateClassificationsRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get complete definition of an entity given its type and unique attribute.
+        ///
         /// In
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following format:
         /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
         /// NOTE: The
         /// attrName and attrValue should be unique across entities, eg.
         /// qualifiedName.
+        ///
+        /// The REST request would look something like this:
+        /// GET
+        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
+        /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="attribute">
+        /// The qualified name of the entity. (This is only an example. qualifiedName can
+        /// be changed to other unique attributes)
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByUniqueAttributeAsync(string,bool?,bool?,string,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasEntityWithExtInfo>> GetByUniqueAttributeAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attribute = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetByUniqueAttributeAsync(typeName, minExtInfo, ignoreRelationships, attribute, context).ConfigureAwait(false);
+            return Response.FromValue(AtlasEntityWithExtInfo.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Get complete definition of an entity given its type and unique attribute.
+        ///
+        /// In
+        /// addition to the typeName path parameter, attribute key-value pair(s) can be
+        /// provided in the following format:
+        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
+        /// NOTE: The
+        /// attrName and attrValue should be unique across entities, eg.
+        /// qualifiedName.
+        ///
+        /// The REST request would look something like this:
+        /// GET
+        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
+        /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="attribute">
+        /// The qualified name of the entity. (This is only an example. qualifiedName can
+        /// be changed to other unique attributes)
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByUniqueAttribute(string,bool?,bool?,string,CancellationToken)']/*" />
+        public virtual Response<AtlasEntityWithExtInfo> GetByUniqueAttribute(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attribute = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetByUniqueAttribute(typeName, minExtInfo, ignoreRelationships, attribute, context);
+            return Response.FromValue(AtlasEntityWithExtInfo.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
+        ///
+        /// In
+        /// addition to the typeName path parameter, attribute key-value pair(s) can be
+        /// provided in the following format:
+        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
+        /// NOTE: The
+        /// attrName and attrValue should be unique across entities, eg.
+        /// qualifiedName.
+        ///
         /// The REST request would look something like this:
         /// GET
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetByUniqueAttributeAsync(string,bool?,bool?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1507,21 +1754,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByUniqueAttributeAsync(string,bool?,bool?,string,RequestContext)']/*" />
         public virtual async Task<Response> GetByUniqueAttributeAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attribute, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
                 using HttpMessage message = CreateGetByUniqueAttributeRequest(typeName, minExtInfo, ignoreRelationships, attribute, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1531,17 +1779,32 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// Get complete definition of an entity given its type and unique attribute.
+        /// [Protocol Method] Get complete definition of an entity given its type and unique attribute.
+        ///
         /// In
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following format:
         /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
         /// NOTE: The
         /// attrName and attrValue should be unique across entities, eg.
         /// qualifiedName.
+        ///
         /// The REST request would look something like this:
         /// GET
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetByUniqueAttribute(string,bool?,bool?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
@@ -1550,142 +1813,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasEntityWithExtInfo> GetByUniqueAttribute(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetByUniqueAttribute(string,bool?,bool?,string,RequestContext)']/*" />
+        public virtual Response GetByUniqueAttribute(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attribute, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = GetByUniqueAttribute(typeName, minExtInfo, ignoreRelationships, attribute, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasEntityWithExtInfo)result, result);
-        }
-
-        /// <summary>
-        /// Get complete definition of an entity given its type and unique attribute.
-        /// In
-        /// addition to the typeName path parameter, attribute key-value pair(s) can be
-        /// provided in the following format:
-        /// attr:\&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// NOTE: The
-        /// attrName and attrValue should be unique across entities, eg.
-        /// qualifiedName.
-        /// The REST request would look something like this:
-        /// GET
-        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasEntityWithExtInfo>> GetByUniqueAttributeAsync(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attribute = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-            Response result = await GetByUniqueAttributeAsync(typeName, minExtInfo, ignoreRelationships, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasEntityWithExtInfo)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update entity partially - Allow a subset of attributes to be updated on an
-        /// entity which is identified by its type and unique attribute eg:
-        /// Referenceable.qualifiedName. Null updates are not possible.
-        /// In addition to the
-        /// typeName path parameter, attribute key-value pair(s) can be provided in the
-        /// following format:
-        /// attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// NOTE: The attrName and
-        /// attrValue should be unique across entities, eg. qualifiedName.
-        /// The REST
-        /// request would look something like this:
-        /// PUT
-        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateByUniqueAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateByUniqueAttribute");
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateByUniqueAttributeRequest(typeName, content, attribute, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Update entity partially - Allow a subset of attributes to be updated on an
-        /// entity which is identified by its type and unique attribute eg:
-        /// Referenceable.qualifiedName. Null updates are not possible.
-        /// In addition to the
-        /// typeName path parameter, attribute key-value pair(s) can be provided in the
-        /// following format:
-        /// attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// NOTE: The attrName and
-        /// attrValue should be unique across entities, eg. qualifiedName.
-        /// The REST
-        /// request would look something like this:
-        /// PUT
-        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateByUniqueAttribute");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateByUniqueAttributeRequest(typeName, content, attribute, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetByUniqueAttributeRequest(typeName, minExtInfo, ignoreRelationships, attribute, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1698,12 +1841,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// Update entity partially - Allow a subset of attributes to be updated on an
         /// entity which is identified by its type and unique attribute eg:
         /// Referenceable.qualifiedName. Null updates are not possible.
+        ///
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format:
+        ///
         /// attr:&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
         /// request would look something like this:
         /// PUT
@@ -1715,29 +1861,34 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> UpdateByUniqueAttribute(string typeName, AtlasEntityWithExtInfo body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttributeAsync(string,AtlasEntityWithExtInfo,string,CancellationToken)']/*" />
+        public virtual async Task<Response<EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, AtlasEntityWithExtInfo body, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = UpdateByUniqueAttribute(typeName, body, attribute, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpdateByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
         /// <summary>
         /// Update entity partially - Allow a subset of attributes to be updated on an
         /// entity which is identified by its type and unique attribute eg:
         /// Referenceable.qualifiedName. Null updates are not possible.
+        ///
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format:
+        ///
         /// attr:&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
         /// request would look something like this:
         /// PUT
@@ -1749,57 +1900,74 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, AtlasEntityWithExtInfo body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttribute(string,AtlasEntityWithExtInfo,string,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> UpdateByUniqueAttribute(string typeName, AtlasEntityWithExtInfo body, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await UpdateByUniqueAttributeAsync(typeName, body, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpdateByUniqueAttribute(typeName, content, attribute, context);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Delete an entity identified by its type and unique attributes.
-        /// In addition to
-        /// the typeName path parameter, attribute key-value pair(s) can be provided in the
+        /// [Protocol Method] Update entity partially - Allow a subset of attributes to be updated on an
+        /// entity which is identified by its type and unique attribute eg:
+        /// Referenceable.qualifiedName. Null updates are not possible.
+        ///
+        /// In addition to the
+        /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format:
-        /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
+        ///
+        /// attr:&lt;attrName&gt;=&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
         /// request would look something like this:
-        /// DELETE
+        /// PUT
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateByUniqueAttributeAsync(string,AtlasEntityWithExtInfo,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="attribute">
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteByUniqueAttribute(string typeName, string attribute, RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.DeleteByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.UpdateByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-                using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attribute, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateUpdateByUniqueAttributeRequest(typeName, content, attribute, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1809,6 +1977,131 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
+        /// [Protocol Method] Update entity partially - Allow a subset of attributes to be updated on an
+        /// entity which is identified by its type and unique attribute eg:
+        /// Referenceable.qualifiedName. Null updates are not possible.
+        ///
+        /// In addition to the
+        /// typeName path parameter, attribute key-value pair(s) can be provided in the
+        /// following format:
+        ///
+        /// attr:&lt;attrName&gt;=&lt;attrValue&gt;.
+        /// NOTE: The attrName and
+        /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
+        /// The REST
+        /// request would look something like this:
+        /// PUT
+        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateByUniqueAttribute(string,AtlasEntityWithExtInfo,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="attribute">
+        /// The qualified name of the entity. (This is only an example. qualifiedName can
+        /// be changed to other unique attributes)
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
+        public virtual Response UpdateByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.UpdateByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateByUniqueAttributeRequest(typeName, content, attribute, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete an entity identified by its type and unique attributes.
+        /// In addition to
+        /// the typeName path parameter, attribute key-value pair(s) can be provided in the
+        /// following format:
+        /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
+        /// NOTE: The attrName and
+        /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
+        /// The REST
+        /// request would look something like this:
+        /// DELETE
+        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
+        /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="attribute">
+        /// The qualified name of the entity. (This is only an example. qualifiedName can
+        /// be changed to other unique attributes)
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteByUniqueAttributeAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<EntityMutationResult>> DeleteByUniqueAttributeAsync(string typeName, string attribute = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DeleteByUniqueAttributeAsync(typeName, attribute, context).ConfigureAwait(false);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Delete an entity identified by its type and unique attributes.
+        /// In addition to
+        /// the typeName path parameter, attribute key-value pair(s) can be provided in the
+        /// following format:
+        /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
+        /// NOTE: The attrName and
+        /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
+        /// The REST
+        /// request would look something like this:
+        /// DELETE
+        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
+        /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="attribute">
+        /// The qualified name of the entity. (This is only an example. qualifiedName can
+        /// be changed to other unique attributes)
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteByUniqueAttribute(string,string,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> DeleteByUniqueAttribute(string typeName, string attribute = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = DeleteByUniqueAttribute(typeName, attribute, context);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
+        }
+
+        /// <summary>
         /// [Protocol Method] Delete an entity identified by its type and unique attributes.
         /// In addition to
         /// the typeName path parameter, attribute key-value pair(s) can be provided in the
@@ -1816,13 +2109,21 @@ namespace Azure.Analytics.Purview.DataMap
         /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
         /// request would look something like this:
         /// DELETE
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteByUniqueAttributeAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1831,21 +2132,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteByUniqueAttributeAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteByUniqueAttributeAsync(string typeName, string attribute, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.DeleteByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.DeleteByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
                 using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attribute, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1855,71 +2157,69 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// Delete an entity identified by its type and unique attributes.
+        /// [Protocol Method] Delete an entity identified by its type and unique attributes.
         /// In addition to
         /// the typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format:
         /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
         /// request would look something like this:
         /// DELETE
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteByUniqueAttribute(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="attribute">
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> DeleteByUniqueAttribute(string typeName, string attribute = default, CancellationToken cancellationToken = default)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='DeleteByUniqueAttribute(string,string,RequestContext)']/*" />
+        public virtual Response DeleteByUniqueAttribute(string typeName, string attribute, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = DeleteByUniqueAttribute(typeName, attribute, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
+            using var scope = ClientDiagnostics.CreateScope("Entity.DeleteByUniqueAttribute");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteByUniqueAttributeRequest(typeName, attribute, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// Delete an entity identified by its type and unique attributes.
-        /// In addition to
-        /// the typeName path parameter, attribute key-value pair(s) can be provided in the
-        /// following format:
-        /// attr:\&lt;attrName&gt;=\&lt;attrValue&gt;.
-        /// NOTE: The attrName and
-        /// attrValue should be unique across entities, eg. qualifiedName.
-        /// The REST
-        /// request would look something like this:
-        /// DELETE
-        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EntityMutationResult>> DeleteByUniqueAttributeAsync(string typeName, string attribute = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-            Response result = await DeleteByUniqueAttributeAsync(typeName, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
-        }
-
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete a given classification from an entity identified by its type and unique
         /// attributes.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1929,22 +2229,23 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response RemoveClassificationByUniqueAttribute(string typeName, string classificationName, string attribute, RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveClassificationByUniqueAttributeAsync(string,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> RemoveClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveClassificationByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveClassificationByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
-
                 using HttpMessage message = CreateRemoveClassificationByUniqueAttributeRequest(typeName, classificationName, attribute, context);
-                return Pipeline.ProcessMessage(message, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1953,12 +2254,15 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Delete a given classification from an entity identified by its type and unique
         /// attributes.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1968,142 +2272,23 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attribute, RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveClassificationByUniqueAttribute(string,string,string,RequestContext)']/*" />
+        public virtual Response RemoveClassificationByUniqueAttribute(string typeName, string classificationName, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveClassificationByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveClassificationByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
-
                 using HttpMessage message = CreateRemoveClassificationByUniqueAttributeRequest(typeName, classificationName, attribute, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a given classification from an entity identified by its type and unique
-        /// attributes.
-        /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RemoveClassificationByUniqueAttribute(string typeName, string classificationName, string attribute = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
-
-            return RemoveClassificationByUniqueAttribute(typeName, classificationName, attribute, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary>
-        /// Delete a given classification from an entity identified by its type and unique
-        /// attributes.
-        /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="classificationName"> The name of the classification. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> or <paramref name="classificationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveClassificationByUniqueAttributeAsync(string typeName, string classificationName, string attribute = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-            Argument.AssertNotNullOrEmpty(classificationName, nameof(classificationName));
-
-            return await RemoveClassificationByUniqueAttributeAsync(typeName, classificationName, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add classification to the entity identified by its type and unique attributes.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddClassificationsByUniqueAttribute");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attribute, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add classification to the entity identified by its type and unique attributes.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddClassificationsByUniqueAttribute");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attribute, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2119,17 +2304,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddClassificationsByUniqueAttribute(string typeName, IEnumerable<AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsByUniqueAttributeAsync(string,IEnumerable{AtlasClassification},string,CancellationToken)']/*" />
+        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, IEnumerable<AtlasClassification> body, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return AddClassificationsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
+            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AddClassificationsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
+            return response;
         }
 
         /// <summary> Add classification to the entity identified by its type and unique attributes. </summary>
@@ -2139,24 +2326,33 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, IEnumerable<AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsByUniqueAttribute(string,IEnumerable{AtlasClassification},string,CancellationToken)']/*" />
+        public virtual Response AddClassificationsByUniqueAttribute(string typeName, IEnumerable<AtlasClassification> body, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await AddClassificationsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AddClassificationsByUniqueAttribute(typeName, content, attribute, context);
+            return response;
         }
 
         /// <summary>
-        /// [Protocol Method] Update classification on an entity identified by its type and unique attributes.
+        /// [Protocol Method] Add classification to the entity identified by its type and unique attributes.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddClassificationsByUniqueAttributeAsync(string,IEnumerable{AtlasClassification},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2166,22 +2362,23 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateClassificationsUniqueByAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> AddClassificationsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateClassificationsUniqueByAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateClassificationsUniqueByAttributeRequest(typeName, content, attribute, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attribute, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2191,10 +2388,17 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Update classification on an entity identified by its type and unique attributes.
+        /// [Protocol Method] Add classification to the entity identified by its type and unique attributes.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddClassificationsByUniqueAttribute(string,IEnumerable{AtlasClassification},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2204,22 +2408,23 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateClassificationsUniqueByAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
+        public virtual Response AddClassificationsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.UpdateClassificationsUniqueByAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddClassificationsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUpdateClassificationsUniqueByAttributeRequest(typeName, content, attribute, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateAddClassificationsByUniqueAttributeRequest(typeName, content, attribute, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2235,17 +2440,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response UpdateClassificationsUniqueByAttribute(string typeName, IEnumerable<AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsUniqueByAttributeAsync(string,IEnumerable{AtlasClassification},string,CancellationToken)']/*" />
+        public virtual async Task<Response> UpdateClassificationsUniqueByAttributeAsync(string typeName, IEnumerable<AtlasClassification> body, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return UpdateClassificationsUniqueByAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
+            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await UpdateClassificationsUniqueByAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
+            return response;
         }
 
         /// <summary> Update classification on an entity identified by its type and unique attributes. </summary>
@@ -2255,42 +2462,59 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> UpdateClassificationsUniqueByAttributeAsync(string typeName, IEnumerable<AtlasClassification> body, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsUniqueByAttribute(string,IEnumerable{AtlasClassification},string,CancellationToken)']/*" />
+        public virtual Response UpdateClassificationsUniqueByAttribute(string typeName, IEnumerable<AtlasClassification> body, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await UpdateClassificationsUniqueByAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = UpdateClassificationsUniqueByAttribute(typeName, content, attribute, context);
+            return response;
         }
 
         /// <summary>
-        /// [Protocol Method] Set classifications on entities in bulk.
+        /// [Protocol Method] Update classification on an entity identified by its type and unique attributes.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateClassificationsUniqueByAttributeAsync(string,IEnumerable{AtlasClassification},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="attribute">
+        /// The qualified name of the entity. (This is only an example. qualifiedName can
+        /// be changed to other unique attributes)
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response BatchSetClassifications(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsUniqueByAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateClassificationsUniqueByAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchSetClassifications");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.UpdateClassificationsUniqueByAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateBatchSetClassificationsRequest(content, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateUpdateClassificationsUniqueByAttributeRequest(typeName, content, attribute, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2300,28 +2524,43 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Set classifications on entities in bulk.
+        /// [Protocol Method] Update classification on an entity identified by its type and unique attributes.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="UpdateClassificationsUniqueByAttribute(string,IEnumerable{AtlasClassification},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="attribute">
+        /// The qualified name of the entity. (This is only an example. qualifiedName can
+        /// be changed to other unique attributes)
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> BatchSetClassificationsAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='UpdateClassificationsUniqueByAttribute(string,RequestContent,string,RequestContext)']/*" />
+        public virtual Response UpdateClassificationsUniqueByAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchSetClassifications");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.UpdateClassificationsUniqueByAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateBatchSetClassificationsRequest(content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateUpdateClassificationsUniqueByAttributeRequest(typeName, content, attribute, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2332,98 +2571,81 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Set classifications on entities in bulk. </summary>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<string>> BatchSetClassifications(AtlasEntityHeaders body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = BatchSetClassifications(body, cancellationToken.ToRequestContext());
-            List<string> value = new List<string>();
-            BinaryData data = result.Content;
-            Utf8JsonReader jsonReader = new Utf8JsonReader(data.ToMemory().Span);
-            jsonReader.Read();
-            while (jsonReader.Read())
-            {
-                if (jsonReader.TokenType == JsonTokenType.EndArray)
-                {
-                    break;
-                }
-                value.Add(jsonReader.GetString());
-            }
-            return Response.FromValue((IReadOnlyList<string>)value, result);
-        }
-
-        /// <summary> Set classifications on entities in bulk. </summary>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassificationsAsync(AtlasEntityHeaders,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<string>>> BatchSetClassificationsAsync(AtlasEntityHeaders body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await BatchSetClassificationsAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<string> value = new List<string>();
-            BinaryData data = result.Content;
-            Utf8JsonReader jsonReader = new Utf8JsonReader(data.ToMemory().Span);
-            jsonReader.Read();
-            while (jsonReader.Read())
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await BatchSetClassificationsAsync(content, context).ConfigureAwait(false);
+            IReadOnlyList<string> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            List<string> array = new List<string>();
+            foreach (var item in document.RootElement.EnumerateArray())
             {
-                if (jsonReader.TokenType == JsonTokenType.EndArray)
-                {
-                    break;
-                }
-                value.Add(jsonReader.GetString());
+                array.Add(item.GetString());
             }
-            return Response.FromValue((IReadOnlyList<string>)value, result);
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Set classifications on entities in bulk. </summary>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassifications(AtlasEntityHeaders,CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<string>> BatchSetClassifications(AtlasEntityHeaders body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = BatchSetClassifications(content, context);
+            IReadOnlyList<string> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            List<string> array = new List<string>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(item.GetString());
+            }
+            value = array;
+            return Response.FromValue(value, response);
         }
 
         /// <summary>
-        /// [Protocol Method] Bulk API to retrieve list of entities identified by its unique attributes.
-        /// In
-        /// addition to the typeName path parameter, attribute key-value pair(s) can be
-        /// provided in the following
-        /// format
-        /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
-        /// NOTE:
-        /// The attrName should be an unique attribute for the given entity-type.
-        /// The REST
-        /// request would look something like this
-        /// GET
-        /// /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_1:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
-        /// Note:
-        /// at least one unique attribute must be provided.
+        /// [Protocol Method] Set classifications on entities in bulk.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="BatchSetClassificationsAsync(AtlasEntityHeaders,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="attrNQualifiedName">
-        /// Qualified name of an entity. E.g. to find 2 entities you can set
-        /// attrs_1:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. (This is only an
-        /// example. qualifiedName can be changed to other unique attributes)
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response BatchGetByUniqueAttributes(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassificationsAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> BatchSetClassificationsAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchGetByUniqueAttributes");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.BatchSetClassifications");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-                using HttpMessage message = CreateBatchGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateBatchSetClassificationsRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2433,23 +2655,155 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
+        /// [Protocol Method] Set classifications on entities in bulk.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="BatchSetClassifications(AtlasEntityHeaders,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchSetClassifications(RequestContent,RequestContext)']/*" />
+        public virtual Response BatchSetClassifications(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.BatchSetClassifications");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateBatchSetClassificationsRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Bulk API to retrieve list of entities identified by its unique attributes.
+        /// In
+        /// addition to the typeName path parameter, attribute key-value pair(s) can be
+        /// provided in the following
+        /// format
+        ///
+        /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
+        ///
+        /// NOTE:
+        /// The attrName should be an unique attribute for the given entity-type.
+        /// The REST
+        /// request would look something like this
+        ///
+        /// GET
+        /// /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_1:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
+        ///
+        /// Note:
+        /// at least one unique attribute must be provided.
+        /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="attrNQualifiedName">
+        /// Qualified name of an entity. E.g. to find 2 entities you can set
+        /// attrs_1:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. (This is only an
+        /// example. qualifiedName can be changed to other unique attributes)
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchGetByUniqueAttributesAsync(string,bool?,bool?,string,CancellationToken)']/*" />
+        public virtual async Task<Response<AtlasEntitiesWithExtInfo>> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await BatchGetByUniqueAttributesAsync(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context).ConfigureAwait(false);
+            return Response.FromValue(AtlasEntitiesWithExtInfo.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Bulk API to retrieve list of entities identified by its unique attributes.
+        /// In
+        /// addition to the typeName path parameter, attribute key-value pair(s) can be
+        /// provided in the following
+        /// format
+        ///
+        /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
+        ///
+        /// NOTE:
+        /// The attrName should be an unique attribute for the given entity-type.
+        /// The REST
+        /// request would look something like this
+        ///
+        /// GET
+        /// /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_1:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
+        ///
+        /// Note:
+        /// at least one unique attribute must be provided.
+        /// </summary>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
+        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
+        /// <param name="attrNQualifiedName">
+        /// Qualified name of an entity. E.g. to find 2 entities you can set
+        /// attrs_1:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. (This is only an
+        /// example. qualifiedName can be changed to other unique attributes)
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchGetByUniqueAttributes(string,bool?,bool?,string,CancellationToken)']/*" />
+        public virtual Response<AtlasEntitiesWithExtInfo> BatchGetByUniqueAttributes(string typeName, bool? minExtInfo = null, bool? ignoreRelationships = null, string attrNQualifiedName = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = BatchGetByUniqueAttributes(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
+            return Response.FromValue(AtlasEntitiesWithExtInfo.FromResponse(response), response);
+        }
+
+        /// <summary>
         /// [Protocol Method] Bulk API to retrieve list of entities identified by its unique attributes.
         /// In
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following
         /// format
+        ///
         /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
+        ///
         /// NOTE:
         /// The attrName should be an unique attribute for the given entity-type.
         /// The REST
         /// request would look something like this
+        ///
         /// GET
         /// /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_1:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
+        ///
         /// Note:
         /// at least one unique attribute must be provided.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="BatchGetByUniqueAttributesAsync(string,bool?,bool?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2461,21 +2815,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// attrs_1:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. (This is only an
         /// example. qualifiedName can be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchGetByUniqueAttributesAsync(string,bool?,bool?,string,RequestContext)']/*" />
         public virtual async Task<Response> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.BatchGetByUniqueAttributes");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.BatchGetByUniqueAttributes");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
                 using HttpMessage message = CreateBatchGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2485,20 +2840,36 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// Bulk API to retrieve list of entities identified by its unique attributes.
+        /// [Protocol Method] Bulk API to retrieve list of entities identified by its unique attributes.
         /// In
         /// addition to the typeName path parameter, attribute key-value pair(s) can be
         /// provided in the following
         /// format
+        ///
         /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
+        ///
         /// NOTE:
         /// The attrName should be an unique attribute for the given entity-type.
         /// The REST
         /// request would look something like this
+        ///
         /// GET
         /// /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_1:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
+        ///
         /// Note:
         /// at least one unique attribute must be provided.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="BatchGetByUniqueAttributes(string,bool?,bool?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
@@ -2508,110 +2879,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// attrs_1:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. (This is only an
         /// example. qualifiedName can be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasEntitiesWithExtInfo> BatchGetByUniqueAttributes(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attrNQualifiedName = default, CancellationToken cancellationToken = default)
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='BatchGetByUniqueAttributes(string,bool?,bool?,string,RequestContext)']/*" />
+        public virtual Response BatchGetByUniqueAttributes(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Response result = BatchGetByUniqueAttributes(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasEntitiesWithExtInfo)result, result);
-        }
-
-        /// <summary>
-        /// Bulk API to retrieve list of entities identified by its unique attributes.
-        /// In
-        /// addition to the typeName path parameter, attribute key-value pair(s) can be
-        /// provided in the following
-        /// format
-        /// typeName=\&lt;typeName&gt;&amp;attr_1:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_2:\&lt;attrName&gt;=\&lt;attrValue&gt;&amp;attr_3:\&lt;attrName&gt;=\&lt;attrValue&gt;
-        /// NOTE:
-        /// The attrName should be an unique attribute for the given entity-type.
-        /// The REST
-        /// request would look something like this
-        /// GET
-        /// /v2/entity/bulk/uniqueAttribute/type/hive_db?attr_1:qualifiedName=db1@cl1&amp;attr_2:qualifiedName=db2@cl1
-        /// Note:
-        /// at least one unique attribute must be provided.
-        /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="minExtInfo"> Whether to return minimal information for referred entities. </param>
-        /// <param name="ignoreRelationships"> Whether to ignore relationship attributes. </param>
-        /// <param name="attrNQualifiedName">
-        /// Qualified name of an entity. E.g. to find 2 entities you can set
-        /// attrs_1:qualifiedName=db1@cl1&amp;attrs_2:qualifiedName=db2@cl1. (This is only an
-        /// example. qualifiedName can be changed to other unique attributes)
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AtlasEntitiesWithExtInfo>> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo = default, bool? ignoreRelationships = default, string attrNQualifiedName = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-            Response result = await BatchGetByUniqueAttributesAsync(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasEntitiesWithExtInfo)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get entity header given its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetHeader(string guid, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetHeader");
+            using var scope = ClientDiagnostics.CreateScope("Entity.BatchGetByUniqueAttributes");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-                using HttpMessage message = CreateGetHeaderRequest(guid, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get entity header given its GUID.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetHeaderAsync(string guid, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetHeader");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-                using HttpMessage message = CreateGetHeaderRequest(guid, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateBatchGetByUniqueAttributesRequest(typeName, minExtInfo, ignoreRelationships, attrNQualifiedName, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2622,162 +2905,184 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Get entity header given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AtlasEntityHeader> GetHeader(string guid, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            Response result = GetHeader(guid, cancellationToken.ToRequestContext());
-            return Response.FromValue((AtlasEntityHeader)result, result);
-        }
-
-        /// <summary> Get entity header given its GUID. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetHeaderAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEntityHeader>> GetHeaderAsync(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            Response result = await GetHeaderAsync(guid, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AtlasEntityHeader)result, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetHeaderAsync(guid, context).ConfigureAwait(false);
+            return Response.FromValue(AtlasEntityHeader.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// [Protocol Method] Remove business metadata from an entity.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get entity header given its GUID. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response RemoveBusinessMetadata(string guid, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadata");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateRemoveBusinessMetadataRequest(guid, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Remove business metadata from an entity.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveBusinessMetadataAsync(string guid, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadata");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateRemoveBusinessMetadataRequest(guid, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Remove business metadata from an entity. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="body"> Business metadata payload. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RemoveBusinessMetadata(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetHeader(string,CancellationToken)']/*" />
+        public virtual Response<AtlasEntityHeader> GetHeader(string guid, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return RemoveBusinessMetadata(guid, content, cancellationToken.ToRequestContext());
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetHeader(guid, context);
+            return Response.FromValue(AtlasEntityHeader.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get entity header given its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetHeaderAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetHeaderAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetHeaderAsync(string guid, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetHeader");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetHeaderRequest(guid, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get entity header given its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetHeader(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetHeader(string,RequestContext)']/*" />
+        public virtual Response GetHeader(string guid, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetHeader");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetHeaderRequest(guid, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Remove business metadata from an entity. </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="body"> Business metadata payload. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAsync(string,IDictionary{string,IDictionary{string,BinaryData}},CancellationToken)']/*" />
         public virtual async Task<Response> RemoveBusinessMetadataAsync(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return await RemoveBusinessMetadataAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await RemoveBusinessMetadataAsync(guid, content, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Remove business metadata from an entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="body"> Business metadata payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadata(string,IDictionary{string,IDictionary{string,BinaryData}},CancellationToken)']/*" />
+        public virtual Response RemoveBusinessMetadata(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = RemoveBusinessMetadata(guid, content, context);
+            return response;
         }
 
         /// <summary>
-        /// [Protocol Method] Add business metadata to an entity.
+        /// [Protocol Method] Remove business metadata from an entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RemoveBusinessMetadataAsync(string,IDictionary{string,IDictionary{string,BinaryData}},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="overwrite">
-        /// Whether to overwrite the existing business metadata on the entity or not,
-        /// default is false.
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AddOrUpdateBusinessMetadata(string guid, RequestContent content, bool? overwrite = default, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> RemoveBusinessMetadataAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadata");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAddOrUpdateBusinessMetadataRequest(guid, content, overwrite, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateRemoveBusinessMetadataRequest(guid, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2787,35 +3092,39 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Add business metadata to an entity.
+        /// [Protocol Method] Remove business metadata from an entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RemoveBusinessMetadata(string,IDictionary{string,IDictionary{string,BinaryData}},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="overwrite">
-        /// Whether to overwrite the existing business metadata on the entity or not,
-        /// default is false.
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, RequestContent content, bool? overwrite = default, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadata(string,RequestContent,RequestContext)']/*" />
+        public virtual Response RemoveBusinessMetadata(string guid, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadata");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAddOrUpdateBusinessMetadataRequest(guid, content, overwrite, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateRemoveBusinessMetadataRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2831,17 +3140,19 @@ namespace Azure.Analytics.Purview.DataMap
         /// Whether to overwrite the existing business metadata on the entity or not,
         /// default is false.
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddOrUpdateBusinessMetadata(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, bool? overwrite = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAsync(string,IDictionary{string,IDictionary{string,BinaryData}},bool?,CancellationToken)']/*" />
+        public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, bool? overwrite = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return AddOrUpdateBusinessMetadata(guid, content, overwrite, cancellationToken.ToRequestContext());
+            using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AddOrUpdateBusinessMetadataAsync(guid, content, overwrite, context).ConfigureAwait(false);
+            return response;
         }
 
         /// <summary> Add business metadata to an entity. </summary>
@@ -2851,47 +3162,59 @@ namespace Azure.Analytics.Purview.DataMap
         /// Whether to overwrite the existing business metadata on the entity or not,
         /// default is false.
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, bool? overwrite = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadata(string,IDictionary{string,IDictionary{string,BinaryData}},bool?,CancellationToken)']/*" />
+        public virtual Response AddOrUpdateBusinessMetadata(string guid, IDictionary<string, IDictionary<string, BinaryData>> body, bool? overwrite = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return await AddOrUpdateBusinessMetadataAsync(guid, content, overwrite, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AddOrUpdateBusinessMetadata(guid, content, overwrite, context);
+            return response;
         }
 
         /// <summary>
-        /// [Protocol Method] Delete business metadata attributes from an entity.
+        /// [Protocol Method] Add business metadata to an entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddOrUpdateBusinessMetadataAsync(string,IDictionary{string,IDictionary{string,BinaryData}},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="overwrite">
+        /// Whether to overwrite the existing business metadata on the entity or not,
+        /// default is false.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response RemoveBusinessMetadataAttributes(string businessMetadataName, string guid, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAsync(string,RequestContent,bool?,RequestContext)']/*" />
+        public virtual async Task<Response> AddOrUpdateBusinessMetadataAsync(string guid, RequestContent content, bool? overwrite = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadataAttributes");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateRemoveBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataRequest(guid, content, overwrite, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2901,33 +3224,43 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Delete business metadata attributes from an entity.
+        /// [Protocol Method] Add business metadata to an entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddOrUpdateBusinessMetadata(string,IDictionary{string,IDictionary{string,BinaryData}},bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="overwrite">
+        /// Whether to overwrite the existing business metadata on the entity or not,
+        /// default is false.
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveBusinessMetadataAttributesAsync(string businessMetadataName, string guid, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadata(string,RequestContent,bool?,RequestContext)']/*" />
+        public virtual Response AddOrUpdateBusinessMetadata(string guid, RequestContent content, bool? overwrite = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadataAttributes");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateRemoveBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataRequest(guid, content, overwrite, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -2937,69 +3270,81 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Delete business metadata attributes from an entity. </summary>
-        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="body"> Business metadata attribute payload. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RemoveBusinessMetadataAttributes(string businessMetadataName, string guid, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="businessMetadataName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="businessMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAttributesAsync(string,string,IDictionary{string,BinaryData},CancellationToken)']/*" />
+        public virtual async Task<Response> RemoveBusinessMetadataAttributesAsync(string guid, string businessMetadataName, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return RemoveBusinessMetadataAttributes(businessMetadataName, guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await RemoveBusinessMetadataAttributesAsync(guid, businessMetadataName, content, context).ConfigureAwait(false);
+            return response;
         }
 
         /// <summary> Delete business metadata attributes from an entity. </summary>
-        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="body"> Business metadata attribute payload. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveBusinessMetadataAttributesAsync(string businessMetadataName, string guid, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="businessMetadataName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="businessMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAttributes(string,string,IDictionary{string,BinaryData},CancellationToken)']/*" />
+        public virtual Response RemoveBusinessMetadataAttributes(string guid, string businessMetadataName, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return await RemoveBusinessMetadataAttributesAsync(businessMetadataName, guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = RemoveBusinessMetadataAttributes(guid, businessMetadataName, content, context);
+            return response;
         }
 
         /// <summary>
-        /// [Protocol Method] Add or update business metadata attributes.
+        /// [Protocol Method] Delete business metadata attributes from an entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RemoveBusinessMetadataAttributesAsync(string,string,IDictionary{string,BinaryData},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="businessMetadataName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="businessMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AddOrUpdateBusinessMetadataAttributes(string businessMetadataName, string guid, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> RemoveBusinessMetadataAttributesAsync(string guid, string businessMetadataName, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadataAttributes");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadataAttributes");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAddOrUpdateBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateRemoveBusinessMetadataAttributesRequest(guid, businessMetadataName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3009,33 +3354,41 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Add or update business metadata attributes.
+        /// [Protocol Method] Delete business metadata attributes from an entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RemoveBusinessMetadataAttributes(string,string,IDictionary{string,BinaryData},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="businessMetadataName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="businessMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string businessMetadataName, string guid, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveBusinessMetadataAttributes(string,string,RequestContent,RequestContext)']/*" />
+        public virtual Response RemoveBusinessMetadataAttributes(string guid, string businessMetadataName, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadataAttributes");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveBusinessMetadataAttributes");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateAddOrUpdateBusinessMetadataAttributesRequest(businessMetadataName, guid, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateRemoveBusinessMetadataAttributesRequest(guid, businessMetadataName, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3045,60 +3398,81 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Add or update business metadata attributes. </summary>
-        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="body"> Business metadata attribute payload. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddOrUpdateBusinessMetadataAttributes(string businessMetadataName, string guid, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="businessMetadataName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="businessMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAttributesAsync(string,string,IDictionary{string,BinaryData},CancellationToken)']/*" />
+        public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string businessMetadataName, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return AddOrUpdateBusinessMetadataAttributes(businessMetadataName, guid, content, cancellationToken.ToRequestContext());
+            using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AddOrUpdateBusinessMetadataAttributesAsync(guid, businessMetadataName, content, context).ConfigureAwait(false);
+            return response;
         }
 
         /// <summary> Add or update business metadata attributes. </summary>
-        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
         /// <param name="body"> Business metadata attribute payload. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="businessMetadataName"/>, <paramref name="guid"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="businessMetadataName"/> or <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string businessMetadataName, string guid, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="businessMetadataName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="businessMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAttributes(string,string,IDictionary{string,BinaryData},CancellationToken)']/*" />
+        public virtual Response AddOrUpdateBusinessMetadataAttributes(string guid, string businessMetadataName, IDictionary<string, BinaryData> body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = BinaryContentHelper.FromDictionary(body);
-            return await AddOrUpdateBusinessMetadataAttributesAsync(businessMetadataName, guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AddOrUpdateBusinessMetadataAttributes(guid, businessMetadataName, content, context);
+            return response;
         }
 
         /// <summary>
-        /// [Protocol Method] Get the sample Template for uploading/creating bulk BusinessMetaData
+        /// [Protocol Method] Add or update business metadata attributes.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddOrUpdateBusinessMetadataAttributesAsync(string,string,IDictionary{string,BinaryData},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="businessMetadataName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="businessMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetBusinessMetadataTemplate(RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAttributesAsync(string,string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string businessMetadataName, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetBusinessMetadataTemplate");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadataAttributes");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBusinessMetadataTemplateRequest(context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataAttributesRequest(guid, businessMetadataName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3108,24 +3482,41 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Get the sample Template for uploading/creating bulk BusinessMetaData
+        /// [Protocol Method] Add or update business metadata attributes.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddOrUpdateBusinessMetadataAttributes(string,string,IDictionary{string,BinaryData},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="businessMetadataName"> BusinessMetadata name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/>, <paramref name="businessMetadataName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> or <paramref name="businessMetadataName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBusinessMetadataTemplateAsync(RequestContext context)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddOrUpdateBusinessMetadataAttributes(string,string,RequestContent,RequestContext)']/*" />
+        public virtual Response AddOrUpdateBusinessMetadataAttributes(string guid, string businessMetadataName, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.GetBusinessMetadataTemplate");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddOrUpdateBusinessMetadataAttributes");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBusinessMetadataTemplateRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateAddOrUpdateBusinessMetadataAttributesRequest(guid, businessMetadataName, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3135,47 +3526,52 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetBusinessMetadataTemplate(CancellationToken cancellationToken = default)
-        {
-            Response result = GetBusinessMetadataTemplate(cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetBusinessMetadataTemplateAsync(CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetBusinessMetadataTemplateAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetBusinessMetadataTemplateAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetBusinessMetadataTemplateAsync(context).ConfigureAwait(false);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary> Get the sample Template for uploading/creating bulk BusinessMetaData. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetBusinessMetadataTemplate(CancellationToken)']/*" />
+        public virtual Response<BinaryData> GetBusinessMetadataTemplate(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetBusinessMetadataTemplate(context);
+            return Response.FromValue(response.Content, response);
         }
 
         /// <summary>
-        /// [Protocol Method] Upload the file for creating Business Metadata in BULK
+        /// [Protocol Method] Get the sample Template for uploading/creating bulk BusinessMetaData
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetBusinessMetadataTemplateAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ImportBusinessMetadata(RequestContent content, string contentType, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetBusinessMetadataTemplateAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetBusinessMetadataTemplateAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.ImportBusinessMetadata");
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetBusinessMetadataTemplate");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateGetBusinessMetadataTemplateRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3185,29 +3581,102 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
+        /// [Protocol Method] Get the sample Template for uploading/creating bulk BusinessMetaData
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetBusinessMetadataTemplate(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='GetBusinessMetadataTemplate(RequestContext)']/*" />
+        public virtual Response GetBusinessMetadataTemplate(RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("Entity.GetBusinessMetadataTemplate");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetBusinessMetadataTemplateRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
+        /// <param name="body"> Multipart body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(BusinessMetadataOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<BulkImportResult>> ImportBusinessMetadataAsync(BusinessMetadataOptions body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await ImportBusinessMetadataAsync(content, content.ContentType, context).ConfigureAwait(false);
+            return Response.FromValue(BulkImportResult.FromResponse(response), response);
+        }
+
+        /// <summary> Upload the file for creating Business Metadata in BULK. </summary>
+        /// <param name="body"> Multipart body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)']/*" />
+        public virtual Response<BulkImportResult> ImportBusinessMetadata(BusinessMetadataOptions body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultipartFormDataRequestContent content = body.ToMultipartRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = ImportBusinessMetadata(content, content.ContentType, context);
+            return Response.FromValue(BulkImportResult.FromResponse(response), response);
+        }
+
+        /// <summary>
         /// [Protocol Method] Upload the file for creating Business Metadata in BULK
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ImportBusinessMetadataAsync(BusinessMetadataOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="contentType"> The content type for the operation. Always multipart/form-data for this operation. Allowed values: "multipart/form-data". </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, string contentType, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.ImportBusinessMetadata");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.ImportBusinessMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3217,30 +3686,37 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Delete given labels to a given entity.
+        /// [Protocol Method] Upload the file for creating Business Metadata in BULK
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ImportBusinessMetadata(BusinessMetadataOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="contentType"> The content type for the operation. Always multipart/form-data for this operation. Allowed values: "multipart/form-data". </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response RemoveLabels(string guid, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(RequestContent,string,RequestContext)']/*" />
+        public virtual Response ImportBusinessMetadata(RequestContent content, string contentType, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveLabels");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.ImportBusinessMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-                using HttpMessage message = CreateRemoveLabelsRequest(guid, content, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3249,31 +3725,73 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <summary> Delete given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="body"> set of labels to be deleted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsAsync(string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual async Task<Response> RemoveLabelsAsync(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await RemoveLabelsAsync(guid, content, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Delete given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="body"> set of labels to be deleted. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabels(string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Response RemoveLabels(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = RemoveLabels(guid, content, context);
+            return response;
+        }
+
         /// <summary>
         /// [Protocol Method] Delete given labels to a given entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RemoveLabelsAsync(string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RemoveLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveLabels");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabels");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
                 using HttpMessage message = CreateRemoveLabelsRequest(guid, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3282,61 +3800,39 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        /// <summary> Delete given labels to a given entity. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="body"> set of labels to be deleted. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RemoveLabels(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return RemoveLabels(guid, content, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Delete given labels to a given entity. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="body"> set of labels to be deleted. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveLabelsAsync(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await RemoveLabelsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
         /// <summary>
-        /// [Protocol Method] Set labels to a given entity.
+        /// [Protocol Method] Delete given labels to a given entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RemoveLabels(string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetLabels(string guid, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabels(string,RequestContent,RequestContext)']/*" />
+        public virtual Response RemoveLabels(string guid, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.SetLabels");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabels");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-                using HttpMessage message = CreateSetLabelsRequest(guid, content, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateRemoveLabelsRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3345,31 +3841,73 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <summary> Set labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="body"> set of labels to be set to the entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsAsync(string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual async Task<Response> SetLabelsAsync(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await SetLabelsAsync(guid, content, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Set labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="body"> set of labels to be set to the entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabels(string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Response SetLabels(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = SetLabels(guid, content, context);
+            return response;
+        }
+
         /// <summary>
         /// [Protocol Method] Set labels to a given entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="SetLabelsAsync(string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SetLabelsAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.SetLabels");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.SetLabels");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
                 using HttpMessage message = CreateSetLabelsRequest(guid, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3378,61 +3916,39 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        /// <summary> Set labels to a given entity. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="body"> set of labels to be set to the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetLabels(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return SetLabels(guid, content, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Set labels to a given entity. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="body"> set of labels to be set to the entity. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetLabelsAsync(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await SetLabelsAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
         /// <summary>
-        /// [Protocol Method] Add given labels to a given entity.
+        /// [Protocol Method] Set labels to a given entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="SetLabels(string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AddLabel(string guid, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabels(string,RequestContent,RequestContext)']/*" />
+        public virtual Response SetLabels(string guid, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddLabel");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.SetLabels");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-                using HttpMessage message = CreateAddLabelRequest(guid, content, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateSetLabelsRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3441,108 +3957,73 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <summary> Add given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="body"> set of labels to be added. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelAsync(string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual async Task<Response> AddLabelAsync(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AddLabelAsync(guid, content, context).ConfigureAwait(false);
+            return response;
+        }
+
+        /// <summary> Add given labels to a given entity. </summary>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
+        /// <param name="body"> set of labels to be added. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabel(string,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Response AddLabel(string guid, IEnumerable<string> body = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AddLabel(guid, content, context);
+            return response;
+        }
+
         /// <summary>
         /// [Protocol Method] Add given labels to a given entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddLabelAsync(string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AddLabelAsync(string guid, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddLabel");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddLabel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
                 using HttpMessage message = CreateAddLabelRequest(guid, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Add given labels to a given entity. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="body"> set of labels to be added. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddLabel(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return AddLabel(guid, content, cancellationToken.ToRequestContext());
-        }
-
-        /// <summary> Add given labels to a given entity. </summary>
-        /// <param name="guid"> The globally unique identifier of the entity. </param>
-        /// <param name="body"> set of labels to be added. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddLabelAsync(string guid, IEnumerable<string> body = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
-
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await AddLabelAsync(guid, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique
-        /// attribute.
-        /// If labels is null/empty, no labels will be removed.
-        /// If any labels
-        /// in labels set are non-existing labels, they will be ignored, only existing
-        /// labels will be removed. In addition to the typeName path parameter, attribute
-        /// key-value pair(s) can be provided in the following format:
-        /// attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique
-        /// across entities, eg. qualifiedName. The REST request would look something like
-        /// this: DELETE
-        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response RemoveLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveLabelsByUniqueAttribute");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-                using HttpMessage message = CreateRemoveLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
-                return Pipeline.ProcessMessage(message, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3552,44 +4033,38 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique
-        /// attribute.
-        /// If labels is null/empty, no labels will be removed.
-        /// If any labels
-        /// in labels set are non-existing labels, they will be ignored, only existing
-        /// labels will be removed. In addition to the typeName path parameter, attribute
-        /// key-value pair(s) can be provided in the following format:
-        /// attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique
-        /// across entities, eg. qualifiedName. The REST request would look something like
-        /// this: DELETE
-        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
+        /// [Protocol Method] Add given labels to a given entity.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddLabel(string,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="guid"> The globally unique identifier of the entity. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="attribute">
-        /// The qualified name of the entity. (This is only an example. qualifiedName can
-        /// be changed to other unique attributes)
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabel(string,RequestContent,RequestContext)']/*" />
+        public virtual Response AddLabel(string guid, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.RemoveLabelsByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddLabel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-                using HttpMessage message = CreateRemoveLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateAddLabelRequest(guid, content, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3601,7 +4076,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Delete given labels to a given entity identified by its type and unique
         /// attribute.
+        ///
         /// If labels is null/empty, no labels will be removed.
+        ///
         /// If any labels
         /// in labels set are non-existing labels, they will be ignored, only existing
         /// labels will be removed. In addition to the typeName path parameter, attribute
@@ -3617,22 +4094,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RemoveLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)']/*" />
+        public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return RemoveLabelsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await RemoveLabelsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
+            return response;
         }
 
         /// <summary>
         /// Delete given labels to a given entity identified by its type and unique
         /// attribute.
+        ///
         /// If labels is null/empty, no labels will be removed.
+        ///
         /// If any labels
         /// in labels set are non-existing labels, they will be ignored, only existing
         /// labels will be removed. In addition to the typeName path parameter, attribute
@@ -3648,33 +4129,44 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)']/*" />
+        public virtual Response RemoveLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await RemoveLabelsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = RemoveLabelsByUniqueAttribute(typeName, content, attribute, context);
+            return response;
         }
 
         /// <summary>
-        /// [Protocol Method] Set labels to a given entity identified by its type and unique attributes.
-        /// If
-        /// labels is null/empty, existing labels will all be removed.
-        /// In addition to the
-        /// typeName path parameter, attribute key-value pair(s) can be provided in the
-        /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// NOTE: The attrName and
-        /// attrValue should be unique across entities, eg. qualifiedName.
-        /// The REST
-        /// request would look something like this: POST
+        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique
+        /// attribute.
+        ///
+        /// If labels is null/empty, no labels will be removed.
+        ///
+        /// If any labels
+        /// in labels set are non-existing labels, they will be ignored, only existing
+        /// labels will be removed. In addition to the typeName path parameter, attribute
+        /// key-value pair(s) can be provided in the following format:
+        /// attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique
+        /// across entities, eg. qualifiedName. The REST request would look something like
+        /// this: DELETE
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RemoveLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3684,21 +4176,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> RemoveLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.SetLabelsByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabelsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-                using HttpMessage message = CreateSetLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateRemoveLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3708,20 +4201,29 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Set labels to a given entity identified by its type and unique attributes.
-        /// If
-        /// labels is null/empty, existing labels will all be removed.
-        /// In addition to the
-        /// typeName path parameter, attribute key-value pair(s) can be provided in the
-        /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
-        /// NOTE: The attrName and
-        /// attrValue should be unique across entities, eg. qualifiedName.
-        /// The REST
-        /// request would look something like this: POST
+        /// [Protocol Method] Delete given labels to a given entity identified by its type and unique
+        /// attribute.
+        ///
+        /// If labels is null/empty, no labels will be removed.
+        ///
+        /// If any labels
+        /// in labels set are non-existing labels, they will be ignored, only existing
+        /// labels will be removed. In addition to the typeName path parameter, attribute
+        /// key-value pair(s) can be provided in the following format:
+        /// attr:&lt;attrName&gt;=&lt;attrValue&gt;. NOTE: The attrName and attrValue should be unique
+        /// across entities, eg. qualifiedName. The REST request would look something like
+        /// this: DELETE
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RemoveLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3731,21 +4233,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='RemoveLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
+        public virtual Response RemoveLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.SetLabelsByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.RemoveLabelsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-                using HttpMessage message = CreateSetLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateRemoveLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3756,13 +4259,17 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary>
         /// Set labels to a given entity identified by its type and unique attributes.
+        ///
         /// If
         /// labels is null/empty, existing labels will all be removed.
+        ///
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
         /// request would look something like this: POST
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3773,27 +4280,33 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)']/*" />
+        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return SetLabelsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await SetLabelsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
+            return response;
         }
 
         /// <summary>
         /// Set labels to a given entity identified by its type and unique attributes.
+        ///
         /// If
         /// labels is null/empty, existing labels will all be removed.
+        ///
         /// In addition to the
         /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
         /// request would look something like this: POST
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3804,33 +4317,46 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)']/*" />
+        public virtual Response SetLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await SetLabelsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = SetLabelsByUniqueAttribute(typeName, content, attribute, context);
+            return response;
         }
 
         /// <summary>
-        /// [Protocol Method] Add given labels to a given entity identified by its type and unique
-        /// attributes.
-        /// If labels is null/empty, no labels will be added.
-        /// In addition to
-        /// the typeName path parameter, attribute key-value pair(s) can be provided in the
+        /// [Protocol Method] Set labels to a given entity identified by its type and unique attributes.
+        ///
+        /// If
+        /// labels is null/empty, existing labels will all be removed.
+        ///
+        /// In addition to the
+        /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
-        /// request would look something like this: PUT
+        /// request would look something like this: POST
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="SetLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3840,21 +4366,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AddLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> SetLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddLabelsByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.SetLabelsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-                using HttpMessage message = CreateAddLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateSetLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3864,20 +4391,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Add given labels to a given entity identified by its type and unique
-        /// attributes.
-        /// If labels is null/empty, no labels will be added.
-        /// In addition to
-        /// the typeName path parameter, attribute key-value pair(s) can be provided in the
+        /// [Protocol Method] Set labels to a given entity identified by its type and unique attributes.
+        ///
+        /// If
+        /// labels is null/empty, existing labels will all be removed.
+        ///
+        /// In addition to the
+        /// typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
-        /// request would look something like this: PUT
+        /// request would look something like this: POST
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="SetLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3887,21 +4425,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = default, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='SetLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
+        public virtual Response SetLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.AddLabelsByUniqueAttribute");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.SetLabelsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-                using HttpMessage message = CreateAddLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateSetLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -3913,12 +4452,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary>
         /// Add given labels to a given entity identified by its type and unique
         /// attributes.
+        ///
         /// If labels is null/empty, no labels will be added.
+        ///
         /// In addition to
         /// the typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
         /// request would look something like this: PUT
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3929,27 +4472,33 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)']/*" />
+        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return AddLabelsByUniqueAttribute(typeName, content, attribute, cancellationToken.ToRequestContext());
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AddLabelsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
+            return response;
         }
 
         /// <summary>
         /// Add given labels to a given entity identified by its type and unique
         /// attributes.
+        ///
         /// If labels is null/empty, no labels will be added.
+        ///
         /// In addition to
         /// the typeName path parameter, attribute key-value pair(s) can be provided in the
         /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
         /// NOTE: The attrName and
         /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
         /// The REST
         /// request would look something like this: PUT
         /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
@@ -3960,44 +4509,71 @@ namespace Azure.Analytics.Purview.DataMap
         /// The qualified name of the entity. (This is only an example. qualifiedName can
         /// be changed to other unique attributes)
         /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, IEnumerable<string> body = default, string attribute = default, CancellationToken cancellationToken = default)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)']/*" />
+        public virtual Response AddLabelsByUniqueAttribute(string typeName, IEnumerable<string> body = null, string attribute = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            return await AddLabelsByUniqueAttributeAsync(typeName, content, attribute, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AddLabelsByUniqueAttribute(typeName, content, attribute, context);
+            return response;
         }
 
         /// <summary>
-        /// [Protocol Method] Move existing entities to the target collection.
+        /// [Protocol Method] Add given labels to a given entity identified by its type and unique
+        /// attributes.
+        ///
+        /// If labels is null/empty, no labels will be added.
+        ///
+        /// In addition to
+        /// the typeName path parameter, attribute key-value pair(s) can be provided in the
+        /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
+        /// NOTE: The attrName and
+        /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
+        /// The REST
+        /// request would look something like this: PUT
+        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddLabelsByUniqueAttributeAsync(string,IEnumerable{string},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="collectionId"> The collection where entities will be moved to. </param>
+        /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="attribute">
+        /// The qualified name of the entity. (This is only an example. qualifiedName can
+        /// be changed to other unique attributes)
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response MoveEntitiesToCollection(string collectionId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelsByUniqueAttributeAsync(string,RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> AddLabelsByUniqueAttributeAsync(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.MoveEntitiesToCollection");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddLabelsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateMoveEntitiesToCollectionRequest(collectionId, content, context);
-                return Pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateAddLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -4007,31 +4583,56 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Move existing entities to the target collection.
+        /// [Protocol Method] Add given labels to a given entity identified by its type and unique
+        /// attributes.
+        ///
+        /// If labels is null/empty, no labels will be added.
+        ///
+        /// In addition to
+        /// the typeName path parameter, attribute key-value pair(s) can be provided in the
+        /// following format: attr:&lt;attrName&gt;=&lt;attrValue&gt;.
+        ///
+        /// NOTE: The attrName and
+        /// attrValue should be unique across entities, eg. qualifiedName.
+        ///
+        /// The REST
+        /// request would look something like this: PUT
+        /// /v2/entity/uniqueAttribute/type/aType?attr:aTypeAttribute=someValue.
         /// <list type="bullet">
         /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AddLabelsByUniqueAttribute(string,IEnumerable{string},string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="collectionId"> The collection where entities will be moved to. </param>
+        /// <param name="typeName"> The name of the type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="attribute">
+        /// The qualified name of the entity. (This is only an example. qualifiedName can
+        /// be changed to other unique attributes)
+        /// </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> MoveEntitiesToCollectionAsync(string collectionId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddLabelsByUniqueAttribute(string,RequestContent,string,RequestContext)']/*" />
+        public virtual Response AddLabelsByUniqueAttribute(string typeName, RequestContent content, string attribute = null, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Entity.MoveEntitiesToCollection");
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.AddLabelsByUniqueAttribute");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateMoveEntitiesToCollectionRequest(collectionId, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateAddLabelsByUniqueAttributeRequest(typeName, content, attribute, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -4043,33 +4644,812 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Move existing entities to the target collection. </summary>
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
         /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EntityMutationResult> MoveEntitiesToCollection(string collectionId, MoveEntitiesConfig body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = MoveEntitiesToCollection(collectionId, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((EntityMutationResult)result, result);
-        }
-
-        /// <summary> Move existing entities to the target collection. </summary>
-        /// <param name="collectionId"> The collection where entities will be moved to. </param>
-        /// <param name="body"> Body parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)']/*" />
         public virtual async Task<Response<EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, MoveEntitiesConfig body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await MoveEntitiesToCollectionAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((EntityMutationResult)result, result);
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await MoveEntitiesToCollectionAsync(collectionId, content, context).ConfigureAwait(false);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
+
+        /// <summary> Move existing entities to the target collection. </summary>
+        /// <param name="collectionId"> The collection where entities will be moved to. </param>
+        /// <param name="body"> Body parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> MoveEntitiesToCollection(string collectionId, MoveEntitiesConfig body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using RequestContent content = body.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = MoveEntitiesToCollection(collectionId, content, context);
+            return Response.FromValue(EntityMutationResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Move existing entities to the target collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection where entities will be moved to. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> MoveEntitiesToCollectionAsync(string collectionId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.MoveEntitiesToCollection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateMoveEntitiesToCollectionRequest(collectionId, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Move existing entities to the target collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection where entities will be moved to. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,RequestContent,RequestContext)']/*" />
+        public virtual Response MoveEntitiesToCollection(string collectionId, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("Entity.MoveEntitiesToCollection");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateMoveEntitiesToCollectionRequest(collectionId, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(RequestContent content, string businessAttributeUpdateBehavior, string collectionId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (businessAttributeUpdateBehavior != null)
+            {
+                uri.AppendQuery("businessAttributeUpdateBehavior", businessAttributeUpdateBehavior, true);
+            }
+            if (collectionId != null)
+            {
+                uri.AppendQuery("collectionId", collectionId, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetByIdsRequest(IEnumerable<string> guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk", false);
+            if (guid != null && !(guid is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in guid)
+                {
+                    uri.AppendQuery("guid", param, true);
+                }
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (minExtInfo != null)
+            {
+                uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
+            }
+            if (ignoreRelationships != null)
+            {
+                uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateBatchCreateOrUpdateRequest(RequestContent content, string collectionId, string businessAttributeUpdateBehavior, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (collectionId != null)
+            {
+                uri.AppendQuery("collectionId", collectionId, true);
+            }
+            if (businessAttributeUpdateBehavior != null)
+            {
+                uri.AppendQuery("businessAttributeUpdateBehavior", businessAttributeUpdateBehavior, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateBatchDeleteRequest(IEnumerable<string> guid, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk", false);
+            if (guid != null && !(guid is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in guid)
+                {
+                    uri.AppendQuery("guid", param, true);
+                }
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateAddClassificationRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk/classification", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetEntityRequest(string guid, bool? minExtInfo, bool? ignoreRelationships, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            if (minExtInfo != null)
+            {
+                uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
+            }
+            if (ignoreRelationships != null)
+            {
+                uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateAttributeByIdRequest(string guid, string name, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendQuery("name", name, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string guid, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetClassificationRequest(string guid, string classificationName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/classification/", false);
+            uri.AppendPath(classificationName, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveClassificationRequest(string guid, string classificationName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/classification/", false);
+            uri.AppendPath(classificationName, true);
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateGetClassificationsRequest(string guid, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/classifications", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateAddClassificationsRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/classifications", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateClassificationsRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/classifications", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetByUniqueAttributeRequest(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attribute, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            if (minExtInfo != null)
+            {
+                uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
+            }
+            if (ignoreRelationships != null)
+            {
+                uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
+            }
+            if (attribute != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attribute, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateByUniqueAttributeRequest(string typeName, RequestContent content, string attribute, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            if (attribute != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attribute, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteByUniqueAttributeRequest(string typeName, string attribute, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            if (attribute != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attribute, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveClassificationByUniqueAttributeRequest(string typeName, string classificationName, string attribute, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/classification/", false);
+            uri.AppendPath(classificationName, true);
+            if (attribute != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attribute, true);
+            }
+            request.Uri = uri;
+            return message;
+        }
+
+        internal HttpMessage CreateAddClassificationsByUniqueAttributeRequest(string typeName, RequestContent content, string attribute, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/classifications", false);
+            if (attribute != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attribute, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateClassificationsUniqueByAttributeRequest(string typeName, RequestContent content, string attribute, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/classifications", false);
+            if (attribute != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attribute, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateBatchSetClassificationsRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk/setClassifications", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateBatchGetByUniqueAttributesRequest(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/bulk/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            if (minExtInfo != null)
+            {
+                uri.AppendQuery("minExtInfo", minExtInfo.Value, true);
+            }
+            if (ignoreRelationships != null)
+            {
+                uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
+            }
+            if (attrNQualifiedName != null)
+            {
+                uri.AppendQuery("attr_N:qualifiedName", attrNQualifiedName, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetHeaderRequest(string guid, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/header", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveBusinessMetadataRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddOrUpdateBusinessMetadataRequest(string guid, RequestContent content, bool? overwrite, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata", false);
+            if (overwrite != null)
+            {
+                uri.AppendQuery("isOverwrite", overwrite.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveBusinessMetadataAttributesRequest(string guid, string businessMetadataName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata/", false);
+            uri.AppendPath(businessMetadataName, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddOrUpdateBusinessMetadataAttributesRequest(string guid, string businessMetadataName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/businessmetadata/", false);
+            uri.AppendPath(businessMetadataName, true);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetBusinessMetadataTemplateRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/businessmetadata/import/template", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
+            return message;
+        }
+
+        internal HttpMessage CreateImportBusinessMetadataRequest(RequestContent content, string contentType, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/businessmetadata/import", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", contentType);
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveLabelsRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateSetLabelsRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddLabelRequest(string guid, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/guid/", false);
+            uri.AppendPath(guid, true);
+            uri.AppendPath("/labels", false);
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateRemoveLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attribute, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attribute != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attribute, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateSetLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attribute, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attribute != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attribute, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAddLabelsByUniqueAttributeRequest(string typeName, RequestContent content, string attribute, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/uniqueAttribute/type/", false);
+            uri.AppendPath(typeName, true);
+            uri.AppendPath("/labels", false);
+            if (attribute != null)
+            {
+                uri.AppendQuery("attr:qualifiedName", attribute, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateMoveEntitiesToCollectionRequest(string collectionId, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/entity/moveTo", false);
+            uri.AppendQuery("collectionId", collectionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
+        }
+
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier204;
+        private static ResponseClassifier ResponseClassifier204 => _responseClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
     }
 }

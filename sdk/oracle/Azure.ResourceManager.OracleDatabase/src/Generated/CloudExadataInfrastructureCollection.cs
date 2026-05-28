@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.OracleDatabase
     /// </summary>
     public partial class CloudExadataInfrastructureCollection : ArmCollection, IEnumerable<CloudExadataInfrastructureResource>, IAsyncEnumerable<CloudExadataInfrastructureResource>
     {
-        private readonly ClientDiagnostics _cloudExadataInfrastructuresClientDiagnostics;
-        private readonly CloudExadataInfrastructures _cloudExadataInfrastructuresRestClient;
+        private readonly ClientDiagnostics _cloudExadataInfrastructureClientDiagnostics;
+        private readonly CloudExadataInfrastructuresRestOperations _cloudExadataInfrastructureRestClient;
 
-        /// <summary> Initializes a new instance of CloudExadataInfrastructureCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudExadataInfrastructureCollection"/> class for mocking. </summary>
         protected CloudExadataInfrastructureCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudExadataInfrastructureCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CloudExadataInfrastructureCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _cloudExadataInfrastructureClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudExadataInfrastructureResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CloudExadataInfrastructureResource.ResourceType, out string cloudExadataInfrastructureApiVersion);
-            _cloudExadataInfrastructuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", CloudExadataInfrastructureResource.ResourceType.Namespace, Diagnostics);
-            _cloudExadataInfrastructuresRestClient = new CloudExadataInfrastructures(_cloudExadataInfrastructuresClientDiagnostics, Pipeline, Endpoint, cloudExadataInfrastructureApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _cloudExadataInfrastructureRestClient = new CloudExadataInfrastructuresRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudExadataInfrastructureApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a CloudExadataInfrastructure
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CloudExadataInfrastructureResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudexadatainfrastructurename, CloudExadataInfrastructureData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _cloudExadataInfrastructuresClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.CreateOrUpdate");
+            using var scope = _cloudExadataInfrastructureClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, CloudExadataInfrastructureData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
-                    new CloudExadataInfrastructureOperationSource(Client),
-                    _cloudExadataInfrastructuresClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cloudExadataInfrastructureRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudexadatainfrastructurename, data, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(new CloudExadataInfrastructureOperationSource(Client), _cloudExadataInfrastructureClientDiagnostics, Pipeline, _cloudExadataInfrastructureRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudexadatainfrastructurename, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Create a CloudExadataInfrastructure
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CloudExadataInfrastructureResource> CreateOrUpdate(WaitUntil waitUntil, string cloudexadatainfrastructurename, CloudExadataInfrastructureData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _cloudExadataInfrastructuresClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.CreateOrUpdate");
+            using var scope = _cloudExadataInfrastructureClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, CloudExadataInfrastructureData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
-                    new CloudExadataInfrastructureOperationSource(Client),
-                    _cloudExadataInfrastructuresClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cloudExadataInfrastructureRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudexadatainfrastructurename, data, cancellationToken);
+                var operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(new CloudExadataInfrastructureOperationSource(Client), _cloudExadataInfrastructureClientDiagnostics, Pipeline, _cloudExadataInfrastructureRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudexadatainfrastructurename, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a CloudExadataInfrastructure
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         public virtual async Task<Response<CloudExadataInfrastructureResource>> GetAsync(string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
-            using DiagnosticScope scope = _cloudExadataInfrastructuresClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.Get");
+            using var scope = _cloudExadataInfrastructureClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
+                var response = await _cloudExadataInfrastructureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudexadatainfrastructurename, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudExadataInfrastructureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a CloudExadataInfrastructure
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         public virtual Response<CloudExadataInfrastructureResource> Get(string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
-            using DiagnosticScope scope = _cloudExadataInfrastructuresClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.Get");
+            using var scope = _cloudExadataInfrastructureClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CloudExadataInfrastructureData> response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
+                var response = _cloudExadataInfrastructureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudexadatainfrastructurename, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudExadataInfrastructureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.OracleDatabase
         /// List CloudExadataInfrastructure resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudExadataInfrastructureResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudExadataInfrastructureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudExadataInfrastructureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructuresGetByResourceGroupAsyncCollectionResultOfT(_cloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudExadataInfrastructureCollection.GetAll"), data => new CloudExadataInfrastructureResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudExadataInfrastructureRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudExadataInfrastructureRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudExadataInfrastructureResource(Client, CloudExadataInfrastructureData.DeserializeCloudExadataInfrastructureData(e)), _cloudExadataInfrastructureClientDiagnostics, Pipeline, "CloudExadataInfrastructureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List CloudExadataInfrastructure resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="CloudExadataInfrastructureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudExadataInfrastructureResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<CloudExadataInfrastructureData, CloudExadataInfrastructureResource>(new CloudExadataInfrastructuresGetByResourceGroupCollectionResultOfT(_cloudExadataInfrastructuresRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CloudExadataInfrastructureCollection.GetAll"), data => new CloudExadataInfrastructureResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudExadataInfrastructureRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudExadataInfrastructureRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudExadataInfrastructureResource(Client, CloudExadataInfrastructureData.DeserializeCloudExadataInfrastructureData(e)), _cloudExadataInfrastructureClientDiagnostics, Pipeline, "CloudExadataInfrastructureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
-            using DiagnosticScope scope = _cloudExadataInfrastructuresClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.Exists");
+            using var scope = _cloudExadataInfrastructureClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<CloudExadataInfrastructureData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudExadataInfrastructureData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _cloudExadataInfrastructureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudexadatainfrastructurename, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         public virtual Response<bool> Exists(string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
-            using DiagnosticScope scope = _cloudExadataInfrastructuresClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.Exists");
+            using var scope = _cloudExadataInfrastructureClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<CloudExadataInfrastructureData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudExadataInfrastructureData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _cloudExadataInfrastructureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudexadatainfrastructurename, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         public virtual async Task<NullableResponse<CloudExadataInfrastructureResource>> GetIfExistsAsync(string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
-            using DiagnosticScope scope = _cloudExadataInfrastructuresClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.GetIfExists");
+            using var scope = _cloudExadataInfrastructureClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<CloudExadataInfrastructureData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudExadataInfrastructureData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _cloudExadataInfrastructureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudexadatainfrastructurename, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<CloudExadataInfrastructureResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudExadataInfrastructureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudExadataInfrastructures/{cloudexadatainfrastructurename}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudExadataInfrastructures_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudExadataInfrastructure_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudExadataInfrastructureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudexadatainfrastructurename"> CloudExadataInfrastructure name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudexadatainfrastructurename"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudexadatainfrastructurename"/> is null. </exception>
         public virtual NullableResponse<CloudExadataInfrastructureResource> GetIfExists(string cloudexadatainfrastructurename, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudexadatainfrastructurename, nameof(cloudexadatainfrastructurename));
 
-            using DiagnosticScope scope = _cloudExadataInfrastructuresClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.GetIfExists");
+            using var scope = _cloudExadataInfrastructureClientDiagnostics.CreateScope("CloudExadataInfrastructureCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<CloudExadataInfrastructureData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudExadataInfrastructureData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudExadataInfrastructureData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _cloudExadataInfrastructureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudexadatainfrastructurename, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<CloudExadataInfrastructureResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudExadataInfrastructureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CloudExadataInfrastructureResource> IAsyncEnumerable<CloudExadataInfrastructureResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Database connection string information.
-    /// Serialized Name: ConnStringInfo
-    /// </summary>
+    /// <summary> Database connection string information. </summary>
     public partial class ConnStringInfo
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnStringInfo"/>. </summary>
-        /// <param name="name">
-        /// Name of connection string.
-        /// Serialized Name: ConnStringInfo.name
-        /// </param>
-        /// <param name="connectionString">
-        /// Connection string value.
-        /// Serialized Name: ConnStringInfo.connectionString
-        /// </param>
-        /// <param name="connectionStringType">
-        /// Type of database.
-        /// Serialized Name: ConnStringInfo.type
-        /// </param>
+        /// <param name="name"> Name of connection string. </param>
+        /// <param name="connectionString"> Connection string value. </param>
+        /// <param name="connectionStringType"> Type of database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnStringInfo(string name, string connectionString, ConnectionStringType? connectionStringType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,22 +63,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of connection string.
-        /// Serialized Name: ConnStringInfo.name
-        /// </summary>
+        /// <summary> Name of connection string. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// Connection string value.
-        /// Serialized Name: ConnStringInfo.connectionString
-        /// </summary>
+        /// <summary> Connection string value. </summary>
         [WirePath("connectionString")]
         public string ConnectionString { get; set; }
-        /// <summary>
-        /// Type of database.
-        /// Serialized Name: ConnStringInfo.type
-        /// </summary>
+        /// <summary> Type of database. </summary>
         [WirePath("type")]
         public ConnectionStringType? ConnectionStringType { get; set; }
     }

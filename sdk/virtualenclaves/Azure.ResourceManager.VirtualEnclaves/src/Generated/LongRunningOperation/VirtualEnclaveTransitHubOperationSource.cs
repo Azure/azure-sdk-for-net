@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
-    /// <summary></summary>
-    internal partial class VirtualEnclaveTransitHubOperationSource : IOperationSource<VirtualEnclaveTransitHubResource>
+    internal class VirtualEnclaveTransitHubOperationSource : IOperationSource<VirtualEnclaveTransitHubResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal VirtualEnclaveTransitHubOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         VirtualEnclaveTransitHubResource IOperationSource<VirtualEnclaveTransitHubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            VirtualEnclaveTransitHubData data = VirtualEnclaveTransitHubData.DeserializeVirtualEnclaveTransitHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<VirtualEnclaveTransitHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVirtualEnclavesContext.Default);
             return new VirtualEnclaveTransitHubResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<VirtualEnclaveTransitHubResource> IOperationSource<VirtualEnclaveTransitHubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            VirtualEnclaveTransitHubData data = VirtualEnclaveTransitHubData.DeserializeVirtualEnclaveTransitHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualEnclaveTransitHubResource(_client, data);
+            var data = ModelReaderWriter.Read<VirtualEnclaveTransitHubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerVirtualEnclavesContext.Default);
+            return await Task.FromResult(new VirtualEnclaveTransitHubResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

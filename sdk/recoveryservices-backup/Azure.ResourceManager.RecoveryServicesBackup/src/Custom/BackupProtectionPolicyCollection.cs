@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupProtectionPolicyCollection
@@ -24,6 +23,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <description>ProtectionPolicies_CreateOrUpdate</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="BackupProtectionPolicyResource"/></description>
         /// </item>
@@ -37,7 +40,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BackupProtectionPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string policyName, BackupProtectionPolicyData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, policyName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+        {
+            return CreateOrUpdate(waitUntil, policyName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+        }
 
         /// <summary>
         /// Creates or modifies a backup policy. This is an asynchronous operation. Status of the operation can be fetched
@@ -52,6 +57,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <description>ProtectionPolicies_CreateOrUpdate</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="BackupProtectionPolicyResource"/></description>
         /// </item>
@@ -64,7 +73,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<BackupProtectionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, BackupProtectionPolicyData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, policyName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken).ConfigureAwait(false);
+        public virtual Task<ArmOperation<BackupProtectionPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, BackupProtectionPolicyData data, CancellationToken cancellationToken)
+        {
+            return CreateOrUpdateAsync(waitUntil, policyName, data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
+        }
     }
 }

@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "SendContentType",
+      "name": "sendContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -22,7 +22,7 @@
     {
       "$id": "3",
       "kind": "constant",
-      "name": "SendContentType1",
+      "name": "getContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -45,11 +45,6 @@
       "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.JsonEncodedNameModel",
       "usage": "Input,Output,Json",
       "decorators": [],
-      "serializationOptions": {
-        "json": {
-          "name": "JsonEncodedNameModel"
-        }
-      },
       "properties": [
         {
           "$id": "6",
@@ -120,7 +115,6 @@
           "crossLanguageDefinitionId": "Serialization.EncodedName.Json.endpoint"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Serialization.EncodedName.Json",
       "apiVersions": [],
@@ -158,30 +152,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.contentType",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "16",
-                        "kind": "method",
-                        "name": "contentType",
-                        "serializedName": "Content-Type",
-                        "doc": "Body parameter's content type. Known values are application/json",
-                        "type": {
-                          "$ref": "1"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.contentType",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.contentType"
                   },
                   {
-                    "$id": "17",
+                    "$id": "16",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -197,31 +171,7 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.body",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "18",
-                        "kind": "method",
-                        "name": "body",
-                        "serializedName": "body",
-                        "type": {
-                          "$ref": "5"
-                        },
-                        "location": "Body",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.body",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "body"
-                      }
-                    }
+                    "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.body"
                   }
                 ],
                 "responses": [
@@ -230,8 +180,7 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "POST",
@@ -244,15 +193,43 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send",
-                "decorators": [],
-                "namespace": "Serialization.EncodedName.Json.Property"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "18"
+                  "$id": "17",
+                  "kind": "method",
+                  "name": "body",
+                  "serializedName": "body",
+                  "type": {
+                    "$ref": "5"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "16"
+                  "$id": "18",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "1"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.send.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -287,26 +264,7 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.get.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "22",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "3"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.get.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.get.accept"
                   }
                 ],
                 "responses": [
@@ -321,12 +279,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -336,12 +289,25 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.get",
-                "decorators": [],
-                "namespace": "Serialization.EncodedName.Json.Property"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "22"
+                  "$id": "22",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "3"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.get.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -384,20 +350,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property.endpoint"
+              "crossLanguageDefinitionId": "Serialization.EncodedName.Json.endpoint"
             }
           ],
-          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Serialization.EncodedName.Json.Property",
           "apiVersions": [],
           "parent": {
             "$ref": "8"
-          },
-          "isMultiServiceClient": false
+          }
         }
-      ],
-      "isMultiServiceClient": false
+      ]
     }
   ]
 }

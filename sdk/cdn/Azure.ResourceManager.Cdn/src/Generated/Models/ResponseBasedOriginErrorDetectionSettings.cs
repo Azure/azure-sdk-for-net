@@ -7,15 +7,46 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. </summary>
+    /// <summary>
+    /// The JSON object that contains the properties to determine origin health using real requests/responses.
+    /// Serialized Name: ResponseBasedOriginErrorDetectionParameters
+    /// </summary>
     public partial class ResponseBasedOriginErrorDetectionSettings
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResponseBasedOriginErrorDetectionSettings"/>. </summary>
         public ResponseBasedOriginErrorDetectionSettings()
@@ -24,28 +55,41 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseBasedOriginErrorDetectionSettings"/>. </summary>
-        /// <param name="responseBasedDetectedErrorType"> Type of response errors for real user requests for which origin will be deemed unhealthy. </param>
-        /// <param name="responseBasedFailoverThresholdPercentage"> The percentage of failed requests in the sample where failover should trigger. </param>
-        /// <param name="httpErrorRanges"> The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseBasedOriginErrorDetectionSettings(ResponseBasedDetectedErrorType? responseBasedDetectedErrorType, int? responseBasedFailoverThresholdPercentage, IList<HttpErrorRange> httpErrorRanges, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="responseBasedDetectedErrorType">
+        /// Type of response errors for real user requests for which origin will be deemed unhealthy
+        /// Serialized Name: ResponseBasedOriginErrorDetectionParameters.responseBasedDetectedErrorTypes
+        /// </param>
+        /// <param name="responseBasedFailoverThresholdPercentage">
+        /// The percentage of failed requests in the sample where failover should trigger.
+        /// Serialized Name: ResponseBasedOriginErrorDetectionParameters.responseBasedFailoverThresholdPercentage
+        /// </param>
+        /// <param name="httpErrorRanges">
+        /// The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy.
+        /// Serialized Name: ResponseBasedOriginErrorDetectionParameters.httpErrorRanges
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseBasedOriginErrorDetectionSettings(ResponseBasedDetectedErrorType? responseBasedDetectedErrorType, int? responseBasedFailoverThresholdPercentage, IList<HttpErrorRange> httpErrorRanges, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResponseBasedDetectedErrorType = responseBasedDetectedErrorType;
             ResponseBasedFailoverThresholdPercentage = responseBasedFailoverThresholdPercentage;
             HttpErrorRanges = httpErrorRanges;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of response errors for real user requests for which origin will be deemed unhealthy. </summary>
-        [WirePath("responseBasedDetectedErrorTypes")]
+        /// <summary>
+        /// Type of response errors for real user requests for which origin will be deemed unhealthy
+        /// Serialized Name: ResponseBasedOriginErrorDetectionParameters.responseBasedDetectedErrorTypes
+        /// </summary>
         public ResponseBasedDetectedErrorType? ResponseBasedDetectedErrorType { get; set; }
-
-        /// <summary> The percentage of failed requests in the sample where failover should trigger. </summary>
-        [WirePath("responseBasedFailoverThresholdPercentage")]
+        /// <summary>
+        /// The percentage of failed requests in the sample where failover should trigger.
+        /// Serialized Name: ResponseBasedOriginErrorDetectionParameters.responseBasedFailoverThresholdPercentage
+        /// </summary>
         public int? ResponseBasedFailoverThresholdPercentage { get; set; }
-
-        /// <summary> The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy. </summary>
-        [WirePath("httpErrorRanges")]
+        /// <summary>
+        /// The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy.
+        /// Serialized Name: ResponseBasedOriginErrorDetectionParameters.httpErrorRanges
+        /// </summary>
         public IList<HttpErrorRange> HttpErrorRanges { get; }
     }
 }

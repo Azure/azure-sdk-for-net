@@ -3,11 +3,10 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
-    /// <summary> The updatable properties of the OrganizationResource. </summary>
-    [CodeGenType("OrganizationResourceUpdateProperties")]
+    [CodeGenModel("OrganizationResourceUpdateProperties")]
     public partial class MongoDBAtlasOrganizationUpdateProperties { }
 }

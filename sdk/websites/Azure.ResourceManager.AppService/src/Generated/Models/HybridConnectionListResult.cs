@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of hostname bindings.
-    /// Serialized Name: HybridConnectionCollection
-    /// </summary>
+    /// <summary> Collection of hostname bindings. </summary>
     internal partial class HybridConnectionListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectionListResult"/>. </summary>
-        /// <param name="value">
-        /// The HybridConnection items on this page
-        /// Serialized Name: HybridConnectionCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HybridConnectionListResult(IEnumerable<HybridConnectionData> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectionListResult"/>. </summary>
-        /// <param name="value">
-        /// The HybridConnection items on this page
-        /// Serialized Name: HybridConnectionCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: HybridConnectionCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionListResult(IReadOnlyList<HybridConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridConnectionListResult(IReadOnlyList<HybridConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,17 +72,11 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The HybridConnection items on this page
-        /// Serialized Name: HybridConnectionCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         [WirePath("value")]
         public IReadOnlyList<HybridConnectionData> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: HybridConnectionCollection.nextLink
-        /// </summary>
+        /// <summary> Link to next page of resources. </summary>
         [WirePath("nextLink")]
-        public Uri NextLink { get; }
+        public string NextLink { get; }
     }
 }

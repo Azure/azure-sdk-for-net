@@ -1,13 +1,14 @@
 # Azure Template client library for .NET
 
-Azure Template is a template project for creating Azure SDK libraries generated from TypeSpec.
+Azure Template is a managed service that helps developers get secret simply and securely.
 
-Use this template as a starting point for:
+Use the client library for to:
 
-* Creating new TypeSpec-based Azure SDK client libraries
-* Understanding the project structure for TypeSpec-generated SDKs
+* [Get secret](https://learn.microsoft.com/azure)
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure)
+[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
+
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure)
 
 ## Getting started
 
@@ -60,13 +61,20 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/template/Azure.Template/samples).
 
-### Basic usage example
+### Get secret
 
-Replace this section with examples specific to your generated client library methods.
+The `GetSecret` method retrieves a secret from the service.
 
-```C#
-// Example code will be generated based on your TypeSpec definition
-// See the samples directory for complete examples
+```C# Snippet:Azure_Template_GetSecret
+string endpoint = "https://myvault.vault.azure.net";
+var credential = new DefaultAzureCredential();
+var client = new TemplateClient(endpoint, credential);
+
+SecretBundle secret = client.GetSecretValue("TestSecret");
+
+Console.WriteLine(secret.Value);
+```Python
+things = client.list_things()
 ```
 
 ## Troubleshooting

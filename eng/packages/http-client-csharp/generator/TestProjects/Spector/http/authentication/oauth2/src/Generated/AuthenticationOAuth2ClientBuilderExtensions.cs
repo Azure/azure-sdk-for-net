@@ -14,9 +14,6 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AuthenticationOAuth2ClientBuilderExtensions
     {
-        public static IAzureClientBuilder<OAuth2Client, OAuth2ClientOptions> AddOAuth2Client<TBuilder>(this TBuilder builder)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential => throw null;
-
         public static IAzureClientBuilder<OAuth2Client, OAuth2ClientOptions> AddOAuth2Client<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential => throw null;
 

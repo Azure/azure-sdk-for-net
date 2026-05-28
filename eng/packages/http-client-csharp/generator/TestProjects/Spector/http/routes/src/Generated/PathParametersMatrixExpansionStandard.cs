@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,8 +16,6 @@ namespace Routes._PathParameters.MatrixExpansion.Standard
     public partial class PathParametersMatrixExpansionStandard
     {
         protected PathParametersMatrixExpansionStandard() => throw null;
-
-        internal PathParametersMatrixExpansionStandard(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Extended info class details. </summary>
-    public partial class WorkloadSqlRecoveryPointExtendedInfo : IJsonModel<WorkloadSqlRecoveryPointExtendedInfo>
+    public partial class WorkloadSqlRecoveryPointExtendedInfo : IUtf8JsonSerializable, IJsonModel<WorkloadSqlRecoveryPointExtendedInfo>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkloadSqlRecoveryPointExtendedInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWorkloadSqlRecoveryPointExtendedInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadSqlRecoveryPointExtendedInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadSqlRecoveryPointExtendedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadSqlRecoveryPointExtendedInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadSqlRecoveryPointExtendedInfo IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadSqlRecoveryPointExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadSqlRecoveryPointExtendedInfo)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(DataDirectoryInfoCapturedOn))
             {
                 writer.WritePropertyName("dataDirectoryTimeInUTC"u8);
@@ -83,31 +43,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("dataDirectoryPaths"u8);
                 writer.WriteStartArray();
-                foreach (SqlDataDirectory item in DataDirectoryPaths)
+                foreach (var item in DataDirectoryPaths)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedDatabases))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("includedDatabases"u8);
-                writer.WriteStartArray();
-                foreach (BackupDatabaseInRecoveryPoint item in IncludedDatabases)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,80 +66,93 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadSqlRecoveryPointExtendedInfo IJsonModel<WorkloadSqlRecoveryPointExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkloadSqlRecoveryPointExtendedInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WorkloadSqlRecoveryPointExtendedInfo IJsonModel<WorkloadSqlRecoveryPointExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadSqlRecoveryPointExtendedInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWorkloadSqlRecoveryPointExtendedInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WorkloadSqlRecoveryPointExtendedInfo DeserializeWorkloadSqlRecoveryPointExtendedInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static WorkloadSqlRecoveryPointExtendedInfo DeserializeWorkloadSqlRecoveryPointExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? dataDirectoryInfoCapturedOn = default;
+            DateTimeOffset? dataDirectoryTimeInUTC = default;
             IList<SqlDataDirectory> dataDirectoryPaths = default;
-            IList<BackupDatabaseInRecoveryPoint> includedDatabases = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("dataDirectoryTimeInUTC"u8))
+                if (property.NameEquals("dataDirectoryTimeInUTC"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataDirectoryInfoCapturedOn = prop.Value.GetDateTimeOffset("O");
+                    dataDirectoryTimeInUTC = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("dataDirectoryPaths"u8))
+                if (property.NameEquals("dataDirectoryPaths"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SqlDataDirectory> array = new List<SqlDataDirectory>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item, options));
                     }
                     dataDirectoryPaths = array;
                     continue;
                 }
-                if (prop.NameEquals("includedDatabases"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BackupDatabaseInRecoveryPoint> array = new List<BackupDatabaseInRecoveryPoint>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(BackupDatabaseInRecoveryPoint.DeserializeBackupDatabaseInRecoveryPoint(item, options));
-                    }
-                    includedDatabases = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryInfoCapturedOn, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), includedDatabases ?? new ChangeTrackingList<BackupDatabaseInRecoveryPoint>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryTimeInUTC, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadSqlRecoveryPointExtendedInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WorkloadSqlRecoveryPointExtendedInfo IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWorkloadSqlRecoveryPointExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadSqlRecoveryPointExtendedInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkloadSqlRecoveryPointExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

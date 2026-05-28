@@ -6,27 +6,38 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
+    /// <summary> A class to add extension methods to ArmClient. </summary>
     public partial class MockableDatabaseWatcherArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableDatabaseWatcherArmClient for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableDatabaseWatcherArmClient"/> class for mocking. </summary>
         protected MockableDatabaseWatcherArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableDatabaseWatcherArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableDatabaseWatcherArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDatabaseWatcherArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="DatabaseWatcherResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        internal MockableDatabaseWatcherArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
+        {
+        }
+
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseWatcherResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseWatcherResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseWatcherResource"/> object. </returns>
         public virtual DatabaseWatcherResource GetDatabaseWatcherResource(ResourceIdentifier id)
@@ -35,7 +46,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
             return new DatabaseWatcherResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DatabaseWatcherAlertRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseWatcherAlertRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseWatcherAlertRuleResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherAlertRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseWatcherAlertRuleResource"/> object. </returns>
         public virtual DatabaseWatcherAlertRuleResource GetDatabaseWatcherAlertRuleResource(ResourceIdentifier id)
@@ -44,7 +58,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
             return new DatabaseWatcherAlertRuleResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DatabaseWatcherHealthValidationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseWatcherHealthValidationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseWatcherHealthValidationResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherHealthValidationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseWatcherHealthValidationResource"/> object. </returns>
         public virtual DatabaseWatcherHealthValidationResource GetDatabaseWatcherHealthValidationResource(ResourceIdentifier id)
@@ -53,7 +70,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
             return new DatabaseWatcherHealthValidationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DatabaseWatcherTargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseWatcherTargetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseWatcherTargetResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseWatcherTargetResource"/> object. </returns>
         public virtual DatabaseWatcherTargetResource GetDatabaseWatcherTargetResource(ResourceIdentifier id)
@@ -62,7 +82,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Mocking
             return new DatabaseWatcherTargetResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DatabaseWatcherSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DatabaseWatcherSharedPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseWatcherSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseWatcherSharedPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseWatcherSharedPrivateLinkResource"/> object. </returns>
         public virtual DatabaseWatcherSharedPrivateLinkResource GetDatabaseWatcherSharedPrivateLinkResource(ResourceIdentifier id)

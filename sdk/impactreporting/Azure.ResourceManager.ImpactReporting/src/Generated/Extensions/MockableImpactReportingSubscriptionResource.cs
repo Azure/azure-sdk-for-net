@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ImpactReporting;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ImpactReporting.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableImpactReportingSubscriptionResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableImpactReportingSubscriptionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableImpactReportingSubscriptionResource"/> class for mocking. </summary>
         protected MockableImpactReportingSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableImpactReportingSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableImpactReportingSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableImpactReportingSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of WorkloadImpacts in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of WorkloadImpacts and their operations over a WorkloadImpactResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of WorkloadImpactResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of WorkloadImpactResources and their operations over a WorkloadImpactResource. </returns>
         public virtual WorkloadImpactCollection GetWorkloadImpacts()
         {
             return GetCachedClient(client => new WorkloadImpactCollection(client, Id));
@@ -42,28 +44,30 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// Get a WorkloadImpact
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workloadImpactName"> workloadImpact resource . </param>
+        /// <param name="workloadImpactName"> workloadImpact resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadImpactResource>> GetWorkloadImpactAsync(string workloadImpactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workloadImpactName, nameof(workloadImpactName));
-
             return await GetWorkloadImpacts().GetAsync(workloadImpactName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,33 +75,35 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// Get a WorkloadImpact
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadImpacts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadImpact_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadImpactResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workloadImpactName"> workloadImpact resource . </param>
+        /// <param name="workloadImpactName"> workloadImpact resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadImpactName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workloadImpactName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadImpactResource> GetWorkloadImpact(string workloadImpactName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(workloadImpactName, nameof(workloadImpactName));
-
             return GetWorkloadImpacts().Get(workloadImpactName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ImpactCategories in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of ImpactCategories and their operations over a ImpactCategoryResource. </returns>
+        /// <summary> Gets a collection of ImpactCategoryResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of ImpactCategoryResources and their operations over a ImpactCategoryResource. </returns>
         public virtual ImpactCategoryCollection GetImpactCategories()
         {
             return GetCachedClient(client => new ImpactCategoryCollection(client, Id));
@@ -107,16 +113,20 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// Get a ImpactCategory
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ImpactCategories_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ImpactCategory_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ImpactCategoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,8 +137,6 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ImpactCategoryResource>> GetImpactCategoryAsync(string impactCategoryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(impactCategoryName, nameof(impactCategoryName));
-
             return await GetImpactCategories().GetAsync(impactCategoryName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -136,16 +144,20 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// Get a ImpactCategory
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/impactCategories/{impactCategoryName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ImpactCategories_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ImpactCategory_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ImpactCategoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,13 +168,11 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         [ForwardsClientCalls]
         public virtual Response<ImpactCategoryResource> GetImpactCategory(string impactCategoryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(impactCategoryName, nameof(impactCategoryName));
-
             return GetImpactCategories().Get(impactCategoryName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ImpactConnectors in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of ImpactConnectors and their operations over a ImpactConnectorResource. </returns>
+        /// <summary> Gets a collection of ImpactConnectorResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of ImpactConnectorResources and their operations over a ImpactConnectorResource. </returns>
         public virtual ImpactConnectorCollection GetImpactConnectors()
         {
             return GetCachedClient(client => new ImpactConnectorCollection(client, Id));
@@ -172,16 +182,20 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// Get a Connector
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Connectors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Connector_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ImpactConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,8 +206,6 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ImpactConnectorResource>> GetImpactConnectorAsync(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
-
             return await GetImpactConnectors().GetAsync(connectorName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -201,16 +213,20 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         /// Get a Connector
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/connectors/{connectorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Connectors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Connector_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ImpactConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,8 +237,6 @@ namespace Azure.ResourceManager.ImpactReporting.Mocking
         [ForwardsClientCalls]
         public virtual Response<ImpactConnectorResource> GetImpactConnector(string connectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
-
             return GetImpactConnectors().Get(connectorName, cancellationToken);
         }
     }

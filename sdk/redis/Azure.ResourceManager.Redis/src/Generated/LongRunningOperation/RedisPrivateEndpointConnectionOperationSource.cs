@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary></summary>
-    internal partial class RedisPrivateEndpointConnectionOperationSource : IOperationSource<RedisPrivateEndpointConnectionResource>
+    internal class RedisPrivateEndpointConnectionOperationSource : IOperationSource<RedisPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal RedisPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         RedisPrivateEndpointConnectionResource IOperationSource<RedisPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            RedisPrivateEndpointConnectionData data = RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<RedisPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
             return new RedisPrivateEndpointConnectionResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<RedisPrivateEndpointConnectionResource> IOperationSource<RedisPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            RedisPrivateEndpointConnectionData data = RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RedisPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<RedisPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
+            return await Task.FromResult(new RedisPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

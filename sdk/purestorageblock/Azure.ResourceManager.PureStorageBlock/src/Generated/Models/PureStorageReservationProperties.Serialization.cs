@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.PureStorageBlock;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
-    /// <summary> Properties of a Reservation resource. </summary>
-    public partial class PureStorageReservationProperties : IJsonModel<PureStorageReservationProperties>
+    public partial class PureStorageReservationProperties : IUtf8JsonSerializable, IJsonModel<PureStorageReservationProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="PureStorageReservationProperties"/> for deserialization. </summary>
-        internal PureStorageReservationProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PureStorageReservationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PureStorageReservationProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PureStorageReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePureStorageReservationProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PureStorageReservationProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PureStorageReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PureStorageReservationProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PureStorageReservationProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PureStorageReservationProperties IPersistableModel<PureStorageReservationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PureStorageReservationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PureStorageReservationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PureStorageReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageReservationProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(ReservationInternalId))
             {
                 writer.WritePropertyName("reservationInternalId"u8);
@@ -93,15 +48,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -110,27 +65,22 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PureStorageReservationProperties IJsonModel<PureStorageReservationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PureStorageReservationProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PureStorageReservationProperties IJsonModel<PureStorageReservationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PureStorageReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PureStorageReservationProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePureStorageReservationProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PureStorageReservationProperties DeserializePureStorageReservationProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static PureStorageReservationProperties DeserializePureStorageReservationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,39 +89,72 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             PureStorageMarketplaceDetails marketplace = default;
             PureStorageUserDetails user = default;
             PureStorageProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("reservationInternalId"u8))
+                if (property.NameEquals("reservationInternalId"u8))
                 {
-                    reservationInternalId = prop.Value.GetString();
+                    reservationInternalId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("marketplace"u8))
+                if (property.NameEquals("marketplace"u8))
                 {
-                    marketplace = PureStorageMarketplaceDetails.DeserializePureStorageMarketplaceDetails(prop.Value, options);
+                    marketplace = PureStorageMarketplaceDetails.DeserializePureStorageMarketplaceDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("user"u8))
+                if (property.NameEquals("user"u8))
                 {
-                    user = PureStorageUserDetails.DeserializePureStorageUserDetails(prop.Value, options);
+                    user = PureStorageUserDetails.DeserializePureStorageUserDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new PureStorageProvisioningState(prop.Value.GetString());
+                    provisioningState = new PureStorageProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new PureStorageReservationProperties(reservationInternalId, marketplace, user, provisioningState, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PureStorageReservationProperties(reservationInternalId, marketplace, user, provisioningState, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PureStorageReservationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PureStorageReservationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PureStorageReservationProperties IPersistableModel<PureStorageReservationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PureStorageReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePureStorageReservationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PureStorageReservationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PureStorageReservationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

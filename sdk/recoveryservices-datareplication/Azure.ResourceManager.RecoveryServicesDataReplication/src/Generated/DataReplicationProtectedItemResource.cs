@@ -6,36 +6,47 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
-    /// A class representing a DataReplicationProtectedItem along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationProtectedItemResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationProtectedItems method.
+    /// A Class representing a DataReplicationProtectedItem along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationProtectedItemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataReplicationProtectedItemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationProtectedItem method.
     /// </summary>
     public partial class DataReplicationProtectedItemResource : ArmResource
     {
-        private readonly ClientDiagnostics _protectedItemClientDiagnostics;
-        private readonly ProtectedItem _protectedItemRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="DataReplicationProtectedItemResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="protectedItemName"> The protectedItemName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _dataReplicationProtectedItemProtectedItemClientDiagnostics;
+        private readonly ProtectedItemRestOperations _dataReplicationProtectedItemProtectedItemRestClient;
         private readonly DataReplicationProtectedItemData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/protectedItems";
 
-        /// <summary> Initializes a new instance of DataReplicationProtectedItemResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationProtectedItemResource"/> class for mocking. </summary>
         protected DataReplicationProtectedItemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationProtectedItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataReplicationProtectedItemResource(ArmClient client, DataReplicationProtectedItemData data) : this(client, data.Id)
@@ -44,93 +55,140 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationProtectedItemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationProtectedItemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataReplicationProtectedItemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataReplicationProtectedItemApiVersion);
-            _protectedItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            _protectedItemRestClient = new ProtectedItem(_protectedItemClientDiagnostics, Pipeline, Endpoint, dataReplicationProtectedItemApiVersion ?? "2024-09-01");
-            ValidateResourceId(id);
+            _dataReplicationProtectedItemProtectedItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string dataReplicationProtectedItemProtectedItemApiVersion);
+            _dataReplicationProtectedItemProtectedItemRestClient = new ProtectedItemRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationProtectedItemProtectedItemApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DataReplicationProtectedItemData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="vaultName"> The vaultName. </param>
-        /// <param name="protectedItemName"> The protectedItemName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of DataReplicationRecoveryPointResources in the DataReplicationProtectedItem. </summary>
+        /// <returns> An object representing collection of DataReplicationRecoveryPointResources and their operations over a DataReplicationRecoveryPointResource. </returns>
+        public virtual DataReplicationRecoveryPointCollection GetDataReplicationRecoveryPoints()
+        {
+            return GetCachedClient(client => new DataReplicationRecoveryPointCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the recovery point of a protected item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryPointModel_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recoveryPointName"> The recovery point name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataReplicationRecoveryPointResource>> GetDataReplicationRecoveryPointAsync(string recoveryPointName, CancellationToken cancellationToken = default)
+        {
+            return await GetDataReplicationRecoveryPoints().GetAsync(recoveryPointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the recovery point of a protected item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryPointModel_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recoveryPointName"> The recovery point name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataReplicationRecoveryPointResource> GetDataReplicationRecoveryPoint(string recoveryPointName, CancellationToken cancellationToken = default)
+        {
+            return GetDataReplicationRecoveryPoints().Get(recoveryPointName, cancellationToken);
         }
 
         /// <summary>
         /// Gets the details of the protected item.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectedItem_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItemModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationProtectedItemResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DataReplicationProtectedItemResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _protectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Get");
+            using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectedItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataReplicationProtectedItemData> response = Response.FromValue(DataReplicationProtectedItemData.FromResponse(result), result);
+                var response = await _dataReplicationProtectedItemProtectedItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationProtectedItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,42 +202,120 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Gets the details of the protected item.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectedItem_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItemModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationProtectedItemResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DataReplicationProtectedItemResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _protectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Get");
+            using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectedItemRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataReplicationProtectedItemData> response = Response.FromValue(DataReplicationProtectedItemData.FromResponse(result), result);
+                var response = _dataReplicationProtectedItemProtectedItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new DataReplicationProtectedItemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the protected item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItemModel_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationProtectedItemResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="forceDelete"> A flag indicating whether to do force delete or not. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceDelete = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _dataReplicationProtectedItemProtectedItemRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesDataReplicationArmOperation(_dataReplicationProtectedItemProtectedItemClientDiagnostics, Pipeline, _dataReplicationProtectedItemProtectedItemRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Removes the protected item.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItemModel_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationProtectedItemResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="forceDelete"> A flag indicating whether to do force delete or not. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceDelete = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _dataReplicationProtectedItemProtectedItemRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDelete, cancellationToken);
+                var operation = new RecoveryServicesDataReplicationArmOperation(_dataReplicationProtectedItemProtectedItemClientDiagnostics, Pipeline, _dataReplicationProtectedItemProtectedItemRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -192,20 +328,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Performs update on the protected item.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectedItem_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItemModel_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationProtectedItemResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,27 +353,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _protectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Update");
+            using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectedItemRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationProtectedItemPatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(
-                    new DataReplicationProtectedItemOperationSource(Client),
-                    _protectedItemClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _dataReplicationProtectedItemProtectedItemRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(new DataReplicationProtectedItemOperationSource(Client), _dataReplicationProtectedItemProtectedItemClientDiagnostics, Pipeline, _dataReplicationProtectedItemProtectedItemRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -251,20 +374,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Performs update on the protected item.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectedItem_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItemModel_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationProtectedItemResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,127 +399,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _protectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Update");
+            using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectedItemRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationProtectedItemPatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(
-                    new DataReplicationProtectedItemOperationSource(Client),
-                    _protectedItemClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _dataReplicationProtectedItemProtectedItemRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(new DataReplicationProtectedItemOperationSource(Client), _dataReplicationProtectedItemProtectedItemClientDiagnostics, Pipeline, _dataReplicationProtectedItemProtectedItemRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes the protected item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectedItem_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationProtectedItemResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceDelete"> A flag indicating whether to do force delete or not. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? forceDelete = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _protectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectedItemRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDelete, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesDataReplicationArmOperation operation = new RecoveryServicesDataReplicationArmOperation(_protectedItemClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Removes the protected item.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectedItem_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationProtectedItemResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="forceDelete"> A flag indicating whether to do force delete or not. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? forceDelete = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _protectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectedItemRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, forceDelete, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesDataReplicationArmOperation operation = new RecoveryServicesDataReplicationArmOperation(_protectedItemClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -410,20 +420,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Performs the planned failover on the protected item.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/plannedFailover. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/plannedFailover</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectedItem_PlannedFailover. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItem_PlannedFailover</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationProtectedItemResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -435,27 +445,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _protectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.PlannedFailover");
+            using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.PlannedFailover");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectedItemRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, Models.PlannedFailover.ToRequestContent(body), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RecoveryServicesDataReplicationArmOperation<PlannedFailover> operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailover>(
-                    new PlannedFailoverOperationSource(),
-                    _protectedItemClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _dataReplicationProtectedItemProtectedItemRestClient.PlannedFailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
+                var operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailover>(new PlannedFailoverOperationSource(), _dataReplicationProtectedItemProtectedItemClientDiagnostics, Pipeline, _dataReplicationProtectedItemProtectedItemRestClient.CreatePlannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -469,20 +466,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// Performs the planned failover on the protected item.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/plannedFailover. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/plannedFailover</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ProtectedItem_PlannedFailover. </description>
+        /// <term>Operation Id</term>
+        /// <description>ProtectedItem_PlannedFailover</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationProtectedItemResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationProtectedItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,27 +491,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _protectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.PlannedFailover");
+            using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemResource.PlannedFailover");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _protectedItemRestClient.CreatePlannedFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, Models.PlannedFailover.ToRequestContent(body), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RecoveryServicesDataReplicationArmOperation<PlannedFailover> operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailover>(
-                    new PlannedFailoverOperationSource(),
-                    _protectedItemClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _dataReplicationProtectedItemProtectedItemRestClient.PlannedFailover(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
+                var operation = new RecoveryServicesDataReplicationArmOperation<PlannedFailover>(new PlannedFailoverOperationSource(), _dataReplicationProtectedItemProtectedItemClientDiagnostics, Pipeline, _dataReplicationProtectedItemProtectedItemRestClient.CreatePlannedFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -522,39 +506,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of DataReplicationRecoveryPoints in the <see cref="DataReplicationProtectedItemResource"/>. </summary>
-        /// <returns> An object representing collection of DataReplicationRecoveryPoints and their operations over a DataReplicationRecoveryPointResource. </returns>
-        public virtual DataReplicationRecoveryPointCollection GetDataReplicationRecoveryPoints()
-        {
-            return GetCachedClient(client => new DataReplicationRecoveryPointCollection(client, Id));
-        }
-
-        /// <summary> Gets the details of the recovery point of a protected item. </summary>
-        /// <param name="recoveryPointName"> The recovery point name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataReplicationRecoveryPointResource>> GetDataReplicationRecoveryPointAsync(string recoveryPointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
-
-            return await GetDataReplicationRecoveryPoints().GetAsync(recoveryPointName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the details of the recovery point of a protected item. </summary>
-        /// <param name="recoveryPointName"> The recovery point name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataReplicationRecoveryPointResource> GetDataReplicationRecoveryPoint(string recoveryPointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recoveryPointName, nameof(recoveryPointName));
-
-            return GetDataReplicationRecoveryPoints().Get(recoveryPointName, cancellationToken);
         }
     }
 }

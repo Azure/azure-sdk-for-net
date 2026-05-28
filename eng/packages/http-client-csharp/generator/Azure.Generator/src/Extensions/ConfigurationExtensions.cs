@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.TypeSpec.Generator;
 
-namespace Azure.Generator.Extensions
+namespace Azure.Generator
 {
     internal static class ConfigurationExtensions
     {

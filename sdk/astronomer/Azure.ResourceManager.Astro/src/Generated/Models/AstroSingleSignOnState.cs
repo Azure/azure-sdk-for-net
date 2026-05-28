@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Astro;
 
 namespace Azure.ResourceManager.Astro.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.Astro.Models
     public readonly partial struct AstroSingleSignOnState : IEquatable<AstroSingleSignOnState>
     {
         private readonly string _value;
-        /// <summary> Initial state of the SSO resource. </summary>
-        private const string InitialValue = "Initial";
-        /// <summary> State of the SSO resource when it is enabled. </summary>
-        private const string EnableValue = "Enable";
-        /// <summary> State of the SSO resource when it is disabled. </summary>
-        private const string DisableValue = "Disable";
 
         /// <summary> Initializes a new instance of <see cref="AstroSingleSignOnState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AstroSingleSignOnState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string InitialValue = "Initial";
+        private const string EnableValue = "Enable";
+        private const string DisableValue = "Disable";
 
         /// <summary> Initial state of the SSO resource. </summary>
         public static AstroSingleSignOnState Initial { get; } = new AstroSingleSignOnState(InitialValue);
-
         /// <summary> State of the SSO resource when it is enabled. </summary>
         public static AstroSingleSignOnState Enable { get; } = new AstroSingleSignOnState(EnableValue);
-
         /// <summary> State of the SSO resource when it is disabled. </summary>
         public static AstroSingleSignOnState Disable { get; } = new AstroSingleSignOnState(DisableValue);
-
         /// <summary> Determines if two <see cref="AstroSingleSignOnState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AstroSingleSignOnState left, AstroSingleSignOnState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AstroSingleSignOnState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AstroSingleSignOnState left, AstroSingleSignOnState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AstroSingleSignOnState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AstroSingleSignOnState"/>. </summary>
         public static implicit operator AstroSingleSignOnState(string value) => new AstroSingleSignOnState(value);
 
-        /// <summary> Converts a string to a <see cref="AstroSingleSignOnState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AstroSingleSignOnState?(string value) => value == null ? null : new AstroSingleSignOnState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AstroSingleSignOnState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AstroSingleSignOnState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

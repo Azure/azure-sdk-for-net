@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
     /// <summary>
-    /// A class representing a HciVmSecurityRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciVmSecurityRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HciVmNetworkSecurityGroupResource"/> using the GetHciVmSecurityRules method.
+    /// A Class representing a HciVmSecurityRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciVmSecurityRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHciVmSecurityRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HciVmNetworkSecurityGroupResource"/> using the GetHciVmSecurityRule method.
     /// </summary>
     public partial class HciVmSecurityRuleResource : ArmResource
     {
-        private readonly ClientDiagnostics _securityRulesClientDiagnostics;
-        private readonly SecurityRules _securityRulesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="HciVmSecurityRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkSecurityGroupName"> The networkSecurityGroupName. </param>
+        /// <param name="securityRuleName"> The securityRuleName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, string securityRuleName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _hciVmSecurityRuleSecurityRulesClientDiagnostics;
+        private readonly SecurityRulesRestOperations _hciVmSecurityRuleSecurityRulesRestClient;
         private readonly HciVmSecurityRuleData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/networkSecurityGroups/securityRules";
 
-        /// <summary> Initializes a new instance of HciVmSecurityRuleResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciVmSecurityRuleResource"/> class for mocking. </summary>
         protected HciVmSecurityRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciVmSecurityRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciVmSecurityRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HciVmSecurityRuleResource(ArmClient client, HciVmSecurityRuleData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.Hci.Vm
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciVmSecurityRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HciVmSecurityRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HciVmSecurityRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string hciVmSecurityRuleApiVersion);
-            _securityRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _securityRulesRestClient = new SecurityRules(_securityRulesClientDiagnostics, Pipeline, Endpoint, hciVmSecurityRuleApiVersion ?? "2025-09-01-preview");
-            ValidateResourceId(id);
+            _hciVmSecurityRuleSecurityRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hciVmSecurityRuleSecurityRulesApiVersion);
+            _hciVmSecurityRuleSecurityRulesRestClient = new SecurityRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmSecurityRuleSecurityRulesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HciVmSecurityRuleData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkSecurityGroupName"> The networkSecurityGroupName. </param>
-        /// <param name="securityRuleName"> The securityRuleName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, string securityRuleName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets the specified security rule.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityRule_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciVmSecurityRuleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciVmSecurityRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HciVmSecurityRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _securityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Get");
+            using var scope = _hciVmSecurityRuleSecurityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HciVmSecurityRuleData> response = Response.FromValue(HciVmSecurityRuleData.FromResponse(result), result);
+                var response = await _hciVmSecurityRuleSecurityRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciVmSecurityRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +132,33 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Gets the specified security rule.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityRules_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityRule_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciVmSecurityRuleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciVmSecurityRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HciVmSecurityRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _securityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Get");
+            using var scope = _hciVmSecurityRuleSecurityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HciVmSecurityRuleData> response = Response.FromValue(HciVmSecurityRuleData.FromResponse(result), result);
+                var response = _hciVmSecurityRuleSecurityRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HciVmSecurityRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +172,20 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Deletes the specified security rule.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityRules_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityRule_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciVmSecurityRuleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciVmSecurityRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,21 +193,14 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _securityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Delete");
+            using var scope = _hciVmSecurityRuleSecurityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                VmArmOperation operation = new VmArmOperation(_securityRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _hciVmSecurityRuleSecurityRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VmArmOperation(_hciVmSecurityRuleSecurityRulesClientDiagnostics, Pipeline, _hciVmSecurityRuleSecurityRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +214,20 @@ namespace Azure.ResourceManager.Hci.Vm
         /// Deletes the specified security rule.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityRules_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityRule_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciVmSecurityRuleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciVmSecurityRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,21 +235,14 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _securityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Delete");
+            using var scope = _hciVmSecurityRuleSecurityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                VmArmOperation operation = new VmArmOperation(_securityRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _hciVmSecurityRuleSecurityRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new VmArmOperation(_hciVmSecurityRuleSecurityRulesClientDiagnostics, Pipeline, _hciVmSecurityRuleSecurityRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -286,23 +253,23 @@ namespace Azure.ResourceManager.Hci.Vm
         }
 
         /// <summary>
-        /// Update a HciVmSecurityRule.
+        /// Creates or updates a security rule in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityRules_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityRule_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciVmSecurityRuleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciVmSecurityRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,27 +281,14 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _securityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Update");
+            using var scope = _hciVmSecurityRuleSecurityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciVmSecurityRuleData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                VmArmOperation<HciVmSecurityRuleResource> operation = new VmArmOperation<HciVmSecurityRuleResource>(
-                    new HciVmSecurityRuleOperationSource(Client),
-                    _securityRulesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _hciVmSecurityRuleSecurityRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new VmArmOperation<HciVmSecurityRuleResource>(new HciVmSecurityRuleOperationSource(Client), _hciVmSecurityRuleSecurityRulesClientDiagnostics, Pipeline, _hciVmSecurityRuleSecurityRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -345,23 +299,23 @@ namespace Azure.ResourceManager.Hci.Vm
         }
 
         /// <summary>
-        /// Update a HciVmSecurityRule.
+        /// Creates or updates a security rule in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityRules_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>SecurityRule_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciVmSecurityRuleResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="HciVmSecurityRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,27 +327,14 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _securityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Update");
+            using var scope = _hciVmSecurityRuleSecurityRulesClientDiagnostics.CreateScope("HciVmSecurityRuleResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _securityRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciVmSecurityRuleData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                VmArmOperation<HciVmSecurityRuleResource> operation = new VmArmOperation<HciVmSecurityRuleResource>(
-                    new HciVmSecurityRuleOperationSource(Client),
-                    _securityRulesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _hciVmSecurityRuleSecurityRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new VmArmOperation<HciVmSecurityRuleResource>(new HciVmSecurityRuleOperationSource(Client), _hciVmSecurityRuleSecurityRulesClientDiagnostics, Pipeline, _hciVmSecurityRuleSecurityRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

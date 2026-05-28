@@ -3,10 +3,11 @@
 
 #nullable disable
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
+using Azure.Core;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownManagedServiceScalingMechanism")]
+    [CodeGenModel("UnknownManagedServiceScalingMechanism")]
     internal partial class UnknownScalingMechanism
     {
     }

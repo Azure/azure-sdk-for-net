@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SiteManager
 {
-    /// <summary></summary>
-    internal partial class ServiceGroupEdgeSiteOperationSource : IOperationSource<ServiceGroupEdgeSiteResource>
+    internal class ServiceGroupEdgeSiteOperationSource : IOperationSource<ServiceGroupEdgeSiteResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ServiceGroupEdgeSiteOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ServiceGroupEdgeSiteResource IOperationSource<ServiceGroupEdgeSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            EdgeSiteData data = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<EdgeSiteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSiteManagerContext.Default);
             return new ServiceGroupEdgeSiteResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ServiceGroupEdgeSiteResource> IOperationSource<ServiceGroupEdgeSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            EdgeSiteData data = EdgeSiteData.DeserializeEdgeSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ServiceGroupEdgeSiteResource(_client, data);
+            var data = ModelReaderWriter.Read<EdgeSiteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSiteManagerContext.Default);
+            return await Task.FromResult(new ServiceGroupEdgeSiteResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a ScriptPackage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptPackageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetScriptPackages method.
+    /// A Class representing a ScriptPackage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptPackageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScriptPackageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetScriptPackage method.
     /// </summary>
     public partial class ScriptPackageResource : ArmResource
     {
-        private readonly ClientDiagnostics _scriptPackagesClientDiagnostics;
-        private readonly ScriptPackages _scriptPackagesRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="ScriptPackageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="scriptPackageName"> The scriptPackageName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _scriptPackageClientDiagnostics;
+        private readonly ScriptPackagesRestOperations _scriptPackageRestClient;
         private readonly ScriptPackageData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptPackages";
 
-        /// <summary> Initializes a new instance of ScriptPackageResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptPackageResource"/> class for mocking. </summary>
         protected ScriptPackageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScriptPackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptPackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScriptPackageResource(ArmClient client, ScriptPackageData data) : this(client, data.Id)
@@ -43,158 +54,68 @@ namespace Azure.ResourceManager.Avs
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScriptPackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptPackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScriptPackageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _scriptPackageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string scriptPackageApiVersion);
-            _scriptPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _scriptPackagesRestClient = new ScriptPackages(_scriptPackagesClientDiagnostics, Pipeline, Endpoint, scriptPackageApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _scriptPackageRestClient = new ScriptPackagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scriptPackageApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ScriptPackageData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="privateCloudName"> The privateCloudName. </param>
-        /// <param name="scriptPackageName"> The scriptPackageName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary>
-        /// Get a ScriptPackage
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScriptPackages_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScriptPackageResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ScriptPackageResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _scriptPackagesClientDiagnostics.CreateScope("ScriptPackageResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scriptPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScriptPackageData> response = Response.FromValue(ScriptPackageData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new ScriptPackageResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get a ScriptPackage
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScriptPackages_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScriptPackageResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ScriptPackageResource> Get(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _scriptPackagesClientDiagnostics.CreateScope("ScriptPackageResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scriptPackagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScriptPackageData> response = Response.FromValue(ScriptPackageData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new ScriptPackageResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a collection of ScriptCmdlets in the <see cref="ScriptPackageResource"/>. </summary>
-        /// <returns> An object representing collection of ScriptCmdlets and their operations over a ScriptCmdletResource. </returns>
+        /// <summary> Gets a collection of ScriptCmdletResources in the ScriptPackage. </summary>
+        /// <returns> An object representing collection of ScriptCmdletResources and their operations over a ScriptCmdletResource. </returns>
         public virtual ScriptCmdletCollection GetScriptCmdlets()
         {
             return GetCachedClient(client => new ScriptCmdletCollection(client, Id));
         }
 
-        /// <summary> Get a ScriptCmdlet. </summary>
+        /// <summary>
+        /// Get a ScriptCmdlet
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/{scriptCmdletName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptCmdlet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptCmdletResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="scriptCmdletName"> Name of the script cmdlet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
@@ -202,12 +123,30 @@ namespace Azure.ResourceManager.Avs
         [ForwardsClientCalls]
         public virtual async Task<Response<ScriptCmdletResource>> GetScriptCmdletAsync(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scriptCmdletName, nameof(scriptCmdletName));
-
             return await GetScriptCmdlets().GetAsync(scriptCmdletName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a ScriptCmdlet. </summary>
+        /// <summary>
+        /// Get a ScriptCmdlet
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}/scriptCmdlets/{scriptCmdletName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptCmdlet_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptCmdletResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="scriptCmdletName"> Name of the script cmdlet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
@@ -215,9 +154,87 @@ namespace Azure.ResourceManager.Avs
         [ForwardsClientCalls]
         public virtual Response<ScriptCmdletResource> GetScriptCmdlet(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(scriptCmdletName, nameof(scriptCmdletName));
-
             return GetScriptCmdlets().Get(scriptCmdletName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a ScriptPackage
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptPackage_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ScriptPackageResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _scriptPackageClientDiagnostics.CreateScope("ScriptPackageResource.Get");
+            scope.Start();
+            try
+            {
+                var response = await _scriptPackageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ScriptPackageResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a ScriptPackage
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptPackages/{scriptPackageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScriptPackage_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptPackageResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ScriptPackageResource> Get(CancellationToken cancellationToken = default)
+        {
+            using var scope = _scriptPackageClientDiagnostics.CreateScope("ScriptPackageResource.Get");
+            scope.Start();
+            try
+            {
+                var response = _scriptPackageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new ScriptPackageResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

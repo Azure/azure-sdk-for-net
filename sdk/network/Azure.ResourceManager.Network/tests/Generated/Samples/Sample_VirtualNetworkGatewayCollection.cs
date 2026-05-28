@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayUpdate.json
             // this example is just showing the usage of "VirtualNetworkGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ Name = "natRule2",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateVirtualNetworkScalableGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkScalableGatewayUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkScalableGatewayUpdate.json
             // this example is just showing the usage of "VirtualNetworkGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,14 +163,9 @@ Name = "natRule2",
             string virtualNetworkGatewayName = "ergw";
             VirtualNetworkGatewayData data = new VirtualNetworkGatewayData
             {
-                AutoScaleBounds = new VirtualNetworkGatewayAutoScaleBounds
-                {
-                    Min = 2,
-                    Max = 3,
-                },
                 IPConfigurations = {new VirtualNetworkGatewayIPConfiguration
 {
-PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
 SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/GatewaySubnet"),
 PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/gwpip"),
 Name = "gwipconfig1",
@@ -186,13 +181,41 @@ Name = "gwipconfig1",
                     Tier = VirtualNetworkGatewaySkuTier.ErGwScale,
                 },
                 VpnClientConfiguration = default,
-                VirtualNetworkGatewayPolicyGroups = { },
                 BgpSettings = default,
-                NatRules = { },
+                NatRules = {new VirtualNetworkGatewayNatRuleData
+{
+VpnNatRuleType = VpnNatRuleType.Static,
+Mode = VpnNatRuleMode.EgressSnat,
+InternalMappings = {new VpnNatRuleMapping
+{
+AddressSpace = "10.10.0.0/24",
+}},
+ExternalMappings = {new VpnNatRuleMapping
+{
+AddressSpace = "50.0.0.0/24",
+}},
+IPConfigurationId = "",
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/ergw/natRules/natRule1"),
+Name = "natRule1",
+}, new VirtualNetworkGatewayNatRuleData
+{
+VpnNatRuleType = VpnNatRuleType.Static,
+Mode = VpnNatRuleMode.IngressSnat,
+InternalMappings = {new VpnNatRuleMapping
+{
+AddressSpace = "20.10.0.0/24",
+}},
+ExternalMappings = {new VpnNatRuleMapping
+{
+AddressSpace = "30.0.0.0/24",
+}},
+IPConfigurationId = "",
+Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/ergw/natRules/natRule2"),
+Name = "natRule2",
+}},
                 EnableBgpRouteTranslationForNat = false,
                 AllowVirtualWanTraffic = false,
                 AllowRemoteVnetTraffic = false,
-                AdminState = ExpressRouteGatewayAdminState.Enabled,
                 Location = new AzureLocation("centralus"),
             };
             ArmOperation<VirtualNetworkGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, data);
@@ -209,7 +232,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -242,7 +265,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkScalableGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkScalableGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkScalableGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -275,7 +298,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVirtualNetworkGatewaysinResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayList.json
             // this example is just showing the usage of "VirtualNetworkGateways_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -310,7 +333,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -339,7 +362,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVirtualNetworkScalableGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkScalableGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkScalableGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -368,7 +391,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -409,7 +432,7 @@ Name = "gwipconfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVirtualNetworkScalableGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkScalableGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkScalableGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -50,8 +50,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanInstallPatch()
-        {
+        public async Task CanInstallPatch(){
             MachineInstallPatchesResult resourceData = await installPatch();
 
             Assert.NotNull(resourceData.Status.ToString());
@@ -59,8 +58,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanAssessPatch()
-        {
+        public async Task CanAssessPatch(){
             MachineAssessPatchesResult resourceData = await assessPatch();
 
             Assert.AreEqual("Succeeded", resourceData.Status.ToString());
@@ -79,8 +77,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeleteMachine()
-        {
+        public async Task CanDeleteMachine(){
             await deleteMachine();
         }
     }

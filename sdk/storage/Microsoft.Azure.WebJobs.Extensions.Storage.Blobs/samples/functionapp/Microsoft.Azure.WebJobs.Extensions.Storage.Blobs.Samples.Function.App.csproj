@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <SupportsNetStandard20>false</SupportsNetStandard20>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
   </PropertyGroup>
 

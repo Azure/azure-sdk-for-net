@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.DataProtectionBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Extended Information about the job. </summary>
-    public partial class BackupJobExtendedInfo : IJsonModel<BackupJobExtendedInfo>
+    public partial class BackupJobExtendedInfo : IUtf8JsonSerializable, IJsonModel<BackupJobExtendedInfo>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupJobExtendedInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBackupJobExtendedInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupJobExtendedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupJobExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupJobExtendedInfo IPersistableModel<BackupJobExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupJobExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupJobExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
@@ -81,11 +41,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 foreach (var item in AdditionalDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -114,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("subTasks"u8);
                 writer.WriteStartArray();
-                foreach (BackupJobSubTask item in SubTasks)
+                foreach (var item in SubTasks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -129,21 +84,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("warningDetails"u8);
                 writer.WriteStartArray();
-                foreach (UserFacingWarningDetail item in WarningDetails)
+                foreach (var item in WarningDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -152,27 +107,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupJobExtendedInfo IJsonModel<BackupJobExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupJobExtendedInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BackupJobExtendedInfo IJsonModel<BackupJobExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBackupJobExtendedInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupJobExtendedInfo DeserializeBackupJobExtendedInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static BackupJobExtendedInfo DeserializeBackupJobExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -185,89 +135,83 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IReadOnlyList<BackupJobSubTask> subTasks = default;
             RestoreJobRecoveryPointDetails targetRecoverPoint = default;
             IReadOnlyList<UserFacingWarningDetail> warningDetails = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("additionalDetails"u8))
+                if (property.NameEquals("additionalDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     additionalDetails = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("backupInstanceState"u8))
+                if (property.NameEquals("backupInstanceState"u8))
                 {
-                    backupInstanceState = prop.Value.GetString();
+                    backupInstanceState = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dataTransferredInBytes"u8))
+                if (property.NameEquals("dataTransferredInBytes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataTransferredInBytes = prop.Value.GetDouble();
+                    dataTransferredInBytes = property.Value.GetDouble();
                     continue;
                 }
-                if (prop.NameEquals("recoveryDestination"u8))
+                if (property.NameEquals("recoveryDestination"u8))
                 {
-                    recoveryDestination = prop.Value.GetString();
+                    recoveryDestination = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sourceRecoverPoint"u8))
+                if (property.NameEquals("sourceRecoverPoint"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(prop.Value, options);
+                    sourceRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("subTasks"u8))
+                if (property.NameEquals("subTasks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BackupJobSubTask> array = new List<BackupJobSubTask>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(BackupJobSubTask.DeserializeBackupJobSubTask(item, options));
                     }
                     subTasks = array;
                     continue;
                 }
-                if (prop.NameEquals("targetRecoverPoint"u8))
+                if (property.NameEquals("targetRecoverPoint"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(prop.Value, options);
+                    targetRecoverPoint = RestoreJobRecoveryPointDetails.DeserializeRestoreJobRecoveryPointDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("warningDetails"u8))
+                if (property.NameEquals("warningDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<UserFacingWarningDetail> array = new List<UserFacingWarningDetail>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(UserFacingWarningDetail.DeserializeUserFacingWarningDetail(item, options));
                     }
@@ -276,9 +220,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupJobExtendedInfo(
                 additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
                 backupInstanceState,
@@ -288,7 +233,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 subTasks ?? new ChangeTrackingList<BackupJobSubTask>(),
                 targetRecoverPoint,
                 warningDetails ?? new ChangeTrackingList<UserFacingWarningDetail>(),
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupJobExtendedInfo IPersistableModel<BackupJobExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBackupJobExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupJobExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

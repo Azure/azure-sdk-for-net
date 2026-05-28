@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
     internal static partial class HealthDataAIServicesPublicNetworkAccessExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HealthDataAIServicesPublicNetworkAccess value) => value switch
         {
             HealthDataAIServicesPublicNetworkAccess.Enabled => "Enabled",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthDataAIServicesPublicNetworkAccess value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static HealthDataAIServicesPublicNetworkAccess ToHealthDataAIServicesPublicNetworkAccess(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
-            {
-                return HealthDataAIServicesPublicNetworkAccess.Enabled;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
-            {
-                return HealthDataAIServicesPublicNetworkAccess.Disabled;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return HealthDataAIServicesPublicNetworkAccess.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return HealthDataAIServicesPublicNetworkAccess.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthDataAIServicesPublicNetworkAccess value.");
         }
     }

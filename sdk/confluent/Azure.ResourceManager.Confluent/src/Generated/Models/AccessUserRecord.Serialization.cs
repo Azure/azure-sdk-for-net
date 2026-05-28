@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Confluent;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Record of the user. </summary>
-    public partial class AccessUserRecord : IJsonModel<AccessUserRecord>
+    public partial class AccessUserRecord : IUtf8JsonSerializable, IJsonModel<AccessUserRecord>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessUserRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessUserRecord>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAccessUserRecord(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AccessUserRecord)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessUserRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessUserRecord>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AccessUserRecord)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AccessUserRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AccessUserRecord IPersistableModel<AccessUserRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AccessUserRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AccessUserRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessUserRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessUserRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AccessUserRecord)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -104,15 +64,15 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("auth_type"u8);
                 writer.WriteStringValue(AuthType);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +81,22 @@ namespace Azure.ResourceManager.Confluent.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AccessUserRecord IJsonModel<AccessUserRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessUserRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AccessUserRecord IJsonModel<AccessUserRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessUserRecord>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessUserRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AccessUserRecord)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAccessUserRecord(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AccessUserRecord DeserializeAccessUserRecord(JsonElement element, ModelReaderWriterOptions options)
+        internal static AccessUserRecord DeserializeAccessUserRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -152,48 +107,50 @@ namespace Azure.ResourceManager.Confluent.Models
             string email = default;
             string fullName = default;
             string authType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("kind"u8))
+                if (property.NameEquals("kind"u8))
                 {
-                    kind = prop.Value.GetString();
+                    kind = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("metadata"u8))
+                if (property.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    metadata = MetadataEntity.DeserializeMetadataEntity(prop.Value, options);
+                    metadata = MetadataEntity.DeserializeMetadataEntity(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("email"u8))
+                if (property.NameEquals("email"u8))
                 {
-                    email = prop.Value.GetString();
+                    email = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("full_name"u8))
+                if (property.NameEquals("full_name"u8))
                 {
-                    fullName = prop.Value.GetString();
+                    fullName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("auth_type"u8))
+                if (property.NameEquals("auth_type"u8))
                 {
-                    authType = prop.Value.GetString();
+                    authType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AccessUserRecord(
                 kind,
                 id,
@@ -201,7 +158,38 @@ namespace Azure.ResourceManager.Confluent.Models
                 email,
                 fullName,
                 authType,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AccessUserRecord>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessUserRecord>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AccessUserRecord)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AccessUserRecord IPersistableModel<AccessUserRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessUserRecord>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAccessUserRecord(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AccessUserRecord)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AccessUserRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

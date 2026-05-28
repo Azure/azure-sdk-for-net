@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ConnectedCache;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
-    /// <summary> Mcc cache node resource Tls certificate details. </summary>
-    public partial class MccCacheNodeTlsCertificate : IJsonModel<MccCacheNodeTlsCertificate>
+    public partial class MccCacheNodeTlsCertificate : IUtf8JsonSerializable, IJsonModel<MccCacheNodeTlsCertificate>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MccCacheNodeTlsCertificate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeTlsCertificate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMccCacheNodeTlsCertificate(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MccCacheNodeTlsCertificate)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MccCacheNodeTlsCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeTlsCertificate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MccCacheNodeTlsCertificate)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MccCacheNodeTlsCertificate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MccCacheNodeTlsCertificate IPersistableModel<MccCacheNodeTlsCertificate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MccCacheNodeTlsCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MccCacheNodeTlsCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeTlsCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeTlsCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MccCacheNodeTlsCertificate)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(ActionRequired))
             {
                 writer.WritePropertyName("actionRequired"u8);
@@ -109,15 +69,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("subjectAltName"u8);
                 writer.WriteStringValue(SubjectAltName);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,27 +86,22 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MccCacheNodeTlsCertificate IJsonModel<MccCacheNodeTlsCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MccCacheNodeTlsCertificate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MccCacheNodeTlsCertificate IJsonModel<MccCacheNodeTlsCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeTlsCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeTlsCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MccCacheNodeTlsCertificate)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMccCacheNodeTlsCertificate(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MccCacheNodeTlsCertificate DeserializeMccCacheNodeTlsCertificate(JsonElement element, ModelReaderWriterOptions options)
+        internal static MccCacheNodeTlsCertificate DeserializeMccCacheNodeTlsCertificate(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,70 +109,103 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             string actionRequired = default;
             string certificateFileName = default;
             string thumbprint = default;
-            DateTimeOffset? expiryOn = default;
-            DateTimeOffset? notBeforeOn = default;
+            DateTimeOffset? expiryDate = default;
+            DateTimeOffset? notBeforeDate = default;
             string subject = default;
             string subjectAltName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("actionRequired"u8))
+                if (property.NameEquals("actionRequired"u8))
                 {
-                    actionRequired = prop.Value.GetString();
+                    actionRequired = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("certificateFileName"u8))
+                if (property.NameEquals("certificateFileName"u8))
                 {
-                    certificateFileName = prop.Value.GetString();
+                    certificateFileName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("thumbprint"u8))
+                if (property.NameEquals("thumbprint"u8))
                 {
-                    thumbprint = prop.Value.GetString();
+                    thumbprint = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("expiryDate"u8))
+                if (property.NameEquals("expiryDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiryOn = prop.Value.GetDateTimeOffset("O");
+                    expiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("notBeforeDate"u8))
+                if (property.NameEquals("notBeforeDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    notBeforeOn = prop.Value.GetDateTimeOffset("O");
+                    notBeforeDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("subject"u8))
+                if (property.NameEquals("subject"u8))
                 {
-                    subject = prop.Value.GetString();
+                    subject = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subjectAltName"u8))
+                if (property.NameEquals("subjectAltName"u8))
                 {
-                    subjectAltName = prop.Value.GetString();
+                    subjectAltName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new MccCacheNodeTlsCertificate(
                 actionRequired,
                 certificateFileName,
                 thumbprint,
-                expiryOn,
-                notBeforeOn,
+                expiryDate,
+                notBeforeDate,
                 subject,
                 subjectAltName,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MccCacheNodeTlsCertificate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeTlsCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MccCacheNodeTlsCertificate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MccCacheNodeTlsCertificate IPersistableModel<MccCacheNodeTlsCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeTlsCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMccCacheNodeTlsCertificate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MccCacheNodeTlsCertificate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MccCacheNodeTlsCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Grafana
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class ManagedPrivateEndpointModelCollection : ArmCollection, IEnumerable<ManagedPrivateEndpointModelResource>, IAsyncEnumerable<ManagedPrivateEndpointModelResource>
     {
-        private readonly ClientDiagnostics _managedPrivateEndpointModelsClientDiagnostics;
-        private readonly ManagedPrivateEndpointModels _managedPrivateEndpointModelsRestClient;
+        private readonly ClientDiagnostics _managedPrivateEndpointModelClientDiagnostics;
+        private readonly ManagedPrivateEndpointModelsRestOperations _managedPrivateEndpointModelRestClient;
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointModelCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedPrivateEndpointModelCollection"/> class for mocking. </summary>
         protected ManagedPrivateEndpointModelCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedPrivateEndpointModelCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedPrivateEndpointModelCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _managedPrivateEndpointModelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedPrivateEndpointModelResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagedPrivateEndpointModelResource.ResourceType, out string managedPrivateEndpointModelApiVersion);
-            _managedPrivateEndpointModelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedPrivateEndpointModelResource.ResourceType.Namespace, Diagnostics);
-            _managedPrivateEndpointModelsRestClient = new ManagedPrivateEndpointModels(_managedPrivateEndpointModelsClientDiagnostics, Pipeline, Endpoint, managedPrivateEndpointModelApiVersion ?? "2025-09-01-preview");
-            ValidateResourceId(id);
+            _managedPrivateEndpointModelRestClient = new ManagedPrivateEndpointModelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedPrivateEndpointModelApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ManagedGrafanaResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a managed private endpoint for a grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedPrivateEndpointModels_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
         /// <param name="data"> The managed private endpoint to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedPrivateEndpointModelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedPrivateEndpointName, ManagedPrivateEndpointModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _managedPrivateEndpointModelsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.CreateOrUpdate");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, ManagedPrivateEndpointModelData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                GrafanaArmOperation<ManagedPrivateEndpointModelResource> operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(
-                    new ManagedPrivateEndpointModelOperationSource(Client),
-                    _managedPrivateEndpointModelsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.OriginalUri);
+                var response = await _managedPrivateEndpointModelRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelOperationSource(Client), _managedPrivateEndpointModelClientDiagnostics, Pipeline, _managedPrivateEndpointModelRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.Grafana
         /// Create or update a managed private endpoint for a grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedPrivateEndpointModels_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
         /// <param name="data"> The managed private endpoint to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedPrivateEndpointModelResource> CreateOrUpdate(WaitUntil waitUntil, string managedPrivateEndpointName, ManagedPrivateEndpointModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _managedPrivateEndpointModelsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.CreateOrUpdate");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, ManagedPrivateEndpointModelData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                GrafanaArmOperation<ManagedPrivateEndpointModelResource> operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(
-                    new ManagedPrivateEndpointModelOperationSource(Client),
-                    _managedPrivateEndpointModelsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.OriginalUri);
+                var response = _managedPrivateEndpointModelRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data, cancellationToken);
+                var operation = new GrafanaArmOperation<ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelOperationSource(Client), _managedPrivateEndpointModelClientDiagnostics, Pipeline, _managedPrivateEndpointModelRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.Grafana
         /// Get a specific managed private endpoint of a grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedPrivateEndpointModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual async Task<Response<ManagedPrivateEndpointModelResource>> GetAsync(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using DiagnosticScope scope = _managedPrivateEndpointModelsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Get");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ManagedPrivateEndpointModelData> response = Response.FromValue(ManagedPrivateEndpointModelData.FromResponse(result), result);
+                var response = await _managedPrivateEndpointModelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.Grafana
         /// Get a specific managed private endpoint of a grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedPrivateEndpointModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual Response<ManagedPrivateEndpointModelResource> Get(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using DiagnosticScope scope = _managedPrivateEndpointModelsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Get");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ManagedPrivateEndpointModelData> response = Response.FromValue(ManagedPrivateEndpointModelData.FromResponse(result), result);
+                var response = _managedPrivateEndpointModelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.Grafana
         /// List all managed private endpoints of a grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedPrivateEndpointModels_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedPrivateEndpointModelResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedPrivateEndpointModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedPrivateEndpointModelResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelsGetAllAsyncCollectionResultOfT(
-                _managedPrivateEndpointModelsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ManagedPrivateEndpointModelCollection.GetAll"), data => new ManagedPrivateEndpointModelResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedPrivateEndpointModelRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedPrivateEndpointModelRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedPrivateEndpointModelResource(Client, ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(e)), _managedPrivateEndpointModelClientDiagnostics, Pipeline, "ManagedPrivateEndpointModelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all managed private endpoints of a grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedPrivateEndpointModels_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="ManagedPrivateEndpointModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedPrivateEndpointModelResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ManagedPrivateEndpointModelData, ManagedPrivateEndpointModelResource>(new ManagedPrivateEndpointModelsGetAllCollectionResultOfT(
-                _managedPrivateEndpointModelsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ManagedPrivateEndpointModelCollection.GetAll"), data => new ManagedPrivateEndpointModelResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedPrivateEndpointModelRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedPrivateEndpointModelRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedPrivateEndpointModelResource(Client, ManagedPrivateEndpointModelData.DeserializeManagedPrivateEndpointModelData(e)), _managedPrivateEndpointModelClientDiagnostics, Pipeline, "ManagedPrivateEndpointModelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedPrivateEndpointModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using DiagnosticScope scope = _managedPrivateEndpointModelsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Exists");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ManagedPrivateEndpointModelData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ManagedPrivateEndpointModelData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ManagedPrivateEndpointModelData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _managedPrivateEndpointModelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.Grafana
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedPrivateEndpointModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using DiagnosticScope scope = _managedPrivateEndpointModelsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Exists");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ManagedPrivateEndpointModelData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ManagedPrivateEndpointModelData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ManagedPrivateEndpointModelData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _managedPrivateEndpointModelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.Grafana
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedPrivateEndpointModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedPrivateEndpointModelResource>> GetIfExistsAsync(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using DiagnosticScope scope = _managedPrivateEndpointModelsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.GetIfExists");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ManagedPrivateEndpointModelData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ManagedPrivateEndpointModelData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ManagedPrivateEndpointModelData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _managedPrivateEndpointModelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ManagedPrivateEndpointModelResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.Grafana
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/managedPrivateEndpoints/{managedPrivateEndpointName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedPrivateEndpointModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedPrivateEndpointModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedPrivateEndpointModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedPrivateEndpointName"> The managed private endpoint name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual NullableResponse<ManagedPrivateEndpointModelResource> GetIfExists(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
-            using DiagnosticScope scope = _managedPrivateEndpointModelsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.GetIfExists");
+            using var scope = _managedPrivateEndpointModelClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedPrivateEndpointModelsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ManagedPrivateEndpointModelData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ManagedPrivateEndpointModelData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ManagedPrivateEndpointModelData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _managedPrivateEndpointModelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, managedPrivateEndpointName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ManagedPrivateEndpointModelResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ManagedPrivateEndpointModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.Grafana
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ManagedPrivateEndpointModelResource> IAsyncEnumerable<ManagedPrivateEndpointModelResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

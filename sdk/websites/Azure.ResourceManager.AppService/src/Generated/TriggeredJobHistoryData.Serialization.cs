@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
-                kind,
                 runs ?? new ChangeTrackingList<TriggeredJobRun>(),
+                kind,
                 serializedAdditionalRawData);
         }
 

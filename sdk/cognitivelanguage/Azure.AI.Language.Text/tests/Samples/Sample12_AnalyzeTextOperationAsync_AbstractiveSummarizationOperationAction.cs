@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -76,15 +76,15 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 },
             };
 
-            Response<AnalyzeTextJobState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationAsync(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextJobState analyzeTextJobState = response.Value;
+            AnalyzeTextOperationState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
             {
-                if (analyzeTextOperationResult is AbstractiveSummarizationOperationResult)
+                if (analyzeTextLROResult is AbstractiveSummarizationOperationResult)
                 {
-                    AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextOperationResult;
+                    AbstractiveSummarizationOperationResult abstractiveSummarizationLROResult = (AbstractiveSummarizationOperationResult)analyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
                     foreach (AbstractiveSummaryActionResult extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)

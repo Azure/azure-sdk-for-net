@@ -55,13 +55,6 @@ namespace Azure.Messaging.WebPubSub.Clients
         private static readonly JsonEncodedText SendToGroupTypeBytes = JsonEncodedText.Encode("sendToGroup");
         private static readonly JsonEncodedText SendEventTypeBytes = JsonEncodedText.Encode("event");
         private static readonly JsonEncodedText SequenceAckTypeBytes = JsonEncodedText.Encode("sequenceAck");
-        private static readonly JsonEncodedText InvokeTypeBytes = JsonEncodedText.Encode("invoke");
-        private static readonly JsonEncodedText CancelInvocationTypeBytes = JsonEncodedText.Encode("cancelInvocation");
-
-        private const string InvocationIdPropertyName = "invocationId";
-        private static readonly JsonEncodedText InvocationIdPropertyNameBytes = JsonEncodedText.Encode(InvocationIdPropertyName);
-        private const string TargetPropertyName = "target";
-        private static readonly JsonEncodedText TargetPropertyNameBytes = JsonEncodedText.Encode(TargetPropertyName);
 
         private const byte Quote = (byte)'"';
         private const byte KeyValueSeperator = (byte)':';
@@ -90,20 +83,14 @@ namespace Azure.Messaging.WebPubSub.Clients
                 FromType fromType = FromType.Server;
                 AckMessageError errorDetail = null;
                 WebPubSubDataType dataType = WebPubSubDataType.Text;
-                bool hasDataType = false;
                 string userId = null;
                 string connectionId = null;
                 string reconnectionToken = null;
                 string message = null;
                 string fromUserId = null;
-                string invocationId = null;
-                InvokeResponseError invokeResponseError = null;
 
                 var completed = false;
                 bool hasDataToken = false;
-                bool hasErrorToken = false;
-                string parsedErrorName = null;
-                string parsedErrorMessage = null;
                 BinaryData data = null;
                 SequencePosition dataStart = default;
                 Utf8JsonReader dataReader = default;
@@ -151,11 +138,6 @@ namespace Azure.Messaging.WebPubSub.Clients
                                 {
                                     throw new InvalidDataException($"Unknown '{DataTypePropertyName}': {dataTypeValue}.");
                                 }
-                                hasDataType = true;
-                            }
-                            else if (reader.ValueTextEquals(InvocationIdPropertyNameBytes.EncodedUtf8Bytes))
-                            {
-                                invocationId = reader.ReadAsNullableString(InvocationIdPropertyName);
                             }
                             else if (reader.ValueTextEquals(AckIdPropertyNameBytes.EncodedUtf8Bytes))
                             {
@@ -192,30 +174,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                             }
                             else if (reader.ValueTextEquals(ErrorPropertyNameBytes.EncodedUtf8Bytes))
                             {
-                                hasErrorToken = true;
-                                var errorCompleted = false;
-                                reader.CheckRead();
-                                reader.EnsureObjectStart();
-                                do
-                                {
-                                    switch (reader.TokenType)
-                                    {
-                                        case JsonTokenType.PropertyName:
-                                            if (reader.ValueTextEquals(ErrorNamePropertyNameBytes.EncodedUtf8Bytes))
-                                            {
-                                                parsedErrorName = reader.ReadAsNullableString(ErrorNamePropertyName);
-                                            }
-                                            else if (reader.ValueTextEquals(MessagePropertyNameBytes.EncodedUtf8Bytes))
-                                            {
-                                                parsedErrorMessage = reader.ReadAsNullableString(MessagePropertyName);
-                                            }
-                                            break;
-                                        case JsonTokenType.EndObject:
-                                            errorCompleted = true;
-                                            break;
-                                    }
-                                }
-                                while (!errorCompleted && reader.CheckRead());
+                                errorDetail = ReadErrorDetail(reader);
                             }
                             else if (reader.ValueTextEquals(FromPropertyNameBytes.EncodedUtf8Bytes))
                             {
@@ -263,18 +222,6 @@ namespace Azure.Messaging.WebPubSub.Clients
                     throw new InvalidDataException($"Missing required property '{TypePropertyName}'.");
                 }
 
-                if (hasErrorToken)
-                {
-                    if (eventType == DownstreamEventType.InvokeResponse)
-                    {
-                        invokeResponseError = new InvokeResponseError(parsedErrorName, parsedErrorMessage);
-                    }
-                    else
-                    {
-                        errorDetail = new AckMessageError(parsedErrorName, parsedErrorMessage);
-                    }
-                }
-
                 if (hasDataToken)
                 {
                     if (dataType == WebPubSubDataType.Binary ||
@@ -318,11 +265,6 @@ namespace Azure.Messaging.WebPubSub.Clients
                         AssertNotNull(ackId, AckIdPropertyName);
                         AssertNotNull(success, SuccessPropertyName);
                         return new List<WebPubSubMessage> { new AckMessage(ackId.Value, success.Value, errorDetail) };
-
-                    case DownstreamEventType.InvokeResponse:
-                        AssertNotNull(invocationId, InvocationIdPropertyName);
-                        AssertNotNull(success, SuccessPropertyName);
-                        return new List<WebPubSubMessage> { new InvokeResponseMessage(invocationId, success.Value, hasDataType ? dataType : (WebPubSubDataType?)null, data, invokeResponseError) };
 
                     case DownstreamEventType.Message:
                         AssertNotNull(from, FromPropertyName);
@@ -422,18 +364,6 @@ namespace Azure.Messaging.WebPubSub.Clients
                         writer.WriteString(TypePropertyNameBytes, SequenceAckTypeBytes);
                         writer.WriteNumber(SequenceIdPropertyNameBytes, sequenceAckMessage.SequenceId);
                         break;
-                    case InvokeMessage invokeMessage:
-                        writer.WriteString(TypePropertyNameBytes, InvokeTypeBytes);
-                        writer.WriteString(InvocationIdPropertyNameBytes, invokeMessage.InvocationId);
-                        writer.WriteString(TargetPropertyNameBytes, invokeMessage.Target);
-                        writer.WriteString(EventPropertyNameBytes, invokeMessage.EventName);
-                        writer.WriteString(DataTypePropertyNameBytes, invokeMessage.DataType.ToString());
-                        WriteData(output, writer, invokeMessage.Data, invokeMessage.DataType);
-                        break;
-                    case CancelInvocationMessage cancelInvocationMessage:
-                        writer.WriteString(TypePropertyNameBytes, CancelInvocationTypeBytes);
-                        writer.WriteString(InvocationIdPropertyNameBytes, cancelInvocationMessage.InvocationId);
-                        break;
                     default:
                         throw new InvalidDataException($"{message.GetType()} is not supported.");
                 }
@@ -445,6 +375,39 @@ namespace Azure.Messaging.WebPubSub.Clients
             {
                 ReusableUtf8JsonWriter.Return(jsonWriterLease);
             }
+        }
+
+        private static AckMessageError ReadErrorDetail(Utf8JsonReader reader)
+        {
+            string errorName = null;
+            string errorMessage = null;
+
+            var completed = false;
+            reader.CheckRead();
+            // Error detail should start with object
+            reader.EnsureObjectStart();
+            do
+            {
+                switch (reader.TokenType)
+                {
+                    case JsonTokenType.PropertyName:
+                        if (reader.ValueTextEquals(ErrorNamePropertyNameBytes.EncodedUtf8Bytes))
+                        {
+                            errorName = reader.ReadAsNullableString(ErrorNamePropertyName);
+                        }
+                        else if (reader.ValueTextEquals(MessagePropertyNameBytes.EncodedUtf8Bytes))
+                        {
+                            errorMessage = reader.ReadAsNullableString(MessagePropertyName);
+                        }
+                        break;
+                    case JsonTokenType.EndObject:
+                        completed = true;
+                        break;
+                }
+            }
+            while (!completed && reader.CheckRead());
+
+            return new AckMessageError(errorName, errorMessage);
         }
 
         private static void AssertNotNull<T>(T value, string propertyName)
@@ -488,7 +451,6 @@ namespace Azure.Messaging.WebPubSub.Clients
             Ack,
             Message,
             System,
-            InvokeResponse,
         }
 
         private enum FromType

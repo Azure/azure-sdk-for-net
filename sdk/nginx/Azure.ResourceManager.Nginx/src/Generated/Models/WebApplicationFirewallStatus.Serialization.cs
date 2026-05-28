@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Nginx;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The status of the NGINX App Protect Web Application Firewall. </summary>
-    public partial class WebApplicationFirewallStatus : IJsonModel<WebApplicationFirewallStatus>
+    public partial class WebApplicationFirewallStatus : IUtf8JsonSerializable, IJsonModel<WebApplicationFirewallStatus>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebApplicationFirewallStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebApplicationFirewallStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationFirewallStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebApplicationFirewallStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApplicationFirewallStatus IPersistableModel<WebApplicationFirewallStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebApplicationFirewallStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebApplicationFirewallStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,16 +28,12 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApplicationFirewallStatus)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(WafRelease))
-            {
-                writer.WritePropertyName("wafRelease"u8);
-                writer.WriteStringValue(WafRelease);
-            }
+
             if (options.Format != "W" && Optional.IsDefined(AttackSignaturesPackage))
             {
                 writer.WritePropertyName("attackSignaturesPackage"u8);
@@ -99,15 +54,15 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("componentVersions"u8);
                 writer.WriteObjectValue(ComponentVersions, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,92 +71,108 @@ namespace Azure.ResourceManager.Nginx.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApplicationFirewallStatus IJsonModel<WebApplicationFirewallStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebApplicationFirewallStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebApplicationFirewallStatus IJsonModel<WebApplicationFirewallStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApplicationFirewallStatus)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebApplicationFirewallStatus(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WebApplicationFirewallStatus DeserializeWebApplicationFirewallStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static WebApplicationFirewallStatus DeserializeWebApplicationFirewallStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string wafRelease = default;
             WebApplicationFirewallPackage attackSignaturesPackage = default;
             WebApplicationFirewallPackage botSignaturesPackage = default;
             WebApplicationFirewallPackage threatCampaignsPackage = default;
             WebApplicationFirewallComponentVersions componentVersions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("wafRelease"u8))
+                if (property.NameEquals("attackSignaturesPackage"u8))
                 {
-                    wafRelease = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("attackSignaturesPackage"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    attackSignaturesPackage = WebApplicationFirewallPackage.DeserializeWebApplicationFirewallPackage(prop.Value, options);
+                    attackSignaturesPackage = WebApplicationFirewallPackage.DeserializeWebApplicationFirewallPackage(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("botSignaturesPackage"u8))
+                if (property.NameEquals("botSignaturesPackage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    botSignaturesPackage = WebApplicationFirewallPackage.DeserializeWebApplicationFirewallPackage(prop.Value, options);
+                    botSignaturesPackage = WebApplicationFirewallPackage.DeserializeWebApplicationFirewallPackage(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("threatCampaignsPackage"u8))
+                if (property.NameEquals("threatCampaignsPackage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    threatCampaignsPackage = WebApplicationFirewallPackage.DeserializeWebApplicationFirewallPackage(prop.Value, options);
+                    threatCampaignsPackage = WebApplicationFirewallPackage.DeserializeWebApplicationFirewallPackage(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("componentVersions"u8))
+                if (property.NameEquals("componentVersions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    componentVersions = WebApplicationFirewallComponentVersions.DeserializeWebApplicationFirewallComponentVersions(prop.Value, options);
+                    componentVersions = WebApplicationFirewallComponentVersions.DeserializeWebApplicationFirewallComponentVersions(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new WebApplicationFirewallStatus(
-                wafRelease,
-                attackSignaturesPackage,
-                botSignaturesPackage,
-                threatCampaignsPackage,
-                componentVersions,
-                additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WebApplicationFirewallStatus(attackSignaturesPackage, botSignaturesPackage, threatCampaignsPackage, componentVersions, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebApplicationFirewallStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebApplicationFirewallStatus IPersistableModel<WebApplicationFirewallStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWebApplicationFirewallStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebApplicationFirewallStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

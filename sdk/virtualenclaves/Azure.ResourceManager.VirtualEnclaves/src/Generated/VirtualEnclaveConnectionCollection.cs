@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.VirtualEnclaves
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.VirtualEnclaves
     /// </summary>
     public partial class VirtualEnclaveConnectionCollection : ArmCollection, IEnumerable<VirtualEnclaveConnectionResource>, IAsyncEnumerable<VirtualEnclaveConnectionResource>
     {
-        private readonly ClientDiagnostics _enclaveConnectionClientDiagnostics;
-        private readonly EnclaveConnection _enclaveConnectionRestClient;
+        private readonly ClientDiagnostics _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics;
+        private readonly EnclaveConnectionRestOperations _virtualEnclaveConnectionEnclaveConnectionRestClient;
 
-        /// <summary> Initializes a new instance of VirtualEnclaveConnectionCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveConnectionCollection"/> class for mocking. </summary>
         protected VirtualEnclaveConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualEnclaveConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualEnclaveConnectionResource.ResourceType, out string virtualEnclaveConnectionApiVersion);
-            _enclaveConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveConnectionResource.ResourceType.Namespace, Diagnostics);
-            _enclaveConnectionRestClient = new EnclaveConnection(_enclaveConnectionClientDiagnostics, Pipeline, Endpoint, virtualEnclaveConnectionApiVersion ?? "2025-05-01-preview");
-            ValidateResourceId(id);
+            _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveConnectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualEnclaveConnectionResource.ResourceType, out string virtualEnclaveConnectionEnclaveConnectionApiVersion);
+            _virtualEnclaveConnectionEnclaveConnectionRestClient = new EnclaveConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveConnectionEnclaveConnectionApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a EnclaveConnectionResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnclaveConnection_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnclaveConnectionResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualEnclaveConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string enclaveConnectionName, VirtualEnclaveConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _enclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.CreateOrUpdate");
+            using var scope = _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enclaveConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, VirtualEnclaveConnectionData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                VirtualEnclavesArmOperation<VirtualEnclaveConnectionResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveConnectionResource>(
-                    new VirtualEnclaveConnectionOperationSource(Client),
-                    _enclaveConnectionClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _virtualEnclaveConnectionEnclaveConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, enclaveConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveConnectionResource>(new VirtualEnclaveConnectionOperationSource(Client), _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics, Pipeline, _virtualEnclaveConnectionEnclaveConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, enclaveConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Create a EnclaveConnectionResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnclaveConnection_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnclaveConnectionResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualEnclaveConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string enclaveConnectionName, VirtualEnclaveConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _enclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.CreateOrUpdate");
+            using var scope = _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enclaveConnectionRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, VirtualEnclaveConnectionData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                VirtualEnclavesArmOperation<VirtualEnclaveConnectionResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveConnectionResource>(
-                    new VirtualEnclaveConnectionOperationSource(Client),
-                    _enclaveConnectionClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _virtualEnclaveConnectionEnclaveConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, enclaveConnectionName, data, cancellationToken);
+                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveConnectionResource>(new VirtualEnclaveConnectionOperationSource(Client), _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics, Pipeline, _virtualEnclaveConnectionEnclaveConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, enclaveConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a EnclaveConnectionResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnclaveConnection_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnclaveConnectionResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         public virtual async Task<Response<VirtualEnclaveConnectionResource>> GetAsync(string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
 
-            using DiagnosticScope scope = _enclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.Get");
+            using var scope = _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VirtualEnclaveConnectionData> response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
+                var response = await _virtualEnclaveConnectionEnclaveConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, enclaveConnectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a EnclaveConnectionResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnclaveConnection_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnclaveConnectionResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         public virtual Response<VirtualEnclaveConnectionResource> Get(string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
 
-            using DiagnosticScope scope = _enclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.Get");
+            using var scope = _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<VirtualEnclaveConnectionData> response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
+                var response = _virtualEnclaveConnectionEnclaveConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, enclaveConnectionName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// List EnclaveConnectionResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnclaveConnection_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnclaveConnectionResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualEnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualEnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualEnclaveConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<VirtualEnclaveConnectionData, VirtualEnclaveConnectionResource>(new EnclaveConnectionGetByResourceGroupAsyncCollectionResultOfT(_enclaveConnectionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualEnclaveConnectionCollection.GetAll"), data => new VirtualEnclaveConnectionResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEnclaveConnectionEnclaveConnectionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEnclaveConnectionEnclaveConnectionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveConnectionResource(Client, VirtualEnclaveConnectionData.DeserializeVirtualEnclaveConnectionData(e)), _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics, Pipeline, "VirtualEnclaveConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List EnclaveConnectionResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnclaveConnection_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnclaveConnectionResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <returns> A collection of <see cref="VirtualEnclaveConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualEnclaveConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<VirtualEnclaveConnectionData, VirtualEnclaveConnectionResource>(new EnclaveConnectionGetByResourceGroupCollectionResultOfT(_enclaveConnectionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualEnclaveConnectionCollection.GetAll"), data => new VirtualEnclaveConnectionResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEnclaveConnectionEnclaveConnectionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEnclaveConnectionEnclaveConnectionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveConnectionResource(Client, VirtualEnclaveConnectionData.DeserializeVirtualEnclaveConnectionData(e)), _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics, Pipeline, "VirtualEnclaveConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnclaveConnection_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnclaveConnectionResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
 
-            using DiagnosticScope scope = _enclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.Exists");
+            using var scope = _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<VirtualEnclaveConnectionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveConnectionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _virtualEnclaveConnectionEnclaveConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, enclaveConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnclaveConnection_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnclaveConnectionResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
 
-            using DiagnosticScope scope = _enclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.Exists");
+            using var scope = _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<VirtualEnclaveConnectionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveConnectionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _virtualEnclaveConnectionEnclaveConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, enclaveConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnclaveConnection_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnclaveConnectionResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualEnclaveConnectionResource>> GetIfExistsAsync(string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
 
-            using DiagnosticScope scope = _enclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.GetIfExists");
+            using var scope = _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<VirtualEnclaveConnectionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveConnectionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _virtualEnclaveConnectionEnclaveConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, enclaveConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<VirtualEnclaveConnectionResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/enclaveConnections/{enclaveConnectionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> EnclaveConnection_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>EnclaveConnectionResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="enclaveConnectionName"> The name of the Enclave Connection Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="enclaveConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="enclaveConnectionName"/> is null. </exception>
         public virtual NullableResponse<VirtualEnclaveConnectionResource> GetIfExists(string enclaveConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(enclaveConnectionName, nameof(enclaveConnectionName));
 
-            using DiagnosticScope scope = _enclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.GetIfExists");
+            using var scope = _virtualEnclaveConnectionEnclaveConnectionClientDiagnostics.CreateScope("VirtualEnclaveConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _enclaveConnectionRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, enclaveConnectionName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<VirtualEnclaveConnectionData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveConnectionData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveConnectionData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _virtualEnclaveConnectionEnclaveConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, enclaveConnectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<VirtualEnclaveConnectionResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.VirtualEnclaves
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<VirtualEnclaveConnectionResource> IAsyncEnumerable<VirtualEnclaveConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

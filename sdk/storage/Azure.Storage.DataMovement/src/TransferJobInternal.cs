@@ -4,8 +4,8 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -234,10 +234,7 @@ namespace Azure.Storage.DataMovement
                 {
                     if (!part.JobPartStatus.HasCompletedSuccessfully)
                     {
-                        // Use ResetToQueued to bypass the state-machine guard.
-                        // Parts may be in transient states (Pausing, Stopping)
-                        // if the process exited mid-pause/stop.
-                        part.JobPartStatus.ResetToQueued();
+                        part.JobPartStatus.SetTransferStateChange(TransferState.Queued);
                         yield return part;
                     }
                 }
@@ -333,15 +330,6 @@ namespace Azure.Storage.DataMovement
                             await sourceContainer.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                         bool overwrite = _creationPreference == StorageResourceCreationMode.OverwriteIfExists;
                         await subContainer.CreateAsync(overwrite, sourceProperties, _cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (Exception ex) when (
-                        _creationPreference == StorageResourceCreationMode.SkipIfExists &&
-                        (ex is InvalidOperationException operationException &&
-                        operationException.Message.Contains(DataMovementConstants.ErrorCode.CannotOverwriteDirectory)))
-                    {
-                        DataMovementEventSource.Singleton.DirectorySkipped(
-                            _transferOperation.Id,
-                            subContainer.Uri.AbsolutePath);
                     }
                     catch (Exception ex)
                     {
@@ -549,36 +537,20 @@ namespace Azure.Storage.DataMovement
         {
             if (_transferOperation._state.SetTransferState(state))
             {
-                try
+                // If we are in a final state, dispose the JobPartEvent handlers and complete the progress tracker.
+                if (state == TransferState.Completed ||
+                    state == TransferState.Paused)
                 {
-                    // If we are in a final state, dispose the JobPartEvent handlers and complete the progress tracker.
-                    if (state == TransferState.Completed ||
-                        state == TransferState.Paused)
+                    if (JobPartStatusEvents != default)
                     {
-                        if (JobPartStatusEvents != default)
-                        {
-                            JobPartStatusEvents -= JobPartStatusEventAsync;
-                        }
-                        // This will block until all pending progress reports have gone out
-                        await _progressTracker.CleanUpAsync().ConfigureAwait(false);
+                        JobPartStatusEvents -= JobPartStatusEventAsync;
                     }
+                    // This will block until all pending progress reports have gone out
+                    await _progressTracker.CleanUpAsync().ConfigureAwait(false);
+                }
 
-                    await OnJobPartStatusChangedAsync().ConfigureAwait(false);
-                    await SetCheckpointerStatusAsync().ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    DataMovementEventSource.Singleton.UnexpectedCleanupError(
-                        _transferOperation.Id, ex.Message);
-                }
-                finally
-                {
-                    // Signal completion AFTER all checkpointer cleanup is done.
-                    // This prevents a race condition where the pause waiter returns
-                    // and immediately resumes the transfer before the checkpointer
-                    // has finished disposing the old JobPlanFile.
-                    _transferOperation._state.CompleteIfFinalState();
-                }
+                await OnJobPartStatusChangedAsync().ConfigureAwait(false);
+                await SetCheckpointerStatusAsync().ConfigureAwait(false);
             }
         }
 

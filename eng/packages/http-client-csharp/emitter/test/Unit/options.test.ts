@@ -24,8 +24,8 @@ describe("Configuration tests", async () => {
         await importOriginal<typeof import("@typespec/http-client-csharp")>();
       return {
         ...actual,
-        emitCodeModel: async () => {
-          return [undefined, []];
+        $onEmit: async () => {
+          // do nothing
         }
       };
     });

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Elastic.Tests
                 elasticsearchServiceUri: elasticsearchServiceUri,
                 kibanaServiceUri: kibanaServiceUri,
                 kibanaSsoUri: kibanaSsoUri,
-                additionalBinaryDataProperties: new Dictionary<string, BinaryData>()
+                serializedAdditionalRawData: new Dictionary<string, BinaryData>()
             );
 
             // Act - Serialize
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Elastic.Tests
                 elasticsearchServiceUri: elasticsearchServiceUri,
                 kibanaServiceUri: kibanaServiceUri,
                 kibanaSsoUri: kibanaSsoUri,
-                additionalBinaryDataProperties: new Dictionary<string, BinaryData>()
+                serializedAdditionalRawData: new Dictionary<string, BinaryData>()
             );
 
             // Act - Serialize

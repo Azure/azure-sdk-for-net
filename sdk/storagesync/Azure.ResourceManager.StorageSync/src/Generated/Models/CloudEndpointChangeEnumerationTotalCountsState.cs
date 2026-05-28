@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct CloudEndpointChangeEnumerationTotalCountsState : IEquatable<CloudEndpointChangeEnumerationTotalCountsState>
     {
         private readonly string _value;
-        private const string CalculatingValue = "Calculating";
-        private const string FinalValue = "Final";
 
         /// <summary> Initializes a new instance of <see cref="CloudEndpointChangeEnumerationTotalCountsState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CloudEndpointChangeEnumerationTotalCountsState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Calculating. </summary>
+        private const string CalculatingValue = "Calculating";
+        private const string FinalValue = "Final";
+
+        /// <summary> Calculating. </summary>
         public static CloudEndpointChangeEnumerationTotalCountsState Calculating { get; } = new CloudEndpointChangeEnumerationTotalCountsState(CalculatingValue);
-
-        /// <summary> Gets the Final. </summary>
+        /// <summary> Final. </summary>
         public static CloudEndpointChangeEnumerationTotalCountsState Final { get; } = new CloudEndpointChangeEnumerationTotalCountsState(FinalValue);
-
         /// <summary> Determines if two <see cref="CloudEndpointChangeEnumerationTotalCountsState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CloudEndpointChangeEnumerationTotalCountsState left, CloudEndpointChangeEnumerationTotalCountsState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CloudEndpointChangeEnumerationTotalCountsState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CloudEndpointChangeEnumerationTotalCountsState left, CloudEndpointChangeEnumerationTotalCountsState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CloudEndpointChangeEnumerationTotalCountsState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudEndpointChangeEnumerationTotalCountsState"/>. </summary>
         public static implicit operator CloudEndpointChangeEnumerationTotalCountsState(string value) => new CloudEndpointChangeEnumerationTotalCountsState(value);
 
-        /// <summary> Converts a string to a <see cref="CloudEndpointChangeEnumerationTotalCountsState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CloudEndpointChangeEnumerationTotalCountsState?(string value) => value == null ? null : new CloudEndpointChangeEnumerationTotalCountsState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CloudEndpointChangeEnumerationTotalCountsState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CloudEndpointChangeEnumerationTotalCountsState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -16,8 +15,6 @@ namespace Payload.MultiPart._FormData.HttpParts.NonString
     public partial class FormDataHttpPartsNonString
     {
         protected FormDataHttpPartsNonString() => throw null;
-
-        internal FormDataHttpPartsNonString(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

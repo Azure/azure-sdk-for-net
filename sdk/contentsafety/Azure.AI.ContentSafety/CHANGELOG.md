@@ -5,8 +5,6 @@
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-- Added `ContentSafetyClientSettings` to support creating a `ContentSafetyClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-- Added `BlocklistClientSettings` to support creating a `BlocklistClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ### Breaking Changes
 

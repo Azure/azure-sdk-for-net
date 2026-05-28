@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct AllowDnsProxyType : IEquatable<AllowDnsProxyType>
     {
         private readonly string _value;
-        private const string DisabledValue = "DISABLED";
-        private const string EnabledValue = "ENABLED";
 
         /// <summary> Initializes a new instance of <see cref="AllowDnsProxyType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AllowDnsProxyType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Disabled. </summary>
+        private const string DisabledValue = "DISABLED";
+        private const string EnabledValue = "ENABLED";
+
+        /// <summary> DISABLED. </summary>
         public static AllowDnsProxyType Disabled { get; } = new AllowDnsProxyType(DisabledValue);
-
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> ENABLED. </summary>
         public static AllowDnsProxyType Enabled { get; } = new AllowDnsProxyType(EnabledValue);
-
         /// <summary> Determines if two <see cref="AllowDnsProxyType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AllowDnsProxyType left, AllowDnsProxyType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AllowDnsProxyType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AllowDnsProxyType left, AllowDnsProxyType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AllowDnsProxyType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AllowDnsProxyType"/>. </summary>
         public static implicit operator AllowDnsProxyType(string value) => new AllowDnsProxyType(value);
 
-        /// <summary> Converts a string to a <see cref="AllowDnsProxyType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AllowDnsProxyType?(string value) => value == null ? null : new AllowDnsProxyType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AllowDnsProxyType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AllowDnsProxyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,8 +16,6 @@ namespace Versioning.RenamedFrom
     public partial class NewInterface
     {
         protected NewInterface() => throw null;
-
-        internal NewInterface(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string version) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

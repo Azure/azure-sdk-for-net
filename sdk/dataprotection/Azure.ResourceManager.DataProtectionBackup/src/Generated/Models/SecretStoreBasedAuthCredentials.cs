@@ -14,17 +14,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class SecretStoreBasedAuthCredentials : DataProtectionBackupAuthCredentials
     {
         /// <summary> Initializes a new instance of <see cref="SecretStoreBasedAuthCredentials"/>. </summary>
-        public SecretStoreBasedAuthCredentials() : base("SecretStoreBasedAuthCredentials")
+        public SecretStoreBasedAuthCredentials()
         {
+            ObjectType = "SecretStoreBasedAuthCredentials";
         }
 
         /// <summary> Initializes a new instance of <see cref="SecretStoreBasedAuthCredentials"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secretStoreResource"> Secret store resource. </param>
-        internal SecretStoreBasedAuthCredentials(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecretStoreResourceInfo secretStoreResource) : base(objectType, additionalBinaryDataProperties)
+        internal SecretStoreBasedAuthCredentials(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, SecretStoreResourceInfo secretStoreResource) : base(objectType, serializedAdditionalRawData)
         {
             SecretStoreResource = secretStoreResource;
+            ObjectType = objectType ?? "SecretStoreBasedAuthCredentials";
         }
 
         /// <summary> Secret store resource. </summary>

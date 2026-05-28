@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace Specs.Azure.Core.Scalar
+namespace _Specs_.Azure.Core.Scalar
 {
     public static partial class _Specs_AzureCoreScalarModelFactory
     {

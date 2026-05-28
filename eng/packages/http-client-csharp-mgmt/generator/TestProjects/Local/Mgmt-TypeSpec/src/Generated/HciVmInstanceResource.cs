@@ -84,31 +84,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Gets a virtual machine instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/MgmtTypeSpec/virtualMachineInstances/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HciVmInstances_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciVmInstanceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a virtual machine instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HciVmInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -120,7 +100,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hciVmInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                HttpMessage message = _hciVmInstancesRestClient.CreateGetRequest(Id.Parent, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmInstanceData> response = Response.FromValue(HciVmInstanceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -136,27 +116,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary>
-        /// Gets a virtual machine instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/MgmtTypeSpec/virtualMachineInstances/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HciVmInstances_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HciVmInstanceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets a virtual machine instance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HciVmInstanceResource> Get(CancellationToken cancellationToken = default)
         {
@@ -168,7 +128,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hciVmInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                HttpMessage message = _hciVmInstancesRestClient.CreateGetRequest(Id.Parent, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmInstanceData> response = Response.FromValue(HciVmInstanceData.FromResponse(result), result);
                 if (response.Value == null)

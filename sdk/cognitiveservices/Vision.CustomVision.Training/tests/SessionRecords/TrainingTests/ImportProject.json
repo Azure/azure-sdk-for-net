@@ -1,0 +1,384 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//customvision/v3.2/training/projects/1dc70f49-b5be-4816-8304-271e1842bb62/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy8xZGM3MGY0OS1iNWJlLTQ4MTYtODMwNC0yNzFlMTg0MmJiNjIvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "d18ace3e-8f27-47c5-bf33-af0afcdd73ff"
+        ],
+        "apim-request-id": [
+          "d18ace3e-8f27-47c5-bf33-af0afcdd73ff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 11 Feb 2020 16:33:07 GMT"
+        ],
+        "Content-Length": [
+          "319"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"iterationCount\": 2,\r\n  \"imageCount\": 10,\r\n  \"tagCount\": 4,\r\n  \"regionCount\": 0,\r\n  \"estimatedImportTimeInMS\": 6121,\r\n  \"token\": \"https://irisprodeu2training.blob.core.windows.net/prjexp-1dc70f49b5be48168304271e1842bb62/project-export-info?sv=2017-04-17&sr=b&sig=RtO82NRrKyi4uYFaOF5PPmRuAKx9PVrQ5EqXHSJhXKo%3D&se=2020-02-12T16%3A33%3A07Z&sp=r\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.2/training/projects/import?token=https%3A%2F%2Firisprodeu2training.blob.core.windows.net%2Fprjexp-1dc70f49b5be48168304271e1842bb62%2Fproject-export-info%3Fsv%3D2017-04-17%26sr%3Db%26sig%3DRtO82NRrKyi4uYFaOF5PPmRuAKx9PVrQ5EqXHSJhXKo%253D%26se%3D2020-02-12T16%253A33%253A07Z%26sp%3Dr",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy9pbXBvcnQ/dG9rZW49aHR0cHMlM0ElMkYlMkZpcmlzcHJvZGV1MnRyYWluaW5nLmJsb2IuY29yZS53aW5kb3dzLm5ldCUyRnByamV4cC0xZGM3MGY0OWI1YmU0ODE2ODMwNDI3MWUxODQyYmI2MiUyRnByb2plY3QtZXhwb3J0LWluZm8lM0ZzdiUzRDIwMTctMDQtMTclMjZzciUzRGIlMjZzaWclM0RSdE84Mk5Sckt5aTR1WUZhT0Y1UFBtUnVBS3g5UFZyUTVFcVhIU0poWEtvJTI1M0QlMjZzZSUzRDIwMjAtMDItMTJUMTYlMjUzQTMzJTI1M0EwN1olMjZzcCUzRHI=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "b22dc8a7-e3ed-498f-be2e-3bf507f21248"
+        ],
+        "apim-request-id": [
+          "b22dc8a7-e3ed-498f-be2e-3bf507f21248"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 11 Feb 2020 16:33:07 GMT"
+        ],
+        "Content-Length": [
+          "611"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"cf392ab5-3d76-445e-8a49-1114f60a0e52\",\r\n  \"name\": \"SDK UT: 2b1fdb65-cc10-4663-98dd-c5eda27041ae (1)\",\r\n  \"description\": \"\",\r\n  \"settings\": {\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"targetExportPlatforms\": [],\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null,\r\n    \"imageProcessingSettings\": {\r\n      \"augmentationMethods\": {\r\n        \"rotation\": true,\r\n        \"scaling\": true,\r\n        \"translation\": true,\r\n        \"horizontal flip\": true,\r\n        \"equalize\": true,\r\n        \"solarize\": true,\r\n        \"padtosquare\": true\r\n      }\r\n    }\r\n  },\r\n  \"created\": \"2020-02-11T16:33:07.926Z\",\r\n  \"lastModified\": \"2020-02-11T16:33:07.926Z\",\r\n  \"thumbnailUri\": null,\r\n  \"drModeEnabled\": false,\r\n  \"status\": \"Importing\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.2/training/projects/cf392ab5-3d76-445e-8a49-1114f60a0e52",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy9jZjM5MmFiNS0zZDc2LTQ0NWUtOGE0OS0xMTE0ZjYwYTBlNTI=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "a4ca947e-b071-4b4c-9369-91c491bcf0c0"
+        ],
+        "apim-request-id": [
+          "a4ca947e-b071-4b4c-9369-91c491bcf0c0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 11 Feb 2020 16:33:27 GMT"
+        ],
+        "Content-Length": [
+          "831"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"cf392ab5-3d76-445e-8a49-1114f60a0e52\",\r\n  \"name\": \"SDK UT: 2b1fdb65-cc10-4663-98dd-c5eda27041ae (1)\",\r\n  \"description\": \"\",\r\n  \"settings\": {\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"targetExportPlatforms\": [],\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": \"\",\r\n    \"imageProcessingSettings\": {\r\n      \"augmentationMethods\": {\r\n        \"rotation\": true,\r\n        \"scaling\": true,\r\n        \"translation\": true,\r\n        \"horizontal flip\": true,\r\n        \"equalize\": true,\r\n        \"solarize\": true,\r\n        \"padtosquare\": true\r\n      }\r\n    }\r\n  },\r\n  \"created\": \"2020-02-11T16:33:07.926Z\",\r\n  \"lastModified\": \"2020-02-11T16:33:15.485Z\",\r\n  \"thumbnailUri\": \"https://irisprodeu2training.blob.core.windows.net/i-cf392ab53d76445e8a491114f60a0e52/t-8624022068e34408854c2b0811cfcc94?sv=2017-04-17&sr=b&sig=lxKemm4IJO%2FT7SFyU4LMtN14Qujgni8PfT14pr1UOak%3D&se=2020-02-12T16%3A33%3A28Z&sp=r\",\r\n  \"drModeEnabled\": false,\r\n  \"status\": \"Succeeded\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.2/training/projects/cf392ab5-3d76-445e-8a49-1114f60a0e52/images/tagged/count",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy9jZjM5MmFiNS0zZDc2LTQ0NWUtOGE0OS0xMTE0ZjYwYTBlNTIvaW1hZ2VzL3RhZ2dlZC9jb3VudA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "a4136636-f048-4874-ae25-4d174d67cdaf"
+        ],
+        "apim-request-id": [
+          "a4136636-f048-4874-ae25-4d174d67cdaf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 11 Feb 2020 16:33:27 GMT"
+        ],
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "10",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.2/training/projects/1dc70f49-b5be-4816-8304-271e1842bb62/images/tagged/count",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy8xZGM3MGY0OS1iNWJlLTQ4MTYtODMwNC0yNzFlMTg0MmJiNjIvaW1hZ2VzL3RhZ2dlZC9jb3VudA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "2aeb39c2-b730-4207-9090-1dbc5f23837d"
+        ],
+        "apim-request-id": [
+          "2aeb39c2-b730-4207-9090-1dbc5f23837d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 11 Feb 2020 16:33:27 GMT"
+        ],
+        "Content-Length": [
+          "2"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "10",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.2/training/projects/cf392ab5-3d76-445e-8a49-1114f60a0e52/tags",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy9jZjM5MmFiNS0zZDc2LTQ0NWUtOGE0OS0xMTE0ZjYwYTBlNTIvdGFncw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "6ee4abf7-8204-4682-a3a1-8834896508c0"
+        ],
+        "apim-request-id": [
+          "6ee4abf7-8204-4682-a3a1-8834896508c0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 11 Feb 2020 16:33:27 GMT"
+        ],
+        "Content-Length": [
+          "223"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"c448a947-f04a-4802-9b63-6f028734867c\",\r\n    \"name\": \"Tag2\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 5\r\n  },\r\n  {\r\n    \"id\": \"56f685b2-b8e9-421b-a2b2-aacba35937bd\",\r\n    \"name\": \"Tag1\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 5\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.2/training/projects/1dc70f49-b5be-4816-8304-271e1842bb62/tags",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy8xZGM3MGY0OS1iNWJlLTQ4MTYtODMwNC0yNzFlMTg0MmJiNjIvdGFncw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "b65dea37-1119-4a6f-ab6b-b527519c860d"
+        ],
+        "apim-request-id": [
+          "b65dea37-1119-4a6f-ab6b-b527519c860d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 11 Feb 2020 16:33:27 GMT"
+        ],
+        "Content-Length": [
+          "223"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"5dce5be3-ccb0-4853-8f4b-3a1b88c8aba3\",\r\n    \"name\": \"Tag2\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 5\r\n  },\r\n  {\r\n    \"id\": \"8d3701dc-e5bb-4dd5-93cf-991ff0ff7a33\",\r\n    \"name\": \"Tag1\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 5\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.2/training/projects/cf392ab5-3d76-445e-8a49-1114f60a0e52/iterations",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy9jZjM5MmFiNS0zZDc2LTQ0NWUtOGE0OS0xMTE0ZjYwYTBlNTIvaXRlcmF0aW9ucw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "a070b06d-7f64-4ca4-8259-f141931d8b7c"
+        ],
+        "apim-request-id": [
+          "a070b06d-7f64-4ca4-8259-f141931d8b7c"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 11 Feb 2020 16:33:27 GMT"
+        ],
+        "Content-Length": [
+          "508"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"2f9bde0b-6c3a-4bfc-8dc6-87c81e815071\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2020-02-11T16:33:07.943Z\",\r\n    \"lastModified\": \"2020-02-11T16:33:14.767Z\",\r\n    \"trainedAt\": \"2020-02-11T16:33:05.446Z\",\r\n    \"projectId\": \"cf392ab5-3d76-445e-8a49-1114f60a0e52\",\r\n    \"exportable\": false,\r\n    \"exportableTo\": [],\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"trainingTimeInMinutes\": 1,\r\n    \"publishName\": null,\r\n    \"originalPublishResourceId\": null\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.2/training/projects/1dc70f49-b5be-4816-8304-271e1842bb62/iterations",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy8xZGM3MGY0OS1iNWJlLTQ4MTYtODMwNC0yNzFlMTg0MmJiNjIvaXRlcmF0aW9ucw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Request-Id": [
+          "ea5aad2e-c417-4a8e-87f9-67788762dac9"
+        ],
+        "apim-request-id": [
+          "ea5aad2e-c417-4a8e-87f9-67788762dac9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 11 Feb 2020 16:33:27 GMT"
+        ],
+        "Content-Length": [
+          "684"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"dfafc798-3d2b-4851-99b7-50257e7fdf0b\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2020-02-11T16:32:10.45Z\",\r\n    \"lastModified\": \"2020-02-11T16:33:06.448Z\",\r\n    \"trainedAt\": \"2020-02-11T16:33:05.445Z\",\r\n    \"projectId\": \"1dc70f49-b5be-4816-8304-271e1842bb62\",\r\n    \"exportable\": false,\r\n    \"exportableTo\": [],\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"trainingTimeInMinutes\": 1,\r\n    \"publishName\": \"Training UnitTest Iteration\",\r\n    \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n  }\r\n]",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

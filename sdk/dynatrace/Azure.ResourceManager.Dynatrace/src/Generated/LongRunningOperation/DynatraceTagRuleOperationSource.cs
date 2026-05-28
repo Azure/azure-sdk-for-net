@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    /// <summary></summary>
-    internal partial class DynatraceTagRuleOperationSource : IOperationSource<DynatraceTagRuleResource>
+    internal class DynatraceTagRuleOperationSource : IOperationSource<DynatraceTagRuleResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DynatraceTagRuleOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DynatraceTagRuleResource IOperationSource<DynatraceTagRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DynatraceTagRuleData data = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DynatraceTagRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
             return new DynatraceTagRuleResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DynatraceTagRuleResource> IOperationSource<DynatraceTagRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DynatraceTagRuleData data = DynatraceTagRuleData.DeserializeDynatraceTagRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DynatraceTagRuleResource(_client, data);
+            var data = ModelReaderWriter.Read<DynatraceTagRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
+            return await Task.FromResult(new DynatraceTagRuleResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

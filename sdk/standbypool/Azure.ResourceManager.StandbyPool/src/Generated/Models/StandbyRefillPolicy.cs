@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.StandbyPool;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
@@ -15,52 +14,35 @@ namespace Azure.ResourceManager.StandbyPool.Models
     public readonly partial struct StandbyRefillPolicy : IEquatable<StandbyRefillPolicy>
     {
         private readonly string _value;
-        /// <summary> A refill policy that standby pool is automatically refilled to maintain maxReadyCapacity. </summary>
-        private const string AlwaysValue = "always";
 
         /// <summary> Initializes a new instance of <see cref="StandbyRefillPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StandbyRefillPolicy(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string AlwaysValue = "always";
 
         /// <summary> A refill policy that standby pool is automatically refilled to maintain maxReadyCapacity. </summary>
         public static StandbyRefillPolicy Always { get; } = new StandbyRefillPolicy(AlwaysValue);
-
         /// <summary> Determines if two <see cref="StandbyRefillPolicy"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StandbyRefillPolicy left, StandbyRefillPolicy right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StandbyRefillPolicy"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StandbyRefillPolicy left, StandbyRefillPolicy right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StandbyRefillPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StandbyRefillPolicy"/>. </summary>
         public static implicit operator StandbyRefillPolicy(string value) => new StandbyRefillPolicy(value);
 
-        /// <summary> Converts a string to a <see cref="StandbyRefillPolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StandbyRefillPolicy?(string value) => value == null ? null : new StandbyRefillPolicy(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StandbyRefillPolicy other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StandbyRefillPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

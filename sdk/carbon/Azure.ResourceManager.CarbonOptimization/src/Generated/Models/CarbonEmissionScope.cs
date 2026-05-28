@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     public readonly partial struct CarbonEmissionScope : IEquatable<CarbonEmissionScope>
     {
         private readonly string _value;
-        /// <summary> Scope1 carbon emission. </summary>
-        private const string Scope1Value = "Scope1";
-        /// <summary> Scope2 carbon emission. </summary>
-        private const string Scope2Value = "Scope2";
-        /// <summary> Scope3 carbon emission. </summary>
-        private const string Scope3Value = "Scope3";
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionScope"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CarbonEmissionScope(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string Scope1Value = "Scope1";
+        private const string Scope2Value = "Scope2";
+        private const string Scope3Value = "Scope3";
 
         /// <summary> Scope1 carbon emission. </summary>
         public static CarbonEmissionScope Scope1 { get; } = new CarbonEmissionScope(Scope1Value);
-
         /// <summary> Scope2 carbon emission. </summary>
         public static CarbonEmissionScope Scope2 { get; } = new CarbonEmissionScope(Scope2Value);
-
         /// <summary> Scope3 carbon emission. </summary>
         public static CarbonEmissionScope Scope3 { get; } = new CarbonEmissionScope(Scope3Value);
-
         /// <summary> Determines if two <see cref="CarbonEmissionScope"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CarbonEmissionScope left, CarbonEmissionScope right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CarbonEmissionScope"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CarbonEmissionScope left, CarbonEmissionScope right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CarbonEmissionScope"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionScope"/>. </summary>
         public static implicit operator CarbonEmissionScope(string value) => new CarbonEmissionScope(value);
 
-        /// <summary> Converts a string to a <see cref="CarbonEmissionScope"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CarbonEmissionScope?(string value) => value == null ? null : new CarbonEmissionScope(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CarbonEmissionScope other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CarbonEmissionScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

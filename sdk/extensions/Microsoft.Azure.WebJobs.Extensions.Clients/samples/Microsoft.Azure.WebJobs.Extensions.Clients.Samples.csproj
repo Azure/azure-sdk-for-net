@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
   </PropertyGroup>

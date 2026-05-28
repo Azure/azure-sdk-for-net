@@ -8,61 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.FrontDoor;
+using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Defines a managed rule group override setting. </summary>
-    public partial class ManagedRuleGroupOverride : IJsonModel<ManagedRuleGroupOverride>
+    public partial class ManagedRuleGroupOverride : IUtf8JsonSerializable, IJsonModel<ManagedRuleGroupOverride>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedRuleGroupOverride"/> for deserialization. </summary>
-        internal ManagedRuleGroupOverride()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleGroupOverride>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedRuleGroupOverride PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeManagedRuleGroupOverride(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedRuleGroupOverride>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedRuleGroupOverride IPersistableModel<ManagedRuleGroupOverride>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedRuleGroupOverride>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedRuleGroupOverride>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,18 +30,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
             if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
-                foreach (ManagedRuleExclusion item in Exclusions)
+                foreach (var item in Exclusions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -95,21 +52,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
-                foreach (ManagedRuleOverride item in Rules)
+                foreach (var item in Rules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -118,27 +75,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedRuleGroupOverride IJsonModel<ManagedRuleGroupOverride>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedRuleGroupOverride JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedRuleGroupOverride IJsonModel<ManagedRuleGroupOverride>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedRuleGroupOverride(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedRuleGroupOverride DeserializeManagedRuleGroupOverride(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedRuleGroupOverride DeserializeManagedRuleGroupOverride(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,36 +98,37 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string ruleGroupName = default;
             IList<ManagedRuleExclusion> exclusions = default;
             IList<ManagedRuleOverride> rules = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("ruleGroupName"u8))
+                if (property.NameEquals("ruleGroupName"u8))
                 {
-                    ruleGroupName = prop.Value.GetString();
+                    ruleGroupName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("exclusions"u8))
+                if (property.NameEquals("exclusions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ManagedRuleExclusion> array = new List<ManagedRuleExclusion>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item, options));
                     }
                     exclusions = array;
                     continue;
                 }
-                if (prop.NameEquals("rules"u8))
+                if (property.NameEquals("rules"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ManagedRuleOverride> array = new List<ManagedRuleOverride>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ManagedRuleOverride.DeserializeManagedRuleOverride(item, options));
                     }
@@ -184,10 +137,128 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ManagedRuleGroupOverride(ruleGroupName, exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), rules ?? new ChangeTrackingList<ManagedRuleOverride>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedRuleGroupOverride(ruleGroupName, exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), rules ?? new ChangeTrackingList<ManagedRuleOverride>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleGroupName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ruleGroupName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuleGroupName))
+                {
+                    builder.Append("  ruleGroupName: ");
+                    if (RuleGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuleGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuleGroupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exclusions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exclusions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Exclusions))
+                {
+                    if (Exclusions.Any())
+                    {
+                        builder.Append("  exclusions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Exclusions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  exclusions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Rules))
+                {
+                    if (Rules.Any())
+                    {
+                        builder.Append("  rules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Rules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  rules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ManagedRuleGroupOverride>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedRuleGroupOverride IPersistableModel<ManagedRuleGroupOverride>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeManagedRuleGroupOverride(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedRuleGroupOverride>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

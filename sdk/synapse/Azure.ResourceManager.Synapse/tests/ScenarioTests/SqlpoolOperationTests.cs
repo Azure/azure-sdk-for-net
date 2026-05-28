@@ -1,21 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager.Synapse.Models;
 using Azure.ResourceManager.Synapse.Tests;
-using Azure.ResourceManager.Synapse.Tests.Helpers;
+using System.Collections.Generic;
 using NUnit;
+using System.Threading;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Threading.Tasks;
+using Azure.ResourceManager.Synapse.Tests.Helpers;
+using System;
+using System.Linq;
 
 namespace Azure.ResourceManager.Synapse.Tests
 {
-    [Ignore("Test recordings need re-recording with current Storage SDK. See https://github.com/Azure/azure-sdk-for-net/issues/57594")]
     public class SqlpoolOperationTests : SynapseManagementTestBase
     {
         public SqlpoolOperationTests(bool async) : base(async)
@@ -39,10 +38,10 @@ namespace Azure.ResourceManager.Synapse.Tests
             string sqlpoolName = Recording.GenerateAssetName("sqlpool");
             var createSqlpoolParams = CommonData.PrepareSqlpoolCreateParams();
             SynapseSqlPoolCollection sqlPoolCollection = WorkspaceResource.GetSynapseSqlPools();
-            var sqlpoolCreate = (await sqlPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, sqlpoolName, createSqlpoolParams)).Value;
-            Assert.That(sqlpoolCreate.Data.ResourceType, Is.EqualTo(CommonTestFixture.SqlpoolType));
-            Assert.That(sqlpoolCreate.Data.Name, Is.EqualTo(sqlpoolName));
-            Assert.That(sqlpoolCreate.Data.Location, Is.EqualTo(CommonData.Location));
+            var sqlpoolCreate =(await sqlPoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, sqlpoolName, createSqlpoolParams)).Value;
+            Assert.AreEqual(CommonTestFixture.SqlpoolType, sqlpoolCreate.Data.ResourceType);
+            Assert.AreEqual(sqlpoolName, sqlpoolCreate.Data.Name);
+            Assert.AreEqual(CommonData.Location, sqlpoolCreate.Data.Location);
 
             // get sqlpool
             for (int i = 0; i < 60; i++)
@@ -50,14 +49,14 @@ namespace Azure.ResourceManager.Synapse.Tests
                 var sqlpoolGet = (await sqlPoolCollection.GetAsync(sqlpoolName)).Value;
                 if (sqlpoolGet.Data.ProvisioningState.Equals("Succeeded"))
                 {
-                    Assert.That(sqlpoolCreate.Data.ResourceType, Is.EqualTo(CommonTestFixture.SqlpoolType));
-                    Assert.That(sqlpoolCreate.Data.Name, Is.EqualTo(sqlpoolName));
-                    Assert.That(sqlpoolCreate.Data.Location, Is.EqualTo(CommonData.Location));
+                    Assert.AreEqual(CommonTestFixture.SqlpoolType, sqlpoolCreate.Data.ResourceType);
+                    Assert.AreEqual(sqlpoolName, sqlpoolCreate.Data.Name);
+                    Assert.AreEqual(CommonData.Location, sqlpoolCreate.Data.Location);
                     break;
                 }
 
                 Thread.Sleep(30000);
-                Assert.That(i < 60, Is.True, "Synapse SqlPool is not in succeeded state even after 30 min.");
+                Assert.True(i < 60, "Synapse SqlPool is not in succeeded state even after 30 min.");
             }
 
             // update sqlpool
@@ -71,8 +70,8 @@ namespace Azure.ResourceManager.Synapse.Tests
             await sqlpoolCreate.UpdateAsync(WaitUntil.Completed, sqlPoolPatchInfo);
 
             var sqlpoolUpdate = (await sqlPoolCollection.GetAsync(sqlpoolName)).Value;
-            Assert.That(sqlpoolUpdate.Data.Tags, Is.Not.Null);
-            Assert.That(sqlpoolUpdate.Data.Tags["TestTag"], Is.EqualTo("TestUpdate"));
+            Assert.NotNull(sqlpoolUpdate.Data.Tags);
+            Assert.AreEqual("TestUpdate", sqlpoolUpdate.Data.Tags["TestTag"]);
 
             // list sqlpool from workspace
             var sqlpoolFromWorkspace = sqlPoolCollection.GetAllAsync();
@@ -80,12 +79,12 @@ namespace Azure.ResourceManager.Synapse.Tests
             var sqlpoolCount = sqlpoolList.Count;
             var sqlpool = sqlpoolList.Single(pool => pool.Data.Name == sqlpoolName);
 
-            Assert.That(sqlpool != null, Is.True, string.Format("sql pool created earlier is not found when listing all in workspace {0}", workspaceName));
+            Assert.True(sqlpool != null, string.Format("sql pool created earlier is not found when listing all in workspace {0}", workspaceName));
 
             // delete sqlpool
             await sqlpool.DeleteAsync(WaitUntil.Completed);
             var sqlPoolList = await sqlPoolCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(sqlPoolList.Count, Is.EqualTo(sqlpoolCount - 1));
+            Assert.AreEqual(sqlpoolCount - 1, sqlPoolList.Count);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct BackupInstanceProtectionStatus : IEquatable<BackupInstanceProtectionStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceProtectionStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupInstanceProtectionStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string ConfiguringProtectionValue = "ConfiguringProtection";
         private const string ConfiguringProtectionFailedValue = "ConfiguringProtectionFailed";
         private const string ProtectionConfiguredValue = "ProtectionConfigured";
@@ -22,64 +29,35 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private const string SoftDeletedValue = "SoftDeleted";
         private const string SoftDeletingValue = "SoftDeleting";
 
-        /// <summary> Initializes a new instance of <see cref="BackupInstanceProtectionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupInstanceProtectionStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the ConfiguringProtection. </summary>
+        /// <summary> ConfiguringProtection. </summary>
         public static BackupInstanceProtectionStatus ConfiguringProtection { get; } = new BackupInstanceProtectionStatus(ConfiguringProtectionValue);
-
-        /// <summary> Gets the ConfiguringProtectionFailed. </summary>
+        /// <summary> ConfiguringProtectionFailed. </summary>
         public static BackupInstanceProtectionStatus ConfiguringProtectionFailed { get; } = new BackupInstanceProtectionStatus(ConfiguringProtectionFailedValue);
-
-        /// <summary> Gets the ProtectionConfigured. </summary>
+        /// <summary> ProtectionConfigured. </summary>
         public static BackupInstanceProtectionStatus ProtectionConfigured { get; } = new BackupInstanceProtectionStatus(ProtectionConfiguredValue);
-
-        /// <summary> Gets the ProtectionStopped. </summary>
+        /// <summary> ProtectionStopped. </summary>
         public static BackupInstanceProtectionStatus ProtectionStopped { get; } = new BackupInstanceProtectionStatus(ProtectionStoppedValue);
-
-        /// <summary> Gets the SoftDeleted. </summary>
+        /// <summary> SoftDeleted. </summary>
         public static BackupInstanceProtectionStatus SoftDeleted { get; } = new BackupInstanceProtectionStatus(SoftDeletedValue);
-
-        /// <summary> Gets the SoftDeleting. </summary>
+        /// <summary> SoftDeleting. </summary>
         public static BackupInstanceProtectionStatus SoftDeleting { get; } = new BackupInstanceProtectionStatus(SoftDeletingValue);
-
         /// <summary> Determines if two <see cref="BackupInstanceProtectionStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupInstanceProtectionStatus left, BackupInstanceProtectionStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BackupInstanceProtectionStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupInstanceProtectionStatus left, BackupInstanceProtectionStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BackupInstanceProtectionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupInstanceProtectionStatus"/>. </summary>
         public static implicit operator BackupInstanceProtectionStatus(string value) => new BackupInstanceProtectionStatus(value);
 
-        /// <summary> Converts a string to a <see cref="BackupInstanceProtectionStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BackupInstanceProtectionStatus?(string value) => value == null ? null : new BackupInstanceProtectionStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupInstanceProtectionStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BackupInstanceProtectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

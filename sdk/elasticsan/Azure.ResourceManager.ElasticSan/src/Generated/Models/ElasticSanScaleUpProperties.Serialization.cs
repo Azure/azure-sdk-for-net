@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ElasticSan;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> Scale up properties on Elastic San Appliance. </summary>
-    public partial class ElasticSanScaleUpProperties : IJsonModel<ElasticSanScaleUpProperties>
+    public partial class ElasticSanScaleUpProperties : IUtf8JsonSerializable, IJsonModel<ElasticSanScaleUpProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticSanScaleUpProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeElasticSanScaleUpProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticSanScaleUpProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanScaleUpProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ElasticSanScaleUpProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ElasticSanScaleUpProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticSanScaleUpProperties IPersistableModel<ElasticSanScaleUpProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ElasticSanScaleUpProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticSanScaleUpProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticSanScaleUpProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(UnusedSizeTiB))
             {
                 writer.WritePropertyName("unusedSizeTiB"u8);
@@ -94,15 +54,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("autoScalePolicyEnforcement"u8);
                 writer.WriteStringValue(AutoScalePolicyEnforcement.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,27 +71,22 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticSanScaleUpProperties IJsonModel<ElasticSanScaleUpProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticSanScaleUpProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ElasticSanScaleUpProperties IJsonModel<ElasticSanScaleUpProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ElasticSanScaleUpProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeElasticSanScaleUpProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ElasticSanScaleUpProperties DeserializeElasticSanScaleUpProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ElasticSanScaleUpProperties DeserializeElasticSanScaleUpProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,51 +95,84 @@ namespace Azure.ResourceManager.ElasticSan.Models
             long? increaseCapacityUnitByTiB = default;
             long? capacityUnitScaleUpLimitTiB = default;
             AutoScalePolicyEnforcement? autoScalePolicyEnforcement = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("unusedSizeTiB"u8))
+                if (property.NameEquals("unusedSizeTiB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unusedSizeTiB = prop.Value.GetInt64();
+                    unusedSizeTiB = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("increaseCapacityUnitByTiB"u8))
+                if (property.NameEquals("increaseCapacityUnitByTiB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    increaseCapacityUnitByTiB = prop.Value.GetInt64();
+                    increaseCapacityUnitByTiB = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("capacityUnitScaleUpLimitTiB"u8))
+                if (property.NameEquals("capacityUnitScaleUpLimitTiB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacityUnitScaleUpLimitTiB = prop.Value.GetInt64();
+                    capacityUnitScaleUpLimitTiB = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("autoScalePolicyEnforcement"u8))
+                if (property.NameEquals("autoScalePolicyEnforcement"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoScalePolicyEnforcement = new AutoScalePolicyEnforcement(prop.Value.GetString());
+                    autoScalePolicyEnforcement = new AutoScalePolicyEnforcement(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ElasticSanScaleUpProperties(unusedSizeTiB, increaseCapacityUnitByTiB, capacityUnitScaleUpLimitTiB, autoScalePolicyEnforcement, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ElasticSanScaleUpProperties(unusedSizeTiB, increaseCapacityUnitByTiB, capacityUnitScaleUpLimitTiB, autoScalePolicyEnforcement, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticSanScaleUpProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanScaleUpProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ElasticSanScaleUpProperties IPersistableModel<ElasticSanScaleUpProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanScaleUpProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeElasticSanScaleUpProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanScaleUpProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticSanScaleUpProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

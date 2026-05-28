@@ -15,23 +15,24 @@ namespace Microsoft.ClientModel.TestFramework
     internal partial class ClientUriBuilder
     {
         private UriBuilder _uriBuilder;
-        private StringBuilder _pathAndQuery;
-        private int _pathLength;
+        private StringBuilder _pathBuilder;
+        private StringBuilder _queryBuilder;
 
         public ClientUriBuilder()
         {
         }
 
-        private UriBuilder UriBuilder => _uriBuilder ??= new UriBuilder();
+        private UriBuilder UriBuilder => _uriBuilder  ??=  new UriBuilder();
 
-        private StringBuilder PathAndQuery => _pathAndQuery ??= new StringBuilder();
+        private StringBuilder PathBuilder => _pathBuilder  ??=  new StringBuilder(UriBuilder.Path);
+
+        private StringBuilder QueryBuilder => _queryBuilder  ??=  new StringBuilder(UriBuilder.Query);
 
         public void Reset(Uri uri)
         {
             _uriBuilder = new UriBuilder(uri);
-            PathAndQuery.Clear();
-            PathAndQuery.Append(UriBuilder.Path);
-            _pathLength = PathAndQuery.Length;
+            _pathBuilder = new StringBuilder(UriBuilder.Path);
+            _queryBuilder = new StringBuilder(UriBuilder.Query);
         }
 
         public void AppendPath(string value, bool escape)
@@ -40,13 +41,12 @@ namespace Microsoft.ClientModel.TestFramework
             {
                 value = Uri.EscapeDataString(value);
             }
-            if (_pathLength > 0 && PathAndQuery[_pathLength - 1] == '/' && value[0] == '/')
+            if (PathBuilder.Length > 0 && PathBuilder[PathBuilder.Length - 1] == '/' && value[0] == '/')
             {
-                PathAndQuery.Remove(_pathLength - 1, 1);
-                _pathLength = _pathLength - 1;
+                PathBuilder.Remove(PathBuilder.Length - 1, 1);
             }
-            PathAndQuery.Insert(_pathLength, value);
-            _pathLength = _pathLength + value.Length;
+            PathBuilder.Append(value);
+            UriBuilder.Path = PathBuilder.ToString();
         }
 
         public void AppendPath(bool value, bool escape = false) => AppendPath(TypeFormatters.ConvertToString(value), escape);
@@ -57,17 +57,17 @@ namespace Microsoft.ClientModel.TestFramework
 
         public void AppendPath(int value, bool escape = true) => AppendPath(TypeFormatters.ConvertToString(value), escape);
 
-        public void AppendPath(byte[] value, SerializationFormat format = SerializationFormat.Default, bool escape = true) => AppendPath(TypeFormatters.ConvertToString(value, format), escape);
+        public void AppendPath(byte[] value, string format, bool escape = true) => AppendPath(TypeFormatters.ConvertToString(value, format), escape);
 
-        public void AppendPath(DateTimeOffset value, SerializationFormat format = SerializationFormat.Default, bool escape = true) => AppendPath(TypeFormatters.ConvertToString(value, format), escape);
+        public void AppendPath(DateTimeOffset value, string format, bool escape = true) => AppendPath(TypeFormatters.ConvertToString(value, format), escape);
 
-        public void AppendPath(TimeSpan value, SerializationFormat format = SerializationFormat.Default, bool escape = true) => AppendPath(TypeFormatters.ConvertToString(value, format), escape);
+        public void AppendPath(TimeSpan value, string format, bool escape = true) => AppendPath(TypeFormatters.ConvertToString(value, format), escape);
 
         public void AppendPath(Guid value, bool escape = true) => AppendPath(TypeFormatters.ConvertToString(value), escape);
 
         public void AppendPath(long value, bool escape = true) => AppendPath(TypeFormatters.ConvertToString(value), escape);
 
-        public void AppendPathDelimited<T>(IEnumerable<T> value, string delimiter, SerializationFormat format = SerializationFormat.Default, bool escape = true)
+        public void AppendPathDelimited<T>(IEnumerable<T> value, string delimiter, string format = null, bool escape = true)
         {
             delimiter ??= ",";
             IEnumerable<string> stringValues = value.Select(v => TypeFormatters.ConvertToString(v, format));
@@ -76,30 +76,26 @@ namespace Microsoft.ClientModel.TestFramework
 
         public void AppendQuery(string name, string value, bool escape)
         {
-            if (PathAndQuery.Length == _pathLength)
+            if (QueryBuilder.Length > 0)
             {
-                PathAndQuery.Append('?');
-            }
-            if (PathAndQuery.Length > _pathLength && PathAndQuery[PathAndQuery.Length - 1] != '?')
-            {
-                PathAndQuery.Append('&');
+                QueryBuilder.Append('&');
             }
             if (escape)
             {
                 value = Uri.EscapeDataString(value);
             }
-            PathAndQuery.Append(name);
-            PathAndQuery.Append('=');
-            PathAndQuery.Append(value);
+            QueryBuilder.Append(name);
+            QueryBuilder.Append('=');
+            QueryBuilder.Append(value);
         }
 
         public void AppendQuery(string name, bool value, bool escape = false) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
 
         public void AppendQuery(string name, float value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
 
-        public void AppendQuery(string name, DateTimeOffset value, SerializationFormat format = SerializationFormat.Default, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value, format), escape);
+        public void AppendQuery(string name, DateTimeOffset value, string format, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value, format), escape);
 
-        public void AppendQuery(string name, TimeSpan value, SerializationFormat format = SerializationFormat.Default, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value, format), escape);
+        public void AppendQuery(string name, TimeSpan value, string format, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value, format), escape);
 
         public void AppendQuery(string name, double value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
 
@@ -111,11 +107,11 @@ namespace Microsoft.ClientModel.TestFramework
 
         public void AppendQuery(string name, TimeSpan value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
 
-        public void AppendQuery(string name, byte[] value, SerializationFormat format = SerializationFormat.Default, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value, format), escape);
+        public void AppendQuery(string name, byte[] value, string format, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value, format), escape);
 
         public void AppendQuery(string name, Guid value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
 
-        public void AppendQueryDelimited<T>(string name, IEnumerable<T> value, string delimiter, SerializationFormat format = SerializationFormat.Default, bool escape = true)
+        public void AppendQueryDelimited<T>(string name, IEnumerable<T> value, string delimiter, string format = null, bool escape = true)
         {
             delimiter ??= ",";
             IEnumerable<string> stringValues = value.Select(v => TypeFormatters.ConvertToString(v, format));
@@ -124,14 +120,13 @@ namespace Microsoft.ClientModel.TestFramework
 
         public Uri ToUri()
         {
-            UriBuilder.Path = PathAndQuery.ToString(0, _pathLength);
-            if (PathAndQuery.Length > _pathLength)
+            if (_pathBuilder != null)
             {
-                UriBuilder.Query = PathAndQuery.ToString(_pathLength + 1, PathAndQuery.Length - _pathLength - 1);
+                UriBuilder.Path = _pathBuilder.ToString();
             }
-            if (PathAndQuery.Length == _pathLength)
+            if (_queryBuilder != null)
             {
-                UriBuilder.Query = "";
+                UriBuilder.Query = _queryBuilder.ToString();
             }
             return UriBuilder.Uri;
         }

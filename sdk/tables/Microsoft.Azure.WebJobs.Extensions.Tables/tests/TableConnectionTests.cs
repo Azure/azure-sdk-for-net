@@ -104,7 +104,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         {
             public async Task Call([Table(TableNameExpression)] TableClient client)
             {
-                Assert.That(await TableExistsAsync(client), Is.True);
+                Assert.True(await TableExistsAsync(client));
             }
         }
     }

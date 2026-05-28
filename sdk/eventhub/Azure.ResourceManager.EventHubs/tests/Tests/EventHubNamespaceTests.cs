@@ -4,19 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Core;
+using NUnit.Framework;
+using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Models;
-using Azure.ResourceManager.KeyVault;
-using Azure.ResourceManager.KeyVault.Models;
-using Azure.ResourceManager.ManagedServiceIdentities;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using NUnit.Framework;
+using Azure.ResourceManager.KeyVault;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Models;
+using Azure.Core;
+using Azure.ResourceManager.ManagedServiceIdentities;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             var updateNamespaceParameter = eventHubNamespace.Data;
             updateNamespaceParameter.Tags.Add("key1", "value1");
             updateNamespaceParameter.Tags.Add("key2", "value2");
-            var eventHubNamespace2 = await eventHubNamespace.UpdateAsync(WaitUntil.Completed, updateNamespaceParameter);
+            eventHubNamespace = await eventHubNamespace.UpdateAsync(updateNamespaceParameter);
 
             //validate
-            Assert.AreEqual(eventHubNamespace2.Value.Data.Tags.Count, 2);
-            Assert.AreEqual("value1", eventHubNamespace2.Value.Data.Tags["key1"]);
-            Assert.AreEqual("value2", eventHubNamespace2.Value.Data.Tags["key2"]);
+            Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 2);
+            Assert.AreEqual("value1", eventHubNamespace.Data.Tags["key1"]);
+            Assert.AreEqual("value2", eventHubNamespace.Data.Tags["key2"]);
 
             //wait until provision state is succeeded
             await GetSucceededNamespace(eventHubNamespace);
@@ -110,7 +110,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Testing")]
         public async Task GetNamespacesInSubscription()
         {
             //create two namespaces in two resourcegroups
@@ -376,7 +375,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Run in Record mode only. Will fix later.")]
         public async Task NamespaceSystemAssignedEncryptionTests()
         {
             //This test uses a pre-created KeyVault resource. In the event the resource cannot be accessed or is deleted
@@ -445,7 +443,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Run in Record mode only. Will fix later.")]
         public async Task UserAssignedEncryptionTests()
         {
             EventHubsNamespaceResource resource = null;
@@ -519,7 +516,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 Assert.AreEqual(EventHubsSkuName.Standard, namespaceData.Sku.Name);
                 Assert.AreEqual(1, namespaceData.Sku.Capacity);
-                Assert.True(namespaceData.ZoneRedundant);
+                Assert.False(namespaceData.ZoneRedundant);
                 Assert.False(namespaceData.DisableLocalAuth);
                 Assert.False(namespaceData.IsAutoInflateEnabled);
                 Assert.AreEqual(0, namespaceData.MaximumThroughputUnits);
@@ -633,9 +630,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 DefaultAction = EventHubsNetworkRuleSetDefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new EventHubsNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId1 },
-                    new EventHubsNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId2 },
-                    new EventHubsNetworkRuleSetVirtualNetworkRules() { SubnetId = subnetId3 }
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId1} },
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId2} },
+                    new EventHubsNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){Id=subnetId3} }
                 },
                 IPRules =
                     {
@@ -660,9 +657,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await virtualNetwork.DeleteAsync(WaitUntil.Completed);
         }
 
+        [TestCase(null)]
+        [TestCase(true)]
         [TestCase(false)]
         [RecordedTest]
-        [Ignore("Run in Record mode only. Will fix later.")]
         public async Task AddSetRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);

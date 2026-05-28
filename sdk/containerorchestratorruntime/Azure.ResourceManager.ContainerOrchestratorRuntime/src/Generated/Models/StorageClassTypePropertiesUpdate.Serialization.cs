@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerOrchestratorRuntime;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
-    /// <summary> The model for update a storageClass. </summary>
-    public partial class StorageClassTypePropertiesUpdate : IJsonModel<StorageClassTypePropertiesUpdate>
+    public partial class StorageClassTypePropertiesUpdate : IUtf8JsonSerializable, IJsonModel<StorageClassTypePropertiesUpdate>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageClassTypePropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageClassTypePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStorageClassTypePropertiesUpdate(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageClassTypePropertiesUpdate)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageClassTypePropertiesUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageClassTypePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StorageClassTypePropertiesUpdate)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageClassTypePropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StorageClassTypePropertiesUpdate IPersistableModel<StorageClassTypePropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageClassTypePropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageClassTypePropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageClassTypePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageClassTypePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageClassTypePropertiesUpdate)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(BackingStorageClassName))
             {
                 writer.WritePropertyName("backingStorageClassName"u8);
@@ -134,15 +94,15 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -151,27 +111,22 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StorageClassTypePropertiesUpdate IJsonModel<StorageClassTypePropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageClassTypePropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageClassTypePropertiesUpdate IJsonModel<StorageClassTypePropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageClassTypePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageClassTypePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageClassTypePropertiesUpdate)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageClassTypePropertiesUpdate(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageClassTypePropertiesUpdate DeserializeStorageClassTypePropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageClassTypePropertiesUpdate DeserializeStorageClassTypePropertiesUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -188,78 +143,80 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             string username = default;
             string password = default;
             string domain = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("backingStorageClassName"u8))
+                if (property.NameEquals("backingStorageClassName"u8))
                 {
-                    backingStorageClassName = prop.Value.GetString();
+                    backingStorageClassName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("azureStorageAccountName"u8))
+                if (property.NameEquals("azureStorageAccountName"u8))
                 {
-                    azureStorageAccountName = prop.Value.GetString();
+                    azureStorageAccountName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("azureStorageAccountKey"u8))
+                if (property.NameEquals("azureStorageAccountKey"u8))
                 {
-                    azureStorageAccountKey = prop.Value.GetString();
+                    azureStorageAccountKey = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("server"u8))
+                if (property.NameEquals("server"u8))
                 {
-                    server = prop.Value.GetString();
+                    server = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("share"u8))
+                if (property.NameEquals("share"u8))
                 {
-                    share = prop.Value.GetString();
+                    share = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subDir"u8))
+                if (property.NameEquals("subDir"u8))
                 {
-                    subDir = prop.Value.GetString();
+                    subDir = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("mountPermissions"u8))
+                if (property.NameEquals("mountPermissions"u8))
                 {
-                    mountPermissions = prop.Value.GetString();
+                    mountPermissions = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("onDelete"u8))
+                if (property.NameEquals("onDelete"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    onDelete = new NfsDirectoryActionOnVolumeDeletion(prop.Value.GetString());
+                    onDelete = new NfsDirectoryActionOnVolumeDeletion(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("source"u8))
+                if (property.NameEquals("source"u8))
                 {
-                    source = prop.Value.GetString();
+                    source = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("username"u8))
+                if (property.NameEquals("username"u8))
                 {
-                    username = prop.Value.GetString();
+                    username = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("password"u8))
+                if (property.NameEquals("password"u8))
                 {
-                    password = prop.Value.GetString();
+                    password = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("domain"u8))
+                if (property.NameEquals("domain"u8))
                 {
-                    domain = prop.Value.GetString();
+                    domain = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageClassTypePropertiesUpdate(
                 backingStorageClassName,
                 azureStorageAccountName,
@@ -273,7 +230,38 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 username,
                 password,
                 domain,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageClassTypePropertiesUpdate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageClassTypePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StorageClassTypePropertiesUpdate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageClassTypePropertiesUpdate IPersistableModel<StorageClassTypePropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageClassTypePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeStorageClassTypePropertiesUpdate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageClassTypePropertiesUpdate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageClassTypePropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

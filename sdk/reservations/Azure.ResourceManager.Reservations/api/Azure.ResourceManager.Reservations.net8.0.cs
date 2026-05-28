@@ -164,8 +164,10 @@ namespace Azure.ResourceManager.Reservations
         public virtual Azure.ResourceManager.Reservations.ReservationDetailCollection GetReservationDetails() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationDetailData>> MergeReservation(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.MergeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationDetailData>>> MergeReservationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.MergeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.Reservations.Models.ReservationRefundResult> Return(Azure.ResourceManager.Reservations.Models.ReservationRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResource> Return(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.ReservationRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>> ReturnAsync(Azure.ResourceManager.Reservations.Models.ReservationRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.ReservationOrderResource>> ReturnAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.ReservationRefundContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<System.Collections.Generic.IList<Azure.ResourceManager.Reservations.ReservationDetailData>> SplitReservation(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.SplitContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -350,7 +352,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.AppliedScopeType Shared { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.AppliedScopeType Single { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.AppliedScopeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.AppliedScopeType left, Azure.ResourceManager.Reservations.Models.AppliedScopeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.AppliedScopeType (string value) { throw null; }
@@ -454,7 +458,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public BenefitsCommitmentGrain(string value) { throw null; }
         public static Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain Hourly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain left, Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain (string value) { throw null; }
@@ -509,7 +515,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus left, Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus (string value) { throw null; }
@@ -665,7 +673,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus PendingRefunds { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus left, Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus (string value) { throw null; }
@@ -738,7 +748,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.InstanceFlexibility Off { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.InstanceFlexibility On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.InstanceFlexibility other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.InstanceFlexibility left, Azure.ResourceManager.Reservations.Models.InstanceFlexibility right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.InstanceFlexibility (string value) { throw null; }
@@ -796,7 +808,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.PaymentStatus Scheduled { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.PaymentStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.PaymentStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.PaymentStatus left, Azure.ResourceManager.Reservations.Models.PaymentStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.PaymentStatus (string value) { throw null; }
@@ -844,7 +858,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.QuotaRequestState Invalid { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.QuotaRequestState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.QuotaRequestState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.QuotaRequestState left, Azure.ResourceManager.Reservations.Models.QuotaRequestState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.QuotaRequestState (string value) { throw null; }
@@ -897,7 +913,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.ReservationBillingPlan Monthly { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.ReservationBillingPlan Upfront { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.ReservationBillingPlan other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ReservationBillingPlan left, Azure.ResourceManager.Reservations.Models.ReservationBillingPlan right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ReservationBillingPlan (string value) { throw null; }
@@ -940,6 +958,7 @@ namespace Azure.ResourceManager.Reservations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ReservationCatalog : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>
     {
         internal ReservationCatalog() { }
@@ -1058,7 +1077,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode UnauthenticatedRequestsThrottled { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode UnsupportedReservationTerm { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode left, Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode (string value) { throw null; }
@@ -1073,7 +1094,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public ReservationKind(string value) { throw null; }
         public static Azure.ResourceManager.Reservations.Models.ReservationKind MicrosoftCompute { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.ReservationKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ReservationKind left, Azure.ResourceManager.Reservations.Models.ReservationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ReservationKind (string value) { throw null; }
@@ -1103,7 +1126,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.ReservationOperationStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.ReservationOperationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.ReservationOperationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ReservationOperationStatus left, Azure.ResourceManager.Reservations.Models.ReservationOperationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ReservationOperationStatus (string value) { throw null; }
@@ -1201,7 +1226,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.ReservationProvisioningState Split { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.ReservationProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.ReservationProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ReservationProvisioningState left, Azure.ResourceManager.Reservations.Models.ReservationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ReservationProvisioningState (string value) { throw null; }
@@ -1314,6 +1341,7 @@ namespace Azure.ResourceManager.Reservations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ReservationRefundResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>
     {
         internal ReservationRefundResult() { }
@@ -1367,7 +1395,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.ReservationStatusCode Split { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.ReservationStatusCode Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.ReservationStatusCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ReservationStatusCode left, Azure.ResourceManager.Reservations.Models.ReservationStatusCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ReservationStatusCode (string value) { throw null; }
@@ -1396,7 +1426,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.ReservationTerm P3Y { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.ReservationTerm P5Y { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.ReservationTerm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ReservationTerm left, Azure.ResourceManager.Reservations.Models.ReservationTerm right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ReservationTerm (string value) { throw null; }
@@ -1518,7 +1550,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.ReservedResourceType VirtualMachineSoftware { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.ReservedResourceType VMwareCloudSimple { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.ReservedResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ReservedResourceType left, Azure.ResourceManager.Reservations.Models.ReservedResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ReservedResourceType (string value) { throw null; }
@@ -1537,7 +1571,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.ResourceTypeName Shared { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.ResourceTypeName Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.ResourceTypeName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.ResourceTypeName left, Azure.ResourceManager.Reservations.Models.ResourceTypeName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.ResourceTypeName (string value) { throw null; }
@@ -1552,7 +1588,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public SavingsPlanBillingPlan(string value) { throw null; }
         public static Azure.ResourceManager.Reservations.Models.SavingsPlanBillingPlan P1M { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.SavingsPlanBillingPlan other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.SavingsPlanBillingPlan left, Azure.ResourceManager.Reservations.Models.SavingsPlanBillingPlan right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.SavingsPlanBillingPlan (string value) { throw null; }
@@ -1586,7 +1624,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.SavingsPlanTerm P1Y { get { throw null; } }
         public static Azure.ResourceManager.Reservations.Models.SavingsPlanTerm P3Y { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Reservations.Models.SavingsPlanTerm other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Reservations.Models.SavingsPlanTerm left, Azure.ResourceManager.Reservations.Models.SavingsPlanTerm right) { throw null; }
         public static implicit operator Azure.ResourceManager.Reservations.Models.SavingsPlanTerm (string value) { throw null; }

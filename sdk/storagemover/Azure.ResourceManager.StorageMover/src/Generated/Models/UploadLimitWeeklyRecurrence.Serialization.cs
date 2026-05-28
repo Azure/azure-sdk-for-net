@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.StorageMover;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The weekly recurrence of the WAN-link upload limit schedule. The start time must be earlier in the day than the end time. The recurrence must not span across multiple days. </summary>
-    public partial class UploadLimitWeeklyRecurrence : ScheduleWeeklyRecurrence, IJsonModel<UploadLimitWeeklyRecurrence>
+    public partial class UploadLimitWeeklyRecurrence : IUtf8JsonSerializable, IJsonModel<UploadLimitWeeklyRecurrence>
     {
-        /// <summary> Initializes a new instance of <see cref="UploadLimitWeeklyRecurrence"/> for deserialization. </summary>
-        internal UploadLimitWeeklyRecurrence()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadLimitWeeklyRecurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ScheduleRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UploadLimitWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeUploadLimitWeeklyRecurrence(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UploadLimitWeeklyRecurrence)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UploadLimitWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UploadLimitWeeklyRecurrence)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UploadLimitWeeklyRecurrence>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UploadLimitWeeklyRecurrence IPersistableModel<UploadLimitWeeklyRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options) => (UploadLimitWeeklyRecurrence)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UploadLimitWeeklyRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UploadLimitWeeklyRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,79 +28,108 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UploadLimitWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UploadLimitWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UploadLimitWeeklyRecurrence)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("limitInMbps"u8);
             writer.WriteNumberValue(LimitInMbps);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UploadLimitWeeklyRecurrence IJsonModel<UploadLimitWeeklyRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UploadLimitWeeklyRecurrence)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ScheduleRecurrence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UploadLimitWeeklyRecurrence IJsonModel<UploadLimitWeeklyRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UploadLimitWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UploadLimitWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UploadLimitWeeklyRecurrence)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUploadLimitWeeklyRecurrence(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UploadLimitWeeklyRecurrence DeserializeUploadLimitWeeklyRecurrence(JsonElement element, ModelReaderWriterOptions options)
+        internal static UploadLimitWeeklyRecurrence DeserializeUploadLimitWeeklyRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            int limitInMbps = default;
+            IList<ScheduleDayOfWeek> days = default;
             ScheduleTime startTime = default;
             ScheduleTime endTime = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<ScheduleDayOfWeek> days = default;
-            int limitInMbps = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("startTime"u8))
+                if (property.NameEquals("limitInMbps"u8))
                 {
-                    startTime = ScheduleTime.DeserializeScheduleTime(prop.Value, options);
+                    limitInMbps = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("endTime"u8))
-                {
-                    endTime = ScheduleTime.DeserializeScheduleTime(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("days"u8))
+                if (property.NameEquals("days"u8))
                 {
                     List<ScheduleDayOfWeek> array = new List<ScheduleDayOfWeek>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetString().ToScheduleDayOfWeek());
                     }
                     days = array;
                     continue;
                 }
-                if (prop.NameEquals("limitInMbps"u8))
+                if (property.NameEquals("startTime"u8))
                 {
-                    limitInMbps = prop.Value.GetInt32();
+                    startTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("endTime"u8))
+                {
+                    endTime = ScheduleTime.DeserializeScheduleTime(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new UploadLimitWeeklyRecurrence(startTime, endTime, additionalBinaryDataProperties, days, limitInMbps);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UploadLimitWeeklyRecurrence(startTime, endTime, serializedAdditionalRawData, days, limitInMbps);
         }
+
+        BinaryData IPersistableModel<UploadLimitWeeklyRecurrence>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UploadLimitWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UploadLimitWeeklyRecurrence)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UploadLimitWeeklyRecurrence IPersistableModel<UploadLimitWeeklyRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UploadLimitWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeUploadLimitWeeklyRecurrence(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UploadLimitWeeklyRecurrence)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UploadLimitWeeklyRecurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

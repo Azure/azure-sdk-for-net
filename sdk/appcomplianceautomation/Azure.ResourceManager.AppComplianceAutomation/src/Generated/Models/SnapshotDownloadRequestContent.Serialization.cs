@@ -10,70 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> Snapshot's download request. </summary>
-    public partial class SnapshotDownloadRequestContent : IJsonModel<SnapshotDownloadRequestContent>
+    public partial class SnapshotDownloadRequestContent : IUtf8JsonSerializable, IJsonModel<SnapshotDownloadRequestContent>
     {
-        /// <summary> Initializes a new instance of <see cref="SnapshotDownloadRequestContent"/> for deserialization. </summary>
-        internal SnapshotDownloadRequestContent()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotDownloadRequestContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SnapshotDownloadRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSnapshotDownloadRequestContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SnapshotDownloadRequestContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SnapshotDownloadRequestContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SnapshotDownloadRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SnapshotDownloadRequestContent IPersistableModel<SnapshotDownloadRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SnapshotDownloadRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="snapshotDownloadRequestContent"> The <see cref="SnapshotDownloadRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SnapshotDownloadRequestContent snapshotDownloadRequestContent)
-        {
-            if (snapshotDownloadRequestContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(snapshotDownloadRequestContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SnapshotDownloadRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -85,11 +28,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SnapshotDownloadRequestContent)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ReportCreatorTenantId))
             {
                 writer.WritePropertyName("reportCreatorTenantId"u8);
@@ -102,15 +46,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -119,27 +63,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SnapshotDownloadRequestContent IJsonModel<SnapshotDownloadRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SnapshotDownloadRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SnapshotDownloadRequestContent IJsonModel<SnapshotDownloadRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SnapshotDownloadRequestContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSnapshotDownloadRequestContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SnapshotDownloadRequestContent DeserializeSnapshotDownloadRequestContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static SnapshotDownloadRequestContent DeserializeSnapshotDownloadRequestContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -147,34 +86,67 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Guid? reportCreatorTenantId = default;
             AppComplianceDownloadType downloadType = default;
             string offerGuid = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("reportCreatorTenantId"u8))
+                if (property.NameEquals("reportCreatorTenantId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reportCreatorTenantId = new Guid(prop.Value.GetString());
+                    reportCreatorTenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (prop.NameEquals("downloadType"u8))
+                if (property.NameEquals("downloadType"u8))
                 {
-                    downloadType = new AppComplianceDownloadType(prop.Value.GetString());
+                    downloadType = new AppComplianceDownloadType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("offerGuid"u8))
+                if (property.NameEquals("offerGuid"u8))
                 {
-                    offerGuid = prop.Value.GetString();
+                    offerGuid = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new SnapshotDownloadRequestContent(reportCreatorTenantId, downloadType, offerGuid, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SnapshotDownloadRequestContent(reportCreatorTenantId, downloadType, offerGuid, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SnapshotDownloadRequestContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SnapshotDownloadRequestContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SnapshotDownloadRequestContent IPersistableModel<SnapshotDownloadRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSnapshotDownloadRequestContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SnapshotDownloadRequestContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SnapshotDownloadRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

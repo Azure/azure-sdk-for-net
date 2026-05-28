@@ -1,4 +1,0 @@
-directory: specification/resourcegraph/resource-manager/Microsoft.ResourceGraph/ResourceGraph
-commit: cd283345a35e238e92dcef71b350d4699b5c466c
-repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

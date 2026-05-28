@@ -6,35 +6,46 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing a LocalRulestackPrefix along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LocalRulestackPrefixResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LocalRulestackResource"/> using the GetLocalRulestackPrefixes method.
+    /// A Class representing a LocalRulestackPrefix along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LocalRulestackPrefixResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLocalRulestackPrefixResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LocalRulestackResource"/> using the GetLocalRulestackPrefix method.
     /// </summary>
     public partial class LocalRulestackPrefixResource : ArmResource
     {
-        private readonly ClientDiagnostics _prefixListLocalRulestackClientDiagnostics;
-        private readonly PrefixListLocalRulestack _prefixListLocalRulestackRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="LocalRulestackPrefixResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="localRulestackName"> The localRulestackName. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string localRulestackName, string name)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics;
+        private readonly PrefixListLocalRulestackRestOperations _localRulestackPrefixPrefixListLocalRulestackRestClient;
         private readonly LocalRulestackPrefixData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/localRulestacks/prefixlists";
 
-        /// <summary> Initializes a new instance of LocalRulestackPrefixResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LocalRulestackPrefixResource"/> class for mocking. </summary>
         protected LocalRulestackPrefixResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocalRulestackPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LocalRulestackPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LocalRulestackPrefixResource(ArmClient client, LocalRulestackPrefixData data) : this(client, data.Id)
@@ -43,93 +54,71 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocalRulestackPrefixResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LocalRulestackPrefixResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LocalRulestackPrefixResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string localRulestackPrefixApiVersion);
-            _prefixListLocalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _prefixListLocalRulestackRestClient = new PrefixListLocalRulestack(_prefixListLocalRulestackClientDiagnostics, Pipeline, Endpoint, localRulestackPrefixApiVersion ?? "2025-10-08");
-            ValidateResourceId(id);
+            _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string localRulestackPrefixPrefixListLocalRulestackApiVersion);
+            _localRulestackPrefixPrefixListLocalRulestackRestClient = new PrefixListLocalRulestackRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, localRulestackPrefixPrefixListLocalRulestackApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual LocalRulestackPrefixData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="localRulestackName"> The localRulestackName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string localRulestackName, string name)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a PrefixListResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrefixListResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrefixListLocalRulestack_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LocalRulestackPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LocalRulestackPrefixResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _prefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Get");
+            using var scope = _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LocalRulestackPrefixData> response = Response.FromValue(LocalRulestackPrefixData.FromResponse(result), result);
+                var response = await _localRulestackPrefixPrefixListLocalRulestackRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LocalRulestackPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,41 +132,33 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Get a PrefixListResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrefixListResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrefixListLocalRulestack_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LocalRulestackPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LocalRulestackPrefixResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _prefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Get");
+            using var scope = _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LocalRulestackPrefixData> response = Response.FromValue(LocalRulestackPrefixData.FromResponse(result), result);
+                var response = _localRulestackPrefixPrefixListLocalRulestackRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LocalRulestackPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +172,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Delete a PrefixListResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrefixListResources_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrefixListLocalRulestack_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LocalRulestackPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,21 +193,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _prefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Delete");
+            using var scope = _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NgfwArmOperation operation = new NgfwArmOperation(_prefixListLocalRulestackClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _localRulestackPrefixPrefixListLocalRulestackRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NgfwArmOperation(_localRulestackPrefixPrefixListLocalRulestackClientDiagnostics, Pipeline, _localRulestackPrefixPrefixListLocalRulestackRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +214,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// Delete a PrefixListResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrefixListResources_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrefixListLocalRulestack_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LocalRulestackPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,21 +235,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _prefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Delete");
+            using var scope = _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NgfwArmOperation operation = new NgfwArmOperation(_prefixListLocalRulestackClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _localRulestackPrefixPrefixListLocalRulestackRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new NgfwArmOperation(_localRulestackPrefixPrefixListLocalRulestackClientDiagnostics, Pipeline, _localRulestackPrefixPrefixListLocalRulestackRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -286,23 +253,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Update a LocalRulestackPrefix.
+        /// Create a PrefixListResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrefixListResources_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrefixListLocalRulestack_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LocalRulestackPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,27 +281,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _prefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Update");
+            using var scope = _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackPrefixData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NgfwArmOperation<LocalRulestackPrefixResource> operation = new NgfwArmOperation<LocalRulestackPrefixResource>(
-                    new LocalRulestackPrefixOperationSource(Client),
-                    _prefixListLocalRulestackClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _localRulestackPrefixPrefixListLocalRulestackRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NgfwArmOperation<LocalRulestackPrefixResource>(new LocalRulestackPrefixOperationSource(Client), _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics, Pipeline, _localRulestackPrefixPrefixListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -345,23 +299,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Update a LocalRulestackPrefix.
+        /// Create a PrefixListResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/prefixlists/{name}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrefixListResources_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>PrefixListLocalRulestack_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-08. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="LocalRulestackPrefixResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackPrefixResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,27 +327,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _prefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Update");
+            using var scope = _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _prefixListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackPrefixData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NgfwArmOperation<LocalRulestackPrefixResource> operation = new NgfwArmOperation<LocalRulestackPrefixResource>(
-                    new LocalRulestackPrefixOperationSource(Client),
-                    _prefixListLocalRulestackClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _localRulestackPrefixPrefixListLocalRulestackRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new NgfwArmOperation<LocalRulestackPrefixResource>(new LocalRulestackPrefixOperationSource(Client), _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics, Pipeline, _localRulestackPrefixPrefixListLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

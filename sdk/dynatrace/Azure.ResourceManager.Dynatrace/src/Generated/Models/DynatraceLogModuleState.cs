@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public readonly partial struct DynatraceLogModuleState : IEquatable<DynatraceLogModuleState>
     {
         private readonly string _value;
-        private const string EnabledValue = "ENABLED";
-        private const string DisabledValue = "DISABLED";
 
         /// <summary> Initializes a new instance of <see cref="DynatraceLogModuleState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynatraceLogModuleState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        private const string EnabledValue = "ENABLED";
+        private const string DisabledValue = "DISABLED";
+
+        /// <summary> ENABLED. </summary>
         public static DynatraceLogModuleState Enabled { get; } = new DynatraceLogModuleState(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> DISABLED. </summary>
         public static DynatraceLogModuleState Disabled { get; } = new DynatraceLogModuleState(DisabledValue);
-
         /// <summary> Determines if two <see cref="DynatraceLogModuleState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynatraceLogModuleState left, DynatraceLogModuleState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DynatraceLogModuleState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynatraceLogModuleState left, DynatraceLogModuleState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DynatraceLogModuleState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceLogModuleState"/>. </summary>
         public static implicit operator DynatraceLogModuleState(string value) => new DynatraceLogModuleState(value);
 
-        /// <summary> Converts a string to a <see cref="DynatraceLogModuleState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DynatraceLogModuleState?(string value) => value == null ? null : new DynatraceLogModuleState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynatraceLogModuleState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DynatraceLogModuleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

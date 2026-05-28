@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> kubernetes Cluster Backup target info for restore operation from vault. </summary>
-    public partial class KubernetesClusterVaultTierRestoreCriteria : ItemLevelRestoreCriteria, IJsonModel<KubernetesClusterVaultTierRestoreCriteria>
+    public partial class KubernetesClusterVaultTierRestoreCriteria : IUtf8JsonSerializable, IJsonModel<KubernetesClusterVaultTierRestoreCriteria>
     {
-        /// <summary> Initializes a new instance of <see cref="KubernetesClusterVaultTierRestoreCriteria"/> for deserialization. </summary>
-        internal KubernetesClusterVaultTierRestoreCriteria()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterVaultTierRestoreCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ItemLevelRestoreCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeKubernetesClusterVaultTierRestoreCriteria(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KubernetesClusterVaultTierRestoreCriteria IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (KubernetesClusterVaultTierRestoreCriteria)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubernetesClusterVaultTierRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("includeClusterScopeResources"u8);
             writer.WriteBooleanValue(IncludeClusterScopeResources);
@@ -87,13 +41,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("includedNamespaces"u8);
                 writer.WriteStartArray();
-                foreach (string item in IncludedNamespaces)
+                foreach (var item in IncludedNamespaces)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -102,13 +51,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("excludedNamespaces"u8);
                 writer.WriteStartArray();
-                foreach (string item in ExcludedNamespaces)
+                foreach (var item in ExcludedNamespaces)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -117,13 +61,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("includedResourceTypes"u8);
                 writer.WriteStartArray();
-                foreach (string item in IncludedResourceTypes)
+                foreach (var item in IncludedResourceTypes)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -132,13 +71,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("excludedResourceTypes"u8);
                 writer.WriteStartArray();
-                foreach (string item in ExcludedResourceTypes)
+                foreach (var item in ExcludedResourceTypes)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -147,13 +81,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("labelSelectors"u8);
                 writer.WriteStartArray();
-                foreach (string item in LabelSelectors)
+                foreach (var item in LabelSelectors)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -175,11 +104,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 foreach (var item in NamespaceMappings)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -188,7 +112,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("restoreHookReferences"u8);
                 writer.WriteStartArray();
-                foreach (NamespacedName item in RestoreHookReferences)
+                foreach (var item in RestoreHookReferences)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -211,33 +135,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        KubernetesClusterVaultTierRestoreCriteria IJsonModel<KubernetesClusterVaultTierRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KubernetesClusterVaultTierRestoreCriteria)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ItemLevelRestoreCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KubernetesClusterVaultTierRestoreCriteria IJsonModel<KubernetesClusterVaultTierRestoreCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKubernetesClusterVaultTierRestoreCriteria(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KubernetesClusterVaultTierRestoreCriteria DeserializeKubernetesClusterVaultTierRestoreCriteria(JsonElement element, ModelReaderWriterOptions options)
+        internal static KubernetesClusterVaultTierRestoreCriteria DeserializeKubernetesClusterVaultTierRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string objectType = "KubernetesClusterVaultTierRestoreCriteria";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool includeClusterScopeResources = default;
             IList<string> includedNamespaces = default;
             IList<string> excludedNamespaces = default;
@@ -251,211 +168,173 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceIdentifier stagingResourceGroupId = default;
             ResourceIdentifier stagingStorageAccountId = default;
             NamespacedName resourceModifierReference = default;
-            foreach (var prop in element.EnumerateObject())
+            string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("objectType"u8))
+                if (property.NameEquals("includeClusterScopeResources"u8))
                 {
-                    objectType = prop.Value.GetString();
+                    includeClusterScopeResources = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("includeClusterScopeResources"u8))
+                if (property.NameEquals("includedNamespaces"u8))
                 {
-                    includeClusterScopeResources = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("includedNamespaces"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     includedNamespaces = array;
                     continue;
                 }
-                if (prop.NameEquals("excludedNamespaces"u8))
+                if (property.NameEquals("excludedNamespaces"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     excludedNamespaces = array;
                     continue;
                 }
-                if (prop.NameEquals("includedResourceTypes"u8))
+                if (property.NameEquals("includedResourceTypes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     includedResourceTypes = array;
                     continue;
                 }
-                if (prop.NameEquals("excludedResourceTypes"u8))
+                if (property.NameEquals("excludedResourceTypes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     excludedResourceTypes = array;
                     continue;
                 }
-                if (prop.NameEquals("labelSelectors"u8))
+                if (property.NameEquals("labelSelectors"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     labelSelectors = array;
                     continue;
                 }
-                if (prop.NameEquals("persistentVolumeRestoreMode"u8))
+                if (property.NameEquals("persistentVolumeRestoreMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    persistentVolumeRestoreMode = new PersistentVolumeRestoreMode(prop.Value.GetString());
+                    persistentVolumeRestoreMode = new PersistentVolumeRestoreMode(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("conflictPolicy"u8))
+                if (property.NameEquals("conflictPolicy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    conflictPolicy = new KubernetesClusterRestoreExistingResourcePolicy(prop.Value.GetString());
+                    conflictPolicy = new KubernetesClusterRestoreExistingResourcePolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("namespaceMappings"u8))
+                if (property.NameEquals("namespaceMappings"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     namespaceMappings = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("restoreHookReferences"u8))
+                if (property.NameEquals("restoreHookReferences"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NamespacedName> array = new List<NamespacedName>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(NamespacedName.DeserializeNamespacedName(item, options));
                     }
                     restoreHookReferences = array;
                     continue;
                 }
-                if (prop.NameEquals("stagingResourceGroupId"u8))
+                if (property.NameEquals("stagingResourceGroupId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stagingResourceGroupId = new ResourceIdentifier(prop.Value.GetString());
+                    stagingResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("stagingStorageAccountId"u8))
+                if (property.NameEquals("stagingStorageAccountId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stagingStorageAccountId = new ResourceIdentifier(prop.Value.GetString());
+                    stagingStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("resourceModifierReference"u8))
+                if (property.NameEquals("resourceModifierReference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceModifierReference = NamespacedName.DeserializeNamespacedName(prop.Value, options);
+                    resourceModifierReference = NamespacedName.DeserializeNamespacedName(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("objectType"u8))
+                {
+                    objectType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesClusterVaultTierRestoreCriteria(
                 objectType,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 includeClusterScopeResources,
                 includedNamespaces ?? new ChangeTrackingList<string>(),
                 excludedNamespaces ?? new ChangeTrackingList<string>(),
@@ -470,5 +349,36 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 stagingStorageAccountId,
                 resourceModifierReference);
         }
+
+        BinaryData IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KubernetesClusterVaultTierRestoreCriteria IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeKubernetesClusterVaultTierRestoreCriteria(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

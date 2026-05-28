@@ -3,7 +3,3 @@
 
 export { $lib } from "./lib/lib.js";
 export { $onEmit } from "./emitter.js";
-export {
-  AzureMgmtEmitterOptions,
-  AzureMgmtEmitterOptionsSchema
-} from "./options.js";

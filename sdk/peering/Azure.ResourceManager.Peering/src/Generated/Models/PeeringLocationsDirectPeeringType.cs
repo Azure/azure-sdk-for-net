@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary></summary>
+    /// <summary> The PeeringLocationsDirectPeeringType. </summary>
     public readonly partial struct PeeringLocationsDirectPeeringType : IEquatable<PeeringLocationsDirectPeeringType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringLocationsDirectPeeringType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PeeringLocationsDirectPeeringType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string EdgeValue = "Edge";
         private const string TransitValue = "Transit";
         private const string CdnValue = "Cdn";
@@ -23,75 +30,40 @@ namespace Azure.ResourceManager.Peering.Models
         private const string IxRsValue = "IxRs";
         private const string VoiceValue = "Voice";
         private const string EdgeZoneForOperatorsValue = "EdgeZoneForOperators";
-        private const string PeerPropValue = "PeerProp";
 
-        /// <summary> Initializes a new instance of <see cref="PeeringLocationsDirectPeeringType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PeeringLocationsDirectPeeringType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Edge. </summary>
+        /// <summary> Edge. </summary>
         public static PeeringLocationsDirectPeeringType Edge { get; } = new PeeringLocationsDirectPeeringType(EdgeValue);
-
-        /// <summary> Gets the Transit. </summary>
+        /// <summary> Transit. </summary>
         public static PeeringLocationsDirectPeeringType Transit { get; } = new PeeringLocationsDirectPeeringType(TransitValue);
-
-        /// <summary> Gets the Cdn. </summary>
+        /// <summary> Cdn. </summary>
         public static PeeringLocationsDirectPeeringType Cdn { get; } = new PeeringLocationsDirectPeeringType(CdnValue);
-
-        /// <summary> Gets the Internal. </summary>
+        /// <summary> Internal. </summary>
         public static PeeringLocationsDirectPeeringType Internal { get; } = new PeeringLocationsDirectPeeringType(InternalValue);
-
-        /// <summary> Gets the Ix. </summary>
+        /// <summary> Ix. </summary>
         public static PeeringLocationsDirectPeeringType Ix { get; } = new PeeringLocationsDirectPeeringType(IxValue);
-
-        /// <summary> Gets the IxRs. </summary>
+        /// <summary> IxRs. </summary>
         public static PeeringLocationsDirectPeeringType IxRs { get; } = new PeeringLocationsDirectPeeringType(IxRsValue);
-
-        /// <summary> Gets the Voice. </summary>
+        /// <summary> Voice. </summary>
         public static PeeringLocationsDirectPeeringType Voice { get; } = new PeeringLocationsDirectPeeringType(VoiceValue);
-
-        /// <summary> Gets the EdgeZoneForOperators. </summary>
+        /// <summary> EdgeZoneForOperators. </summary>
         public static PeeringLocationsDirectPeeringType EdgeZoneForOperators { get; } = new PeeringLocationsDirectPeeringType(EdgeZoneForOperatorsValue);
-
-        /// <summary> Gets the PeerProp. </summary>
-        public static PeeringLocationsDirectPeeringType PeerProp { get; } = new PeeringLocationsDirectPeeringType(PeerPropValue);
-
         /// <summary> Determines if two <see cref="PeeringLocationsDirectPeeringType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PeeringLocationsDirectPeeringType left, PeeringLocationsDirectPeeringType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PeeringLocationsDirectPeeringType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PeeringLocationsDirectPeeringType left, PeeringLocationsDirectPeeringType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PeeringLocationsDirectPeeringType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringLocationsDirectPeeringType"/>. </summary>
         public static implicit operator PeeringLocationsDirectPeeringType(string value) => new PeeringLocationsDirectPeeringType(value);
 
-        /// <summary> Converts a string to a <see cref="PeeringLocationsDirectPeeringType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PeeringLocationsDirectPeeringType?(string value) => value == null ? null : new PeeringLocationsDirectPeeringType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PeeringLocationsDirectPeeringType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PeeringLocationsDirectPeeringType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

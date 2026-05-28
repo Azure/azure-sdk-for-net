@@ -121,8 +121,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerExpiresAfter: TimeSpan.FromMinutes(5),
-                    mode: new RoundRobinMode())
-                { Name = "Simple round robin" });
+                    mode: new RoundRobinMode()) { Name = "Simple round robin" });
 
             // Create queue
             string queueId = "queue-id-1";
@@ -143,7 +142,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, capacity: 10)
                 {
-                    Channels = { new RouterChannel("general", 5), },
+                    Channels = { new RouterChannel("general",5), },
                     Queues = { queueId },
                     AvailableForOffers = true, // register worker upon creation
                 });
@@ -214,8 +213,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateDistributionPolicyOptions(
                     distributionPolicyId: distributionPolicyId,
                     offerExpiresAfter: TimeSpan.FromMinutes(5),
-                    mode: new BestWorkerMode())
-                { Name = "Default best worker mode" });
+                    mode: new BestWorkerMode()) { Name = "Default best worker mode" });
 
             // Create queue
             string queueId = "queue-id-1";
@@ -231,7 +229,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker1Id, capacity: 10)
                 {
-                    Channels = { new RouterChannel("general", 10), },
+                    Channels = { new RouterChannel("general",10), },
                     Queues = { queueId },
                     Labels =
                     {
@@ -247,7 +245,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
                 options: new CreateWorkerOptions(workerId: worker2Id, capacity: 10)
                 {
-                    Channels = { new RouterChannel("general", 10), },
+                    Channels = { new RouterChannel("general",10), },
                     Queues = { queueId },
                     Labels =
                     {

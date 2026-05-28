@@ -13,11 +13,43 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> The storage account credential. </summary>
+    /// <summary>
+    /// A class representing the DataBoxEdgeStorageAccountCredential data model.
+    /// The storage account credential.
+    /// </summary>
     public partial class DataBoxEdgeStorageAccountCredentialData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialData"/>. </summary>
         /// <param name="alias"> Alias for the storage account. </param>
@@ -28,159 +60,58 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             Argument.AssertNotNull(@alias, nameof(@alias));
 
-            Properties = new StorageAccountCredentialProperties(@alias, sslStatus, accountType);
+            Alias = @alias;
+            SslStatus = sslStatus;
+            AccountType = accountType;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> The storage account credential properties. </param>
-        internal DataBoxEdgeStorageAccountCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageAccountCredentialProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="alias"> Alias for the storage account. </param>
+        /// <param name="userName"> Username for the storage account. </param>
+        /// <param name="accountKey"> Encrypted storage key. </param>
+        /// <param name="connectionString"> Connection string for the storage account. Use this string if username and account key are not specified. </param>
+        /// <param name="sslStatus"> Signifies whether SSL needs to be enabled or not. </param>
+        /// <param name="blobDomainName"> Blob end point for private clouds. </param>
+        /// <param name="accountType"> Type of storage accessed on the storage account. </param>
+        /// <param name="storageAccountId"> Id of the storage account. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeStorageAccountCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string @alias, string userName, AsymmetricEncryptedSecret accountKey, string connectionString, DataBoxEdgeStorageAccountSslStatus sslStatus, string blobDomainName, DataBoxEdgeStorageAccountType accountType, ResourceIdentifier storageAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            Alias = @alias;
+            UserName = userName;
+            AccountKey = accountKey;
+            ConnectionString = connectionString;
+            SslStatus = sslStatus;
+            BlobDomainName = blobDomainName;
+            AccountType = accountType;
+            StorageAccountId = storageAccountId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The storage account credential properties. </summary>
-        internal StorageAccountCredentialProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialData"/> for deserialization. </summary>
+        internal DataBoxEdgeStorageAccountCredentialData()
+        {
+        }
 
         /// <summary> Alias for the storage account. </summary>
-        public string Alias
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Alias;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountCredentialProperties();
-                }
-                Properties.Alias = value;
-            }
-        }
-
+        public string Alias { get; set; }
         /// <summary> Username for the storage account. </summary>
-        public string UserName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UserName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountCredentialProperties();
-                }
-                Properties.UserName = value;
-            }
-        }
-
+        public string UserName { get; set; }
         /// <summary> Encrypted storage key. </summary>
-        public AsymmetricEncryptedSecret AccountKey
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AccountKey;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountCredentialProperties();
-                }
-                Properties.AccountKey = value;
-            }
-        }
-
+        public AsymmetricEncryptedSecret AccountKey { get; set; }
         /// <summary> Connection string for the storage account. Use this string if username and account key are not specified. </summary>
-        public string ConnectionString
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectionString;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountCredentialProperties();
-                }
-                Properties.ConnectionString = value;
-            }
-        }
-
+        public string ConnectionString { get; set; }
         /// <summary> Signifies whether SSL needs to be enabled or not. </summary>
-        public DataBoxEdgeStorageAccountSslStatus SslStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SslStatus;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountCredentialProperties();
-                }
-                Properties.SslStatus = value;
-            }
-        }
-
+        public DataBoxEdgeStorageAccountSslStatus SslStatus { get; set; }
         /// <summary> Blob end point for private clouds. </summary>
-        public string BlobDomainName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BlobDomainName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountCredentialProperties();
-                }
-                Properties.BlobDomainName = value;
-            }
-        }
-
+        public string BlobDomainName { get; set; }
         /// <summary> Type of storage accessed on the storage account. </summary>
-        public DataBoxEdgeStorageAccountType AccountType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AccountType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountCredentialProperties();
-                }
-                Properties.AccountType = value;
-            }
-        }
-
+        public DataBoxEdgeStorageAccountType AccountType { get; set; }
         /// <summary> Id of the storage account. </summary>
-        public ResourceIdentifier StorageAccountId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StorageAccountId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountCredentialProperties();
-                }
-                Properties.StorageAccountId = value;
-            }
-        }
+        public ResourceIdentifier StorageAccountId { get; set; }
     }
 }

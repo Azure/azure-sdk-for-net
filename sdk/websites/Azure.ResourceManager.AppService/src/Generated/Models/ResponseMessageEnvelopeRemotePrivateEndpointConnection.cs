@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Message envelope that contains the common Azure resource manager properties and the resource provider specific content.
-    /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection
-    /// </summary>
+    /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ResourceData
     {
         /// <summary>
@@ -62,42 +59,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.location
-        /// </param>
-        /// <param name="tags">
-        /// Tags associated with resource.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.tags
-        /// </param>
-        /// <param name="plan">
-        /// Azure resource manager plan.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.plan
-        /// </param>
-        /// <param name="properties">
-        /// Resource specific properties.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.properties
-        /// </param>
-        /// <param name="sku">
-        /// SKU description of the resource.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.sku
-        /// </param>
-        /// <param name="status">
-        /// Azure-AsyncOperation Status info.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.status
-        /// </param>
-        /// <param name="error">
-        /// Azure-AsyncOperation Error info.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.error
-        /// </param>
-        /// <param name="identity">
-        /// MSI resource
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.identity
-        /// </param>
-        /// <param name="zones">
-        /// Logical Availability Zones the service is hosted in
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.zones
-        /// </param>
+        /// <param name="location"> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </param>
+        /// <param name="tags"> Tags associated with resource. </param>
+        /// <param name="plan"> Azure resource manager plan. </param>
+        /// <param name="properties"> Resource specific properties. </param>
+        /// <param name="sku"> SKU description of the resource. </param>
+        /// <param name="status"> Azure-AsyncOperation Status info. </param>
+        /// <param name="error"> Azure-AsyncOperation Error info. </param>
+        /// <param name="identity"> MSI resource. </param>
+        /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, AppServiceSkuDescription sku, string status, ResponseError error, ManagedServiceIdentity identity, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -113,52 +83,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.location
-        /// </summary>
+        /// <summary> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// Tags associated with resource.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.tags
-        /// </summary>
+        /// <summary> Tags associated with resource. </summary>
         [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Azure resource manager plan.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.plan
-        /// </summary>
+        /// <summary> Azure resource manager plan. </summary>
         [WirePath("plan")]
         public AppServiceArmPlan Plan { get; }
-        /// <summary>
-        /// Resource specific properties.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.properties
-        /// </summary>
+        /// <summary> Resource specific properties. </summary>
         [WirePath("properties")]
         public RemotePrivateEndpointConnection Properties { get; }
-        /// <summary>
-        /// SKU description of the resource.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.sku
-        /// </summary>
+        /// <summary> SKU description of the resource. </summary>
         [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; }
-        /// <summary>
-        /// Azure-AsyncOperation Status info.
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.status
-        /// </summary>
+        /// <summary> Azure-AsyncOperation Status info. </summary>
         [WirePath("status")]
         public string Status { get; }
-        /// <summary>
-        /// MSI resource
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.identity
-        /// </summary>
+        /// <summary> MSI resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; }
-        /// <summary>
-        /// Logical Availability Zones the service is hosted in
-        /// Serialized Name: ResponseMessageEnvelopeRemotePrivateEndpointConnection.zones
-        /// </summary>
+        /// <summary> Logical Availability Zones the service is hosted in. </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
     }

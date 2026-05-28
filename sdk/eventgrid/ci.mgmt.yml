@@ -2,6 +2,18 @@
 # This is for Track 2 managment plane SDK
 
 trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/eventgrid/ci.mgmt.yml
+    - sdk/eventgrid/Azure.ResourceManager.EventGrid/
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -11,5 +23,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.EventGrid
       safeName: AzureResourceManagerEventGrid
-    - name: Azure.Provisioning.EventGrid
-      safeName: AzureProvisioningEventGrid

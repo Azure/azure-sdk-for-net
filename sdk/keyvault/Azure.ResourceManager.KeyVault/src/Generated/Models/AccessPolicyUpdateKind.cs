@@ -7,14 +7,14 @@
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary></summary>
+    /// <summary> The AccessPolicyUpdateKind. </summary>
     public enum AccessPolicyUpdateKind
     {
-        /// <summary> Add. </summary>
+        /// <summary> add. </summary>
         Add,
-        /// <summary> Replace. </summary>
+        /// <summary> replace. </summary>
         Replace,
-        /// <summary> Remove. </summary>
+        /// <summary> remove. </summary>
         Remove
     }
 }

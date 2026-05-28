@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     internal readonly partial struct BillingType : IEquatable<BillingType>
     {
         private readonly string _value;
-        /// <summary> PaV2 billing. </summary>
-        private const string Pav2Value = "Pav2";
-        /// <summary> Purchase billing. </summary>
-        private const string PurchaseValue = "Purchase";
 
         /// <summary> Initializes a new instance of <see cref="BillingType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string Pav2Value = "Pav2";
+        private const string PurchaseValue = "Purchase";
 
         /// <summary> PaV2 billing. </summary>
         public static BillingType Pav2 { get; } = new BillingType(Pav2Value);
-
         /// <summary> Purchase billing. </summary>
         public static BillingType Purchase { get; } = new BillingType(PurchaseValue);
-
         /// <summary> Determines if two <see cref="BillingType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingType left, BillingType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BillingType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingType left, BillingType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BillingType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingType"/>. </summary>
         public static implicit operator BillingType(string value) => new BillingType(value);
 
-        /// <summary> Converts a string to a <see cref="BillingType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BillingType?(string value) => value == null ? null : new BillingType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BillingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

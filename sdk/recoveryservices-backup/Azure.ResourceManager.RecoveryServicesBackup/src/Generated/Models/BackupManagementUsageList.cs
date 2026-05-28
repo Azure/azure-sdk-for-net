@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -22,14 +21,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="BackupManagementUsageList"/>. </summary>
         /// <param name="nextLink"> The URI to fetch the next page of resources, with each API call returning up to 200 resources per page. Use ListNext() to fetch the next page if the total number of resources exceeds 200. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The list of backup management usages for the given vault. </param>
-        internal BackupManagementUsageList(string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<BackupManagementUsage> value) : base(nextLink, additionalBinaryDataProperties)
+        internal BackupManagementUsageList(string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<BackupManagementUsage> value) : base(nextLink, serializedAdditionalRawData)
         {
             Value = value;
         }
 
         /// <summary> The list of backup management usages for the given vault. </summary>
-        public IList<BackupManagementUsage> Value { get; }
+        public IReadOnlyList<BackupManagementUsage> Value { get; }
     }
 }

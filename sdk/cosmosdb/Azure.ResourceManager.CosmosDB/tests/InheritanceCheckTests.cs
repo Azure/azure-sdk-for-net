@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.TestFramework
         [OneTimeSetUp]
         public void SetExceptionList()
         {
-            ExceptionList = new string[] { "CosmosDBTablePropertiesResource", "RestorableMongoDBCollection" };
+            ExceptionList = new string[] { "CassandraViewGetPropertiesResource", "CassandraViewResource", "CosmosDBTablePropertiesResource",
+            "PhysicalPartitionStorageInfoCollection", "PhysicalPartitionThroughputInfoResource", "PhysicalPartitionThroughputInfoResultPropertiesResource",
+            "RedistributeThroughputPropertiesResource", "RestorableMongoDBCollection", "RetrieveThroughputPropertiesResource" };
         }
     }
 }

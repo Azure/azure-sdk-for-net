@@ -3,14 +3,14 @@
 
 using System;
 using System.Text.Json;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
     /// Status information about a particular document within a translation operation.
     /// </summary>
-    [CodeGenType("DocumentStatus")]
+    [CodeGenModel("DocumentStatus")]
     public partial class DocumentStatusResult
     {
         [CodeGenMember("Error")]

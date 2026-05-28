@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
@@ -25,86 +24,75 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     /// </summary>
     public partial class ContainerServiceFleetMemberCollection : ArmCollection, IEnumerable<ContainerServiceFleetMemberResource>, IAsyncEnumerable<ContainerServiceFleetMemberResource>
     {
-        private readonly ClientDiagnostics _fleetMembersClientDiagnostics;
-        private readonly FleetMembers _fleetMembersRestClient;
+        private readonly ClientDiagnostics _containerServiceFleetMemberFleetMembersClientDiagnostics;
+        private readonly FleetMembersRestOperations _containerServiceFleetMemberFleetMembersRestClient;
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetMemberCollection"/> class for mocking. </summary>
         protected ContainerServiceFleetMemberCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerServiceFleetMemberCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ContainerServiceFleetMemberCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerServiceFleetMemberResource.ResourceType, out string containerServiceFleetMemberApiVersion);
-            _fleetMembersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetMemberResource.ResourceType.Namespace, Diagnostics);
-            _fleetMembersRestClient = new FleetMembers(_fleetMembersClientDiagnostics, Pipeline, Endpoint, containerServiceFleetMemberApiVersion ?? "2026-02-01-preview");
-            ValidateResourceId(id);
+            _containerServiceFleetMemberFleetMembersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ContainerServiceFleetMemberResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ContainerServiceFleetMemberResource.ResourceType, out string containerServiceFleetMemberFleetMembersApiVersion);
+            _containerServiceFleetMemberFleetMembersRestClient = new FleetMembersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetMemberFleetMembersApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerServiceFleetResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerServiceFleetResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a FleetMember
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetMembers_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetMemberResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="data"> Resource create parameters. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ContainerServiceFleetMemberResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fleetMemberName, ContainerServiceFleetMemberData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ContainerServiceFleetMemberResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fleetMemberName, ContainerServiceFleetMemberData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.CreateOrUpdate");
+            using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetMembersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, ContainerServiceFleetMemberData.ToRequestContent(data), matchConditions, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource>(
-                    new ContainerServiceFleetMemberOperationSource(Client),
-                    _fleetMembersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation,
-                    true);
+                var response = await _containerServiceFleetMemberFleetMembersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource>(new ContainerServiceFleetMemberOperationSource(Client), _containerServiceFleetMemberFleetMembersClientDiagnostics, Pipeline, _containerServiceFleetMemberFleetMembersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation, apiVersionOverrideValue: "2016-03-30");
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -118,53 +106,44 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Create a FleetMember
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetMembers_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetMemberResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="data"> Resource create parameters. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="ifMatch"> The request should only proceed if an entity matches this string. </param>
+        /// <param name="ifNoneMatch"> The request should only proceed if no entity matches this string. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ContainerServiceFleetMemberResource> CreateOrUpdate(WaitUntil waitUntil, string fleetMemberName, ContainerServiceFleetMemberData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ContainerServiceFleetMemberResource> CreateOrUpdate(WaitUntil waitUntil, string fleetMemberName, ContainerServiceFleetMemberData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.CreateOrUpdate");
+            using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetMembersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, ContainerServiceFleetMemberData.ToRequestContent(data), matchConditions, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource>(
-                    new ContainerServiceFleetMemberOperationSource(Client),
-                    _fleetMembersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation,
-                    true);
+                var response = _containerServiceFleetMemberFleetMembersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource>(new ContainerServiceFleetMemberOperationSource(Client), _containerServiceFleetMemberFleetMembersClientDiagnostics, Pipeline, _containerServiceFleetMemberFleetMembersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation, apiVersionOverrideValue: "2016-03-30");
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -178,42 +157,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Get a FleetMember
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetMembers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetMemberResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         public virtual async Task<Response<ContainerServiceFleetMemberResource>> GetAsync(string fleetMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
 
-            using DiagnosticScope scope = _fleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.Get");
+            using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetMembersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerServiceFleetMemberData> response = Response.FromValue(ContainerServiceFleetMemberData.FromResponse(result), result);
+                var response = await _containerServiceFleetMemberFleetMembersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetMemberResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -227,42 +202,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Get a FleetMember
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetMembers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetMemberResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         public virtual Response<ContainerServiceFleetMemberResource> Get(string fleetMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
 
-            using DiagnosticScope scope = _fleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.Get");
+            using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetMembersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerServiceFleetMemberData> response = Response.FromValue(ContainerServiceFleetMemberData.FromResponse(result), result);
+                var response = _containerServiceFleetMemberFleetMembersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetMemberResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -276,130 +247,96 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// List FleetMember resources by Fleet
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetMembers_ListByFleet. </description>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_ListByFleet</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetMemberResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
-        /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerServiceFleetMemberResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerServiceFleetMemberResource> GetAllAsync(int? maxCount = default, string skipToken = default, string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerServiceFleetMemberResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceFleetMemberResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ContainerServiceFleetMemberData, ContainerServiceFleetMemberResource>(new FleetMembersGetByFleetAsyncCollectionResultOfT(
-                _fleetMembersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxCount,
-                skipToken,
-                filter,
-                context,
-                "ContainerServiceFleetMemberCollection.GetAll"), data => new ContainerServiceFleetMemberResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetMemberFleetMembersRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetMemberFleetMembersRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetMemberResource(Client, ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(e)), _containerServiceFleetMemberFleetMembersClientDiagnostics, Pipeline, "ContainerServiceFleetMemberCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List FleetMember resources by Fleet
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetMembers_ListByFleet. </description>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_ListByFleet</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetMemberResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
-        /// <param name="filter"> Filter the result list using the given expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerServiceFleetMemberResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerServiceFleetMemberResource> GetAll(int? maxCount = default, string skipToken = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainerServiceFleetMemberResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ContainerServiceFleetMemberData, ContainerServiceFleetMemberResource>(new FleetMembersGetByFleetCollectionResultOfT(
-                _fleetMembersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxCount,
-                skipToken,
-                filter,
-                context,
-                "ContainerServiceFleetMemberCollection.GetAll"), data => new ContainerServiceFleetMemberResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceFleetMemberFleetMembersRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceFleetMemberFleetMembersRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceFleetMemberResource(Client, ContainerServiceFleetMemberData.DeserializeContainerServiceFleetMemberData(e)), _containerServiceFleetMemberFleetMembersClientDiagnostics, Pipeline, "ContainerServiceFleetMemberCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetMembers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetMemberResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fleetMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
 
-            using DiagnosticScope scope = _fleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.Exists");
+            using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetMembersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerServiceFleetMemberData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetMemberData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetMemberData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerServiceFleetMemberFleetMembersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -413,50 +350,36 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetMembers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetMemberResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         public virtual Response<bool> Exists(string fleetMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
 
-            using DiagnosticScope scope = _fleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.Exists");
+            using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetMembersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerServiceFleetMemberData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetMemberData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetMemberData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerServiceFleetMemberFleetMembersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -470,54 +393,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetMembers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetMemberResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerServiceFleetMemberResource>> GetIfExistsAsync(string fleetMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
 
-            using DiagnosticScope scope = _fleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.GetIfExists");
+            using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetMembersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerServiceFleetMemberData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetMemberData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetMemberData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerServiceFleetMemberFleetMembersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerServiceFleetMemberResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetMemberResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -531,54 +438,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/fleets/{fleetName}/members/{fleetMemberName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FleetMembers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FleetMembers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetMemberResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
         public virtual NullableResponse<ContainerServiceFleetMemberResource> GetIfExists(string fleetMemberName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fleetMemberName, nameof(fleetMemberName));
 
-            using DiagnosticScope scope = _fleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.GetIfExists");
+            using var scope = _containerServiceFleetMemberFleetMembersClientDiagnostics.CreateScope("ContainerServiceFleetMemberCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetMembersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerServiceFleetMemberData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerServiceFleetMemberData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerServiceFleetMemberData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerServiceFleetMemberFleetMembersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fleetMemberName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerServiceFleetMemberResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerServiceFleetMemberResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -598,7 +489,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerServiceFleetMemberResource> IAsyncEnumerable<ContainerServiceFleetMemberResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

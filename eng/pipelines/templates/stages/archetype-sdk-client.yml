@@ -17,6 +17,12 @@ parameters:
   - name: BuildSnippets
     type: boolean
     default: true
+  - name: CheckAOTCompat
+    type: boolean
+    default: false
+  - name: AOTTestInputs
+    type: object
+    default: []
   - name: TestSetupSteps
     type: stepList
     default: []
@@ -78,6 +84,8 @@ extends:
               ArtifactName: packages
               LimitForPullRequest: ${{ parameters.LimitForPullRequest }}
               BuildSnippets: ${{ parameters.BuildSnippets }}
+              CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
+              AOTTestInputs: ${{ parameters.AOTTestInputs }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
               TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
               MatrixConfigs:

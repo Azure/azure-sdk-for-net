@@ -8,57 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> Information about VMSS VM. </summary>
-    public partial class GuestConfigurationVmssVmInfo : IJsonModel<GuestConfigurationVmssVmInfo>
+    public partial class GuestConfigurationVmssVmInfo : IUtf8JsonSerializable, IJsonModel<GuestConfigurationVmssVmInfo>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GuestConfigurationVmssVmInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGuestConfigurationVmssVmInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationVmssVmInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGuestConfigurationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GuestConfigurationVmssVmInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GuestConfigurationVmssVmInfo IPersistableModel<GuestConfigurationVmssVmInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GuestConfigurationVmssVmInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GuestConfigurationVmssVmInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,11 +29,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
@@ -92,23 +52,37 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
             if (options.Format != "W" && Optional.IsDefined(LatestReportId))
             {
-                writer.WritePropertyName("latestReportId"u8);
-                writer.WriteStringValue(LatestReportId.Value);
+                if (LatestReportId != null)
+                {
+                    writer.WritePropertyName("latestReportId"u8);
+                    writer.WriteStringValue(LatestReportId.Value);
+                }
+                else
+                {
+                    writer.WriteNull("latestReportId");
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(LastComplianceCheckedOn))
             {
-                writer.WritePropertyName("lastComplianceChecked"u8);
-                writer.WriteStringValue(LastComplianceCheckedOn.Value, "O");
+                if (LastComplianceCheckedOn != null)
+                {
+                    writer.WritePropertyName("lastComplianceChecked"u8);
+                    writer.WriteStringValue(LastComplianceCheckedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("lastComplianceChecked");
+                }
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,27 +91,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GuestConfigurationVmssVmInfo IJsonModel<GuestConfigurationVmssVmInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GuestConfigurationVmssVmInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GuestConfigurationVmssVmInfo IJsonModel<GuestConfigurationVmssVmInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGuestConfigurationVmssVmInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GuestConfigurationVmssVmInfo DeserializeGuestConfigurationVmssVmInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static GuestConfigurationVmssVmInfo DeserializeGuestConfigurationVmssVmInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,68 +115,195 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             ResourceIdentifier vmResourceId = default;
             AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
             Guid? latestReportId = default;
-            DateTimeOffset? lastComplianceCheckedOn = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            DateTimeOffset? lastComplianceChecked = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("vmId"u8))
+                if (property.NameEquals("vmId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmId = new Guid(prop.Value.GetString());
+                    vmId = property.Value.GetGuid();
                     continue;
                 }
-                if (prop.NameEquals("vmResourceId"u8))
+                if (property.NameEquals("vmResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    vmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("complianceStatus"u8))
+                if (property.NameEquals("complianceStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(prop.Value.GetString());
+                    complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("latestReportId"u8))
+                if (property.NameEquals("latestReportId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        latestReportId = null;
                         continue;
                     }
-                    latestReportId = new Guid(prop.Value.GetString());
+                    latestReportId = property.Value.GetGuid();
                     continue;
                 }
-                if (prop.NameEquals("lastComplianceChecked"u8))
+                if (property.NameEquals("lastComplianceChecked"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        lastComplianceCheckedOn = null;
+                        lastComplianceChecked = null;
                         continue;
                     }
-                    lastComplianceCheckedOn = prop.Value.GetDateTimeOffset("O");
+                    lastComplianceChecked = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new GuestConfigurationVmssVmInfo(
                 vmId,
                 vmResourceId,
                 complianceStatus,
                 latestReportId,
-                lastComplianceCheckedOn,
-                additionalBinaryDataProperties);
+                lastComplianceChecked,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmId))
+                {
+                    builder.Append("  vmId: ");
+                    builder.AppendLine($"'{VmId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VmResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vmResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VmResourceId))
+                {
+                    builder.Append("  vmResourceId: ");
+                    builder.AppendLine($"'{VmResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComplianceStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  complianceStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ComplianceStatus))
+                {
+                    builder.Append("  complianceStatus: ");
+                    builder.AppendLine($"'{ComplianceStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LatestReportId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  latestReportId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LatestReportId))
+                {
+                    builder.Append("  latestReportId: ");
+                    builder.AppendLine($"'{LatestReportId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastComplianceCheckedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastComplianceChecked: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastComplianceCheckedOn))
+                {
+                    builder.Append("  lastComplianceChecked: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastComplianceCheckedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<GuestConfigurationVmssVmInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGuestConfigurationContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GuestConfigurationVmssVmInfo IPersistableModel<GuestConfigurationVmssVmInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeGuestConfigurationVmssVmInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GuestConfigurationVmssVmInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

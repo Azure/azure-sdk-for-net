@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
-namespace Specs.Azure.Core.Lro.Standard
+namespace _Specs_.Azure.Core.Lro.Standard
 {
     public static partial class _Specs_AzureCoreLroStandardModelFactory
     {

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary></summary>
-    internal partial class WorkloadNetworkVmGroupOperationSource : IOperationSource<WorkloadNetworkVmGroupResource>
+    internal class WorkloadNetworkVmGroupOperationSource : IOperationSource<WorkloadNetworkVmGroupResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal WorkloadNetworkVmGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         WorkloadNetworkVmGroupResource IOperationSource<WorkloadNetworkVmGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            WorkloadNetworkVmGroupData data = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new WorkloadNetworkVmGroupResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<WorkloadNetworkVmGroupResource> IOperationSource<WorkloadNetworkVmGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            WorkloadNetworkVmGroupData data = WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new WorkloadNetworkVmGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            return await Task.FromResult(new WorkloadNetworkVmGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

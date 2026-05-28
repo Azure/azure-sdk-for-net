@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DisconnectedOperations;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     public readonly partial struct DisconnectedOperationsRegistrationStatus : IEquatable<DisconnectedOperationsRegistrationStatus>
     {
         private readonly string _value;
-        /// <summary> Device is registered to cloud. </summary>
-        private const string RegisteredValue = "Registered";
-        /// <summary> Device is not registered to cloud. </summary>
-        private const string UnregisteredValue = "Unregistered";
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsRegistrationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DisconnectedOperationsRegistrationStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string RegisteredValue = "Registered";
+        private const string UnregisteredValue = "Unregistered";
 
         /// <summary> Device is registered to cloud. </summary>
         public static DisconnectedOperationsRegistrationStatus Registered { get; } = new DisconnectedOperationsRegistrationStatus(RegisteredValue);
-
         /// <summary> Device is not registered to cloud. </summary>
         public static DisconnectedOperationsRegistrationStatus Unregistered { get; } = new DisconnectedOperationsRegistrationStatus(UnregisteredValue);
-
         /// <summary> Determines if two <see cref="DisconnectedOperationsRegistrationStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DisconnectedOperationsRegistrationStatus left, DisconnectedOperationsRegistrationStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DisconnectedOperationsRegistrationStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DisconnectedOperationsRegistrationStatus left, DisconnectedOperationsRegistrationStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DisconnectedOperationsRegistrationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DisconnectedOperationsRegistrationStatus"/>. </summary>
         public static implicit operator DisconnectedOperationsRegistrationStatus(string value) => new DisconnectedOperationsRegistrationStatus(value);
 
-        /// <summary> Converts a string to a <see cref="DisconnectedOperationsRegistrationStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DisconnectedOperationsRegistrationStatus?(string value) => value == null ? null : new DisconnectedOperationsRegistrationStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DisconnectedOperationsRegistrationStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DisconnectedOperationsRegistrationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

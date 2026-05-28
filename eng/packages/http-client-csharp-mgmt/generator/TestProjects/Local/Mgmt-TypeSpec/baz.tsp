@@ -2,21 +2,14 @@ import "@azure-tools/typespec-client-generator-core";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
-using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
 
 namespace MgmtTypeSpec;
 
-// shows a way of mitigating breaking changes for tracked resource with optional location when migrated into new generator
-@Azure.ClientGenerator.Core.Legacy.hierarchyBuilding(Azure.ResourceManager.Foundations.TrackedResource, "csharp")
 @resource("bazs")
-model Baz is ProxyResource<BazProperties> {
+model Baz is TrackedResource<BazProperties> {
   ...ResourceNameParameter<Baz, SegmentName = "bazs">;
-
-  location?: azureLocation;
-
-  tags?: Record<string>;
 }
 
 model BazProperties {
@@ -39,10 +32,5 @@ interface Bazs {
 
   list is ArmResourceListByParent<Baz>;
 
-  listBySubscription is ArmListBySubscription<
-    Baz,
-    Parameters = {
-      @query("$top")
-      $top?: int32;
-    }>;
+  listBySubscription is ArmListBySubscription<Baz>;
 }

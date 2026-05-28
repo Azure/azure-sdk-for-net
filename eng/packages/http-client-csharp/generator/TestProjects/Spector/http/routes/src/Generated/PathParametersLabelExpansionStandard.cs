@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,8 +16,6 @@ namespace Routes._PathParameters.LabelExpansion.Standard
     public partial class PathParametersLabelExpansionStandard
     {
         protected PathParametersLabelExpansionStandard() => throw null;
-
-        internal PathParametersLabelExpansionStandard(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

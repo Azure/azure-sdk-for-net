@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 using System.Text.Json;
-using Azure.Core;
+
 using FluentAssertions;
 
 using NUnit.Framework;
@@ -129,7 +129,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
         private static void TestSerializationRoundtrip(ExperimentMetricUpdate original)
         {
-            using RequestContent requestContent = original;
+            using var requestContent = original.ToRequestContent();
 
             using var buffer = new MemoryStream();
             requestContent.WriteTo(buffer, cancellation: default);
@@ -138,28 +138,28 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             // Deserialization matches ExperimentMetric.FromResponse()
             using var document = JsonDocument.Parse(buffer, ModelSerializationExtensions.JsonDocumentOptions);
-            var deserialized = ExperimentMetric.DeserializeExperimentMetric(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var deserialized = ExperimentMetric.DeserializeExperimentMetric(document.RootElement);
 
-            // _additionalBinaryDataProperties is originally null, Deserialize*() methods set it empty dictionary.
+            // _serializedAdditionalRawData is originally null, Deserialize*() methods set it empty dictionary.
             deserialized.Should().BeEquivalentTo(
                 original,
                 c => c.Excluding(m => m.Categories)
-                      .Excluding(m => m.SelectedMemberPath.EndsWith("_additionalBinaryDataProperties")));
+                      .Excluding(m => m.SelectedMemberPath.EndsWith("._serializedAdditionalRawData")));
 
             var originalCategories = original.Categories.Should().BeOfType<ChangeTrackingList<string>>().Which;
             var categoriesEmitted = document.RootElement.TryGetProperty("categories", out var categoriesElement);
             if (originalCategories.IsUndefined)
             {
-                Assert.That(categoriesEmitted, Is.False);
+                Assert.IsFalse(categoriesEmitted);
             }
             else
             {
-                Assert.That(categoriesEmitted, Is.True);
-                Assert.That(categoriesElement.ValueKind, Is.EqualTo(JsonValueKind.Array));
-                Assert.That(categoriesElement.GetArrayLength(), Is.EqualTo(originalCategories.Count));
+                Assert.IsTrue(categoriesEmitted);
+                Assert.AreEqual(JsonValueKind.Array, categoriesElement.ValueKind);
+                Assert.AreEqual(originalCategories.Count, categoriesElement.GetArrayLength());
                 for (int i = 0; i < originalCategories.Count; i++)
                 {
-                    Assert.That(categoriesElement[i].GetString(), Is.EqualTo(originalCategories[i]));
+                    Assert.AreEqual(originalCategories[i], categoriesElement[i].GetString());
                 }
             }
         }

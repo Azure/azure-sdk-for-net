@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeNetworkAdapterStatus : IEquatable<DataBoxEdgeNetworkAdapterStatus>
     {
         private readonly string _value;
-        private const string InactiveValue = "Inactive";
-        private const string ActiveValue = "Active";
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapterStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataBoxEdgeNetworkAdapterStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Inactive. </summary>
+        private const string InactiveValue = "Inactive";
+        private const string ActiveValue = "Active";
+
+        /// <summary> Inactive. </summary>
         public static DataBoxEdgeNetworkAdapterStatus Inactive { get; } = new DataBoxEdgeNetworkAdapterStatus(InactiveValue);
-
-        /// <summary> Gets the Active. </summary>
+        /// <summary> Active. </summary>
         public static DataBoxEdgeNetworkAdapterStatus Active { get; } = new DataBoxEdgeNetworkAdapterStatus(ActiveValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeNetworkAdapterStatus left, DataBoxEdgeNetworkAdapterStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeNetworkAdapterStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeNetworkAdapterStatus left, DataBoxEdgeNetworkAdapterStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkAdapterStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeNetworkAdapterStatus"/>. </summary>
         public static implicit operator DataBoxEdgeNetworkAdapterStatus(string value) => new DataBoxEdgeNetworkAdapterStatus(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeNetworkAdapterStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeNetworkAdapterStatus?(string value) => value == null ? null : new DataBoxEdgeNetworkAdapterStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeNetworkAdapterStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeNetworkAdapterStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

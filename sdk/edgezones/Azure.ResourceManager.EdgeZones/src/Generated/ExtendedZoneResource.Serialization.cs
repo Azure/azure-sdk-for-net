@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EdgeZones
 {
-    /// <summary></summary>
     public partial class ExtendedZoneResource : IJsonModel<ExtendedZoneData>
     {
-        private static IJsonModel<ExtendedZoneData> s_dataDeserializationInstance;
+        private static ExtendedZoneData s_dataDeserializationInstance;
+        private static ExtendedZoneData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<ExtendedZoneData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExtendedZoneData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExtendedZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedZoneData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExtendedZoneData IJsonModel<ExtendedZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ExtendedZoneData IJsonModel<ExtendedZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedZoneData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ExtendedZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtendedZoneData>(Data, options, AzureResourceManagerEdgeZonesContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ExtendedZoneData IPersistableModel<ExtendedZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtendedZoneData>(data, options, AzureResourceManagerEdgeZonesContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExtendedZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ExtendedZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedZoneData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

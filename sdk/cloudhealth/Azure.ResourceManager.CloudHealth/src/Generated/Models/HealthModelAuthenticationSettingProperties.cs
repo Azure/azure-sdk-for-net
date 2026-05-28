@@ -12,39 +12,65 @@ namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary>
     /// Authentication setting properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedIdentityAuthenticationSettingProperties"/>.
+    /// Please note <see cref="HealthModelAuthenticationSettingProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ManagedIdentityAuthenticationSettingProperties"/>.
     /// </summary>
     public abstract partial class HealthModelAuthenticationSettingProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HealthModelAuthenticationSettingProperties"/>. </summary>
-        /// <param name="authenticationKind"> Kind of the authentication setting. </param>
-        private protected HealthModelAuthenticationSettingProperties(HealthModelAuthenticationKind authenticationKind)
+        protected HealthModelAuthenticationSettingProperties()
         {
-            AuthenticationKind = authenticationKind;
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthModelAuthenticationSettingProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="authenticationKind"> Kind of the authentication setting. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState, string displayName, HealthModelAuthenticationKind authenticationKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthModelAuthenticationSettingProperties(HealthModelProvisioningState? provisioningState, string displayName, HealthModelAuthenticationKind authenticationKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
             AuthenticationKind = authenticationKind;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the last operation. </summary>
         public HealthModelProvisioningState? ProvisioningState { get; }
-
         /// <summary> Display name. </summary>
         public string DisplayName { get; set; }
-
         /// <summary> Kind of the authentication setting. </summary>
         internal HealthModelAuthenticationKind AuthenticationKind { get; set; }
     }

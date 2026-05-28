@@ -52,13 +52,10 @@ namespace Azure.ResourceManager.StorageActions
             uri.AppendPath("/providers/Microsoft.StorageActions/storageTasks/", false);
             uri.AppendPath(storageTaskName, true);
             uri.AppendPath("/reports", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+                uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
             }
             if (filter != null)
             {
@@ -75,18 +72,7 @@ namespace Azure.ResourceManager.StorageActions
         internal HttpMessage CreateNextGetStorageTasksReportsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -5,17 +5,11 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
-namespace Specs.Azure.ClientGenerator.Core.Override
+namespace _Specs_.Azure.ClientGenerator.Core.Override
 {
     public partial class OverrideClientOptions : ClientOptions
     {
-        public OverrideClientOptions() => throw null;
-
-        [Experimental("SCME0002")]
-        internal OverrideClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

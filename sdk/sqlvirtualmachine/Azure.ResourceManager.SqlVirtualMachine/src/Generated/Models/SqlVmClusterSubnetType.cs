@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public readonly partial struct SqlVmClusterSubnetType : IEquatable<SqlVmClusterSubnetType>
     {
         private readonly string _value;
-        private const string SingleSubnetValue = "SingleSubnet";
-        private const string MultiSubnetValue = "MultiSubnet";
 
         /// <summary> Initializes a new instance of <see cref="SqlVmClusterSubnetType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlVmClusterSubnetType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the SingleSubnet. </summary>
+        private const string SingleSubnetValue = "SingleSubnet";
+        private const string MultiSubnetValue = "MultiSubnet";
+
+        /// <summary> SingleSubnet. </summary>
         public static SqlVmClusterSubnetType SingleSubnet { get; } = new SqlVmClusterSubnetType(SingleSubnetValue);
-
-        /// <summary> Gets the MultiSubnet. </summary>
+        /// <summary> MultiSubnet. </summary>
         public static SqlVmClusterSubnetType MultiSubnet { get; } = new SqlVmClusterSubnetType(MultiSubnetValue);
-
         /// <summary> Determines if two <see cref="SqlVmClusterSubnetType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlVmClusterSubnetType left, SqlVmClusterSubnetType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SqlVmClusterSubnetType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlVmClusterSubnetType left, SqlVmClusterSubnetType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SqlVmClusterSubnetType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlVmClusterSubnetType"/>. </summary>
         public static implicit operator SqlVmClusterSubnetType(string value) => new SqlVmClusterSubnetType(value);
 
-        /// <summary> Converts a string to a <see cref="SqlVmClusterSubnetType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SqlVmClusterSubnetType?(string value) => value == null ? null : new SqlVmClusterSubnetType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlVmClusterSubnetType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SqlVmClusterSubnetType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

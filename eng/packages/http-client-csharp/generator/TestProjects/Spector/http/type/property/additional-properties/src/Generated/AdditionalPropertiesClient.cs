@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
 namespace _Type.Property.AdditionalProperties
@@ -15,12 +14,7 @@ namespace _Type.Property.AdditionalProperties
     {
         public AdditionalPropertiesClient() : this(new Uri("http://localhost:3000"), new AdditionalPropertiesClientOptions()) => throw null;
 
-        internal AdditionalPropertiesClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AdditionalPropertiesClientOptions options) => throw null;
-
-        public AdditionalPropertiesClient(Uri endpoint, AdditionalPropertiesClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public AdditionalPropertiesClient(AdditionalPropertiesClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public AdditionalPropertiesClient(Uri endpoint, AdditionalPropertiesClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

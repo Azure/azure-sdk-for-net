@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.CodeTransparency.Receipt;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.CodeTransparency
 {
@@ -34,16 +33,6 @@ namespace Azure.Security.CodeTransparency
         public static readonly string UnknownIssuerPrefix = "__unknown-issuer::";
 
         /// <summary>
-        /// Public key storage used to verify receipts. The value can be set through the verification options.
-        /// </summary>
-        private IReadOnlyDictionary<string, JwksDocument> _offlineKeys = null;
-
-        /// <summary>
-        /// Indicates whether offline keys can fallback to network retrieval when a key is not found locally.
-        /// </summary>
-        private bool _offlineKeysAllowNetworkFallback = true;
-
-        /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
         /// TLS CA cert to perform server cert authentication.
         /// If the CA changes then there is a TTL which will help healing the long lived clients.
@@ -61,12 +50,13 @@ namespace Azure.Security.CodeTransparency
             HttpPipelineTransportOptions transportOptions = CreateTlsCertAndTrustVerifier(name, certificateClient);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            Pipeline = HttpPipelineBuilder.Build(
+            _keyCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(
                 options,
-                new HttpPipelinePolicy[] { new CodeTransparencyRedirectPolicy() },
-                credential == null ?
+                Array.Empty<HttpPipelinePolicy>(),
+                _keyCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
-                    new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(credential, AuthorizationHeader, AuthorizationApiKeyPrefix) },
+                    new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) },
                 transportOptions,
                 new ResponseClassifier());
             _endpoint = endpoint;
@@ -203,13 +193,13 @@ namespace Azure.Security.CodeTransparency
         public virtual Operation<BinaryData> CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = Pipeline.ProcessMessage(message, context, cancellationToken);
+                Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
 
                 string operationId = string.Empty;
                 try
@@ -252,13 +242,13 @@ namespace Azure.Security.CodeTransparency
         public virtual async Task<Operation<BinaryData>> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = cancellationToken.ToRequestContext();
+            RequestContext context = FromCancellationToken(cancellationToken);
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryAsync");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
+                Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
 
                 string operationId = string.Empty;
                 try
@@ -355,6 +345,7 @@ namespace Azure.Security.CodeTransparency
 
             Dictionary<string, CodeTransparencyClient> clientInstances = new Dictionary<string, CodeTransparencyClient>();
 
+            // Prepare authorized list state. If no authorized list provided, implicitly authorized all detected issuer domains encountered in receipts.
             var configuredAuthorizedList = verificationOptions?.AuthorizedDomains ?? Array.Empty<string>();
             bool userProvidedAuthorizedList = configuredAuthorizedList.Count > 0;
             HashSet<string> authorizedListNormalized = new(StringComparer.OrdinalIgnoreCase);
@@ -367,12 +358,6 @@ namespace Azure.Security.CodeTransparency
                         authorizedListNormalized.Add(domain.Trim());
                     }
                 }
-            }
-
-            // if no authorized domains are provided and the remaining ones are set to be ignored, then all receipts would be ignored
-            if (authorizedListNormalized.Count == 0 && verificationOptions.UnauthorizedReceiptBehavior == UnauthorizedReceiptBehavior.IgnoreAll)
-            {
-                throw new InvalidOperationException("No receipts would be verified as no authorized domains were provided and the unauthorized receipt behavior is set to ignore all.");
             }
 
             // Tracking for behaviors
@@ -435,16 +420,10 @@ namespace Azure.Security.CodeTransparency
                     if (!clientInstances.TryGetValue(issuer, out CodeTransparencyClient clientInstance))
                     {
                         clientInstance = new CodeTransparencyClient(new Uri($"https://{issuer}"), clientOptions);
-                        if (verificationOptions?.OfflineKeys != null)
-                        {
-                            clientInstance._offlineKeys = verificationOptions.OfflineKeys.ByIssuer;
-                            clientInstance._offlineKeysAllowNetworkFallback = verificationOptions.OfflineKeysBehavior == OfflineKeysBehavior.FallbackToNetwork;
-                        }
                         clientInstances[issuer] = clientInstance;
                     }
                     clientInstance.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes, receiptBytes);
 
-                    // If we reach here, verification succeeded
                     if (isAuthorized)
                     {
                         validAuthorizedDomainsEncountered.Add(issuer);
@@ -467,7 +446,7 @@ namespace Azure.Security.CodeTransparency
             switch (verificationOptions.AuthorizedReceiptBehavior)
             {
                 case AuthorizedReceiptBehavior.VerifyAnyMatching:
-                    if (authorizedListNormalized.Count > 0 && validAuthorizedDomainsEncountered.Count == 0)
+                    if (validAuthorizedDomainsEncountered.Count == 0)
                     {
                         authorizedFailures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
                     }
@@ -479,7 +458,7 @@ namespace Azure.Security.CodeTransparency
                     break;
                 case AuthorizedReceiptBehavior.VerifyAllMatching:
                     // All receipts from authorized domains must be valid: i.e., any receipt from an authorized domain that failed adds failure (already captured) -> if any authorized domain had receipt but not all successful? We check failures now.
-                    if (authorizedListNormalized.Count > 0 && authorizedDomainsWithReceipt.Count == 0)
+                    if (authorizedDomainsWithReceipt.Count == 0)
                     {
                         authorizedFailures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
                     }
@@ -529,19 +508,8 @@ namespace Azure.Security.CodeTransparency
                 throw new InvalidOperationException("Issuer and service instance name are not matching.");
             }
 
-            JwksDocument jwksDocument = null;
-            // Check if we have offline keys for this domain
-            if (_offlineKeys?.TryGetValue(issuer, out jwksDocument) != true && _offlineKeysAllowNetworkFallback)
-            {
-                // Get all the public keys from the JWKS endpoint
-                jwksDocument = GetPublicKeys().Value;
-            }
-
-            // Ensure jwksDocument was obtained from either offline keys or network
-            if (jwksDocument == null)
-            {
-                throw new InvalidOperationException($"No keys available for issuer '{issuer}'. Either offline keys are not configured or network fallback is disabled.");
-            }
+            // Get all the public keys from the JWKS endpoint
+            JwksDocument jwksDocument = GetPublicKeys().Value;
 
             // Ensure there is at least one entry in the JWKS document
             if (jwksDocument.Keys.Count == 0)
@@ -574,7 +542,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetTransparencyConfigCborRequest(RequestContext context)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -588,7 +556,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -602,7 +570,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier201202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -618,7 +586,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -633,7 +601,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -648,7 +616,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
         {
-            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

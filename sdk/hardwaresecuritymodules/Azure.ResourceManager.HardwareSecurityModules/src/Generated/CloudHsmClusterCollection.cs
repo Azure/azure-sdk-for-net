@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     /// </summary>
     public partial class CloudHsmClusterCollection : ArmCollection, IEnumerable<CloudHsmClusterResource>, IAsyncEnumerable<CloudHsmClusterResource>
     {
-        private readonly ClientDiagnostics _cloudHsmClustersClientDiagnostics;
-        private readonly CloudHsmClusters _cloudHsmClustersRestClient;
+        private readonly ClientDiagnostics _cloudHsmClusterClientDiagnostics;
+        private readonly CloudHsmClustersRestOperations _cloudHsmClusterRestClient;
 
-        /// <summary> Initializes a new instance of CloudHsmClusterCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudHsmClusterCollection"/> class for mocking. </summary>
         protected CloudHsmClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CloudHsmClusterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal CloudHsmClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _cloudHsmClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(CloudHsmClusterResource.ResourceType, out string cloudHsmClusterApiVersion);
-            _cloudHsmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", CloudHsmClusterResource.ResourceType.Namespace, Diagnostics);
-            _cloudHsmClustersRestClient = new CloudHsmClusters(_cloudHsmClustersClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
-            ValidateResourceId(id);
+            _cloudHsmClusterRestClient = new CloudHsmClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or Update a Cloud HSM Cluster in the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudHsmClusters_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmCluster_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="data"> Parameters to create Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CloudHsmClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudHsmClusterName, CloudHsmClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _cloudHsmClustersClientDiagnostics.CreateScope("CloudHsmClusterCollection.CreateOrUpdate");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudHsmClusterName, CloudHsmClusterData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HardwareSecurityModulesArmOperation<CloudHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(
-                    new CloudHsmClusterOperationSource(Client),
-                    _cloudHsmClustersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.OriginalUri);
+                var response = await _cloudHsmClusterRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(new CloudHsmClusterOperationSource(Client), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// Create or Update a Cloud HSM Cluster in the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudHsmClusters_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmCluster_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="data"> Parameters to create Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CloudHsmClusterResource> CreateOrUpdate(WaitUntil waitUntil, string cloudHsmClusterName, CloudHsmClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _cloudHsmClustersClientDiagnostics.CreateScope("CloudHsmClusterCollection.CreateOrUpdate");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudHsmClusterName, CloudHsmClusterData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HardwareSecurityModulesArmOperation<CloudHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(
-                    new CloudHsmClusterOperationSource(Client),
-                    _cloudHsmClustersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.OriginalUri);
+                var response = _cloudHsmClusterRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, data, cancellationToken);
+                var operation = new HardwareSecurityModulesArmOperation<CloudHsmClusterResource>(new CloudHsmClusterOperationSource(Client), _cloudHsmClusterClientDiagnostics, Pipeline, _cloudHsmClusterRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// Gets the specified Cloud HSM Cluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudHsmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual async Task<Response<CloudHsmClusterResource>> GetAsync(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using DiagnosticScope scope = _cloudHsmClustersClientDiagnostics.CreateScope("CloudHsmClusterCollection.Get");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudHsmClusterName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CloudHsmClusterData> response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
+                var response = await _cloudHsmClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudHsmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// Gets the specified Cloud HSM Cluster
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudHsmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual Response<CloudHsmClusterResource> Get(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using DiagnosticScope scope = _cloudHsmClustersClientDiagnostics.CreateScope("CloudHsmClusterCollection.Get");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudHsmClusterName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CloudHsmClusterData> response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
+                var response = _cloudHsmClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudHsmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,120 +244,98 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// The List operation gets information about the Cloud HSM Clusters associated with the subscription and within the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudHsmClusters_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmCluster_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CloudHsmClusterResource> GetAllAsync(string skiptoken = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CloudHsmClusterResource> GetAllAsync(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupAsyncCollectionResultOfT(
-                _cloudHsmClustersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                skiptoken,
-                context,
-                "CloudHsmClusterCollection.GetAll"), data => new CloudHsmClusterResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudHsmClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), _cloudHsmClusterClientDiagnostics, Pipeline, "CloudHsmClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// The List operation gets information about the Cloud HSM Clusters associated with the subscription and within the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudHsmClusters_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmCluster_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CloudHsmClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CloudHsmClusterResource> GetAll(string skiptoken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CloudHsmClusterResource> GetAll(string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<CloudHsmClusterData, CloudHsmClusterResource>(new CloudHsmClustersGetByResourceGroupCollectionResultOfT(
-                _cloudHsmClustersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                skiptoken,
-                context,
-                "CloudHsmClusterCollection.GetAll"), data => new CloudHsmClusterResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudHsmClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudHsmClusterResource(Client, CloudHsmClusterData.DeserializeCloudHsmClusterData(e)), _cloudHsmClusterClientDiagnostics, Pipeline, "CloudHsmClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudHsmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using DiagnosticScope scope = _cloudHsmClustersClientDiagnostics.CreateScope("CloudHsmClusterCollection.Exists");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudHsmClusterName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<CloudHsmClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudHsmClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _cloudHsmClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -400,50 +349,36 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudHsmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using DiagnosticScope scope = _cloudHsmClustersClientDiagnostics.CreateScope("CloudHsmClusterCollection.Exists");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudHsmClusterName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<CloudHsmClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudHsmClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _cloudHsmClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -457,54 +392,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudHsmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual async Task<NullableResponse<CloudHsmClusterResource>> GetIfExistsAsync(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using DiagnosticScope scope = _cloudHsmClustersClientDiagnostics.CreateScope("CloudHsmClusterCollection.GetIfExists");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudHsmClusterName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<CloudHsmClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudHsmClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _cloudHsmClusterRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<CloudHsmClusterResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudHsmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -518,54 +437,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/{cloudHsmClusterName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CloudHsmClusters_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CloudHsmCluster_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudHsmClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudHsmClusterName"> The name of the Cloud HSM Cluster within the specified resource group. Cloud HSM Cluster names must be between 3 and 23 characters in length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cloudHsmClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudHsmClusterName"/> is null. </exception>
         public virtual NullableResponse<CloudHsmClusterResource> GetIfExists(string cloudHsmClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudHsmClusterName, nameof(cloudHsmClusterName));
 
-            using DiagnosticScope scope = _cloudHsmClustersClientDiagnostics.CreateScope("CloudHsmClusterCollection.GetIfExists");
+            using var scope = _cloudHsmClusterClientDiagnostics.CreateScope("CloudHsmClusterCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _cloudHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudHsmClusterName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<CloudHsmClusterData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(CloudHsmClusterData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((CloudHsmClusterData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _cloudHsmClusterRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudHsmClusterName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<CloudHsmClusterResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new CloudHsmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -585,7 +488,6 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CloudHsmClusterResource> IAsyncEnumerable<CloudHsmClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

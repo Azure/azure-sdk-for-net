@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.AppContainers.Models;
-using Azure.ResourceManager.AppContainers.Tests.Helpers;
+using Azure.Core;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using Azure.ResourceManager.AppContainers.Tests.Helpers;
+using Azure.ResourceManager.AppContainers.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace Azure.ResourceManager.AppContainers.Tests
 {
@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.AppContainers.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/57787 - Recordings need re-recording for api-version 2025-07-01")]
         public async Task CreateOrUpdate()
         {
             string envName = Recording.GenerateAssetName("env");

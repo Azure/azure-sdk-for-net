@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct FileShareRestoreType : IEquatable<FileShareRestoreType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="FileShareRestoreType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FileShareRestoreType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string FullShareRestoreValue = "FullShareRestore";
         private const string ItemLevelRestoreValue = "ItemLevelRestore";
 
-        /// <summary> Initializes a new instance of <see cref="FileShareRestoreType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FileShareRestoreType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static FileShareRestoreType Invalid { get; } = new FileShareRestoreType(InvalidValue);
-
-        /// <summary> Gets the FullShareRestore. </summary>
+        /// <summary> FullShareRestore. </summary>
         public static FileShareRestoreType FullShareRestore { get; } = new FileShareRestoreType(FullShareRestoreValue);
-
-        /// <summary> Gets the ItemLevelRestore. </summary>
+        /// <summary> ItemLevelRestore. </summary>
         public static FileShareRestoreType ItemLevelRestore { get; } = new FileShareRestoreType(ItemLevelRestoreValue);
-
         /// <summary> Determines if two <see cref="FileShareRestoreType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FileShareRestoreType left, FileShareRestoreType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="FileShareRestoreType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FileShareRestoreType left, FileShareRestoreType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="FileShareRestoreType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FileShareRestoreType"/>. </summary>
         public static implicit operator FileShareRestoreType(string value) => new FileShareRestoreType(value);
 
-        /// <summary> Converts a string to a <see cref="FileShareRestoreType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator FileShareRestoreType?(string value) => value == null ? null : new FileShareRestoreType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FileShareRestoreType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(FileShareRestoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

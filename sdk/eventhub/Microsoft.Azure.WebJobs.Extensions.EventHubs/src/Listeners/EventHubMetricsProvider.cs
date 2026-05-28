@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Primitives;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
-using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
@@ -103,7 +102,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             }
             catch (Exception e)
             {
-                _logger.LogFunctionScaleWarning($"Encountered an exception while getting partition information for Event Hub '{_client.EventHubName}' used for scaling.", _functionId, e);
+                _logger.LogWarning($"Encountered an exception while getting partition information for Event Hub '{_client.EventHubName}' used for scaling. Error: {e.Message}");
             }
 
             // Get checkpoints
@@ -150,7 +149,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             }
             catch (Exception e)
             {
-                _logger.LogFunctionScaleWarning($"Encountered an exception while getting checkpoints for Event Hub '{_client.EventHubName}' used for scaling.", _functionId, e);
+                _logger.LogWarning($"Encountered an exception while getting checkpoints for Event Hub '{_client.EventHubName}' used for scaling. Error: {e.Message}");
             }
 
             return CreateTriggerMetrics(partitionPropertiesTasks.Select(t => t.Result).ToList(), checkpoints);

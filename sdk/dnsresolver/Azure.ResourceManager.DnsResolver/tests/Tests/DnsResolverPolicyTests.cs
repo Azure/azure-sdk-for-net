@@ -3,11 +3,11 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.DnsResolver.Models;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
+using Azure.ResourceManager.DnsResolver.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {

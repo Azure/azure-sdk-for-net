@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     internal readonly partial struct ServiceScalingTriggerKind : IEquatable<ServiceScalingTriggerKind>
     {
         private readonly string _value;
-        /// <summary> Represents a scaling trigger related to an average load of a metric/resource of a partition. The value is 0. </summary>
-        private const string AveragePartitionLoadTriggerValue = "AveragePartitionLoadTrigger";
-        /// <summary> Represents a scaling policy related to an average load of a metric/resource of a service. The value is 1. </summary>
-        private const string AverageServiceLoadTriggerValue = "AverageServiceLoadTrigger";
 
         /// <summary> Initializes a new instance of <see cref="ServiceScalingTriggerKind"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceScalingTriggerKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string AveragePartitionLoadTriggerValue = "AveragePartitionLoadTrigger";
+        private const string AverageServiceLoadTriggerValue = "AverageServiceLoadTrigger";
 
         /// <summary> Represents a scaling trigger related to an average load of a metric/resource of a partition. The value is 0. </summary>
         public static ServiceScalingTriggerKind AveragePartitionLoadTrigger { get; } = new ServiceScalingTriggerKind(AveragePartitionLoadTriggerValue);
-
         /// <summary> Represents a scaling policy related to an average load of a metric/resource of a service. The value is 1. </summary>
         public static ServiceScalingTriggerKind AverageServiceLoadTrigger { get; } = new ServiceScalingTriggerKind(AverageServiceLoadTriggerValue);
-
         /// <summary> Determines if two <see cref="ServiceScalingTriggerKind"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceScalingTriggerKind left, ServiceScalingTriggerKind right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ServiceScalingTriggerKind"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceScalingTriggerKind left, ServiceScalingTriggerKind right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ServiceScalingTriggerKind"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceScalingTriggerKind"/>. </summary>
         public static implicit operator ServiceScalingTriggerKind(string value) => new ServiceScalingTriggerKind(value);
 
-        /// <summary> Converts a string to a <see cref="ServiceScalingTriggerKind"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ServiceScalingTriggerKind?(string value) => value == null ? null : new ServiceScalingTriggerKind(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceScalingTriggerKind other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ServiceScalingTriggerKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

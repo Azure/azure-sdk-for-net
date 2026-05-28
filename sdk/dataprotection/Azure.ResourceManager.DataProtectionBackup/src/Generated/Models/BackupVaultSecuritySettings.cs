@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Class containing security settings of vault. </summary>
     public partial class BackupVaultSecuritySettings
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BackupVaultSecuritySettings"/>. </summary>
         public BackupVaultSecuritySettings()
@@ -25,39 +54,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="softDeleteSettings"> Soft delete related settings. </param>
         /// <param name="immutabilitySettings"> Immutability Settings at vault level. </param>
         /// <param name="encryptionSettings"> Customer Managed Key details of the resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, ImmutabilitySettings immutabilitySettings, BackupVaultEncryptionSettings encryptionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, ImmutabilitySettings immutabilitySettings, BackupVaultEncryptionSettings encryptionSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SoftDeleteSettings = softDeleteSettings;
             ImmutabilitySettings = immutabilitySettings;
             EncryptionSettings = encryptionSettings;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Soft delete related settings. </summary>
         public BackupVaultSoftDeleteSettings SoftDeleteSettings { get; set; }
-
         /// <summary> Immutability Settings at vault level. </summary>
         internal ImmutabilitySettings ImmutabilitySettings { get; set; }
-
-        /// <summary> Customer Managed Key details of the resource. </summary>
-        public BackupVaultEncryptionSettings EncryptionSettings { get; set; }
-
         /// <summary> Immutability state. </summary>
         public BackupVaultImmutabilityState? ImmutabilityState
         {
-            get
-            {
-                return ImmutabilitySettings is null ? default : ImmutabilitySettings.State;
-            }
+            get => ImmutabilitySettings is null ? default : ImmutabilitySettings.State;
             set
             {
                 if (ImmutabilitySettings is null)
-                {
                     ImmutabilitySettings = new ImmutabilitySettings();
-                }
                 ImmutabilitySettings.State = value;
             }
         }
+
+        /// <summary> Customer Managed Key details of the resource. </summary>
+        public BackupVaultEncryptionSettings EncryptionSettings { get; set; }
     }
 }

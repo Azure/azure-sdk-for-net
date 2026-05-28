@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary></summary>
-    internal partial class NetworkCloudBmcKeySetOperationSource : IOperationSource<NetworkCloudBmcKeySetResource>
+    internal class NetworkCloudBmcKeySetOperationSource : IOperationSource<NetworkCloudBmcKeySetResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal NetworkCloudBmcKeySetOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         NetworkCloudBmcKeySetResource IOperationSource<NetworkCloudBmcKeySetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkCloudBmcKeySetData data = NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<NetworkCloudBmcKeySetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
             return new NetworkCloudBmcKeySetResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<NetworkCloudBmcKeySetResource> IOperationSource<NetworkCloudBmcKeySetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkCloudBmcKeySetData data = NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkCloudBmcKeySetResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkCloudBmcKeySetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            return await Task.FromResult(new NetworkCloudBmcKeySetResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

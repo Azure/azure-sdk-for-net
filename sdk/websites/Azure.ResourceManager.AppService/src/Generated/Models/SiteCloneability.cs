@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Represents whether or not an app is cloneable.
-    /// Serialized Name: SiteCloneability
-    /// </summary>
+    /// <summary> Represents whether or not an app is cloneable. </summary>
     public partial class SiteCloneability
     {
         /// <summary>
@@ -57,23 +54,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteCloneability"/>. </summary>
-        /// <param name="result">
-        /// Name of app.
-        /// Serialized Name: SiteCloneability.result
-        /// </param>
-        /// <param name="blockingFeatures">
-        /// List of features enabled on app that prevent cloning.
-        /// Serialized Name: SiteCloneability.blockingFeatures
-        /// </param>
+        /// <param name="result"> Name of app. </param>
+        /// <param name="blockingFeatures"> List of features enabled on app that prevent cloning. </param>
         /// <param name="unsupportedFeatures">
         /// List of features enabled on app that are non-blocking but cannot be cloned. The app can still be cloned
         /// but the features in this list will not be set up on cloned app.
-        /// Serialized Name: SiteCloneability.unsupportedFeatures
         /// </param>
-        /// <param name="blockingCharacteristics">
-        /// List of blocking application characteristics.
-        /// Serialized Name: SiteCloneability.blockingCharacteristics
-        /// </param>
+        /// <param name="blockingCharacteristics"> List of blocking application characteristics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteCloneability(CloneAbilityResult? result, IReadOnlyList<SiteCloneabilityCriterion> blockingFeatures, IReadOnlyList<SiteCloneabilityCriterion> unsupportedFeatures, IReadOnlyList<SiteCloneabilityCriterion> blockingCharacteristics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,29 +71,19 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name of app.
-        /// Serialized Name: SiteCloneability.result
-        /// </summary>
+        /// <summary> Name of app. </summary>
         [WirePath("result")]
         public CloneAbilityResult? Result { get; }
-        /// <summary>
-        /// List of features enabled on app that prevent cloning.
-        /// Serialized Name: SiteCloneability.blockingFeatures
-        /// </summary>
+        /// <summary> List of features enabled on app that prevent cloning. </summary>
         [WirePath("blockingFeatures")]
         public IReadOnlyList<SiteCloneabilityCriterion> BlockingFeatures { get; }
         /// <summary>
         /// List of features enabled on app that are non-blocking but cannot be cloned. The app can still be cloned
         /// but the features in this list will not be set up on cloned app.
-        /// Serialized Name: SiteCloneability.unsupportedFeatures
         /// </summary>
         [WirePath("unsupportedFeatures")]
         public IReadOnlyList<SiteCloneabilityCriterion> UnsupportedFeatures { get; }
-        /// <summary>
-        /// List of blocking application characteristics.
-        /// Serialized Name: SiteCloneability.blockingCharacteristics
-        /// </summary>
+        /// <summary> List of blocking application characteristics. </summary>
         [WirePath("blockingCharacteristics")]
         public IReadOnlyList<SiteCloneabilityCriterion> BlockingCharacteristics { get; }
     }

@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotOperations
 {
-    /// <summary></summary>
-    internal partial class IotOperationsBrokerAuthenticationOperationSource : IOperationSource<IotOperationsBrokerAuthenticationResource>
+    internal class IotOperationsBrokerAuthenticationOperationSource : IOperationSource<IotOperationsBrokerAuthenticationResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal IotOperationsBrokerAuthenticationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         IotOperationsBrokerAuthenticationResource IOperationSource<IotOperationsBrokerAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            IotOperationsBrokerAuthenticationData data = IotOperationsBrokerAuthenticationData.DeserializeIotOperationsBrokerAuthenticationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<IotOperationsBrokerAuthenticationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
             return new IotOperationsBrokerAuthenticationResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<IotOperationsBrokerAuthenticationResource> IOperationSource<IotOperationsBrokerAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            IotOperationsBrokerAuthenticationData data = IotOperationsBrokerAuthenticationData.DeserializeIotOperationsBrokerAuthenticationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new IotOperationsBrokerAuthenticationResource(_client, data);
+            var data = ModelReaderWriter.Read<IotOperationsBrokerAuthenticationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerIotOperationsContext.Default);
+            return await Task.FromResult(new IotOperationsBrokerAuthenticationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

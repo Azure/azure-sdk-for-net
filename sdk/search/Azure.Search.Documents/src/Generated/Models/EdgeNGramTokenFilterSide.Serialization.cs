@@ -11,7 +11,6 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal static partial class EdgeNGramTokenFilterSideExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EdgeNGramTokenFilterSide value) => value switch
         {
             EdgeNGramTokenFilterSide.Front => "front",
@@ -19,17 +18,10 @@ namespace Azure.Search.Documents.Indexes.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EdgeNGramTokenFilterSide value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static EdgeNGramTokenFilterSide ToEdgeNGramTokenFilterSide(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "front"))
-            {
-                return EdgeNGramTokenFilterSide.Front;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "back"))
-            {
-                return EdgeNGramTokenFilterSide.Back;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "front")) return EdgeNGramTokenFilterSide.Front;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "back")) return EdgeNGramTokenFilterSide.Back;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EdgeNGramTokenFilterSide value.");
         }
     }

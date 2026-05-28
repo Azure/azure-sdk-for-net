@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Hci;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Remote Support Node Session Details on the Node. </summary>
-    public partial class PerNodeRemoteSupportSession : IJsonModel<PerNodeRemoteSupportSession>
+    public partial class PerNodeRemoteSupportSession : IUtf8JsonSerializable, IJsonModel<PerNodeRemoteSupportSession>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PerNodeRemoteSupportSession PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PerNodeRemoteSupportSession>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePerNodeRemoteSupportSession(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PerNodeRemoteSupportSession)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerNodeRemoteSupportSession>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PerNodeRemoteSupportSession>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PerNodeRemoteSupportSession)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PerNodeRemoteSupportSession>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PerNodeRemoteSupportSession IPersistableModel<PerNodeRemoteSupportSession>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PerNodeRemoteSupportSession>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PerNodeRemoteSupportSession>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PerNodeRemoteSupportSession>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PerNodeRemoteSupportSession>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PerNodeRemoteSupportSession)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(SessionStartOn))
             {
                 writer.WritePropertyName("sessionStartTime"u8);
@@ -99,20 +60,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("accessLevel"u8);
                 writer.WriteStringValue(AccessLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TranscriptLocation))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("transcriptLocation"u8);
-                writer.WriteStringValue(TranscriptLocation);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,99 +77,222 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PerNodeRemoteSupportSession IJsonModel<PerNodeRemoteSupportSession>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PerNodeRemoteSupportSession JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PerNodeRemoteSupportSession IJsonModel<PerNodeRemoteSupportSession>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PerNodeRemoteSupportSession>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PerNodeRemoteSupportSession>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PerNodeRemoteSupportSession)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePerNodeRemoteSupportSession(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PerNodeRemoteSupportSession DeserializePerNodeRemoteSupportSession(JsonElement element, ModelReaderWriterOptions options)
+        internal static PerNodeRemoteSupportSession DeserializePerNodeRemoteSupportSession(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? sessionStartOn = default;
-            DateTimeOffset? sessionEndOn = default;
+            DateTimeOffset? sessionStartTime = default;
+            DateTimeOffset? sessionEndTime = default;
             string nodeName = default;
             long? duration = default;
             HciClusterAccessLevel? accessLevel = default;
-            string transcriptLocation = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("sessionStartTime"u8))
+                if (property.NameEquals("sessionStartTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sessionStartOn = prop.Value.GetDateTimeOffset("O");
+                    sessionStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("sessionEndTime"u8))
+                if (property.NameEquals("sessionEndTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sessionEndOn = prop.Value.GetDateTimeOffset("O");
+                    sessionEndTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("nodeName"u8))
+                if (property.NameEquals("nodeName"u8))
                 {
-                    nodeName = prop.Value.GetString();
+                    nodeName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("duration"u8))
+                if (property.NameEquals("duration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    duration = prop.Value.GetInt64();
+                    duration = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("accessLevel"u8))
+                if (property.NameEquals("accessLevel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accessLevel = new HciClusterAccessLevel(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("transcriptLocation"u8))
-                {
-                    transcriptLocation = prop.Value.GetString();
+                    accessLevel = new HciClusterAccessLevel(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new PerNodeRemoteSupportSession(
-                sessionStartOn,
-                sessionEndOn,
+                sessionStartTime,
+                sessionEndTime,
                 nodeName,
                 duration,
                 accessLevel,
-                transcriptLocation,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SessionStartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sessionStartTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SessionStartOn))
+                {
+                    builder.Append("  sessionStartTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(SessionStartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SessionEndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sessionEndTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SessionEndOn))
+                {
+                    builder.Append("  sessionEndTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(SessionEndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeName))
+                {
+                    builder.Append("  nodeName: ");
+                    if (NodeName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NodeName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NodeName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Duration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  duration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Duration))
+                {
+                    builder.Append("  duration: ");
+                    builder.AppendLine($"'{Duration.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessLevel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  accessLevel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessLevel))
+                {
+                    builder.Append("  accessLevel: ");
+                    builder.AppendLine($"'{AccessLevel.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PerNodeRemoteSupportSession>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerNodeRemoteSupportSession>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PerNodeRemoteSupportSession)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PerNodeRemoteSupportSession IPersistableModel<PerNodeRemoteSupportSession>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerNodeRemoteSupportSession>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePerNodeRemoteSupportSession(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PerNodeRemoteSupportSession)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PerNodeRemoteSupportSession>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -298,8 +298,7 @@ namespace Azure.Storage.Tests
             var streamChecksumCalculator = StorageCrc64HashAlgorithm.Create();
             var stream = ChecksumCalculatingStream.GetReadStream(
                 new MemoryStream(data),
-                buf =>
-                {
+                buf => {
                     streamChecksumCalculator.Append(buf);
                     var copy = new byte[buf.Length];
                     buf.CopyTo(copy);

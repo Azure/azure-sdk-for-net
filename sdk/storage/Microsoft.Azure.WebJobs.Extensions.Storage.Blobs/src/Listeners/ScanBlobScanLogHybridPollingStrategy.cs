@@ -73,13 +73,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             if (!_scanInfo.TryGetValue(container, out ContainerScanInfo containerScanInfo))
             {
                 // First, try to load serialized scanInfo for this container.
-                DateTimeOffset? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(blobServiceClient.AccountName, container.Name).ConfigureAwait(false);
+                DateTime? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(blobServiceClient.AccountName, container.Name).ConfigureAwait(false);
 
                 containerScanInfo = new ContainerScanInfo()
                 {
                     Registrations = new List<ITriggerExecutor<BlobTriggerExecutorContext>>(),
-                    LastSweepCycleLatestModified = latestStoredScan ?? DateTimeOffset.MinValue,
-                    CurrentSweepCycleLatestModified = DateTimeOffset.MinValue,
+                    LastSweepCycleLatestModified = latestStoredScan ?? DateTime.MinValue,
+                    CurrentSweepCycleLatestModified = DateTime.MinValue,
                     ContinuationToken = null
                 };
 
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             List<BlobNotification> failedNotifications, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            DateTimeOffset lastScan = containerScanInfo.LastSweepCycleLatestModified;
+            DateTime lastScan = containerScanInfo.LastSweepCycleLatestModified;
 
             // For tracking
             string clientRequestId = Guid.NewGuid().ToString();
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // if the 'LatestModified' has changed, update it in the manager
             if (containerScanInfo.LastSweepCycleLatestModified > lastScan)
             {
-                DateTimeOffset latestScan = containerScanInfo.LastSweepCycleLatestModified;
+                DateTime latestScan = containerScanInfo.LastSweepCycleLatestModified;
 
                 // It's possible that we had some blobs that we failed to move to the queue. We want to make sure
                 // we continue to find these if the host needs to restart.
@@ -217,21 +217,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             string continuationToken = containerScanInfo.ContinuationToken;
             Page<BlobItem> page;
 
-            // if starting the cycle, reset the sweep time and set start time
+            // if starting the cycle, reset the sweep time
             if (continuationToken == null)
             {
-                containerScanInfo.PollingStartTime = DateTimeOffset.UtcNow;
-                containerScanInfo.CurrentSweepCycleLatestModified = DateTimeOffset.MinValue;
+                containerScanInfo.CurrentSweepCycleLatestModified = DateTime.MinValue;
             }
 
             Stopwatch sw = Stopwatch.StartNew();
             try
             {
-                AsyncPageable<BlobItem> blobsAsyncPageable = container.GetBlobsAsync(
-                    traits: BlobTraits.None,
-                    states: BlobStates.None,
-                    prefix: null,
-                    cancellationToken: cancellationToken);
+                AsyncPageable<BlobItem> blobsAsyncPageable = container.GetBlobsAsync(cancellationToken: cancellationToken);
                 IAsyncEnumerable<Page<BlobItem>> pages = blobsAsyncPageable.AsPages(continuationToken: continuationToken, pageSizeHint: blobPollLimitPerContainer);
                 IAsyncEnumerator<Page<BlobItem>> pagesEnumerator = pages.GetAsyncEnumerator(cancellationToken);
                 if (await pagesEnumerator.MoveNextAsync().ConfigureAwait(false))
@@ -265,18 +260,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 cancellationToken.ThrowIfCancellationRequested();
 
                 var properties = currentBlob.Properties;
-                DateTimeOffset lastModifiedTimestamp = properties.LastModified.Value;
+                DateTime lastModifiedTimestamp = properties.LastModified.Value.UtcDateTime;
 
-                if (lastModifiedTimestamp > containerScanInfo.CurrentSweepCycleLatestModified &&
-                    (continuationToken == null || lastModifiedTimestamp <= containerScanInfo.PollingStartTime))
+                if (lastModifiedTimestamp > containerScanInfo.CurrentSweepCycleLatestModified)
                 {
                     containerScanInfo.CurrentSweepCycleLatestModified = lastModifiedTimestamp;
                 }
 
                 // Blob timestamps are rounded to the nearest second, so make sure we continue to check
                 // the previous timestamp to catch any blobs that came in slightly after our previous poll.
-                if (lastModifiedTimestamp >= containerScanInfo.LastSweepCycleLatestModified &&
-                    lastModifiedTimestamp <= containerScanInfo.PollingStartTime)
+                if (lastModifiedTimestamp >= containerScanInfo.LastSweepCycleLatestModified)
                 {
                     newBlobs.Add(container.GetBlobClient(currentBlob.Name));
                 }

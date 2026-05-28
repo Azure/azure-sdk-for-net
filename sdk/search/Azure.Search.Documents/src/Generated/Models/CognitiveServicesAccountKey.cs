@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,21 +16,28 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountKey"/>. </summary>
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public CognitiveServicesAccountKey(string key) : base("#Microsoft.Azure.Search.CognitiveServicesByKey")
+        public CognitiveServicesAccountKey(string key)
         {
             Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
+            ODataType = "#Microsoft.Azure.Search.CognitiveServicesByKey";
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountKey"/>. </summary>
-        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="oDataType"> A URI fragment specifying the type of Azure AI service resource attached to a skillset. </param>
         /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The key used to provision the Azure AI service resource attached to a skillset. </param>
-        internal CognitiveServicesAccountKey(string odataType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, string key) : base(odataType, description, additionalBinaryDataProperties)
+        internal CognitiveServicesAccountKey(string oDataType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, string key) : base(oDataType, description, serializedAdditionalRawData)
         {
             Key = key;
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.CognitiveServicesByKey";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountKey"/> for deserialization. </summary>
+        internal CognitiveServicesAccountKey()
+        {
         }
 
         /// <summary> The key used to provision the Azure AI service resource attached to a skillset. </summary>

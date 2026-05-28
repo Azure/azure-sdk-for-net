@@ -5,10 +5,13 @@ pr:
     - feature/*
     - hotfix/*
     - release/*
-    - sdkauto/*
+    - pipelinev3*
   paths:
     include:
     - "*"
+
+    exclude:
+    - eng/packages/http-client-csharp/
 
 parameters:
   - name: Service
@@ -32,6 +35,7 @@ extends:
       ServiceDirectory: template
     ${{ else }}:
       ServiceDirectory: ${{ parameters.Service }}
+    CheckAOTCompat: true
     BuildSnippets: true
     ExcludePaths:
       - eng/packages/http-client-csharp/

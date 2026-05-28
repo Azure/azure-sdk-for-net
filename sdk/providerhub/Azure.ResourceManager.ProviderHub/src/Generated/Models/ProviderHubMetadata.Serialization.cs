@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ProviderHub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderHubMetadata. </summary>
-    public partial class ProviderHubMetadata : IJsonModel<ProviderHubMetadata>
+    public partial class ProviderHubMetadata : IUtf8JsonSerializable, IJsonModel<ProviderHubMetadata>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderHubMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderHubMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeProviderHubMetadata(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderHubMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderHubMetadata>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProviderHubMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderHubMetadata IPersistableModel<ProviderHubMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProviderHubMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProviderHubMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,16 +28,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderHubMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderHubMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
                 writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();
-                foreach (ResourceProviderAuthorization item in ProviderAuthorizations)
+                foreach (var item in ProviderAuthorizations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -109,15 +69,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("globalAsyncOperationResourceTypeName"u8);
                 writer.WriteStringValue(GlobalAsyncOperationResourceTypeName);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,27 +86,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderHubMetadata IJsonModel<ProviderHubMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderHubMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProviderHubMetadata IJsonModel<ProviderHubMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderHubMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderHubMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeProviderHubMetadata(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProviderHubMetadata DeserializeProviderHubMetadata(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProviderHubMetadata DeserializeProviderHubMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,61 +112,63 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string directRpRoleDefinitionId = default;
             string regionalAsyncOperationResourceTypeName = default;
             string globalAsyncOperationResourceTypeName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("providerAuthorizations"u8))
+                if (property.NameEquals("providerAuthorizations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceProviderAuthorization> array = new List<ResourceProviderAuthorization>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ResourceProviderAuthorization.DeserializeResourceProviderAuthorization(item, options));
                     }
                     providerAuthorizations = array;
                     continue;
                 }
-                if (prop.NameEquals("providerAuthentication"u8))
+                if (property.NameEquals("providerAuthentication"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(prop.Value, options);
+                    providerAuthentication = ResourceProviderAuthentication.DeserializeResourceProviderAuthentication(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("thirdPartyProviderAuthorization"u8))
+                if (property.NameEquals("thirdPartyProviderAuthorization"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(prop.Value, options);
+                    thirdPartyProviderAuthorization = ThirdPartyProviderAuthorization.DeserializeThirdPartyProviderAuthorization(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("directRpRoleDefinitionId"u8))
+                if (property.NameEquals("directRpRoleDefinitionId"u8))
                 {
-                    directRpRoleDefinitionId = prop.Value.GetString();
+                    directRpRoleDefinitionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("regionalAsyncOperationResourceTypeName"u8))
+                if (property.NameEquals("regionalAsyncOperationResourceTypeName"u8))
                 {
-                    regionalAsyncOperationResourceTypeName = prop.Value.GetString();
+                    regionalAsyncOperationResourceTypeName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("globalAsyncOperationResourceTypeName"u8))
+                if (property.NameEquals("globalAsyncOperationResourceTypeName"u8))
                 {
-                    globalAsyncOperationResourceTypeName = prop.Value.GetString();
+                    globalAsyncOperationResourceTypeName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProviderHubMetadata(
                 providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(),
                 providerAuthentication,
@@ -219,7 +176,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 directRpRoleDefinitionId,
                 regionalAsyncOperationResourceTypeName,
                 globalAsyncOperationResourceTypeName,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProviderHubMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderHubMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProviderHubMetadata IPersistableModel<ProviderHubMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderHubMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeProviderHubMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProviderHubMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -197,7 +197,7 @@ namespace Azure.Storage.Files.Shares
                 }
                 else
                 {
-                    AccountName = uri.GetAccountNameFromHost(Constants.File.UriSubDomain) ?? string.Empty;
+                    AccountName = uri.GetAccountNameFromDomain(Constants.File.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)
@@ -232,7 +232,7 @@ namespace Azure.Storage.Files.Shares
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                Sas = new ShareSasQueryParameters(paramsMap);
+                Sas = SasQueryParametersInternals.Create(paramsMap);
             }
 
             Query = paramsMap.ToString();
@@ -298,15 +298,13 @@ namespace Azure.Storage.Files.Shares
             var query = new StringBuilder(Query);
             if (!string.IsNullOrWhiteSpace(Snapshot))
             {
-                if (query.Length > 0)
-                { query.Append('&'); }
+                if (query.Length > 0) { query.Append('&'); }
                 query.Append(Constants.File.SnapshotParameterName).Append('=').Append(Snapshot);
             }
             var sas = Sas?.ToString();
             if (!string.IsNullOrWhiteSpace(sas))
             {
-                if (query.Length > 0)
-                { query.Append('&'); }
+                if (query.Length > 0) { query.Append('&'); }
                 query.Append(sas);
             }
 

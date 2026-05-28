@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerInfo.
-    /// Serialized Name: ContainerInfo
-    /// </summary>
+    /// <summary> The ContainerInfo. </summary>
     public partial class ContainerInfo
     {
         /// <summary>
@@ -54,14 +51,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInfo"/>. </summary>
-        /// <param name="currentTimeStamp"> Serialized Name: ContainerInfo.currentTimeStamp. </param>
-        /// <param name="previousTimeStamp"> Serialized Name: ContainerInfo.previousTimeStamp. </param>
-        /// <param name="currentCpuStats"> Serialized Name: ContainerInfo.currentCpuStats. </param>
-        /// <param name="previousCpuStats"> Serialized Name: ContainerInfo.previousCpuStats. </param>
-        /// <param name="memoryStats"> Serialized Name: ContainerInfo.memoryStats. </param>
-        /// <param name="name"> Serialized Name: ContainerInfo.name. </param>
-        /// <param name="id"> Serialized Name: ContainerInfo.id. </param>
-        /// <param name="eth0"> Serialized Name: ContainerInfo.eth0. </param>
+        /// <param name="currentTimeStamp"></param>
+        /// <param name="previousTimeStamp"></param>
+        /// <param name="currentCpuStats"></param>
+        /// <param name="previousCpuStats"></param>
+        /// <param name="memoryStats"></param>
+        /// <param name="name"></param>
+        /// <param name="id"></param>
+        /// <param name="eth0"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerInfo(DateTimeOffset? currentTimeStamp, DateTimeOffset? previousTimeStamp, ContainerCpuStatistics currentCpuStats, ContainerCpuStatistics previousCpuStats, ContainerMemoryStatistics memoryStats, string name, string id, ContainerNetworkInterfaceStatistics eth0, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,28 +73,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: ContainerInfo.currentTimeStamp. </summary>
+        /// <summary> Gets or sets the current time stamp. </summary>
         [WirePath("currentTimeStamp")]
         public DateTimeOffset? CurrentTimeStamp { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.previousTimeStamp. </summary>
+        /// <summary> Gets or sets the previous time stamp. </summary>
         [WirePath("previousTimeStamp")]
         public DateTimeOffset? PreviousTimeStamp { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.currentCpuStats. </summary>
+        /// <summary> Gets or sets the current cpu stats. </summary>
         [WirePath("currentCpuStats")]
         public ContainerCpuStatistics CurrentCpuStats { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.previousCpuStats. </summary>
+        /// <summary> Gets or sets the previous cpu stats. </summary>
         [WirePath("previousCpuStats")]
         public ContainerCpuStatistics PreviousCpuStats { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.memoryStats. </summary>
+        /// <summary> Gets or sets the memory stats. </summary>
         [WirePath("memoryStats")]
         public ContainerMemoryStatistics MemoryStats { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.name. </summary>
+        /// <summary> Gets or sets the name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.id. </summary>
+        /// <summary> Gets or sets the id. </summary>
         [WirePath("id")]
         public string Id { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.eth0. </summary>
+        /// <summary> Gets or sets the eth 0. </summary>
         [WirePath("eth0")]
         public ContainerNetworkInterfaceStatistics Eth0 { get; set; }
     }

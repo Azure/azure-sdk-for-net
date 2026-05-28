@@ -1464,10 +1464,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathAccessControl> response = await file.GetAccessControlAsync();
-            Response<PathSystemProperties> response2 = await file.GetSystemPropertiesAsync();
-
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
-            AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response2.Value.Permissions);
         }
 
         [RecordedTest]
@@ -1613,10 +1610,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathAccessControl> response = await directory.GetAccessControlAsync();
-            Response<PathSystemProperties> response2 = await directory.GetSystemPropertiesAsync();
-
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
-            AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response2.Value.Permissions);
         }
 
         [RecordedTest]
@@ -3433,9 +3427,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 GetOptions()));
 
             string stringToSign = null;
-            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: getUserDelegationKeyOptions);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -3479,9 +3473,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             string stringToSign = null;
-            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: getUserDelegationKeyOptions);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -3519,9 +3513,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 GetOptions()));
 
             string stringToSign = null;
-            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: getUserDelegationKeyOptions);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -3584,9 +3578,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 FileSystemName = null
             };
 
-            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: getUserDelegationKeyOptions);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -3630,9 +3624,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 FileSystemName = GetNewFileSystemName(), // different filesytem name
             };
 
-            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: getUserDelegationKeyOptions);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act
@@ -3666,9 +3660,9 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Path = GetNewFileName()
             };
 
-            DataLakeGetUserDelegationKeyOptions getUserDelegationKeyOptions = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKeyResponse = await GetServiceClient_OAuth().GetUserDelegationKeyAsync(
-                options: getUserDelegationKeyOptions);
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
             UserDelegationKey userDelegationKey = userDelegationKeyResponse.Value;
 
             // Act

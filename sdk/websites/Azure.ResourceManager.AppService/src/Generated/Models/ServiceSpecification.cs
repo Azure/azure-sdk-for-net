@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Resource metrics service provided by Microsoft.Insights resource provider.
-    /// Serialized Name: ServiceSpecification
-    /// </summary>
+    /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
     public partial class ServiceSpecification
     {
         /// <summary>
@@ -56,8 +53,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceSpecification"/>. </summary>
-        /// <param name="metricSpecifications"> Serialized Name: ServiceSpecification.metricSpecifications. </param>
-        /// <param name="logSpecifications"> Serialized Name: ServiceSpecification.logSpecifications. </param>
+        /// <param name="metricSpecifications"></param>
+        /// <param name="logSpecifications"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServiceSpecification(IReadOnlyList<MetricSpecification> metricSpecifications, IReadOnlyList<LogSpecification> logSpecifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +63,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: ServiceSpecification.metricSpecifications. </summary>
+        /// <summary> Gets the metric specifications. </summary>
         [WirePath("metricSpecifications")]
         public IReadOnlyList<MetricSpecification> MetricSpecifications { get; }
-        /// <summary> Serialized Name: ServiceSpecification.logSpecifications. </summary>
+        /// <summary> Gets the log specifications. </summary>
         [WirePath("logSpecifications")]
         public IReadOnlyList<LogSpecification> LogSpecifications { get; }
     }

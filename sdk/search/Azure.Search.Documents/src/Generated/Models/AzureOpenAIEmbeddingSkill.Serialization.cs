@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Allows you to generate a vector embedding for a given text input using the Azure OpenAI resource. </summary>
-    public partial class AzureOpenAIEmbeddingSkill : SearchIndexerSkill, IJsonModel<AzureOpenAIEmbeddingSkill>
+    public partial class AzureOpenAIEmbeddingSkill : IUtf8JsonSerializable, IJsonModel<AzureOpenAIEmbeddingSkill>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureOpenAIEmbeddingSkill"/> for deserialization. </summary>
-        internal AzureOpenAIEmbeddingSkill()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOpenAIEmbeddingSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureOpenAIEmbeddingSkill(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureOpenAIEmbeddingSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureOpenAIEmbeddingSkill IPersistableModel<AzureOpenAIEmbeddingSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureOpenAIEmbeddingSkill)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureOpenAIEmbeddingSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureOpenAIEmbeddingSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,12 +28,25 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Dimensions))
+            {
+                if (Dimensions != null)
+                {
+                    writer.WritePropertyName("dimensions"u8);
+                    writer.WriteNumberValue(Dimensions.Value);
+                }
+                else
+                {
+                    writer.WriteNull("dimensions");
+                }
+            }
             if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
@@ -97,153 +64,153 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(AuthenticationIdentity))
             {
-                writer.WritePropertyName("authIdentity"u8);
-                writer.WriteObjectValue(AuthenticationIdentity, options);
+                if (AuthenticationIdentity != null)
+                {
+                    writer.WritePropertyName("authIdentity"u8);
+                    writer.WriteObjectValue(AuthenticationIdentity, options);
+                }
+                else
+                {
+                    writer.WriteNull("authIdentity");
+                }
             }
             if (Optional.IsDefined(ModelName))
             {
                 writer.WritePropertyName("modelName"u8);
                 writer.WriteStringValue(ModelName.Value.ToString());
             }
-            if (Optional.IsDefined(Dimensions))
-            {
-                writer.WritePropertyName("dimensions"u8);
-                writer.WriteNumberValue(Dimensions.Value);
-            }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureOpenAIEmbeddingSkill IJsonModel<AzureOpenAIEmbeddingSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureOpenAIEmbeddingSkill)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureOpenAIEmbeddingSkill IJsonModel<AzureOpenAIEmbeddingSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureOpenAIEmbeddingSkill(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureOpenAIEmbeddingSkill DeserializeAzureOpenAIEmbeddingSkill(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureOpenAIEmbeddingSkill DeserializeAzureOpenAIEmbeddingSkill(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string odataType = "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill";
+            int? dimensions = default;
+            Uri resourceUri = default;
+            string deploymentId = default;
+            string apiKey = default;
+            SearchIndexerDataIdentity authIdentity = default;
+            AzureOpenAIModelName? modelName = default;
+            string odataType = default;
             string name = default;
             string description = default;
             string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri resourceUri = default;
-            string deploymentName = default;
-            string apiKey = default;
-            SearchIndexerDataIdentity authenticationIdentity = default;
-            AzureOpenAIModelName? modelName = default;
-            int? dimensions = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("@odata.type"u8))
+                if (property.NameEquals("dimensions"u8))
                 {
-                    odataType = prop.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dimensions = null;
+                        continue;
+                    }
+                    dimensions = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("resourceUri"u8))
                 {
-                    name = prop.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("description"u8))
+                if (property.NameEquals("deploymentId"u8))
                 {
-                    description = prop.Value.GetString();
+                    deploymentId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("context"u8))
+                if (property.NameEquals("apiKey"u8))
                 {
-                    context = prop.Value.GetString();
+                    apiKey = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("inputs"u8))
+                if (property.NameEquals("authIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        authIdentity = null;
+                        continue;
+                    }
+                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("modelName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modelName = new AzureOpenAIModelName(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("@odata.type"u8))
+                {
+                    odataType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("context"u8))
+                {
+                    context = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("inputs"u8))
                 {
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
-                if (prop.NameEquals("outputs"u8))
+                if (property.NameEquals("outputs"u8))
                 {
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
-                if (prop.NameEquals("resourceUri"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
-                if (prop.NameEquals("deploymentId"u8))
-                {
-                    deploymentName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("apiKey"u8))
-                {
-                    apiKey = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("authIdentity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authenticationIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("modelName"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    modelName = new AzureOpenAIModelName(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("dimensions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        dimensions = null;
-                        continue;
-                    }
-                    dimensions = prop.Value.GetInt32();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureOpenAIEmbeddingSkill(
                 odataType,
                 name,
@@ -251,13 +218,60 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
+                dimensions,
                 resourceUri,
-                deploymentName,
+                deploymentId,
                 apiKey,
-                authenticationIdentity,
-                modelName,
-                dimensions);
+                authIdentity,
+                modelName);
+        }
+
+        BinaryData IPersistableModel<AzureOpenAIEmbeddingSkill>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureOpenAIEmbeddingSkill IPersistableModel<AzureOpenAIEmbeddingSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureOpenAIEmbeddingSkill>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAzureOpenAIEmbeddingSkill(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureOpenAIEmbeddingSkill)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureOpenAIEmbeddingSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureOpenAIEmbeddingSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAzureOpenAIEmbeddingSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

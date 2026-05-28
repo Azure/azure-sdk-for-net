@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
+using System.Text.Json.Serialization;
 
 namespace Azure.AI.Personalizer
 {

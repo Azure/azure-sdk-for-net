@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: useSessions))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 string sessionId = null;
                 if (useSessions)
@@ -185,8 +185,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await receiver.PurgeMessagesAsync();
                 var purgeScope = _listener.AssertAndRemoveScope(DiagnosticProperty.PurgeActivityName);
                 AssertCommonTags(purgeScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
-            }
-            ;
+            };
         }
 
         [Test]
@@ -210,7 +209,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 });
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCt = 2;
                 var msgs = ServiceBusTestUtilities.GetMessages(messageCt);
@@ -245,8 +244,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     AssertCommonTags(processScope.Activity, processor.EntityPath, processor.FullyQualifiedNamespace);
                 }
                 Assert.IsTrue(callbackExecuted);
-            }
-            ;
+            };
         }
 
         [Test]
@@ -270,7 +268,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 });
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var messageCt = 2;
                 var msgs = ServiceBusTestUtilities.GetMessages(messageCt, "sessionId");
@@ -314,7 +312,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+                var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
                 for (int i = 0; i < 100; i++)
                 {

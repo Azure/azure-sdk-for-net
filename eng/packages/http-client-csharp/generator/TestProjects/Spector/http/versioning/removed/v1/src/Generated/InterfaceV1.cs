@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -17,8 +16,6 @@ namespace Versioning.Removed
     public partial class InterfaceV1
     {
         protected InterfaceV1() => throw null;
-
-        internal InterfaceV1(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string version) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

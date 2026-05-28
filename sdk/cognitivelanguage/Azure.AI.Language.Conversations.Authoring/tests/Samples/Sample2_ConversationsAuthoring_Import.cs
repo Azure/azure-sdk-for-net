@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Conversations.Authoring;
 using Azure.AI.Language.Conversations.Authoring.Tests;
@@ -11,6 +10,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
@@ -22,15 +22,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_Import
-            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
-
             string projectName = "{projectName}";
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
-                projectName: projectName,
                 language: "en"
             )
             {
@@ -41,10 +40,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             ConversationExportedProjectAsset projectAssets = new ConversationExportedProjectAsset();
 
-            projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent1"));
-            projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent2"));
+            projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
+            projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
 
-            projectAssets.Entities.Add(new ConversationExportedEntity(category: "entity1"));
+            projectAssets.Entities.Add(new ConversationExportedEntity ( category : "entity1" ));
 
             projectAssets.Utterances.Add(new ConversationExportedUtterance(
                 text: "text1",
@@ -81,12 +80,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             Operation operation = projectClient.Import(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
                 exportedProject: exportedProject,
-                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
-            // Extract the operation-location header
+             // Extract the operation-location header
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
             Console.WriteLine($"Operation Location: {operationLocation}");
 
@@ -100,11 +98,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJson
-            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
-
             string projectName = "{projectName}";
 
             string rawJson = """
@@ -156,12 +152,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
               }
             }
             """;
-            using RequestContent content = RequestContent.Create(rawJson);
+
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
             Operation operation = projectClient.Import(
                 waitUntil: WaitUntil.Started,
-                projectName: projectName,
-                content: content,
-                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation.ToString()
+                projectJson: rawJson,
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
@@ -176,22 +173,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_ImportProjectWithMetadataAndResources
-            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
-
             string projectName = "{projectName}";
 
             // Create metadata
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
-                projectName: projectName,
                 language: "en-us")
             {
                 Settings = new ConversationAuthoringProjectSettings(0.7F),
                 Multilingual = true,
                 Description = "Trying out CLU",
+                ProjectName = projectName
             };
 
             // Define intents and entities
@@ -250,10 +245,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             {
                 Assets = projectAssets
             };
+
+            // Get project authoring client
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
             // Start import operation
             Operation operation = projectClient.Import(
                 WaitUntil.Started,
-                projectName,
                 exportedProject,
                 ConversationAuthoringExportedProjectFormat.Conversation
             );
@@ -272,15 +270,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_ImportAsync
-            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
-
             string projectName = "{projectName}";
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
-                projectName: projectName,
                 language: "en"
             )
             {
@@ -331,9 +328,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             Operation operation = await projectClient.ImportAsync(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
                 exportedProject: exportedProject,
-                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
             // Extract the operation-location header
@@ -350,12 +346,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJsonAsync
-            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
-
             string projectName = "{projectName}";
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
             string rawJson = """
             {
               "projectFileVersion": "2025-05-15-preview",
@@ -406,12 +402,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             }
             """;
 
-            using RequestContent content = RequestContent.Create(rawJson);
             Operation operation = await projectClient.ImportAsync(
                 waitUntil: WaitUntil.Started,
-                projectName: projectName,
-                content: content,
-                exportedProjectFormat: ConversationAuthoringExportedProjectFormat.Conversation.ToString()
+                projectJson: rawJson,
+                projectFormat: ConversationAuthoringExportedProjectFormat.Conversation
             );
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : null;
@@ -426,22 +420,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
-            ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_ImportProjectAsync_WithMetadataAndAssets
-            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
-
             string projectName = "{projectName}";
 
             // Define project metadata
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
-                projectName: projectName,
                 language: "en-us")
             {
                 Settings = new ConversationAuthoringProjectSettings(0.7F),
                 Multilingual = true,
                 Description = "Trying out CLU",
+                ProjectName = projectName
             };
 
             // Define project assets
@@ -499,10 +491,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             {
                 Assets = projectAssets
             };
+
+            // Get project client
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
             // Start import
             Operation operation = await projectClient.ImportAsync(
                 waitUntil: WaitUntil.Started,
-                projectName,
                 exportedProject,
                 ConversationAuthoringExportedProjectFormat.Conversation
             );

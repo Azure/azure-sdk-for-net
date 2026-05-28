@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+		<RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+		<WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+    <ImplicitUsings>true</ImplicitUsings>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+	<ItemGroup>
+		<Using Include="CoreWCF" />
+		<Using Include="CoreWCF.Configuration" />
+		<Using Include="CoreWCF.Queue.Common.Configuration" />
+		<Using Include="Microsoft.AspNetCore.Builder;" />
+		<Using Include="Microsoft.AspNetCore.Hosting" />
+		<Using Include="Microsoft.Extensions.DependencyInjection" />
+		<Using Include="Microsoft.Extensions.Hosting" />
+		<Using Include="Microsoft.Extensions.Logging" />
+		<Using Include="System.Runtime.Serialization" />
+	</ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CoreWCF.Primitives" />
+    <PackageReference Include="CoreWCF.Queue" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.CoreWCF.Azure.StorageQueues\src\Microsoft.CoreWCF.Azure.StorageQueues.csproj" />
+  </ItemGroup>
+</Project>

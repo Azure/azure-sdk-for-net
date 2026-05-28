@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -55,15 +55,15 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 },
             };
 
-            Response<AnalyzeTextJobState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
+            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
 
-            AnalyzeTextJobState analyzeTextJobState = response.Value;
+            AnalyzeTextOperationState analyzeTextJobState = response.Value;
 
-            foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
+            foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
             {
-                if (taskResult is CustomSingleLabelClassificationOperationResult)
+                if (analyzeTextLROResult is CustomSingleLabelClassificationOperationResult)
                 {
-                    CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)taskResult;
+                    CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)analyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
                     foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)

@@ -38,23 +38,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
 
         private Organizations OrganizationsRestClient => _organizationsRestClient ??= new Organizations(OrganizationsClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
 
-        /// <summary>
-        /// List OrganizationResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/ArizeAi.ObservabilityEval/organizations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List OrganizationResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArizeAIObservabilityEvalOrganizationResource> GetArizeAIObservabilityEvalOrganizationsAsync(CancellationToken cancellationToken = default)
@@ -63,26 +47,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableArizeAIObservabilityEvalSubscriptionResource.GetArizeAIObservabilityEvalOrganizations"), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
 
-        /// <summary>
-        /// List OrganizationResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/ArizeAi.ObservabilityEval/organizations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List OrganizationResource resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArizeAIObservabilityEvalOrganizationResource> GetArizeAIObservabilityEvalOrganizations(CancellationToken cancellationToken = default)
@@ -91,7 +59,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableArizeAIObservabilityEvalSubscriptionResource.GetArizeAIObservabilityEvalOrganizations"), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
+            return new PageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
     }
 }

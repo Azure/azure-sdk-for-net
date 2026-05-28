@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerServiceFleet;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> The node image upgrade to be applied to the target nodes in update run. </summary>
-    public partial class NodeImageSelection : IJsonModel<NodeImageSelection>
+    public partial class NodeImageSelection : IUtf8JsonSerializable, IJsonModel<NodeImageSelection>
     {
-        /// <summary> Initializes a new instance of <see cref="NodeImageSelection"/> for deserialization. </summary>
-        internal NodeImageSelection()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeImageSelection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NodeImageSelection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeNodeImageSelection(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NodeImageSelection)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<NodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NodeImageSelection)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NodeImageSelection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NodeImageSelection IPersistableModel<NodeImageSelection>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NodeImageSelection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NodeImageSelection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,32 +28,33 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NodeImageSelection)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SelectionType.ToString());
             if (Optional.IsCollectionDefined(CustomNodeImageVersions))
             {
                 writer.WritePropertyName("customNodeImageVersions"u8);
                 writer.WriteStartArray();
-                foreach (NodeImageVersion item in CustomNodeImageVersions)
+                foreach (var item in CustomNodeImageVersions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -108,49 +63,45 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NodeImageSelection IJsonModel<NodeImageSelection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NodeImageSelection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NodeImageSelection IJsonModel<NodeImageSelection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NodeImageSelection)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNodeImageSelection(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NodeImageSelection DeserializeNodeImageSelection(JsonElement element, ModelReaderWriterOptions options)
+        internal static NodeImageSelection DeserializeNodeImageSelection(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            NodeImageSelectionType selectionType = default;
+            NodeImageSelectionType type = default;
             IList<NodeImageVersion> customNodeImageVersions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (property.NameEquals("type"u8))
                 {
-                    selectionType = new NodeImageSelectionType(prop.Value.GetString());
+                    type = new NodeImageSelectionType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("customNodeImageVersions"u8))
+                if (property.NameEquals("customNodeImageVersions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NodeImageVersion> array = new List<NodeImageVersion>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(NodeImageVersion.DeserializeNodeImageVersion(item, options));
                     }
@@ -159,10 +110,42 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new NodeImageSelection(selectionType, customNodeImageVersions ?? new ChangeTrackingList<NodeImageVersion>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NodeImageSelection(type, customNodeImageVersions ?? new ChangeTrackingList<NodeImageVersion>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NodeImageSelection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NodeImageSelection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NodeImageSelection IPersistableModel<NodeImageSelection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NodeImageSelection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeNodeImageSelection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NodeImageSelection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NodeImageSelection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

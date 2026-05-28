@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
-    /// <summary></summary>
-    internal partial class CollectorPolicyOperationSource : IOperationSource<CollectorPolicyResource>
+    internal class CollectorPolicyOperationSource : IOperationSource<CollectorPolicyResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal CollectorPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         CollectorPolicyResource IOperationSource<CollectorPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CollectorPolicyData data = CollectorPolicyData.DeserializeCollectorPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<CollectorPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkFunctionContext.Default);
             return new CollectorPolicyResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<CollectorPolicyResource> IOperationSource<CollectorPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CollectorPolicyData data = CollectorPolicyData.DeserializeCollectorPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CollectorPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<CollectorPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkFunctionContext.Default);
+            return await Task.FromResult(new CollectorPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

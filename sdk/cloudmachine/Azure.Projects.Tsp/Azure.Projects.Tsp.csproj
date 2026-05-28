@@ -5,15 +5,15 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <Version>1.0.0-beta.1</Version>
-    <TargetFrameworks>$(RequiredRunnableTargetFrameworks)</TargetFrameworks>
-    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
-    <SupportsNetStandard20>false</SupportsNetStandard20>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
     <Nullable>enable</Nullable>
-    <AotCompatOptOut>true</AotCompatOptOut>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
+  
 </Project>

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,51 +14,35 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct LastAccessTimeTrackingPolicyName : IEquatable<LastAccessTimeTrackingPolicyName>
     {
         private readonly string _value;
-        private const string AccessTimeTrackingValue = "AccessTimeTracking";
 
         /// <summary> Initializes a new instance of <see cref="LastAccessTimeTrackingPolicyName"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LastAccessTimeTrackingPolicyName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the AccessTimeTracking. </summary>
+        private const string AccessTimeTrackingValue = "AccessTimeTracking";
+
+        /// <summary> AccessTimeTracking. </summary>
         public static LastAccessTimeTrackingPolicyName AccessTimeTracking { get; } = new LastAccessTimeTrackingPolicyName(AccessTimeTrackingValue);
-
         /// <summary> Determines if two <see cref="LastAccessTimeTrackingPolicyName"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LastAccessTimeTrackingPolicyName left, LastAccessTimeTrackingPolicyName right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="LastAccessTimeTrackingPolicyName"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LastAccessTimeTrackingPolicyName left, LastAccessTimeTrackingPolicyName right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="LastAccessTimeTrackingPolicyName"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LastAccessTimeTrackingPolicyName"/>. </summary>
         public static implicit operator LastAccessTimeTrackingPolicyName(string value) => new LastAccessTimeTrackingPolicyName(value);
 
-        /// <summary> Converts a string to a <see cref="LastAccessTimeTrackingPolicyName"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator LastAccessTimeTrackingPolicyName?(string value) => value == null ? null : new LastAccessTimeTrackingPolicyName(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LastAccessTimeTrackingPolicyName other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(LastAccessTimeTrackingPolicyName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

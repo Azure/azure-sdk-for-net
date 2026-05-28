@@ -5,9 +5,11 @@ namespace Azure.Communication.Chat
         internal AddChatParticipantsResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AzureCommunicationChatContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         public AzureCommunicationChatContext() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Communication.Chat.AzureCommunicationChatContext Default { get { throw null; } }
     }
     public partial class ChatAttachment
@@ -28,7 +30,9 @@ namespace Azure.Communication.Chat
         public static Azure.Communication.Chat.ChatAttachmentType File { get { throw null; } }
         public static Azure.Communication.Chat.ChatAttachmentType Image { get { throw null; } }
         public bool Equals(Azure.Communication.Chat.ChatAttachmentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.Chat.ChatAttachmentType left, Azure.Communication.Chat.ChatAttachmentType right) { throw null; }
         public static implicit operator Azure.Communication.Chat.ChatAttachmentType (string value) { throw null; }
@@ -113,7 +117,9 @@ namespace Azure.Communication.Chat
         public static Azure.Communication.Chat.ChatMessageType Text { get { throw null; } }
         public static Azure.Communication.Chat.ChatMessageType TopicUpdated { get { throw null; } }
         public bool Equals(Azure.Communication.Chat.ChatMessageType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.Chat.ChatMessageType left, Azure.Communication.Chat.ChatMessageType right) { throw null; }
         public static implicit operator Azure.Communication.Chat.ChatMessageType (string value) { throw null; }
@@ -237,7 +243,9 @@ namespace Azure.Communication.Chat
         public static Azure.Communication.Chat.RetentionPolicyKind None { get { throw null; } }
         public static Azure.Communication.Chat.RetentionPolicyKind ThreadCreationDate { get { throw null; } }
         public bool Equals(Azure.Communication.Chat.RetentionPolicyKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.Chat.RetentionPolicyKind left, Azure.Communication.Chat.RetentionPolicyKind right) { throw null; }
         public static implicit operator Azure.Communication.Chat.RetentionPolicyKind (string value) { throw null; }

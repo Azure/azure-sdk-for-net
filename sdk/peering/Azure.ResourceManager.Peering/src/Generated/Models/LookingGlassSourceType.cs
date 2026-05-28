@@ -7,63 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary></summary>
+    /// <summary> The LookingGlassSourceType. </summary>
     public readonly partial struct LookingGlassSourceType : IEquatable<LookingGlassSourceType>
     {
         private readonly string _value;
-        private const string EdgeSiteValue = "EdgeSite";
-        private const string AzureRegionValue = "AzureRegion";
 
         /// <summary> Initializes a new instance of <see cref="LookingGlassSourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LookingGlassSourceType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the EdgeSite. </summary>
+        private const string EdgeSiteValue = "EdgeSite";
+        private const string AzureRegionValue = "AzureRegion";
+
+        /// <summary> EdgeSite. </summary>
         public static LookingGlassSourceType EdgeSite { get; } = new LookingGlassSourceType(EdgeSiteValue);
-
-        /// <summary> Gets the AzureRegion. </summary>
+        /// <summary> AzureRegion. </summary>
         public static LookingGlassSourceType AzureRegion { get; } = new LookingGlassSourceType(AzureRegionValue);
-
         /// <summary> Determines if two <see cref="LookingGlassSourceType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LookingGlassSourceType left, LookingGlassSourceType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="LookingGlassSourceType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LookingGlassSourceType left, LookingGlassSourceType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="LookingGlassSourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LookingGlassSourceType"/>. </summary>
         public static implicit operator LookingGlassSourceType(string value) => new LookingGlassSourceType(value);
 
-        /// <summary> Converts a string to a <see cref="LookingGlassSourceType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator LookingGlassSourceType?(string value) => value == null ? null : new LookingGlassSourceType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LookingGlassSourceType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(LookingGlassSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

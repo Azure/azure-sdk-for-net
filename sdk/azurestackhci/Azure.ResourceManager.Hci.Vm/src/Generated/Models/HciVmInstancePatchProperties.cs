@@ -7,14 +7,44 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Defines the resource properties for the update. </summary>
     public partial class HciVmInstancePatchProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HciVmInstancePatchProperties"/>. </summary>
         public HciVmInstancePatchProperties()
@@ -26,52 +56,45 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="storageProfile"> StorageProfile - Specifies the storage settings for the virtual machine instance. </param>
         /// <param name="networkProfile"> NetworkProfile - describes the network update configuration the virtual machine instance. </param>
         /// <param name="osProfile"> OsProfile - describes the update configuration of the operating system. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstancePatchProperties(HciVmInstanceHardwareProfileUpdate hardwareProfile, StorageProfileUpdate storageProfile, NetworkProfileUpdate networkProfile, HciVmOSProfile osProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmInstancePatchProperties(HciVmInstanceHardwareProfileUpdate hardwareProfile, StorageProfileUpdate storageProfile, NetworkProfileUpdate networkProfile, HciVmOSProfile osProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
             OSProfile = osProfile;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </summary>
         public HciVmInstanceHardwareProfileUpdate HardwareProfile { get; set; }
-
         /// <summary> StorageProfile - Specifies the storage settings for the virtual machine instance. </summary>
         internal StorageProfileUpdate StorageProfile { get; set; }
-
-        /// <summary> NetworkProfile - describes the network update configuration the virtual machine instance. </summary>
-        internal NetworkProfileUpdate NetworkProfile { get; set; }
-
-        /// <summary> OsProfile - describes the update configuration of the operating system. </summary>
-        public HciVmOSProfile OSProfile { get; set; }
-
         /// <summary> adds data disks to the virtual machine instance for the update call. </summary>
-        public IList<HciVmVirtualHardDiskArmReference> StorageDataDisks
+        public IList<WritableSubResource> StorageDataDisks
         {
             get
             {
                 if (StorageProfile is null)
-                {
                     StorageProfile = new StorageProfileUpdate();
-                }
                 return StorageProfile.DataDisks;
             }
         }
 
+        /// <summary> NetworkProfile - describes the network update configuration the virtual machine instance. </summary>
+        internal NetworkProfileUpdate NetworkProfile { get; set; }
         /// <summary> NetworkInterfaces - list of network interfaces to be attached to the virtual machine instance. </summary>
-        public IList<HciVmNetworkInterfaceArmReference> NetworkInterfaces
+        public IList<WritableSubResource> NetworkInterfaces
         {
             get
             {
                 if (NetworkProfile is null)
-                {
                     NetworkProfile = new NetworkProfileUpdate();
-                }
                 return NetworkProfile.NetworkInterfaces;
             }
         }
+
+        /// <summary> OsProfile - describes the update configuration of the operating system. </summary>
+        public HciVmOSProfile OSProfile { get; set; }
     }
 }

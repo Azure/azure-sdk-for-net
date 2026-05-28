@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct AlertTimeGrainType : IEquatable<AlertTimeGrainType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="AlertTimeGrainType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AlertTimeGrainType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NoneValue = "None";
         private const string MonthlyValue = "Monthly";
         private const string QuarterlyValue = "Quarterly";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string BillingQuarterValue = "BillingQuarter";
         private const string BillingAnnualValue = "BillingAnnual";
 
-        /// <summary> Initializes a new instance of <see cref="AlertTimeGrainType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AlertTimeGrainType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static AlertTimeGrainType None { get; } = new AlertTimeGrainType(NoneValue);
-
-        /// <summary> Gets the Monthly. </summary>
+        /// <summary> Monthly. </summary>
         public static AlertTimeGrainType Monthly { get; } = new AlertTimeGrainType(MonthlyValue);
-
-        /// <summary> Gets the Quarterly. </summary>
+        /// <summary> Quarterly. </summary>
         public static AlertTimeGrainType Quarterly { get; } = new AlertTimeGrainType(QuarterlyValue);
-
-        /// <summary> Gets the Annually. </summary>
+        /// <summary> Annually. </summary>
         public static AlertTimeGrainType Annually { get; } = new AlertTimeGrainType(AnnuallyValue);
-
-        /// <summary> Gets the BillingMonth. </summary>
+        /// <summary> BillingMonth. </summary>
         public static AlertTimeGrainType BillingMonth { get; } = new AlertTimeGrainType(BillingMonthValue);
-
-        /// <summary> Gets the BillingQuarter. </summary>
+        /// <summary> BillingQuarter. </summary>
         public static AlertTimeGrainType BillingQuarter { get; } = new AlertTimeGrainType(BillingQuarterValue);
-
-        /// <summary> Gets the BillingAnnual. </summary>
+        /// <summary> BillingAnnual. </summary>
         public static AlertTimeGrainType BillingAnnual { get; } = new AlertTimeGrainType(BillingAnnualValue);
-
         /// <summary> Determines if two <see cref="AlertTimeGrainType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AlertTimeGrainType left, AlertTimeGrainType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AlertTimeGrainType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AlertTimeGrainType left, AlertTimeGrainType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AlertTimeGrainType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertTimeGrainType"/>. </summary>
         public static implicit operator AlertTimeGrainType(string value) => new AlertTimeGrainType(value);
 
-        /// <summary> Converts a string to a <see cref="AlertTimeGrainType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AlertTimeGrainType?(string value) => value == null ? null : new AlertTimeGrainType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AlertTimeGrainType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AlertTimeGrainType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct StorageSyncFeatureStatus : IEquatable<StorageSyncFeatureStatus>
     {
         private readonly string _value;
-        private const string OnValue = "on";
-        private const string OffValue = "off";
 
         /// <summary> Initializes a new instance of <see cref="StorageSyncFeatureStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageSyncFeatureStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the On. </summary>
+        private const string OnValue = "on";
+        private const string OffValue = "off";
+
+        /// <summary> on. </summary>
         public static StorageSyncFeatureStatus On { get; } = new StorageSyncFeatureStatus(OnValue);
-
-        /// <summary> Gets the Off. </summary>
+        /// <summary> off. </summary>
         public static StorageSyncFeatureStatus Off { get; } = new StorageSyncFeatureStatus(OffValue);
-
         /// <summary> Determines if two <see cref="StorageSyncFeatureStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageSyncFeatureStatus left, StorageSyncFeatureStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageSyncFeatureStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageSyncFeatureStatus left, StorageSyncFeatureStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageSyncFeatureStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageSyncFeatureStatus"/>. </summary>
         public static implicit operator StorageSyncFeatureStatus(string value) => new StorageSyncFeatureStatus(value);
 
-        /// <summary> Converts a string to a <see cref="StorageSyncFeatureStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageSyncFeatureStatus?(string value) => value == null ? null : new StorageSyncFeatureStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageSyncFeatureStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StorageSyncFeatureStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

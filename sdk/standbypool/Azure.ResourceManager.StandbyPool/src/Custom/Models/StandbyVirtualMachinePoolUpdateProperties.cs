@@ -3,11 +3,13 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    [CodeGenType("StandbyVirtualMachinePoolResourceUpdateProperties")]
+    [CodeGenModel("StandbyVirtualMachinePoolResourceUpdateProperties")]
     public partial class StandbyVirtualMachinePoolUpdateProperties
     {
     }

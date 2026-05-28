@@ -7,7 +7,6 @@
 
 using System;
 
-// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.Search.Models
 {
     internal static partial class SharedSearchServicePrivateLinkResourceProvisioningStateExtensions

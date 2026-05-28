@@ -127,6 +127,7 @@ resource azfunc 'Microsoft.Web/sites@2021-03-01' = {
     keyVaultReferenceIdentity: 'SystemAssigned'
     siteConfig: {
       alwaysOn: true
+      netFrameworkVersion: 'v6.0'
       http20Enabled: true
       minTlsVersion: '1.2'
       appSettings: [
@@ -183,6 +184,7 @@ resource web 'Microsoft.Web/sites@2021-03-01' = {
     httpsOnly: true
     keyVaultReferenceIdentity: 'SystemAssigned'
     siteConfig: {
+      netFrameworkVersion: 'v6.0'
       http20Enabled: true
       minTlsVersion: '1.2'
       appSettings: [

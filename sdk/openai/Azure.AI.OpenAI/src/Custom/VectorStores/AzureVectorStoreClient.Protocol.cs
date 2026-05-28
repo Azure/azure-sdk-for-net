@@ -5,6 +5,7 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Threading;
 using Azure.AI.OpenAI.Utility;
 
 namespace Azure.AI.OpenAI.VectorStores;

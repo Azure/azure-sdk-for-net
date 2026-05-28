@@ -11,13 +11,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 using Azure.Storage.Sas;
 using Azure.Storage.Tests.Shared;
 using Microsoft.Identity.Client;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using Azure.Core.TestFramework.Models;
+using Newtonsoft.Json.Linq;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -42,7 +42,6 @@ namespace Azure.Storage.Test.Shared
         private const string PreviousSnapshotUrl = "x-ms-previous-snapshot-url";
         private const string FileRenameSource = "x-ms-file-rename-source";
         private const string SasVersion = "sv";
-        private const string SasSignedTenantId = "sktid";
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
@@ -88,7 +87,6 @@ namespace Azure.Storage.Test.Shared
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceAuthorization));
 
             SanitizedQueryParametersInHeaders.Add((CopySourceName, SignatureQueryName));
-            SanitizedQueryParametersInHeaders.Add((CopySourceName, SasSignedTenantId));
             SanitizedQueryParametersInHeaders.Add((RenameSource, SignatureQueryName));
             SanitizedQueryParametersInHeaders.Add((PreviousSnapshotUrl, SignatureQueryName));
             SanitizedQueryParametersInHeaders.Add((FileRenameSource, SignatureQueryName));

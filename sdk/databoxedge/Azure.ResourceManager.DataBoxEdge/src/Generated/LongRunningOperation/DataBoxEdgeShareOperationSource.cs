@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary></summary>
-    internal partial class DataBoxEdgeShareOperationSource : IOperationSource<DataBoxEdgeShareResource>
+    internal class DataBoxEdgeShareOperationSource : IOperationSource<DataBoxEdgeShareResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DataBoxEdgeShareOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DataBoxEdgeShareResource IOperationSource<DataBoxEdgeShareResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DataBoxEdgeShareData data = DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DataBoxEdgeShareData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new DataBoxEdgeShareResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DataBoxEdgeShareResource> IOperationSource<DataBoxEdgeShareResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DataBoxEdgeShareData data = DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DataBoxEdgeShareResource(_client, data);
+            var data = ModelReaderWriter.Read<DataBoxEdgeShareData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            return await Task.FromResult(new DataBoxEdgeShareResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

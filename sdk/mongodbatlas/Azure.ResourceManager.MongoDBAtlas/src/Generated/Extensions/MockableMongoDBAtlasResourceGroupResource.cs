@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MongoDBAtlas;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableMongoDBAtlasResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableMongoDBAtlasResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableMongoDBAtlasResourceGroupResource"/> class for mocking. </summary>
         protected MockableMongoDBAtlasResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableMongoDBAtlasResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableMongoDBAtlasResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMongoDBAtlasResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of MongoDBAtlasOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of MongoDBAtlasOrganizations and their operations over a MongoDBAtlasOrganizationResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of MongoDBAtlasOrganizationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MongoDBAtlasOrganizationResources and their operations over a MongoDBAtlasOrganizationResource. </returns>
         public virtual MongoDBAtlasOrganizationCollection GetMongoDBAtlasOrganizations()
         {
             return GetCachedClient(client => new MongoDBAtlasOrganizationCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
-
             return await GetMongoDBAtlasOrganizations().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         /// Get a OrganizationResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MongoDB.Atlas/organizations/{organizationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Organizations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>OrganizationResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoDBAtlasOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
         [ForwardsClientCalls]
         public virtual Response<MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganization(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
-
             return GetMongoDBAtlasOrganizations().Get(organizationName, cancellationToken);
         }
     }

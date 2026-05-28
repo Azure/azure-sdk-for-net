@@ -7,10 +7,10 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.StorageMover.Models;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover.Tests.Scenario
 {

@@ -95,11 +95,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("returnMultistatementResult"u8);
                 writer.WriteObjectValue<object>(ReturnMultistatementResult);
             }
-            if (Optional.IsDefined(TreatDecimalAsString))
-            {
-                writer.WritePropertyName("treatDecimalAsString"u8);
-                writer.WriteObjectValue<object>(TreatDecimalAsString);
-            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -128,7 +123,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IList<ScriptActivityScriptBlock> scripts = default;
             ScriptActivityTypePropertiesLogSettings logSettings = default;
             object returnMultistatementResult = default;
-            object treatDecimalAsString = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -262,15 +256,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             returnMultistatementResult = property0.Value.GetObject();
                             continue;
                         }
-                        if (property0.NameEquals("treatDecimalAsString"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            treatDecimalAsString = property0.Value.GetObject();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -291,8 +276,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 scriptBlockExecutionTimeout,
                 scripts ?? new ChangeTrackingList<ScriptActivityScriptBlock>(),
                 logSettings,
-                returnMultistatementResult,
-                treatDecimalAsString);
+                returnMultistatementResult);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.Confluent.Models
     public readonly partial struct ConfluentSaaSOfferStatus : IEquatable<ConfluentSaaSOfferStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ConfluentSaaSOfferStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConfluentSaaSOfferStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string StartedValue = "Started";
         private const string PendingFulfillmentStartValue = "PendingFulfillmentStart";
         private const string InProgressValue = "InProgress";
@@ -26,76 +33,43 @@ namespace Azure.ResourceManager.Confluent.Models
         private const string UnsubscribedValue = "Unsubscribed";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Initializes a new instance of <see cref="ConfluentSaaSOfferStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConfluentSaaSOfferStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Started. </summary>
+        /// <summary> Started. </summary>
         public static ConfluentSaaSOfferStatus Started { get; } = new ConfluentSaaSOfferStatus(StartedValue);
-
-        /// <summary> Gets the PendingFulfillmentStart. </summary>
+        /// <summary> PendingFulfillmentStart. </summary>
         public static ConfluentSaaSOfferStatus PendingFulfillmentStart { get; } = new ConfluentSaaSOfferStatus(PendingFulfillmentStartValue);
-
-        /// <summary> Gets the InProgress. </summary>
+        /// <summary> InProgress. </summary>
         public static ConfluentSaaSOfferStatus InProgress { get; } = new ConfluentSaaSOfferStatus(InProgressValue);
-
-        /// <summary> Gets the Subscribed. </summary>
+        /// <summary> Subscribed. </summary>
         public static ConfluentSaaSOfferStatus Subscribed { get; } = new ConfluentSaaSOfferStatus(SubscribedValue);
-
-        /// <summary> Gets the Suspended. </summary>
+        /// <summary> Suspended. </summary>
         public static ConfluentSaaSOfferStatus Suspended { get; } = new ConfluentSaaSOfferStatus(SuspendedValue);
-
-        /// <summary> Gets the Reinstated. </summary>
+        /// <summary> Reinstated. </summary>
         public static ConfluentSaaSOfferStatus Reinstated { get; } = new ConfluentSaaSOfferStatus(ReinstatedValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static ConfluentSaaSOfferStatus Succeeded { get; } = new ConfluentSaaSOfferStatus(SucceededValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static ConfluentSaaSOfferStatus Failed { get; } = new ConfluentSaaSOfferStatus(FailedValue);
-
-        /// <summary> Gets the Unsubscribed. </summary>
+        /// <summary> Unsubscribed. </summary>
         public static ConfluentSaaSOfferStatus Unsubscribed { get; } = new ConfluentSaaSOfferStatus(UnsubscribedValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static ConfluentSaaSOfferStatus Updating { get; } = new ConfluentSaaSOfferStatus(UpdatingValue);
-
         /// <summary> Determines if two <see cref="ConfluentSaaSOfferStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfluentSaaSOfferStatus left, ConfluentSaaSOfferStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ConfluentSaaSOfferStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfluentSaaSOfferStatus left, ConfluentSaaSOfferStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ConfluentSaaSOfferStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfluentSaaSOfferStatus"/>. </summary>
         public static implicit operator ConfluentSaaSOfferStatus(string value) => new ConfluentSaaSOfferStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ConfluentSaaSOfferStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ConfluentSaaSOfferStatus?(string value) => value == null ? null : new ConfluentSaaSOfferStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfluentSaaSOfferStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ConfluentSaaSOfferStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TrustedSigning;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                accountUri is null && provisioningState is null && skuName is null ? default : new CodeSigningAccountProperties(accountUri, new TrustedSigningAccountSku(skuName.GetValueOrDefault(), null), provisioningState, null));
+                accountUri is null || provisioningState is null || skuName is null ? default : new CodeSigningAccountProperties(accountUri, new TrustedSigningAccountSku(skuName.Value, new Dictionary<string, BinaryData>()), provisioningState, new Dictionary<string, BinaryData>()));
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrustedSigningAccountPatch(tags, skuName is null ? default : new CodeSigningAccountPatchProperties(new AccountSkuPatch(skuName, null), null), additionalBinaryDataProperties: null);
+            return new TrustedSigningAccountPatch(tags, skuName is null ? default : new CodeSigningAccountPatchProperties(new AccountSkuPatch(skuName, new Dictionary<string, BinaryData>()), new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The parameters used to check the availability of the trusted signing account name. </summary>
@@ -87,8 +86,9 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <param name="provisioningState"> Status of the current operation on certificate profile. </param>
         /// <param name="status"> Status of the certificate profile. </param>
         /// <param name="certificates"> List of renewed certificates. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="identityValidationId"/> is null. </exception>
         /// <returns> A new <see cref="TrustedSigning.TrustedSigningCertificateProfileData"/> instance for mocking. </returns>
-        public static TrustedSigningCertificateProfileData TrustedSigningCertificateProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CertificateProfileType? profileType = default, bool? includeStreetAddress = default, bool? includeCity = default, bool? includeState = default, bool? includeCountry = default, bool? includePostalCode = default, string identityValidationId = default, TrustedSigningProvisioningState? provisioningState = default, CertificateProfileStatus? status = default, IEnumerable<TrustedSigningCertificate> certificates = default)
+        public static TrustedSigningCertificateProfileData TrustedSigningCertificateProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CertificateProfileType? profileType = default, bool? includeStreetAddress = default, bool? includeCity = default, bool? includeState = default, bool? includeCountry = default, bool? includePostalCode = default, string identityValidationId = default, TrustedSigningProvisioningState? provisioningState = default, CertificateProfileStatus? status = default, IReadOnlyList<TrustedSigningCertificate> certificates = default)
         {
             return new TrustedSigningCertificateProfileData(
                 id,
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                profileType is null && includeStreetAddress is null && includeCity is null && includeState is null && includeCountry is null && includePostalCode is null && identityValidationId is null && provisioningState is null && status is null && certificates is null ? default : new CertificateProfileProperties(
-                    profileType.GetValueOrDefault(),
+                profileType is null || includeStreetAddress is null || includeCity is null || includeState is null || includeCountry is null || includePostalCode is null || identityValidationId is null || provisioningState is null || status is null || certificates is null ? default : new CertificateProfileProperties(
+                    profileType.Value,
                     includeStreetAddress,
                     includeCity,
                     includeState,
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                     identityValidationId,
                     provisioningState,
                     status,
-                    (certificates ?? new ChangeTrackingList<TrustedSigningCertificate>()).ToList(),
-                    null));
+                    certificates,
+                    new Dictionary<string, BinaryData>()));
         }
 
         /// <param name="serialNumber"> Serial number of the certificate. </param>
@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 createOn,
                 expireOn,
                 status,
-                requestedOn is null && effectiveOn is null && reason is null && remarks is null && revocationStatus is null && failureReason is null ? default : new Revocation(
+                requestedOn is null || effectiveOn is null || reason is null || remarks is null || revocationStatus is null || failureReason is null ? default : new Revocation(
                     requestedOn,
                     effectiveOn,
                     reason,
                     remarks,
                     revocationStatus,
                     failureReason,
-                    null),
+                    new Dictionary<string, BinaryData>()),
                 additionalBinaryDataProperties: null);
         }
 

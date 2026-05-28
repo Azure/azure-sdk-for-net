@@ -42,8 +42,6 @@ namespace Azure.ResourceManager
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The Arm client options.</param>
         /// <returns>The long-running operation.</returns>
-        [RequiresDynamicCode("This method uses reflection.")]
-        [RequiresUnreferencedCode("This method uses reflection.")]
         public static ArmOperation<T> Rehydrate<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull
         {
 
@@ -82,8 +80,6 @@ namespace Azure.ResourceManager
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The Arm client options.</param>
         /// <returns>The long-running operation.</returns>
-        [RequiresDynamicCode("This method uses reflection.")]
-        [RequiresUnreferencedCode("This method uses reflection.")]
         public static async Task<ArmOperation<T>> RehydrateAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull
         {
 

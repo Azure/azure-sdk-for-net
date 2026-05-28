@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct ClusterType : IEquatable<ClusterType>
     {
         private readonly string _value;
-        /// <summary> Single rack configuration. </summary>
-        private const string SingleRackValue = "SingleRack";
-        /// <summary> Multi-rack configuration. </summary>
-        private const string MultiRackValue = "MultiRack";
 
         /// <summary> Initializes a new instance of <see cref="ClusterType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Single rack configuration. </summary>
+        private const string SingleRackValue = "SingleRack";
+        private const string MultiRackValue = "MultiRack";
+
+        /// <summary> SingleRack. </summary>
         public static ClusterType SingleRack { get; } = new ClusterType(SingleRackValue);
-
-        /// <summary> Multi-rack configuration. </summary>
+        /// <summary> MultiRack. </summary>
         public static ClusterType MultiRack { get; } = new ClusterType(MultiRackValue);
-
         /// <summary> Determines if two <see cref="ClusterType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterType left, ClusterType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ClusterType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterType left, ClusterType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ClusterType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterType"/>. </summary>
         public static implicit operator ClusterType(string value) => new ClusterType(value);
 
-        /// <summary> Converts a string to a <see cref="ClusterType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ClusterType?(string value) => value == null ? null : new ClusterType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ClusterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

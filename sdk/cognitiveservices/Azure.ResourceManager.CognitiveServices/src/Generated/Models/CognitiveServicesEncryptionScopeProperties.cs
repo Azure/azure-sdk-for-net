@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -22,10 +21,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesEncryptionScopeProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="state"> The encryptionScope state. </param>
-        internal CognitiveServicesEncryptionScopeProperties(CognitiveServicesKeyVaultProperties keyVaultProperties, ServiceAccountEncryptionKeySource? keySource, IDictionary<string, BinaryData> additionalBinaryDataProperties, EncryptionScopeProvisioningState? provisioningState, EncryptionScopeState? state) : base(keyVaultProperties, keySource, additionalBinaryDataProperties)
+        internal CognitiveServicesEncryptionScopeProperties(CognitiveServicesKeyVaultProperties keyVaultProperties, ServiceAccountEncryptionKeySource? keySource, IDictionary<string, BinaryData> serializedAdditionalRawData, EncryptionScopeProvisioningState? provisioningState, EncryptionScopeState? state) : base(keyVaultProperties, keySource, serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             State = state;
@@ -34,7 +33,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Gets the status of the resource at the time the operation was called. </summary>
         [WirePath("provisioningState")]
         public EncryptionScopeProvisioningState? ProvisioningState { get; }
-
         /// <summary> The encryptionScope state. </summary>
         [WirePath("state")]
         public EncryptionScopeState? State { get; set; }

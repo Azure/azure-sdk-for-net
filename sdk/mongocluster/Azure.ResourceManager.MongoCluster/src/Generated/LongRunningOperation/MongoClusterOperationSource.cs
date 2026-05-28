@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    /// <summary></summary>
-    internal partial class MongoClusterOperationSource : IOperationSource<MongoClusterResource>
+    internal class MongoClusterOperationSource : IOperationSource<MongoClusterResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal MongoClusterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         MongoClusterResource IOperationSource<MongoClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MongoClusterData data = MongoClusterData.DeserializeMongoClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<MongoClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMongoClusterContext.Default);
             return new MongoClusterResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<MongoClusterResource> IOperationSource<MongoClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MongoClusterData data = MongoClusterData.DeserializeMongoClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MongoClusterResource(_client, data);
+            var data = ModelReaderWriter.Read<MongoClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMongoClusterContext.Default);
+            return await Task.FromResult(new MongoClusterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

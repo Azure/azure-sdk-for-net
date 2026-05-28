@@ -11,7 +11,6 @@ namespace Azure.Search.Documents.Models
 {
     internal static partial class SearchModeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchMode value) => value switch
         {
             SearchMode.Any => "any",
@@ -19,17 +18,10 @@ namespace Azure.Search.Documents.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchMode value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static SearchMode ToSearchMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "any"))
-            {
-                return SearchMode.Any;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all"))
-            {
-                return SearchMode.All;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "any")) return SearchMode.Any;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "all")) return SearchMode.All;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchMode value.");
         }
     }

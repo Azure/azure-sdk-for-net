@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsPublicNetworkAccessFlag : IEquatable<EventHubsPublicNetworkAccessFlag>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsPublicNetworkAccessFlag"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsPublicNetworkAccessFlag(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
         private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
-        /// <summary> Initializes a new instance of <see cref="EventHubsPublicNetworkAccessFlag"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsPublicNetworkAccessFlag(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Enabled. </summary>
         public static EventHubsPublicNetworkAccessFlag Enabled { get; } = new EventHubsPublicNetworkAccessFlag(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static EventHubsPublicNetworkAccessFlag Disabled { get; } = new EventHubsPublicNetworkAccessFlag(DisabledValue);
-
-        /// <summary> Gets the SecuredByPerimeter. </summary>
+        /// <summary> SecuredByPerimeter. </summary>
         public static EventHubsPublicNetworkAccessFlag SecuredByPerimeter { get; } = new EventHubsPublicNetworkAccessFlag(SecuredByPerimeterValue);
-
         /// <summary> Determines if two <see cref="EventHubsPublicNetworkAccessFlag"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsPublicNetworkAccessFlag left, EventHubsPublicNetworkAccessFlag right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="EventHubsPublicNetworkAccessFlag"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsPublicNetworkAccessFlag left, EventHubsPublicNetworkAccessFlag right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="EventHubsPublicNetworkAccessFlag"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsPublicNetworkAccessFlag"/>. </summary>
         public static implicit operator EventHubsPublicNetworkAccessFlag(string value) => new EventHubsPublicNetworkAccessFlag(value);
 
-        /// <summary> Converts a string to a <see cref="EventHubsPublicNetworkAccessFlag"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsPublicNetworkAccessFlag?(string value) => value == null ? null : new EventHubsPublicNetworkAccessFlag(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsPublicNetworkAccessFlag other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(EventHubsPublicNetworkAccessFlag other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

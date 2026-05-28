@@ -7,15 +7,46 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Error response indicates CDN service is not able to process the incoming request. The reason is provided in the error message. </summary>
+    /// <summary>
+    /// Error response indicates CDN service is not able to process the incoming request. The reason is provided in the error message.
+    /// Serialized Name: MigrationErrorType
+    /// </summary>
     public partial class MigrationErrorType
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MigrationErrorType"/>. </summary>
         internal MigrationErrorType()
@@ -23,34 +54,51 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationErrorType"/>. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="resourceName"> Resource which has the problem. </param>
-        /// <param name="errorMessage"> Error message indicating why the operation failed. </param>
-        /// <param name="nextSteps"> Describes what needs to be done to fix the problem. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationErrorType(string code, string resourceName, string errorMessage, string nextSteps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="code">
+        /// Error code.
+        /// Serialized Name: MigrationErrorType.code
+        /// </param>
+        /// <param name="resourceName">
+        /// Resource which has the problem.
+        /// Serialized Name: MigrationErrorType.resourceName
+        /// </param>
+        /// <param name="errorMessage">
+        /// Error message indicating why the operation failed.
+        /// Serialized Name: MigrationErrorType.errorMessage
+        /// </param>
+        /// <param name="nextSteps">
+        /// Describes what needs to be done to fix the problem
+        /// Serialized Name: MigrationErrorType.nextSteps
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationErrorType(string code, string resourceName, string errorMessage, string nextSteps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             ResourceName = resourceName;
             ErrorMessage = errorMessage;
             NextSteps = nextSteps;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Error code. </summary>
-        [WirePath("code")]
+        /// <summary>
+        /// Error code.
+        /// Serialized Name: MigrationErrorType.code
+        /// </summary>
         public string Code { get; }
-
-        /// <summary> Resource which has the problem. </summary>
-        [WirePath("resourceName")]
+        /// <summary>
+        /// Resource which has the problem.
+        /// Serialized Name: MigrationErrorType.resourceName
+        /// </summary>
         public string ResourceName { get; }
-
-        /// <summary> Error message indicating why the operation failed. </summary>
-        [WirePath("errorMessage")]
+        /// <summary>
+        /// Error message indicating why the operation failed.
+        /// Serialized Name: MigrationErrorType.errorMessage
+        /// </summary>
         public string ErrorMessage { get; }
-
-        /// <summary> Describes what needs to be done to fix the problem. </summary>
-        [WirePath("nextSteps")]
+        /// <summary>
+        /// Describes what needs to be done to fix the problem
+        /// Serialized Name: MigrationErrorType.nextSteps
+        /// </summary>
         public string NextSteps { get; }
     }
 }

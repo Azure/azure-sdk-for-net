@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.Security.KeyVault.Administration.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.KeyVault.Administration
 {

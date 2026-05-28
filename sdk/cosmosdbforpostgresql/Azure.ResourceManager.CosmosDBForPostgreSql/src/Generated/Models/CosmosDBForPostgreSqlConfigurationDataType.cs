@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     public readonly partial struct CosmosDBForPostgreSqlConfigurationDataType : IEquatable<CosmosDBForPostgreSqlConfigurationDataType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlConfigurationDataType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBForPostgreSqlConfigurationDataType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string BooleanValue = "Boolean";
         private const string NumericValue = "Numeric";
         private const string IntegerValue = "Integer";
         private const string EnumerationValue = "Enumeration";
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlConfigurationDataType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBForPostgreSqlConfigurationDataType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Boolean. </summary>
+        /// <summary> Boolean. </summary>
         public static CosmosDBForPostgreSqlConfigurationDataType Boolean { get; } = new CosmosDBForPostgreSqlConfigurationDataType(BooleanValue);
-
-        /// <summary> Gets the Numeric. </summary>
+        /// <summary> Numeric. </summary>
         public static CosmosDBForPostgreSqlConfigurationDataType Numeric { get; } = new CosmosDBForPostgreSqlConfigurationDataType(NumericValue);
-
-        /// <summary> Gets the Integer. </summary>
+        /// <summary> Integer. </summary>
         public static CosmosDBForPostgreSqlConfigurationDataType Integer { get; } = new CosmosDBForPostgreSqlConfigurationDataType(IntegerValue);
-
-        /// <summary> Gets the Enumeration. </summary>
+        /// <summary> Enumeration. </summary>
         public static CosmosDBForPostgreSqlConfigurationDataType Enumeration { get; } = new CosmosDBForPostgreSqlConfigurationDataType(EnumerationValue);
-
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlConfigurationDataType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBForPostgreSqlConfigurationDataType left, CosmosDBForPostgreSqlConfigurationDataType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CosmosDBForPostgreSqlConfigurationDataType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBForPostgreSqlConfigurationDataType left, CosmosDBForPostgreSqlConfigurationDataType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlConfigurationDataType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBForPostgreSqlConfigurationDataType"/>. </summary>
         public static implicit operator CosmosDBForPostgreSqlConfigurationDataType(string value) => new CosmosDBForPostgreSqlConfigurationDataType(value);
 
-        /// <summary> Converts a string to a <see cref="CosmosDBForPostgreSqlConfigurationDataType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CosmosDBForPostgreSqlConfigurationDataType?(string value) => value == null ? null : new CosmosDBForPostgreSqlConfigurationDataType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBForPostgreSqlConfigurationDataType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CosmosDBForPostgreSqlConfigurationDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

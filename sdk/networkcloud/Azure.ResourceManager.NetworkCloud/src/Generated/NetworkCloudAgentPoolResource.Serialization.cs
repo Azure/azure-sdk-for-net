@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary></summary>
     public partial class NetworkCloudAgentPoolResource : IJsonModel<NetworkCloudAgentPoolData>
     {
-        private static IJsonModel<NetworkCloudAgentPoolData> s_dataDeserializationInstance;
+        private static NetworkCloudAgentPoolData s_dataDeserializationInstance;
+        private static NetworkCloudAgentPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<NetworkCloudAgentPoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkCloudAgentPoolData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudAgentPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudAgentPoolData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetworkCloudAgentPoolData IJsonModel<NetworkCloudAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        NetworkCloudAgentPoolData IJsonModel<NetworkCloudAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudAgentPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkCloudAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudAgentPoolData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkCloudAgentPoolData IPersistableModel<NetworkCloudAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudAgentPoolData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetworkCloudAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudAgentPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

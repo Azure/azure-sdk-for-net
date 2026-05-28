@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         }
 
         [TestCase]
-        [Ignore("temporary until https://github.com/Azure/azure-sdk-for-net/issues/55102 is resolved")]
         public async Task TestListConfigurations()
         {
             ConfigurationFilters configurationFilters = new(GetHierarchyInformation());

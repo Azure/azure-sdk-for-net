@@ -5,81 +5,88 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedServiceIdentities;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableManagedServiceIdentitiesSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _userAssignedIdentitiesClientDiagnostics;
-        private UserAssignedIdentities _userAssignedIdentitiesRestClient;
+        private ClientDiagnostics _userAssignedIdentityClientDiagnostics;
+        private UserAssignedIdentitiesRestOperations _userAssignedIdentityRestClient;
 
-        /// <summary> Initializes a new instance of MockableManagedServiceIdentitiesSubscriptionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableManagedServiceIdentitiesSubscriptionResource"/> class for mocking. </summary>
         protected MockableManagedServiceIdentitiesSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableManagedServiceIdentitiesSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableManagedServiceIdentitiesSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableManagedServiceIdentitiesSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics UserAssignedIdentitiesClientDiagnostics => _userAssignedIdentitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics UserAssignedIdentityClientDiagnostics => _userAssignedIdentityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities", UserAssignedIdentityResource.ResourceType.Namespace, Diagnostics);
+        private UserAssignedIdentitiesRestOperations UserAssignedIdentityRestClient => _userAssignedIdentityRestClient ??= new UserAssignedIdentitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(UserAssignedIdentityResource.ResourceType));
 
-        private UserAssignedIdentities UserAssignedIdentitiesRestClient => _userAssignedIdentitiesRestClient ??= new UserAssignedIdentities(UserAssignedIdentitiesClientDiagnostics, Pipeline, Endpoint, "2025-05-31-preview");
-
-        /// <summary>
-        /// Lists all the userAssignedIdentities available under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(CancellationToken cancellationToken = default)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentitiesGetBySubscriptionAsyncCollectionResultOfT(UserAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities"), data => new UserAssignedIdentityResource(Client, data));
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
 
         /// <summary>
         /// Lists all the userAssignedIdentities available under the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_ListBySubscription. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_ListBySubscription</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UserAssignedIdentityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UserAssignedIdentityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), UserAssignedIdentityClientDiagnostics, Pipeline, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the userAssignedIdentities available under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,11 +94,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <returns> A collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UserAssignedIdentityResource> GetUserAssignedIdentities(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentitiesGetBySubscriptionCollectionResultOfT(UserAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities"), data => new UserAssignedIdentityResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UserAssignedIdentityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UserAssignedIdentityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), UserAssignedIdentityClientDiagnostics, Pipeline, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
         }
     }
 }

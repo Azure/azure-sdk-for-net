@@ -9,66 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.IotOperations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary>
-    /// Disk persistence configuration.
-    /// When persistence is enabled, certain items (non-performance-critical data) selected for persistence will reside only on disk. Below are the affected items: 
-    /// <list type="bullet"><item><description>Retained messages will be stored on disk only. </description></item><item><description>WILL messages will be stored on disk only. </description></item><item><description>DSS key/value pairs will be stored on disk only, except for performance-critical items like timed locks, which remain in both disk and memory for improved performance.</description></item></list>
-    /// Optional. Everything is in-memory if not set. 
-    /// Note: if configured, all MQTT session states are written to disk.
-    /// </summary>
-    public partial class BrokerPersistence : IJsonModel<BrokerPersistence>
+    public partial class BrokerPersistence : IUtf8JsonSerializable, IJsonModel<BrokerPersistence>
     {
-        /// <summary> Initializes a new instance of <see cref="BrokerPersistence"/> for deserialization. </summary>
-        internal BrokerPersistence()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BrokerPersistence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerPersistence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerPersistence>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBrokerPersistence(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BrokerPersistence)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerPersistence>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BrokerPersistence)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrokerPersistence>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerPersistence IPersistableModel<BrokerPersistence>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BrokerPersistence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerPersistence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -80,10 +28,16 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerPersistence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerPersistence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerPersistence)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(DynamicSettings))
+            {
+                writer.WritePropertyName("dynamicSettings"u8);
+                writer.WriteObjectValue(DynamicSettings, options);
             }
             writer.WritePropertyName("maxSize"u8);
             writer.WriteStringValue(MaxSize);
@@ -112,15 +66,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -129,103 +83,142 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerPersistence IJsonModel<BrokerPersistence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerPersistence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BrokerPersistence IJsonModel<BrokerPersistence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerPersistence>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerPersistence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerPersistence)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBrokerPersistence(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BrokerPersistence DeserializeBrokerPersistence(JsonElement element, ModelReaderWriterOptions options)
+        internal static BrokerPersistence DeserializeBrokerPersistence(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            BrokerPersistenceDynamicSettings dynamicSettings = default;
             string maxSize = default;
             VolumeClaimSpec persistentVolumeClaimSpec = default;
             BrokerRetainMessagesPolicy retain = default;
             BrokerStateStorePolicy stateStore = default;
             BrokerSubscriberQueuePolicy subscriberQueue = default;
             BrokerPersistenceEncryption encryption = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("maxSize"u8))
+                if (property.NameEquals("dynamicSettings"u8))
                 {
-                    maxSize = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("persistentVolumeClaimSpec"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    persistentVolumeClaimSpec = VolumeClaimSpec.DeserializeVolumeClaimSpec(prop.Value, options);
+                    dynamicSettings = BrokerPersistenceDynamicSettings.DeserializeBrokerPersistenceDynamicSettings(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("retain"u8))
+                if (property.NameEquals("maxSize"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    maxSize = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("persistentVolumeClaimSpec"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retain = BrokerRetainMessagesPolicy.DeserializeBrokerRetainMessagesPolicy(prop.Value, options);
+                    persistentVolumeClaimSpec = VolumeClaimSpec.DeserializeVolumeClaimSpec(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("stateStore"u8))
+                if (property.NameEquals("retain"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    stateStore = BrokerStateStorePolicy.DeserializeBrokerStateStorePolicy(prop.Value, options);
+                    retain = BrokerRetainMessagesPolicy.DeserializeBrokerRetainMessagesPolicy(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("subscriberQueue"u8))
+                if (property.NameEquals("stateStore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subscriberQueue = BrokerSubscriberQueuePolicy.DeserializeBrokerSubscriberQueuePolicy(prop.Value, options);
+                    stateStore = BrokerStateStorePolicy.DeserializeBrokerStateStorePolicy(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("encryption"u8))
+                if (property.NameEquals("subscriberQueue"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryption = BrokerPersistenceEncryption.DeserializeBrokerPersistenceEncryption(prop.Value, options);
+                    subscriberQueue = BrokerSubscriberQueuePolicy.DeserializeBrokerSubscriberQueuePolicy(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("encryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryption = BrokerPersistenceEncryption.DeserializeBrokerPersistenceEncryption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new BrokerPersistence(
+                dynamicSettings,
                 maxSize,
                 persistentVolumeClaimSpec,
                 retain,
                 stateStore,
                 subscriberQueue,
                 encryption,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BrokerPersistence>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerPersistence>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BrokerPersistence)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BrokerPersistence IPersistableModel<BrokerPersistence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerPersistence>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBrokerPersistence(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BrokerPersistence)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BrokerPersistence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

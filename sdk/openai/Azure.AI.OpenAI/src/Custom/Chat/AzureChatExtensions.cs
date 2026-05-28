@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 using Azure.AI.OpenAI.Internal;
+using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable AZC0112
 
@@ -16,154 +14,127 @@ public static partial class AzureChatExtensions
     [Experimental("AOAI001")]
     public static void AddDataSource(this ChatCompletionOptions options, ChatDataSource dataSource)
     {
-        ChangeTrackingList<ChatDataSource> dataSources = options.GetInternalDataSources();
-        dataSources.Add(dataSource);
+        options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
 
-        using MemoryStream stream = new();
-        using Utf8JsonWriter writer = new(stream);
-
-        writer.WriteStartArray();
-        foreach (ChatDataSource listedDataSource in dataSources)
-        {
-            ((IJsonModel<ChatDataSource>)listedDataSource).Write(writer, ModelSerializationExtensions.WireOptions);
-        }
-        writer.WriteEndArray();
-
-        writer.Flush();
-        stream.Position = 0;
-
-        options.Patch.Set("$.data_sources"u8, BinaryData.FromStream(stream));
+        IList<ChatDataSource> existingSources =
+            AdditionalPropertyHelpers.GetAdditionalPropertyAsListOfChatDataSource(
+                options.SerializedAdditionalRawData,
+                "data_sources")
+            ?? new ChangeTrackingList<ChatDataSource>();
+        existingSources.Add(dataSource);
+        AdditionalPropertyHelpers.SetAdditionalProperty(
+            options.SerializedAdditionalRawData,
+            "data_sources",
+            existingSources);
     }
 
     [Experimental("AOAI001")]
     public static IReadOnlyList<ChatDataSource> GetDataSources(this ChatCompletionOptions options)
     {
-        return options.GetInternalDataSources();
-    }
-
-    private static ChangeTrackingList<ChatDataSource> GetInternalDataSources(this ChatCompletionOptions options)
-    {
-        ChangeTrackingList<ChatDataSource> dataSources = new();
-        if (options.Patch.GetBytesOrDefaultEx("$.data_sources"u8) is BinaryData dataSourceListBytes)
-        {
-            using JsonDocument listDocument = JsonDocument.Parse(dataSourceListBytes);
-            if (listDocument.RootElement.ValueKind == JsonValueKind.Array)
-            {
-                foreach (JsonElement dataSourceElement in listDocument.RootElement.EnumerateArray())
-                {
-                    ChatDataSource dataSource = ChatDataSource.DeserializeChatDataSource(dataSourceElement, ModelSerializationExtensions.WireOptions);
-                    dataSources.Add(dataSource);
-                }
-            }
-        }
-        return dataSources;
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsListOfChatDataSource(
+            options.SerializedAdditionalRawData,
+            "data_sources") as IReadOnlyList<ChatDataSource>;
     }
 
     [Experimental("AOAI001")]
     public static void SetNewMaxCompletionTokensPropertyEnabled(this ChatCompletionOptions options, bool newPropertyEnabled = true)
-        => options.SetMaxTokenPatchValues(newPropertyEnabled);
-
-    internal static void SetMaxTokenPatchValues(this ChatCompletionOptions options, bool? newPropertyRequested = null)
     {
-        bool newPropertyInUse = options.Patch.Contains(NewMaxTokenJsonPath.Span) && !options.Patch.IsRemoved(NewMaxTokenJsonPath.Span);
-        bool useNewProperty = newPropertyRequested ?? newPropertyInUse;
-
-        ReadOnlySpan<byte> selectedPath = useNewProperty ? NewMaxTokenJsonPath.Span : OldMaxTokenJsonPath.Span;
-        ReadOnlySpan<byte> deselectedPath = useNewProperty ? OldMaxTokenJsonPath.Span : NewMaxTokenJsonPath.Span;
-
-        BinaryData valueBytes = options.MaxOutputTokenCount is null
-            ? null
-            : BinaryData.FromString(options.MaxOutputTokenCount.ToString());
-
-        if (valueBytes is null)
+        if (newPropertyEnabled)
         {
-            options.Patch.Remove(selectedPath);
+            // Blocking serialization of max_tokens via dictionary acts as a signal to skip pre-serialization fixup
+            options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+            AdditionalPropertyHelpers.SetEmptySentinelValue(options.SerializedAdditionalRawData, "max_tokens");
         }
         else
         {
-            options.Patch.Set(selectedPath, valueBytes);
+            // In the absence of a dictionary serialization block to max_tokens, the newer property name will
+            // automatically be blocked and the older property name will be used via dictionary override
+            if (options?.SerializedAdditionalRawData?.ContainsKey("max_tokens") == true)
+            {
+                options?.SerializedAdditionalRawData?.Remove("max_tokens");
+            }
         }
-        options.Patch.Remove(deselectedPath);
     }
 
     [Experimental("AOAI001")]
     public static RequestContentFilterResult GetRequestContentFilterResult(this ChatCompletion chatCompletion)
     {
-        return chatCompletion.Patch.GetDeserializedInstanceList(
-            "$.prompt_filter_results"u8,
-            RequestContentFilterResult.DeserializeRequestContentFilterResult)?
-                .FirstOrDefault();
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsListOfRequestContentFilterResult(
+            chatCompletion.SerializedAdditionalRawData,
+            "prompt_filter_results")?[0];
     }
 
     [Experimental("AOAI001")]
     public static ResponseContentFilterResult GetResponseContentFilterResult(this ChatCompletion chatCompletion)
     {
-        return chatCompletion?.Choices?.FirstOrDefault()?.Patch.GetDeserializedInstance(
-            "$.content_filter_results"u8,
-            ResponseContentFilterResult.DeserializeResponseContentFilterResult);
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsResponseContentFilterResult(
+            chatCompletion.Choices?[0]?.SerializedAdditionalRawData,
+            "content_filter_results");
     }
 
     [Experimental("AOAI001")]
     public static ChatMessageContext GetMessageContext(this ChatCompletion chatCompletion)
     {
-        return chatCompletion?.Choices?.FirstOrDefault()?.Message?.Patch.GetDeserializedInstance(
-            "$.context"u8,
-            ChatMessageContext.DeserializeChatMessageContext);
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsChatMessageContext(
+            chatCompletion.Choices?[0]?.Message?.SerializedAdditionalRawData,
+            "context");
     }
 
     [Experimental("AOAI001")]
     public static ChatMessageContext GetMessageContext(this StreamingChatCompletionUpdate chatUpdate)
     {
-        return chatUpdate?.Choices?.FirstOrDefault()?.Delta?.Patch.GetDeserializedInstance(
-            "$.context"u8,
-            ChatMessageContext.DeserializeChatMessageContext);
+        if (chatUpdate.Choices?.Count > 0)
+        {
+            return AdditionalPropertyHelpers.GetAdditionalPropertyAsChatMessageContext(
+                chatUpdate.Choices[0].Delta?.SerializedAdditionalRawData,
+                "context");
+        }
+        return null;
     }
 
     [Experimental("AOAI001")]
     public static RequestContentFilterResult GetRequestContentFilterResult(this StreamingChatCompletionUpdate chatUpdate)
     {
-        return chatUpdate?.Patch.GetDeserializedInstanceList(
-            "$.prompt_filter_results"u8,
-            RequestContentFilterResult.DeserializeContentFilterResultForPrompt)?
-                .FirstOrDefault();
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsListOfRequestContentFilterResult(
+            chatUpdate.SerializedAdditionalRawData,
+            "prompt_filter_results")?[0];
     }
 
     [Experimental("AOAI001")]
     public static ResponseContentFilterResult GetResponseContentFilterResult(this StreamingChatCompletionUpdate chatUpdate)
     {
-        return chatUpdate?.Choices?.FirstOrDefault()?.Patch.GetDeserializedInstance(
-            "$.content_filter_results"u8,
-            ResponseContentFilterResult.DeserializeResponseContentFilterResult);
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsResponseContentFilterResult(
+            chatUpdate?.Choices?.ElementAtOrDefault(0)?.SerializedAdditionalRawData,
+            "content_filter_results");
     }
 
     [Experimental("AOAI001")]
     public static void SetUserSecurityContext(this ChatCompletionOptions options, UserSecurityContext userSecurityContext)
     {
-        BinaryData contextBytes = ((IJsonModel<UserSecurityContext>)userSecurityContext).Write(ModelSerializationExtensions.WireOptions);
-        options.Patch.Set("$.user_security_context"u8, contextBytes);
+        options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+
+        AdditionalPropertyHelpers.SetAdditionalProperty(
+            options.SerializedAdditionalRawData,
+            "user_security_context",
+            userSecurityContext);
     }
 
     [Experimental("AOAI001")]
     public static UserSecurityContext GetUserSecurityContext(this ChatCompletionOptions options)
     {
-        return options.Patch.GetDeserializedInstance(
-            "$.user_security_context"u8,
-            UserSecurityContext.DeserializeUserSecurityContext);
+        return AdditionalPropertyHelpers.GetAdditionalPropertyAsUserSecurityContext(
+            options.SerializedAdditionalRawData,
+            "user_security_context");
     }
 
     [Experimental("AOAI001")]
     public static string GetMessageReasoningContent(this ChatCompletion chatCompletion)
     {
-        if (chatCompletion?.Choices?.FirstOrDefault()?.Message?.Patch.GetBytesOrDefaultEx("$.reasoning_content"u8)
-            is BinaryData reasoningContentBytes)
+        if (chatCompletion?.Choices?.FirstOrDefault()?.Message?.SerializedAdditionalRawData?.TryGetValue("reasoning_content", out BinaryData reasoningContentData) == true
+            && reasoningContentData?.ToString() is string retrievedReasoningContent)
         {
-            Utf8JsonReader reader = new(reasoningContentBytes);
-            reader.Read();
-            return reader.GetString();
+            return retrievedReasoningContent;
         }
         return null;
     }
-
-    internal static ReadOnlyMemory<byte> NewMaxTokenJsonPath { get; } = "$.max_completion_tokens"u8.ToArray();
-    internal static ReadOnlyMemory<byte> OldMaxTokenJsonPath { get; } = "$.max_tokens"u8.ToArray();
 }

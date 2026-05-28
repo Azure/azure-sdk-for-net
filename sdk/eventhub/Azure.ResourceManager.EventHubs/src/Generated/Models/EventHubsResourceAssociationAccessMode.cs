@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -15,67 +14,47 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsResourceAssociationAccessMode : IEquatable<EventHubsResourceAssociationAccessMode>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsResourceAssociationAccessMode"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsResourceAssociationAccessMode(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NoAssociationModeValue = "NoAssociationMode";
         private const string EnforcedModeValue = "EnforcedMode";
         private const string LearningModeValue = "LearningMode";
         private const string AuditModeValue = "AuditMode";
         private const string UnspecifiedModeValue = "UnspecifiedMode";
 
-        /// <summary> Initializes a new instance of <see cref="EventHubsResourceAssociationAccessMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsResourceAssociationAccessMode(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NoAssociationMode. </summary>
+        /// <summary> NoAssociationMode. </summary>
         public static EventHubsResourceAssociationAccessMode NoAssociationMode { get; } = new EventHubsResourceAssociationAccessMode(NoAssociationModeValue);
-
-        /// <summary> Gets the EnforcedMode. </summary>
+        /// <summary> EnforcedMode. </summary>
         public static EventHubsResourceAssociationAccessMode EnforcedMode { get; } = new EventHubsResourceAssociationAccessMode(EnforcedModeValue);
-
-        /// <summary> Gets the LearningMode. </summary>
+        /// <summary> LearningMode. </summary>
         public static EventHubsResourceAssociationAccessMode LearningMode { get; } = new EventHubsResourceAssociationAccessMode(LearningModeValue);
-
-        /// <summary> Gets the AuditMode. </summary>
+        /// <summary> AuditMode. </summary>
         public static EventHubsResourceAssociationAccessMode AuditMode { get; } = new EventHubsResourceAssociationAccessMode(AuditModeValue);
-
-        /// <summary> Gets the UnspecifiedMode. </summary>
+        /// <summary> UnspecifiedMode. </summary>
         public static EventHubsResourceAssociationAccessMode UnspecifiedMode { get; } = new EventHubsResourceAssociationAccessMode(UnspecifiedModeValue);
-
         /// <summary> Determines if two <see cref="EventHubsResourceAssociationAccessMode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsResourceAssociationAccessMode left, EventHubsResourceAssociationAccessMode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="EventHubsResourceAssociationAccessMode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsResourceAssociationAccessMode left, EventHubsResourceAssociationAccessMode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="EventHubsResourceAssociationAccessMode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsResourceAssociationAccessMode"/>. </summary>
         public static implicit operator EventHubsResourceAssociationAccessMode(string value) => new EventHubsResourceAssociationAccessMode(value);
 
-        /// <summary> Converts a string to a <see cref="EventHubsResourceAssociationAccessMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator EventHubsResourceAssociationAccessMode?(string value) => value == null ? null : new EventHubsResourceAssociationAccessMode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsResourceAssociationAccessMode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(EventHubsResourceAssociationAccessMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

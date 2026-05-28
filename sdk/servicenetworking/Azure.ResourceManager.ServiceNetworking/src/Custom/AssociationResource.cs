@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         private readonly ClientDiagnostics _associationAssociationsInterfaceClientDiagnostics;
-        private readonly AssociationsInterface _associationAssociationsInterfaceRestClient;
+        private readonly AssociationsInterfaceRestOperations _associationAssociationsInterfaceRestClient;
         private readonly AssociationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             _associationAssociationsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string associationAssociationsInterfaceApiVersion);
-            _associationAssociationsInterfaceRestClient = new AssociationsInterface(_associationAssociationsInterfaceClientDiagnostics, Pipeline, Endpoint, associationAssociationsInterfaceApiVersion);
+            _associationAssociationsInterfaceRestClient = new AssociationsInterfaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, associationAssociationsInterfaceApiVersion);
 #if DEBUG
-            ValidateResourceId(Id);
+			ValidateResourceId(Id);
 #endif
         }
 
@@ -119,10 +119,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                var result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                var response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                var response = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
@@ -162,10 +159,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                var result = Pipeline.ProcessMessage(message, context);
-                var response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                var response = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
@@ -206,10 +200,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _associationAssociationsInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                var operation = new ServiceNetworkingArmOperation(_associationAssociationsInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = await _associationAssociationsInterfaceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceNetworkingArmOperation(_associationAssociationsInterfaceClientDiagnostics, Pipeline, _associationAssociationsInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -250,10 +242,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _associationAssociationsInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                var response = Pipeline.ProcessMessage(message, context);
-                var operation = new ServiceNetworkingArmOperation(_associationAssociationsInterfaceClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                var response = _associationAssociationsInterfaceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ServiceNetworkingArmOperation(_associationAssociationsInterfaceClientDiagnostics, Pipeline, _associationAssociationsInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -297,12 +287,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _associationAssociationsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TrafficControllerAssociationPatch.ToRequestContent(patch.ToTrafficControllerAssociationPatch()), context);
-                var result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                var response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
+                var response = await _associationAssociationsInterfaceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch.ToTrafficControllerAssociationPatch(), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,12 +329,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             scope.Start();
             try
             {
-                var context = new RequestContext { CancellationToken = cancellationToken };
-                var message = _associationAssociationsInterfaceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TrafficControllerAssociationPatch.ToRequestContent(patch.ToTrafficControllerAssociationPatch()), context);
-                var result = Pipeline.ProcessMessage(message, context);
-                var response = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
+                var response = _associationAssociationsInterfaceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch.ToTrafficControllerAssociationPatch(), cancellationToken);
                 return Response.FromValue(new AssociationResource(Client, new AssociationData(response.Value)), response.GetRawResponse());
             }
             catch (Exception e)
@@ -398,10 +378,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var context = new RequestContext { CancellationToken = cancellationToken };
-                    var message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    var result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    var originalResponse = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                    var originalResponse = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new AssociationResource(Client, new AssociationData(originalResponse.Value)), originalResponse.GetRawResponse());
                 }
                 else
@@ -463,10 +440,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var context = new RequestContext { CancellationToken = cancellationToken };
-                    var message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    var result = Pipeline.ProcessMessage(message, context);
-                    var originalResponse = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                    var originalResponse = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new AssociationResource(Client, new AssociationData(originalResponse.Value)), originalResponse.GetRawResponse());
                 }
                 else
@@ -527,10 +501,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var context = new RequestContext { CancellationToken = cancellationToken };
-                    var message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    var result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    var originalResponse = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                    var originalResponse = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new AssociationResource(Client, new AssociationData(originalResponse.Value)), originalResponse.GetRawResponse());
                 }
                 else
@@ -587,10 +558,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var context = new RequestContext { CancellationToken = cancellationToken };
-                    var message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    var result = Pipeline.ProcessMessage(message, context);
-                    var originalResponse = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                    var originalResponse = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new AssociationResource(Client, new AssociationData(originalResponse.Value)), originalResponse.GetRawResponse());
                 }
                 else
@@ -646,10 +614,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var context = new RequestContext { CancellationToken = cancellationToken };
-                    var message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    var result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    var originalResponse = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                    var originalResponse = await _associationAssociationsInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new AssociationResource(Client, new AssociationData(originalResponse.Value)), originalResponse.GetRawResponse());
                 }
                 else
@@ -709,10 +674,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var context = new RequestContext { CancellationToken = cancellationToken };
-                    var message = _associationAssociationsInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                    var result = Pipeline.ProcessMessage(message, context);
-                    var originalResponse = Response.FromValue(TrafficControllerAssociationData.FromResponse(result), result);
+                    var originalResponse = _associationAssociationsInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new AssociationResource(Client, new AssociationData(originalResponse.Value)), originalResponse.GetRawResponse());
                 }
                 else

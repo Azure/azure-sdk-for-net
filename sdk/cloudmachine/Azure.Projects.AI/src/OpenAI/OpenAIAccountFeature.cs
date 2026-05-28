@@ -30,7 +30,7 @@ internal class OpenAIAccountFeature : AzureProjectFeature
     /// <param name="infrastructure"></param>
     protected override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        CognitiveServicesAccount cognitiveServices = new("openai", resourceVersion: "2024-10-01")
+        CognitiveServicesAccount cognitiveServices = new("openai")
         {
             Name = infrastructure.ProjectId,
             Kind = "OpenAI",

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             AutoUpgradeProfileResource autoUpgradeProfile = client.GetAutoUpgradeProfileResource(autoUpgradeProfileResourceId);
 
             // invoke the operation
-            await autoUpgradeProfile.DeleteAsync(WaitUntil.Completed, ifMatch: (ETag?)null);
+            await autoUpgradeProfile.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             AutoUpgradeProfileResource autoUpgradeProfile = client.GetAutoUpgradeProfileResource(autoUpgradeProfileResourceId);
 
             // invoke the operation
-            ETag ifMatch = new ETag("tmlfhgsu");
+            string ifMatch = "tmlfhgsu";
             await autoUpgradeProfile.DeleteAsync(WaitUntil.Completed, ifMatch: ifMatch);
 
             Console.WriteLine("Succeeded");
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
                 TargetKubernetesVersion = "",
                 LongTermSupport = false,
             };
-            ArmOperation<AutoUpgradeProfileResource> lro = await autoUpgradeProfile.UpdateAsync(WaitUntil.Completed, data, matchConditions: null);
+            ArmOperation<AutoUpgradeProfileResource> lro = await autoUpgradeProfile.UpdateAsync(WaitUntil.Completed, data);
             AutoUpgradeProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -200,12 +200,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
                 SelectionType = AutoUpgradeNodeImageSelectionType.Latest,
                 Disabled = true,
             };
-            MatchConditions matchConditions = new MatchConditions
-            {
-                IfMatch = new ETag("uktvayathbu"),
-                IfNoneMatch = new ETag("vdjolwxnefqamimybcvxxva")
-            };
-            ArmOperation<AutoUpgradeProfileResource> lro = await autoUpgradeProfile.UpdateAsync(WaitUntil.Completed, data, matchConditions: matchConditions);
+            string ifMatch = "uktvayathbu";
+            string ifNoneMatch = "vdjolwxnefqamimybcvxxva";
+            ArmOperation<AutoUpgradeProfileResource> lro = await autoUpgradeProfile.UpdateAsync(WaitUntil.Completed, data, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch);
             AutoUpgradeProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

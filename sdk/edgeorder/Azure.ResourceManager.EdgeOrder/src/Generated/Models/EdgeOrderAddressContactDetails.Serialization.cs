@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.EdgeOrder;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Contact Details. </summary>
-    public partial class EdgeOrderAddressContactDetails : IJsonModel<EdgeOrderAddressContactDetails>
+    public partial class EdgeOrderAddressContactDetails : IUtf8JsonSerializable, IJsonModel<EdgeOrderAddressContactDetails>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeOrderAddressContactDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressContactDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeOrderAddressContactDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeOrderAddressContactDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderAddressContactDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressContactDetails>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EdgeOrderAddressContactDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeOrderAddressContactDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeOrderAddressContactDetails IPersistableModel<EdgeOrderAddressContactDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeOrderAddressContactDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeOrderAddressContactDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,21 +28,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressContactDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeOrderAddressContactDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ContactName))
-            {
-                writer.WritePropertyName("contactName"u8);
-                writer.WriteStringValue(ContactName);
-            }
-            if (Optional.IsDefined(Phone))
-            {
-                writer.WritePropertyName("phone"u8);
-                writer.WriteStringValue(Phone);
-            }
+
+            writer.WritePropertyName("contactName"u8);
+            writer.WriteStringValue(ContactName);
+            writer.WritePropertyName("phone"u8);
+            writer.WriteStringValue(Phone);
             if (Optional.IsDefined(PhoneExtension))
             {
                 writer.WritePropertyName("phoneExtension"u8);
@@ -94,30 +48,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("mobile"u8);
                 writer.WriteStringValue(Mobile);
             }
-            if (Optional.IsCollectionDefined(EmailList))
+            writer.WritePropertyName("emailList"u8);
+            writer.WriteStartArray();
+            foreach (var item in EmailList)
             {
-                writer.WritePropertyName("emailList"u8);
-                writer.WriteStartArray();
-                foreach (string item in EmailList)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(item);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,27 +72,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeOrderAddressContactDetails IJsonModel<EdgeOrderAddressContactDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeOrderAddressContactDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EdgeOrderAddressContactDetails IJsonModel<EdgeOrderAddressContactDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressContactDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeOrderAddressContactDetails)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEdgeOrderAddressContactDetails(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EdgeOrderAddressContactDetails DeserializeEdgeOrderAddressContactDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeOrderAddressContactDetails DeserializeEdgeOrderAddressContactDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -156,62 +97,84 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             string phoneExtension = default;
             string mobile = default;
             IList<string> emailList = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("contactName"u8))
+                if (property.NameEquals("contactName"u8))
                 {
-                    contactName = prop.Value.GetString();
+                    contactName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("phone"u8))
+                if (property.NameEquals("phone"u8))
                 {
-                    phone = prop.Value.GetString();
+                    phone = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("phoneExtension"u8))
+                if (property.NameEquals("phoneExtension"u8))
                 {
-                    phoneExtension = prop.Value.GetString();
+                    phoneExtension = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("mobile"u8))
+                if (property.NameEquals("mobile"u8))
                 {
-                    mobile = prop.Value.GetString();
+                    mobile = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("emailList"u8))
+                if (property.NameEquals("emailList"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     emailList = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeOrderAddressContactDetails(
                 contactName,
                 phone,
                 phoneExtension,
                 mobile,
-                emailList ?? new ChangeTrackingList<string>(),
-                additionalBinaryDataProperties);
+                emailList,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeOrderAddressContactDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeOrderAddressContactDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeOrderAddressContactDetails IPersistableModel<EdgeOrderAddressContactDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressContactDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEdgeOrderAddressContactDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeOrderAddressContactDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeOrderAddressContactDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

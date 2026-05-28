@@ -57,11 +57,11 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
             var repository = new AzureBlobXmlRepository(mock.Object);
             repository.StoreElement(new XElement("Element"), null);
 
-            Assert.That(uploadConditions.IfNoneMatch.ToString(), Is.EqualTo("*"));
-            Assert.That(contentType, Is.EqualTo("application/xml; charset=utf-8"));
+            Assert.AreEqual("*", uploadConditions.IfNoneMatch.ToString());
+            Assert.AreEqual("application/xml; charset=utf-8", contentType);
             var element = "<Element />";
 
-            Assert.That(GetEnvelopedContent(element), Is.EqualTo(bytes));
+            Assert.AreEqual(bytes, GetEnvelopedContent(element));
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
             repository.StoreElement(new XElement("Element2"), null);
 
             mock.Verify();
-            Assert.That(GetEnvelopedContent("<Element1 /><Element2 />"), Is.EqualTo(bytes));
+            Assert.AreEqual(bytes, GetEnvelopedContent("<Element1 /><Element2 />"));
         }
 
         private static byte[] GetEnvelopedContent(string element)

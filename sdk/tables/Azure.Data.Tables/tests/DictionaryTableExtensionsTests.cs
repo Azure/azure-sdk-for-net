@@ -39,11 +39,11 @@ namespace Azure.Data.Tables.Tests
         {
             var model = sourceDictionary.ToTableEntity<ExplicitInterfaceModel>();
 
-            Assert.That(model.Category, Is.EqualTo("cat"));
-            Assert.That(model.Name, Is.EqualTo("name"));
-            Assert.That(model.Priority, Is.EqualTo(1234));
-            Assert.That(((ITableEntity)model).PartitionKey, Is.EqualTo("cat"));
-            Assert.That(((ITableEntity)model).RowKey, Is.EqualTo("name"));
+            Assert.AreEqual("cat", model.Category);
+            Assert.AreEqual("name", model.Name);
+            Assert.AreEqual(1234, model.Priority);
+            Assert.AreEqual("cat", ((ITableEntity)model).PartitionKey);
+            Assert.AreEqual("name", ((ITableEntity)model).RowKey);
         }
 
         [Test]
@@ -51,11 +51,11 @@ namespace Azure.Data.Tables.Tests
         {
             var model = sourceDictionary.ToTableEntity<TableEntity>();
 
-            Assert.That(model["Category"], Is.EqualTo("cat"));
-            Assert.That(model["Name"], Is.EqualTo("name"));
-            Assert.That(model["Priority"], Is.EqualTo(1234));
-            Assert.That(model.PartitionKey, Is.EqualTo("cat"));
-            Assert.That(model.RowKey, Is.EqualTo("name"));
+            Assert.AreEqual("cat", model["Category"]);
+            Assert.AreEqual("name", model["Name"]);
+            Assert.AreEqual(1234, model["Priority"]);
+            Assert.AreEqual("cat", model.PartitionKey);
+            Assert.AreEqual("name", model.RowKey);
         }
 
         [Test]
@@ -63,11 +63,11 @@ namespace Azure.Data.Tables.Tests
         {
             var model = sourceDictionary.ToTableEntity<CustomIDictionary>();
 
-            Assert.That(model.Category, Is.EqualTo("cat"));
-            Assert.That(model.Name, Is.EqualTo("name"));
-            Assert.That(model.Priority, Is.EqualTo(1234));
-            Assert.That(model.PartitionKey, Is.EqualTo("cat"));
-            Assert.That(model.RowKey, Is.EqualTo("name"));
+            Assert.AreEqual("cat", model.Category);
+            Assert.AreEqual("name", model.Name);
+            Assert.AreEqual(1234, model.Priority);
+            Assert.AreEqual("cat", model.PartitionKey);
+            Assert.AreEqual("name", model.RowKey);
         }
 
         [Test]
@@ -77,11 +77,11 @@ namespace Azure.Data.Tables.Tests
 
             foreach (var model in models)
             {
-                Assert.That(model.Category, Is.EqualTo("cat"));
-                Assert.That(model.Name, Is.EqualTo("name"));
-                Assert.That(model.Priority, Is.EqualTo(1234));
-                Assert.That(((ITableEntity)model).PartitionKey, Is.EqualTo("cat"));
-                Assert.That(((ITableEntity)model).RowKey, Is.EqualTo("name"));
+                Assert.AreEqual("cat", model.Category);
+                Assert.AreEqual("name", model.Name);
+                Assert.AreEqual(1234, model.Priority);
+                Assert.AreEqual("cat", ((ITableEntity)model).PartitionKey);
+                Assert.AreEqual("name", ((ITableEntity)model).RowKey);
             }
         }
 
@@ -92,9 +92,9 @@ namespace Azure.Data.Tables.Tests
 
             new TablesTypeBinder().Serialize(sourceModel, dictionary);
 
-            Assert.That(dictionary["Category"], Is.EqualTo("cat"));
-            Assert.That(dictionary["PartitionKey"], Is.EqualTo("cat"));
-            Assert.That(dictionary["RowKey"], Is.EqualTo("name"));
+            Assert.AreEqual("cat", dictionary["Category"]);
+            Assert.AreEqual("cat", dictionary["PartitionKey"]);
+            Assert.AreEqual("name", dictionary["RowKey"]);
         }
 
         private class ExplicitInterfaceModel : ITableEntity
@@ -227,11 +227,10 @@ namespace Azure.Data.Tables.Tests
 
             public bool Remove(string key) => _dict.Remove(key);
 
-            public bool TryGetValue(string key, out object value)
-            {
-                var result = _dict.TryGetValue(key, out object val);
-                value = val;
-                return result;
+            public bool TryGetValue(string key, out object value){
+                 var result = _dict.TryGetValue(key, out object val);
+                 value = val;
+                 return result;
             }
 
             public void Add(KeyValuePair<string, object> item)

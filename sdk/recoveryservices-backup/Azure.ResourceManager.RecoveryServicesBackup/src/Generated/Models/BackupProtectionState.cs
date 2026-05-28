@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupProtectionState : IEquatable<BackupProtectionState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="BackupProtectionState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupProtectionState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string IRPendingValue = "IRPending";
         private const string ProtectedValue = "Protected";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string ProtectionPausedValue = "ProtectionPaused";
         private const string BackupsSuspendedValue = "BackupsSuspended";
 
-        /// <summary> Initializes a new instance of <see cref="BackupProtectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupProtectionState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static BackupProtectionState Invalid { get; } = new BackupProtectionState(InvalidValue);
-
-        /// <summary> Gets the IRPending. </summary>
+        /// <summary> IRPending. </summary>
         public static BackupProtectionState IRPending { get; } = new BackupProtectionState(IRPendingValue);
-
-        /// <summary> Gets the Protected. </summary>
+        /// <summary> Protected. </summary>
         public static BackupProtectionState Protected { get; } = new BackupProtectionState(ProtectedValue);
-
-        /// <summary> Gets the ProtectionError. </summary>
+        /// <summary> ProtectionError. </summary>
         public static BackupProtectionState ProtectionError { get; } = new BackupProtectionState(ProtectionErrorValue);
-
-        /// <summary> Gets the ProtectionStopped. </summary>
+        /// <summary> ProtectionStopped. </summary>
         public static BackupProtectionState ProtectionStopped { get; } = new BackupProtectionState(ProtectionStoppedValue);
-
-        /// <summary> Gets the ProtectionPaused. </summary>
+        /// <summary> ProtectionPaused. </summary>
         public static BackupProtectionState ProtectionPaused { get; } = new BackupProtectionState(ProtectionPausedValue);
-
-        /// <summary> Gets the BackupsSuspended. </summary>
+        /// <summary> BackupsSuspended. </summary>
         public static BackupProtectionState BackupsSuspended { get; } = new BackupProtectionState(BackupsSuspendedValue);
-
         /// <summary> Determines if two <see cref="BackupProtectionState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupProtectionState left, BackupProtectionState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BackupProtectionState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupProtectionState left, BackupProtectionState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BackupProtectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupProtectionState"/>. </summary>
         public static implicit operator BackupProtectionState(string value) => new BackupProtectionState(value);
 
-        /// <summary> Converts a string to a <see cref="BackupProtectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BackupProtectionState?(string value) => value == null ? null : new BackupProtectionState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupProtectionState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BackupProtectionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

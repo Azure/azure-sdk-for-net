@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -15,52 +14,35 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterPromoteMode : IEquatable<MongoClusterPromoteMode>
     {
         private readonly string _value;
-        /// <summary> Promotion will switch the current replica cluster to the primary role and the original primary will be switched to a replica role, maintaining the replication link. </summary>
-        private const string SwitchoverValue = "Switchover";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterPromoteMode"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterPromoteMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string SwitchoverValue = "Switchover";
 
         /// <summary> Promotion will switch the current replica cluster to the primary role and the original primary will be switched to a replica role, maintaining the replication link. </summary>
         public static MongoClusterPromoteMode Switchover { get; } = new MongoClusterPromoteMode(SwitchoverValue);
-
         /// <summary> Determines if two <see cref="MongoClusterPromoteMode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterPromoteMode left, MongoClusterPromoteMode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="MongoClusterPromoteMode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterPromoteMode left, MongoClusterPromoteMode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="MongoClusterPromoteMode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterPromoteMode"/>. </summary>
         public static implicit operator MongoClusterPromoteMode(string value) => new MongoClusterPromoteMode(value);
 
-        /// <summary> Converts a string to a <see cref="MongoClusterPromoteMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator MongoClusterPromoteMode?(string value) => value == null ? null : new MongoClusterPromoteMode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterPromoteMode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(MongoClusterPromoteMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

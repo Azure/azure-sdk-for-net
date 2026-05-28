@@ -8,15 +8,44 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Hci.Vm;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Properties under the network interface resource. </summary>
     public partial class HciVmNetworkInterfaceProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HciVmNetworkInterfaceProperties"/>. </summary>
         public HciVmNetworkInterfaceProperties()
@@ -32,9 +61,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> Provisioning state of the network interface. </param>
         /// <param name="status"> The observed state of network interfaces. </param>
         /// <param name="networkSecurityGroup"> NetworkSecurityGroup - Network Security Group attached to the network interface. </param>
-        /// <param name="isSdnPoliciesBypassed"> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmNetworkInterfaceProperties(IList<HciVmIPConfiguration> ipConfigurations, string macAddress, HciVmInterfaceDnsSettings dnsSettings, bool? createFromLocal, HciVmProvisioningState? provisioningState, HciVmNetworkInterfaceStatus status, NetworkSecurityGroupArmReference networkSecurityGroup, bool? isSdnPoliciesBypassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciVmNetworkInterfaceProperties(IList<HciVmIPConfiguration> ipConfigurations, string macAddress, InterfaceDnsSettings dnsSettings, bool? createFromLocal, HciVmProvisioningState? provisioningState, HciVmNetworkInterfaceStatus status, WritableSubResource networkSecurityGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPConfigurations = ipConfigurations;
             MacAddress = macAddress;
@@ -43,60 +71,42 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             ProvisioningState = provisioningState;
             Status = status;
             NetworkSecurityGroup = networkSecurityGroup;
-            IsSdnPoliciesBypassed = isSdnPoliciesBypassed;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IPConfigurations - A list of IPConfigurations of the network interface. </summary>
         public IList<HciVmIPConfiguration> IPConfigurations { get; }
-
         /// <summary> MacAddress - The MAC address of the network interface. </summary>
         public string MacAddress { get; set; }
-
         /// <summary> DNS Settings for the interface. </summary>
-        internal HciVmInterfaceDnsSettings DnsSettings { get; set; }
-
-        /// <summary> Boolean indicating whether this is a existing local network interface or if one should be created. </summary>
-        public bool? CreateFromLocal { get; set; }
-
-        /// <summary> Provisioning state of the network interface. </summary>
-        public HciVmProvisioningState? ProvisioningState { get; }
-
-        /// <summary> The observed state of network interfaces. </summary>
-        public HciVmNetworkInterfaceStatus Status { get; }
-
-        /// <summary> NetworkSecurityGroup - Network Security Group attached to the network interface. </summary>
-        internal NetworkSecurityGroupArmReference NetworkSecurityGroup { get; set; }
-
-        /// <summary> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </summary>
-        public bool? IsSdnPoliciesBypassed { get; set; }
-
+        internal InterfaceDnsSettings DnsSettings { get; set; }
         /// <summary> List of DNS server IP Addresses for the interface. </summary>
         public IList<string> DnsServers
         {
             get
             {
                 if (DnsSettings is null)
-                {
-                    DnsSettings = new HciVmInterfaceDnsSettings();
-                }
+                    DnsSettings = new InterfaceDnsSettings();
                 return DnsSettings.DnsServers;
             }
         }
 
-        /// <summary> The Azure Resource ID for a Network Security Group. </summary>
+        /// <summary> Boolean indicating whether this is a existing local network interface or if one should be created. </summary>
+        public bool? CreateFromLocal { get; set; }
+        /// <summary> Provisioning state of the network interface. </summary>
+        public HciVmProvisioningState? ProvisioningState { get; }
+        /// <summary> The observed state of network interfaces. </summary>
+        public HciVmNetworkInterfaceStatus Status { get; }
+        /// <summary> NetworkSecurityGroup - Network Security Group attached to the network interface. </summary>
+        internal WritableSubResource NetworkSecurityGroup { get; set; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier NetworkSecurityGroupId
         {
-            get
-            {
-                return NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
-            }
+            get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
             set
             {
                 if (NetworkSecurityGroup is null)
-                {
-                    NetworkSecurityGroup = new NetworkSecurityGroupArmReference();
-                }
+                    NetworkSecurityGroup = new WritableSubResource();
                 NetworkSecurityGroup.Id = value;
             }
         }

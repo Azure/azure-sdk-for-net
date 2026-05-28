@@ -8,60 +8,15 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager.Consumption;
-using Azure.ResourceManager.Models;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// A charge summary resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConsumptionLegacyChargeSummary"/> and <see cref="ConsumptionModernChargeSummary"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownConsumptionChargeSummary))]
-    public abstract partial class ConsumptionChargeSummary : ResourceData, IJsonModel<ConsumptionChargeSummary>
+    [PersistableModelProxy(typeof(UnknownChargeSummary))]
+    public partial class ConsumptionChargeSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionChargeSummary>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeConsumptionChargeSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionChargeSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConsumptionChargeSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionChargeSummary IPersistableModel<ConsumptionChargeSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionChargeSummary)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConsumptionChargeSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConsumptionChargeSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -73,11 +28,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -86,59 +42,68 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionChargeSummary IJsonModel<ConsumptionChargeSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionChargeSummary)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConsumptionChargeSummary IJsonModel<ConsumptionChargeSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConsumptionChargeSummary(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConsumptionChargeSummary DeserializeConsumptionChargeSummary(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConsumptionChargeSummary DeserializeConsumptionChargeSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "legacy":
-                        return ConsumptionLegacyChargeSummary.DeserializeConsumptionLegacyChargeSummary(element, options);
-                    case "modern":
-                        return ConsumptionModernChargeSummary.DeserializeConsumptionModernChargeSummary(element, options);
+                    case "legacy": return ConsumptionLegacyChargeSummary.DeserializeConsumptionLegacyChargeSummary(element, options);
+                    case "modern": return ConsumptionModernChargeSummary.DeserializeConsumptionModernChargeSummary(element, options);
                 }
             }
-            return UnknownConsumptionChargeSummary.DeserializeUnknownConsumptionChargeSummary(element, options);
+            return UnknownChargeSummary.DeserializeUnknownChargeSummary(element, options);
         }
+
+        BinaryData IPersistableModel<ConsumptionChargeSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionChargeSummary IPersistableModel<ConsumptionChargeSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeConsumptionChargeSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionChargeSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

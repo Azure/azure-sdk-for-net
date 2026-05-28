@@ -7,67 +7,48 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary></summary>
+    /// <summary> The AvailabilityZonePolicy. </summary>
     public readonly partial struct AvailabilityZonePolicy : IEquatable<AvailabilityZonePolicy>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="AvailabilityZonePolicy"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AvailabilityZonePolicy(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NotSpecifiedValue = "NotSpecified";
         private const string SingleZonedValue = "SingleZoned";
         private const string MultiZonedValue = "MultiZoned";
 
-        /// <summary> Initializes a new instance of <see cref="AvailabilityZonePolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AvailabilityZonePolicy(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NotSpecified. </summary>
+        /// <summary> NotSpecified. </summary>
         public static AvailabilityZonePolicy NotSpecified { get; } = new AvailabilityZonePolicy(NotSpecifiedValue);
-
-        /// <summary> Gets the SingleZoned. </summary>
+        /// <summary> SingleZoned. </summary>
         public static AvailabilityZonePolicy SingleZoned { get; } = new AvailabilityZonePolicy(SingleZonedValue);
-
-        /// <summary> Gets the MultiZoned. </summary>
+        /// <summary> MultiZoned. </summary>
         public static AvailabilityZonePolicy MultiZoned { get; } = new AvailabilityZonePolicy(MultiZonedValue);
-
         /// <summary> Determines if two <see cref="AvailabilityZonePolicy"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvailabilityZonePolicy left, AvailabilityZonePolicy right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AvailabilityZonePolicy"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvailabilityZonePolicy left, AvailabilityZonePolicy right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AvailabilityZonePolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailabilityZonePolicy"/>. </summary>
         public static implicit operator AvailabilityZonePolicy(string value) => new AvailabilityZonePolicy(value);
 
-        /// <summary> Converts a string to a <see cref="AvailabilityZonePolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AvailabilityZonePolicy?(string value) => value == null ? null : new AvailabilityZonePolicy(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvailabilityZonePolicy other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AvailabilityZonePolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

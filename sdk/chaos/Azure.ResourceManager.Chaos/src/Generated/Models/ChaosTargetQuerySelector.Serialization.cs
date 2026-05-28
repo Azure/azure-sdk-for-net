@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Chaos;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> Model that represents a query selector. </summary>
-    public partial class ChaosTargetQuerySelector : ChaosTargetSelector, IJsonModel<ChaosTargetQuerySelector>
+    public partial class ChaosTargetQuerySelector : IUtf8JsonSerializable, IJsonModel<ChaosTargetQuerySelector>
     {
-        /// <summary> Initializes a new instance of <see cref="ChaosTargetQuerySelector"/> for deserialization. </summary>
-        internal ChaosTargetQuerySelector()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetQuerySelector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ChaosTargetSelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeChaosTargetQuerySelector(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ChaosTargetQuerySelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ChaosTargetQuerySelector IPersistableModel<ChaosTargetQuerySelector>.Create(BinaryData data, ModelReaderWriterOptions options) => (ChaosTargetQuerySelector)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ChaosTargetQuerySelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChaosTargetQuerySelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,114 +28,131 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("queryString"u8);
             writer.WriteStringValue(QueryString);
             writer.WritePropertyName("subscriptionIds"u8);
             writer.WriteStartArray();
-            foreach (string item in SubscriptionIds)
+            foreach (var item in SubscriptionIds)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ChaosTargetQuerySelector IJsonModel<ChaosTargetQuerySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ChaosTargetQuerySelector)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ChaosTargetSelector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ChaosTargetQuerySelector IJsonModel<ChaosTargetQuerySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeChaosTargetQuerySelector(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ChaosTargetQuerySelector DeserializeChaosTargetQuerySelector(JsonElement element, ModelReaderWriterOptions options)
+        internal static ChaosTargetQuerySelector DeserializeChaosTargetQuerySelector(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
-            SelectorType @type = default;
-            ChaosTargetFilter filter = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string queryString = default;
             IList<string> subscriptionIds = default;
-            foreach (var prop in element.EnumerateObject())
+            string id = default;
+            SelectorType type = default;
+            ChaosTargetFilter filter = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("queryString"u8))
                 {
-                    id = prop.Value.GetString();
+                    queryString = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = new SelectorType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("filter"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("queryString"u8))
-                {
-                    queryString = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("subscriptionIds"u8))
+                if (property.NameEquals("subscriptionIds"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     subscriptionIds = array;
                     continue;
                 }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new SelectorType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("filter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ChaosTargetQuerySelector(
                 id,
-                @type,
+                type,
                 filter,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 queryString,
                 subscriptionIds);
         }
+
+        BinaryData IPersistableModel<ChaosTargetQuerySelector>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ChaosTargetQuerySelector IPersistableModel<ChaosTargetQuerySelector>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeChaosTargetQuerySelector(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ChaosTargetQuerySelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

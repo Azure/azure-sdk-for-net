@@ -42,7 +42,7 @@ namespace Azure.Developer.DevCenter.Tests
             List<DevCenterCatalog> catalogs = await _environmentsClient.GetCatalogsAsync(
                 TestEnvironment.ProjectName).ToEnumerableAsync();
 
-            Assert.That(catalogs.Count, Is.EqualTo(1));
+            Assert.AreEqual(1, catalogs.Count);
 
             string catalogName = catalogs[0].Name;
             if (string.IsNullOrWhiteSpace(catalogName))
@@ -50,7 +50,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(catalogName, Is.EqualTo(TestEnvironment.CatalogName));
+            Assert.AreEqual(TestEnvironment.CatalogName, catalogName);
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(catalogName, Is.EqualTo(TestEnvironment.CatalogName));
+            Assert.AreEqual(TestEnvironment.CatalogName, catalogName);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Azure.Developer.DevCenter.Tests
             List<DevCenterEnvironmentType> envTypes = await _environmentsClient.GetEnvironmentTypesAsync(
                 TestEnvironment.ProjectName).ToEnumerableAsync();
 
-            Assert.That(envTypes.Count, Is.EqualTo(1));
+            Assert.AreEqual(1, envTypes.Count);
 
             string envTypeName = envTypes[0].Name;
             if (string.IsNullOrWhiteSpace(envTypeName))
@@ -83,7 +83,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(envTypeName, Is.EqualTo(TestEnvironment.EnvironmentTypeName));
+            Assert.AreEqual(TestEnvironment.EnvironmentTypeName, envTypeName);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(envDefinitionName, Is.EqualTo(EnvDefinitionName));
+            Assert.AreEqual(EnvDefinitionName, envDefinitionName);
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace Azure.Developer.DevCenter.Tests
             List<EnvironmentDefinition> envDefinitions = await _environmentsClient.GetEnvironmentDefinitionsAsync(
                 TestEnvironment.ProjectName).ToEnumerableAsync();
 
-            Assert.That(envDefinitions.Count, Is.EqualTo(EnvDefinitionCount));
+            Assert.AreEqual(EnvDefinitionCount, envDefinitions.Count);
 
             foreach (var envDefinition in envDefinitions)
             {
@@ -130,7 +130,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.ProjectName,
                 TestEnvironment.CatalogName).ToEnumerableAsync();
 
-            Assert.That(envDefinitions.Count, Is.EqualTo(EnvDefinitionCount));
+            Assert.AreEqual(EnvDefinitionCount, envDefinitions.Count);
 
             foreach (var envDefinition in envDefinitions)
             {
@@ -167,7 +167,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase), Is.True);
+            Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
         private async Task GetEnvironmentsAsync()
@@ -176,7 +176,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId).ToEnumerableAsync();
 
-            Assert.That(environments.Count, Is.EqualTo(1));
+            Assert.AreEqual(1, environments.Count);
 
             string envName = environments[0].Name;
             if (string.IsNullOrWhiteSpace(envName))
@@ -184,7 +184,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase), Is.True);
+            Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
         private async Task GetAllEnvironmentsAsync()
@@ -192,7 +192,7 @@ namespace Azure.Developer.DevCenter.Tests
             List<DevCenterEnvironment> environments = await _environmentsClient.GetAllEnvironmentsAsync(
                 TestEnvironment.ProjectName).ToEnumerableAsync();
 
-            Assert.That(environments.Count, Is.EqualTo(1));
+            Assert.AreEqual(1, environments.Count);
 
             string envName = environments[0].Name;
             if (string.IsNullOrWhiteSpace(envName))
@@ -200,7 +200,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase), Is.True);
+            Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
         private async Task CreateEnvironmentAsync()
@@ -220,7 +220,7 @@ namespace Azure.Developer.DevCenter.Tests
                 environment);
 
             EnvironmentProvisioningState? provisioningState = environmentCreateOperation.Value.ProvisioningState;
-            Assert.That(provisioningState, Is.EqualTo(EnvironmentProvisioningState.Succeeded));
+            Assert.IsTrue(provisioningState.Equals(EnvironmentProvisioningState.Succeeded));
         }
 
         private async Task DeleteEnvironmentAsync()
@@ -245,7 +245,7 @@ namespace Azure.Developer.DevCenter.Tests
             }
 
             var status = responseStatusJson.ToString();
-            Assert.That(status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase), Is.True);
+            Assert.True(status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
         }
 
         private void FailDueToMissingProperty(string propertyName)

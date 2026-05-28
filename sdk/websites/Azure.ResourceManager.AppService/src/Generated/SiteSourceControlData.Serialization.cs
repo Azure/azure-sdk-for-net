@@ -77,8 +77,15 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(GitHubActionConfiguration))
             {
-                writer.WritePropertyName("gitHubActionConfiguration"u8);
-                writer.WriteObjectValue(GitHubActionConfiguration, options);
+                if (GitHubActionConfiguration != null)
+                {
+                    writer.WritePropertyName("gitHubActionConfiguration"u8);
+                    writer.WriteObjectValue(GitHubActionConfiguration, options);
+                }
+                else
+                {
+                    writer.WriteNull("gitHubActionConfiguration");
+                }
             }
             writer.WriteEndObject();
         }
@@ -211,6 +218,7 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                gitHubActionConfiguration = null;
                                 continue;
                             }
                             gitHubActionConfiguration = GitHubActionConfiguration.DeserializeGitHubActionConfiguration(property0.Value, options);
@@ -230,7 +238,6 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
-                kind,
                 repoUrl,
                 branch,
                 isManualIntegration,
@@ -238,6 +245,7 @@ namespace Azure.ResourceManager.AppService
                 deploymentRollbackEnabled,
                 isMercurial,
                 gitHubActionConfiguration,
+                kind,
                 serializedAdditionalRawData);
         }
 

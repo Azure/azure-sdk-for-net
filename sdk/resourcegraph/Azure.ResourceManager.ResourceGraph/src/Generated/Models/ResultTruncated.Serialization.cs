@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     internal static partial class ResultTruncatedExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResultTruncated value) => value switch
         {
             ResultTruncated.True => "true",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResultTruncated value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static ResultTruncated ToResultTruncated(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "true"))
-            {
-                return ResultTruncated.True;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "false"))
-            {
-                return ResultTruncated.False;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "true")) return ResultTruncated.True;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "false")) return ResultTruncated.False;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResultTruncated value.");
         }
     }

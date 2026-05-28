@@ -69,7 +69,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
             ContainerServiceFleetGateResource containerServiceFleetGate = client.GetContainerServiceFleetGateResource(containerServiceFleetGateResourceId);
 
             // invoke the operation
-            ContainerServiceFleetGatePatch patch = new ContainerServiceFleetGatePatch(ContainerServiceFleetGateState.Completed);
+            ContainerServiceFleetGatePatch patch = new ContainerServiceFleetGatePatch
+            {
+                GatePatchState = ContainerServiceFleetGateState.Completed,
+            };
             ArmOperation<ContainerServiceFleetGateResource> lro = await containerServiceFleetGate.UpdateAsync(WaitUntil.Completed, patch);
             ContainerServiceFleetGateResource result = lro.Value;
 

@@ -7,63 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> Nginx Private IP Allocation Method. </summary>
+    /// <summary> The NginxPrivateIPAllocationMethod. </summary>
     public readonly partial struct NginxPrivateIPAllocationMethod : IEquatable<NginxPrivateIPAllocationMethod>
     {
         private readonly string _value;
-        private const string StaticValue = "Static";
-        private const string DynamicValue = "Dynamic";
 
         /// <summary> Initializes a new instance of <see cref="NginxPrivateIPAllocationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NginxPrivateIPAllocationMethod(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Static. </summary>
+        private const string StaticValue = "Static";
+        private const string DynamicValue = "Dynamic";
+
+        /// <summary> Static. </summary>
         public static NginxPrivateIPAllocationMethod Static { get; } = new NginxPrivateIPAllocationMethod(StaticValue);
-
-        /// <summary> Gets the Dynamic. </summary>
+        /// <summary> Dynamic. </summary>
         public static NginxPrivateIPAllocationMethod Dynamic { get; } = new NginxPrivateIPAllocationMethod(DynamicValue);
-
         /// <summary> Determines if two <see cref="NginxPrivateIPAllocationMethod"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NginxPrivateIPAllocationMethod left, NginxPrivateIPAllocationMethod right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NginxPrivateIPAllocationMethod"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NginxPrivateIPAllocationMethod left, NginxPrivateIPAllocationMethod right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NginxPrivateIPAllocationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NginxPrivateIPAllocationMethod"/>. </summary>
         public static implicit operator NginxPrivateIPAllocationMethod(string value) => new NginxPrivateIPAllocationMethod(value);
 
-        /// <summary> Converts a string to a <see cref="NginxPrivateIPAllocationMethod"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NginxPrivateIPAllocationMethod?(string value) => value == null ? null : new NginxPrivateIPAllocationMethod(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NginxPrivateIPAllocationMethod other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NginxPrivateIPAllocationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

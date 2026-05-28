@@ -82,8 +82,7 @@ namespace Azure.Storage.Cryptography
                         output.Slice(0, dataLength));
                     return input.Length - NonceLength - TagLength;
 
-                default:
-                    throw new InvalidOperationException("TransformMode invalid for this operation.");
+                default: throw new InvalidOperationException("TransformMode invalid for this operation.");
             }
         }
 

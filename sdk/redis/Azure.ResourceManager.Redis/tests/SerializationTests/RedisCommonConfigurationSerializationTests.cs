@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.ResourceManager.Redis.Models;
 using NUnit.Framework;
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Redis.Tests.SerializationTests
         {
             JsonDocument jsonDocument = JsonDocument.Parse(rawJson);
 
-            RedisCommonConfiguration redisCommonConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(jsonDocument.RootElement, ModelReaderWriterOptions.Json);
+            RedisCommonConfiguration redisCommonConfiguration = RedisCommonConfiguration.DeserializeRedisCommonConfiguration(jsonDocument.RootElement);
 
             Assert.IsTrue(redisCommonConfiguration.IsAofBackupEnabled);
             Assert.IsTrue(redisCommonConfiguration.IsRdbBackupEnabled);

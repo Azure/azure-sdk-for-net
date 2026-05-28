@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct LocalCacheMode : IEquatable<LocalCacheMode>
     {
         private readonly string _value;
-        private const string DownloadNewAndModifiedFilesValue = "DownloadNewAndModifiedFiles";
-        private const string UpdateLocallyCachedFilesValue = "UpdateLocallyCachedFiles";
 
         /// <summary> Initializes a new instance of <see cref="LocalCacheMode"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LocalCacheMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the DownloadNewAndModifiedFiles. </summary>
+        private const string DownloadNewAndModifiedFilesValue = "DownloadNewAndModifiedFiles";
+        private const string UpdateLocallyCachedFilesValue = "UpdateLocallyCachedFiles";
+
+        /// <summary> DownloadNewAndModifiedFiles. </summary>
         public static LocalCacheMode DownloadNewAndModifiedFiles { get; } = new LocalCacheMode(DownloadNewAndModifiedFilesValue);
-
-        /// <summary> Gets the UpdateLocallyCachedFiles. </summary>
+        /// <summary> UpdateLocallyCachedFiles. </summary>
         public static LocalCacheMode UpdateLocallyCachedFiles { get; } = new LocalCacheMode(UpdateLocallyCachedFilesValue);
-
         /// <summary> Determines if two <see cref="LocalCacheMode"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LocalCacheMode left, LocalCacheMode right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="LocalCacheMode"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LocalCacheMode left, LocalCacheMode right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="LocalCacheMode"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LocalCacheMode"/>. </summary>
         public static implicit operator LocalCacheMode(string value) => new LocalCacheMode(value);
 
-        /// <summary> Converts a string to a <see cref="LocalCacheMode"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator LocalCacheMode?(string value) => value == null ? null : new LocalCacheMode(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LocalCacheMode other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(LocalCacheMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

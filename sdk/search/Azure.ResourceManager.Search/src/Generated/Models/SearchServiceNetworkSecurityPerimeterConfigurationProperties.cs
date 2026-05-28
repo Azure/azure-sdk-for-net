@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Network security configuration properties. </summary>
     public partial class SearchServiceNetworkSecurityPerimeterConfigurationProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
         public SearchServiceNetworkSecurityPerimeterConfigurationProperties()
@@ -24,39 +52,35 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of a network security perimeter configuration that is being created or updated. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"></param>
-        /// <param name="resourceAssociation"></param>
-        /// <param name="profile"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceNetworkSecurityPerimeterConfigurationProperties(SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<SearchServiceNetworkSecurityPerimeterProvisioningIssue> provisioningIssues, SearchServiceNetworkSecurityPerimeter networkSecurityPerimeter, SearchServiceNetworkSecurityPerimeterResourceAssociation resourceAssociation, SearchNetworkSecurityProfile profile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="networkSecurityPerimeter"> Information about a network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchServiceNetworkSecurityPerimeterConfigurationProperties(SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IReadOnlyList<SearchServiceNetworkSecurityPerimeterProvisioningIssue> provisioningIssues, SearchServiceNetworkSecurityPerimeter networkSecurityPerimeter, SearchServiceNetworkSecurityPerimeterResourceAssociation resourceAssociation, SearchNetworkSecurityProfile profile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
             NetworkSecurityPerimeter = networkSecurityPerimeter;
             ResourceAssociation = resourceAssociation;
             Profile = profile;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
+        /// <summary> Provisioning state of a network security perimeter configuration that is being created or updated. </summary>
         [WirePath("provisioningState")]
         public SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
-
         /// <summary> List of provisioning issues, if any. </summary>
         [WirePath("provisioningIssues")]
         public IReadOnlyList<SearchServiceNetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get; }
-
-        /// <summary> Gets or sets the NetworkSecurityPerimeter. </summary>
+        /// <summary> Information about a network security perimeter (NSP). </summary>
         [WirePath("networkSecurityPerimeter")]
         public SearchServiceNetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
-
-        /// <summary> Gets or sets the ResourceAssociation. </summary>
+        /// <summary> Information about resource association. </summary>
         [WirePath("resourceAssociation")]
         public SearchServiceNetworkSecurityPerimeterResourceAssociation ResourceAssociation { get; set; }
-
-        /// <summary> Gets or sets the Profile. </summary>
+        /// <summary> Network security perimeter configuration profile. </summary>
         [WirePath("profile")]
         public SearchNetworkSecurityProfile Profile { get; set; }
     }

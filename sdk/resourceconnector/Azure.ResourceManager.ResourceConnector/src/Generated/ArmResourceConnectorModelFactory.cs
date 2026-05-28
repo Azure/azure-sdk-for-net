@@ -8,148 +8,119 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class ArmResourceConnectorModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <summary> Initializes a new instance of <see cref="ResourceConnector.ResourceConnectorApplianceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
         /// <param name="distro"> Represents a supported Fabric/Infra. (AKSEdge etc...). </param>
+        /// <param name="infrastructureConfigProvider"> Contains infrastructure information about the Appliance. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="publicKey"> Certificates pair used to download MSI certificate from HIS. Can only be set once. </param>
-        /// <param name="status"> Appliance’s health and state of connection to on-prem. This list of values is not exhaustive. </param>
+        /// <param name="status"> Appliance’s health and state of connection to on-prem. </param>
         /// <param name="version"> Version of the Appliance. </param>
-        /// <param name="events"> A list of events that occurred on the Appliance to relay information to the user. </param>
-        /// <param name="networkProfile"> Contains network information about the Appliance. </param>
-        /// <param name="infrastructureConfigProvider"> Information about the connected appliance. </param>
-        /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="ResourceConnector.ResourceConnectorApplianceData"/> instance for mocking. </returns>
-        public static ResourceConnectorApplianceData ResourceConnectorApplianceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApplianceDistro? distro = default, string provisioningState = default, string publicKey = default, ApplianceStatus? status = default, string version = default, IEnumerable<ApplianceEvent> events = default, ApplianceNetworkProfile networkProfile = default, ApplianceProvider? infrastructureConfigProvider = default, ManagedServiceIdentity identity = default)
+        public static ResourceConnectorApplianceData ResourceConnectorApplianceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ResourceConnectorDistro? distro = null, ApplianceProvider? infrastructureConfigProvider = null, string provisioningState = null, string publicKey = null, ResourceConnectorStatus? status = null, string version = null)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
 
             return new ResourceConnectorApplianceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                distro is null && provisioningState is null && publicKey is null && status is null && version is null && events is null && networkProfile is null && infrastructureConfigProvider is null ? default : new ApplianceProperties(
-                    distro,
-                    new AppliancePropertiesInfrastructureConfig(infrastructureConfigProvider, null),
-                    provisioningState,
-                    publicKey,
-                    status,
-                    version,
-                    (events ?? new ChangeTrackingList<ApplianceEvent>()).ToList(),
-                    networkProfile,
-                    null),
-                identity);
-        }
-
-        /// <summary> Event contains information about customer driven, platform driven, or unplanned events that occurred on the Appliance. </summary>
-        /// <param name="type"> The type of event is used to classify how the event was initiated. </param>
-        /// <param name="code"> Code is used to break down the event further to identify why it occurred. </param>
-        /// <param name="status"> Status is used to represent the outcome of the event. </param>
-        /// <param name="message"> Message is intended to be actionable and should be used to inform the user of the event. </param>
-        /// <param name="severity"> Severity is the classification of the event to relay the importance of the event. </param>
-        /// <param name="timestamp"> Timestamp is the time the event occurred. </param>
-        /// <returns> A new <see cref="Models.ApplianceEvent"/> instance for mocking. </returns>
-        public static ApplianceEvent ApplianceEvent(string @type = default, string code = default, string status = default, string message = default, string severity = default, DateTimeOffset? timestamp = default)
-        {
-            return new ApplianceEvent(
-                @type,
-                code,
+                identity,
+                distro,
+                infrastructureConfigProvider != null ? new AppliancePropertiesInfrastructureConfig(infrastructureConfigProvider, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                publicKey,
                 status,
-                message,
-                severity,
-                timestamp,
-                additionalBinaryDataProperties: null);
+                version,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> The Appliances patchable resource definition. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ResourceConnectorAppliancePatch"/> instance for mocking. </returns>
-        public static ResourceConnectorAppliancePatch ResourceConnectorAppliancePatch(IDictionary<string, string> tags = default)
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceTelemetryConfigResult"/>. </summary>
+        /// <param name="telemetryInstrumentationKey"> Telemetry instrumentation key. </param>
+        /// <returns> A new <see cref="Models.ApplianceTelemetryConfigResult"/> instance for mocking. </returns>
+        public static ApplianceTelemetryConfigResult ApplianceTelemetryConfigResult(string telemetryInstrumentationKey = null)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ResourceConnectorAppliancePatch(tags, additionalBinaryDataProperties: null);
+            return new ApplianceTelemetryConfigResult(telemetryInstrumentationKey, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The List Cluster User Credential appliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceClusterUserCredentialResult"/>. </summary>
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
-        /// <returns> A new <see cref="Models.ApplianceListCredentialResult"/> instance for mocking. </returns>
-        public static ApplianceListCredentialResult ApplianceListCredentialResult(HybridConnectionConfig hybridConnectionConfig = default, IEnumerable<ApplianceCredentialKubeconfig> kubeconfigs = default)
+        /// <returns> A new <see cref="Models.ApplianceClusterUserCredentialResult"/> instance for mocking. </returns>
+        public static ApplianceClusterUserCredentialResult ApplianceClusterUserCredentialResult(HybridConnectionConfig hybridConnectionConfig = null, IEnumerable<ApplianceCredentialKubeconfig> kubeconfigs = null)
         {
-            kubeconfigs ??= new ChangeTrackingList<ApplianceCredentialKubeconfig>();
+            kubeconfigs ??= new List<ApplianceCredentialKubeconfig>();
 
-            return new ApplianceListCredentialResult(hybridConnectionConfig, kubeconfigs.ToList(), additionalBinaryDataProperties: null);
+            return new ApplianceClusterUserCredentialResult(hybridConnectionConfig, kubeconfigs?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridConnectionConfig"/>. </summary>
         /// <param name="expirationTime"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the notification service. </param>
         /// <param name="token"> Listener access token. </param>
         /// <returns> A new <see cref="Models.HybridConnectionConfig"/> instance for mocking. </returns>
-        public static HybridConnectionConfig HybridConnectionConfig(long? expirationTime = default, string hybridConnectionName = default, string relay = default, string token = default)
+        public static HybridConnectionConfig HybridConnectionConfig(long? expirationTime = null, string hybridConnectionName = null, string relay = null, string token = null)
         {
-            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token, additionalBinaryDataProperties: null);
+            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Cluster User Credential appliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceCredentialKubeconfig"/>. </summary>
         /// <param name="name"> Name which contains the role of the kubeconfig. </param>
         /// <param name="value"> Contains the kubeconfig value. </param>
         /// <returns> A new <see cref="Models.ApplianceCredentialKubeconfig"/> instance for mocking. </returns>
-        public static ApplianceCredentialKubeconfig ApplianceCredentialKubeconfig(AccessProfileType? name = default, string value = default)
+        public static ApplianceCredentialKubeconfig ApplianceCredentialKubeconfig(AccessProfileType? name = null, string value = null)
         {
-            return new ApplianceCredentialKubeconfig(name, value, additionalBinaryDataProperties: null);
+            return new ApplianceCredentialKubeconfig(name, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The List Cluster Keys Results appliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceClusterUserKeysResult"/>. </summary>
         /// <param name="artifactProfiles"> Map of artifacts that contains a list of ArtifactProfile used to upload artifacts such as logs. </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         /// <param name="sshKeys"> Map of Customer User Public, Private SSH Keys and Certificate when available. </param>
-        /// <returns> A new <see cref="Models.ApplianceListKeysResult"/> instance for mocking. </returns>
-        public static ApplianceListKeysResult ApplianceListKeysResult(IReadOnlyDictionary<string, ApplianceArtifactProfile> artifactProfiles = default, IEnumerable<ApplianceCredentialKubeconfig> kubeconfigs = default, IReadOnlyDictionary<string, ApplianceSshKey> sshKeys = default)
+        /// <returns> A new <see cref="Models.ApplianceClusterUserKeysResult"/> instance for mocking. </returns>
+        public static ApplianceClusterUserKeysResult ApplianceClusterUserKeysResult(IReadOnlyDictionary<string, ApplianceArtifactProfile> artifactProfiles = null, IEnumerable<ApplianceCredentialKubeconfig> kubeconfigs = null, IReadOnlyDictionary<string, ApplianceSshKey> sshKeys = null)
         {
-            artifactProfiles ??= new ChangeTrackingDictionary<string, ApplianceArtifactProfile>();
-            kubeconfigs ??= new ChangeTrackingList<ApplianceCredentialKubeconfig>();
-            sshKeys ??= new ChangeTrackingDictionary<string, ApplianceSshKey>();
+            artifactProfiles ??= new Dictionary<string, ApplianceArtifactProfile>();
+            kubeconfigs ??= new List<ApplianceCredentialKubeconfig>();
+            sshKeys ??= new Dictionary<string, ApplianceSshKey>();
 
-            return new ApplianceListKeysResult(artifactProfiles, kubeconfigs.ToList(), sshKeys, additionalBinaryDataProperties: null);
+            return new ApplianceClusterUserKeysResult(artifactProfiles, kubeconfigs?.ToList(), sshKeys, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Appliance ArtifactProfile definition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceArtifactProfile"/>. </summary>
         /// <param name="endpoint"> Endpoint is the URL to upload artifacts to. </param>
         /// <returns> A new <see cref="Models.ApplianceArtifactProfile"/> instance for mocking. </returns>
-        public static ApplianceArtifactProfile ApplianceArtifactProfile(string endpoint = default)
+        public static ApplianceArtifactProfile ApplianceArtifactProfile(string endpoint = null)
         {
-            return new ApplianceArtifactProfile(endpoint, additionalBinaryDataProperties: null);
+            return new ApplianceArtifactProfile(endpoint, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Appliance SSHKey definition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceSshKey"/>. </summary>
         /// <param name="certificate"> Certificate associated with the public key if the key is signed. </param>
         /// <param name="creationTimeStamp"> Certificate creation timestamp (Unix). </param>
         /// <param name="expirationTimeStamp"> Certificate expiration timestamp (Unix). </param>
         /// <param name="privateKey"> Private Key. </param>
         /// <param name="publicKey"> Public Key. </param>
         /// <returns> A new <see cref="Models.ApplianceSshKey"/> instance for mocking. </returns>
-        public static ApplianceSshKey ApplianceSshKey(string certificate = default, long? creationTimeStamp = default, long? expirationTimeStamp = default, string privateKey = default, string publicKey = default)
+        public static ApplianceSshKey ApplianceSshKey(string certificate = null, long? creationTimeStamp = null, long? expirationTimeStamp = null, string privateKey = null, string publicKey = null)
         {
             return new ApplianceSshKey(
                 certificate,
@@ -157,65 +128,58 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 expirationTimeStamp,
                 privateKey,
                 publicKey,
-                additionalBinaryDataProperties: null);
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> The Upgrade Graph for appliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceUpgradeGraph"/>. </summary>
         /// <param name="id"> The appliance resource path. </param>
         /// <param name="name"> The release train name. </param>
         /// <param name="properties"> The properties of supported version. </param>
         /// <returns> A new <see cref="Models.ApplianceUpgradeGraph"/> instance for mocking. </returns>
-        public static ApplianceUpgradeGraph ApplianceUpgradeGraph(string id = default, string name = default, ApplianceUpgradeGraphProperties properties = default)
+        public static ApplianceUpgradeGraph ApplianceUpgradeGraph(string id = null, string name = null, ApplianceUpgradeGraphProperties properties = null)
         {
-            return new ApplianceUpgradeGraph(id, name, properties, additionalBinaryDataProperties: null);
+            return new ApplianceUpgradeGraph(id, name, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The Upgrade Graph Properties for appliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceUpgradeGraphProperties"/>. </summary>
         /// <param name="applianceVersion"> The current appliance version. </param>
         /// <param name="supportedVersions"> This contains the current version and supported upgrade versions. </param>
         /// <returns> A new <see cref="Models.ApplianceUpgradeGraphProperties"/> instance for mocking. </returns>
-        public static ApplianceUpgradeGraphProperties ApplianceUpgradeGraphProperties(string applianceVersion = default, IEnumerable<ApplianceSupportedVersion> supportedVersions = default)
+        public static ApplianceUpgradeGraphProperties ApplianceUpgradeGraphProperties(string applianceVersion = null, IEnumerable<ApplianceSupportedVersion> supportedVersions = null)
         {
-            supportedVersions ??= new ChangeTrackingList<ApplianceSupportedVersion>();
+            supportedVersions ??= new List<ApplianceSupportedVersion>();
 
-            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions.ToList(), additionalBinaryDataProperties: null);
+            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <param name="metadataCatalogVersion"> The newer supported version catalog version. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceSupportedVersion"/>. </summary>
+        /// <param name="metadataCatalogVersion"> This is the metadata of the supported newer version. </param>
         /// <param name="version"> The newer version available for upgrade. </param>
         /// <returns> A new <see cref="Models.ApplianceSupportedVersion"/> instance for mocking. </returns>
-        public static ApplianceSupportedVersion ApplianceSupportedVersion(ApplianceSupportedVersionCatalogVersion metadataCatalogVersion = default, string version = default)
+        public static ApplianceSupportedVersion ApplianceSupportedVersion(ApplianceSupportedVersionCatalogVersion metadataCatalogVersion = null, string version = null)
         {
-            return new ApplianceSupportedVersion(metadataCatalogVersion is null ? default : new ApplianceSupportedVersionMetadata(metadataCatalogVersion, null), version, additionalBinaryDataProperties: null);
+            return new ApplianceSupportedVersion(metadataCatalogVersion != null ? new ApplianceSupportedVersionMetadata(metadataCatalogVersion, serializedAdditionalRawData: null) : null, version, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The SupportedVersionCatalogVersion object for appliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceSupportedVersionCatalogVersion"/>. </summary>
         /// <param name="data"> The newer supported version catalog version data. </param>
         /// <param name="name"> The catalog version name for the version available for upgrade. </param>
         /// <param name="namespace"> The catalog version namespace for the version available for upgrade. </param>
         /// <returns> A new <see cref="Models.ApplianceSupportedVersionCatalogVersion"/> instance for mocking. </returns>
-        public static ApplianceSupportedVersionCatalogVersion ApplianceSupportedVersionCatalogVersion(ApplianceSupportedVersionCatalogVersionProperties data = default, string name = default, string @namespace = default)
+        public static ApplianceSupportedVersionCatalogVersion ApplianceSupportedVersionCatalogVersion(ApplianceSupportedVersionCatalogVersionProperties data = null, string name = null, string @namespace = null)
         {
-            return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace, additionalBinaryDataProperties: null);
+            return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace, serializedAdditionalRawData: null);
         }
 
-        /// <summary> The SupportedVersionCatalogVersionData object for appliance. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApplianceSupportedVersionCatalogVersionProperties"/>. </summary>
         /// <param name="audience"> The image audience name for the version available for upgrade. </param>
         /// <param name="catalog"> The image catalog name for the version available for upgrade. </param>
         /// <param name="offer"> The image offer name for the version available for upgrade. </param>
         /// <param name="version"> The image version for the version available for upgrade. </param>
         /// <returns> A new <see cref="Models.ApplianceSupportedVersionCatalogVersionProperties"/> instance for mocking. </returns>
-        public static ApplianceSupportedVersionCatalogVersionProperties ApplianceSupportedVersionCatalogVersionProperties(string audience = default, string catalog = default, string offer = default, string version = default)
+        public static ApplianceSupportedVersionCatalogVersionProperties ApplianceSupportedVersionCatalogVersionProperties(string audience = null, string catalog = null, string offer = null, string version = null)
         {
-            return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The Get Telemetry Config Result appliance. </summary>
-        /// <param name="telemetryInstrumentationKey"> Telemetry instrumentation key. </param>
-        /// <returns> A new <see cref="Models.ApplianceTelemetryConfigResult"/> instance for mocking. </returns>
-        public static ApplianceTelemetryConfigResult ApplianceTelemetryConfigResult(string telemetryInstrumentationKey = default)
-        {
-            return new ApplianceTelemetryConfigResult(telemetryInstrumentationKey, additionalBinaryDataProperties: null);
+            return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version, serializedAdditionalRawData: null);
         }
     }
 }

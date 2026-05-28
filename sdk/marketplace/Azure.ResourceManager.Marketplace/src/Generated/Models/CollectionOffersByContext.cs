@@ -13,29 +13,58 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> List of offers and plans that restricted to the context. </summary>
     public partial class CollectionOffersByContext
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CollectionOffersByContext"/>. </summary>
         internal CollectionOffersByContext()
         {
+            Value = new ChangeTrackingList<PrivateStoreOfferResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CollectionOffersByContext"/>. </summary>
         /// <param name="context"> Offer's context, e.g. subscription ID, tenant ID. </param>
-        /// <param name="offers"> List of offers. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CollectionOffersByContext(string context, CollectionOffersByContextOffers offers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="value"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionOffersByContext(string context, IReadOnlyList<PrivateStoreOfferResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Context = context;
-            Offers = offers;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Offer's context, e.g. subscription ID, tenant ID. </summary>
         public string Context { get; }
-
-        /// <summary> List of offers. </summary>
-        internal CollectionOffersByContextOffers Offers { get; }
+        /// <summary> Gets the value. </summary>
+        public IReadOnlyList<PrivateStoreOfferResult> Value { get; }
     }
 }

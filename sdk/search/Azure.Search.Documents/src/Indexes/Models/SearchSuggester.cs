@@ -4,10 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
+// suppress the generated type for the property `SearchMode`
+[assembly: CodeGenSuppressType("SuggesterMode")]
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [CodeGenModel("Suggester")]
     public partial class SearchSuggester
     {
         private const string AnalyzingInfixMatching = "analyzingInfixMatching";

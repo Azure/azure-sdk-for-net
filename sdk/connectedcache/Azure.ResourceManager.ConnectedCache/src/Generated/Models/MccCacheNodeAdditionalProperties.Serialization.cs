@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ConnectedCache;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
-    /// <summary> Model representing cache node for connected cache resource. </summary>
-    public partial class MccCacheNodeAdditionalProperties : IJsonModel<MccCacheNodeAdditionalProperties>
+    public partial class MccCacheNodeAdditionalProperties : IUtf8JsonSerializable, IJsonModel<MccCacheNodeAdditionalProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MccCacheNodeAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMccCacheNodeAdditionalProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MccCacheNodeAdditionalProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MccCacheNodeAdditionalProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MccCacheNodeAdditionalProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MccCacheNodeAdditionalProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MccCacheNodeAdditionalProperties IPersistableModel<MccCacheNodeAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MccCacheNodeAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MccCacheNodeAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,22 +28,18 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MccCacheNodeAdditionalProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(CacheNodePropertiesDetailsIssuesList))
             {
                 writer.WritePropertyName("cacheNodePropertiesDetailsIssuesList"u8);
                 writer.WriteStartArray();
-                foreach (string item in CacheNodePropertiesDetailsIssuesList)
+                foreach (var item in CacheNodePropertiesDetailsIssuesList)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -93,13 +48,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             {
                 writer.WritePropertyName("issuesList"u8);
                 writer.WriteStartArray();
-                foreach (string item in IssuesList)
+                foreach (var item in IssuesList)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -163,7 +113,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             {
                 writer.WritePropertyName("driveConfiguration"u8);
                 writer.WriteStartArray();
-                foreach (CacheNodeDriveConfiguration item in DriveConfiguration)
+                foreach (var item in DriveConfiguration)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -274,15 +224,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("optionalProperty5"u8);
                 writer.WriteStringValue(OptionalProperty5);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -291,27 +241,22 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MccCacheNodeAdditionalProperties IJsonModel<MccCacheNodeAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MccCacheNodeAdditionalProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MccCacheNodeAdditionalProperties IJsonModel<MccCacheNodeAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MccCacheNodeAdditionalProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMccCacheNodeAdditionalProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MccCacheNodeAdditionalProperties DeserializeMccCacheNodeAdditionalProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static MccCacheNodeAdditionalProperties DeserializeMccCacheNodeAdditionalProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -336,14 +281,14 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             MccCacheNodeOSType? osType = default;
             string autoUpdateVersion = default;
             string updateInfoDetails = default;
-            DateTimeOffset? updateRequestedOn = default;
+            DateTimeOffset? updateRequestedDateTime = default;
             string autoUpdateNextAvailableVersion = default;
-            DateTimeOffset? autoUpdateNextAvailableOn = default;
+            DateTimeOffset? autoUpdateNextAvailableDateTime = default;
             string autoUpdateAppliedVersion = default;
             string autoUpdateLastAppliedDetails = default;
             string autoUpdateLastAppliedState = default;
-            DateTimeOffset? autoUpdateLastAppliedOn = default;
-            DateTimeOffset? autoUpdateLastTriggeredOn = default;
+            DateTimeOffset? autoUpdateLastAppliedDateTime = default;
+            DateTimeOffset? autoUpdateLastTriggeredDateTime = default;
             int? creationMethod = default;
             string tlsStatus = default;
             string optionalProperty1 = default;
@@ -351,290 +296,278 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             string optionalProperty3 = default;
             string optionalProperty4 = default;
             string optionalProperty5 = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("cacheNodePropertiesDetailsIssuesList"u8))
+                if (property.NameEquals("cacheNodePropertiesDetailsIssuesList"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     cacheNodePropertiesDetailsIssuesList = array;
                     continue;
                 }
-                if (prop.NameEquals("issuesList"u8))
+                if (property.NameEquals("issuesList"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     issuesList = array;
                     continue;
                 }
-                if (prop.NameEquals("issuesCount"u8))
+                if (property.NameEquals("issuesCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    issuesCount = prop.Value.GetInt32();
+                    issuesCount = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("currentTlsCertificate"u8))
+                if (property.NameEquals("currentTlsCertificate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    currentTlsCertificate = MccCacheNodeTlsCertificate.DeserializeMccCacheNodeTlsCertificate(prop.Value, options);
+                    currentTlsCertificate = MccCacheNodeTlsCertificate.DeserializeMccCacheNodeTlsCertificate(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("lastAutoUpdateInfo"u8))
+                if (property.NameEquals("lastAutoUpdateInfo"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastAutoUpdateInfo = MccCacheNodeAutoUpdateInfo.DeserializeMccCacheNodeAutoUpdateInfo(prop.Value, options);
+                    lastAutoUpdateInfo = MccCacheNodeAutoUpdateInfo.DeserializeMccCacheNodeAutoUpdateInfo(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("aggregatedStatusDetails"u8))
+                if (property.NameEquals("aggregatedStatusDetails"u8))
                 {
-                    aggregatedStatusDetails = prop.Value.GetString();
+                    aggregatedStatusDetails = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("aggregatedStatusText"u8))
+                if (property.NameEquals("aggregatedStatusText"u8))
                 {
-                    aggregatedStatusText = prop.Value.GetString();
+                    aggregatedStatusText = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("aggregatedStatusCode"u8))
+                if (property.NameEquals("aggregatedStatusCode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    aggregatedStatusCode = prop.Value.GetInt32();
+                    aggregatedStatusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("productVersion"u8))
+                if (property.NameEquals("productVersion"u8))
                 {
-                    productVersion = prop.Value.GetString();
+                    productVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isProvisioned"u8))
+                if (property.NameEquals("isProvisioned"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isProvisioned = prop.Value.GetBoolean();
+                    isProvisioned = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("cacheNodeStateDetailedText"u8))
+                if (property.NameEquals("cacheNodeStateDetailedText"u8))
                 {
-                    cacheNodeStateDetailedText = prop.Value.GetString();
+                    cacheNodeStateDetailedText = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("cacheNodeStateShortText"u8))
+                if (property.NameEquals("cacheNodeStateShortText"u8))
                 {
-                    cacheNodeStateShortText = prop.Value.GetString();
+                    cacheNodeStateShortText = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("cacheNodeState"u8))
+                if (property.NameEquals("cacheNodeState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cacheNodeState = prop.Value.GetInt32();
+                    cacheNodeState = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("driveConfiguration"u8))
+                if (property.NameEquals("driveConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CacheNodeDriveConfiguration> array = new List<CacheNodeDriveConfiguration>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(CacheNodeDriveConfiguration.DeserializeCacheNodeDriveConfiguration(item, options));
                     }
                     driveConfiguration = array;
                     continue;
                 }
-                if (prop.NameEquals("bgpConfiguration"u8))
+                if (property.NameEquals("bgpConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bgpConfiguration = MccCacheNodeBgpConfiguration.DeserializeMccCacheNodeBgpConfiguration(prop.Value, options);
+                    bgpConfiguration = MccCacheNodeBgpConfiguration.DeserializeMccCacheNodeBgpConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("proxyUrlConfiguration"u8))
+                if (property.NameEquals("proxyUrlConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    proxyUrlConfiguration = MccCacheNodeProxyUriConfiguration.DeserializeMccCacheNodeProxyUriConfiguration(prop.Value, options);
+                    proxyUrlConfiguration = MccCacheNodeProxyUriConfiguration.DeserializeMccCacheNodeProxyUriConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("isProxyRequired"u8))
+                if (property.NameEquals("isProxyRequired"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isProxyRequired = new MccCacheNodeProxyRequired(prop.Value.GetString());
+                    isProxyRequired = new MccCacheNodeProxyRequired(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("osType"u8))
+                if (property.NameEquals("osType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osType = new MccCacheNodeOSType(prop.Value.GetString());
+                    osType = new MccCacheNodeOSType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("autoUpdateVersion"u8))
+                if (property.NameEquals("autoUpdateVersion"u8))
                 {
-                    autoUpdateVersion = prop.Value.GetString();
+                    autoUpdateVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("updateInfoDetails"u8))
+                if (property.NameEquals("updateInfoDetails"u8))
                 {
-                    updateInfoDetails = prop.Value.GetString();
+                    updateInfoDetails = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("updateRequestedDateTime"u8))
+                if (property.NameEquals("updateRequestedDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    updateRequestedOn = prop.Value.GetDateTimeOffset("O");
+                    updateRequestedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("autoUpdateNextAvailableVersion"u8))
+                if (property.NameEquals("autoUpdateNextAvailableVersion"u8))
                 {
-                    autoUpdateNextAvailableVersion = prop.Value.GetString();
+                    autoUpdateNextAvailableVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("autoUpdateNextAvailableDateTime"u8))
+                if (property.NameEquals("autoUpdateNextAvailableDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoUpdateNextAvailableOn = prop.Value.GetDateTimeOffset("O");
+                    autoUpdateNextAvailableDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("autoUpdateAppliedVersion"u8))
+                if (property.NameEquals("autoUpdateAppliedVersion"u8))
                 {
-                    autoUpdateAppliedVersion = prop.Value.GetString();
+                    autoUpdateAppliedVersion = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("autoUpdateLastAppliedDetails"u8))
+                if (property.NameEquals("autoUpdateLastAppliedDetails"u8))
                 {
-                    autoUpdateLastAppliedDetails = prop.Value.GetString();
+                    autoUpdateLastAppliedDetails = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("autoUpdateLastAppliedState"u8))
+                if (property.NameEquals("autoUpdateLastAppliedState"u8))
                 {
-                    autoUpdateLastAppliedState = prop.Value.GetString();
+                    autoUpdateLastAppliedState = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("autoUpdateLastAppliedDateTime"u8))
+                if (property.NameEquals("autoUpdateLastAppliedDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoUpdateLastAppliedOn = prop.Value.GetDateTimeOffset("O");
+                    autoUpdateLastAppliedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("autoUpdateLastTriggeredDateTime"u8))
+                if (property.NameEquals("autoUpdateLastTriggeredDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoUpdateLastTriggeredOn = prop.Value.GetDateTimeOffset("O");
+                    autoUpdateLastTriggeredDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("creationMethod"u8))
+                if (property.NameEquals("creationMethod"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    creationMethod = prop.Value.GetInt32();
+                    creationMethod = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("tlsStatus"u8))
+                if (property.NameEquals("tlsStatus"u8))
                 {
-                    tlsStatus = prop.Value.GetString();
+                    tlsStatus = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty1"u8))
+                if (property.NameEquals("optionalProperty1"u8))
                 {
-                    optionalProperty1 = prop.Value.GetString();
+                    optionalProperty1 = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty2"u8))
+                if (property.NameEquals("optionalProperty2"u8))
                 {
-                    optionalProperty2 = prop.Value.GetString();
+                    optionalProperty2 = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty3"u8))
+                if (property.NameEquals("optionalProperty3"u8))
                 {
-                    optionalProperty3 = prop.Value.GetString();
+                    optionalProperty3 = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty4"u8))
+                if (property.NameEquals("optionalProperty4"u8))
                 {
-                    optionalProperty4 = prop.Value.GetString();
+                    optionalProperty4 = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty5"u8))
+                if (property.NameEquals("optionalProperty5"u8))
                 {
-                    optionalProperty5 = prop.Value.GetString();
+                    optionalProperty5 = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new MccCacheNodeAdditionalProperties(
                 cacheNodePropertiesDetailsIssuesList ?? new ChangeTrackingList<string>(),
                 issuesList ?? new ChangeTrackingList<string>(),
@@ -656,14 +589,14 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 osType,
                 autoUpdateVersion,
                 updateInfoDetails,
-                updateRequestedOn,
+                updateRequestedDateTime,
                 autoUpdateNextAvailableVersion,
-                autoUpdateNextAvailableOn,
+                autoUpdateNextAvailableDateTime,
                 autoUpdateAppliedVersion,
                 autoUpdateLastAppliedDetails,
                 autoUpdateLastAppliedState,
-                autoUpdateLastAppliedOn,
-                autoUpdateLastTriggeredOn,
+                autoUpdateLastAppliedDateTime,
+                autoUpdateLastTriggeredDateTime,
                 creationMethod,
                 tlsStatus,
                 optionalProperty1,
@@ -671,7 +604,38 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 optionalProperty3,
                 optionalProperty4,
                 optionalProperty5,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MccCacheNodeAdditionalProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConnectedCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MccCacheNodeAdditionalProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MccCacheNodeAdditionalProperties IPersistableModel<MccCacheNodeAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MccCacheNodeAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMccCacheNodeAdditionalProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MccCacheNodeAdditionalProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MccCacheNodeAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

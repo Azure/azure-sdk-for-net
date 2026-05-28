@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     internal static partial class DesktopVirtualizationSkuTierExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DesktopVirtualizationSkuTier value) => value switch
         {
             DesktopVirtualizationSkuTier.Free => "Free",
@@ -21,25 +20,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DesktopVirtualizationSkuTier value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static DesktopVirtualizationSkuTier ToDesktopVirtualizationSkuTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free"))
-            {
-                return DesktopVirtualizationSkuTier.Free;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic"))
-            {
-                return DesktopVirtualizationSkuTier.Basic;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
-            {
-                return DesktopVirtualizationSkuTier.Standard;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium"))
-            {
-                return DesktopVirtualizationSkuTier.Premium;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return DesktopVirtualizationSkuTier.Free;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return DesktopVirtualizationSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return DesktopVirtualizationSkuTier.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return DesktopVirtualizationSkuTier.Premium;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DesktopVirtualizationSkuTier value.");
         }
     }

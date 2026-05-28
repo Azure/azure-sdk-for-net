@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DependencyMap;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
@@ -18,18 +17,25 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <summary> Initializes a new instance of <see cref="OffAzureDiscoverySourceProperties"/>. </summary>
         /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        public OffAzureDiscoverySourceProperties(ResourceIdentifier sourceId) : base(SourceType.OffAzure, sourceId)
+        public OffAzureDiscoverySourceProperties(ResourceIdentifier sourceId) : base(sourceId)
         {
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 
+            SourceType = SourceType.OffAzure;
         }
 
         /// <summary> Initializes a new instance of <see cref="OffAzureDiscoverySourceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
         /// <param name="sourceType"> Source type of Discovery Source resource. </param>
         /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OffAzureDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState, SourceType sourceType, ResourceIdentifier sourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provisioningState, sourceType, sourceId, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OffAzureDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState, SourceType sourceType, ResourceIdentifier sourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provisioningState, sourceType, sourceId, serializedAdditionalRawData)
+        {
+            SourceType = sourceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OffAzureDiscoverySourceProperties"/> for deserialization. </summary>
+        internal OffAzureDiscoverySourceProperties()
         {
         }
     }

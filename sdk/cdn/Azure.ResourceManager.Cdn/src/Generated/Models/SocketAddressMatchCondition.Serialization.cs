@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Cdn;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for SocketAddress match conditions. </summary>
-    public partial class SocketAddressMatchCondition : DeliveryRuleConditionProperties, IJsonModel<SocketAddressMatchCondition>
+    public partial class SocketAddressMatchCondition : IUtf8JsonSerializable, IJsonModel<SocketAddressMatchCondition>
     {
-        /// <summary> Initializes a new instance of <see cref="SocketAddressMatchCondition"/> for deserialization. </summary>
-        internal SocketAddressMatchCondition()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SocketAddressMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DeliveryRuleConditionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SocketAddressMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeSocketAddressMatchCondition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SocketAddressMatchCondition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<SocketAddressMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SocketAddressMatchCondition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SocketAddressMatchCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SocketAddressMatchCondition IPersistableModel<SocketAddressMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => (SocketAddressMatchCondition)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SocketAddressMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SocketAddressMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SocketAddressMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SocketAddressMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SocketAddressMatchCondition)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(SocketAddressOperator.ToString());
@@ -91,13 +46,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();
-                foreach (string item in MatchValues)
+                foreach (var item in MatchValues)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -106,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
-                foreach (PreTransformCategory item in Transforms)
+                foreach (var item in Transforms)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -114,105 +64,126 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SocketAddressMatchCondition IJsonModel<SocketAddressMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SocketAddressMatchCondition)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DeliveryRuleConditionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SocketAddressMatchCondition IJsonModel<SocketAddressMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SocketAddressMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SocketAddressMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SocketAddressMatchCondition)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSocketAddressMatchCondition(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SocketAddressMatchCondition DeserializeSocketAddressMatchCondition(JsonElement element, ModelReaderWriterOptions options)
+        internal static SocketAddressMatchCondition DeserializeSocketAddressMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DeliveryRuleConditionParametersType typeName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SocketAddressOperator socketAddressOperator = default;
+            SocketAddressOperator @operator = default;
             bool? negateCondition = default;
             IList<string> matchValues = default;
             IList<PreTransformCategory> transforms = default;
-            foreach (var prop in element.EnumerateObject())
+            DeliveryRuleConditionParametersType typeName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("typeName"u8))
+                if (property.NameEquals("operator"u8))
                 {
-                    typeName = new DeliveryRuleConditionParametersType(prop.Value.GetString());
+                    @operator = new SocketAddressOperator(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("operator"u8))
+                if (property.NameEquals("negateCondition"u8))
                 {
-                    socketAddressOperator = new SocketAddressOperator(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("negateCondition"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    negateCondition = prop.Value.GetBoolean();
+                    negateCondition = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("matchValues"u8))
+                if (property.NameEquals("matchValues"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     matchValues = array;
                     continue;
                 }
-                if (prop.NameEquals("transforms"u8))
+                if (property.NameEquals("transforms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PreTransformCategory> array = new List<PreTransformCategory>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new PreTransformCategory(item.GetString()));
                     }
                     transforms = array;
                     continue;
                 }
+                if (property.NameEquals("typeName"u8))
+                {
+                    typeName = new DeliveryRuleConditionParametersType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new SocketAddressMatchCondition(
                 typeName,
-                additionalBinaryDataProperties,
-                socketAddressOperator,
+                serializedAdditionalRawData,
+                @operator,
                 negateCondition,
                 matchValues ?? new ChangeTrackingList<string>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>());
         }
+
+        BinaryData IPersistableModel<SocketAddressMatchCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SocketAddressMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SocketAddressMatchCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SocketAddressMatchCondition IPersistableModel<SocketAddressMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SocketAddressMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeSocketAddressMatchCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SocketAddressMatchCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SocketAddressMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

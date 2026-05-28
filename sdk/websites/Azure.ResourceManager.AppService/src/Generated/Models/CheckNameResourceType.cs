@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Resource type used for verification.
-    /// Serialized Name: CheckNameResourceTypes
-    /// </summary>
+    /// <summary> Resource type used for verification. </summary>
     public readonly partial struct CheckNameResourceType : IEquatable<CheckNameResourceType>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.AppService.Models
         private const string MicrosoftWebHostingEnvironmentsValue = "Microsoft.Web/hostingEnvironments";
         private const string MicrosoftWebPublishingUsersValue = "Microsoft.Web/publishingUsers";
 
-        /// <summary>
-        /// Site
-        /// Serialized Name: CheckNameResourceTypes.Site
-        /// </summary>
+        /// <summary> Site. </summary>
         public static CheckNameResourceType WebSite { get; } = new CheckNameResourceType(WebSiteValue);
-        /// <summary>
-        /// Slot
-        /// Serialized Name: CheckNameResourceTypes.Slot
-        /// </summary>
+        /// <summary> Slot. </summary>
         public static CheckNameResourceType Slot { get; } = new CheckNameResourceType(SlotValue);
-        /// <summary>
-        /// HostingEnvironment
-        /// Serialized Name: CheckNameResourceTypes.HostingEnvironment
-        /// </summary>
+        /// <summary> HostingEnvironment. </summary>
         public static CheckNameResourceType HostingEnvironment { get; } = new CheckNameResourceType(HostingEnvironmentValue);
-        /// <summary>
-        /// PublishingUser
-        /// Serialized Name: CheckNameResourceTypes.PublishingUser
-        /// </summary>
+        /// <summary> PublishingUser. </summary>
         public static CheckNameResourceType PublishingUser { get; } = new CheckNameResourceType(PublishingUserValue);
-        /// <summary>
-        /// Microsoft.Web/sites
-        /// Serialized Name: CheckNameResourceTypes.Microsoft.Web/sites
-        /// </summary>
+        /// <summary> Microsoft.Web/sites. </summary>
         public static CheckNameResourceType MicrosoftWebSites { get; } = new CheckNameResourceType(MicrosoftWebSitesValue);
-        /// <summary>
-        /// Microsoft.Web/sites/slots
-        /// Serialized Name: CheckNameResourceTypes.Microsoft.Web/sites/slots
-        /// </summary>
+        /// <summary> Microsoft.Web/sites/slots. </summary>
         public static CheckNameResourceType MicrosoftWebSitesSlots { get; } = new CheckNameResourceType(MicrosoftWebSitesSlotsValue);
-        /// <summary>
-        /// Microsoft.Web/hostingEnvironments
-        /// Serialized Name: CheckNameResourceTypes.Microsoft.Web/hostingEnvironments
-        /// </summary>
+        /// <summary> Microsoft.Web/hostingEnvironments. </summary>
         public static CheckNameResourceType MicrosoftWebHostingEnvironments { get; } = new CheckNameResourceType(MicrosoftWebHostingEnvironmentsValue);
-        /// <summary>
-        /// Microsoft.Web/publishingUsers
-        /// Serialized Name: CheckNameResourceTypes.Microsoft.Web/publishingUsers
-        /// </summary>
+        /// <summary> Microsoft.Web/publishingUsers. </summary>
         public static CheckNameResourceType MicrosoftWebPublishingUsers { get; } = new CheckNameResourceType(MicrosoftWebPublishingUsersValue);
         /// <summary> Determines if two <see cref="CheckNameResourceType"/> values are the same. </summary>
         public static bool operator ==(CheckNameResourceType left, CheckNameResourceType right) => left.Equals(right);

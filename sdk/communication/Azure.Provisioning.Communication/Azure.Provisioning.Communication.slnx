@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.Communication.csproj" />
-  <Project Path="tests/Azure.Provisioning.Communication.Tests.csproj" />
-</Solution>

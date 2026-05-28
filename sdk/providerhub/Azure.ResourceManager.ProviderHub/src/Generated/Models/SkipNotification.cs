@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct SkipNotification : IEquatable<SkipNotification>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="SkipNotification"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SkipNotification(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UnspecifiedValue = "Unspecified";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="SkipNotification"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SkipNotification(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Unspecified. </summary>
+        /// <summary> Unspecified. </summary>
         public static SkipNotification Unspecified { get; } = new SkipNotification(UnspecifiedValue);
-
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Enabled. </summary>
         public static SkipNotification Enabled { get; } = new SkipNotification(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static SkipNotification Disabled { get; } = new SkipNotification(DisabledValue);
-
         /// <summary> Determines if two <see cref="SkipNotification"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SkipNotification left, SkipNotification right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SkipNotification"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SkipNotification left, SkipNotification right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SkipNotification"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SkipNotification"/>. </summary>
         public static implicit operator SkipNotification(string value) => new SkipNotification(value);
 
-        /// <summary> Converts a string to a <see cref="SkipNotification"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SkipNotification?(string value) => value == null ? null : new SkipNotification(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SkipNotification other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SkipNotification other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
     /// <summary> The definition of a file along with its contents. </summary>
     public partial class DecompiledFileDefinition
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DecompiledFileDefinition"/>. </summary>
         internal DecompiledFileDefinition()
@@ -24,17 +53,16 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         /// <summary> Initializes a new instance of <see cref="DecompiledFileDefinition"/>. </summary>
         /// <param name="path"> The file path of the Bicep file. </param>
         /// <param name="contents"> The contents of the Bicep file. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DecompiledFileDefinition(string path, string contents, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DecompiledFileDefinition(string path, string contents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             Contents = contents;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The file path of the Bicep file. </summary>
         public string Path { get; }
-
         /// <summary> The contents of the Bicep file. </summary>
         public string Contents { get; }
     }

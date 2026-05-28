@@ -9,7 +9,7 @@ namespace Azure.Provisioning.Generator.Specifications;
 public class ManagedServiceIdentitiesSpecification : Specification
 {
     public ManagedServiceIdentitiesSpecification() :
-        base("ManagedServiceIdentities", typeof(ManagedServiceIdentitiesExtensions), serviceDirectory: "provisioning")
+        base("ManagedServiceIdentities", typeof(ManagedServiceIdentitiesExtensions))
     {
         Namespace = "Azure.Provisioning.Roles";
         SkipCleaning = true;

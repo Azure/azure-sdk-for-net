@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/ContentModerator" -AutoRestVersion "latest"

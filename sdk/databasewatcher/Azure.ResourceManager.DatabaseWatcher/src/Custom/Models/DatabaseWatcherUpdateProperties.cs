@@ -3,12 +3,12 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
     /// <summary> The updatable properties of the Watcher. </summary>
-    [CodeGenTypeAttribute("WatcherUpdateProperties")]
+    [CodeGenModel("WatcherUpdateProperties")]
     public partial class DatabaseWatcherUpdateProperties
     {
     }

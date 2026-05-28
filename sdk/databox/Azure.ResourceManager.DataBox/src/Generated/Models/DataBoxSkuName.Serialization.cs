@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DataBoxSkuNameExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataBoxSkuName value) => value switch
         {
             DataBoxSkuName.DataBox => "DataBox",
@@ -21,25 +20,12 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxSkuName value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static DataBoxSkuName ToDataBoxSkuName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBox"))
-            {
-                return DataBoxSkuName.DataBox;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxDisk"))
-            {
-                return DataBoxSkuName.DataBoxDisk;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxHeavy"))
-            {
-                return DataBoxSkuName.DataBoxHeavy;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxCustomerDisk"))
-            {
-                return DataBoxSkuName.DataBoxCustomerDisk;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBox")) return DataBoxSkuName.DataBox;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxDisk")) return DataBoxSkuName.DataBoxDisk;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxHeavy")) return DataBoxSkuName.DataBoxHeavy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DataBoxCustomerDisk")) return DataBoxSkuName.DataBoxCustomerDisk;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxSkuName value.");
         }
     }

@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using Azure.Core.TestFramework;
+using Azure.Identity;
+using System.Threading.Tasks;
+using Microsoft.Identity.Client;
 using System.Security;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.Communication.Tests;
-using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
-using Azure.Identity;
-using Microsoft.Identity.Client;
-using NUnit.Framework.Constraints;
+using System;
+using Azure.Communication.Tests;
 using static Azure.Communication.Identity.CommunicationIdentityClientOptions;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Communication.Identity.Tests
 {

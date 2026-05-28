@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net;
 using Azure.Core.TestFramework;
-using Azure.Data.Tables.Tests;
 using NUnit.Framework;
+using Azure.Data.Tables.Tests;
+using System.Net;
 
 namespace Azure.Data.Tables.Samples
 {

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public readonly partial struct MetricsSendingStatus : IEquatable<MetricsSendingStatus>
     {
         private readonly string _value;
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="MetricsSendingStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetricsSendingStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
+
+        /// <summary> Enabled. </summary>
         public static MetricsSendingStatus Enabled { get; } = new MetricsSendingStatus(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static MetricsSendingStatus Disabled { get; } = new MetricsSendingStatus(DisabledValue);
-
         /// <summary> Determines if two <see cref="MetricsSendingStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MetricsSendingStatus left, MetricsSendingStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="MetricsSendingStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MetricsSendingStatus left, MetricsSendingStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="MetricsSendingStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricsSendingStatus"/>. </summary>
         public static implicit operator MetricsSendingStatus(string value) => new MetricsSendingStatus(value);
 
-        /// <summary> Converts a string to a <see cref="MetricsSendingStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator MetricsSendingStatus?(string value) => value == null ? null : new MetricsSendingStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MetricsSendingStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(MetricsSendingStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

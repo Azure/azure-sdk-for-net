@@ -892,9 +892,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions.ValidateConditionsNotPresent(
                     invalidConditions:
                         BlobRequestConditionProperty.IfAppendPositionEqual
-                        | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
-                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                        | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual,
                     operationName: nameof(AppendBlobClient.Create),
                     parameterName: nameof(conditions));
 
@@ -1262,10 +1260,9 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
 
+                // All AppendBlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(AppendBlobClient.AppendBlock),
                     parameterName: nameof(conditions));
 
@@ -1275,38 +1272,14 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, ClientConfiguration.CustomerProvidedKey);
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    ContentHasher.GetHashResult hashResult = null;
-                    long contentLength = (content?.Length - content?.Position) ?? 0;
-                    long? structuredContentLength = default;
-                    string structuredBodyType = null;
-                    if (validationOptions != null &&
-                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
-                        ClientSideEncryption == null) // don't allow feature combination
-                    {
-                        // report progress in terms of caller bytes, not encoded bytes
-                        structuredContentLength = contentLength;
-                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                        content = validationOptions.PrecalculatedChecksum.IsEmpty
-                            ? new StructuredMessageEncodingStream(
-                                content,
-                                Constants.StructuredMessage.DefaultSegmentContentLength,
-                                StructuredMessage.Flags.StorageCrc64)
-                            : new StructuredMessagePrecalculatedCrcWrapperStream(
-                                content,
-                                validationOptions.PrecalculatedChecksum.Span);
-                        contentLength = (content?.Length - content?.Position) ?? 0;
-                    }
-                    else
-                    {
-                        // compute hash BEFORE attaching progress handler
-                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                            content,
-                            validationOptions,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                    }
+                    // compute hash BEFORE attaching progress handler
+                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                        content,
+                        validationOptions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
+                    content = content.WithNoDispose().WithProgress(progressHandler);
 
                     ResponseWithHeaders<AppendBlobAppendBlockHeaders> response;
 
@@ -1324,8 +1297,6 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            structuredBodyType: structuredBodyType,
-                            structuredContentLength: structuredContentLength,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch?.ToString(),
@@ -1348,8 +1319,6 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            structuredBodyType: structuredBodyType,
-                            structuredContentLength: structuredContentLength,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch?.ToString(),
@@ -1425,7 +1394,6 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.SourceAuthentication,
                 options?.SourceShareTokenIntent,
-                options?.SourceCustomerProvidedKey,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1477,7 +1445,6 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.SourceAuthentication,
                 options?.SourceShareTokenIntent,
-                options?.SourceCustomerProvidedKey,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1556,7 +1523,6 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceConditions,
                 sourceAuthentication: default,
                 sourceShareTokenIntent: default,
-                sourceCustomerProvidedKey: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1635,7 +1601,6 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceConditions,
                 sourceAuthentication: default,
                 sourceShareTokenIntent: default,
-                sourceCustomerProvidedKey: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1689,9 +1654,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional, only applicable (but required) when the source is Azure Storage Files and using token authentication.
         /// Used to indicate the intent of the request.
         /// </param>
-        /// <param name="sourceCustomerProvidedKey">
-        /// Optional. Specifies the source customer provided key to use to encrypt the source blob.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1717,7 +1679,6 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobRequestConditions sourceConditions,
             HttpAuthorization sourceAuthentication,
             FileShareTokenIntent? sourceShareTokenIntent,
-            CustomerProvidedKey? sourceCustomerProvidedKey,
             bool async,
             CancellationToken cancellationToken = default)
         {
@@ -1732,10 +1693,9 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlockFromUri)}");
 
+                // All destination AppendBlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    invalidConditions: BlobRequestConditionProperty.None,
                     operationName: nameof(AppendBlobClient.AppendBlockFromUri),
                     parameterName: nameof(conditions));
 
@@ -1744,9 +1704,7 @@ namespace Azure.Storage.Blobs.Specialized
                         BlobRequestConditionProperty.LeaseId
                         | BlobRequestConditionProperty.TagConditions
                         | BlobRequestConditionProperty.IfAppendPositionEqual
-                        | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
-                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                        | BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual,
                     operationName: nameof(AppendBlobClient.AppendBlockFromUri),
                     parameterName: nameof(sourceConditions));
 
@@ -1780,9 +1738,6 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             fileRequestIntent: sourceShareTokenIntent,
-                            sourceEncryptionKey: sourceCustomerProvidedKey?.EncryptionKey,
-                            sourceEncryptionKeySha256: sourceCustomerProvidedKey?.EncryptionKeyHash,
-                            sourceEncryptionAlgorithm: sourceCustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1811,9 +1766,6 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             fileRequestIntent: sourceShareTokenIntent,
-                            sourceEncryptionKey: sourceCustomerProvidedKey?.EncryptionKey,
-                            sourceEncryptionKeySha256: sourceCustomerProvidedKey?.EncryptionKeyHash,
-                            sourceEncryptionAlgorithm: sourceCustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1936,9 +1888,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions.ValidateConditionsNotPresent(
                     invalidConditions:
                         BlobRequestConditionProperty.IfMaxSizeLessThanOrEqual
-                        | BlobRequestConditionProperty.TagConditions
-                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
-                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                        | BlobRequestConditionProperty.TagConditions,
                     operationName: nameof(AppendBlobClient.Seal),
                     parameterName: nameof(conditions));
 

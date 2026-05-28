@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -22,53 +21,55 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing a collection of <see cref="OracleResourceAnchorResource"/> and their operations.
     /// Each <see cref="OracleResourceAnchorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="OracleResourceAnchorCollection"/> instance call the GetOracleResourceAnchors method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="OracleResourceAnchorCollection"/> instance call the GetOracleResourceAnchors method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class OracleResourceAnchorCollection : ArmCollection, IEnumerable<OracleResourceAnchorResource>, IAsyncEnumerable<OracleResourceAnchorResource>
     {
-        private readonly ClientDiagnostics _resourceAnchorsClientDiagnostics;
-        private readonly ResourceAnchors _resourceAnchorsRestClient;
+        private readonly ClientDiagnostics _oracleResourceAnchorResourceAnchorsClientDiagnostics;
+        private readonly ResourceAnchorsRestOperations _oracleResourceAnchorResourceAnchorsRestClient;
 
-        /// <summary> Initializes a new instance of OracleResourceAnchorCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OracleResourceAnchorCollection"/> class for mocking. </summary>
         protected OracleResourceAnchorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleResourceAnchorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OracleResourceAnchorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OracleResourceAnchorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OracleResourceAnchorResource.ResourceType, out string oracleResourceAnchorApiVersion);
-            _resourceAnchorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleResourceAnchorResource.ResourceType.Namespace, Diagnostics);
-            _resourceAnchorsRestClient = new ResourceAnchors(_resourceAnchorsClientDiagnostics, Pipeline, Endpoint, oracleResourceAnchorApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _oracleResourceAnchorResourceAnchorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleResourceAnchorResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(OracleResourceAnchorResource.ResourceType, out string oracleResourceAnchorResourceAnchorsApiVersion);
+            _oracleResourceAnchorResourceAnchorsRestClient = new ResourceAnchorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleResourceAnchorResourceAnchorsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a ResourceAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="resourceAnchorName"> The name of the ResourceAnchor. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OracleResourceAnchorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceAnchorName, OracleResourceAnchorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAnchorName, nameof(resourceAnchorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _resourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.CreateOrUpdate");
+            using var scope = _oracleResourceAnchorResourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceAnchorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceAnchorName, OracleResourceAnchorData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OracleDatabaseArmOperation<OracleResourceAnchorResource> operation = new OracleDatabaseArmOperation<OracleResourceAnchorResource>(
-                    new OracleResourceAnchorOperationSource(Client),
-                    _resourceAnchorsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _oracleResourceAnchorResourceAnchorsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceAnchorName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation<OracleResourceAnchorResource>(new OracleResourceAnchorOperationSource(Client), _oracleResourceAnchorResourceAnchorsClientDiagnostics, Pipeline, _oracleResourceAnchorResourceAnchorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceAnchorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Create a ResourceAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="resourceAnchorName"> The name of the ResourceAnchor. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OracleResourceAnchorResource> CreateOrUpdate(WaitUntil waitUntil, string resourceAnchorName, OracleResourceAnchorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAnchorName, nameof(resourceAnchorName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _resourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.CreateOrUpdate");
+            using var scope = _oracleResourceAnchorResourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceAnchorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceAnchorName, OracleResourceAnchorData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OracleDatabaseArmOperation<OracleResourceAnchorResource> operation = new OracleDatabaseArmOperation<OracleResourceAnchorResource>(
-                    new OracleResourceAnchorOperationSource(Client),
-                    _resourceAnchorsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _oracleResourceAnchorResourceAnchorsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceAnchorName, data, cancellationToken);
+                var operation = new OracleDatabaseArmOperation<OracleResourceAnchorResource>(new OracleResourceAnchorOperationSource(Client), _oracleResourceAnchorResourceAnchorsClientDiagnostics, Pipeline, _oracleResourceAnchorResourceAnchorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceAnchorName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a ResourceAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceAnchorName"> The name of the ResourceAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         public virtual async Task<Response<OracleResourceAnchorResource>> GetAsync(string resourceAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAnchorName, nameof(resourceAnchorName));
 
-            using DiagnosticScope scope = _resourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.Get");
+            using var scope = _oracleResourceAnchorResourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceAnchorName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OracleResourceAnchorData> response = Response.FromValue(OracleResourceAnchorData.FromResponse(result), result);
+                var response = await _oracleResourceAnchorResourceAnchorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceAnchorName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new OracleResourceAnchorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a ResourceAnchor
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceAnchorName"> The name of the ResourceAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         public virtual Response<OracleResourceAnchorResource> Get(string resourceAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAnchorName, nameof(resourceAnchorName));
 
-            using DiagnosticScope scope = _resourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.Get");
+            using var scope = _oracleResourceAnchorResourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceAnchorName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<OracleResourceAnchorData> response = Response.FromValue(OracleResourceAnchorData.FromResponse(result), result);
+                var response = _oracleResourceAnchorResourceAnchorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceAnchorName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new OracleResourceAnchorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.OracleDatabase
         /// List ResourceAnchor resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OracleResourceAnchorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OracleResourceAnchorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OracleResourceAnchorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new ResourceAnchorsGetByResourceGroupAsyncCollectionResultOfT(_resourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleResourceAnchorCollection.GetAll"), data => new OracleResourceAnchorResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleResourceAnchorResourceAnchorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleResourceAnchorResourceAnchorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleResourceAnchorResource(Client, OracleResourceAnchorData.DeserializeOracleResourceAnchorData(e)), _oracleResourceAnchorResourceAnchorsClientDiagnostics, Pipeline, "OracleResourceAnchorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List ResourceAnchor resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="OracleResourceAnchorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OracleResourceAnchorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<OracleResourceAnchorData, OracleResourceAnchorResource>(new ResourceAnchorsGetByResourceGroupCollectionResultOfT(_resourceAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleResourceAnchorCollection.GetAll"), data => new OracleResourceAnchorResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleResourceAnchorResourceAnchorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleResourceAnchorResourceAnchorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleResourceAnchorResource(Client, OracleResourceAnchorData.DeserializeOracleResourceAnchorData(e)), _oracleResourceAnchorResourceAnchorsClientDiagnostics, Pipeline, "OracleResourceAnchorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceAnchorName"> The name of the ResourceAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAnchorName, nameof(resourceAnchorName));
 
-            using DiagnosticScope scope = _resourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.Exists");
+            using var scope = _oracleResourceAnchorResourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceAnchorName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<OracleResourceAnchorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OracleResourceAnchorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OracleResourceAnchorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _oracleResourceAnchorResourceAnchorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceAnchorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceAnchorName"> The name of the ResourceAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAnchorName, nameof(resourceAnchorName));
 
-            using DiagnosticScope scope = _resourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.Exists");
+            using var scope = _oracleResourceAnchorResourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceAnchorName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<OracleResourceAnchorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OracleResourceAnchorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OracleResourceAnchorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _oracleResourceAnchorResourceAnchorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceAnchorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceAnchorName"> The name of the ResourceAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         public virtual async Task<NullableResponse<OracleResourceAnchorResource>> GetIfExistsAsync(string resourceAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAnchorName, nameof(resourceAnchorName));
 
-            using DiagnosticScope scope = _resourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.GetIfExists");
+            using var scope = _oracleResourceAnchorResourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceAnchorName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<OracleResourceAnchorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OracleResourceAnchorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OracleResourceAnchorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _oracleResourceAnchorResourceAnchorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceAnchorName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<OracleResourceAnchorResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new OracleResourceAnchorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/resourceAnchors/{resourceAnchorName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceAnchors_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceAnchor_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleResourceAnchorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceAnchorName"> The name of the ResourceAnchor. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceAnchorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceAnchorName"/> is null. </exception>
         public virtual NullableResponse<OracleResourceAnchorResource> GetIfExists(string resourceAnchorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAnchorName, nameof(resourceAnchorName));
 
-            using DiagnosticScope scope = _resourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.GetIfExists");
+            using var scope = _oracleResourceAnchorResourceAnchorsClientDiagnostics.CreateScope("OracleResourceAnchorCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceAnchorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceAnchorName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<OracleResourceAnchorData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OracleResourceAnchorData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OracleResourceAnchorData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _oracleResourceAnchorResourceAnchorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceAnchorName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<OracleResourceAnchorResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new OracleResourceAnchorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OracleResourceAnchorResource> IAsyncEnumerable<OracleResourceAnchorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

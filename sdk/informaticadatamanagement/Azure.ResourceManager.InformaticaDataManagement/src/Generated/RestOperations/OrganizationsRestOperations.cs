@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
             uri.AppendPath(organizationName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -73,10 +70,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
             uri.AppendPath(organizationName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,10 +91,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
             uri.AppendPath(organizationName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -121,10 +112,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
             uri.AppendPath(organizationName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -141,10 +129,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -156,18 +141,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -183,10 +157,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Informatica.DataManagement/organizations", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -198,18 +169,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -229,10 +189,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/getServerlessMetadata", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -252,10 +209,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/getAllServerlessRuntimes", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

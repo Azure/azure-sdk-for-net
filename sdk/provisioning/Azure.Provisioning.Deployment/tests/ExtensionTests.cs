@@ -18,8 +18,7 @@ internal class ExtensionTests(bool async)
     [Test]
     public void LintClean()
     {
-        if (SkipTools)
-        { return; }
+        if (SkipTools) { return; }
 
         Infrastructure infra = new();
         StorageAccount resource =
@@ -35,14 +34,13 @@ internal class ExtensionTests(bool async)
         // Lint
         ProvisioningPlan plan = infra.Build();
         IReadOnlyList<BicepErrorMessage> messages = plan.Lint();
-        Assert.That(messages, Is.Empty);
+        Assert.AreEqual(0, messages.Count);
     }
 
     [Test]
     public void LintWarn()
     {
-        if (SkipTools)
-        { return; }
+        if (SkipTools) { return; }
 
         Infrastructure infra = new();
         ProvisioningParameter param = new("endpoint", typeof(string));
@@ -53,17 +51,16 @@ internal class ExtensionTests(bool async)
         IReadOnlyList<BicepErrorMessage> messages = plan.Lint();
 
         // Make sure it warns about the unused param
-        Assert.That(messages.Count, Is.EqualTo(1));
-        Assert.That(messages[0].IsError, Is.False);
-        Assert.That(messages[0].Code, Is.EqualTo("no-unused-params"));
-        Assert.That(messages[0].Message, Does.Contain("endpoint"));
+        Assert.AreEqual(1, messages.Count);
+        Assert.IsFalse(messages[0].IsError);
+        Assert.AreEqual("no-unused-params", messages[0].Code);
+        StringAssert.Contains("endpoint", messages[0].Message);
     }
 
     [Test]
     public void LintError()
     {
-        if (SkipTools)
-        { return; }
+        if (SkipTools) { return; }
 
         Infrastructure infra = new();
         // Use a string as the default value for a param typed int
@@ -74,17 +71,16 @@ internal class ExtensionTests(bool async)
         IReadOnlyList<BicepErrorMessage> messages = plan.Lint();
 
         // Ignore the "unused param" first warning and make sure we get a type error
-        Assert.That(messages.Count, Is.EqualTo(2));
-        Assert.That(messages[1].IsError, Is.True);
-        Assert.That(messages[1].Code, Is.EqualTo("BCP033"));
-        Assert.That(messages[1].Message, Does.Contain("int"));
+        Assert.AreEqual(2, messages.Count);
+        Assert.IsTrue(messages[1].IsError);
+        Assert.AreEqual("BCP033", messages[1].Code);
+        StringAssert.Contains("int", messages[1].Message);
     }
 
     [Test]
     public void GetArmTemplate()
     {
-        if (SkipTools)
-        { return; }
+        if (SkipTools) { return; }
 
         Infrastructure infra = new();
         StorageAccount resource =
@@ -105,26 +101,25 @@ internal class ExtensionTests(bool async)
         // installed tool
         string resources = JsonDocument.Parse(arm).RootElement.GetProperty("resources").ToString();
 
-        Assert.That(
-            resources,
-            Is.EqualTo(
-                """
-                [
-                    {
-                      "type": "Microsoft.Storage/storageAccounts",
-                      "apiVersion": "2023-01-01",
-                      "name": "[take(format('storage{0}', uniqueString(resourceGroup().id)), 24)]",
-                      "kind": "StorageV2",
-                      "location": "[resourceGroup().location]",
-                      "sku": {
-                        "name": "Standard_LRS"
-                      },
-                      "properties": {
-                        "allowBlobPublicAccess": false,
-                        "isHnsEnabled": true
-                      }
-                    }
-                  ]
-                """));
+        Assert.AreEqual(
+            """
+            [
+                {
+                  "type": "Microsoft.Storage/storageAccounts",
+                  "apiVersion": "2023-01-01",
+                  "name": "[take(format('storage{0}', uniqueString(resourceGroup().id)), 24)]",
+                  "kind": "StorageV2",
+                  "location": "[resourceGroup().location]",
+                  "sku": {
+                    "name": "Standard_LRS"
+                  },
+                  "properties": {
+                    "allowBlobPublicAccess": false,
+                    "isHnsEnabled": true
+                  }
+                }
+              ]
+            """,
+            resources);
     }
 }

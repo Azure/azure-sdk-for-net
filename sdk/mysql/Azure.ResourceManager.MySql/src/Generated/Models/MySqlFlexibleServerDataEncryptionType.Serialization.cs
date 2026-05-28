@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     internal static partial class MySqlFlexibleServerDataEncryptionTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MySqlFlexibleServerDataEncryptionType value) => value switch
         {
             MySqlFlexibleServerDataEncryptionType.AzureKeyVault => "AzureKeyVault",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MySqlFlexibleServerDataEncryptionType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static MySqlFlexibleServerDataEncryptionType ToMySqlFlexibleServerDataEncryptionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureKeyVault"))
-            {
-                return MySqlFlexibleServerDataEncryptionType.AzureKeyVault;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemManaged"))
-            {
-                return MySqlFlexibleServerDataEncryptionType.SystemManaged;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureKeyVault")) return MySqlFlexibleServerDataEncryptionType.AzureKeyVault;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemManaged")) return MySqlFlexibleServerDataEncryptionType.SystemManaged;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MySqlFlexibleServerDataEncryptionType value.");
         }
     }

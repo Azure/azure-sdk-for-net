@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-05-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List Hosting Environment Detector Responses. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> App Service Environment Name. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="name"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List Hosting Environment Detector Responses. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> App Service Environment Name. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="name"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -142,7 +142,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -155,6 +154,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -173,7 +173,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -186,6 +185,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Hosting Environment Detector Response. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> App Service Environment Name. </param>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Hosting Environment Detector Response. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> App Service Environment Name. </param>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
@@ -301,8 +301,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List Site Detector Responses. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
@@ -330,8 +330,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List Site Detector Responses. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
@@ -370,7 +370,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(siteName, true);
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -383,6 +382,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -401,7 +401,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(siteName, true);
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -414,6 +413,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -421,8 +421,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get site detector response. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
@@ -457,8 +457,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get site detector response. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
@@ -529,8 +529,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Diagnostics Categories. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
@@ -558,8 +558,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Diagnostics Categories. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
@@ -625,8 +625,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Diagnostics Category. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -658,8 +658,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Diagnostics Category. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -731,8 +731,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Site Analyses. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -762,8 +762,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Site Analyses. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -835,8 +835,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Site Analysis. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="analysisName"> Analysis Name. </param>
@@ -870,8 +870,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Site Analysis. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="analysisName"> Analysis Name. </param>
@@ -919,7 +919,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/analyses/", false);
             uri.AppendPath(analysisName, true);
             uri.AppendPath("/execute", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -932,6 +931,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -953,7 +953,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/analyses/", false);
             uri.AppendPath(analysisName, true);
             uri.AppendPath("/execute", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -966,6 +965,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -973,11 +973,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Execute Analysis. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
-        /// <param name="diagnosticCategory"> Diagnostic Category. </param>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="diagnosticCategory"> Category Name. </param>
+        /// <param name="analysisName"> Analysis Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
@@ -1009,11 +1009,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Execute Analysis. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
-        /// <param name="diagnosticCategory"> Diagnostic Category. </param>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="diagnosticCategory"> Category Name. </param>
+        /// <param name="analysisName"> Analysis Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
@@ -1085,8 +1085,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Detectors. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1116,8 +1116,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Detectors. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1189,8 +1189,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Detector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="detectorName"> Detector Name. </param>
@@ -1224,8 +1224,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Detector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="detectorName"> Detector Name. </param>
@@ -1273,7 +1273,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
             uri.AppendPath("/execute", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -1286,6 +1285,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -1307,7 +1307,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
             uri.AppendPath("/execute", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -1320,6 +1319,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1327,11 +1327,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Execute Detector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
-        /// <param name="diagnosticCategory"> Diagnostic Category. </param>
-        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="diagnosticCategory"> Category Name. </param>
+        /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
@@ -1363,11 +1363,11 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Execute Detector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
-        /// <param name="diagnosticCategory"> Diagnostic Category. </param>
-        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="diagnosticCategory"> Category Name. </param>
+        /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
@@ -1439,8 +1439,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List Site Detector Responses. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1470,8 +1470,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for List Site Detector Responses. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1514,7 +1514,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -1527,6 +1526,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -1547,7 +1547,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -1560,6 +1559,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1567,8 +1567,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get site detector response. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="detectorName"> Detector Resource Name. </param>
@@ -1605,8 +1605,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get site detector response. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="detectorName"> Detector Resource Name. </param>
@@ -1683,8 +1683,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Diagnostics Categories. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1714,8 +1714,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Diagnostics Categories. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1787,8 +1787,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Diagnostics Category. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
@@ -1822,8 +1822,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Diagnostics Category. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
@@ -1901,10 +1901,10 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Site Analyses. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
-        /// <param name="slot"> Slot - optional. </param>
+        /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/>, <paramref name="slot"/> or <paramref name="diagnosticCategory"/> is null. </exception>
@@ -1934,10 +1934,10 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Site Analyses. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
-        /// <param name="slot"> Slot - optional. </param>
+        /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/>, <paramref name="slot"/> or <paramref name="diagnosticCategory"/> is null. </exception>
@@ -2013,8 +2013,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Site Analysis. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot - optional. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
@@ -2050,8 +2050,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Site Analysis. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot - optional. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
@@ -2103,7 +2103,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/analyses/", false);
             uri.AppendPath(analysisName, true);
             uri.AppendPath("/execute", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -2116,6 +2115,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -2139,7 +2139,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/analyses/", false);
             uri.AppendPath(analysisName, true);
             uri.AppendPath("/execute", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -2152,6 +2151,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -2159,12 +2159,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Execute Analysis. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
-        /// <param name="slot"> Slot - optional. </param>
-        /// <param name="diagnosticCategory"> Diagnostic Category. </param>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="slot"> Slot Name. </param>
+        /// <param name="diagnosticCategory"> Category Name. </param>
+        /// <param name="analysisName"> Analysis Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
@@ -2197,12 +2197,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Execute Analysis. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
-        /// <param name="slot"> Slot - optional. </param>
-        /// <param name="diagnosticCategory"> Diagnostic Category. </param>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="slot"> Slot Name. </param>
+        /// <param name="diagnosticCategory"> Category Name. </param>
+        /// <param name="analysisName"> Analysis Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
@@ -2279,8 +2279,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Detectors. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
@@ -2312,8 +2312,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Detectors. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
@@ -2391,8 +2391,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Detector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
@@ -2428,8 +2428,8 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Get Detector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
@@ -2481,7 +2481,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
             uri.AppendPath("/execute", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -2494,6 +2493,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -2517,7 +2517,6 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/detectors/", false);
             uri.AppendPath(detectorName, true);
             uri.AppendPath("/execute", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
             if (startTime != null)
             {
                 uri.AppendQuery("startTime", startTime.Value, "O", true);
@@ -2530,6 +2529,7 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("timeGrain", timeGrain, true);
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -2537,12 +2537,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Execute Detector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
-        /// <param name="diagnosticCategory"> Diagnostic Category. </param>
-        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="diagnosticCategory"> Category Name. </param>
+        /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
@@ -2575,12 +2575,12 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description for Execute Detector. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
-        /// <param name="diagnosticCategory"> Diagnostic Category. </param>
-        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="diagnosticCategory"> Category Name. </param>
+        /// <param name="detectorName"> Detector Resource Name. </param>
         /// <param name="startTime"> Start Time. </param>
         /// <param name="endTime"> End Time. </param>
         /// <param name="timeGrain"> Time Grain. </param>
@@ -2636,9 +2636,9 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List Hosting Environment Detector Responses. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> App Service Environment Name. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="name"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2667,9 +2667,9 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List Hosting Environment Detector Responses. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="name"> App Service Environment Name. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
+        /// <param name="name"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -2720,8 +2720,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List Site Detector Responses. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
@@ -2751,8 +2751,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List Site Detector Responses. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
@@ -2804,8 +2804,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Diagnostics Categories. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
@@ -2835,8 +2835,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Diagnostics Categories. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
@@ -2888,8 +2888,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Site Analyses. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2921,8 +2921,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Site Analyses. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2976,8 +2976,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Detectors. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3009,8 +3009,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Detectors. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3064,8 +3064,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List Site Detector Responses. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3097,8 +3097,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for List Site Detector Responses. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3152,8 +3152,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Diagnostics Categories. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3185,8 +3185,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Diagnostics Categories. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3240,10 +3240,10 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Site Analyses. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
-        /// <param name="slot"> Slot - optional. </param>
+        /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/>, <paramref name="slot"/> or <paramref name="diagnosticCategory"/> is null. </exception>
@@ -3275,10 +3275,10 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Site Analyses. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
-        /// <param name="slot"> Slot - optional. </param>
+        /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/>, <paramref name="slot"/> or <paramref name="diagnosticCategory"/> is null. </exception>
@@ -3332,8 +3332,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Detectors. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>
@@ -3367,8 +3367,8 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get Detectors. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Site Name. </param>
         /// <param name="slot"> Slot Name. </param>
         /// <param name="diagnosticCategory"> Diagnostic Category. </param>

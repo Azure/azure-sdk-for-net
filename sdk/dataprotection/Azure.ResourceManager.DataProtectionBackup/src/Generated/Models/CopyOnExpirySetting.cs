@@ -14,15 +14,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class CopyOnExpirySetting : DataProtectionBackupCopySetting
     {
         /// <summary> Initializes a new instance of <see cref="CopyOnExpirySetting"/>. </summary>
-        public CopyOnExpirySetting() : base("CopyOnExpiryOption")
+        public CopyOnExpirySetting()
         {
+            ObjectType = "CopyOnExpiryOption";
         }
 
         /// <summary> Initializes a new instance of <see cref="CopyOnExpirySetting"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CopyOnExpirySetting(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyOnExpirySetting(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
         {
+            ObjectType = objectType ?? "CopyOnExpiryOption";
         }
     }
 }

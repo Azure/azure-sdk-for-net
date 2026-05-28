@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct CurrentProtectionState : IEquatable<CurrentProtectionState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CurrentProtectionState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CurrentProtectionState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string NotProtectedValue = "NotProtected";
         private const string ConfiguringProtectionValue = "ConfiguringProtection";
@@ -28,82 +35,47 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private const string SoftDeletedValue = "SoftDeleted";
         private const string UpdatingProtectionValue = "UpdatingProtection";
 
-        /// <summary> Initializes a new instance of <see cref="CurrentProtectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CurrentProtectionState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static CurrentProtectionState Invalid { get; } = new CurrentProtectionState(InvalidValue);
-
-        /// <summary> Gets the NotProtected. </summary>
+        /// <summary> NotProtected. </summary>
         public static CurrentProtectionState NotProtected { get; } = new CurrentProtectionState(NotProtectedValue);
-
-        /// <summary> Gets the ConfiguringProtection. </summary>
+        /// <summary> ConfiguringProtection. </summary>
         public static CurrentProtectionState ConfiguringProtection { get; } = new CurrentProtectionState(ConfiguringProtectionValue);
-
-        /// <summary> Gets the ProtectionConfigured. </summary>
+        /// <summary> ProtectionConfigured. </summary>
         public static CurrentProtectionState ProtectionConfigured { get; } = new CurrentProtectionState(ProtectionConfiguredValue);
-
-        /// <summary> Gets the BackupSchedulesSuspended. </summary>
+        /// <summary> BackupSchedulesSuspended. </summary>
         public static CurrentProtectionState BackupSchedulesSuspended { get; } = new CurrentProtectionState(BackupSchedulesSuspendedValue);
-
-        /// <summary> Gets the RetentionSchedulesSuspended. </summary>
+        /// <summary> RetentionSchedulesSuspended. </summary>
         public static CurrentProtectionState RetentionSchedulesSuspended { get; } = new CurrentProtectionState(RetentionSchedulesSuspendedValue);
-
-        /// <summary> Gets the ProtectionStopped. </summary>
+        /// <summary> ProtectionStopped. </summary>
         public static CurrentProtectionState ProtectionStopped { get; } = new CurrentProtectionState(ProtectionStoppedValue);
-
-        /// <summary> Gets the ProtectionError. </summary>
+        /// <summary> ProtectionError. </summary>
         public static CurrentProtectionState ProtectionError { get; } = new CurrentProtectionState(ProtectionErrorValue);
-
-        /// <summary> Gets the ConfiguringProtectionFailed. </summary>
+        /// <summary> ConfiguringProtectionFailed. </summary>
         public static CurrentProtectionState ConfiguringProtectionFailed { get; } = new CurrentProtectionState(ConfiguringProtectionFailedValue);
-
-        /// <summary> Gets the SoftDeleting. </summary>
+        /// <summary> SoftDeleting. </summary>
         public static CurrentProtectionState SoftDeleting { get; } = new CurrentProtectionState(SoftDeletingValue);
-
-        /// <summary> Gets the SoftDeleted. </summary>
+        /// <summary> SoftDeleted. </summary>
         public static CurrentProtectionState SoftDeleted { get; } = new CurrentProtectionState(SoftDeletedValue);
-
-        /// <summary> Gets the UpdatingProtection. </summary>
+        /// <summary> UpdatingProtection. </summary>
         public static CurrentProtectionState UpdatingProtection { get; } = new CurrentProtectionState(UpdatingProtectionValue);
-
         /// <summary> Determines if two <see cref="CurrentProtectionState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CurrentProtectionState left, CurrentProtectionState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CurrentProtectionState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CurrentProtectionState left, CurrentProtectionState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CurrentProtectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CurrentProtectionState"/>. </summary>
         public static implicit operator CurrentProtectionState(string value) => new CurrentProtectionState(value);
 
-        /// <summary> Converts a string to a <see cref="CurrentProtectionState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CurrentProtectionState?(string value) => value == null ? null : new CurrentProtectionState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CurrentProtectionState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CurrentProtectionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

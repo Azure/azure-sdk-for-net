@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConfidentialLedger.Mocking;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 using Azure.ResourceManager.Resources;
@@ -20,32 +18,30 @@ namespace Azure.ResourceManager.ConfidentialLedger
     /// <summary> A class to add extension methods to Azure.ResourceManager.ConfidentialLedger. </summary>
     public static partial class ConfidentialLedgerExtensions
     {
-        /// <param name="client"></param>
         private static MockableConfidentialLedgerArmClient GetMockableConfidentialLedgerArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableConfidentialLedgerArmClient(client0, ResourceIdentifier.Root));
+            return client.GetCachedClient(client0 => new MockableConfidentialLedgerArmClient(client0));
         }
 
-        /// <param name="resourceGroupResource"></param>
-        private static MockableConfidentialLedgerResourceGroupResource GetMockableConfidentialLedgerResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableConfidentialLedgerResourceGroupResource GetMockableConfidentialLedgerResourceGroupResource(ArmResource resource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockableConfidentialLedgerResourceGroupResource(client, resourceGroupResource.Id));
+            return resource.GetCachedClient(client => new MockableConfidentialLedgerResourceGroupResource(client, resource.Id));
         }
 
-        /// <param name="subscriptionResource"></param>
-        private static MockableConfidentialLedgerSubscriptionResource GetMockableConfidentialLedgerSubscriptionResource(SubscriptionResource subscriptionResource)
+        private static MockableConfidentialLedgerSubscriptionResource GetMockableConfidentialLedgerSubscriptionResource(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient(client => new MockableConfidentialLedgerSubscriptionResource(client, subscriptionResource.Id));
+            return resource.GetCachedClient(client => new MockableConfidentialLedgerSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfidentialLedgerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ConfidentialLedgerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConfidentialLedgerResource.CreateResourceIdentifier" /> to create a <see cref="ConfidentialLedgerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfidentialLedgerArmClient.GetConfidentialLedgerResource(ResourceIdentifier)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerArmClient.GetConfidentialLedgerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ConfidentialLedgerResource"/> object. </returns>
@@ -57,15 +53,34 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Gets a collection of ConfidentialLedgers in the <see cref="ResourceGroupResource"/>
+        /// Gets an object representing a <see cref="ManagedCcfResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedCcfResource.CreateResourceIdentifier" /> to create a <see cref="ManagedCcfResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfidentialLedgerResourceGroupResource.GetConfidentialLedgers()"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerArmClient.GetManagedCcfResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManagedCcfResource"/> object. </returns>
+        public static ManagedCcfResource GetManagedCcfResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableConfidentialLedgerArmClient(client).GetManagedCcfResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of ConfidentialLedgerResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerResourceGroupResource.GetConfidentialLedgers()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ConfidentialLedgers and their operations over a ConfidentialLedgerResource. </returns>
+        /// <returns> An object representing collection of ConfidentialLedgerResources and their operations over a ConfidentialLedgerResource. </returns>
         public static ConfidentialLedgerCollection GetConfidentialLedgers(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -75,15 +90,34 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// Retrieves the properties of a Confidential Ledger.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfidentialLedgerResourceGroupResource.GetConfidentialLedgerAsync(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerResourceGroupResource.GetConfidentialLedgerAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="ledgerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ConfidentialLedgerResource>> GetConfidentialLedgerAsync(this ResourceGroupResource resourceGroupResource, string ledgerName, CancellationToken cancellationToken = default)
         {
@@ -94,15 +128,34 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// Retrieves the properties of a Confidential Ledger.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfidentialLedgerResourceGroupResource.GetConfidentialLedger(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerResourceGroupResource.GetConfidentialLedger(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="ledgerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ConfidentialLedgerResource> GetConfidentialLedger(this ResourceGroupResource resourceGroupResource, string ledgerName, CancellationToken cancellationToken = default)
         {
@@ -112,54 +165,123 @@ namespace Azure.ResourceManager.ConfidentialLedger
         }
 
         /// <summary>
-        /// Retrieves the properties of all Confidential Ledgers.
+        /// Gets a collection of ManagedCcfResources in the ResourceGroupResource.
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfidentialLedgerSubscriptionResource.GetConfidentialLedgersAsync(string, CancellationToken)"/> instead. </description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerResourceGroupResource.GetManagedCcfs()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfidentialLedgerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfidentialLedgerResource> GetConfidentialLedgersAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ManagedCcfResources and their operations over a ManagedCcfResource. </returns>
+        public static ManagedCcfCollection GetManagedCcfs(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableConfidentialLedgerSubscriptionResource(subscriptionResource).GetConfidentialLedgersAsync(filter, cancellationToken);
+            return GetMockableConfidentialLedgerResourceGroupResource(resourceGroupResource).GetManagedCcfs();
         }
 
         /// <summary>
-        /// Retrieves the properties of all Confidential Ledgers.
+        /// Retrieves the properties of a Managed CCF app.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfidentialLedgerSubscriptionResource.GetConfidentialLedgers(string, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/managedCCFs/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedCCF_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerResourceGroupResource.GetManagedCcfAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="appName"> Name of the Managed CCF. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfidentialLedgerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfidentialLedgerResource> GetConfidentialLedgers(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="appName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ManagedCcfResource>> GetManagedCcfAsync(this ResourceGroupResource resourceGroupResource, string appName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableConfidentialLedgerSubscriptionResource(subscriptionResource).GetConfidentialLedgers(filter, cancellationToken);
+            return await GetMockableConfidentialLedgerResourceGroupResource(resourceGroupResource).GetManagedCcfAsync(appName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of a Managed CCF app.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/managedCCFs/{appName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedCCF_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerResourceGroupResource.GetManagedCcf(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="appName"> Name of the Managed CCF. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="appName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="appName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<ManagedCcfResource> GetManagedCcf(this ResourceGroupResource resourceGroupResource, string appName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableConfidentialLedgerResourceGroupResource(resourceGroupResource).GetManagedCcf(appName, cancellationToken);
         }
 
         /// <summary>
         /// To check whether a resource name is available.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfidentialLedgerSubscriptionResource.CheckConfidentialLedgerNameAvailabilityAsync(ConfidentialLedgerNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerSubscriptionResource.CheckConfidentialLedgerNameAvailability(ConfidentialLedgerNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -169,20 +291,182 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         /// <summary>
         /// To check whether a resource name is available.
+        /// <list type="bullet">
         /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfidentialLedgerSubscriptionResource.CheckConfidentialLedgerNameAvailability(ConfidentialLedgerNameAvailabilityContent, CancellationToken)"/> instead. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerSubscriptionResource.CheckConfidentialLedgerNameAvailability(ConfidentialLedgerNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Name availability request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableConfidentialLedgerSubscriptionResource(subscriptionResource).CheckConfidentialLedgerNameAvailability(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of all Confidential Ledgers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerSubscriptionResource.GetConfidentialLedgers(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ConfidentialLedgerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConfidentialLedgerResource> GetConfidentialLedgersAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableConfidentialLedgerSubscriptionResource(subscriptionResource).GetConfidentialLedgersAsync(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of all Confidential Ledgers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/ledgers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerSubscriptionResource.GetConfidentialLedgers(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConfidentialLedgerResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConfidentialLedgerResource> GetConfidentialLedgers(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableConfidentialLedgerSubscriptionResource(subscriptionResource).GetConfidentialLedgers(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of all Managed CCF.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/managedCCFs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedCCF_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerSubscriptionResource.GetManagedCcfs(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedCcfResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ManagedCcfResource> GetManagedCcfsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableConfidentialLedgerSubscriptionResource(subscriptionResource).GetManagedCcfsAsync(filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of all Managed CCF.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ConfidentialLedger/managedCCFs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedCCF_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-19-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfidentialLedgerSubscriptionResource.GetManagedCcfs(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedCcfResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ManagedCcfResource> GetManagedCcfs(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableConfidentialLedgerSubscriptionResource(subscriptionResource).GetManagedCcfs(filter, cancellationToken);
         }
     }
 }

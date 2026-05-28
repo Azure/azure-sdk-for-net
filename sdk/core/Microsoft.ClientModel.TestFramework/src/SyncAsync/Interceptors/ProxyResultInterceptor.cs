@@ -2,6 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
 namespace Microsoft.ClientModel.TestFramework;
@@ -19,7 +25,8 @@ internal class ProxyResultInterceptor : IInterceptor
     {
         var type = invocation.Method.ReturnType;
 
-        if (CanProxyClient(invocation))
+        // We don't want to instrument generated rest clients.
+        if ((type.Name.EndsWith("Client") && !type.Name.EndsWith("RestClient") && !type.Name.EndsWith("ExtensionClient")))
         {
             if (IsNullResult(invocation))
                 return;
@@ -34,25 +41,6 @@ internal class ProxyResultInterceptor : IInterceptor
         }
 
         invocation.Proceed();
-    }
-
-    private static bool CanProxyClient(IInvocation invocation)
-    {
-        var type = invocation.Method.ReturnType;
-
-        // System types, rest clients, extension clients are not proxied
-        if (type.Namespace?.StartsWith("System.") == true || type.Name.EndsWith("RestClient") || type.Name.EndsWith("ExtensionClient"))
-        {
-            return false;
-        }
-
-        // Clients and subclients without "Client" suffix are proxied
-        if (type.Name.EndsWith("Client") || (type.IsPublic && type.GetProperty("Pipeline") != null))
-        {
-            return true;
-        }
-
-        return false;
     }
 
     private bool IsNullResult(IInvocation invocation)

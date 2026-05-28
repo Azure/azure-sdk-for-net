@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary></summary>
+    /// <summary> The SearchServiceAdminKeyKind. </summary>
     public enum SearchServiceAdminKeyKind
     {
         /// <summary> The primary API key for the search service. </summary>

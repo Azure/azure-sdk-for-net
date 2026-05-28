@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Tests
 {
-    public class HciClusterOperationTests : HciManagementTestBase
+    public class HciClusterOperationTests: HciManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private HciClusterResource _cluster;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Tests
                 {
                     DiagnosticLevel = HciClusterDiagnosticLevel.Enhanced
                 },
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None)
+                ManagedServiceIdentityType = Models.HciManagedServiceIdentityType.None
             };
 
             HciClusterResource clusterFromUpdate = await cluster.UpdateAsync(patch);

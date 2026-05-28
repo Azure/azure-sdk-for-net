@@ -6,36 +6,44 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
     /// <summary>
-    /// A class representing a BillingBenefitsSavingsPlanOrderAlias along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingBenefitsSavingsPlanOrderAliases method.
+    /// A Class representing a BillingBenefitsSavingsPlanOrderAlias along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingBenefitsSavingsPlanOrderAliasResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingBenefitsSavingsPlanOrderAlias method.
     /// </summary>
     public partial class BillingBenefitsSavingsPlanOrderAliasResource : ArmResource
     {
-        private readonly ClientDiagnostics _savingsPlanOrderAliasClientDiagnostics;
-        private readonly SavingsPlanOrderAlias _savingsPlanOrderAliasRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> instance. </summary>
+        /// <param name="savingsPlanOrderAliasName"> The savingsPlanOrderAliasName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string savingsPlanOrderAliasName)
+        {
+            var resourceId = $"/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics;
+        private readonly SavingsPlanOrderAliasRestOperations _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient;
         private readonly BillingBenefitsSavingsPlanOrderAliasData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.BillingBenefits/savingsPlanOrderAliases";
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanOrderAliasResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> class for mocking. </summary>
         protected BillingBenefitsSavingsPlanOrderAliasResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingBenefitsSavingsPlanOrderAliasResource(ArmClient client, BillingBenefitsSavingsPlanOrderAliasData data) : this(client, data.Id)
@@ -44,90 +52,71 @@ namespace Azure.ResourceManager.BillingBenefits
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingBenefitsSavingsPlanOrderAliasResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string billingBenefitsSavingsPlanOrderAliasApiVersion);
-            _savingsPlanOrderAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _savingsPlanOrderAliasRestClient = new SavingsPlanOrderAlias(_savingsPlanOrderAliasClientDiagnostics, Pipeline, Endpoint, billingBenefitsSavingsPlanOrderAliasApiVersion ?? "2025-12-01-preview");
-            ValidateResourceId(id);
+            _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasApiVersion);
+            _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient = new SavingsPlanOrderAliasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingBenefitsSavingsPlanOrderAliasData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="savingsPlanOrderAliasName"> The savingsPlanOrderAliasName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string savingsPlanOrderAliasName)
-        {
-            string resourceId = $"/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a savings plan.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SavingsPlanOrderAliasModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlanOrderAlias_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingBenefitsSavingsPlanOrderAliasResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _savingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasResource.Get");
+            using var scope = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BillingBenefitsSavingsPlanOrderAliasData> response = Response.FromValue(BillingBenefitsSavingsPlanOrderAliasData.FromResponse(result), result);
+                var response = await _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BillingBenefitsSavingsPlanOrderAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -141,41 +130,33 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Get a savings plan.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SavingsPlanOrderAliasModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlanOrderAlias_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingBenefitsSavingsPlanOrderAliasResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _savingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasResource.Get");
+            using var scope = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateGetRequest(Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<BillingBenefitsSavingsPlanOrderAliasData> response = Response.FromValue(BillingBenefitsSavingsPlanOrderAliasData.FromResponse(result), result);
+                var response = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new BillingBenefitsSavingsPlanOrderAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -186,23 +167,23 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary>
-        /// Update a BillingBenefitsSavingsPlanOrderAlias.
+        /// Create a savings plan. Learn more about permissions needed at https://go.microsoft.com/fwlink/?linkid=2215851
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SavingsPlanOrderAliasModels_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlanOrderAlias_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,27 +195,14 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _savingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasResource.Update");
+            using var scope = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateCreateRequest(Id.Name, BillingBenefitsSavingsPlanOrderAliasData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(
-                    new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client),
-                    _savingsPlanOrderAliasClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.CreateAsync(Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client), _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics, Pipeline, _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.CreateCreateRequest(Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -245,23 +213,23 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary>
-        /// Update a BillingBenefitsSavingsPlanOrderAlias.
+        /// Create a savings plan. Learn more about permissions needed at https://go.microsoft.com/fwlink/?linkid=2215851
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SavingsPlanOrderAliasModels_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>SavingsPlanOrderAlias_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,27 +241,14 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _savingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasResource.Update");
+            using var scope = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics.CreateScope("BillingBenefitsSavingsPlanOrderAliasResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _savingsPlanOrderAliasRestClient.CreateCreateRequest(Id.Name, BillingBenefitsSavingsPlanOrderAliasData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(
-                    new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client),
-                    _savingsPlanOrderAliasClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.Create(Id.Name, data, cancellationToken);
+                var operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanOrderAliasResource>(new BillingBenefitsSavingsPlanOrderAliasOperationSource(Client), _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasClientDiagnostics, Pipeline, _billingBenefitsSavingsPlanOrderAliasSavingsPlanOrderAliasRestClient.CreateCreateRequest(Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

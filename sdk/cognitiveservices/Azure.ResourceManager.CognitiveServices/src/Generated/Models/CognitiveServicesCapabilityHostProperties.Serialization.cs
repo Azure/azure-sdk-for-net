@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.CognitiveServices;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The CognitiveServicesCapabilityHostProperties. </summary>
-    public partial class CognitiveServicesCapabilityHostProperties : CognitiveServicesResourceBase, IJsonModel<CognitiveServicesCapabilityHostProperties>
+    public partial class CognitiveServicesCapabilityHostProperties : IUtf8JsonSerializable, IJsonModel<CognitiveServicesCapabilityHostProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CognitiveServicesResourceBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapabilityHostProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCognitiveServicesCapabilityHostProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesCapabilityHostProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesCapabilityHostProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapabilityHostProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesCapabilityHostProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CognitiveServicesCapabilityHostProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServicesCapabilityHostProperties IPersistableModel<CognitiveServicesCapabilityHostProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (CognitiveServicesCapabilityHostProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CognitiveServicesCapabilityHostProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CognitiveServicesCapabilityHostProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,26 +30,29 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapabilityHostProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapabilityHostProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesCapabilityHostProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(AiServicesConnections))
             {
-                writer.WritePropertyName("aiServicesConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in AiServicesConnections)
+                if (AiServicesConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("aiServicesConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in AiServicesConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("aiServicesConnections");
+                }
             }
             if (Optional.IsDefined(CapabilityHostKind))
             {
@@ -97,8 +61,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             if (Optional.IsDefined(CustomerSubnet))
             {
-                writer.WritePropertyName("customerSubnet"u8);
-                writer.WriteStringValue(CustomerSubnet);
+                if (CustomerSubnet != null)
+                {
+                    writer.WritePropertyName("customerSubnet"u8);
+                    writer.WriteStringValue(CustomerSubnet);
+                }
+                else
+                {
+                    writer.WriteNull("customerSubnet");
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -107,84 +78,77 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             if (Optional.IsCollectionDefined(StorageConnections))
             {
-                writer.WritePropertyName("storageConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in StorageConnections)
+                if (StorageConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("storageConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in StorageConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("storageConnections");
+                }
             }
             if (Optional.IsCollectionDefined(ThreadStorageConnections))
             {
-                writer.WritePropertyName("threadStorageConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in ThreadStorageConnections)
+                if (ThreadStorageConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("threadStorageConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ThreadStorageConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("threadStorageConnections");
+                }
             }
             if (Optional.IsCollectionDefined(VectorStoreConnections))
             {
-                writer.WritePropertyName("vectorStoreConnections"u8);
-                writer.WriteStartArray();
-                foreach (string item in VectorStoreConnections)
+                if (VectorStoreConnections != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("vectorStoreConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in VectorStoreConnections)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(EnablePublicHostingEnvironment))
-            {
-                writer.WritePropertyName("enablePublicHostingEnvironment"u8);
-                writer.WriteBooleanValue(EnablePublicHostingEnvironment.Value);
+                else
+                {
+                    writer.WriteNull("vectorStoreConnections");
+                }
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServicesCapabilityHostProperties IJsonModel<CognitiveServicesCapabilityHostProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CognitiveServicesCapabilityHostProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CognitiveServicesResourceBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CognitiveServicesCapabilityHostProperties IJsonModel<CognitiveServicesCapabilityHostProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapabilityHostProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapabilityHostProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesCapabilityHostProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCognitiveServicesCapabilityHostProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CognitiveServicesCapabilityHostProperties DeserializeCognitiveServicesCapabilityHostProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CognitiveServicesCapabilityHostProperties DeserializeCognitiveServicesCapabilityHostProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string description = default;
-            IDictionary<string, string> tags = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<string> aiServicesConnections = default;
             CapabilityHostKind? capabilityHostKind = default;
             string customerSubnet = default;
@@ -192,178 +156,442 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IList<string> storageConnections = default;
             IList<string> threadStorageConnections = default;
             IList<string> vectorStoreConnections = default;
-            bool? enablePublicHostingEnvironment = default;
-            foreach (var prop in element.EnumerateObject())
+            string description = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("description"u8))
+                if (property.NameEquals("aiServicesConnections"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("tags"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("aiServicesConnections"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     aiServicesConnections = array;
                     continue;
                 }
-                if (prop.NameEquals("capabilityHostKind"u8))
+                if (property.NameEquals("capabilityHostKind"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capabilityHostKind = new CapabilityHostKind(prop.Value.GetString());
+                    capabilityHostKind = new CapabilityHostKind(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("customerSubnet"u8))
+                if (property.NameEquals("customerSubnet"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         customerSubnet = null;
                         continue;
                     }
-                    customerSubnet = prop.Value.GetString();
+                    customerSubnet = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new CapabilityHostProvisioningState(prop.Value.GetString());
+                    provisioningState = new CapabilityHostProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("storageConnections"u8))
+                if (property.NameEquals("storageConnections"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     storageConnections = array;
                     continue;
                 }
-                if (prop.NameEquals("threadStorageConnections"u8))
+                if (property.NameEquals("threadStorageConnections"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     threadStorageConnections = array;
                     continue;
                 }
-                if (prop.NameEquals("vectorStoreConnections"u8))
+                if (property.NameEquals("vectorStoreConnections"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     vectorStoreConnections = array;
                     continue;
                 }
-                if (prop.NameEquals("enablePublicHostingEnvironment"u8))
+                if (property.NameEquals("description"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        description = null;
+                        continue;
+                    }
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enablePublicHostingEnvironment = prop.Value.GetBoolean();
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new CognitiveServicesCapabilityHostProperties(
                 description,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 aiServicesConnections ?? new ChangeTrackingList<string>(),
                 capabilityHostKind,
                 customerSubnet,
                 provisioningState,
                 storageConnections ?? new ChangeTrackingList<string>(),
                 threadStorageConnections ?? new ChangeTrackingList<string>(),
-                vectorStoreConnections ?? new ChangeTrackingList<string>(),
-                enablePublicHostingEnvironment);
+                vectorStoreConnections ?? new ChangeTrackingList<string>());
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AiServicesConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aiServicesConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AiServicesConnections))
+                {
+                    if (AiServicesConnections.Any())
+                    {
+                        builder.Append("  aiServicesConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AiServicesConnections)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityHostKind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  capabilityHostKind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CapabilityHostKind))
+                {
+                    builder.Append("  capabilityHostKind: ");
+                    builder.AppendLine($"'{CapabilityHostKind.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomerSubnet), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customerSubnet: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomerSubnet))
+                {
+                    builder.Append("  customerSubnet: ");
+                    if (CustomerSubnet.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomerSubnet}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomerSubnet}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(StorageConnections))
+                {
+                    if (StorageConnections.Any())
+                    {
+                        builder.Append("  storageConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in StorageConnections)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreadStorageConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  threadStorageConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ThreadStorageConnections))
+                {
+                    if (ThreadStorageConnections.Any())
+                    {
+                        builder.Append("  threadStorageConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ThreadStorageConnections)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VectorStoreConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vectorStoreConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(VectorStoreConnections))
+                {
+                    if (VectorStoreConnections.Any())
+                    {
+                        builder.Append("  vectorStoreConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in VectorStoreConnections)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  tags: ");
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<CognitiveServicesCapabilityHostProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapabilityHostProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesCapabilityHostProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CognitiveServicesCapabilityHostProperties IPersistableModel<CognitiveServicesCapabilityHostProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapabilityHostProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCognitiveServicesCapabilityHostProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesCapabilityHostProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CognitiveServicesCapabilityHostProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

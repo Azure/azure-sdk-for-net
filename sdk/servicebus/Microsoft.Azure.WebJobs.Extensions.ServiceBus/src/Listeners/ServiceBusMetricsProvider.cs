@@ -1,14 +1,14 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
+using Microsoft.Azure.WebJobs.ServiceBus;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
-using Microsoft.Azure.WebJobs.Host.Scale;
-using Microsoft.Azure.WebJobs.ServiceBus;
-using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
-using Microsoft.Extensions.Logging;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 
 namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
 {
@@ -17,7 +17,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
         internal const string DeadLetterQueuePath = @"/$DeadLetterQueue";
 
         private readonly ILogger _logger;
-        private readonly string _functionId;
         private readonly string _entityPath;
         private readonly ServiceBusEntityType _serviceBusEntityType;
         private readonly Lazy<ServiceBusReceiver> _receiver;
@@ -31,14 +30,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
         private DateTime _nextWarningTime;
 
         public ServiceBusMetricsProvider(
-            string functionId,
             string entityPath,
             ServiceBusEntityType serviceBusEntityType,
             Lazy<ServiceBusReceiver> receiver,
             Lazy<ServiceBusAdministrationClient> administrationClient,
             ILoggerFactory loggerFactory)
         {
-            _functionId = functionId;
             _serviceBusEntityType = serviceBusEntityType;
             _receiver = receiver;
             _entityPath = entityPath;
@@ -93,20 +90,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             catch (ServiceBusException ex)
             when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
             {
-                _logger.LogFunctionScaleWarning($"ServiceBus {entityName} '{_entityPath}' was not found.", _functionId, ex);
+                _logger.LogWarning($"ServiceBus {entityName} '{_entityPath}' was not found.");
             }
             catch (UnauthorizedAccessException ex)
             {
                 if (TimeToLogWarning())
                 {
-                    _logger.LogFunctionScaleWarning($"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.",
-                        _functionId, ex);
+                    _logger.LogWarning(ex, $"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.");
                 }
                 throw;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogFunctionScaleWarning($"Error querying for Service Bus {entityName} scale", _functionId, ex);
+                _logger.LogWarning(e, $"Error querying for Service Bus {entityName} scale");
             }
 
             long totalNewMessageCount = 0;
@@ -167,20 +163,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             catch (ServiceBusException ex)
             when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
             {
-                _logger.LogFunctionScaleWarning($"ServiceBus {entityName} '{_entityPath}' was not found.", _functionId, ex);
+                _logger.LogWarning($"ServiceBus {entityName} '{_entityPath}' was not found.");
             }
-            catch (UnauthorizedAccessException ex) // When manage claim is not used on Service Bus connection string
+            catch (UnauthorizedAccessException) // When manage claim is not used on Service Bus connection string
             {
                 if (TimeToLogWarning())
                 {
-                    _logger.LogFunctionScaleWarning($"Connection string does not have Manage claim for {entityName} '{_entityPath}'. Failed to get {entityName} description to " +
-                        $"derive {entityName} length metrics. Falling back to using first message enqueued time.",
-                        _functionId, ex);
+                    _logger.LogWarning($"Connection string does not have Manage claim for {entityName} '{_entityPath}'. Failed to get {entityName} description to " +
+                        $"derive {entityName} length metrics. Falling back to using first message enqueued time.");
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.LogFunctionScaleWarning($"Error querying for Service Bus {entityName} scale status", _functionId, ex);
+                _logger.LogWarning($"Error querying for Service Bus {entityName} scale status: {e.Message}");
             }
 
             // Path for connection strings with no manage claim

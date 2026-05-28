@@ -6,19 +6,29 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> Client options for <see cref="EasmClient"/>. </summary>
+    /// <summary> Client options for EasmClient. </summary>
     public partial class EasmClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_10_01_Preview;
 
-        /// <summary> Initializes a new instance of EasmClientOptions. </summary>
-        /// <param name="version"> The service version. </param>
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Service version "2023-03-01-preview". </summary>
+            V2023_03_01_Preview = 1,
+            /// <summary> Service version "2024-03-01-preview". </summary>
+            V2024_03_01_Preview = 2,
+            /// <summary> Service version "2024-10-01-preview". </summary>
+            V2024_10_01_Preview = 3,
+        }
+
+        internal string Version { get; }
+
+        /// <summary> Initializes new instance of EasmClientOptions. </summary>
         public EasmClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -28,41 +38,6 @@ namespace Azure.Analytics.Defender.Easm
                 ServiceVersion.V2024_10_01_Preview => "2024-10-01-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
-        }
-
-        /// <summary> Initializes a new instance of EasmClientOptions from configuration. </summary>
-        /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
-        internal EasmClientOptions(IConfigurationSection section) : base(section, null)
-        {
-            Version = "2024-10-01-preview";
-            if (section is null || !section.Exists())
-            {
-                return;
-            }
-            if (section["Version"] is string version)
-            {
-                Version = version;
-            }
-            ConfigureLogging();
-        }
-
-        /// <summary> Gets the Version. </summary>
-        internal string Version { get; }
-
-        /// <summary> Configures logging for the client options. </summary>
-        partial void ConfigureLogging();
-
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Version 2023-03-01-preview. </summary>
-            V2023_03_01_Preview = 1,
-            /// <summary> Version 2024-03-01-preview. </summary>
-            V2024_03_01_Preview = 2,
-            /// <summary> Version 2024-10-01-preview. </summary>
-            V2024_10_01_Preview = 3
         }
     }
 }

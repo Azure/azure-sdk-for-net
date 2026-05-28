@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct CognitiveServicesConnectionGroup : IEquatable<CognitiveServicesConnectionGroup>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesConnectionGroup"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CognitiveServicesConnectionGroup(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AzureValue = "Azure";
         private const string AzureAIValue = "AzureAI";
         private const string DatabaseValue = "Database";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string GenericProtocolValue = "GenericProtocol";
         private const string ServicesAndAppsValue = "ServicesAndApps";
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesConnectionGroup"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CognitiveServicesConnectionGroup(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Azure. </summary>
+        /// <summary> Azure. </summary>
         public static CognitiveServicesConnectionGroup Azure { get; } = new CognitiveServicesConnectionGroup(AzureValue);
-
-        /// <summary> Gets the AzureAI. </summary>
+        /// <summary> AzureAI. </summary>
         public static CognitiveServicesConnectionGroup AzureAI { get; } = new CognitiveServicesConnectionGroup(AzureAIValue);
-
-        /// <summary> Gets the Database. </summary>
+        /// <summary> Database. </summary>
         public static CognitiveServicesConnectionGroup Database { get; } = new CognitiveServicesConnectionGroup(DatabaseValue);
-
-        /// <summary> Gets the NoSQL. </summary>
+        /// <summary> NoSQL. </summary>
         public static CognitiveServicesConnectionGroup NoSQL { get; } = new CognitiveServicesConnectionGroup(NoSQLValue);
-
-        /// <summary> Gets the File. </summary>
+        /// <summary> File. </summary>
         public static CognitiveServicesConnectionGroup File { get; } = new CognitiveServicesConnectionGroup(FileValue);
-
-        /// <summary> Gets the GenericProtocol. </summary>
+        /// <summary> GenericProtocol. </summary>
         public static CognitiveServicesConnectionGroup GenericProtocol { get; } = new CognitiveServicesConnectionGroup(GenericProtocolValue);
-
-        /// <summary> Gets the ServicesAndApps. </summary>
+        /// <summary> ServicesAndApps. </summary>
         public static CognitiveServicesConnectionGroup ServicesAndApps { get; } = new CognitiveServicesConnectionGroup(ServicesAndAppsValue);
-
         /// <summary> Determines if two <see cref="CognitiveServicesConnectionGroup"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CognitiveServicesConnectionGroup left, CognitiveServicesConnectionGroup right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CognitiveServicesConnectionGroup"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CognitiveServicesConnectionGroup left, CognitiveServicesConnectionGroup right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CognitiveServicesConnectionGroup"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CognitiveServicesConnectionGroup"/>. </summary>
         public static implicit operator CognitiveServicesConnectionGroup(string value) => new CognitiveServicesConnectionGroup(value);
 
-        /// <summary> Converts a string to a <see cref="CognitiveServicesConnectionGroup"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CognitiveServicesConnectionGroup?(string value) => value == null ? null : new CognitiveServicesConnectionGroup(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CognitiveServicesConnectionGroup other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CognitiveServicesConnectionGroup other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

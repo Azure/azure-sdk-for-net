@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     public readonly partial struct GuestConfigurationAssignmentType : IEquatable<GuestConfigurationAssignmentType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GuestConfigurationAssignmentType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string AuditValue = "Audit";
         private const string DeployAndAutoCorrectValue = "DeployAndAutoCorrect";
         private const string ApplyAndAutoCorrectValue = "ApplyAndAutoCorrect";
         private const string ApplyAndMonitorValue = "ApplyAndMonitor";
 
-        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GuestConfigurationAssignmentType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Audit. </summary>
+        /// <summary> Audit. </summary>
         public static GuestConfigurationAssignmentType Audit { get; } = new GuestConfigurationAssignmentType(AuditValue);
-
-        /// <summary> Gets the DeployAndAutoCorrect. </summary>
+        /// <summary> DeployAndAutoCorrect. </summary>
         public static GuestConfigurationAssignmentType DeployAndAutoCorrect { get; } = new GuestConfigurationAssignmentType(DeployAndAutoCorrectValue);
-
-        /// <summary> Gets the ApplyAndAutoCorrect. </summary>
+        /// <summary> ApplyAndAutoCorrect. </summary>
         public static GuestConfigurationAssignmentType ApplyAndAutoCorrect { get; } = new GuestConfigurationAssignmentType(ApplyAndAutoCorrectValue);
-
-        /// <summary> Gets the ApplyAndMonitor. </summary>
+        /// <summary> ApplyAndMonitor. </summary>
         public static GuestConfigurationAssignmentType ApplyAndMonitor { get; } = new GuestConfigurationAssignmentType(ApplyAndMonitorValue);
-
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GuestConfigurationAssignmentType left, GuestConfigurationAssignmentType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GuestConfigurationAssignmentType left, GuestConfigurationAssignmentType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="GuestConfigurationAssignmentType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GuestConfigurationAssignmentType"/>. </summary>
         public static implicit operator GuestConfigurationAssignmentType(string value) => new GuestConfigurationAssignmentType(value);
 
-        /// <summary> Converts a string to a <see cref="GuestConfigurationAssignmentType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator GuestConfigurationAssignmentType?(string value) => value == null ? null : new GuestConfigurationAssignmentType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GuestConfigurationAssignmentType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(GuestConfigurationAssignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// </summary>
     public partial class FederatedIdentityCredentialCollection : ArmCollection, IEnumerable<FederatedIdentityCredentialResource>, IAsyncEnumerable<FederatedIdentityCredentialResource>
     {
-        private readonly ClientDiagnostics _federatedIdentityCredentialsClientDiagnostics;
-        private readonly FederatedIdentityCredentials _federatedIdentityCredentialsRestClient;
+        private readonly ClientDiagnostics _federatedIdentityCredentialClientDiagnostics;
+        private readonly FederatedIdentityCredentialsRestOperations _federatedIdentityCredentialRestClient;
 
-        /// <summary> Initializes a new instance of FederatedIdentityCredentialCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FederatedIdentityCredentialCollection"/> class for mocking. </summary>
         protected FederatedIdentityCredentialCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FederatedIdentityCredentialCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal FederatedIdentityCredentialCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _federatedIdentityCredentialClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities", FederatedIdentityCredentialResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FederatedIdentityCredentialResource.ResourceType, out string federatedIdentityCredentialApiVersion);
-            _federatedIdentityCredentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities", FederatedIdentityCredentialResource.ResourceType.Namespace, Diagnostics);
-            _federatedIdentityCredentialsRestClient = new FederatedIdentityCredentials(_federatedIdentityCredentialsClientDiagnostics, Pipeline, Endpoint, federatedIdentityCredentialApiVersion ?? "2025-05-31-preview");
-            ValidateResourceId(id);
+            _federatedIdentityCredentialRestClient = new FederatedIdentityCredentialsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, federatedIdentityCredentialApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != UserAssignedIdentityResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, UserAssignedIdentityResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, UserAssignedIdentityResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a federated identity credential under the specified user assigned identity.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FederatedIdentityCredentials_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FederatedIdentityCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
         /// <param name="data"> Parameters to create or update the federated identity credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FederatedIdentityCredentialResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string federatedIdentityCredentialResourceName, FederatedIdentityCredentialData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _federatedIdentityCredentialsClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.CreateOrUpdate");
+            using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, FederatedIdentityCredentialData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FederatedIdentityCredentialData> response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ManagedServiceIdentitiesArmOperation<FederatedIdentityCredentialResource> operation = new ManagedServiceIdentitiesArmOperation<FederatedIdentityCredentialResource>(Response.FromValue(new FederatedIdentityCredentialResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _federatedIdentityCredentialRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _federatedIdentityCredentialRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagedServiceIdentitiesArmOperation<FederatedIdentityCredentialResource>(Response.FromValue(new FederatedIdentityCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Create or update a federated identity credential under the specified user assigned identity.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FederatedIdentityCredentials_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FederatedIdentityCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
         /// <param name="data"> Parameters to create or update the federated identity credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FederatedIdentityCredentialResource> CreateOrUpdate(WaitUntil waitUntil, string federatedIdentityCredentialResourceName, FederatedIdentityCredentialData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _federatedIdentityCredentialsClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.CreateOrUpdate");
+            using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, FederatedIdentityCredentialData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FederatedIdentityCredentialData> response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ManagedServiceIdentitiesArmOperation<FederatedIdentityCredentialResource> operation = new ManagedServiceIdentitiesArmOperation<FederatedIdentityCredentialResource>(Response.FromValue(new FederatedIdentityCredentialResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _federatedIdentityCredentialRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, data, cancellationToken);
+                var uri = _federatedIdentityCredentialRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagedServiceIdentitiesArmOperation<FederatedIdentityCredentialResource>(Response.FromValue(new FederatedIdentityCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Gets the federated identity credential.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FederatedIdentityCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FederatedIdentityCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual async Task<Response<FederatedIdentityCredentialResource>> GetAsync(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
 
-            using DiagnosticScope scope = _federatedIdentityCredentialsClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Get");
+            using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FederatedIdentityCredentialData> response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
+                var response = await _federatedIdentityCredentialRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FederatedIdentityCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Gets the federated identity credential.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FederatedIdentityCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FederatedIdentityCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual Response<FederatedIdentityCredentialResource> Get(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
 
-            using DiagnosticScope scope = _federatedIdentityCredentialsClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Get");
+            using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<FederatedIdentityCredentialData> response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
+                var response = _federatedIdentityCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new FederatedIdentityCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,54 +247,52 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Lists all the federated identity credentials under the specified user assigned identity.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FederatedIdentityCredentials_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FederatedIdentityCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FederatedIdentityCredentialResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FederatedIdentityCredentialResource> GetAllAsync(int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FederatedIdentityCredentialResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FederatedIdentityCredentialResource> GetAllAsync(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<FederatedIdentityCredentialData, FederatedIdentityCredentialResource>(new FederatedIdentityCredentialsGetAllAsyncCollectionResultOfT(
-                _federatedIdentityCredentialsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                top,
-                skiptoken,
-                context,
-                "FederatedIdentityCredentialCollection.GetAll"), data => new FederatedIdentityCredentialResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _federatedIdentityCredentialRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _federatedIdentityCredentialRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FederatedIdentityCredentialResource(Client, FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(e)), _federatedIdentityCredentialClientDiagnostics, Pipeline, "FederatedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the federated identity credentials under the specified user assigned identity.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FederatedIdentityCredentials_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FederatedIdentityCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,71 +300,47 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FederatedIdentityCredentialResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FederatedIdentityCredentialResource> GetAll(int? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<FederatedIdentityCredentialResource> GetAll(int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<FederatedIdentityCredentialData, FederatedIdentityCredentialResource>(new FederatedIdentityCredentialsGetAllCollectionResultOfT(
-                _federatedIdentityCredentialsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                top,
-                skiptoken,
-                context,
-                "FederatedIdentityCredentialCollection.GetAll"), data => new FederatedIdentityCredentialResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _federatedIdentityCredentialRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _federatedIdentityCredentialRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FederatedIdentityCredentialResource(Client, FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(e)), _federatedIdentityCredentialClientDiagnostics, Pipeline, "FederatedIdentityCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FederatedIdentityCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FederatedIdentityCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
 
-            using DiagnosticScope scope = _federatedIdentityCredentialsClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Exists");
+            using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<FederatedIdentityCredentialData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FederatedIdentityCredentialData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _federatedIdentityCredentialRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,50 +354,36 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FederatedIdentityCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FederatedIdentityCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
 
-            using DiagnosticScope scope = _federatedIdentityCredentialsClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Exists");
+            using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<FederatedIdentityCredentialData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FederatedIdentityCredentialData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _federatedIdentityCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -456,54 +397,38 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FederatedIdentityCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FederatedIdentityCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<FederatedIdentityCredentialResource>> GetIfExistsAsync(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
 
-            using DiagnosticScope scope = _federatedIdentityCredentialsClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetIfExists");
+            using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<FederatedIdentityCredentialData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FederatedIdentityCredentialData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _federatedIdentityCredentialRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<FederatedIdentityCredentialResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new FederatedIdentityCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -517,54 +442,38 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FederatedIdentityCredentials_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>FederatedIdentityCredentials_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FederatedIdentityCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
         public virtual NullableResponse<FederatedIdentityCredentialResource> GetIfExists(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(federatedIdentityCredentialResourceName, nameof(federatedIdentityCredentialResourceName));
 
-            using DiagnosticScope scope = _federatedIdentityCredentialsClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetIfExists");
+            using var scope = _federatedIdentityCredentialClientDiagnostics.CreateScope("FederatedIdentityCredentialCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _federatedIdentityCredentialsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<FederatedIdentityCredentialData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(FederatedIdentityCredentialData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((FederatedIdentityCredentialData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _federatedIdentityCredentialRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, federatedIdentityCredentialResourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<FederatedIdentityCredentialResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new FederatedIdentityCredentialResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -584,7 +493,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FederatedIdentityCredentialResource> IAsyncEnumerable<FederatedIdentityCredentialResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

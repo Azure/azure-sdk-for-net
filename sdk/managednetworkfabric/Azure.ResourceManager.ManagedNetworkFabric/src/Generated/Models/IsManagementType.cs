@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> IsManagementType-True. </summary>
+        /// <summary> True. </summary>
         public static IsManagementType True { get; } = new IsManagementType(TrueValue);
-        /// <summary> IsManagementType-False. </summary>
+        /// <summary> False. </summary>
         public static IsManagementType False { get; } = new IsManagementType(FalseValue);
         /// <summary> Determines if two <see cref="IsManagementType"/> values are the same. </summary>
         public static bool operator ==(IsManagementType left, IsManagementType right) => left.Equals(right);

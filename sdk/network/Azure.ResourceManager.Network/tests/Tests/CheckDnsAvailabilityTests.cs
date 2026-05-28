@@ -5,8 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Tests.Helpers;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network.Tests
 {

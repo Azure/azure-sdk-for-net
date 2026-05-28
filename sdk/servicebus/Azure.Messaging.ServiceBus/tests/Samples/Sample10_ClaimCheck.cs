@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #endif
                 var containerClient = new BlobContainerClient(accountUri, credential);
                 await containerClient.CreateIfNotExistsAsync();
-                #endregion
+#endregion
 
                 try
                 {
@@ -48,9 +48,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     #region Snippet:ClaimCheckSendMessage
 
 #if SNIPPET
-                    await using ServiceBusClient client = new("<service bus fully qualified namespace>", credential);
+                    ServiceBusClient client = new("<service bus fully qualified namespace>", credential);
 #else
-                    await using ServiceBusClient client = new(TestEnvironment.FullyQualifiedNamespace, credential);
+                    ServiceBusClient client = new(TestEnvironment.FullyQualifiedNamespace, credential);
 #endif
                     ServiceBusSender sender = client.CreateSender(scope.QueueName);
                     await sender.SendMessageAsync(message);

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -15,67 +14,47 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct SelfHelpType : IEquatable<SelfHelpType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="SelfHelpType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SelfHelpType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string DecisionValue = "Decision";
         private const string SolutionValue = "Solution";
         private const string InsightValue = "Insight";
         private const string AutomatedCheckValue = "AutomatedCheck";
         private const string InputValue = "Input";
 
-        /// <summary> Initializes a new instance of <see cref="SelfHelpType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SelfHelpType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Decision. </summary>
+        /// <summary> Decision. </summary>
         public static SelfHelpType Decision { get; } = new SelfHelpType(DecisionValue);
-
-        /// <summary> Gets the Solution. </summary>
+        /// <summary> Solution. </summary>
         public static SelfHelpType Solution { get; } = new SelfHelpType(SolutionValue);
-
-        /// <summary> Gets the Insight. </summary>
+        /// <summary> Insight. </summary>
         public static SelfHelpType Insight { get; } = new SelfHelpType(InsightValue);
-
-        /// <summary> Gets the AutomatedCheck. </summary>
+        /// <summary> AutomatedCheck. </summary>
         public static SelfHelpType AutomatedCheck { get; } = new SelfHelpType(AutomatedCheckValue);
-
-        /// <summary> Gets the Input. </summary>
+        /// <summary> Input. </summary>
         public static SelfHelpType Input { get; } = new SelfHelpType(InputValue);
-
         /// <summary> Determines if two <see cref="SelfHelpType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SelfHelpType left, SelfHelpType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SelfHelpType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SelfHelpType left, SelfHelpType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SelfHelpType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHelpType"/>. </summary>
         public static implicit operator SelfHelpType(string value) => new SelfHelpType(value);
 
-        /// <summary> Converts a string to a <see cref="SelfHelpType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SelfHelpType?(string value) => value == null ? null : new SelfHelpType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SelfHelpType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SelfHelpType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

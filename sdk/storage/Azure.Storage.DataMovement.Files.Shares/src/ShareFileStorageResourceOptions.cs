@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Storage.Files.Shares.Models;
+using static System.Net.WebRequestMethods;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares
@@ -288,12 +289,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// Optional. Snapshot identifier for reading from a specific snapshot.
-        /// Only valid for source resources.
-        /// </summary>
-        public string Snapshot { get; set; }
-
-        /// <summary>
         /// Constructor for ShareFileStorageResourceOptions.
         /// </summary>
         public ShareFileStorageResourceOptions()
@@ -329,7 +324,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             _isFileMetadataSet = options?._isFileMetadataSet ?? false;
             SkipProtocolValidation = options?.SkipProtocolValidation ?? false;
             ShareProtocol = options?.ShareProtocol ?? ShareProtocol.Smb;
-            Snapshot = options?.Snapshot;
         }
     }
 }

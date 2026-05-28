@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary></summary>
-    internal partial class ProviderMonitorSettingOperationSource : IOperationSource<ProviderMonitorSettingResource>
+    internal class ProviderMonitorSettingOperationSource : IOperationSource<ProviderMonitorSettingResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal ProviderMonitorSettingOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         ProviderMonitorSettingResource IOperationSource<ProviderMonitorSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ProviderMonitorSettingData data = ProviderMonitorSettingData.DeserializeProviderMonitorSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<ProviderMonitorSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
             return new ProviderMonitorSettingResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<ProviderMonitorSettingResource> IOperationSource<ProviderMonitorSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ProviderMonitorSettingData data = ProviderMonitorSettingData.DeserializeProviderMonitorSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ProviderMonitorSettingResource(_client, data);
+            var data = ModelReaderWriter.Read<ProviderMonitorSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
+            return await Task.FromResult(new ProviderMonitorSettingResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

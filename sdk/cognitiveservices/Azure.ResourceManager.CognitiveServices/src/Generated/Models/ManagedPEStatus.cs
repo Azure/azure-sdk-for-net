@@ -7,67 +7,48 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary></summary>
+    /// <summary> The ManagedPEStatus. </summary>
     public readonly partial struct ManagedPEStatus : IEquatable<ManagedPEStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedPEStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ManagedPEStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InactiveValue = "Inactive";
         private const string ActiveValue = "Active";
         private const string NotApplicableValue = "NotApplicable";
 
-        /// <summary> Initializes a new instance of <see cref="ManagedPEStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ManagedPEStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Inactive. </summary>
+        /// <summary> Inactive. </summary>
         public static ManagedPEStatus Inactive { get; } = new ManagedPEStatus(InactiveValue);
-
-        /// <summary> Gets the Active. </summary>
+        /// <summary> Active. </summary>
         public static ManagedPEStatus Active { get; } = new ManagedPEStatus(ActiveValue);
-
-        /// <summary> Gets the NotApplicable. </summary>
+        /// <summary> NotApplicable. </summary>
         public static ManagedPEStatus NotApplicable { get; } = new ManagedPEStatus(NotApplicableValue);
-
         /// <summary> Determines if two <see cref="ManagedPEStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedPEStatus left, ManagedPEStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ManagedPEStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedPEStatus left, ManagedPEStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ManagedPEStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedPEStatus"/>. </summary>
         public static implicit operator ManagedPEStatus(string value) => new ManagedPEStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ManagedPEStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ManagedPEStatus?(string value) => value == null ? null : new ManagedPEStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedPEStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ManagedPEStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

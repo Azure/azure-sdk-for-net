@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {

@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary></summary>
+    /// <summary> The DataProtectionBackupDayOfWeek. </summary>
     public readonly partial struct DataProtectionBackupDayOfWeek : IEquatable<DataProtectionBackupDayOfWeek>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDayOfWeek"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataProtectionBackupDayOfWeek(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string FridayValue = "Friday";
         private const string MondayValue = "Monday";
         private const string SaturdayValue = "Saturday";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private const string TuesdayValue = "Tuesday";
         private const string WednesdayValue = "Wednesday";
 
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDayOfWeek"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataProtectionBackupDayOfWeek(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Friday. </summary>
+        /// <summary> Friday. </summary>
         public static DataProtectionBackupDayOfWeek Friday { get; } = new DataProtectionBackupDayOfWeek(FridayValue);
-
-        /// <summary> Gets the Monday. </summary>
+        /// <summary> Monday. </summary>
         public static DataProtectionBackupDayOfWeek Monday { get; } = new DataProtectionBackupDayOfWeek(MondayValue);
-
-        /// <summary> Gets the Saturday. </summary>
+        /// <summary> Saturday. </summary>
         public static DataProtectionBackupDayOfWeek Saturday { get; } = new DataProtectionBackupDayOfWeek(SaturdayValue);
-
-        /// <summary> Gets the Sunday. </summary>
+        /// <summary> Sunday. </summary>
         public static DataProtectionBackupDayOfWeek Sunday { get; } = new DataProtectionBackupDayOfWeek(SundayValue);
-
-        /// <summary> Gets the Thursday. </summary>
+        /// <summary> Thursday. </summary>
         public static DataProtectionBackupDayOfWeek Thursday { get; } = new DataProtectionBackupDayOfWeek(ThursdayValue);
-
-        /// <summary> Gets the Tuesday. </summary>
+        /// <summary> Tuesday. </summary>
         public static DataProtectionBackupDayOfWeek Tuesday { get; } = new DataProtectionBackupDayOfWeek(TuesdayValue);
-
-        /// <summary> Gets the Wednesday. </summary>
+        /// <summary> Wednesday. </summary>
         public static DataProtectionBackupDayOfWeek Wednesday { get; } = new DataProtectionBackupDayOfWeek(WednesdayValue);
-
         /// <summary> Determines if two <see cref="DataProtectionBackupDayOfWeek"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataProtectionBackupDayOfWeek left, DataProtectionBackupDayOfWeek right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataProtectionBackupDayOfWeek"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataProtectionBackupDayOfWeek left, DataProtectionBackupDayOfWeek right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataProtectionBackupDayOfWeek"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataProtectionBackupDayOfWeek"/>. </summary>
         public static implicit operator DataProtectionBackupDayOfWeek(string value) => new DataProtectionBackupDayOfWeek(value);
 
-        /// <summary> Converts a string to a <see cref="DataProtectionBackupDayOfWeek"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataProtectionBackupDayOfWeek?(string value) => value == null ? null : new DataProtectionBackupDayOfWeek(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataProtectionBackupDayOfWeek other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataProtectionBackupDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

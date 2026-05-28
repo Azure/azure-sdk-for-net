@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.ProviderHub
     /// </summary>
     public partial class ResourceTypeRegistrationCollection : ArmCollection, IEnumerable<ResourceTypeRegistrationResource>, IAsyncEnumerable<ResourceTypeRegistrationResource>
     {
-        private readonly ClientDiagnostics _resourceTypeRegistrationsClientDiagnostics;
-        private readonly ResourceTypeRegistrations _resourceTypeRegistrationsRestClient;
+        private readonly ClientDiagnostics _resourceTypeRegistrationClientDiagnostics;
+        private readonly ResourceTypeRegistrationsRestOperations _resourceTypeRegistrationRestClient;
 
-        /// <summary> Initializes a new instance of ResourceTypeRegistrationCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceTypeRegistrationCollection"/> class for mocking. </summary>
         protected ResourceTypeRegistrationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceTypeRegistrationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ResourceTypeRegistrationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _resourceTypeRegistrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceTypeRegistrationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceTypeRegistrationResource.ResourceType, out string resourceTypeRegistrationApiVersion);
-            _resourceTypeRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceTypeRegistrationResource.ResourceType.Namespace, Diagnostics);
-            _resourceTypeRegistrationsRestClient = new ResourceTypeRegistrations(_resourceTypeRegistrationsClientDiagnostics, Pipeline, Endpoint, resourceTypeRegistrationApiVersion ?? "2024-09-01");
-            ValidateResourceId(id);
+            _resourceTypeRegistrationRestClient = new ResourceTypeRegistrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceTypeRegistrationApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ProviderRegistrationResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProviderRegistrationResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates a resource type.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="data"> The required request body parameters supplied to the resource type registration CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceTypeRegistrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceType, ResourceTypeRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _resourceTypeRegistrationsClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.CreateOrUpdate");
+            using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, ResourceTypeRegistrationData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ProviderHubArmOperation<ResourceTypeRegistrationResource> operation = new ProviderHubArmOperation<ResourceTypeRegistrationResource>(
-                    new ResourceTypeRegistrationOperationSource(Client),
-                    _resourceTypeRegistrationsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _resourceTypeRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, resourceType, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ProviderHubArmOperation<ResourceTypeRegistrationResource>(new ResourceTypeRegistrationOperationSource(Client), _resourceTypeRegistrationClientDiagnostics, Pipeline, _resourceTypeRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, resourceType, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.ProviderHub
         /// Creates or updates a resource type.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="data"> The required request body parameters supplied to the resource type registration CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ResourceTypeRegistrationResource> CreateOrUpdate(WaitUntil waitUntil, string resourceType, ResourceTypeRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _resourceTypeRegistrationsClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.CreateOrUpdate");
+            using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, ResourceTypeRegistrationData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ProviderHubArmOperation<ResourceTypeRegistrationResource> operation = new ProviderHubArmOperation<ResourceTypeRegistrationResource>(
-                    new ResourceTypeRegistrationOperationSource(Client),
-                    _resourceTypeRegistrationsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _resourceTypeRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, resourceType, data, cancellationToken);
+                var operation = new ProviderHubArmOperation<ResourceTypeRegistrationResource>(new ResourceTypeRegistrationOperationSource(Client), _resourceTypeRegistrationClientDiagnostics, Pipeline, _resourceTypeRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, resourceType, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets a resource type details in the given subscription and provider.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual async Task<Response<ResourceTypeRegistrationResource>> GetAsync(string resourceType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
-            using DiagnosticScope scope = _resourceTypeRegistrationsClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Get");
+            using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceTypeRegistrationData> response = Response.FromValue(ResourceTypeRegistrationData.FromResponse(result), result);
+                var response = await _resourceTypeRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.Name, resourceType, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ResourceTypeRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets a resource type details in the given subscription and provider.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual Response<ResourceTypeRegistrationResource> Get(string resourceType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
-            using DiagnosticScope scope = _resourceTypeRegistrationsClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Get");
+            using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceTypeRegistrationData> response = Response.FromValue(ResourceTypeRegistrationData.FromResponse(result), result);
+                var response = _resourceTypeRegistrationRestClient.Get(Id.SubscriptionId, Id.Name, resourceType, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ResourceTypeRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,44 +243,50 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets the list of the resource types for the given provider.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_ListByProviderRegistration. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_ListByProviderRegistration</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceTypeRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceTypeRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceTypeRegistrationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ResourceTypeRegistrationData, ResourceTypeRegistrationResource>(new ResourceTypeRegistrationsGetByProviderRegistrationAsyncCollectionResultOfT(_resourceTypeRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ResourceTypeRegistrationCollection.GetAll"), data => new ResourceTypeRegistrationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeRegistrationRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeRegistrationRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeRegistrationResource(Client, ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(e)), _resourceTypeRegistrationClientDiagnostics, Pipeline, "ResourceTypeRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of the resource types for the given provider.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_ListByProviderRegistration. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_ListByProviderRegistration</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,61 +294,45 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> A collection of <see cref="ResourceTypeRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceTypeRegistrationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ResourceTypeRegistrationData, ResourceTypeRegistrationResource>(new ResourceTypeRegistrationsGetByProviderRegistrationCollectionResultOfT(_resourceTypeRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ResourceTypeRegistrationCollection.GetAll"), data => new ResourceTypeRegistrationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeRegistrationRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeRegistrationRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeRegistrationResource(Client, ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(e)), _resourceTypeRegistrationClientDiagnostics, Pipeline, "ResourceTypeRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
-            using DiagnosticScope scope = _resourceTypeRegistrationsClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Exists");
+            using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ResourceTypeRegistrationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ResourceTypeRegistrationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ResourceTypeRegistrationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _resourceTypeRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.Name, resourceType, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -385,50 +346,36 @@ namespace Azure.ResourceManager.ProviderHub
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
-            using DiagnosticScope scope = _resourceTypeRegistrationsClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Exists");
+            using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ResourceTypeRegistrationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ResourceTypeRegistrationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ResourceTypeRegistrationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _resourceTypeRegistrationRestClient.Get(Id.SubscriptionId, Id.Name, resourceType, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,54 +389,38 @@ namespace Azure.ResourceManager.ProviderHub
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceTypeRegistrationResource>> GetIfExistsAsync(string resourceType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
-            using DiagnosticScope scope = _resourceTypeRegistrationsClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetIfExists");
+            using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ResourceTypeRegistrationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ResourceTypeRegistrationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ResourceTypeRegistrationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _resourceTypeRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.Name, resourceType, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ResourceTypeRegistrationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ResourceTypeRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -503,54 +434,38 @@ namespace Azure.ResourceManager.ProviderHub
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ResourceTypeRegistrations_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ResourceTypeRegistrations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> is null. </exception>
         public virtual NullableResponse<ResourceTypeRegistrationResource> GetIfExists(string resourceType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
 
-            using DiagnosticScope scope = _resourceTypeRegistrationsClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetIfExists");
+            using var scope = _resourceTypeRegistrationClientDiagnostics.CreateScope("ResourceTypeRegistrationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _resourceTypeRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, resourceType, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ResourceTypeRegistrationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ResourceTypeRegistrationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ResourceTypeRegistrationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _resourceTypeRegistrationRestClient.Get(Id.SubscriptionId, Id.Name, resourceType, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ResourceTypeRegistrationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ResourceTypeRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -570,7 +485,6 @@ namespace Azure.ResourceManager.ProviderHub
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ResourceTypeRegistrationResource> IAsyncEnumerable<ResourceTypeRegistrationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -6,14 +6,13 @@ using System.Net;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The Azure Communication Services Conversation Thread client.
     /// </summary>
-    [CodeGenSuppress("ConversationThreadClient", typeof(Uri), typeof(AzureKeyCredential), typeof(CommunicationMessagesClientOptions))]
+
     public partial class ConversationThreadClient
     {
         #region public constructors
@@ -49,6 +48,7 @@ namespace Azure.Communication.Messages
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CommunicationMessagesClientOptions())
         {
+            _keyCredential = credential;
         }
 
         /// <summary>
@@ -63,6 +63,7 @@ namespace Azure.Communication.Messages
                 Argument.CheckNotNull(communicationTokenCredential, nameof(communicationTokenCredential)),
                 options ?? new CommunicationMessagesClientOptions())
         {
+            _tokenCredential = new CommunicationBearerTokenCredential(communicationTokenCredential);
         }
 
         #endregion
@@ -84,7 +85,7 @@ namespace Azure.Communication.Messages
         private ConversationThreadClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
             ClientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = httpPipeline;
+            _pipeline = httpPipeline;
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -108,7 +109,7 @@ namespace Azure.Communication.Messages
             options ??= new CommunicationMessagesClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -124,7 +125,7 @@ namespace Azure.Communication.Messages
         /// <summary>Initializes a new instance of <see cref="ConversationThreadClient"/> for mocking.</summary>
         protected ConversationThreadClient()
         {
-            ClientDiagnostics = null!;
+           ClientDiagnostics = null!;
         }
     }
 }

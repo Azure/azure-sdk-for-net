@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
+    /// <summary> Unknown version of ProtectableContainer. </summary>
     internal partial class UnknownProtectableContainer : ProtectableContainer
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProtectableContainer"/>. </summary>
@@ -17,12 +18,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="protectableContainerType">
         /// Type of the container. The value of this property for
-        /// <list type="number"><item><description>Compute Azure VM is Microsoft.Compute/virtualMachines</description></item><item><description>Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines</description></item></list>
+        /// 1. Compute Azure VM is Microsoft.Compute/virtualMachines
+        /// 2. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines
         /// </param>
         /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(friendlyName, backupManagementType, protectableContainerType != default ? protectableContainerType : "unknown", healthStatus, containerId, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownProtectableContainer(string friendlyName, BackupManagementType? backupManagementType, ProtectableContainerType protectableContainerType, string healthStatus, string containerId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(friendlyName, backupManagementType, protectableContainerType, healthStatus, containerId, serializedAdditionalRawData)
+        {
+            ProtectableContainerType = protectableContainerType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectableContainer"/> for deserialization. </summary>
+        internal UnknownProtectableContainer()
         {
         }
     }

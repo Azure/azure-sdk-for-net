@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
     public class Sample13_AdvancedConfiguration : ServiceBusLiveTestBase
     {
         [Test]
-        public async Task ConfigureProxy()
+        public void ConfigureProxy()
         {
             #region Snippet:ServiceBusConfigureTransport
 #if SNIPPET
@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
             var credential = TestEnvironment.Credential;
 #endif
-            await using ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
             {
                 TransportType = ServiceBusTransportType.AmqpWebSockets,
                 WebProxy = new WebProxy("https://myproxyserver:80")
@@ -36,7 +36,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
-        public async Task ConfigureRetryOptions()
+        public void ConfigureRetryOptions()
         {
             #region Snippet:ServiceBusConfigureRetryOptions
 #if SNIPPET
@@ -46,7 +46,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
             var credential = TestEnvironment.Credential;
 #endif
-            await using ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
             {
                 RetryOptions = new ServiceBusRetryOptions
                 {
@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
-        public async Task ConfigureRemoteCertificateValidationCallback()
+        public void ConfigureRemoteCertificateValidationCallback()
         {
             #region Snippet:ServiceBusConfigureRemoteCertificateValidationCallback
 #if SNIPPET
@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 return false;
             }
 
-            await using ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBusClientOptions
             {
                 CertificateValidationCallback = ValidateServerCertificate
             });
@@ -95,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
-        public async Task ConfigurePrefetchReceiver()
+        public void ConfigurePrefetchReceiver()
         {
             #region Snippet:ServiceBusConfigurePrefetchReceiver
 #if SNIPPET
@@ -105,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
             var credential = TestEnvironment.Credential;
 #endif
-            await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential);
             ServiceBusReceiver receiver = client.CreateReceiver("<queue-name>", new ServiceBusReceiverOptions
             {
                 PrefetchCount = 10
@@ -116,7 +116,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
-        public async Task ConfigurePrefetchProcessor()
+        public void ConfigurePrefetchProcessor()
         {
             #region Snippet:ServiceBusConfigurePrefetchProcessor
 #if SNIPPET
@@ -126,7 +126,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
             var credential = TestEnvironment.Credential;
 #endif
-            await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential);
             ServiceBusProcessor processor = client.CreateProcessor("<queue-name>", new ServiceBusProcessorOptions
             {
                 PrefetchCount = 10
@@ -148,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
             var credential = TestEnvironment.Credential;
 #endif
-            await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
+            ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
             // create a processor that we can use to process the messages
             await using ServiceBusProcessor processor = client.CreateProcessor("<queue-name>");
@@ -217,7 +217,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
             var credential = TestEnvironment.Credential;
 #endif
-            await using var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
+            var client = new ServiceBusClient(fullyQualifiedNamespace, credential);
 
             // create a processor that we can use to process the messages
             await using ServiceBusSessionProcessor processor = client.CreateSessionProcessor("<queue-name>");

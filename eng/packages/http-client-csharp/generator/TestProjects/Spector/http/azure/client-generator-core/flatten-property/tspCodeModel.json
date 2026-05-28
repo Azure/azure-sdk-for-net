@@ -1,0 +1,667 @@
+{
+  "name": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "putFlattenModelContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "putFlattenModelContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "5",
+      "kind": "constant",
+      "name": "putNestedFlattenModelContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "6",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "7",
+      "kind": "constant",
+      "name": "putNestedFlattenModelContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "9",
+      "kind": "model",
+      "name": "FlattenModel",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.FlattenModel",
+      "usage": "Input,Output,Json",
+      "doc": "This is the model with one level of flattening.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "10",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "type": {
+            "$id": "11",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.FlattenModel.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "12",
+          "kind": "property",
+          "name": "properties",
+          "serializedName": "properties",
+          "type": {
+            "$id": "13",
+            "kind": "model",
+            "name": "ChildModel",
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.ChildModel",
+            "usage": "Input,Output,Json",
+            "doc": "This is the child model to be flattened.",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "14",
+                "kind": "property",
+                "name": "description",
+                "serializedName": "description",
+                "type": {
+                  "$id": "15",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.ChildModel.description",
+                "serializationOptions": {
+                  "json": {
+                    "name": "description"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "16",
+                "kind": "property",
+                "name": "age",
+                "serializedName": "age",
+                "type": {
+                  "$id": "17",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.ChildModel.age",
+                "serializationOptions": {
+                  "json": {
+                    "name": "age"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": true,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.FlattenModel.properties",
+          "serializationOptions": {
+            "json": {
+              "name": "properties"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$ref": "13"
+    },
+    {
+      "$id": "18",
+      "kind": "model",
+      "name": "NestedFlattenModel",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.NestedFlattenModel",
+      "usage": "Input,Output,Json",
+      "doc": "This is the model with two levels of flattening.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "19",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "type": {
+            "$id": "20",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.NestedFlattenModel.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "21",
+          "kind": "property",
+          "name": "properties",
+          "serializedName": "properties",
+          "type": {
+            "$id": "22",
+            "kind": "model",
+            "name": "ChildFlattenModel",
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.ChildFlattenModel",
+            "usage": "Input,Output,Json",
+            "doc": "This is the child model to be flattened. And it has flattened property as well.",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "23",
+                "kind": "property",
+                "name": "summary",
+                "serializedName": "summary",
+                "type": {
+                  "$id": "24",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.ChildFlattenModel.summary",
+                "serializationOptions": {
+                  "json": {
+                    "name": "summary"
+                  }
+                },
+                "isHttpMetadata": false
+              },
+              {
+                "$id": "25",
+                "kind": "property",
+                "name": "properties",
+                "serializedName": "properties",
+                "type": {
+                  "$ref": "13"
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": true,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.ChildFlattenModel.properties",
+                "serializationOptions": {
+                  "json": {
+                    "name": "properties"
+                  }
+                },
+                "isHttpMetadata": false
+              }
+            ]
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": true,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.NestedFlattenModel.properties",
+          "serializationOptions": {
+            "json": {
+              "name": "properties"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
+      "$ref": "22"
+    }
+  ],
+  "clients": [
+    {
+      "$id": "26",
+      "kind": "client",
+      "name": "FlattenPropertyClient",
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
+      "doc": "Illustrates the model flatten cases.",
+      "methods": [
+        {
+          "$id": "27",
+          "kind": "basic",
+          "name": "putFlattenModel",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "28",
+            "name": "putFlattenModel",
+            "resourceName": "FlattenProperty",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "29",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "1"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.contentType"
+              },
+              {
+                "$id": "30",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "3"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.accept"
+              },
+              {
+                "$id": "31",
+                "kind": "body",
+                "name": "input",
+                "serializedName": "input",
+                "type": {
+                  "$ref": "9"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.input"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "9"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "PUT",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/flatten-property/flattenModel",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "32",
+              "kind": "method",
+              "name": "input",
+              "serializedName": "input",
+              "type": {
+                "$ref": "9"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "33",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "1"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "34",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "3"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "9"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel"
+        },
+        {
+          "$id": "35",
+          "kind": "basic",
+          "name": "putNestedFlattenModel",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "36",
+            "name": "putNestedFlattenModel",
+            "resourceName": "FlattenProperty",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "37",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "5"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.contentType"
+              },
+              {
+                "$id": "38",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "7"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.accept"
+              },
+              {
+                "$id": "39",
+                "kind": "body",
+                "name": "input",
+                "serializedName": "input",
+                "type": {
+                  "$ref": "18"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.input"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "18"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "PUT",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/flatten-property/nestedFlattenModel",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "40",
+              "kind": "method",
+              "name": "input",
+              "serializedName": "input",
+              "type": {
+                "$ref": "18"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "41",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "5"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "42",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "7"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "18"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "43",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "44",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "45",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.endpoint"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty",
+      "apiVersions": []
+    }
+  ]
+}

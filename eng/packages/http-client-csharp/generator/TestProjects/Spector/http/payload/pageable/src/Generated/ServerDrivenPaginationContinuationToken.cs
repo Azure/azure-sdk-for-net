@@ -17,8 +17,6 @@ namespace Payload.Pageable._ServerDrivenPagination.ContinuationToken
     {
         protected ServerDrivenPaginationContinuationToken() => throw null;
 
-        internal ServerDrivenPaginationContinuationToken(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
-
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Pageable<BinaryData> RequestQueryResponseBody(string token, string foo, string bar, RequestContext context) => throw null;

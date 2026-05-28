@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Cdn;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the parameters for IsDevice match conditions. </summary>
-    public partial class IsDeviceMatchCondition : DeliveryRuleConditionProperties, IJsonModel<IsDeviceMatchCondition>
+    public partial class IsDeviceMatchCondition : IUtf8JsonSerializable, IJsonModel<IsDeviceMatchCondition>
     {
-        /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/> for deserialization. </summary>
-        internal IsDeviceMatchCondition()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IsDeviceMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DeliveryRuleConditionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IsDeviceMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeIsDeviceMatchCondition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IsDeviceMatchCondition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<IsDeviceMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IsDeviceMatchCondition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IsDeviceMatchCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IsDeviceMatchCondition IPersistableModel<IsDeviceMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => (IsDeviceMatchCondition)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IsDeviceMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IsDeviceMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IsDeviceMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IsDeviceMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IsDeviceMatchCondition)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(IsDeviceOperator.ToString());
@@ -91,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();
-                foreach (IsDeviceMatchConditionMatchValue item in MatchValues)
+                foreach (var item in MatchValues)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -101,7 +56,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
-                foreach (PreTransformCategory item in Transforms)
+                foreach (var item in Transforms)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -109,98 +64,126 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        IsDeviceMatchCondition IJsonModel<IsDeviceMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IsDeviceMatchCondition)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DeliveryRuleConditionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IsDeviceMatchCondition IJsonModel<IsDeviceMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IsDeviceMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IsDeviceMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IsDeviceMatchCondition)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIsDeviceMatchCondition(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IsDeviceMatchCondition DeserializeIsDeviceMatchCondition(JsonElement element, ModelReaderWriterOptions options)
+        internal static IsDeviceMatchCondition DeserializeIsDeviceMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DeliveryRuleConditionParametersType typeName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IsDeviceOperator isDeviceOperator = default;
+            IsDeviceOperator @operator = default;
             bool? negateCondition = default;
             IList<IsDeviceMatchConditionMatchValue> matchValues = default;
             IList<PreTransformCategory> transforms = default;
-            foreach (var prop in element.EnumerateObject())
+            DeliveryRuleConditionParametersType typeName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("typeName"u8))
+                if (property.NameEquals("operator"u8))
                 {
-                    typeName = new DeliveryRuleConditionParametersType(prop.Value.GetString());
+                    @operator = new IsDeviceOperator(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("operator"u8))
+                if (property.NameEquals("negateCondition"u8))
                 {
-                    isDeviceOperator = new IsDeviceOperator(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("negateCondition"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    negateCondition = prop.Value.GetBoolean();
+                    negateCondition = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("matchValues"u8))
+                if (property.NameEquals("matchValues"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IsDeviceMatchConditionMatchValue> array = new List<IsDeviceMatchConditionMatchValue>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new IsDeviceMatchConditionMatchValue(item.GetString()));
                     }
                     matchValues = array;
                     continue;
                 }
-                if (prop.NameEquals("transforms"u8))
+                if (property.NameEquals("transforms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PreTransformCategory> array = new List<PreTransformCategory>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new PreTransformCategory(item.GetString()));
                     }
                     transforms = array;
                     continue;
                 }
+                if (property.NameEquals("typeName"u8))
+                {
+                    typeName = new DeliveryRuleConditionParametersType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new IsDeviceMatchCondition(
                 typeName,
-                additionalBinaryDataProperties,
-                isDeviceOperator,
+                serializedAdditionalRawData,
+                @operator,
                 negateCondition,
                 matchValues ?? new ChangeTrackingList<IsDeviceMatchConditionMatchValue>(),
                 transforms ?? new ChangeTrackingList<PreTransformCategory>());
         }
+
+        BinaryData IPersistableModel<IsDeviceMatchCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IsDeviceMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IsDeviceMatchCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IsDeviceMatchCondition IPersistableModel<IsDeviceMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IsDeviceMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeIsDeviceMatchCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IsDeviceMatchCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IsDeviceMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

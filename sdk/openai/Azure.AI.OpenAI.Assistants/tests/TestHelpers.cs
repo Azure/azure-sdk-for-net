@@ -6,7 +6,6 @@ using Azure.AI.OpenAI.Assistants;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.OpenAI.Assistants.Tests;
-
 public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEnvironment>
 {
     public enum OpenAIClientServiceTarget

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct CrossTenantTokenValidation : IEquatable<CrossTenantTokenValidation>
     {
         private readonly string _value;
-        private const string EnsureSecureValidationValue = "EnsureSecureValidation";
-        private const string PassthroughInsecureTokenValue = "PassthroughInsecureToken";
 
         /// <summary> Initializes a new instance of <see cref="CrossTenantTokenValidation"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CrossTenantTokenValidation(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the EnsureSecureValidation. </summary>
+        private const string EnsureSecureValidationValue = "EnsureSecureValidation";
+        private const string PassthroughInsecureTokenValue = "PassthroughInsecureToken";
+
+        /// <summary> EnsureSecureValidation. </summary>
         public static CrossTenantTokenValidation EnsureSecureValidation { get; } = new CrossTenantTokenValidation(EnsureSecureValidationValue);
-
-        /// <summary> Gets the PassthroughInsecureToken. </summary>
+        /// <summary> PassthroughInsecureToken. </summary>
         public static CrossTenantTokenValidation PassthroughInsecureToken { get; } = new CrossTenantTokenValidation(PassthroughInsecureTokenValue);
-
         /// <summary> Determines if two <see cref="CrossTenantTokenValidation"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CrossTenantTokenValidation left, CrossTenantTokenValidation right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CrossTenantTokenValidation"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CrossTenantTokenValidation left, CrossTenantTokenValidation right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CrossTenantTokenValidation"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CrossTenantTokenValidation"/>. </summary>
         public static implicit operator CrossTenantTokenValidation(string value) => new CrossTenantTokenValidation(value);
 
-        /// <summary> Converts a string to a <see cref="CrossTenantTokenValidation"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CrossTenantTokenValidation?(string value) => value == null ? null : new CrossTenantTokenValidation(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CrossTenantTokenValidation other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CrossTenantTokenValidation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

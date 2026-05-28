@@ -67,7 +67,7 @@ DisplayName = "gate after stage1",
 }},
 }},
             };
-            ArmOperation<FleetUpdateStrategyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, updateStrategyName, data, matchConditions: null);
+            ArmOperation<FleetUpdateStrategyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, updateStrategyName, data);
             FleetUpdateStrategyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -110,12 +110,9 @@ Groups = {new ContainerServiceFleetUpdateGroup("group-a")},
 AfterStageWaitInSeconds = 3600,
 }},
             };
-            MatchConditions matchConditions = new MatchConditions
-            {
-                IfMatch = new ETag("bttptpmhheves"),
-                IfNoneMatch = new ETag("tlx")
-            };
-            ArmOperation<FleetUpdateStrategyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, updateStrategyName, data, matchConditions: matchConditions);
+            string ifMatch = "bttptpmhheves";
+            string ifNoneMatch = "tlx";
+            ArmOperation<FleetUpdateStrategyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, updateStrategyName, data, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch);
             FleetUpdateStrategyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

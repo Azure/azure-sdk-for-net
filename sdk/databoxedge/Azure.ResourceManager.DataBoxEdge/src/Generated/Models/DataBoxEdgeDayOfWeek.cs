@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary></summary>
+    /// <summary> The DataBoxEdgeDayOfWeek. </summary>
     public readonly partial struct DataBoxEdgeDayOfWeek : IEquatable<DataBoxEdgeDayOfWeek>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDayOfWeek"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeDayOfWeek(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string SundayValue = "Sunday";
         private const string MondayValue = "Monday";
         private const string TuesdayValue = "Tuesday";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private const string FridayValue = "Friday";
         private const string SaturdayValue = "Saturday";
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDayOfWeek"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeDayOfWeek(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Sunday. </summary>
+        /// <summary> Sunday. </summary>
         public static DataBoxEdgeDayOfWeek Sunday { get; } = new DataBoxEdgeDayOfWeek(SundayValue);
-
-        /// <summary> Gets the Monday. </summary>
+        /// <summary> Monday. </summary>
         public static DataBoxEdgeDayOfWeek Monday { get; } = new DataBoxEdgeDayOfWeek(MondayValue);
-
-        /// <summary> Gets the Tuesday. </summary>
+        /// <summary> Tuesday. </summary>
         public static DataBoxEdgeDayOfWeek Tuesday { get; } = new DataBoxEdgeDayOfWeek(TuesdayValue);
-
-        /// <summary> Gets the Wednesday. </summary>
+        /// <summary> Wednesday. </summary>
         public static DataBoxEdgeDayOfWeek Wednesday { get; } = new DataBoxEdgeDayOfWeek(WednesdayValue);
-
-        /// <summary> Gets the Thursday. </summary>
+        /// <summary> Thursday. </summary>
         public static DataBoxEdgeDayOfWeek Thursday { get; } = new DataBoxEdgeDayOfWeek(ThursdayValue);
-
-        /// <summary> Gets the Friday. </summary>
+        /// <summary> Friday. </summary>
         public static DataBoxEdgeDayOfWeek Friday { get; } = new DataBoxEdgeDayOfWeek(FridayValue);
-
-        /// <summary> Gets the Saturday. </summary>
+        /// <summary> Saturday. </summary>
         public static DataBoxEdgeDayOfWeek Saturday { get; } = new DataBoxEdgeDayOfWeek(SaturdayValue);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeDayOfWeek"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeDayOfWeek left, DataBoxEdgeDayOfWeek right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DataBoxEdgeDayOfWeek"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeDayOfWeek left, DataBoxEdgeDayOfWeek right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeDayOfWeek"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeDayOfWeek"/>. </summary>
         public static implicit operator DataBoxEdgeDayOfWeek(string value) => new DataBoxEdgeDayOfWeek(value);
 
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeDayOfWeek"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DataBoxEdgeDayOfWeek?(string value) => value == null ? null : new DataBoxEdgeDayOfWeek(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeDayOfWeek other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DataBoxEdgeDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

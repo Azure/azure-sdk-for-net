@@ -14,15 +14,17 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class NativeBlobSoftDeleteDeletionDetectionPolicy : DataDeletionDetectionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/>. </summary>
-        public NativeBlobSoftDeleteDeletionDetectionPolicy() : base("#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy")
+        public NativeBlobSoftDeleteDeletionDetectionPolicy()
         {
+            ODataType = "#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy";
         }
 
         /// <summary> Initializes a new instance of <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/>. </summary>
-        /// <param name="odataType"> The discriminator for derived types. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NativeBlobSoftDeleteDeletionDetectionPolicy(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(odataType, additionalBinaryDataProperties)
+        /// <param name="oDataType"> A URI fragment specifying the type of data deletion detection policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NativeBlobSoftDeleteDeletionDetectionPolicy(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, serializedAdditionalRawData)
         {
+            ODataType = oDataType ?? "#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy";
         }
     }
 }

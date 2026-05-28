@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap;
-
 public partial class BusinessMetadataOptions
 {
     // CUSTOM CODE NOTE:
@@ -16,8 +15,8 @@ public partial class BusinessMetadataOptions
 
     internal virtual RequestContent ToRequestContent()
     {
-        MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
-        content.Add(File, "file", "file.csv", "text/csv");
+        MultipartFormDataContent content = new MultipartFormDataContent();
+        content.Add(MultipartContent.Create(File), "file", "file.csv", null);
         return content;
     }
 }

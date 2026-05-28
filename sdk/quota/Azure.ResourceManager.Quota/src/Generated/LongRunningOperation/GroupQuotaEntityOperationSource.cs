@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
-    /// <summary></summary>
-    internal partial class GroupQuotaEntityOperationSource : IOperationSource<GroupQuotaEntityResource>
+    internal class GroupQuotaEntityOperationSource : IOperationSource<GroupQuotaEntityResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal GroupQuotaEntityOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         GroupQuotaEntityResource IOperationSource<GroupQuotaEntityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GroupQuotaEntityData data = GroupQuotaEntityData.DeserializeGroupQuotaEntityData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<GroupQuotaEntityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
             return new GroupQuotaEntityResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<GroupQuotaEntityResource> IOperationSource<GroupQuotaEntityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GroupQuotaEntityData data = GroupQuotaEntityData.DeserializeGroupQuotaEntityData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GroupQuotaEntityResource(_client, data);
+            var data = ModelReaderWriter.Read<GroupQuotaEntityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerQuotaContext.Default);
+            return await Task.FromResult(new GroupQuotaEntityResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

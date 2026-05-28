@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public readonly partial struct ServiceBusNetworkRuleSetDefaultAction : IEquatable<ServiceBusNetworkRuleSetDefaultAction>
     {
         private readonly string _value;
-        private const string AllowValue = "Allow";
-        private const string DenyValue = "Deny";
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetDefaultAction"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceBusNetworkRuleSetDefaultAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Allow. </summary>
+        private const string AllowValue = "Allow";
+        private const string DenyValue = "Deny";
+
+        /// <summary> Allow. </summary>
         public static ServiceBusNetworkRuleSetDefaultAction Allow { get; } = new ServiceBusNetworkRuleSetDefaultAction(AllowValue);
-
-        /// <summary> Gets the Deny. </summary>
+        /// <summary> Deny. </summary>
         public static ServiceBusNetworkRuleSetDefaultAction Deny { get; } = new ServiceBusNetworkRuleSetDefaultAction(DenyValue);
-
         /// <summary> Determines if two <see cref="ServiceBusNetworkRuleSetDefaultAction"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceBusNetworkRuleSetDefaultAction left, ServiceBusNetworkRuleSetDefaultAction right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ServiceBusNetworkRuleSetDefaultAction"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceBusNetworkRuleSetDefaultAction left, ServiceBusNetworkRuleSetDefaultAction right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ServiceBusNetworkRuleSetDefaultAction"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusNetworkRuleSetDefaultAction"/>. </summary>
         public static implicit operator ServiceBusNetworkRuleSetDefaultAction(string value) => new ServiceBusNetworkRuleSetDefaultAction(value);
 
-        /// <summary> Converts a string to a <see cref="ServiceBusNetworkRuleSetDefaultAction"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ServiceBusNetworkRuleSetDefaultAction?(string value) => value == null ? null : new ServiceBusNetworkRuleSetDefaultAction(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceBusNetworkRuleSetDefaultAction other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ServiceBusNetworkRuleSetDefaultAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

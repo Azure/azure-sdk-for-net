@@ -6,25 +6,19 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Specs.Azure.Encode.Duration
+namespace _Specs_.Azure.Encode.Duration
 {
     public partial class DurationClient
     {
         public DurationClient() : this(new Uri("http://localhost:3000"), new DurationClientOptions()) => throw null;
 
-        internal DurationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DurationClientOptions options) => throw null;
-
-        public DurationClient(Uri endpoint, DurationClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public DurationClient(DurationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public DurationClient(Uri endpoint, DurationClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

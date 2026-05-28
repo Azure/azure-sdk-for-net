@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.Purview.Models
     public readonly partial struct PurviewKafkaEventHubType : IEquatable<PurviewKafkaEventHubType>
     {
         private readonly string _value;
-        /// <summary> Notification. </summary>
-        private const string NotificationValue = "Notification";
-        /// <summary> Hook. </summary>
-        private const string HookValue = "Hook";
 
         /// <summary> Initializes a new instance of <see cref="PurviewKafkaEventHubType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PurviewKafkaEventHubType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string NotificationValue = "Notification";
+        private const string HookValue = "Hook";
 
         /// <summary> Notification. </summary>
         public static PurviewKafkaEventHubType Notification { get; } = new PurviewKafkaEventHubType(NotificationValue);
-
         /// <summary> Hook. </summary>
         public static PurviewKafkaEventHubType Hook { get; } = new PurviewKafkaEventHubType(HookValue);
-
         /// <summary> Determines if two <see cref="PurviewKafkaEventHubType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PurviewKafkaEventHubType left, PurviewKafkaEventHubType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PurviewKafkaEventHubType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PurviewKafkaEventHubType left, PurviewKafkaEventHubType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PurviewKafkaEventHubType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewKafkaEventHubType"/>. </summary>
         public static implicit operator PurviewKafkaEventHubType(string value) => new PurviewKafkaEventHubType(value);
 
-        /// <summary> Converts a string to a <see cref="PurviewKafkaEventHubType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PurviewKafkaEventHubType?(string value) => value == null ? null : new PurviewKafkaEventHubType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PurviewKafkaEventHubType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PurviewKafkaEventHubType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.Resources.Models
     public readonly partial struct Level : IEquatable<Level>
     {
         private readonly string _value;
-        /// <summary> Warning. </summary>
-        private const string WarningValue = "Warning";
-        /// <summary> Info. </summary>
-        private const string InfoValue = "Info";
-        /// <summary> Error. </summary>
-        private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="Level"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Level(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string WarningValue = "Warning";
+        private const string InfoValue = "Info";
+        private const string ErrorValue = "Error";
 
         /// <summary> Warning. </summary>
         public static Level Warning { get; } = new Level(WarningValue);
-
         /// <summary> Info. </summary>
         public static Level Info { get; } = new Level(InfoValue);
-
         /// <summary> Error. </summary>
         public static Level Error { get; } = new Level(ErrorValue);
-
         /// <summary> Determines if two <see cref="Level"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(Level left, Level right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="Level"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(Level left, Level right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="Level"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="Level"/>. </summary>
         public static implicit operator Level(string value) => new Level(value);
 
-        /// <summary> Converts a string to a <see cref="Level"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator Level?(string value) => value == null ? null : new Level(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Level other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(Level other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

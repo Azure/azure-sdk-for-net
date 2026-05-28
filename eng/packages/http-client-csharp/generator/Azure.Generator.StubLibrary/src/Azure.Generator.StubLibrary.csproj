@@ -3,7 +3,8 @@
   <PropertyGroup>
     <PackageId>StubPlugin</PackageId>
     <Version>1.0.0-beta.1</Version>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <RequiredTargetFrameworks>net9.0</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

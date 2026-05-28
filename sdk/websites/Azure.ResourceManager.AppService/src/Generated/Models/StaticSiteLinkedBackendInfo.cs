@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Static Site Linked Backend ARM resource.
-    /// Serialized Name: StaticSiteLinkedBackend
-    /// </summary>
+    /// <summary> Static Site Linked Backend ARM resource. </summary>
     public partial class StaticSiteLinkedBackendInfo
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteLinkedBackendInfo"/>. </summary>
-        /// <param name="backendResourceId">
-        /// The resource id of the backend linked to the static site
-        /// Serialized Name: StaticSiteLinkedBackend.backendResourceId
-        /// </param>
-        /// <param name="region">
-        /// The region of the backend linked to the static site
-        /// Serialized Name: StaticSiteLinkedBackend.region
-        /// </param>
-        /// <param name="createdOn">
-        /// The date and time on which the backend was linked to the static site.
-        /// Serialized Name: StaticSiteLinkedBackend.createdOn
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the linking process.
-        /// Serialized Name: StaticSiteLinkedBackend.provisioningState
-        /// </param>
+        /// <param name="backendResourceId"> The resource id of the backend linked to the static site. </param>
+        /// <param name="region"> The region of the backend linked to the static site. </param>
+        /// <param name="createdOn"> The date and time on which the backend was linked to the static site. </param>
+        /// <param name="provisioningState"> The provisioning state of the linking process. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteLinkedBackendInfo(string backendResourceId, string region, DateTimeOffset? createdOn, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +65,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource id of the backend linked to the static site
-        /// Serialized Name: StaticSiteLinkedBackend.backendResourceId
-        /// </summary>
+        /// <summary> The resource id of the backend linked to the static site. </summary>
         [WirePath("backendResourceId")]
         public string BackendResourceId { get; }
-        /// <summary>
-        /// The region of the backend linked to the static site
-        /// Serialized Name: StaticSiteLinkedBackend.region
-        /// </summary>
+        /// <summary> The region of the backend linked to the static site. </summary>
         [WirePath("region")]
         public string Region { get; }
-        /// <summary>
-        /// The date and time on which the backend was linked to the static site.
-        /// Serialized Name: StaticSiteLinkedBackend.createdOn
-        /// </summary>
+        /// <summary> The date and time on which the backend was linked to the static site. </summary>
         [WirePath("createdOn")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The provisioning state of the linking process.
-        /// Serialized Name: StaticSiteLinkedBackend.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the linking process. </summary>
         [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }

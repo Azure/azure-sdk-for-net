@@ -37,23 +37,7 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
 
         private ConnectedCluster ConnectedClusterRestClient => _connectedClusterRestClient ??= new ConnectedCluster(ConnectedClusterClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
 
-        /// <summary>
-        /// API to enumerate registered connected K8s clusters under a Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kubernetes/connectedClusters. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedClusters_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectedClusterResource> GetConnectedClustersAsync(CancellationToken cancellationToken = default)
@@ -62,26 +46,10 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionAsyncCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context, "MockableKubernetesSubscriptionResource.GetConnectedClusters"), data => new ConnectedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionAsyncCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context), data => new ConnectedClusterResource(Client, data));
         }
 
-        /// <summary>
-        /// API to enumerate registered connected K8s clusters under a Subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Kubernetes/connectedClusters. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ConnectedClusters_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> API to enumerate registered connected K8s clusters under a Subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConnectedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectedClusterResource> GetConnectedClusters(CancellationToken cancellationToken = default)
@@ -90,7 +58,7 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context, "MockableKubernetesSubscriptionResource.GetConnectedClusters"), data => new ConnectedClusterResource(Client, data));
+            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context), data => new ConnectedClusterResource(Client, data));
         }
     }
 }

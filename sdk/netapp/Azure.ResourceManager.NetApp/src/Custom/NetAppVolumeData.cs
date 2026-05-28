@@ -1,32 +1,27 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp.Models;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    // The spec now generates the GA ETag shape. The remaining custom member restores the
-    // GA setter for IsRestoring, which is read-only in the current service contract.
-    public partial class NetAppVolumeData
+    /// <summary>
+    /// A class representing the NetAppVolume data model.
+    /// Volume resource
+    /// </summary>
+    [CodeGenSerialization(nameof(IsRestoring), "isRestoring")]
+    public partial class NetAppVolumeData : TrackedResourceData
     {
-        // The new spec marks isRestoring as read-only; restore the GA setter for source compat.
-        /// <summary> Restoring. </summary>
+        /// <summary> Restoring. ReadOnly property indicating if volume is being resored </summary>
         public bool? IsRestoring
         {
-            get
-            {
-                return Properties is null ? default : Properties.IsRestoring;
-            }
+            get;
             [EditorBrowsable(EditorBrowsableState.Never)]
-            set
-            {
-                // Setter retained for backward compatibility; isRestoring is read-only on the
-                // service, so the value is not propagated to the request payload.
-            }
+            set;
         }
     }
 }

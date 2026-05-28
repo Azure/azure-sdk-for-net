@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Redis.Models
 {
     internal static partial class RedisLinkedServerRoleExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RedisLinkedServerRole value) => value switch
         {
             RedisLinkedServerRole.Primary => "Primary",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.Redis.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedisLinkedServerRole value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static RedisLinkedServerRole ToRedisLinkedServerRole(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary"))
-            {
-                return RedisLinkedServerRole.Primary;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary"))
-            {
-                return RedisLinkedServerRole.Secondary;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return RedisLinkedServerRole.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return RedisLinkedServerRole.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedisLinkedServerRole value.");
         }
     }

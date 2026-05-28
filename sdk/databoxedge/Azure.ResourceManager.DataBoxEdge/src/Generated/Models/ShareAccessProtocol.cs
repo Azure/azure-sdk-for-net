@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct ShareAccessProtocol : IEquatable<ShareAccessProtocol>
     {
         private readonly string _value;
-        private const string SmbValue = "SMB";
-        private const string NfsValue = "NFS";
 
         /// <summary> Initializes a new instance of <see cref="ShareAccessProtocol"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ShareAccessProtocol(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Smb. </summary>
+        private const string SmbValue = "SMB";
+        private const string NfsValue = "NFS";
+
+        /// <summary> SMB. </summary>
         public static ShareAccessProtocol Smb { get; } = new ShareAccessProtocol(SmbValue);
-
-        /// <summary> Gets the Nfs. </summary>
+        /// <summary> NFS. </summary>
         public static ShareAccessProtocol Nfs { get; } = new ShareAccessProtocol(NfsValue);
-
         /// <summary> Determines if two <see cref="ShareAccessProtocol"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ShareAccessProtocol left, ShareAccessProtocol right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ShareAccessProtocol"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ShareAccessProtocol left, ShareAccessProtocol right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ShareAccessProtocol"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ShareAccessProtocol"/>. </summary>
         public static implicit operator ShareAccessProtocol(string value) => new ShareAccessProtocol(value);
 
-        /// <summary> Converts a string to a <see cref="ShareAccessProtocol"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ShareAccessProtocol?(string value) => value == null ? null : new ShareAccessProtocol(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ShareAccessProtocol other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ShareAccessProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Quantum;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
-    /// <summary> Information about a Provider. A Provider is an entity that offers Targets to run Azure Quantum Jobs. </summary>
-    public partial class QuantumProvider : IJsonModel<QuantumProvider>
+    public partial class QuantumProvider : IUtf8JsonSerializable, IJsonModel<QuantumProvider>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuantumProvider PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeQuantumProvider(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(QuantumProvider)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuantumProvider>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuantumContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(QuantumProvider)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuantumProvider>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QuantumProvider IPersistableModel<QuantumProvider>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuantumProvider>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<QuantumProvider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QuantumProvider)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ProviderId))
             {
                 writer.WritePropertyName("providerId"u8);
@@ -104,20 +64,15 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WritePropertyName("resourceUsageId"u8);
                 writer.WriteStringValue(ResourceUsageId);
             }
-            if (Optional.IsDefined(Quotas))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("quotas"u8);
-                writer.WriteObjectValue(Quotas, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,27 +81,22 @@ namespace Azure.ResourceManager.Quantum.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        QuantumProvider IJsonModel<QuantumProvider>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuantumProvider JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QuantumProvider IJsonModel<QuantumProvider>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QuantumProvider)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeQuantumProvider(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static QuantumProvider DeserializeQuantumProvider(JsonElement element, ModelReaderWriterOptions options)
+        internal static QuantumProvider DeserializeQuantumProvider(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,64 +105,56 @@ namespace Azure.ResourceManager.Quantum.Models
             string providerSku = default;
             Uri instanceUri = default;
             string applicationName = default;
-            QuantumProvisioningStatus? provisioningState = default;
+            ProviderProvisioningStatus? provisioningState = default;
             string resourceUsageId = default;
-            QuantumQuotaAllocations quotas = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("providerId"u8))
+                if (property.NameEquals("providerId"u8))
                 {
-                    providerId = prop.Value.GetString();
+                    providerId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("providerSku"u8))
+                if (property.NameEquals("providerSku"u8))
                 {
-                    providerSku = prop.Value.GetString();
+                    providerSku = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("instanceUri"u8))
+                if (property.NameEquals("instanceUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    instanceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    instanceUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("applicationName"u8))
+                if (property.NameEquals("applicationName"u8))
                 {
-                    applicationName = prop.Value.GetString();
+                    applicationName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new QuantumProvisioningStatus(prop.Value.GetString());
+                    provisioningState = new ProviderProvisioningStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("resourceUsageId"u8))
+                if (property.NameEquals("resourceUsageId"u8))
                 {
-                    resourceUsageId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("quotas"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    quotas = QuantumQuotaAllocations.DeserializeQuantumQuotaAllocations(prop.Value, options);
+                    resourceUsageId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new QuantumProvider(
                 providerId,
                 providerSku,
@@ -220,8 +162,38 @@ namespace Azure.ResourceManager.Quantum.Models
                 applicationName,
                 provisioningState,
                 resourceUsageId,
-                quotas,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<QuantumProvider>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerQuantumContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(QuantumProvider)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        QuantumProvider IPersistableModel<QuantumProvider>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuantumProvider>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeQuantumProvider(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuantumProvider)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QuantumProvider>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

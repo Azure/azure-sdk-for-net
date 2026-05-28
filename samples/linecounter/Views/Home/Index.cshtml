@@ -1,0 +1,20 @@
+﻿@model string[]
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Index</title>
+</head>
+<body>
+    <form method="post" action="upload" enctype="multipart/form-data">
+        <input name="files" multiple type="file" />
+        <input type="submit" />
+    </form>
+
+    @foreach (var name in Model ?? Array.Empty<string>())
+    {
+        <p><a href="status/@(name).html">View @name status</a></p>
+    }
+</body>
+</html>

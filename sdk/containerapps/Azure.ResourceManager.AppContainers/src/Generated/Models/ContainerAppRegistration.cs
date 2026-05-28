@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the app registration for providers that have app ids and app secrets. </summary>
     public partial class ContainerAppRegistration
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppRegistration"/>. </summary>
         public ContainerAppRegistration()
@@ -25,18 +53,17 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppRegistration"/>. </summary>
         /// <param name="appId"> The App ID of the app used for login. </param>
         /// <param name="appSecretSettingName"> The app setting name that contains the app secret. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppRegistration(string appId, string appSecretSettingName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppRegistration(string appId, string appSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppId = appId;
             AppSecretSettingName = appSecretSettingName;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The App ID of the app used for login. </summary>
         [WirePath("appId")]
         public string AppId { get; set; }
-
         /// <summary> The app setting name that contains the app secret. </summary>
         [WirePath("appSecretSettingName")]
         public string AppSecretSettingName { get; set; }

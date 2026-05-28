@@ -4,13 +4,10 @@
 #nullable disable
 
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    // we have this customization here to change its namespace to avoid breaking changes
-    [CodeGenType("CommunityGalleryImageData")]
     public partial class CommunityGalleryImageData
     {
         /// <summary> This is the gallery image definition identifier. </summary>
@@ -21,15 +18,5 @@ namespace Azure.ResourceManager.Compute
             Offer = ImageIdentifier.Offer,
             Sku = ImageIdentifier.Sku
         };
-
-        // we also must add back this property to avoid breaking changes, but its payload never have this property.
-        /// <summary>
-        /// The resource identifier.
-        ///
-        /// This property is depracated and will be removed in a future release.
-        /// There is possibility that this property will be null.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier Id { get; internal set; }
     }
 }

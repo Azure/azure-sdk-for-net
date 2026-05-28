@@ -6,85 +6,91 @@
 #nullable disable
 
 using System.Threading;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Grafana;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Grafana.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableGrafanaSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _managedGrafanasClientDiagnostics;
-        private ManagedGrafanas _managedGrafanasRestClient;
-        private ClientDiagnostics _managedDashboardsClientDiagnostics;
-        private ManagedDashboards _managedDashboardsRestClient;
+        private ClientDiagnostics _managedGrafanaClientDiagnostics;
+        private ManagedGrafanasRestOperations _managedGrafanaRestClient;
+        private ClientDiagnostics _managedDashboardClientDiagnostics;
+        private ManagedDashboardsRestOperations _managedDashboardRestClient;
 
-        /// <summary> Initializes a new instance of MockableGrafanaSubscriptionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableGrafanaSubscriptionResource"/> class for mocking. </summary>
         protected MockableGrafanaSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableGrafanaSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableGrafanaSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableGrafanaSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ManagedGrafanasClientDiagnostics => _managedGrafanasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics ManagedGrafanaClientDiagnostics => _managedGrafanaClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedGrafanaResource.ResourceType.Namespace, Diagnostics);
+        private ManagedGrafanasRestOperations ManagedGrafanaRestClient => _managedGrafanaRestClient ??= new ManagedGrafanasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedGrafanaResource.ResourceType));
+        private ClientDiagnostics ManagedDashboardClientDiagnostics => _managedDashboardClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedDashboardResource.ResourceType.Namespace, Diagnostics);
+        private ManagedDashboardsRestOperations ManagedDashboardRestClient => _managedDashboardRestClient ??= new ManagedDashboardsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedDashboardResource.ResourceType));
 
-        private ManagedGrafanas ManagedGrafanasRestClient => _managedGrafanasRestClient ??= new ManagedGrafanas(ManagedGrafanasClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
-
-        private ClientDiagnostics ManagedDashboardsClientDiagnostics => _managedDashboardsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Grafana.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ManagedDashboards ManagedDashboardsRestClient => _managedDashboardsRestClient ??= new ManagedDashboards(ManagedDashboardsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
-
-        /// <summary>
-        /// List all resources of workspaces for Grafana under the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedGrafanas_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(CancellationToken cancellationToken = default)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ManagedGrafanaData, ManagedGrafanaResource>(new ManagedGrafanasGetAllAsyncCollectionResultOfT(ManagedGrafanasRestClient, Id.SubscriptionId, context, "MockableGrafanaSubscriptionResource.GetManagedGrafanas"), data => new ManagedGrafanaResource(Client, data));
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
 
         /// <summary>
         /// List all resources of workspaces for Grafana under the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedGrafanas_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedGrafanaRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedGrafanaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), ManagedGrafanaClientDiagnostics, Pipeline, "MockableGrafanaSubscriptionResource.GetManagedGrafanas", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all resources of workspaces for Grafana under the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/grafana</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedGrafana_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedGrafanaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,55 +98,59 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <returns> A collection of <see cref="ManagedGrafanaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedGrafanaResource> GetManagedGrafanas(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ManagedGrafanaData, ManagedGrafanaResource>(new ManagedGrafanasGetAllCollectionResultOfT(ManagedGrafanasRestClient, Id.SubscriptionId, context, "MockableGrafanaSubscriptionResource.GetManagedGrafanas"), data => new ManagedGrafanaResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedGrafanaRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedGrafanaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), ManagedGrafanaClientDiagnostics, Pipeline, "MockableGrafanaSubscriptionResource.GetManagedGrafanas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all resources of dashboards under the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/dashboards. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/dashboards</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_ListBySubscription. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_ListBySubscription</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDashboardResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedDashboardResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDashboardResource> GetManagedDashboardsAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetBySubscriptionAsyncCollectionResultOfT(ManagedDashboardsRestClient, Id.SubscriptionId, context, "MockableGrafanaSubscriptionResource.GetManagedDashboards"), data => new ManagedDashboardResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedDashboardRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedDashboardRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDashboardResource(Client, ManagedDashboardData.DeserializeManagedDashboardData(e)), ManagedDashboardClientDiagnostics, Pipeline, "MockableGrafanaSubscriptionResource.GetManagedDashboards", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all resources of dashboards under the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/dashboards. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Dashboard/dashboards</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_ListBySubscription. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_ListBySubscription</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,11 +158,9 @@ namespace Azure.ResourceManager.Grafana.Mocking
         /// <returns> A collection of <see cref="ManagedDashboardResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDashboardResource> GetManagedDashboards(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetBySubscriptionCollectionResultOfT(ManagedDashboardsRestClient, Id.SubscriptionId, context, "MockableGrafanaSubscriptionResource.GetManagedDashboards"), data => new ManagedDashboardResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedDashboardRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedDashboardRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDashboardResource(Client, ManagedDashboardData.DeserializeManagedDashboardData(e)), ManagedDashboardClientDiagnostics, Pipeline, "MockableGrafanaSubscriptionResource.GetManagedDashboards", "value", "nextLink", cancellationToken);
         }
     }
 }

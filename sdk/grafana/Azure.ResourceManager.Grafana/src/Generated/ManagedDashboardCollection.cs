@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Grafana
@@ -26,84 +25,73 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class ManagedDashboardCollection : ArmCollection, IEnumerable<ManagedDashboardResource>, IAsyncEnumerable<ManagedDashboardResource>
     {
-        private readonly ClientDiagnostics _managedDashboardsClientDiagnostics;
-        private readonly ManagedDashboards _managedDashboardsRestClient;
+        private readonly ClientDiagnostics _managedDashboardClientDiagnostics;
+        private readonly ManagedDashboardsRestOperations _managedDashboardRestClient;
 
-        /// <summary> Initializes a new instance of ManagedDashboardCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDashboardCollection"/> class for mocking. </summary>
         protected ManagedDashboardCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedDashboardCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedDashboardCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedDashboardCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _managedDashboardClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedDashboardResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagedDashboardResource.ResourceType, out string managedDashboardApiVersion);
-            _managedDashboardsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ManagedDashboardResource.ResourceType.Namespace, Diagnostics);
-            _managedDashboardsRestClient = new ManagedDashboards(_managedDashboardsClientDiagnostics, Pipeline, Endpoint, managedDashboardApiVersion ?? "2025-09-01-preview");
-            ValidateResourceId(id);
+            _managedDashboardRestClient = new ManagedDashboardsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDashboardApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a dashboard for grafana resource. This API is idempotent, so user can either create a new dashboard or update an existing dashboard.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> The <see cref="ManagedDashboardData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedDashboardResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dashboardName, ManagedDashboardData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dashboardName, nameof(dashboardName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _managedDashboardsClientDiagnostics.CreateScope("ManagedDashboardCollection.CreateOrUpdate");
+            using var scope = _managedDashboardClientDiagnostics.CreateScope("ManagedDashboardCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedDashboardsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, ManagedDashboardData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                GrafanaArmOperation<ManagedDashboardResource> operation = new GrafanaArmOperation<ManagedDashboardResource>(
-                    new ManagedDashboardOperationSource(Client),
-                    _managedDashboardsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _managedDashboardRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<ManagedDashboardResource>(new ManagedDashboardOperationSource(Client), _managedDashboardClientDiagnostics, Pipeline, _managedDashboardRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,51 +105,42 @@ namespace Azure.ResourceManager.Grafana
         /// Create or update a dashboard for grafana resource. This API is idempotent, so user can either create a new dashboard or update an existing dashboard.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> The <see cref="ManagedDashboardData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedDashboardResource> CreateOrUpdate(WaitUntil waitUntil, string dashboardName, ManagedDashboardData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dashboardName, nameof(dashboardName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _managedDashboardsClientDiagnostics.CreateScope("ManagedDashboardCollection.CreateOrUpdate");
+            using var scope = _managedDashboardClientDiagnostics.CreateScope("ManagedDashboardCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedDashboardsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, ManagedDashboardData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                GrafanaArmOperation<ManagedDashboardResource> operation = new GrafanaArmOperation<ManagedDashboardResource>(
-                    new ManagedDashboardOperationSource(Client),
-                    _managedDashboardsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _managedDashboardRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, data, cancellationToken);
+                var operation = new GrafanaArmOperation<ManagedDashboardResource>(new ManagedDashboardOperationSource(Client), _managedDashboardClientDiagnostics, Pipeline, _managedDashboardRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.Grafana
         /// Get the properties of a specific dashboard for grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         public virtual async Task<Response<ManagedDashboardResource>> GetAsync(string dashboardName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dashboardName, nameof(dashboardName));
 
-            using DiagnosticScope scope = _managedDashboardsClientDiagnostics.CreateScope("ManagedDashboardCollection.Get");
+            using var scope = _managedDashboardClientDiagnostics.CreateScope("ManagedDashboardCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ManagedDashboardData> response = Response.FromValue(ManagedDashboardData.FromResponse(result), result);
+                var response = await _managedDashboardRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ManagedDashboardResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.Grafana
         /// Get the properties of a specific dashboard for grafana resource.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         public virtual Response<ManagedDashboardResource> Get(string dashboardName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dashboardName, nameof(dashboardName));
 
-            using DiagnosticScope scope = _managedDashboardsClientDiagnostics.CreateScope("ManagedDashboardCollection.Get");
+            using var scope = _managedDashboardClientDiagnostics.CreateScope("ManagedDashboardCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ManagedDashboardData> response = Response.FromValue(ManagedDashboardData.FromResponse(result), result);
+                var response = _managedDashboardRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ManagedDashboardResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.Grafana
         /// List all resources of dashboards under the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedDashboardResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedDashboardResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDashboardResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetAllAsyncCollectionResultOfT(_managedDashboardsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedDashboardCollection.GetAll"), data => new ManagedDashboardResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDashboardRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDashboardRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDashboardResource(Client, ManagedDashboardData.DeserializeManagedDashboardData(e)), _managedDashboardClientDiagnostics, Pipeline, "ManagedDashboardCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List all resources of dashboards under the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="ManagedDashboardResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDashboardResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ManagedDashboardData, ManagedDashboardResource>(new ManagedDashboardsGetAllCollectionResultOfT(_managedDashboardsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "ManagedDashboardCollection.GetAll"), data => new ManagedDashboardResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDashboardRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDashboardRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDashboardResource(Client, ManagedDashboardData.DeserializeManagedDashboardData(e)), _managedDashboardClientDiagnostics, Pipeline, "ManagedDashboardCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dashboardName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dashboardName, nameof(dashboardName));
 
-            using DiagnosticScope scope = _managedDashboardsClientDiagnostics.CreateScope("ManagedDashboardCollection.Exists");
+            using var scope = _managedDashboardClientDiagnostics.CreateScope("ManagedDashboardCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ManagedDashboardData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ManagedDashboardData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ManagedDashboardData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _managedDashboardRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.Grafana
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         public virtual Response<bool> Exists(string dashboardName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dashboardName, nameof(dashboardName));
 
-            using DiagnosticScope scope = _managedDashboardsClientDiagnostics.CreateScope("ManagedDashboardCollection.Exists");
+            using var scope = _managedDashboardClientDiagnostics.CreateScope("ManagedDashboardCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ManagedDashboardData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ManagedDashboardData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ManagedDashboardData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _managedDashboardRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.Grafana
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedDashboardResource>> GetIfExistsAsync(string dashboardName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dashboardName, nameof(dashboardName));
 
-            using DiagnosticScope scope = _managedDashboardsClientDiagnostics.CreateScope("ManagedDashboardCollection.GetIfExists");
+            using var scope = _managedDashboardClientDiagnostics.CreateScope("ManagedDashboardCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ManagedDashboardData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ManagedDashboardData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ManagedDashboardData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _managedDashboardRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ManagedDashboardResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ManagedDashboardResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.Grafana
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/dashboards/{dashboardName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ManagedDashboards_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ManagedDashboard_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedDashboardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dashboardName"> The name of the Azure Managed Dashboard. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dashboardName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dashboardName"/> is null. </exception>
         public virtual NullableResponse<ManagedDashboardResource> GetIfExists(string dashboardName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dashboardName, nameof(dashboardName));
 
-            using DiagnosticScope scope = _managedDashboardsClientDiagnostics.CreateScope("ManagedDashboardCollection.GetIfExists");
+            using var scope = _managedDashboardClientDiagnostics.CreateScope("ManagedDashboardCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _managedDashboardsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ManagedDashboardData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ManagedDashboardData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ManagedDashboardData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _managedDashboardRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ManagedDashboardResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ManagedDashboardResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.Grafana
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ManagedDashboardResource> IAsyncEnumerable<ManagedDashboardResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

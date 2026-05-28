@@ -1,45 +1,17 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Developer.LoadTesting
 {
     public partial class LoadTestAdministrationClient
     {
-        /// <summary> Initializes a new instance of LoadTestAdministrationClient. </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new LoadTestingClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of LoadTestAdministrationClient. </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential, LoadTestingClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new LoadTestingClientOptions();
-
-            _endpoint = endpoint;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
         /// <summary> Upload input file for a given test name. File size can&apos;t be more than 50 MB. Existing file with same name for the given test will be overwritten. File should be provided in the request body as application/octet-stream. </summary>
         /// <param name="waitUntil"> Defines how to use the LRO, if passed WaitUntil.Completed then waits for complete file validation</param>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
@@ -136,14 +108,9 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetTestsAsync(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, RequestContext context)
         {
-            return new LoadTestAdministrationClientGetTestsAsyncCollectionResult(
-                this,
-                orderby,
-                search,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
-                null,
-                context, "LoadTestAdministrationClient.GetTests");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
         }
 
         /// <summary> Get all load tests by the fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
@@ -156,14 +123,9 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetTests(string orderby, string search, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, RequestContext context)
         {
-            return new LoadTestAdministrationClientGetTestsCollectionResult(
-                this,
-                orderby,
-                search,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
-                null,
-                context, "LoadTestAdministrationClient.GetTests");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -184,14 +146,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<LoadTest> GetTestsAsync(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, CancellationToken cancellationToken = default)
         {
-            return new LoadTestAdministrationClientGetTestsAsyncCollectionResultOfT(
-                this,
-                orderby,
-                search,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
-                null,
-                cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTests");
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LoadTest.DeserializeLoadTest(e), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -212,14 +170,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<LoadTest> GetTests(string orderby = null, string search = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, CancellationToken cancellationToken = default)
         {
-            return new LoadTestAdministrationClientGetTestsCollectionResultOfT(
-                this,
-                orderby,
-                search,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
-                null,
-                cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTests");
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestsRequest(orderby, search, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestsNextPageRequest(nextLink, orderby, search, lastModifiedStartTime, lastModifiedEndTime, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LoadTest.DeserializeLoadTest(e), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTests", "value", "nextLink", context);
         }
 
         /// <summary> List test profiles. </summary>
@@ -231,14 +185,10 @@ namespace Azure.Developer.LoadTesting
         /// <remarks> Get all test profiles for the given filters. </remarks>
         public virtual AsyncPageable<TestProfile> GetTestProfilesAsync(DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, IEnumerable<string> testProfileIds = null, IEnumerable<string> testIds = null, CancellationToken cancellationToken = default)
         {
-            return new LoadTestAdministrationClientGetTestProfilesAsyncCollectionResultOfT(
-                this,
-                null,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
-                testProfileIds,
-                testIds,
-                cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTestProfiles");
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfilesRequest(pageSizeHint, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfilesNextPageRequest(nextLink, pageSizeHint, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TestProfile.DeserializeTestProfile(e), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestProfiles", "value", "nextLink", context);
         }
 
         /// <summary> List test profiles. </summary>
@@ -250,14 +200,10 @@ namespace Azure.Developer.LoadTesting
         /// <remarks> Get all test profiles for the given filters. </remarks>
         public virtual Pageable<TestProfile> GetTestProfiles(DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, IEnumerable<string> testProfileIds = null, IEnumerable<string> testIds = null, CancellationToken cancellationToken = default)
         {
-            return new LoadTestAdministrationClientGetTestProfilesCollectionResultOfT(
-                this,
-                null,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
-                testProfileIds,
-                testIds,
-                cancellationToken.ToRequestContext(), "LoadTestAdministrationClient.GetTestProfiles");
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfilesRequest(pageSizeHint, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfilesNextPageRequest(nextLink, pageSizeHint, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TestProfile.DeserializeTestProfile(e), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestProfiles", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -284,14 +230,9 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetTestProfilesAsync(DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
         {
-            return new LoadTestAdministrationClientGetTestProfilesAsyncCollectionResult(
-                this,
-                null,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
-                testProfileIds,
-                testIds,
-                context, "LoadTestAdministrationClient.GetTestProfiles");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfilesRequest(pageSizeHint, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfilesNextPageRequest(nextLink, pageSizeHint, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestProfiles", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -318,14 +259,9 @@ namespace Azure.Developer.LoadTesting
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetTestProfiles(DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
         {
-            return new LoadTestAdministrationClientGetTestProfilesCollectionResult(
-                this,
-                null,
-                lastModifiedStartTime,
-                lastModifiedEndTime,
-                testProfileIds,
-                testIds,
-                context, "LoadTestAdministrationClient.GetTestProfiles");
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfilesRequest(pageSizeHint, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfilesNextPageRequest(nextLink, pageSizeHint, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestAdministrationClient.GetTestProfiles", "value", "nextLink", context);
         }
     }
 }

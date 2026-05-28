@@ -5,23 +5,21 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
+    /// <summary> Contains a document found by a search query, plus associated metadata. </summary>
     internal partial class SearchResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
-        public SearchResult()
+        /// <param name="score"> The relevance score of the document compared to other documents returned by the query. </param>
+        internal SearchResult(double score)
         {
+            Score = score;
             Highlights = new ChangeTrackingDictionary<string, IList<string>>();
             Captions = new ChangeTrackingList<QueryCaptionResult>();
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
@@ -31,8 +29,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="highlights"> Text fragments from the document that indicate the matching search terms, organized by each applicable field; null if hit highlighting was not enabled for the query. </param>
         /// <param name="captions"> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type 'semantic'. </param>
         /// <param name="documentDebugInfo"> Contains debugging information that can be used to further explore your search results. </param>
-        /// <param name="additionalProperties"></param>
-        internal SearchResult(double score, double? rerankerScore, double? rerankerBoostedScore, IReadOnlyDictionary<string, IList<string>> highlights, IReadOnlyList<QueryCaptionResult> captions, DocumentDebugInfo documentDebugInfo, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        internal SearchResult(double score, double? rerankerScore, double? rerankerBoostedScore, IReadOnlyDictionary<string, IList<string>> highlights, IReadOnlyList<QueryCaptionResult> captions, DocumentDebugInfo documentDebugInfo, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Score = score;
             RerankerScore = rerankerScore;
@@ -40,28 +38,27 @@ namespace Azure.Search.Documents.Models
             Highlights = highlights;
             Captions = captions;
             DocumentDebugInfo = documentDebugInfo;
-            _additionalBinaryDataProperties = additionalProperties;
+            AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchResult"/> for deserialization. </summary>
+        internal SearchResult()
+        {
         }
 
         /// <summary> The relevance score of the document compared to other documents returned by the query. </summary>
         public double Score { get; }
-
         /// <summary> The relevance score computed by the semantic ranker for the top search results. Search results are sorted by the RerankerScore first and then by the Score. RerankerScore is only returned for queries of type 'semantic'. </summary>
         public double? RerankerScore { get; }
-
         /// <summary> The relevance score computed by boosting the Reranker Score. Search results are sorted by the RerankerScore/RerankerBoostedScore based on useScoringProfileBoostedRanking in the Semantic Config. RerankerBoostedScore is only returned for queries of type 'semantic'. </summary>
         public double? RerankerBoostedScore { get; }
-
         /// <summary> Text fragments from the document that indicate the matching search terms, organized by each applicable field; null if hit highlighting was not enabled for the query. </summary>
         public IReadOnlyDictionary<string, IList<string>> Highlights { get; }
-
         /// <summary> Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type 'semantic'. </summary>
         public IReadOnlyList<QueryCaptionResult> Captions { get; }
-
         /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
         public DocumentDebugInfo DocumentDebugInfo { get; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+        /// <summary> Additional Properties. </summary>
+        public IReadOnlyDictionary<string, object> AdditionalProperties { get; }
     }
 }

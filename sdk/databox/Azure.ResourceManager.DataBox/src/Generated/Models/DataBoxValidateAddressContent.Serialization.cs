@@ -10,70 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> The requirements to validate customer address where the device needs to be shipped. </summary>
-    public partial class DataBoxValidateAddressContent : DataBoxValidationInputContent, IJsonModel<DataBoxValidateAddressContent>
+    public partial class DataBoxValidateAddressContent : IUtf8JsonSerializable, IJsonModel<DataBoxValidateAddressContent>
     {
-        /// <summary> Initializes a new instance of <see cref="DataBoxValidateAddressContent"/> for deserialization. </summary>
-        internal DataBoxValidateAddressContent()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxValidateAddressContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataBoxValidationInputContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxValidateAddressContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataBoxValidateAddressContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxValidateAddressContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataBoxValidateAddressContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxValidateAddressContent IPersistableModel<DataBoxValidateAddressContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataBoxValidateAddressContent)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataBoxValidateAddressContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="dataBoxValidateAddressContent"> The <see cref="DataBoxValidateAddressContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DataBoxValidateAddressContent dataBoxValidateAddressContent)
-        {
-            if (dataBoxValidateAddressContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(dataBoxValidateAddressContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxValidateAddressContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -85,11 +28,12 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxValidateAddressContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidateAddressContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("shippingAddress"u8);
             writer.WriteObjectValue(ShippingAddress, options);
@@ -107,84 +51,112 @@ namespace Azure.ResourceManager.DataBox.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxValidateAddressContent IJsonModel<DataBoxValidateAddressContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataBoxValidateAddressContent)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataBoxValidationInputContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataBoxValidateAddressContent IJsonModel<DataBoxValidateAddressContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxValidateAddressContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidateAddressContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxValidateAddressContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataBoxValidateAddressContent DeserializeDataBoxValidateAddressContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataBoxValidateAddressContent DeserializeDataBoxValidateAddressContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataBoxValidationInputDiscriminator validationType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataBoxShippingAddress shippingAddress = default;
             DataBoxSkuName deviceType = default;
             TransportPreferences transportPreferences = default;
             DeviceModelName? model = default;
-            foreach (var prop in element.EnumerateObject())
+            DataBoxValidationInputDiscriminator validationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("validationType"u8))
+                if (property.NameEquals("shippingAddress"u8))
                 {
-                    validationType = prop.Value.GetString().ToDataBoxValidationInputDiscriminator();
+                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("shippingAddress"u8))
+                if (property.NameEquals("deviceType"u8))
                 {
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(prop.Value, options);
+                    deviceType = property.Value.GetString().ToDataBoxSkuName();
                     continue;
                 }
-                if (prop.NameEquals("deviceType"u8))
+                if (property.NameEquals("transportPreferences"u8))
                 {
-                    deviceType = prop.Value.GetString().ToDataBoxSkuName();
-                    continue;
-                }
-                if (prop.NameEquals("transportPreferences"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(prop.Value, options);
+                    transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("model"u8))
+                if (property.NameEquals("model"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    model = prop.Value.GetString().ToDeviceModelName();
+                    model = property.Value.GetString().ToDeviceModelName();
+                    continue;
+                }
+                if (property.NameEquals("validationType"u8))
+                {
+                    validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxValidateAddressContent(
                 validationType,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 shippingAddress,
                 deviceType,
                 transportPreferences,
                 model);
         }
+
+        BinaryData IPersistableModel<DataBoxValidateAddressContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidateAddressContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxValidateAddressContent IPersistableModel<DataBoxValidateAddressContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidateAddressContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataBoxValidateAddressContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxValidateAddressContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxValidateAddressContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

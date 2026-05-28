@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchAccountKeyTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchAccountKeyType value) => value switch
         {
             BatchAccountKeyType.Primary => "Primary",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountKeyType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static BatchAccountKeyType ToBatchAccountKeyType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary"))
-            {
-                return BatchAccountKeyType.Primary;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary"))
-            {
-                return BatchAccountKeyType.Secondary;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return BatchAccountKeyType.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return BatchAccountKeyType.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchAccountKeyType value.");
         }
     }

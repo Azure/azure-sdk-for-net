@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.VirtualEnclaves
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.VirtualEnclaves
     /// </summary>
     public partial class VirtualEnclaveCommunityCollection : ArmCollection, IEnumerable<VirtualEnclaveCommunityResource>, IAsyncEnumerable<VirtualEnclaveCommunityResource>
     {
-        private readonly ClientDiagnostics _communityClientDiagnostics;
-        private readonly Community _communityRestClient;
+        private readonly ClientDiagnostics _virtualEnclaveCommunityCommunityClientDiagnostics;
+        private readonly CommunityRestOperations _virtualEnclaveCommunityCommunityRestClient;
 
-        /// <summary> Initializes a new instance of VirtualEnclaveCommunityCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveCommunityCollection"/> class for mocking. </summary>
         protected VirtualEnclaveCommunityCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveCommunityCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveCommunityCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal VirtualEnclaveCommunityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(VirtualEnclaveCommunityResource.ResourceType, out string virtualEnclaveCommunityApiVersion);
-            _communityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveCommunityResource.ResourceType.Namespace, Diagnostics);
-            _communityRestClient = new Community(_communityClientDiagnostics, Pipeline, Endpoint, virtualEnclaveCommunityApiVersion ?? "2025-05-01-preview");
-            ValidateResourceId(id);
+            _virtualEnclaveCommunityCommunityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", VirtualEnclaveCommunityResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(VirtualEnclaveCommunityResource.ResourceType, out string virtualEnclaveCommunityCommunityApiVersion);
+            _virtualEnclaveCommunityCommunityRestClient = new CommunityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveCommunityCommunityApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a CommunityResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunityResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualEnclaveCommunityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string communityName, VirtualEnclaveCommunityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _communityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.CreateOrUpdate");
+            using var scope = _virtualEnclaveCommunityCommunityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communityRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, VirtualEnclaveCommunityData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                VirtualEnclavesArmOperation<VirtualEnclaveCommunityResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveCommunityResource>(
-                    new VirtualEnclaveCommunityOperationSource(Client),
-                    _communityClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _virtualEnclaveCommunityCommunityRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, communityName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveCommunityResource>(new VirtualEnclaveCommunityOperationSource(Client), _virtualEnclaveCommunityCommunityClientDiagnostics, Pipeline, _virtualEnclaveCommunityCommunityRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communityName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Create a CommunityResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunityResource_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualEnclaveCommunityResource> CreateOrUpdate(WaitUntil waitUntil, string communityName, VirtualEnclaveCommunityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _communityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.CreateOrUpdate");
+            using var scope = _virtualEnclaveCommunityCommunityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communityRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, VirtualEnclaveCommunityData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                VirtualEnclavesArmOperation<VirtualEnclaveCommunityResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveCommunityResource>(
-                    new VirtualEnclaveCommunityOperationSource(Client),
-                    _communityClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _virtualEnclaveCommunityCommunityRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, communityName, data, cancellationToken);
+                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveCommunityResource>(new VirtualEnclaveCommunityOperationSource(Client), _virtualEnclaveCommunityCommunityClientDiagnostics, Pipeline, _virtualEnclaveCommunityCommunityRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, communityName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a CommunityResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunityResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         public virtual async Task<Response<VirtualEnclaveCommunityResource>> GetAsync(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            using DiagnosticScope scope = _communityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.Get");
+            using var scope = _virtualEnclaveCommunityCommunityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communityRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VirtualEnclaveCommunityData> response = Response.FromValue(VirtualEnclaveCommunityData.FromResponse(result), result);
+                var response = await _virtualEnclaveCommunityCommunityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, communityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveCommunityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a CommunityResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunityResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         public virtual Response<VirtualEnclaveCommunityResource> Get(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            using DiagnosticScope scope = _communityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.Get");
+            using var scope = _virtualEnclaveCommunityCommunityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communityRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<VirtualEnclaveCommunityData> response = Response.FromValue(VirtualEnclaveCommunityData.FromResponse(result), result);
+                var response = _virtualEnclaveCommunityCommunityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, communityName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveCommunityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// List CommunityResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunityResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualEnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualEnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualEnclaveCommunityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<VirtualEnclaveCommunityData, VirtualEnclaveCommunityResource>(new CommunityGetByResourceGroupAsyncCollectionResultOfT(_communityRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualEnclaveCommunityCollection.GetAll"), data => new VirtualEnclaveCommunityResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEnclaveCommunityCommunityRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEnclaveCommunityCommunityRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveCommunityResource(Client, VirtualEnclaveCommunityData.DeserializeVirtualEnclaveCommunityData(e)), _virtualEnclaveCommunityCommunityClientDiagnostics, Pipeline, "VirtualEnclaveCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List CommunityResource resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunityResource_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <returns> A collection of <see cref="VirtualEnclaveCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualEnclaveCommunityResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<VirtualEnclaveCommunityData, VirtualEnclaveCommunityResource>(new CommunityGetByResourceGroupCollectionResultOfT(_communityRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "VirtualEnclaveCommunityCollection.GetAll"), data => new VirtualEnclaveCommunityResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualEnclaveCommunityCommunityRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualEnclaveCommunityCommunityRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualEnclaveCommunityResource(Client, VirtualEnclaveCommunityData.DeserializeVirtualEnclaveCommunityData(e)), _virtualEnclaveCommunityCommunityClientDiagnostics, Pipeline, "VirtualEnclaveCommunityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunityResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            using DiagnosticScope scope = _communityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.Exists");
+            using var scope = _virtualEnclaveCommunityCommunityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communityRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<VirtualEnclaveCommunityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveCommunityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveCommunityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _virtualEnclaveCommunityCommunityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, communityName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunityResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         public virtual Response<bool> Exists(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            using DiagnosticScope scope = _communityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.Exists");
+            using var scope = _virtualEnclaveCommunityCommunityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communityRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<VirtualEnclaveCommunityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveCommunityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveCommunityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _virtualEnclaveCommunityCommunityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, communityName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunityResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualEnclaveCommunityResource>> GetIfExistsAsync(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            using DiagnosticScope scope = _communityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.GetIfExists");
+            using var scope = _virtualEnclaveCommunityCommunityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communityRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<VirtualEnclaveCommunityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveCommunityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveCommunityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _virtualEnclaveCommunityCommunityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, communityName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<VirtualEnclaveCommunityResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveCommunityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Mission/communities/{communityName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Community_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CommunityResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveCommunityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="communityName"> The name of the communityResource Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="communityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="communityName"/> is null. </exception>
         public virtual NullableResponse<VirtualEnclaveCommunityResource> GetIfExists(string communityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(communityName, nameof(communityName));
 
-            using DiagnosticScope scope = _communityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.GetIfExists");
+            using var scope = _virtualEnclaveCommunityCommunityClientDiagnostics.CreateScope("VirtualEnclaveCommunityCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _communityRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, communityName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<VirtualEnclaveCommunityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(VirtualEnclaveCommunityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((VirtualEnclaveCommunityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _virtualEnclaveCommunityCommunityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, communityName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<VirtualEnclaveCommunityResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveCommunityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.VirtualEnclaves
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<VirtualEnclaveCommunityResource> IAsyncEnumerable<VirtualEnclaveCommunityResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

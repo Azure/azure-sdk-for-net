@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     public readonly partial struct ConfidentialLedgerApplicationType : IEquatable<ConfidentialLedgerApplicationType>
     {
         private readonly string _value;
-        private const string ConfidentialLedgerValue = "ConfidentialLedger";
-        private const string CodeTransparencyValue = "CodeTransparency";
 
         /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerApplicationType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConfidentialLedgerApplicationType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the ConfidentialLedger. </summary>
+        private const string ConfidentialLedgerValue = "ConfidentialLedger";
+        private const string CodeTransparencyValue = "CodeTransparency";
+
+        /// <summary> ConfidentialLedger. </summary>
         public static ConfidentialLedgerApplicationType ConfidentialLedger { get; } = new ConfidentialLedgerApplicationType(ConfidentialLedgerValue);
-
-        /// <summary> Gets the CodeTransparency. </summary>
+        /// <summary> CodeTransparency. </summary>
         public static ConfidentialLedgerApplicationType CodeTransparency { get; } = new ConfidentialLedgerApplicationType(CodeTransparencyValue);
-
         /// <summary> Determines if two <see cref="ConfidentialLedgerApplicationType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfidentialLedgerApplicationType left, ConfidentialLedgerApplicationType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ConfidentialLedgerApplicationType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfidentialLedgerApplicationType left, ConfidentialLedgerApplicationType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ConfidentialLedgerApplicationType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialLedgerApplicationType"/>. </summary>
         public static implicit operator ConfidentialLedgerApplicationType(string value) => new ConfidentialLedgerApplicationType(value);
 
-        /// <summary> Converts a string to a <see cref="ConfidentialLedgerApplicationType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ConfidentialLedgerApplicationType?(string value) => value == null ? null : new ConfidentialLedgerApplicationType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfidentialLedgerApplicationType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ConfidentialLedgerApplicationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

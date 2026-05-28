@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -179,8 +178,8 @@ namespace Azure.Data.Tables.Tests
             Assert.Multiple(
                 () =>
                 {
-                    Assert.That(client.AccountName, Is.EqualTo(expectedAccountName));
-                    Assert.That(client.Name, Is.EqualTo(expectedTableName));
+                    Assert.AreEqual(expectedAccountName, client.AccountName);
+                    Assert.AreEqual(expectedTableName, client.Name);
                 });
         }
 
@@ -189,8 +188,8 @@ namespace Azure.Data.Tables.Tests
         {
             var client = new TableClient(_url, TableName, new TableSharedKeyCredential(AccountName, string.Empty), new TableClientOptions());
 
-            Assert.That(client.AccountName, Is.EqualTo(AccountName));
-            Assert.That(client.Name, Is.EqualTo(TableName));
+            Assert.AreEqual(AccountName, client.AccountName);
+            Assert.AreEqual(TableName, client.Name);
         }
 
         [Test]
@@ -198,8 +197,8 @@ namespace Azure.Data.Tables.Tests
         {
             var client = new TableClient(new Uri($"{_url}/{TableName}?{signature}"));
 
-            Assert.That(client.AccountName, Is.EqualTo(AccountName));
-            Assert.That(client.Name, Is.EqualTo(TableName));
+            Assert.AreEqual(AccountName, client.AccountName);
+            Assert.AreEqual(TableName, client.Name);
         }
 
         /// <summary>
@@ -392,8 +391,8 @@ namespace Azure.Data.Tables.Tests
             Assert.That(deserializedEntity.PartitionKey, Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
             Assert.That(deserializedEntity.RowKey, Is.EqualTo(entity.RowKey), "The entities should be equivalent");
             Assert.That(deserializedEntity.MyFoo.ToString(), Is.EqualTo(default(Foo).ToString()), "The non-existing enum value should not be deserialized.");
-            Assert.That(deserializedEntity.MyNullableFoo, Is.Null, "The non-existing nullable enum value should not be deserialized.");
-            Assert.That(deserializedEntity.MyNullableFoo2, Is.Null, "The entities should be equivalent.");
+            Assert.IsNull(deserializedEntity.MyNullableFoo, "The non-existing nullable enum value should not be deserialized.");
+            Assert.IsNull(deserializedEntity.MyNullableFoo2, "The entities should be equivalent.");
             Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
         }
 
@@ -456,9 +455,9 @@ namespace Azure.Data.Tables.Tests
         public async Task ValidateUri()
         {
             await client.UpdateEntityAsync(new TableEntity("pkā", "rk"), ETag.All).ConfigureAwait(false);
-            Assert.That(
-                _transport.Requests[0].Uri.ToString(),
-                Is.EqualTo($"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata"));
+            Assert.AreEqual(
+                $"https://example.com/someTableName(PartitionKey='{Uri.EscapeDataString("pkā")}',RowKey='rk')?{signature}&$format=application%2Fjson%3Bodata%3Dminimalmetadata",
+                _transport.Requests[0].Uri.ToString());
         }
 
         [Test]
@@ -534,8 +533,8 @@ namespace Azure.Data.Tables.Tests
 
             var actualSas = client.GenerateSasUri(permissions, expires);
 
-            Assert.That(actualSas.Query, Is.EqualTo("?" + expectedSas));
-            Assert.That(actualSas.Segments, Has.Member(TableName));
+            Assert.AreEqual("?" + expectedSas, actualSas.Query);
+            CollectionAssert.Contains(actualSas.Segments, TableName);
         }
 
         private static IEnumerable<object[]> TableClientsAllCtors(bool useEmulator)
@@ -572,14 +571,14 @@ namespace Azure.Data.Tables.Tests
         [TestCaseSource(nameof(TableClientsAllCtors), new object[] { false })]
         public void UriPropertyIsPopulated(TableClient client)
         {
-            Assert.That(client.Uri, Is.EqualTo(_urlWithTableName));
+            Assert.AreEqual(_urlWithTableName, client.Uri);
             Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
         }
 
         [TestCaseSource(nameof(TableClientsAllCtors), new object[] { true })]
         public void UriPropertyIsPopulatedForEmulator(TableClient client)
         {
-            Assert.That(client.Uri, Is.EqualTo(new Uri("http://127.0.0.1:10002/devstoreaccount1/" + TableName)));
+            Assert.AreEqual(new Uri("http://127.0.0.1:10002/devstoreaccount1/" + TableName), client.Uri);
             Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
         }
 
@@ -737,154 +736,6 @@ namespace Azure.Data.Tables.Tests
   }}
 }}");
             return new(_ => conflictResponse);
-        }
-
-        /// <summary>
-        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/57079.
-        /// Verifies that GetEntityAsync correctly deserializes the response even when the
-        /// transport response disposes its content stream on Dispose() (as the real HTTP
-        /// transport does for non-MemoryStream seekable streams).
-        /// </summary>
-        [Test]
-        public async Task GetEntityAsyncDoesNotThrowObjectDisposedException()
-        {
-            string entityJson =
-                "{\"odata.etag\": \"W/\\\"datetime'2021-03-23T18%3A28%3A39.9160983Z'\\\"\", \"PartitionKey\": \"pk\", \"RowKey\": \"rk-1\", \"Timestamp\": \"2021-03-23T18:28:39.9160983Z\", \"Value\": \"hello\"}";
-            var response = new StreamDisposingMockResponse(200);
-            response.SetContent(entityJson);
-            var transport = new MockTransport(_ => response);
-            var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
-
-            Response<TableEntity> result = await tableClient.GetEntityAsync<TableEntity>("pk", "rk-1");
-
-            Assert.That(result.Value.PartitionKey, Is.EqualTo("pk"));
-            Assert.That(result.Value.RowKey, Is.EqualTo("rk-1"));
-            Assert.That(result.Value.GetString("Value"), Is.EqualTo("hello"));
-        }
-
-        /// <summary>
-        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/57079.
-        /// Verifies that GetEntityIfExistsAsync correctly deserializes the response even
-        /// when the transport response disposes its content stream on Dispose().
-        /// </summary>
-        [Test]
-        public async Task GetEntityIfExistsAsyncDoesNotThrowObjectDisposedException()
-        {
-            string entityJson =
-                "{\"odata.etag\": \"W/\\\"datetime'2021-03-23T18%3A28%3A39.9160983Z'\\\"\", \"PartitionKey\": \"pk\", \"RowKey\": \"rk-1\", \"Timestamp\": \"2021-03-23T18:28:39.9160983Z\", \"Value\": \"world\"}";
-            var response = new StreamDisposingMockResponse(200);
-            response.SetContent(entityJson);
-            var transport = new MockTransport(_ => response);
-            var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
-
-            NullableResponse<TableEntity> result = await tableClient.GetEntityIfExistsAsync<TableEntity>("pk", "rk-1");
-
-            Assert.That(result.HasValue, Is.True);
-            Assert.That(result.Value.PartitionKey, Is.EqualTo("pk"));
-            Assert.That(result.Value.RowKey, Is.EqualTo("rk-1"));
-            Assert.That(result.Value.GetString("Value"), Is.EqualTo("world"));
-        }
-
-        /// <summary>
-        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58303.
-        /// Verifies that GetEntityIfExistsAsync throws RequestFailedException instead of
-        /// ArgumentNullException when the HTTP response has a null ContentStream, and that
-        /// the exception message includes the HTTP status code.
-        /// </summary>
-        [Test]
-        public async Task GetEntityIfExistsAsyncThrowsRequestFailedExceptionWhenContentStreamIsNull()
-        {
-            var response = new NullContentStreamMockResponse(200);
-            var transport = new MockTransport(_ => response);
-            var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await tableClient.GetEntityIfExistsAsync<TableEntity>("pk", "rk-1"));
-            Assert.That(ex.Status, Is.EqualTo(200));
-            Assert.That(ex.Message, Does.Contain("200"));
-        }
-
-        /// <summary>
-        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58303.
-        /// Verifies that GetEntityAsync throws RequestFailedException instead of
-        /// ArgumentNullException when the HTTP response has a null ContentStream, and that
-        /// the exception message includes the HTTP status code.
-        /// </summary>
-        [Test]
-        public async Task GetEntityAsyncThrowsRequestFailedExceptionWhenContentStreamIsNull()
-        {
-            var response = new NullContentStreamMockResponse(200);
-            var transport = new MockTransport(_ => response);
-            var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await tableClient.GetEntityAsync<TableEntity>("pk", "rk-1"));
-            Assert.That(ex.Status, Is.EqualTo(200));
-            Assert.That(ex.Message, Does.Contain("200"));
-        }
-
-        /// <summary>
-        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58303.
-        /// Verifies that GetEntityIfExistsAsync throws RequestFailedException instead of
-        /// JsonException when the HTTP response has an empty (non-null) ContentStream.
-        /// </summary>
-        [Test]
-        public async Task GetEntityIfExistsAsyncThrowsRequestFailedExceptionWhenContentStreamIsEmpty()
-        {
-            var response = new MockResponse(200);
-            response.ContentStream = new MemoryStream();
-            var transport = new MockTransport(_ => response);
-            var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await tableClient.GetEntityIfExistsAsync<TableEntity>("pk", "rk-1"));
-            Assert.That(ex.Status, Is.EqualTo(200));
-            Assert.That(ex.Message, Does.Contain("200"));
-        }
-
-        /// <summary>
-        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/58303.
-        /// Verifies that GetEntityAsync throws RequestFailedException instead of
-        /// JsonException when the HTTP response has an empty (non-null) ContentStream.
-        /// </summary>
-        [Test]
-        public async Task GetEntityAsyncThrowsRequestFailedExceptionWhenContentStreamIsEmpty()
-        {
-            var response = new MockResponse(200);
-            response.ContentStream = new MemoryStream();
-            var transport = new MockTransport(_ => response);
-            var tableClient = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await tableClient.GetEntityAsync<TableEntity>("pk", "rk-1"));
-            Assert.That(ex.Status, Is.EqualTo(200));
-            Assert.That(ex.Message, Does.Contain("200"));
-        }
-
-        /// <summary>
-        /// A mock response that disposes its ContentStream on Dispose(), simulating the
-        /// behavior of the real HttpClientTransportResponse for non-MemoryStream seekable
-        /// streams. Used by regression tests for issue #57079.
-        /// </summary>
-        private class StreamDisposingMockResponse : MockResponse
-        {
-            public StreamDisposingMockResponse(int status) : base(status) { }
-
-            public override void Dispose()
-            {
-                ContentStream?.Dispose();
-                base.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// A mock response with a null ContentStream. Used by regression tests for issue #58303.
-        /// </summary>
-        private class NullContentStreamMockResponse : MockResponse
-        {
-            public NullContentStreamMockResponse(int status) : base(status) { }
-
-            public override Stream ContentStream
-            {
-                get => null;
-                set { }
-            }
         }
 
         public class EnumEntity : ITableEntity

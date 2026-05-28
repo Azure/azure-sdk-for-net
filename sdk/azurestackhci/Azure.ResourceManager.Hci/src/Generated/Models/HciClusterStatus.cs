@@ -7,115 +7,84 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Status of the cluster agent. Indicates the current connectivity, validation, and deployment state of the agent within the cluster. </summary>
+    /// <summary> Status of the cluster agent. </summary>
     public readonly partial struct HciClusterStatus : IEquatable<HciClusterStatus>
     {
         private readonly string _value;
-        /// <summary> The cluster agent has not yet registered with Azure. </summary>
-        private const string NotYetRegisteredValue = "NotYetRegistered";
-        /// <summary> The cluster agent has connected to Azure recently. </summary>
-        private const string ConnectedRecentlyValue = "ConnectedRecently";
-        /// <summary> The cluster agent has not connected to Azure recently. </summary>
-        private const string NotConnectedRecentlyValue = "NotConnectedRecently";
-        /// <summary> The cluster agent is currently disconnected from Azure. </summary>
-        private const string DisconnectedValue = "Disconnected";
-        /// <summary> An error occurred in the cluster agent's operation. </summary>
-        private const string ErrorValue = "Error";
-        /// <summary> The status of the cluster agent is not specified. </summary>
-        private const string NotSpecifiedValue = "NotSpecified";
-        /// <summary> Validation of the cluster agent is currently in progress. </summary>
-        private const string ValidationInProgressValue = "ValidationInProgress";
-        /// <summary> Validation of the cluster agent completed successfully. </summary>
-        private const string ValidationSuccessValue = "ValidationSuccess";
-        /// <summary> Validation of the cluster agent failed. </summary>
-        private const string ValidationFailedValue = "ValidationFailed";
-        /// <summary> Deployment of the cluster agent is currently in progress. </summary>
-        private const string DeploymentInProgressValue = "DeploymentInProgress";
-        /// <summary> Deployment of the cluster agent failed. </summary>
-        private const string DeploymentFailedValue = "DeploymentFailed";
-        /// <summary> Deployment of the cluster agent completed successfully. </summary>
-        private const string DeploymentSuccessValue = "DeploymentSuccess";
 
         /// <summary> Initializes a new instance of <see cref="HciClusterStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciClusterStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The cluster agent has not yet registered with Azure. </summary>
+        private const string NotYetRegisteredValue = "NotYetRegistered";
+        private const string ConnectedRecentlyValue = "ConnectedRecently";
+        private const string NotConnectedRecentlyValue = "NotConnectedRecently";
+        private const string DisconnectedValue = "Disconnected";
+        private const string ErrorValue = "Error";
+        private const string NotSpecifiedValue = "NotSpecified";
+        private const string ValidationInProgressValue = "ValidationInProgress";
+        private const string ValidationSuccessValue = "ValidationSuccess";
+        private const string ValidationFailedValue = "ValidationFailed";
+        private const string DeploymentInProgressValue = "DeploymentInProgress";
+        private const string DeploymentFailedValue = "DeploymentFailed";
+        private const string DeploymentSuccessValue = "DeploymentSuccess";
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string InProgressValue = "InProgress";
+
+        /// <summary> NotYetRegistered. </summary>
         public static HciClusterStatus NotYetRegistered { get; } = new HciClusterStatus(NotYetRegisteredValue);
-
-        /// <summary> The cluster agent has connected to Azure recently. </summary>
+        /// <summary> ConnectedRecently. </summary>
         public static HciClusterStatus ConnectedRecently { get; } = new HciClusterStatus(ConnectedRecentlyValue);
-
-        /// <summary> The cluster agent has not connected to Azure recently. </summary>
+        /// <summary> NotConnectedRecently. </summary>
         public static HciClusterStatus NotConnectedRecently { get; } = new HciClusterStatus(NotConnectedRecentlyValue);
-
-        /// <summary> The cluster agent is currently disconnected from Azure. </summary>
+        /// <summary> Disconnected. </summary>
         public static HciClusterStatus Disconnected { get; } = new HciClusterStatus(DisconnectedValue);
-
-        /// <summary> An error occurred in the cluster agent's operation. </summary>
+        /// <summary> Error. </summary>
         public static HciClusterStatus Error { get; } = new HciClusterStatus(ErrorValue);
-
-        /// <summary> The status of the cluster agent is not specified. </summary>
+        /// <summary> NotSpecified. </summary>
         public static HciClusterStatus NotSpecified { get; } = new HciClusterStatus(NotSpecifiedValue);
-
-        /// <summary> Validation of the cluster agent is currently in progress. </summary>
+        /// <summary> ValidationInProgress. </summary>
         public static HciClusterStatus ValidationInProgress { get; } = new HciClusterStatus(ValidationInProgressValue);
-
-        /// <summary> Validation of the cluster agent completed successfully. </summary>
+        /// <summary> ValidationSuccess. </summary>
         public static HciClusterStatus ValidationSuccess { get; } = new HciClusterStatus(ValidationSuccessValue);
-
-        /// <summary> Validation of the cluster agent failed. </summary>
+        /// <summary> ValidationFailed. </summary>
         public static HciClusterStatus ValidationFailed { get; } = new HciClusterStatus(ValidationFailedValue);
-
-        /// <summary> Deployment of the cluster agent is currently in progress. </summary>
+        /// <summary> DeploymentInProgress. </summary>
         public static HciClusterStatus DeploymentInProgress { get; } = new HciClusterStatus(DeploymentInProgressValue);
-
-        /// <summary> Deployment of the cluster agent failed. </summary>
+        /// <summary> DeploymentFailed. </summary>
         public static HciClusterStatus DeploymentFailed { get; } = new HciClusterStatus(DeploymentFailedValue);
-
-        /// <summary> Deployment of the cluster agent completed successfully. </summary>
+        /// <summary> DeploymentSuccess. </summary>
         public static HciClusterStatus DeploymentSuccess { get; } = new HciClusterStatus(DeploymentSuccessValue);
-
+        /// <summary> Succeeded. </summary>
+        public static HciClusterStatus Succeeded { get; } = new HciClusterStatus(SucceededValue);
+        /// <summary> Failed. </summary>
+        public static HciClusterStatus Failed { get; } = new HciClusterStatus(FailedValue);
+        /// <summary> InProgress. </summary>
+        public static HciClusterStatus InProgress { get; } = new HciClusterStatus(InProgressValue);
         /// <summary> Determines if two <see cref="HciClusterStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciClusterStatus left, HciClusterStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="HciClusterStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciClusterStatus left, HciClusterStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="HciClusterStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HciClusterStatus"/>. </summary>
         public static implicit operator HciClusterStatus(string value) => new HciClusterStatus(value);
 
-        /// <summary> Converts a string to a <see cref="HciClusterStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator HciClusterStatus?(string value) => value == null ? null : new HciClusterStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciClusterStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(HciClusterStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

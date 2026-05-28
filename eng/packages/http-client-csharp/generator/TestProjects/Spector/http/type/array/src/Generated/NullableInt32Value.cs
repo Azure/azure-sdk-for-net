@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,8 +17,6 @@ namespace _Type._Array
     public partial class NullableInt32Value
     {
         protected NullableInt32Value() => throw null;
-
-        internal NullableInt32Value(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -8,38 +8,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Parameters to be used during configuration of backup of blobs. </summary>
+    /// <summary>
+    /// Parameters to be used during configuration of backup of blobs
+    /// Please note <see cref="BlobBackupDataSourceSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AdlsBlobBackupDataSourceSettings"/>.
+    /// </summary>
     public partial class BlobBackupDataSourceSettings : BackupDataSourceSettings
     {
         /// <summary> Initializes a new instance of <see cref="BlobBackupDataSourceSettings"/>. </summary>
         /// <param name="containersList"> List of containers to be backed up during configuration of backup of blobs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containersList"/> is null. </exception>
-        public BlobBackupDataSourceSettings(IEnumerable<string> containersList) : base("BlobBackupDatasourceParameters")
+        public BlobBackupDataSourceSettings(IEnumerable<string> containersList)
         {
             Argument.AssertNotNull(containersList, nameof(containersList));
 
             ContainersList = containersList.ToList();
+            ObjectType = "BlobBackupDatasourceParameters";
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobBackupDataSourceSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containersList"> List of containers to be backed up during configuration of backup of blobs. </param>
-        internal BlobBackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> containersList) : base(objectType, additionalBinaryDataProperties)
+        internal BlobBackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> containersList) : base(objectType, serializedAdditionalRawData)
         {
             ContainersList = containersList;
+            ObjectType = objectType ?? "BlobBackupDatasourceParameters";
         }
 
-        /// <summary> Initializes a new instance of <see cref="BlobBackupDataSourceSettings"/>. </summary>
-        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="containersList"> List of containers to be backed up during configuration of backup of blobs. </param>
-        private protected BlobBackupDataSourceSettings(string objectType, IEnumerable<string> containersList) : base(objectType)
+        /// <summary> Initializes a new instance of <see cref="BlobBackupDataSourceSettings"/> for deserialization. </summary>
+        internal BlobBackupDataSourceSettings()
         {
-            ContainersList = containersList.ToList();
         }
 
         /// <summary> List of containers to be backed up during configuration of backup of blobs. </summary>

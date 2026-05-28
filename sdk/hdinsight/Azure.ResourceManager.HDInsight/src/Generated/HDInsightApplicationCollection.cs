@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HDInsight
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.HDInsight
     /// </summary>
     public partial class HDInsightApplicationCollection : ArmCollection, IEnumerable<HDInsightApplicationResource>, IAsyncEnumerable<HDInsightApplicationResource>
     {
-        private readonly ClientDiagnostics _applicationsClientDiagnostics;
-        private readonly Applications _applicationsRestClient;
+        private readonly ClientDiagnostics _hdInsightApplicationApplicationsClientDiagnostics;
+        private readonly ApplicationsRestOperations _hdInsightApplicationApplicationsRestClient;
 
-        /// <summary> Initializes a new instance of HDInsightApplicationCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightApplicationCollection"/> class for mocking. </summary>
         protected HDInsightApplicationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightApplicationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HDInsightApplicationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(HDInsightApplicationResource.ResourceType, out string hdInsightApplicationApiVersion);
-            _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightApplicationResource.ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Endpoint, hdInsightApplicationApiVersion ?? "2025-01-15-preview");
-            ValidateResourceId(id);
+            _hdInsightApplicationApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", HDInsightApplicationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HDInsightApplicationResource.ResourceType, out string hdInsightApplicationApplicationsApiVersion);
+            _hdInsightApplicationApplicationsRestClient = new ApplicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightApplicationApplicationsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != HDInsightClusterResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HDInsightClusterResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HDInsightClusterResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates applications for the HDInsight cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Applications_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,34 +76,21 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="data"> The application create request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HDInsightApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationName, HDInsightApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.CreateOrUpdate");
+            using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _applicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, HDInsightApplicationData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HDInsightArmOperation<HDInsightApplicationResource> operation = new HDInsightArmOperation<HDInsightApplicationResource>(
-                    new HDInsightApplicationOperationSource(Client),
-                    _applicationsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _hdInsightApplicationApplicationsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HDInsightArmOperation<HDInsightApplicationResource>(new HDInsightApplicationOperationSource(Client), _hdInsightApplicationApplicationsClientDiagnostics, Pipeline, _hdInsightApplicationApplicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,16 +104,20 @@ namespace Azure.ResourceManager.HDInsight
         /// Creates applications for the HDInsight cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Applications_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,34 +125,21 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="data"> The application create request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HDInsightApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationName, HDInsightApplicationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.CreateOrUpdate");
+            using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _applicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, HDInsightApplicationData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                HDInsightArmOperation<HDInsightApplicationResource> operation = new HDInsightArmOperation<HDInsightApplicationResource>(
-                    new HDInsightApplicationOperationSource(Client),
-                    _applicationsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _hdInsightApplicationApplicationsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, data, cancellationToken);
+                var operation = new HDInsightArmOperation<HDInsightApplicationResource>(new HDInsightApplicationOperationSource(Client), _hdInsightApplicationApplicationsClientDiagnostics, Pipeline, _hdInsightApplicationApplicationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.HDInsight
         /// Gets properties of the specified application.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Applications_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<Response<HDInsightApplicationResource>> GetAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Get");
+            using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HDInsightApplicationData> response = Response.FromValue(HDInsightApplicationData.FromResponse(result), result);
+                var response = await _hdInsightApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HDInsightApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.HDInsight
         /// Gets properties of the specified application.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Applications_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<HDInsightApplicationResource> Get(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Get");
+            using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HDInsightApplicationData> response = Response.FromValue(HDInsightApplicationData.FromResponse(result), result);
+                var response = _hdInsightApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new HDInsightApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.HDInsight
         /// Lists all of the applications for the HDInsight cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Applications_ListByCluster. </description>
+        /// <term>Operation Id</term>
+        /// <description>Applications_ListByCluster</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightApplicationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<HDInsightApplicationData, HDInsightApplicationResource>(new ApplicationsGetByClusterAsyncCollectionResultOfT(
-                _applicationsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "HDInsightApplicationCollection.GetAll"), data => new HDInsightApplicationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightApplicationApplicationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightApplicationApplicationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HDInsightApplicationResource(Client, HDInsightApplicationData.DeserializeHDInsightApplicationData(e)), _hdInsightApplicationApplicationsClientDiagnostics, Pipeline, "HDInsightApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all of the applications for the HDInsight cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Applications_ListByCluster. </description>
+        /// <term>Operation Id</term>
+        /// <description>Applications_ListByCluster</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> A collection of <see cref="HDInsightApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<HDInsightApplicationData, HDInsightApplicationResource>(new ApplicationsGetByClusterCollectionResultOfT(
-                _applicationsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "HDInsightApplicationCollection.GetAll"), data => new HDInsightApplicationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightApplicationApplicationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightApplicationApplicationsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HDInsightApplicationResource(Client, HDInsightApplicationData.DeserializeHDInsightApplicationData(e)), _hdInsightApplicationApplicationsClientDiagnostics, Pipeline, "HDInsightApplicationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Applications_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Exists");
+            using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<HDInsightApplicationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HDInsightApplicationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HDInsightApplicationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _hdInsightApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.HDInsight
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Applications_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Exists");
+            using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<HDInsightApplicationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HDInsightApplicationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HDInsightApplicationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _hdInsightApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.HDInsight
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Applications_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual async Task<NullableResponse<HDInsightApplicationResource>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.GetIfExists");
+            using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<HDInsightApplicationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HDInsightApplicationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HDInsightApplicationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _hdInsightApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<HDInsightApplicationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new HDInsightApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.HDInsight
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Applications_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         public virtual NullableResponse<HDInsightApplicationResource> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
-            using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.GetIfExists");
+            using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _applicationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<HDInsightApplicationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(HDInsightApplicationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((HDInsightApplicationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _hdInsightApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<HDInsightApplicationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new HDInsightApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.HDInsight
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HDInsightApplicationResource> IAsyncEnumerable<HDInsightApplicationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

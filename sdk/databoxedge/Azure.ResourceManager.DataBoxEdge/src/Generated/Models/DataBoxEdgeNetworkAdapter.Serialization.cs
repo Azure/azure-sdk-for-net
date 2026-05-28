@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.DataBoxEdge;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Represents the networkAdapter on a device. </summary>
-    public partial class DataBoxEdgeNetworkAdapter : IJsonModel<DataBoxEdgeNetworkAdapter>
+    public partial class DataBoxEdgeNetworkAdapter : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeNetworkAdapter>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataBoxEdgeNetworkAdapter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeDataBoxEdgeNetworkAdapter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeNetworkAdapter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataBoxEdgeNetworkAdapter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeNetworkAdapter IPersistableModel<DataBoxEdgeNetworkAdapter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataBoxEdgeNetworkAdapter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataBoxEdgeNetworkAdapter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(AdapterId))
             {
                 writer.WritePropertyName("adapterId"u8);
@@ -148,26 +108,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
-                foreach (string item in DnsServers)
+                foreach (var item in DnsServers)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -176,27 +131,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DataBoxEdgeNetworkAdapter IJsonModel<DataBoxEdgeNetworkAdapter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DataBoxEdgeNetworkAdapter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataBoxEdgeNetworkAdapter IJsonModel<DataBoxEdgeNetworkAdapter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataBoxEdgeNetworkAdapter(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataBoxEdgeNetworkAdapter DeserializeDataBoxEdgeNetworkAdapter(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataBoxEdgeNetworkAdapter DeserializeDataBoxEdgeNetworkAdapter(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -212,145 +162,140 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             DataBoxEdgeNetworkAdapterStatus? status = default;
             DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus = default;
             DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus = default;
-            DataBoxEdgeIPv4Config iPv4Configuration = default;
-            DataBoxEdgeIPv6Config iPv6Configuration = default;
-            string iPv6LinkLocalAddress = default;
+            DataBoxEdgeIPv4Config ipv4Configuration = default;
+            DataBoxEdgeIPv6Config ipv6Configuration = default;
+            string ipv6LinkLocalAddress = default;
             IReadOnlyList<string> dnsServers = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("adapterId"u8))
+                if (property.NameEquals("adapterId"u8))
                 {
-                    adapterId = prop.Value.GetString();
+                    adapterId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("adapterPosition"u8))
+                if (property.NameEquals("adapterPosition"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    adapterPosition = DataBoxEdgeNetworkAdapterPosition.DeserializeDataBoxEdgeNetworkAdapterPosition(prop.Value, options);
+                    adapterPosition = DataBoxEdgeNetworkAdapterPosition.DeserializeDataBoxEdgeNetworkAdapterPosition(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("index"u8))
+                if (property.NameEquals("index"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    index = prop.Value.GetInt32();
+                    index = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("nodeId"u8))
+                if (property.NameEquals("nodeId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nodeId = new Guid(prop.Value.GetString());
+                    nodeId = property.Value.GetGuid();
                     continue;
                 }
-                if (prop.NameEquals("networkAdapterName"u8))
+                if (property.NameEquals("networkAdapterName"u8))
                 {
-                    networkAdapterName = prop.Value.GetString();
+                    networkAdapterName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("label"u8))
+                if (property.NameEquals("label"u8))
                 {
-                    label = prop.Value.GetString();
+                    label = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("macAddress"u8))
+                if (property.NameEquals("macAddress"u8))
                 {
-                    macAddress = prop.Value.GetString();
+                    macAddress = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("linkSpeed"u8))
+                if (property.NameEquals("linkSpeed"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    linkSpeed = prop.Value.GetInt64();
+                    linkSpeed = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new DataBoxEdgeNetworkAdapterStatus(prop.Value.GetString());
+                    status = new DataBoxEdgeNetworkAdapterStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("rdmaStatus"u8))
+                if (property.NameEquals("rdmaStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rdmaStatus = new DataBoxEdgeNetworkAdapterRdmaStatus(prop.Value.GetString());
+                    rdmaStatus = new DataBoxEdgeNetworkAdapterRdmaStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("dhcpStatus"u8))
+                if (property.NameEquals("dhcpStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dhcpStatus = new DataBoxEdgeNetworkAdapterDhcpStatus(prop.Value.GetString());
+                    dhcpStatus = new DataBoxEdgeNetworkAdapterDhcpStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("ipv4Configuration"u8))
+                if (property.NameEquals("ipv4Configuration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    iPv4Configuration = DataBoxEdgeIPv4Config.DeserializeDataBoxEdgeIPv4Config(prop.Value, options);
+                    ipv4Configuration = DataBoxEdgeIPv4Config.DeserializeDataBoxEdgeIPv4Config(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("ipv6Configuration"u8))
+                if (property.NameEquals("ipv6Configuration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    iPv6Configuration = DataBoxEdgeIPv6Config.DeserializeDataBoxEdgeIPv6Config(prop.Value, options);
+                    ipv6Configuration = DataBoxEdgeIPv6Config.DeserializeDataBoxEdgeIPv6Config(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("ipv6LinkLocalAddress"u8))
+                if (property.NameEquals("ipv6LinkLocalAddress"u8))
                 {
-                    iPv6LinkLocalAddress = prop.Value.GetString();
+                    ipv6LinkLocalAddress = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dnsServers"u8))
+                if (property.NameEquals("dnsServers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     dnsServers = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeNetworkAdapter(
                 adapterId,
                 adapterPosition,
@@ -363,11 +308,42 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 status,
                 rdmaStatus,
                 dhcpStatus,
-                iPv4Configuration,
-                iPv6Configuration,
-                iPv6LinkLocalAddress,
+                ipv4Configuration,
+                ipv6Configuration,
+                ipv6LinkLocalAddress,
                 dnsServers ?? new ChangeTrackingList<string>(),
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeNetworkAdapter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeNetworkAdapter IPersistableModel<DataBoxEdgeNetworkAdapter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeDataBoxEdgeNetworkAdapter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeNetworkAdapter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -2,6 +2,18 @@
 # This file is generated automatically and any changes will be lost.
 
 trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/dns/ci.mgmt.yml
+    - sdk/dns/Azure.ResourceManager.Dns/
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -11,5 +23,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Dns
       safeName: AzureResourceManagerDns
-    - name: Azure.Provisioning.Dns
-      safeName: AzureProvisioningDns

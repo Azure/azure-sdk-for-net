@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -15,75 +14,50 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct TimeframeType : IEquatable<TimeframeType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="TimeframeType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TimeframeType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string MonthToDateValue = "MonthToDate";
         private const string BillingMonthToDateValue = "BillingMonthToDate";
         private const string TheLastMonthValue = "TheLastMonth";
         private const string TheLastBillingMonthValue = "TheLastBillingMonth";
         private const string WeekToDateValue = "WeekToDate";
         private const string CustomValue = "Custom";
-        private const string TheCurrentMonthValue = "TheCurrentMonth";
 
-        /// <summary> Initializes a new instance of <see cref="TimeframeType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TimeframeType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the MonthToDate. </summary>
+        /// <summary> MonthToDate. </summary>
         public static TimeframeType MonthToDate { get; } = new TimeframeType(MonthToDateValue);
-
-        /// <summary> Gets the BillingMonthToDate. </summary>
+        /// <summary> BillingMonthToDate. </summary>
         public static TimeframeType BillingMonthToDate { get; } = new TimeframeType(BillingMonthToDateValue);
-
-        /// <summary> Gets the TheLastMonth. </summary>
+        /// <summary> TheLastMonth. </summary>
         public static TimeframeType TheLastMonth { get; } = new TimeframeType(TheLastMonthValue);
-
-        /// <summary> Gets the TheLastBillingMonth. </summary>
+        /// <summary> TheLastBillingMonth. </summary>
         public static TimeframeType TheLastBillingMonth { get; } = new TimeframeType(TheLastBillingMonthValue);
-
-        /// <summary> Gets the WeekToDate. </summary>
+        /// <summary> WeekToDate. </summary>
         public static TimeframeType WeekToDate { get; } = new TimeframeType(WeekToDateValue);
-
-        /// <summary> Gets the Custom. </summary>
+        /// <summary> Custom. </summary>
         public static TimeframeType Custom { get; } = new TimeframeType(CustomValue);
-
-        /// <summary> Gets the TheCurrentMonth. </summary>
-        public static TimeframeType TheCurrentMonth { get; } = new TimeframeType(TheCurrentMonthValue);
-
         /// <summary> Determines if two <see cref="TimeframeType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TimeframeType left, TimeframeType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="TimeframeType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TimeframeType left, TimeframeType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="TimeframeType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TimeframeType"/>. </summary>
         public static implicit operator TimeframeType(string value) => new TimeframeType(value);
 
-        /// <summary> Converts a string to a <see cref="TimeframeType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator TimeframeType?(string value) => value == null ? null : new TimeframeType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TimeframeType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(TimeframeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

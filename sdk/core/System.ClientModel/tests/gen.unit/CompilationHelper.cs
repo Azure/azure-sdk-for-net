@@ -8,10 +8,8 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
 
 namespace System.ClientModel.SourceGeneration.Tests.Unit
@@ -178,13 +176,6 @@ namespace System.ClientModel.SourceGeneration.Tests.Unit
                     parseOptions: parseOptions,
                     driverOptions: new GeneratorDriverOptions(
                         disabledOutputs: IncrementalGeneratorOutputKind.None));
-        }
-
-        public static async Task<ImmutableArray<Diagnostic>> GetAnalyzerDiagnosticsAsync(Compilation compilation, DiagnosticAnalyzer analyzer)
-        {
-            var analyzers = ImmutableArray.Create(analyzer);
-            var compilationWithAnalyzers = compilation.WithAnalyzers(analyzers);
-            return await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync();
         }
     }
 }

@@ -7,49 +7,75 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Custom Authentication properties. </summary>
     internal partial class BrokerAuthenticatorCustomAuth
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/>. </summary>
-        /// <param name="x509SecretRef"> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="x509SecretRef"/> is null. </exception>
-        public BrokerAuthenticatorCustomAuth(string x509SecretRef)
+        /// <param name="x509"> X509 Custom Auth type details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="x509"/> is null. </exception>
+        public BrokerAuthenticatorCustomAuth(X509ManualCertificate x509)
         {
-            Argument.AssertNotNull(x509SecretRef, nameof(x509SecretRef));
+            Argument.AssertNotNull(x509, nameof(x509));
 
-            X509 = new BrokerX509ManualCertificate(x509SecretRef);
+            X509 = x509;
         }
 
         /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/>. </summary>
         /// <param name="x509"> X509 Custom Auth type details. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerAuthenticatorCustomAuth(BrokerX509ManualCertificate x509, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BrokerAuthenticatorCustomAuth(X509ManualCertificate x509, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             X509 = x509;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BrokerAuthenticatorCustomAuth"/> for deserialization. </summary>
+        internal BrokerAuthenticatorCustomAuth()
+        {
         }
 
         /// <summary> X509 Custom Auth type details. </summary>
-        internal BrokerX509ManualCertificate X509 { get; set; }
-
+        internal X509ManualCertificate X509 { get; set; }
         /// <summary> Kubernetes secret containing an X.509 client certificate. This is a reference to the secret through an identifying name, not the secret itself. </summary>
         public string X509SecretRef
         {
-            get
-            {
-                return X509 is null ? default : X509.SecretRef;
-            }
-            set
-            {
-                X509 = new BrokerX509ManualCertificate(value);
-            }
+            get => X509 is null ? default : X509.SecretRef;
+            set => X509 = new X509ManualCertificate(value);
         }
     }
 }

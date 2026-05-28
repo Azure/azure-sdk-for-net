@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Grafana
 {
@@ -25,84 +24,73 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class GrafanaIntegrationFabricCollection : ArmCollection, IEnumerable<GrafanaIntegrationFabricResource>, IAsyncEnumerable<GrafanaIntegrationFabricResource>
     {
-        private readonly ClientDiagnostics _integrationFabricsClientDiagnostics;
-        private readonly IntegrationFabrics _integrationFabricsRestClient;
+        private readonly ClientDiagnostics _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics;
+        private readonly IntegrationFabricsRestOperations _grafanaIntegrationFabricIntegrationFabricsRestClient;
 
-        /// <summary> Initializes a new instance of GrafanaIntegrationFabricCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GrafanaIntegrationFabricCollection"/> class for mocking. </summary>
         protected GrafanaIntegrationFabricCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GrafanaIntegrationFabricCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GrafanaIntegrationFabricCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GrafanaIntegrationFabricCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(GrafanaIntegrationFabricResource.ResourceType, out string grafanaIntegrationFabricApiVersion);
-            _integrationFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", GrafanaIntegrationFabricResource.ResourceType.Namespace, Diagnostics);
-            _integrationFabricsRestClient = new IntegrationFabrics(_integrationFabricsClientDiagnostics, Pipeline, Endpoint, grafanaIntegrationFabricApiVersion ?? "2025-09-01-preview");
-            ValidateResourceId(id);
+            _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", GrafanaIntegrationFabricResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(GrafanaIntegrationFabricResource.ResourceType, out string grafanaIntegrationFabricIntegrationFabricsApiVersion);
+            _grafanaIntegrationFabricIntegrationFabricsRestClient = new IntegrationFabricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, grafanaIntegrationFabricIntegrationFabricsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ManagedGrafanaResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a IntegrationFabric
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationFabrics_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="integrationFabricName"> The integration fabric name of Azure Managed Grafana. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> The <see cref="GrafanaIntegrationFabricData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GrafanaIntegrationFabricResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string integrationFabricName, GrafanaIntegrationFabricData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationFabricName, nameof(integrationFabricName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _integrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.CreateOrUpdate");
+            using var scope = _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, GrafanaIntegrationFabricData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                GrafanaArmOperation<GrafanaIntegrationFabricResource> operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(
-                    new GrafanaIntegrationFabricOperationSource(Client),
-                    _integrationFabricsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(new GrafanaIntegrationFabricOperationSource(Client), _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics, Pipeline, _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -116,51 +104,42 @@ namespace Azure.ResourceManager.Grafana
         /// Create a IntegrationFabric
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationFabrics_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="integrationFabricName"> The integration fabric name of Azure Managed Grafana. </param>
-        /// <param name="data"></param>
+        /// <param name="data"> The <see cref="GrafanaIntegrationFabricData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GrafanaIntegrationFabricResource> CreateOrUpdate(WaitUntil waitUntil, string integrationFabricName, GrafanaIntegrationFabricData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationFabricName, nameof(integrationFabricName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _integrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.CreateOrUpdate");
+            using var scope = _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, GrafanaIntegrationFabricData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                GrafanaArmOperation<GrafanaIntegrationFabricResource> operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(
-                    new GrafanaIntegrationFabricOperationSource(Client),
-                    _integrationFabricsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, data, cancellationToken);
+                var operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(new GrafanaIntegrationFabricOperationSource(Client), _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics, Pipeline, _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -174,42 +153,38 @@ namespace Azure.ResourceManager.Grafana
         /// Get a IntegrationFabric
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationFabrics_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationFabricName"> The integration fabric name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         public virtual async Task<Response<GrafanaIntegrationFabricResource>> GetAsync(string integrationFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationFabricName, nameof(integrationFabricName));
 
-            using DiagnosticScope scope = _integrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.Get");
+            using var scope = _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationFabricsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GrafanaIntegrationFabricData> response = Response.FromValue(GrafanaIntegrationFabricData.FromResponse(result), result);
+                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new GrafanaIntegrationFabricResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -223,42 +198,38 @@ namespace Azure.ResourceManager.Grafana
         /// Get a IntegrationFabric
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationFabrics_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationFabricName"> The integration fabric name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         public virtual Response<GrafanaIntegrationFabricResource> Get(string integrationFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationFabricName, nameof(integrationFabricName));
 
-            using DiagnosticScope scope = _integrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.Get");
+            using var scope = _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationFabricsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<GrafanaIntegrationFabricData> response = Response.FromValue(GrafanaIntegrationFabricData.FromResponse(result), result);
+                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new GrafanaIntegrationFabricResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,50 +243,50 @@ namespace Azure.ResourceManager.Grafana
         /// List IntegrationFabric resources by ManagedGrafana
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationFabrics_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GrafanaIntegrationFabricResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GrafanaIntegrationFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GrafanaIntegrationFabricResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new IntegrationFabricsGetAllAsyncCollectionResultOfT(
-                _integrationFabricsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "GrafanaIntegrationFabricCollection.GetAll"), data => new GrafanaIntegrationFabricResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GrafanaIntegrationFabricResource(Client, GrafanaIntegrationFabricData.DeserializeGrafanaIntegrationFabricData(e)), _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics, Pipeline, "GrafanaIntegrationFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List IntegrationFabric resources by ManagedGrafana
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationFabrics_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,67 +294,45 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="GrafanaIntegrationFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GrafanaIntegrationFabricResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new IntegrationFabricsGetAllCollectionResultOfT(
-                _integrationFabricsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "GrafanaIntegrationFabricCollection.GetAll"), data => new GrafanaIntegrationFabricResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _grafanaIntegrationFabricIntegrationFabricsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GrafanaIntegrationFabricResource(Client, GrafanaIntegrationFabricData.DeserializeGrafanaIntegrationFabricData(e)), _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics, Pipeline, "GrafanaIntegrationFabricCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationFabrics_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationFabricName"> The integration fabric name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string integrationFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationFabricName, nameof(integrationFabricName));
 
-            using DiagnosticScope scope = _integrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.Exists");
+            using var scope = _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationFabricsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<GrafanaIntegrationFabricData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GrafanaIntegrationFabricData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GrafanaIntegrationFabricData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,50 +346,36 @@ namespace Azure.ResourceManager.Grafana
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationFabrics_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationFabricName"> The integration fabric name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         public virtual Response<bool> Exists(string integrationFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationFabricName, nameof(integrationFabricName));
 
-            using DiagnosticScope scope = _integrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.Exists");
+            using var scope = _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationFabricsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<GrafanaIntegrationFabricData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GrafanaIntegrationFabricData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GrafanaIntegrationFabricData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -454,54 +389,38 @@ namespace Azure.ResourceManager.Grafana
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationFabrics_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationFabricName"> The integration fabric name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         public virtual async Task<NullableResponse<GrafanaIntegrationFabricResource>> GetIfExistsAsync(string integrationFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationFabricName, nameof(integrationFabricName));
 
-            using DiagnosticScope scope = _integrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.GetIfExists");
+            using var scope = _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationFabricsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<GrafanaIntegrationFabricData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GrafanaIntegrationFabricData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GrafanaIntegrationFabricData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _grafanaIntegrationFabricIntegrationFabricsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<GrafanaIntegrationFabricResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new GrafanaIntegrationFabricResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -515,54 +434,38 @@ namespace Azure.ResourceManager.Grafana
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/integrationFabrics/{integrationFabricName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> IntegrationFabrics_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationFabric_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaIntegrationFabricResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationFabricName"> The integration fabric name of Azure Managed Grafana. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="integrationFabricName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationFabricName"/> is null. </exception>
         public virtual NullableResponse<GrafanaIntegrationFabricResource> GetIfExists(string integrationFabricName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(integrationFabricName, nameof(integrationFabricName));
 
-            using DiagnosticScope scope = _integrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.GetIfExists");
+            using var scope = _grafanaIntegrationFabricIntegrationFabricsClientDiagnostics.CreateScope("GrafanaIntegrationFabricCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _integrationFabricsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<GrafanaIntegrationFabricData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GrafanaIntegrationFabricData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GrafanaIntegrationFabricData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _grafanaIntegrationFabricIntegrationFabricsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<GrafanaIntegrationFabricResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new GrafanaIntegrationFabricResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -582,7 +485,6 @@ namespace Azure.ResourceManager.Grafana
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<GrafanaIntegrationFabricResource> IAsyncEnumerable<GrafanaIntegrationFabricResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

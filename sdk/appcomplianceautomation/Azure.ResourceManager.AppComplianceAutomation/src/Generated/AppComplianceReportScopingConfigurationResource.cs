@@ -6,35 +6,44 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
-    /// A class representing a AppComplianceReportScopingConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AppComplianceReportScopingConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppComplianceReportResource"/> using the GetAppComplianceReportScopingConfigurations method.
+    /// A Class representing an AppComplianceReportScopingConfiguration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppComplianceReportScopingConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppComplianceReportScopingConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppComplianceReportResource"/> using the GetAppComplianceReportScopingConfiguration method.
     /// </summary>
     public partial class AppComplianceReportScopingConfigurationResource : ArmResource
     {
-        private readonly ClientDiagnostics _scopingConfigurationClientDiagnostics;
-        private readonly ScopingConfiguration _scopingConfigurationRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="AppComplianceReportScopingConfigurationResource"/> instance. </summary>
+        /// <param name="reportName"> The reportName. </param>
+        /// <param name="scopingConfigurationName"> The scopingConfigurationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string reportName, string scopingConfigurationName)
+        {
+            var resourceId = $"/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics;
+        private readonly ScopingConfigurationRestOperations _appComplianceReportScopingConfigurationScopingConfigurationRestClient;
         private readonly AppComplianceReportScopingConfigurationData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AppComplianceAutomation/reports/scopingConfigurations";
 
-        /// <summary> Initializes a new instance of AppComplianceReportScopingConfigurationResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportScopingConfigurationResource"/> class for mocking. </summary>
         protected AppComplianceReportScopingConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppComplianceReportScopingConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportScopingConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppComplianceReportScopingConfigurationResource(ArmClient client, AppComplianceReportScopingConfigurationData data) : this(client, data.Id)
@@ -43,91 +52,71 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppComplianceReportScopingConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppComplianceReportScopingConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppComplianceReportScopingConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string appComplianceReportScopingConfigurationApiVersion);
-            _scopingConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ResourceType.Namespace, Diagnostics);
-            _scopingConfigurationRestClient = new ScopingConfiguration(_scopingConfigurationClientDiagnostics, Pipeline, Endpoint, appComplianceReportScopingConfigurationApiVersion ?? "2024-06-27");
-            ValidateResourceId(id);
+            _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string appComplianceReportScopingConfigurationScopingConfigurationApiVersion);
+            _appComplianceReportScopingConfigurationScopingConfigurationRestClient = new ScopingConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportScopingConfigurationScopingConfigurationApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AppComplianceReportScopingConfigurationData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="reportName"> The reportName. </param>
-        /// <param name="scopingConfigurationName"> The scopingConfigurationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string reportName, string scopingConfigurationName)
-        {
-            string resourceId = $"/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get the AppComplianceAutomation scoping configuration of the specific report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppComplianceReportScopingConfigurationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AppComplianceReportScopingConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Get");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
+                var response = await _appComplianceReportScopingConfigurationScopingConfigurationRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -141,41 +130,33 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Get the AppComplianceAutomation scoping configuration of the specific report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppComplianceReportScopingConfigurationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AppComplianceReportScopingConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Get");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
+                var response = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -189,20 +170,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Clean the AppComplianceAutomation scoping configuration of the specific report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppComplianceReportScopingConfigurationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,23 +191,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Delete");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppComplianceAutomationArmOperation operation = new AppComplianceAutomationArmOperation(response, rehydrationToken);
+                var response = await _appComplianceReportScopingConfigurationScopingConfigurationRestClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateDeleteRequestUri(Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppComplianceAutomationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -240,20 +214,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Clean the AppComplianceAutomation scoping configuration of the specific report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppComplianceReportScopingConfigurationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,23 +235,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Delete");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppComplianceAutomationArmOperation operation = new AppComplianceAutomationArmOperation(response, rehydrationToken);
+                var response = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateDeleteRequestUri(Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppComplianceAutomationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -288,23 +255,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         }
 
         /// <summary>
-        /// Update a AppComplianceReportScopingConfiguration.
+        /// Get the AppComplianceAutomation scoping configuration of the specific report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppComplianceReportScopingConfigurationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,24 +283,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Update");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, AppComplianceReportScopingConfigurationData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource>(Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource>(Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -344,23 +303,23 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         }
 
         /// <summary>
-        /// Update a AppComplianceReportScopingConfiguration.
+        /// Get the AppComplianceAutomation scoping configuration of the specific report.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/scopingConfigurations/{scopingConfigurationName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScopingConfiguration_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScopingConfiguration_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-27. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-27</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="AppComplianceReportScopingConfigurationResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="AppComplianceReportScopingConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,24 +331,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _scopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Update");
+            using var scope = _appComplianceReportScopingConfigurationScopingConfigurationClientDiagnostics.CreateScope("AppComplianceReportScopingConfigurationResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scopingConfigurationRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, AppComplianceReportScopingConfigurationData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AppComplianceReportScopingConfigurationData> response = Response.FromValue(AppComplianceReportScopingConfigurationData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource>(Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateOrUpdate(Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _appComplianceReportScopingConfigurationScopingConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppComplianceAutomationArmOperation<AppComplianceReportScopingConfigurationResource>(Response.FromValue(new AppComplianceReportScopingConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

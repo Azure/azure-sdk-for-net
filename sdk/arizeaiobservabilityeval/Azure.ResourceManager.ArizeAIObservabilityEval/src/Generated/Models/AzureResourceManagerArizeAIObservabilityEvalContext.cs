@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ArizeAIObservabilityEval.Models;
 using Azure.ResourceManager.Models;
 
@@ -27,7 +26,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
     [ModelReaderWriterBuildable(typeof(ArizeAIObservabilityEvalUserDetails))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerArizeAIObservabilityEvalContext : ModelReaderWriterContext

@@ -10,13 +10,11 @@ using System.Threading;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Specs.Azure.Core.Page
+namespace _Specs_.Azure.Core.Page
 {
     public partial class TwoModelsAsPageItem
     {
         protected TwoModelsAsPageItem() => throw null;
-
-        internal TwoModelsAsPageItem(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -14,14 +14,15 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class NoMaskPolicyType : BaseRedactionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="NoMaskPolicyType"/>. </summary>
-        public NoMaskPolicyType() : base(RedactionPolicyKind.NoMask)
+        public NoMaskPolicyType()
         {
+            PolicyKind = RedactionPolicyKind.NoMask;
         }
 
         /// <summary> Initializes a new instance of <see cref="NoMaskPolicyType"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NoMaskPolicyType(RedactionPolicyKind policyKind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(policyKind, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NoMaskPolicyType(RedactionPolicyKind policyKind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyKind, serializedAdditionalRawData)
         {
         }
     }

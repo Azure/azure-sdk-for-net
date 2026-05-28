@@ -328,7 +328,6 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
-                kind,
                 latestRun,
                 historyUrl,
                 schedulerLogsUrl,
@@ -341,6 +340,7 @@ namespace Azure.ResourceManager.AppService
                 publicNetworkAccess,
                 storageAccountRequired,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                kind,
                 serializedAdditionalRawData);
         }
 

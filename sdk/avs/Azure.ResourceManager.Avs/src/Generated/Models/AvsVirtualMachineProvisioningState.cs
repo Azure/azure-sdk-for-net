@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct AvsVirtualMachineProvisioningState : IEquatable<AvsVirtualMachineProvisioningState>
     {
         private readonly string _value;
-        /// <summary> Resource has been created. </summary>
-        private const string SucceededValue = "Succeeded";
-        /// <summary> Resource creation failed. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> Resource creation was canceled. </summary>
-        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="AvsVirtualMachineProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvsVirtualMachineProvisioningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Resource has been created. </summary>
         public static AvsVirtualMachineProvisioningState Succeeded { get; } = new AvsVirtualMachineProvisioningState(SucceededValue);
-
         /// <summary> Resource creation failed. </summary>
         public static AvsVirtualMachineProvisioningState Failed { get; } = new AvsVirtualMachineProvisioningState(FailedValue);
-
         /// <summary> Resource creation was canceled. </summary>
         public static AvsVirtualMachineProvisioningState Canceled { get; } = new AvsVirtualMachineProvisioningState(CanceledValue);
-
         /// <summary> Determines if two <see cref="AvsVirtualMachineProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvsVirtualMachineProvisioningState left, AvsVirtualMachineProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AvsVirtualMachineProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvsVirtualMachineProvisioningState left, AvsVirtualMachineProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AvsVirtualMachineProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsVirtualMachineProvisioningState"/>. </summary>
         public static implicit operator AvsVirtualMachineProvisioningState(string value) => new AvsVirtualMachineProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="AvsVirtualMachineProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AvsVirtualMachineProvisioningState?(string value) => value == null ? null : new AvsVirtualMachineProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvsVirtualMachineProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AvsVirtualMachineProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

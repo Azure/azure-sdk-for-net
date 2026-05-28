@@ -478,7 +478,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExpander Priority { get { throw null; } }
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExpander Random { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExpander other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExpander left, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExpander right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExpander (string value) { throw null; }
@@ -505,7 +507,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public HybridContainerServiceExtendedLocationType(string value) { throw null; }
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocationType CustomLocation { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocationType left, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceExtendedLocationType (string value) { throw null; }
@@ -548,7 +552,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSSku Windows2019 { get { throw null; } }
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSSku Windows2022 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSSku other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSSku left, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSSku (string value) { throw null; }
@@ -564,7 +570,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSType Linux { get { throw null; } }
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSType Windows { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSType left, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSType right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceOSType (string value) { throw null; }
@@ -586,7 +594,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceProvisioningState left, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceProvisioningState (string value) { throw null; }
@@ -609,7 +619,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState Updating { get { throw null; } }
         public static Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState Upgrading { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState left, Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridContainerService.Models.HybridContainerServiceResourceProvisioningState (string value) { throw null; }
@@ -762,7 +774,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonPhase ProvisioningMSICertificateDownloaded { get { throw null; } }
         public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonPhase Upgrading { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonPhase other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonPhase left, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonPhase right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAddonPhase (string value) { throw null; }
@@ -793,7 +807,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAzureHybridBenefit NotApplicable { get { throw null; } }
         public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAzureHybridBenefit True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAzureHybridBenefit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAzureHybridBenefit left, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAzureHybridBenefit right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterAzureHybridBenefit (string value) { throw null; }
@@ -821,7 +837,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public ProvisionedClusterNetworkPolicy(string value) { throw null; }
         public static Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkPolicy Calico { get { throw null; } }
         public bool Equals(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkPolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkPolicy left, Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.HybridContainerService.Models.ProvisionedClusterNetworkPolicy (string value) { throw null; }

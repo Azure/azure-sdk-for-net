@@ -7,34 +7,54 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the url signing action for the delivery rule. </summary>
+    /// <summary>
+    /// Defines the url signing action for the delivery rule.
+    /// Serialized Name: UrlSigningAction
+    /// </summary>
     public partial class UriSigningAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="UriSigningAction"/>. </summary>
-        /// <param name="properties"> Defines the parameters for the action. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the action.
+        /// Serialized Name: UrlSigningAction.parameters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public UriSigningAction(UriSigningActionProperties properties) : base(DeliveryRuleActionName.UrlSigning)
+        public UriSigningAction(UriSigningActionProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+            Name = DeliveryRuleActionType.UriSigning;
         }
 
         /// <summary> Initializes a new instance of <see cref="UriSigningAction"/>. </summary>
-        /// <param name="name"> The name of the action for the delivery rule. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Defines the parameters for the action. </param>
-        internal UriSigningAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> additionalBinaryDataProperties, UriSigningActionProperties properties) : base(name, additionalBinaryDataProperties)
+        /// <param name="name">
+        /// The name of the action for the delivery rule.
+        /// Serialized Name: DeliveryRuleAction.name
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties">
+        /// Defines the parameters for the action.
+        /// Serialized Name: UrlSigningAction.parameters
+        /// </param>
+        internal UriSigningAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, UriSigningActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
+            Name = name;
         }
 
-        /// <summary> Defines the parameters for the action. </summary>
-        [WirePath("parameters")]
+        /// <summary> Initializes a new instance of <see cref="UriSigningAction"/> for deserialization. </summary>
+        internal UriSigningAction()
+        {
+        }
+
+        /// <summary>
+        /// Defines the parameters for the action.
+        /// Serialized Name: UrlSigningAction.parameters
+        /// </summary>
         public UriSigningActionProperties Properties { get; set; }
     }
 }

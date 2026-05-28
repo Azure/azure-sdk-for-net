@@ -56,19 +56,19 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             Operation<BinaryData> createResponse = await client.CreateOrReplaceSentShareAsync(WaitUntil.Completed, sentShareId, RequestContent.Create(data));
 
-            Assert.That(createResponse.HasCompleted, Is.True);
+            Assert.IsTrue(createResponse.HasCompleted);
 
             var jsonDocument = JsonDocument.Parse(createResponse.Value);
 
             var actualId = jsonDocument.RootElement.GetProperty("id").ToString();
             var expectedId = sentShareId;
-            Assert.That(actualId, Is.EqualTo(expectedId));
+            Assert.AreEqual(expectedId, actualId);
 
             JsonElement properties = jsonDocument.RootElement.GetProperty("properties");
 
             var actualDisplayName = properties.GetProperty("displayName").ToString();
             var expectedDisplayName = "testDisplayName1";
-            Assert.That(actualDisplayName, Is.EqualTo(expectedDisplayName));
+            Assert.AreEqual(expectedDisplayName, actualDisplayName);
         }
 
         [RecordedTest]
@@ -81,17 +81,17 @@ namespace Azure.Analytics.Purview.Sharing.Tests
             using var jsonDocumentGet = JsonDocument.Parse(GetContentFromResponse(response));
             JsonElement getBodyJson = jsonDocumentGet.RootElement;
 
-            Assert.That(getBodyJson.GetProperty("id").GetString(), Is.EqualTo(sentShareId));
+            Assert.AreEqual(sentShareId, getBodyJson.GetProperty("id").GetString());
 
             JsonElement properties = getBodyJson.GetProperty("properties");
 
             var actualDisplayName = properties.GetProperty("displayName").ToString();
             var expectedDisplayName = "testDisplayName1";
-            Assert.That(actualDisplayName, Is.EqualTo(expectedDisplayName));
+            Assert.AreEqual(expectedDisplayName, actualDisplayName);
 
             List<BinaryData> listResponse = await client.GetAllSentSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/provideraccount", null, null, new()).ToEnumerableAsync();
 
-            Assert.That(listResponse.Count, Is.GreaterThan(0));
+            Assert.Greater(listResponse.Count, 0);
         }
 
         [RecordedTest]
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             Operation response = await client.DeleteSentShareAsync(WaitUntil.Completed, sentShareId, new());
 
-            Assert.That(response.HasCompleted, Is.True);
+            Assert.IsTrue(response.HasCompleted);
         }
 
         [RecordedTest]
@@ -121,7 +121,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             Response response = await client.CreateSentShareInvitationAsync(sentShareId, sentShareInvitationId, RequestContent.Create(data));
 
-            Assert.That(response.Status, Is.EqualTo(201));
+            Assert.AreEqual(201, response.Status);
         }
         [RecordedTest]
         public async Task CreateSentShareUserInvitationTest()
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             Response response = await client.CreateSentShareInvitationAsync(sentShareId, sentShareInvitationId, RequestContent.Create(data));
 
-            Assert.That(response.Status, Is.EqualTo(201));
+            Assert.AreEqual(201, response.Status);
         }
 
         [RecordedTest]
@@ -150,11 +150,11 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             Response testing = await client.GetSentShareInvitationAsync(sentShareId, sentShareInvitationId, new());
 
-            Assert.That(testing.Status, Is.EqualTo(200));
+            Assert.AreEqual(200, testing.Status);
 
             List<BinaryData> invitations = await client.GetAllSentShareInvitationsAsync(sentShareId, null, null, new()).ToEnumerableAsync();
 
-            Assert.That(invitations.Count, Is.GreaterThanOrEqualTo(0));
+            Assert.GreaterOrEqual(invitations.Count, 0);
         }
 
         [RecordedTest]
@@ -164,7 +164,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests
 
             Operation response = await client.DeleteSentShareInvitationAsync(WaitUntil.Completed, sentShareId, sentShareInvitationId, new());
 
-            Assert.That(response.HasCompleted, Is.True);
+            Assert.IsTrue(response.HasCompleted);
         }
 
         #region Helpers

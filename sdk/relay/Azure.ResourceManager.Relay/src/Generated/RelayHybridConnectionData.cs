@@ -9,15 +9,46 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary> Description of hybrid connection resource. </summary>
+    /// <summary>
+    /// A class representing the RelayHybridConnection data model.
+    /// Description of hybrid connection resource.
+    /// </summary>
     public partial class RelayHybridConnectionData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RelayHybridConnectionData"/>. </summary>
         public RelayHybridConnectionData()
@@ -25,85 +56,39 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary> Initializes a new instance of <see cref="RelayHybridConnectionData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Properties of the HybridConnection. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="createdOn"> The time the hybrid connection was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="listenerCount"> The number of listeners for this hybrid connection. Note that min : 1 and max:25 are supported. </param>
+        /// <param name="isClientAuthorizationRequired"> Returns true if client authorization is needed for this hybrid connection; otherwise, false. </param>
+        /// <param name="userMetadata"> The usermetadata is a placeholder to store user-defined string data for the hybrid connection endpoint. For example, it can be used to store descriptive data, such as a list of teams and their contact information. Also, user-defined configuration settings can be stored. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal RelayHybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HybridConnectionProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelayHybridConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, int? listenerCount, bool? isClientAuthorizationRequired, string userMetadata, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
+            ListenerCount = listenerCount;
+            IsClientAuthorizationRequired = isClientAuthorizationRequired;
+            UserMetadata = userMetadata;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Properties of the HybridConnection. </summary>
-        internal HybridConnectionProperties Properties { get; set; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation? Location { get; }
 
         /// <summary> The time the hybrid connection was created. </summary>
-        public DateTimeOffset? CreatedOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CreatedOn;
-            }
-        }
-
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time the namespace was updated. </summary>
-        public DateTimeOffset? UpdatedOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UpdatedOn;
-            }
-        }
-
+        public DateTimeOffset? UpdatedOn { get; }
         /// <summary> The number of listeners for this hybrid connection. Note that min : 1 and max:25 are supported. </summary>
-        public int? ListenerCount
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ListenerCount;
-            }
-        }
-
+        public int? ListenerCount { get; }
         /// <summary> Returns true if client authorization is needed for this hybrid connection; otherwise, false. </summary>
-        public bool? IsClientAuthorizationRequired
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsClientAuthorizationRequired;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HybridConnectionProperties();
-                }
-                Properties.IsClientAuthorizationRequired = value;
-            }
-        }
-
+        public bool? IsClientAuthorizationRequired { get; set; }
         /// <summary> The usermetadata is a placeholder to store user-defined string data for the hybrid connection endpoint. For example, it can be used to store descriptive data, such as a list of teams and their contact information. Also, user-defined configuration settings can be stored. </summary>
-        public string UserMetadata
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UserMetadata;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HybridConnectionProperties();
-                }
-                Properties.UserMetadata = value;
-            }
-        }
+        public string UserMetadata { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }

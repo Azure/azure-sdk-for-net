@@ -5,12 +5,11 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> The updatable properties of the ScheduledAction. </summary>
-    [CodeGenType("ScheduledActionUpdateProperties")]
+    [CodeGenModel("ScheduledActionUpdateProperties")]
     public partial class ScheduledActionPatchProperties
     {
     }

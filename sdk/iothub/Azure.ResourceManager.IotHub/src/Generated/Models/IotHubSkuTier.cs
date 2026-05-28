@@ -15,8 +15,6 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Standard. </summary>
         Standard,
         /// <summary> Basic. </summary>
-        Basic,
-        /// <summary> Generation2. </summary>
-        Generation2
+        Basic
     }
 }

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Consumption;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> Details about historical usage data that has been used for computing the recommendation. </summary>
-    public partial class ConsumptionUsageProperties : IJsonModel<ConsumptionUsageProperties>
+    public partial class ConsumptionUsageProperties : IUtf8JsonSerializable, IJsonModel<ConsumptionUsageProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConsumptionUsageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeConsumptionUsageProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionUsageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConsumptionUsageProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionUsageProperties IPersistableModel<ConsumptionUsageProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConsumptionUsageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConsumptionUsageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(FirstConsumptionDate))
             {
                 writer.WritePropertyName("firstConsumptionDate"u8);
@@ -93,7 +53,7 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 writer.WritePropertyName("usageData"u8);
                 writer.WriteStartArray();
-                foreach (float item in UsageData)
+                foreach (var item in UsageData)
                 {
                     writer.WriteNumberValue(item);
                 }
@@ -104,15 +64,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("usageGrain"u8);
                 writer.WriteStringValue(UsageGrain);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +81,22 @@ namespace Azure.ResourceManager.Consumption.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionUsageProperties IJsonModel<ConsumptionUsageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConsumptionUsageProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConsumptionUsageProperties IJsonModel<ConsumptionUsageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConsumptionUsageProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConsumptionUsageProperties DeserializeConsumptionUsageProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConsumptionUsageProperties DeserializeConsumptionUsageProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -151,55 +106,88 @@ namespace Azure.ResourceManager.Consumption.Models
             string lookBackUnitType = default;
             IReadOnlyList<float> usageData = default;
             string usageGrain = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("firstConsumptionDate"u8))
+                if (property.NameEquals("firstConsumptionDate"u8))
                 {
-                    firstConsumptionDate = prop.Value.GetString();
+                    firstConsumptionDate = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lastConsumptionDate"u8))
+                if (property.NameEquals("lastConsumptionDate"u8))
                 {
-                    lastConsumptionDate = prop.Value.GetString();
+                    lastConsumptionDate = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lookBackUnitType"u8))
+                if (property.NameEquals("lookBackUnitType"u8))
                 {
-                    lookBackUnitType = prop.Value.GetString();
+                    lookBackUnitType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("usageData"u8))
+                if (property.NameEquals("usageData"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<float> array = new List<float>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetSingle());
                     }
                     usageData = array;
                     continue;
                 }
-                if (prop.NameEquals("usageGrain"u8))
+                if (property.NameEquals("usageGrain"u8))
                 {
-                    usageGrain = prop.Value.GetString();
+                    usageGrain = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionUsageProperties(
                 firstConsumptionDate,
                 lastConsumptionDate,
                 lookBackUnitType,
                 usageData ?? new ChangeTrackingList<float>(),
                 usageGrain,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionUsageProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionUsageProperties IPersistableModel<ConsumptionUsageProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeConsumptionUsageProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionUsageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

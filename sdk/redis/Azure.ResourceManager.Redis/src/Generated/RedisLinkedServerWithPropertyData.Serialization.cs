@@ -10,65 +10,16 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary> Response to put/get linked server (with properties) for Redis cache. </summary>
-    public partial class RedisLinkedServerWithPropertyData : ResourceData, IJsonModel<RedisLinkedServerWithPropertyData>
+    public partial class RedisLinkedServerWithPropertyData : IUtf8JsonSerializable, IJsonModel<RedisLinkedServerWithPropertyData>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRedisLinkedServerWithPropertyData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisLinkedServerWithPropertyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RedisLinkedServerWithPropertyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RedisLinkedServerWithPropertyData IPersistableModel<RedisLinkedServerWithPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RedisLinkedServerWithPropertyData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RedisLinkedServerWithPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RedisLinkedServerWithPropertyData"/> from. </param>
-        internal static RedisLinkedServerWithPropertyData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRedisLinkedServerWithPropertyData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisLinkedServerWithPropertyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -80,105 +31,396 @@ namespace Azure.ResourceManager.Redis
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LinkedRedisCacheId))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("linkedRedisCacheId"u8);
+                writer.WriteStringValue(LinkedRedisCacheId);
             }
+            if (Optional.IsDefined(LinkedRedisCacheLocation))
+            {
+                writer.WritePropertyName("linkedRedisCacheLocation"u8);
+                writer.WriteStringValue(LinkedRedisCacheLocation.Value);
+            }
+            if (Optional.IsDefined(ServerRole))
+            {
+                writer.WritePropertyName("serverRole"u8);
+                writer.WriteStringValue(ServerRole.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(GeoReplicatedPrimaryHostName))
+            {
+                writer.WritePropertyName("geoReplicatedPrimaryHostName"u8);
+                writer.WriteStringValue(GeoReplicatedPrimaryHostName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrimaryHostName))
+            {
+                writer.WritePropertyName("primaryHostName"u8);
+                writer.WriteStringValue(PrimaryHostName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            writer.WriteEndObject();
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RedisLinkedServerWithPropertyData IJsonModel<RedisLinkedServerWithPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RedisLinkedServerWithPropertyData)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisLinkedServerWithPropertyData IJsonModel<RedisLinkedServerWithPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRedisLinkedServerWithPropertyData(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RedisLinkedServerWithPropertyData DeserializeRedisLinkedServerWithPropertyData(JsonElement element, ModelReaderWriterOptions options)
+        internal static RedisLinkedServerWithPropertyData DeserializeRedisLinkedServerWithPropertyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType resourceType = default;
+            ResourceType type = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RedisLinkedServerProperties properties = default;
-            foreach (var prop in element.EnumerateObject())
+            ResourceIdentifier linkedRedisCacheId = default;
+            AzureLocation? linkedRedisCacheLocation = default;
+            RedisLinkedServerRole? serverRole = default;
+            string geoReplicatedPrimaryHostName = default;
+            string primaryHostName = default;
+            string provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        continue;
+                        if (property0.NameEquals("linkedRedisCacheId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            linkedRedisCacheId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("linkedRedisCacheLocation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            linkedRedisCacheLocation = new AzureLocation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("serverRole"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serverRole = property0.Value.GetString().ToRedisLinkedServerRole();
+                            continue;
+                        }
+                        if (property0.NameEquals("geoReplicatedPrimaryHostName"u8))
+                        {
+                            geoReplicatedPrimaryHostName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("primaryHostName"u8))
+                        {
+                            primaryHostName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = RedisLinkedServerProperties.DeserializeRedisLinkedServerProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new RedisLinkedServerWithPropertyData(
                 id,
                 name,
-                resourceType,
+                type,
                 systemData,
-                additionalBinaryDataProperties,
-                properties);
+                linkedRedisCacheId,
+                linkedRedisCacheLocation,
+                serverRole,
+                geoReplicatedPrimaryHostName,
+                primaryHostName,
+                provisioningState,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRedisCacheId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    linkedRedisCacheId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedRedisCacheId))
+                {
+                    builder.Append("    linkedRedisCacheId: ");
+                    builder.AppendLine($"'{LinkedRedisCacheId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRedisCacheLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    linkedRedisCacheLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkedRedisCacheLocation))
+                {
+                    builder.Append("    linkedRedisCacheLocation: ");
+                    builder.AppendLine($"'{LinkedRedisCacheLocation.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerRole), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serverRole: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerRole))
+                {
+                    builder.Append("    serverRole: ");
+                    builder.AppendLine($"'{ServerRole.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoReplicatedPrimaryHostName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    geoReplicatedPrimaryHostName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GeoReplicatedPrimaryHostName))
+                {
+                    builder.Append("    geoReplicatedPrimaryHostName: ");
+                    if (GeoReplicatedPrimaryHostName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GeoReplicatedPrimaryHostName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GeoReplicatedPrimaryHostName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryHostName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    primaryHostName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryHostName))
+                {
+                    builder.Append("    primaryHostName: ");
+                    if (PrimaryHostName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryHostName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryHostName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    if (ProvisioningState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProvisioningState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProvisioningState}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<RedisLinkedServerWithPropertyData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RedisLinkedServerWithPropertyData IPersistableModel<RedisLinkedServerWithPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeRedisLinkedServerWithPropertyData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RedisLinkedServerWithPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

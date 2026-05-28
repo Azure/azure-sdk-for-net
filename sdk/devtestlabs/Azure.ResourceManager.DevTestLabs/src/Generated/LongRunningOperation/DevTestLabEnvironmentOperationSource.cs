@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary></summary>
-    internal partial class DevTestLabEnvironmentOperationSource : IOperationSource<DevTestLabEnvironmentResource>
+    internal class DevTestLabEnvironmentOperationSource : IOperationSource<DevTestLabEnvironmentResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DevTestLabEnvironmentOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DevTestLabEnvironmentResource IOperationSource<DevTestLabEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DevTestLabEnvironmentData data = DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DevTestLabEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
             return new DevTestLabEnvironmentResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DevTestLabEnvironmentResource> IOperationSource<DevTestLabEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DevTestLabEnvironmentData data = DevTestLabEnvironmentData.DeserializeDevTestLabEnvironmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DevTestLabEnvironmentResource(_client, data);
+            var data = ModelReaderWriter.Read<DevTestLabEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
+            return await Task.FromResult(new DevTestLabEnvironmentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

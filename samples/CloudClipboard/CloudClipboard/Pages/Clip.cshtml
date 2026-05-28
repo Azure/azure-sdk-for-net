@@ -1,0 +1,9 @@
+﻿@page "/{userId}/{clipId}"
+@model CloudClipboard.Pages.ClipModel
+@{
+    ViewData["Title"] = "View Clip";
+}
+<br />
+<pre>@Model.Clip</pre>
+<br />
+<a asp-page="./Index" class="btn btn-primary">Back to my clips</a>

@@ -7,14 +7,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI;
-using Azure.Identity;
-using Microsoft.ClientModel.TestFramework;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 using OpenAI.Embeddings;
 
-namespace Azure.AI.Projects.Tests.Samples;
+namespace Azure.AI.Projects.Tests;
 
-public class Sample_AzureOpenAI_Embeddings : SamplesBase
+public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
     [SyncOnly]
@@ -22,16 +21,16 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase
     {
         #region Snippet:AI_Projects_AzureOpenAIEmbeddingsSync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.EMBEDDING_MODEL_NAME;
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var modelDeploymentName = TestEnvironment.TEXTEMBEDDINGSMODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.AOAI_CONNECTION_NAME;
+            connectionName = TestEnvironment.AOAICONNECTIONNAME;
         }
         catch
         {
@@ -66,16 +65,16 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase
     {
         #region Snippet:AI_Projects_AzureOpenAIEmbeddingsAsync
 #if SNIPPET
-        var endpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_FOUNDRY_MODEL_NAME");
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
-        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.EMBEDDING_MODEL_NAME;
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
+        var modelDeploymentName = TestEnvironment.TEXTEMBEDDINGSMODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
-            connectionName = TestEnvironment.AOAI_CONNECTION_NAME;
+            connectionName = TestEnvironment.AOAICONNECTIONNAME;
         }
         catch
         {
@@ -103,7 +102,4 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase
         Console.WriteLine($"Generated embedding with {result.ToFloats().Length} dimensions");
         #endregion
     }
-
-    public Sample_AzureOpenAI_Embeddings(bool isAsync) : base(isAsync)
-    { }
 }

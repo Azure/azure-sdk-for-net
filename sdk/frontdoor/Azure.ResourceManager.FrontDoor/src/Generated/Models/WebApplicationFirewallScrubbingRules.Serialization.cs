@@ -8,61 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.FrontDoor;
+using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Defines the contents of the log scrubbing rules. </summary>
-    public partial class WebApplicationFirewallScrubbingRules : IJsonModel<WebApplicationFirewallScrubbingRules>
+    public partial class WebApplicationFirewallScrubbingRules : IUtf8JsonSerializable, IJsonModel<WebApplicationFirewallScrubbingRules>
     {
-        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallScrubbingRules"/> for deserialization. </summary>
-        internal WebApplicationFirewallScrubbingRules()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationFirewallScrubbingRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebApplicationFirewallScrubbingRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallScrubbingRules>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebApplicationFirewallScrubbingRules(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallScrubbingRules>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebApplicationFirewallScrubbingRules>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApplicationFirewallScrubbingRules IPersistableModel<WebApplicationFirewallScrubbingRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebApplicationFirewallScrubbingRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebApplicationFirewallScrubbingRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +29,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallScrubbingRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallScrubbingRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
             writer.WritePropertyName("selectorMatchOperator"u8);
@@ -93,15 +49,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -110,27 +66,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApplicationFirewallScrubbingRules IJsonModel<WebApplicationFirewallScrubbingRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebApplicationFirewallScrubbingRules JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebApplicationFirewallScrubbingRules IJsonModel<WebApplicationFirewallScrubbingRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallScrubbingRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallScrubbingRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebApplicationFirewallScrubbingRules(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WebApplicationFirewallScrubbingRules DeserializeWebApplicationFirewallScrubbingRules(JsonElement element, ModelReaderWriterOptions options)
+        internal static WebApplicationFirewallScrubbingRules DeserializeWebApplicationFirewallScrubbingRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,39 +90,151 @@ namespace Azure.ResourceManager.FrontDoor.Models
             ScrubbingRuleEntryMatchOperator selectorMatchOperator = default;
             string selector = default;
             ScrubbingRuleEntryState? state = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("matchVariable"u8))
+                if (property.NameEquals("matchVariable"u8))
                 {
-                    matchVariable = new ScrubbingRuleEntryMatchVariable(prop.Value.GetString());
+                    matchVariable = new ScrubbingRuleEntryMatchVariable(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("selectorMatchOperator"u8))
+                if (property.NameEquals("selectorMatchOperator"u8))
                 {
-                    selectorMatchOperator = new ScrubbingRuleEntryMatchOperator(prop.Value.GetString());
+                    selectorMatchOperator = new ScrubbingRuleEntryMatchOperator(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("selector"u8))
+                if (property.NameEquals("selector"u8))
                 {
-                    selector = prop.Value.GetString();
+                    selector = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("state"u8))
+                if (property.NameEquals("state"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new ScrubbingRuleEntryState(prop.Value.GetString());
+                    state = new ScrubbingRuleEntryState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new WebApplicationFirewallScrubbingRules(matchVariable, selectorMatchOperator, selector, state, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WebApplicationFirewallScrubbingRules(matchVariable, selectorMatchOperator, selector, state, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MatchVariable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  matchVariable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  matchVariable: ");
+                builder.AppendLine($"'{MatchVariable.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SelectorMatchOperator), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  selectorMatchOperator: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  selectorMatchOperator: ");
+                builder.AppendLine($"'{SelectorMatchOperator.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Selector), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  selector: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Selector))
+                {
+                    builder.Append("  selector: ");
+                    if (Selector.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Selector}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Selector}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<WebApplicationFirewallScrubbingRules>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallScrubbingRules>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebApplicationFirewallScrubbingRules IPersistableModel<WebApplicationFirewallScrubbingRules>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallScrubbingRules>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWebApplicationFirewallScrubbingRules(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebApplicationFirewallScrubbingRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,52 +14,35 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct DeviceConnectionType : IEquatable<DeviceConnectionType>
     {
         private readonly string _value;
-        /// <summary> PCI connection type. </summary>
-        private const string PCIValue = "PCI";
 
         /// <summary> Initializes a new instance of <see cref="DeviceConnectionType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeviceConnectionType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> PCI connection type. </summary>
+        private const string PCIValue = "PCI";
+
+        /// <summary> PCI. </summary>
         public static DeviceConnectionType PCI { get; } = new DeviceConnectionType(PCIValue);
-
         /// <summary> Determines if two <see cref="DeviceConnectionType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceConnectionType left, DeviceConnectionType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="DeviceConnectionType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceConnectionType left, DeviceConnectionType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="DeviceConnectionType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceConnectionType"/>. </summary>
         public static implicit operator DeviceConnectionType(string value) => new DeviceConnectionType(value);
 
-        /// <summary> Converts a string to a <see cref="DeviceConnectionType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator DeviceConnectionType?(string value) => value == null ? null : new DeviceConnectionType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceConnectionType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(DeviceConnectionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

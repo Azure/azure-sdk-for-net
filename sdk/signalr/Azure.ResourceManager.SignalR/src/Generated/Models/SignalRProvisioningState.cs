@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.SignalR.Models
     public readonly partial struct SignalRProvisioningState : IEquatable<SignalRProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SignalRProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string UnknownValue = "Unknown";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
@@ -25,73 +32,41 @@ namespace Azure.ResourceManager.SignalR.Models
         private const string DeletingValue = "Deleting";
         private const string MovingValue = "Moving";
 
-        /// <summary> Initializes a new instance of <see cref="SignalRProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SignalRProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Unknown. </summary>
+        /// <summary> Unknown. </summary>
         public static SignalRProvisioningState Unknown { get; } = new SignalRProvisioningState(UnknownValue);
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static SignalRProvisioningState Succeeded { get; } = new SignalRProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary> Failed. </summary>
         public static SignalRProvisioningState Failed { get; } = new SignalRProvisioningState(FailedValue);
-
-        /// <summary> Gets the Canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static SignalRProvisioningState Canceled { get; } = new SignalRProvisioningState(CanceledValue);
-
-        /// <summary> Gets the Running. </summary>
+        /// <summary> Running. </summary>
         public static SignalRProvisioningState Running { get; } = new SignalRProvisioningState(RunningValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary> Creating. </summary>
         public static SignalRProvisioningState Creating { get; } = new SignalRProvisioningState(CreatingValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary> Updating. </summary>
         public static SignalRProvisioningState Updating { get; } = new SignalRProvisioningState(UpdatingValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary> Deleting. </summary>
         public static SignalRProvisioningState Deleting { get; } = new SignalRProvisioningState(DeletingValue);
-
-        /// <summary> Gets the Moving. </summary>
+        /// <summary> Moving. </summary>
         public static SignalRProvisioningState Moving { get; } = new SignalRProvisioningState(MovingValue);
-
         /// <summary> Determines if two <see cref="SignalRProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SignalRProvisioningState left, SignalRProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SignalRProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SignalRProvisioningState left, SignalRProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SignalRProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRProvisioningState"/>. </summary>
         public static implicit operator SignalRProvisioningState(string value) => new SignalRProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="SignalRProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SignalRProvisioningState?(string value) => value == null ? null : new SignalRProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SignalRProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SignalRProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

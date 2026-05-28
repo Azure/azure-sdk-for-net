@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OracleDatabase
@@ -22,53 +21,55 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing a collection of <see cref="OracleDBSystemResource"/> and their operations.
     /// Each <see cref="OracleDBSystemResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="OracleDBSystemCollection"/> instance call the GetOracleDBSystems method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="OracleDBSystemCollection"/> instance call the GetOracleDBSystems method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class OracleDBSystemCollection : ArmCollection, IEnumerable<OracleDBSystemResource>, IAsyncEnumerable<OracleDBSystemResource>
     {
-        private readonly ClientDiagnostics _dbSystemsClientDiagnostics;
-        private readonly DbSystems _dbSystemsRestClient;
+        private readonly ClientDiagnostics _oracleDBSystemDbSystemsClientDiagnostics;
+        private readonly DbSystemsRestOperations _oracleDBSystemDbSystemsRestClient;
 
-        /// <summary> Initializes a new instance of OracleDBSystemCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OracleDBSystemCollection"/> class for mocking. </summary>
         protected OracleDBSystemCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OracleDBSystemCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OracleDBSystemCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal OracleDBSystemCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(OracleDBSystemResource.ResourceType, out string oracleDBSystemApiVersion);
-            _dbSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBSystemResource.ResourceType.Namespace, Diagnostics);
-            _dbSystemsRestClient = new DbSystems(_dbSystemsClientDiagnostics, Pipeline, Endpoint, oracleDBSystemApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _oracleDBSystemDbSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBSystemResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(OracleDBSystemResource.ResourceType, out string oracleDBSystemDbSystemsApiVersion);
+            _oracleDBSystemDbSystemsRestClient = new DbSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemDbSystemsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a DbSystem
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="dbSystemName"> The name of the DbSystem. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OracleDBSystemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dbSystemName, OracleDBSystemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _dbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.CreateOrUpdate");
+            using var scope = _oracleDBSystemDbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dbSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, OracleDBSystemData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                OracleDatabaseArmOperation<OracleDBSystemResource> operation = new OracleDatabaseArmOperation<OracleDBSystemResource>(
-                    new OracleDBSystemOperationSource(Client),
-                    _dbSystemsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _oracleDBSystemDbSystemsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, dbSystemName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new OracleDatabaseArmOperation<OracleDBSystemResource>(new OracleDBSystemOperationSource(Client), _oracleDBSystemDbSystemsClientDiagnostics, Pipeline, _oracleDBSystemDbSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dbSystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Create a DbSystem
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="dbSystemName"> The name of the DbSystem. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OracleDBSystemResource> CreateOrUpdate(WaitUntil waitUntil, string dbSystemName, OracleDBSystemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _dbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.CreateOrUpdate");
+            using var scope = _oracleDBSystemDbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dbSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, OracleDBSystemData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                OracleDatabaseArmOperation<OracleDBSystemResource> operation = new OracleDatabaseArmOperation<OracleDBSystemResource>(
-                    new OracleDBSystemOperationSource(Client),
-                    _dbSystemsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _oracleDBSystemDbSystemsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, dbSystemName, data, cancellationToken);
+                var operation = new OracleDatabaseArmOperation<OracleDBSystemResource>(new OracleDBSystemOperationSource(Client), _oracleDBSystemDbSystemsClientDiagnostics, Pipeline, _oracleDBSystemDbSystemsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, dbSystemName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a DbSystem
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbSystemName"> The name of the DbSystem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         public virtual async Task<Response<OracleDBSystemResource>> GetAsync(string dbSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
 
-            using DiagnosticScope scope = _dbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.Get");
+            using var scope = _oracleDBSystemDbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dbSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OracleDBSystemData> response = Response.FromValue(OracleDBSystemData.FromResponse(result), result);
+                var response = await _oracleDBSystemDbSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dbSystemName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new OracleDBSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Get a DbSystem
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbSystemName"> The name of the DbSystem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         public virtual Response<OracleDBSystemResource> Get(string dbSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
 
-            using DiagnosticScope scope = _dbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.Get");
+            using var scope = _oracleDBSystemDbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dbSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<OracleDBSystemData> response = Response.FromValue(OracleDBSystemData.FromResponse(result), result);
+                var response = _oracleDBSystemDbSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dbSystemName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new OracleDBSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.OracleDatabase
         /// List DbSystem resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OracleDBSystemResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OracleDBSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OracleDBSystemResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetByResourceGroupAsyncCollectionResultOfT(_dbSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleDBSystemCollection.GetAll"), data => new OracleDBSystemResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBSystemDbSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBSystemDbSystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleDBSystemResource(Client, OracleDBSystemData.DeserializeOracleDBSystemData(e)), _oracleDBSystemDbSystemsClientDiagnostics, Pipeline, "OracleDBSystemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List DbSystem resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <returns> A collection of <see cref="OracleDBSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OracleDBSystemResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetByResourceGroupCollectionResultOfT(_dbSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleDBSystemCollection.GetAll"), data => new OracleDBSystemResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBSystemDbSystemsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBSystemDbSystemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleDBSystemResource(Client, OracleDBSystemData.DeserializeOracleDBSystemData(e)), _oracleDBSystemDbSystemsClientDiagnostics, Pipeline, "OracleDBSystemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbSystemName"> The name of the DbSystem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dbSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
 
-            using DiagnosticScope scope = _dbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.Exists");
+            using var scope = _oracleDBSystemDbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dbSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<OracleDBSystemData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OracleDBSystemData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OracleDBSystemData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _oracleDBSystemDbSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dbSystemName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbSystemName"> The name of the DbSystem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         public virtual Response<bool> Exists(string dbSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
 
-            using DiagnosticScope scope = _dbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.Exists");
+            using var scope = _oracleDBSystemDbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dbSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<OracleDBSystemData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OracleDBSystemData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OracleDBSystemData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _oracleDBSystemDbSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dbSystemName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbSystemName"> The name of the DbSystem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         public virtual async Task<NullableResponse<OracleDBSystemResource>> GetIfExistsAsync(string dbSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
 
-            using DiagnosticScope scope = _dbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.GetIfExists");
+            using var scope = _oracleDBSystemDbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dbSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<OracleDBSystemData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OracleDBSystemData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OracleDBSystemData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _oracleDBSystemDbSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, dbSystemName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<OracleDBSystemResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new OracleDBSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.OracleDatabase
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/dbSystems/{dbSystemName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DbSystems_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DbSystem_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OracleDBSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dbSystemName"> The name of the DbSystem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dbSystemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbSystemName"/> is null. </exception>
         public virtual NullableResponse<OracleDBSystemResource> GetIfExists(string dbSystemName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
 
-            using DiagnosticScope scope = _dbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.GetIfExists");
+            using var scope = _oracleDBSystemDbSystemsClientDiagnostics.CreateScope("OracleDBSystemCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _dbSystemsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<OracleDBSystemData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(OracleDBSystemData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((OracleDBSystemData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _oracleDBSystemDbSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, dbSystemName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<OracleDBSystemResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new OracleDBSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OracleDBSystemResource> IAsyncEnumerable<OracleDBSystemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

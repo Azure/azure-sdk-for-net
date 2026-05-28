@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineReplaceStoragePolicy : IEquatable<BareMetalMachineReplaceStoragePolicy>
     {
         private readonly string _value;
-        /// <summary> Storage will be preserved and not cleared during the replace action. </summary>
-        private const string PreserveValue = "Preserve";
-        /// <summary> Storage will be cleared during the replace action. </summary>
-        private const string DiscardAllValue = "DiscardAll";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineReplaceStoragePolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineReplaceStoragePolicy(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Storage will be preserved and not cleared during the replace action. </summary>
+        private const string PreserveValue = "Preserve";
+        private const string DiscardAllValue = "DiscardAll";
+
+        /// <summary> Preserve. </summary>
         public static BareMetalMachineReplaceStoragePolicy Preserve { get; } = new BareMetalMachineReplaceStoragePolicy(PreserveValue);
-
-        /// <summary> Storage will be cleared during the replace action. </summary>
+        /// <summary> DiscardAll. </summary>
         public static BareMetalMachineReplaceStoragePolicy DiscardAll { get; } = new BareMetalMachineReplaceStoragePolicy(DiscardAllValue);
-
         /// <summary> Determines if two <see cref="BareMetalMachineReplaceStoragePolicy"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineReplaceStoragePolicy left, BareMetalMachineReplaceStoragePolicy right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="BareMetalMachineReplaceStoragePolicy"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineReplaceStoragePolicy left, BareMetalMachineReplaceStoragePolicy right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="BareMetalMachineReplaceStoragePolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineReplaceStoragePolicy"/>. </summary>
         public static implicit operator BareMetalMachineReplaceStoragePolicy(string value) => new BareMetalMachineReplaceStoragePolicy(value);
 
-        /// <summary> Converts a string to a <see cref="BareMetalMachineReplaceStoragePolicy"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator BareMetalMachineReplaceStoragePolicy?(string value) => value == null ? null : new BareMetalMachineReplaceStoragePolicy(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineReplaceStoragePolicy other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(BareMetalMachineReplaceStoragePolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

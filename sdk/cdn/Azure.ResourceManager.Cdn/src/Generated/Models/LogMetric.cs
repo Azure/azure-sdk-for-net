@@ -7,14 +7,24 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary></summary>
+    /// <summary>
+    /// The LogMetric.
+    /// Serialized Name: LogMetric
+    /// </summary>
     public readonly partial struct LogMetric : IEquatable<LogMetric>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="LogMetric"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LogMetric(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string ClientRequestCountValue = "clientRequestCount";
         private const string ClientRequestTrafficValue = "clientRequestTraffic";
         private const string ClientRequestBandwidthValue = "clientRequestBandwidth";
@@ -22,64 +32,53 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string OriginRequestBandwidthValue = "originRequestBandwidth";
         private const string TotalLatencyValue = "totalLatency";
 
-        /// <summary> Initializes a new instance of <see cref="LogMetric"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LogMetric(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the ClientRequestCount. </summary>
+        /// <summary>
+        /// clientRequestCount
+        /// Serialized Name: LogMetric.clientRequestCount
+        /// </summary>
         public static LogMetric ClientRequestCount { get; } = new LogMetric(ClientRequestCountValue);
-
-        /// <summary> Gets the ClientRequestTraffic. </summary>
+        /// <summary>
+        /// clientRequestTraffic
+        /// Serialized Name: LogMetric.clientRequestTraffic
+        /// </summary>
         public static LogMetric ClientRequestTraffic { get; } = new LogMetric(ClientRequestTrafficValue);
-
-        /// <summary> Gets the ClientRequestBandwidth. </summary>
+        /// <summary>
+        /// clientRequestBandwidth
+        /// Serialized Name: LogMetric.clientRequestBandwidth
+        /// </summary>
         public static LogMetric ClientRequestBandwidth { get; } = new LogMetric(ClientRequestBandwidthValue);
-
-        /// <summary> Gets the OriginRequestTraffic. </summary>
+        /// <summary>
+        /// originRequestTraffic
+        /// Serialized Name: LogMetric.originRequestTraffic
+        /// </summary>
         public static LogMetric OriginRequestTraffic { get; } = new LogMetric(OriginRequestTrafficValue);
-
-        /// <summary> Gets the OriginRequestBandwidth. </summary>
+        /// <summary>
+        /// originRequestBandwidth
+        /// Serialized Name: LogMetric.originRequestBandwidth
+        /// </summary>
         public static LogMetric OriginRequestBandwidth { get; } = new LogMetric(OriginRequestBandwidthValue);
-
-        /// <summary> Gets the TotalLatency. </summary>
+        /// <summary>
+        /// totalLatency
+        /// Serialized Name: LogMetric.totalLatency
+        /// </summary>
         public static LogMetric TotalLatency { get; } = new LogMetric(TotalLatencyValue);
-
         /// <summary> Determines if two <see cref="LogMetric"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogMetric left, LogMetric right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="LogMetric"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogMetric left, LogMetric right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="LogMetric"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LogMetric"/>. </summary>
         public static implicit operator LogMetric(string value) => new LogMetric(value);
 
-        /// <summary> Converts a string to a <see cref="LogMetric"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator LogMetric?(string value) => value == null ? null : new LogMetric(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LogMetric other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(LogMetric other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

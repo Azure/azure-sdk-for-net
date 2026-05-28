@@ -42,7 +42,7 @@ In the case of Question Answering, the modern client libraries have packages and
 
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could create a `QnAMakerRuntimeClient` along with `EndpointKeyServiceClientCredentials`:
 
-```csharp
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateRuntimeClient
 EndpointKeyServiceClientCredentials credential = new EndpointKeyServiceClientCredentials("{ApiKey}");
 
 QnAMakerRuntimeClient client = new QnAMakerRuntimeClient(credential)
@@ -64,7 +64,7 @@ QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credentia
 
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could query for a question using `QueryDTO`:
 
-```csharp
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_QueryKnowledgeBase
 QueryDTO queryDTO = new QueryDTO();
 queryDTO.Question = "{Question}";
 
@@ -82,7 +82,7 @@ Response<AnswersResult> response = await client.GetAnswersAsync("{Question}", pr
 
  Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could chat using `QueryDTO` along with setting the `context` to have `previousQnaId`:
 
-```csharp
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_Chat
 QueryDTO queryDTOFollowUp = new QueryDTO();
 queryDTOFollowUp.Context = new QueryDTOContext(previousQnaId: 1);
 
@@ -107,7 +107,7 @@ Response<AnswersResult> responseFollowUp = await client.GetAnswersAsync("{Questi
 
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could create a `QnAMakerClient` along with `EndpointKeyServiceClientCredentials`:
 
-```csharp
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateClient
 QnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials("{QnAMakerSubscriptionKey}"), new HttpClient(), false)
 {
     Endpoint = "{QnaMakerEndpoint}"
@@ -127,11 +127,10 @@ QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(e
 
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could create a new `Knowledgebase` using a `QnADTO`:
 
-```csharp
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_CreateKnowledgeBase
 Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation createOp = await client.Knowledgebase.CreateAsync(new CreateKbDTO
 {
-    Name = "{KnowledgeBaseName}",
-    QnaList = new List<QnADTO>
+    Name = "{KnowledgeBaseName}", QnaList = new List<QnADTO>
     {
         new QnADTO
         {
@@ -150,16 +149,15 @@ Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you can create a new Que
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateProject
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
-    new
-    {
-        description = "This is the description for a test project",
-        language = "en",
-        multilingualResource = false,
-        settings = new
-        {
-            defaultAnswer = "No answer found for your question."
+    new {
+            description = "This is the description for a test project",
+            language = "en",
+            multilingualResource = false,
+            settings = new
+            {
+                defaultAnswer = "No answer found for your question."
+            }
         }
-    }
     );
 
 Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
@@ -169,7 +167,7 @@ Response creationResponse = await client.CreateProjectAsync(newProjectName, crea
 
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could update your knowledge base using a `UpdateKbOperationDTO`:
 
-```csharp
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeBase
 Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation updateOp = await client.Knowledgebase.UpdateAsync("{KnowledgeBaseID}",
     new UpdateKbOperationDTO
     {
@@ -238,7 +236,7 @@ Operation<AsyncPageable<BinaryData>> updateQnasOperation = await client.UpdateQn
 
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could download your knowledge base using the `DownloadAsync` method:
 
-```csharp
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DownloadKnowledgeBase
 QnADocumentsDTO kbdata = await client.Knowledgebase.DownloadAsync("{KnowledgeBaseID}", EnvironmentType.Test);
 ```
 
@@ -252,7 +250,7 @@ Operation<BinaryData> exportOperation = client.Export(WaitUntil.Completed, "{Pro
 
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could delete your knowledge base using the `DeleteAsync` method:
 
-```csharp
+```C# Snippet:CognitiveServices_QnA_Maker_Snippets_MigrationGuide_DeleteKnowledgeBase
 await client.Knowledgebase.DeleteAsync("{KnowledgeBaseID}");
 ```
 

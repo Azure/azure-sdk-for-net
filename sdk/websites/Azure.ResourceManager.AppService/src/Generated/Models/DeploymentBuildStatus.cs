@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Deployment build status.
-    /// Serialized Name: DeploymentBuildStatus
-    /// </summary>
+    /// <summary> Deployment build status. </summary>
     public readonly partial struct DeploymentBuildStatus : IEquatable<DeploymentBuildStatus>
     {
         private readonly string _value;
@@ -39,70 +36,31 @@ namespace Azure.ResourceManager.AppService.Models
         private const string RuntimeStartingValue = "RuntimeStarting";
         private const string RuntimeSuccessfulValue = "RuntimeSuccessful";
 
-        /// <summary>
-        /// TimedOut
-        /// Serialized Name: DeploymentBuildStatus.TimedOut
-        /// </summary>
+        /// <summary> TimedOut. </summary>
         public static DeploymentBuildStatus TimedOut { get; } = new DeploymentBuildStatus(TimedOutValue);
-        /// <summary>
-        /// RuntimeFailed
-        /// Serialized Name: DeploymentBuildStatus.RuntimeFailed
-        /// </summary>
+        /// <summary> RuntimeFailed. </summary>
         public static DeploymentBuildStatus RuntimeFailed { get; } = new DeploymentBuildStatus(RuntimeFailedValue);
-        /// <summary>
-        /// BuildAborted
-        /// Serialized Name: DeploymentBuildStatus.BuildAborted
-        /// </summary>
+        /// <summary> BuildAborted. </summary>
         public static DeploymentBuildStatus BuildAborted { get; } = new DeploymentBuildStatus(BuildAbortedValue);
-        /// <summary>
-        /// BuildFailed
-        /// Serialized Name: DeploymentBuildStatus.BuildFailed
-        /// </summary>
+        /// <summary> BuildFailed. </summary>
         public static DeploymentBuildStatus BuildFailed { get; } = new DeploymentBuildStatus(BuildFailedValue);
-        /// <summary>
-        /// BuildRequestReceived
-        /// Serialized Name: DeploymentBuildStatus.BuildRequestReceived
-        /// </summary>
+        /// <summary> BuildRequestReceived. </summary>
         public static DeploymentBuildStatus BuildRequestReceived { get; } = new DeploymentBuildStatus(BuildRequestReceivedValue);
-        /// <summary>
-        /// BuildPending
-        /// Serialized Name: DeploymentBuildStatus.BuildPending
-        /// </summary>
+        /// <summary> BuildPending. </summary>
         public static DeploymentBuildStatus BuildPending { get; } = new DeploymentBuildStatus(BuildPendingValue);
-        /// <summary>
-        /// BuildInProgress
-        /// Serialized Name: DeploymentBuildStatus.BuildInProgress
-        /// </summary>
+        /// <summary> BuildInProgress. </summary>
         public static DeploymentBuildStatus BuildInProgress { get; } = new DeploymentBuildStatus(BuildInProgressValue);
-        /// <summary>
-        /// BuildSuccessful
-        /// Serialized Name: DeploymentBuildStatus.BuildSuccessful
-        /// </summary>
+        /// <summary> BuildSuccessful. </summary>
         public static DeploymentBuildStatus BuildSuccessful { get; } = new DeploymentBuildStatus(BuildSuccessfulValue);
-        /// <summary>
-        /// PostBuildRestartRequired
-        /// Serialized Name: DeploymentBuildStatus.PostBuildRestartRequired
-        /// </summary>
+        /// <summary> PostBuildRestartRequired. </summary>
         public static DeploymentBuildStatus PostBuildRestartRequired { get; } = new DeploymentBuildStatus(PostBuildRestartRequiredValue);
-        /// <summary>
-        /// StartPolling
-        /// Serialized Name: DeploymentBuildStatus.StartPolling
-        /// </summary>
+        /// <summary> StartPolling. </summary>
         public static DeploymentBuildStatus StartPolling { get; } = new DeploymentBuildStatus(StartPollingValue);
-        /// <summary>
-        /// StartPollingWithRestart
-        /// Serialized Name: DeploymentBuildStatus.StartPollingWithRestart
-        /// </summary>
+        /// <summary> StartPollingWithRestart. </summary>
         public static DeploymentBuildStatus StartPollingWithRestart { get; } = new DeploymentBuildStatus(StartPollingWithRestartValue);
-        /// <summary>
-        /// RuntimeStarting
-        /// Serialized Name: DeploymentBuildStatus.RuntimeStarting
-        /// </summary>
+        /// <summary> RuntimeStarting. </summary>
         public static DeploymentBuildStatus RuntimeStarting { get; } = new DeploymentBuildStatus(RuntimeStartingValue);
-        /// <summary>
-        /// RuntimeSuccessful
-        /// Serialized Name: DeploymentBuildStatus.RuntimeSuccessful
-        /// </summary>
+        /// <summary> RuntimeSuccessful. </summary>
         public static DeploymentBuildStatus RuntimeSuccessful { get; } = new DeploymentBuildStatus(RuntimeSuccessfulValue);
         /// <summary> Determines if two <see cref="DeploymentBuildStatus"/> values are the same. </summary>
         public static bool operator ==(DeploymentBuildStatus left, DeploymentBuildStatus right) => left.Equals(right);

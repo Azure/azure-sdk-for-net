@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -15,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Azure.Generator.Extensions;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Visitors
@@ -50,7 +48,7 @@ namespace Azure.Generator.Visitors
 
         protected override ConstructorProvider? VisitConstructor(ConstructorProvider constructor)
         {
-            if (ShouldSkipType(constructor.EnclosingType))
+            if (ShouldSkip(constructor.EnclosingType))
             {
                 return base.VisitConstructor(constructor);
             }
@@ -103,16 +101,12 @@ namespace Azure.Generator.Visitors
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            if (ShouldSkipType(method.EnclosingType))
+            if (ShouldSkip(method.EnclosingType))
             {
                 return base.VisitMethod(method);
             }
 
-            if (IsPagingMethod(method))
-            {
-                UpdatePagingMethodWithScope(method);
-            }
-            else if (method.Kind == ScmMethodKind.Protocol)
+            if (method.IsProtocolMethod)
             {
                 UpdateProtocolMethodsWithDistributedTracing(method);
             }
@@ -220,23 +214,8 @@ namespace Azure.Generator.Visitors
             [NotNullWhen(true)] out MethodBodyStatement? updatedStatement)
         {
             updatedStatement = originalStatement;
-            if (originalStatement is not ExpressionStatement { Expression: KeywordExpression keywordExpression })
-            {
-                return false;
-            }
-
-            // Handle simple return: return new T(Pipeline, _endpoint, ...);
-            if (keywordExpression.Expression is NewInstanceExpression simpleCtorExpression)
-            {
-                updatedStatement = Return(new NewInstanceExpression(
-                    simpleCtorExpression.Type,
-                    [clientDiagnostics, .. simpleCtorExpression.Parameters],
-                    simpleCtorExpression.InitExpression));
-                return true;
-            }
-
-            // Handle cached return: return Volatile.Read(ref _cachedT) ?? Interlocked.CompareExchange(ref _cachedT, new T(...), null) ?? _cachedT;
-            if (keywordExpression.Expression is not BinaryOperatorExpression binaryOperatorExpression)
+            if (originalStatement is not ExpressionStatement { Expression: KeywordExpression keywordExpression }
+                || keywordExpression.Expression is not BinaryOperatorExpression binaryOperatorExpression)
             {
                 return false;
             }
@@ -286,56 +265,11 @@ namespace Azure.Generator.Visitors
             return true;
         }
 
-        private static bool ShouldSkipType(TypeProvider typeProvider)
+        private static bool ShouldSkip(TypeProvider typeProvider)
         {
             return typeProvider is not ClientProvider ||
                 !typeProvider.CanonicalView.Properties
                     .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
-        }
-
-        private static void UpdatePagingMethodWithScope(ScmMethodProvider method)
-        {
-            string scopeName = method.GetScopeName();
-            const string asyncSuffix = "Async";
-            if (scopeName.EndsWith(asyncSuffix))
-            {
-                scopeName = scopeName[..^asyncSuffix.Length];
-            }
-
-            if (method.BodyExpression is NewInstanceExpression newInstance)
-            {
-                List<MethodBodyStatement> updatedStatements =
-                [
-                    Return(new NewInstanceExpression(
-                        newInstance.Type,
-                        [.. newInstance.Parameters, Literal(scopeName)],
-                        newInstance.InitExpression))
-                ];
-                method.Update(bodyStatements: updatedStatements);
-            }
-            else if (method.BodyStatements != null)
-            {
-                var updatedStatements = new List<MethodBodyStatement>();
-                foreach (var statement in method.BodyStatements)
-                {
-                    if (statement is ExpressionStatement
-                        {
-                            Expression: KeywordExpression
-                            {
-                                Keyword: "return",
-                                Expression: NewInstanceExpression returnNewInstance
-                            } keyword
-                        })
-                    {
-                        keyword.Update(keyword.Keyword, new NewInstanceExpression(
-                            returnNewInstance.Type,
-                            [.. returnNewInstance.Parameters, Literal(scopeName)],
-                            returnNewInstance.InitExpression));
-                    }
-                    updatedStatements.Add(statement);
-                }
-                method.Update(bodyStatements: updatedStatements);
-            }
         }
 
         private static bool IsSubClientFactoryMethod(ScmMethodProvider method)
@@ -345,19 +279,6 @@ namespace Azure.Generator.Visitors
 
             return methodReturnType != null &&
                 clientProvider.SubClients.Any(subClient => methodReturnType.Equals(subClient.Type));
-        }
-
-        private static bool IsPagingMethod(ScmMethodProvider method)
-        {
-            var returnType = method.Signature.ReturnType;
-            if (returnType == null || !returnType.IsFrameworkType)
-            {
-                return false;
-            }
-
-            // Check if the return type is Pageable<T> or AsyncPageable<T>
-            return returnType.FrameworkType == typeof(Pageable<>) ||
-                   returnType.FrameworkType == typeof(AsyncPageable<>);
         }
     }
 }

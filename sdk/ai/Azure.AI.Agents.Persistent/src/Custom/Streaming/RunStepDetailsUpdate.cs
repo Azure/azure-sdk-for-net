@@ -33,7 +33,7 @@ public class RunStepDetailsUpdate : StreamingUpdate
         ?? _asFileSearchCall?.Id
         ?? _asFunctionCall?.Id
         ?? _asMcpCall?.Id
-        ?? (_toolCall?._additionalBinaryDataProperties?.TryGetValue("id", out BinaryData idData) == true
+        ?? (_toolCall?.SerializedAdditionalRawData?.TryGetValue("id", out BinaryData idData) == true
             ? idData.ToString()
             : null);
 
@@ -77,7 +77,7 @@ public class RunStepDetailsUpdate : StreamingUpdate
         StreamingUpdateReason updateKind,
         ModelReaderWriterOptions options = null)
     {
-        RunStepDeltaChunk stepDelta = RunStepDeltaChunk.DeserializeRunStepDeltaChunk(element, options ?? ModelSerializationExtensions.WireOptions);
+        RunStepDeltaChunk stepDelta = RunStepDeltaChunk.DeserializeRunStepDeltaChunk(element, options);
         List<RunStepDetailsUpdate> updates = [];
         if (stepDelta?.Delta?.StepDetails is RunStepDeltaMessageCreation)
         {

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Diagnostics for an App Service Environment.
-    /// Serialized Name: HostingEnvironmentDiagnostics
-    /// </summary>
+    /// <summary> Diagnostics for an App Service Environment. </summary>
     public partial class HostingEnvironmentDiagnostics
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HostingEnvironmentDiagnostics"/>. </summary>
-        /// <param name="name">
-        /// Name/identifier of the diagnostics.
-        /// Serialized Name: HostingEnvironmentDiagnostics.name
-        /// </param>
-        /// <param name="diagnosticsOutput">
-        /// Diagnostics output.
-        /// Serialized Name: HostingEnvironmentDiagnostics.diagnosticsOutput
-        /// </param>
+        /// <param name="name"> Name/identifier of the diagnostics. </param>
+        /// <param name="diagnosticsOutput"> Diagnostics output. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HostingEnvironmentDiagnostics(string name, string diagnosticsOutput, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,16 +61,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Name/identifier of the diagnostics.
-        /// Serialized Name: HostingEnvironmentDiagnostics.name
-        /// </summary>
+        /// <summary> Name/identifier of the diagnostics. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Diagnostics output.
-        /// Serialized Name: HostingEnvironmentDiagnostics.diagnosticsOutput
-        /// </summary>
+        /// <summary> Diagnostics output. </summary>
         [WirePath("diagnosticsOutput")]
         public string DiagnosticsOutput { get; }
     }

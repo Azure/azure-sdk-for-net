@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -25,49 +24,51 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppManagedEnvironmentDaprComponentCollection : ArmCollection, IEnumerable<ContainerAppManagedEnvironmentDaprComponentResource>, IAsyncEnumerable<ContainerAppManagedEnvironmentDaprComponentResource>
     {
-        private readonly ClientDiagnostics _containerAppManagedEnvironmentDaprComponentsClientDiagnostics;
-        private readonly ContainerAppManagedEnvironmentDaprComponents _containerAppManagedEnvironmentDaprComponentsRestClient;
+        private readonly ClientDiagnostics _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics;
+        private readonly DaprComponentsRestOperations _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient;
 
-        /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentDaprComponentCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDaprComponentCollection"/> class for mocking. </summary>
         protected ContainerAppManagedEnvironmentDaprComponentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerAppManagedEnvironmentDaprComponentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDaprComponentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentDaprComponentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerAppManagedEnvironmentDaprComponentResource.ResourceType, out string containerAppManagedEnvironmentDaprComponentApiVersion);
-            _containerAppManagedEnvironmentDaprComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentDaprComponentResource.ResourceType.Namespace, Diagnostics);
-            _containerAppManagedEnvironmentDaprComponentsRestClient = new ContainerAppManagedEnvironmentDaprComponents(_containerAppManagedEnvironmentDaprComponentsClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentDaprComponentApiVersion ?? "2025-10-02-preview");
-            ValidateResourceId(id);
+            _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentDaprComponentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ContainerAppManagedEnvironmentDaprComponentResource.ResourceType, out string containerAppManagedEnvironmentDaprComponentDaprComponentsApiVersion);
+            _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient = new DaprComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentDaprComponentDaprComponentsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerAppManagedEnvironmentResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppManagedEnvironmentResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppManagedEnvironmentResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Creates or updates a Dapr Component in a Managed Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DaprComponents_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponents_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,31 +76,23 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="data"> Configuration details of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerAppManagedEnvironmentDaprComponentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string componentName, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.CreateOrUpdate");
+            using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, ContainerAppDaprComponentData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerAppDaprComponentData> response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppContainersArmOperation<ContainerAppManagedEnvironmentDaprComponentResource> operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentDaprComponentResource>(Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentDaprComponentResource>(Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -113,16 +106,20 @@ namespace Azure.ResourceManager.AppContainers
         /// Creates or updates a Dapr Component in a Managed Environment.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DaprComponents_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponents_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,31 +127,23 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="data"> Configuration details of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerAppManagedEnvironmentDaprComponentResource> CreateOrUpdate(WaitUntil waitUntil, string componentName, ContainerAppDaprComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.CreateOrUpdate");
+            using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, ContainerAppDaprComponentData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerAppDaprComponentData> response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppContainersArmOperation<ContainerAppManagedEnvironmentDaprComponentResource> operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentDaprComponentResource>(Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, data, cancellationToken);
+                var uri = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentDaprComponentResource>(Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -168,42 +157,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Get a dapr component.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DaprComponents_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponents_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual async Task<Response<ContainerAppManagedEnvironmentDaprComponentResource>> GetAsync(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Get");
+            using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ContainerAppDaprComponentData> response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
+                var response = await _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,42 +202,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Get a dapr component.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DaprComponents_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponents_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual Response<ContainerAppManagedEnvironmentDaprComponentResource> Get(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Get");
+            using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ContainerAppDaprComponentData> response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
+                var response = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,50 +247,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Get the Dapr Components for a managed environment.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DaprComponents_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponents_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppManagedEnvironmentDaprComponentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ContainerAppDaprComponentData, ContainerAppManagedEnvironmentDaprComponentResource>(new ContainerAppManagedEnvironmentDaprComponentsGetAllAsyncCollectionResultOfT(
-                _containerAppManagedEnvironmentDaprComponentsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ContainerAppManagedEnvironmentDaprComponentCollection.GetAll"), data => new ContainerAppManagedEnvironmentDaprComponentResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentDaprComponentResource(Client, ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(e)), _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDaprComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get the Dapr Components for a managed environment.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DaprComponents_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponents_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,67 +298,45 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppManagedEnvironmentDaprComponentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ContainerAppDaprComponentData, ContainerAppManagedEnvironmentDaprComponentResource>(new ContainerAppManagedEnvironmentDaprComponentsGetAllCollectionResultOfT(
-                _containerAppManagedEnvironmentDaprComponentsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ContainerAppManagedEnvironmentDaprComponentCollection.GetAll"), data => new ContainerAppManagedEnvironmentDaprComponentResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentDaprComponentResource(Client, ContainerAppDaprComponentData.DeserializeContainerAppDaprComponentData(e)), _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDaprComponentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DaprComponents_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponents_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Exists");
+            using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerAppDaprComponentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppDaprComponentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,50 +350,36 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DaprComponents_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponents_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual Response<bool> Exists(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Exists");
+            using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerAppDaprComponentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppDaprComponentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -448,54 +393,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DaprComponents_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponents_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerAppManagedEnvironmentDaprComponentResource>> GetIfExistsAsync(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.GetIfExists");
+            using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<ContainerAppDaprComponentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppDaprComponentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerAppManagedEnvironmentDaprComponentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -509,54 +438,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DaprComponents_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>DaprComponents_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentName"> Name of the Dapr Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="componentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public virtual NullableResponse<ContainerAppManagedEnvironmentDaprComponentResource> GetIfExists(string componentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(componentName, nameof(componentName));
 
-            using DiagnosticScope scope = _containerAppManagedEnvironmentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.GetIfExists");
+            using var scope = _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics.CreateScope("ContainerAppManagedEnvironmentDaprComponentCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _containerAppManagedEnvironmentDaprComponentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, componentName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<ContainerAppDaprComponentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(ContainerAppDaprComponentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((ContainerAppDaprComponentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, componentName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<ContainerAppManagedEnvironmentDaprComponentResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -576,7 +489,6 @@ namespace Azure.ResourceManager.AppContainers
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerAppManagedEnvironmentDaprComponentResource> IAsyncEnumerable<ContainerAppManagedEnvironmentDaprComponentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

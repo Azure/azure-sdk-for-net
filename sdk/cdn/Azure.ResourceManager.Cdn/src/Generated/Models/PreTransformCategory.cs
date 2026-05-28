@@ -7,14 +7,24 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes what transforms are applied before matching. </summary>
+    /// <summary>
+    /// Describes what transforms are applied before matching
+    /// Serialized Name: Transform
+    /// </summary>
     public readonly partial struct PreTransformCategory : IEquatable<PreTransformCategory>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="PreTransformCategory"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PreTransformCategory(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string LowercaseValue = "Lowercase";
         private const string UppercaseValue = "Uppercase";
         private const string TrimValue = "Trim";
@@ -22,64 +32,53 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string UriEncodeValue = "UrlEncode";
         private const string RemoveNullsValue = "RemoveNulls";
 
-        /// <summary> Initializes a new instance of <see cref="PreTransformCategory"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PreTransformCategory(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Lowercase. </summary>
+        /// <summary>
+        /// Lowercase
+        /// Serialized Name: Transform.Lowercase
+        /// </summary>
         public static PreTransformCategory Lowercase { get; } = new PreTransformCategory(LowercaseValue);
-
-        /// <summary> Gets the Uppercase. </summary>
+        /// <summary>
+        /// Uppercase
+        /// Serialized Name: Transform.Uppercase
+        /// </summary>
         public static PreTransformCategory Uppercase { get; } = new PreTransformCategory(UppercaseValue);
-
-        /// <summary> Gets the Trim. </summary>
+        /// <summary>
+        /// Trim
+        /// Serialized Name: Transform.Trim
+        /// </summary>
         public static PreTransformCategory Trim { get; } = new PreTransformCategory(TrimValue);
-
-        /// <summary> Gets the UriDecode. </summary>
+        /// <summary>
+        /// UrlDecode
+        /// Serialized Name: Transform.UrlDecode
+        /// </summary>
         public static PreTransformCategory UriDecode { get; } = new PreTransformCategory(UriDecodeValue);
-
-        /// <summary> Gets the UriEncode. </summary>
+        /// <summary>
+        /// UrlEncode
+        /// Serialized Name: Transform.UrlEncode
+        /// </summary>
         public static PreTransformCategory UriEncode { get; } = new PreTransformCategory(UriEncodeValue);
-
-        /// <summary> Gets the RemoveNulls. </summary>
+        /// <summary>
+        /// RemoveNulls
+        /// Serialized Name: Transform.RemoveNulls
+        /// </summary>
         public static PreTransformCategory RemoveNulls { get; } = new PreTransformCategory(RemoveNullsValue);
-
         /// <summary> Determines if two <see cref="PreTransformCategory"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PreTransformCategory left, PreTransformCategory right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PreTransformCategory"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PreTransformCategory left, PreTransformCategory right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PreTransformCategory"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PreTransformCategory"/>. </summary>
         public static implicit operator PreTransformCategory(string value) => new PreTransformCategory(value);
 
-        /// <summary> Converts a string to a <see cref="PreTransformCategory"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PreTransformCategory?(string value) => value == null ? null : new PreTransformCategory(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PreTransformCategory other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PreTransformCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

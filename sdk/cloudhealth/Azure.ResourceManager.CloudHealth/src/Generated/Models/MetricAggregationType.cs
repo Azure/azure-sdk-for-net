@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public readonly partial struct MetricAggregationType : IEquatable<MetricAggregationType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="MetricAggregationType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MetricAggregationType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NoneValue = "None";
         private const string AverageValue = "Average";
         private const string CountValue = "Count";
@@ -22,64 +29,35 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private const string MaximumValue = "Maximum";
         private const string TotalValue = "Total";
 
-        /// <summary> Initializes a new instance of <see cref="MetricAggregationType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MetricAggregationType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static MetricAggregationType None { get; } = new MetricAggregationType(NoneValue);
-
-        /// <summary> Gets the Average. </summary>
+        /// <summary> Average. </summary>
         public static MetricAggregationType Average { get; } = new MetricAggregationType(AverageValue);
-
-        /// <summary> Gets the Count. </summary>
+        /// <summary> Count. </summary>
         public static MetricAggregationType Count { get; } = new MetricAggregationType(CountValue);
-
-        /// <summary> Gets the Minimum. </summary>
+        /// <summary> Minimum. </summary>
         public static MetricAggregationType Minimum { get; } = new MetricAggregationType(MinimumValue);
-
-        /// <summary> Gets the Maximum. </summary>
+        /// <summary> Maximum. </summary>
         public static MetricAggregationType Maximum { get; } = new MetricAggregationType(MaximumValue);
-
-        /// <summary> Gets the Total. </summary>
+        /// <summary> Total. </summary>
         public static MetricAggregationType Total { get; } = new MetricAggregationType(TotalValue);
-
         /// <summary> Determines if two <see cref="MetricAggregationType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MetricAggregationType left, MetricAggregationType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="MetricAggregationType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MetricAggregationType left, MetricAggregationType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="MetricAggregationType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricAggregationType"/>. </summary>
         public static implicit operator MetricAggregationType(string value) => new MetricAggregationType(value);
 
-        /// <summary> Converts a string to a <see cref="MetricAggregationType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator MetricAggregationType?(string value) => value == null ? null : new MetricAggregationType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MetricAggregationType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(MetricAggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

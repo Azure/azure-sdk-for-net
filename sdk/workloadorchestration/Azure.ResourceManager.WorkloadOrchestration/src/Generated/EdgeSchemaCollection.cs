@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
@@ -22,53 +21,55 @@ namespace Azure.ResourceManager.WorkloadOrchestration
     /// <summary>
     /// A class representing a collection of <see cref="EdgeSchemaResource"/> and their operations.
     /// Each <see cref="EdgeSchemaResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="EdgeSchemaCollection"/> instance call the GetEdgeSchemas method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="EdgeSchemaCollection"/> instance call the GetEdgeSchemas method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class EdgeSchemaCollection : ArmCollection, IEnumerable<EdgeSchemaResource>, IAsyncEnumerable<EdgeSchemaResource>
     {
-        private readonly ClientDiagnostics _schemasClientDiagnostics;
-        private readonly Schemas _schemasRestClient;
+        private readonly ClientDiagnostics _edgeSchemaSchemasClientDiagnostics;
+        private readonly SchemasRestOperations _edgeSchemaSchemasRestClient;
 
-        /// <summary> Initializes a new instance of EdgeSchemaCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeSchemaCollection"/> class for mocking. </summary>
         protected EdgeSchemaCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeSchemaCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeSchemaCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal EdgeSchemaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeSchemaResource.ResourceType, out string edgeSchemaApiVersion);
-            _schemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSchemaResource.ResourceType.Namespace, Diagnostics);
-            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Endpoint, edgeSchemaApiVersion ?? "2025-06-01");
-            ValidateResourceId(id);
+            _edgeSchemaSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSchemaResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(EdgeSchemaResource.ResourceType, out string edgeSchemaSchemasApiVersion);
+            _edgeSchemaSchemasRestClient = new SchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSchemaSchemasApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a Schema Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="schemaName"> The name of the Schema. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EdgeSchemaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string schemaName, EdgeSchemaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _schemasClientDiagnostics.CreateScope("EdgeSchemaCollection.CreateOrUpdate");
+            using var scope = _edgeSchemaSchemasClientDiagnostics.CreateScope("EdgeSchemaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _schemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, EdgeSchemaData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WorkloadOrchestrationArmOperation<EdgeSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaResource>(
-                    new EdgeSchemaOperationSource(Client),
-                    _schemasClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _edgeSchemaSchemasRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, schemaName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSchemaResource>(new EdgeSchemaOperationSource(Client), _edgeSchemaSchemasClientDiagnostics, Pipeline, _edgeSchemaSchemasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, schemaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Create or update a Schema Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="schemaName"> The name of the Schema. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EdgeSchemaResource> CreateOrUpdate(WaitUntil waitUntil, string schemaName, EdgeSchemaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _schemasClientDiagnostics.CreateScope("EdgeSchemaCollection.CreateOrUpdate");
+            using var scope = _edgeSchemaSchemasClientDiagnostics.CreateScope("EdgeSchemaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _schemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, EdgeSchemaData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                WorkloadOrchestrationArmOperation<EdgeSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaResource>(
-                    new EdgeSchemaOperationSource(Client),
-                    _schemasClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _edgeSchemaSchemasRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, schemaName, data, cancellationToken);
+                var operation = new WorkloadOrchestrationArmOperation<EdgeSchemaResource>(new EdgeSchemaOperationSource(Client), _edgeSchemaSchemasClientDiagnostics, Pipeline, _edgeSchemaSchemasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, schemaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Schema Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaName"> The name of the Schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<Response<EdgeSchemaResource>> GetAsync(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using DiagnosticScope scope = _schemasClientDiagnostics.CreateScope("EdgeSchemaCollection.Get");
+            using var scope = _edgeSchemaSchemasClientDiagnostics.CreateScope("EdgeSchemaCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _schemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EdgeSchemaData> response = Response.FromValue(EdgeSchemaData.FromResponse(result), result);
+                var response = await _edgeSchemaSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, schemaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Get a Schema Resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaName"> The name of the Schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<EdgeSchemaResource> Get(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using DiagnosticScope scope = _schemasClientDiagnostics.CreateScope("EdgeSchemaCollection.Get");
+            using var scope = _edgeSchemaSchemasClientDiagnostics.CreateScope("EdgeSchemaCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _schemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<EdgeSchemaData> response = Response.FromValue(EdgeSchemaData.FromResponse(result), result);
+                var response = _edgeSchemaSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, schemaName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// List by specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EdgeSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EdgeSchemaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeSchemaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new SchemasGetByResourceGroupAsyncCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeSchemaCollection.GetAll"), data => new EdgeSchemaResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeSchemaSchemasRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeSchemaSchemasRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeSchemaResource(Client, EdgeSchemaData.DeserializeEdgeSchemaData(e)), _edgeSchemaSchemasClientDiagnostics, Pipeline, "EdgeSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List by specified resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <returns> A collection of <see cref="EdgeSchemaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeSchemaResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new SchemasGetByResourceGroupCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeSchemaCollection.GetAll"), data => new EdgeSchemaResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeSchemaSchemasRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeSchemaSchemasRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeSchemaResource(Client, EdgeSchemaData.DeserializeEdgeSchemaData(e)), _edgeSchemaSchemasClientDiagnostics, Pipeline, "EdgeSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaName"> The name of the Schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using DiagnosticScope scope = _schemasClientDiagnostics.CreateScope("EdgeSchemaCollection.Exists");
+            using var scope = _edgeSchemaSchemasClientDiagnostics.CreateScope("EdgeSchemaCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _schemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<EdgeSchemaData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeSchemaData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeSchemaData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _edgeSchemaSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, schemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaName"> The name of the Schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<bool> Exists(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using DiagnosticScope scope = _schemasClientDiagnostics.CreateScope("EdgeSchemaCollection.Exists");
+            using var scope = _edgeSchemaSchemasClientDiagnostics.CreateScope("EdgeSchemaCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _schemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<EdgeSchemaData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeSchemaData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeSchemaData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _edgeSchemaSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, schemaName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaName"> The name of the Schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<NullableResponse<EdgeSchemaResource>> GetIfExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using DiagnosticScope scope = _schemasClientDiagnostics.CreateScope("EdgeSchemaCollection.GetIfExists");
+            using var scope = _edgeSchemaSchemasClientDiagnostics.CreateScope("EdgeSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _schemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<EdgeSchemaData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeSchemaData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeSchemaData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _edgeSchemaSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, schemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<EdgeSchemaResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Edge/schemas/{schemaName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Schemas_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaName"> The name of the Schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual NullableResponse<EdgeSchemaResource> GetIfExists(string schemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
-            using DiagnosticScope scope = _schemasClientDiagnostics.CreateScope("EdgeSchemaCollection.GetIfExists");
+            using var scope = _edgeSchemaSchemasClientDiagnostics.CreateScope("EdgeSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _schemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<EdgeSchemaData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(EdgeSchemaData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((EdgeSchemaData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _edgeSchemaSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, schemaName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<EdgeSchemaResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new EdgeSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeSchemaResource> IAsyncEnumerable<EdgeSchemaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

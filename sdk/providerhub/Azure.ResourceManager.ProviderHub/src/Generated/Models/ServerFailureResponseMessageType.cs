@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ServerFailureResponseMessageType : IEquatable<ServerFailureResponseMessageType>
     {
         private readonly string _value;
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string OutageReportingValue = "OutageReporting";
 
         /// <summary> Initializes a new instance of <see cref="ServerFailureResponseMessageType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServerFailureResponseMessageType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the NotSpecified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        private const string OutageReportingValue = "OutageReporting";
+
+        /// <summary> NotSpecified. </summary>
         public static ServerFailureResponseMessageType NotSpecified { get; } = new ServerFailureResponseMessageType(NotSpecifiedValue);
-
-        /// <summary> Gets the OutageReporting. </summary>
+        /// <summary> OutageReporting. </summary>
         public static ServerFailureResponseMessageType OutageReporting { get; } = new ServerFailureResponseMessageType(OutageReportingValue);
-
         /// <summary> Determines if two <see cref="ServerFailureResponseMessageType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServerFailureResponseMessageType left, ServerFailureResponseMessageType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ServerFailureResponseMessageType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServerFailureResponseMessageType left, ServerFailureResponseMessageType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ServerFailureResponseMessageType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerFailureResponseMessageType"/>. </summary>
         public static implicit operator ServerFailureResponseMessageType(string value) => new ServerFailureResponseMessageType(value);
 
-        /// <summary> Converts a string to a <see cref="ServerFailureResponseMessageType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ServerFailureResponseMessageType?(string value) => value == null ? null : new ServerFailureResponseMessageType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServerFailureResponseMessageType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ServerFailureResponseMessageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

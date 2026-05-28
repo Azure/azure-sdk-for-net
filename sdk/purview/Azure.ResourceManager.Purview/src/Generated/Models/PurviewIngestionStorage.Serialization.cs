@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Purview;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> Ingestion Storage Account Info. </summary>
-    public partial class PurviewIngestionStorage : IJsonModel<PurviewIngestionStorage>
+    public partial class PurviewIngestionStorage : IUtf8JsonSerializable, IJsonModel<PurviewIngestionStorage>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PurviewIngestionStorage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePurviewIngestionStorage(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PurviewIngestionStorage)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewIngestionStorage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PurviewIngestionStorage)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PurviewIngestionStorage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PurviewIngestionStorage IPersistableModel<PurviewIngestionStorage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PurviewIngestionStorage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PurviewIngestionStorage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PurviewIngestionStorage)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -89,15 +49,15 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,27 +66,22 @@ namespace Azure.ResourceManager.Purview.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PurviewIngestionStorage IJsonModel<PurviewIngestionStorage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PurviewIngestionStorage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PurviewIngestionStorage IJsonModel<PurviewIngestionStorage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PurviewIngestionStorage)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePurviewIngestionStorage(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PurviewIngestionStorage DeserializePurviewIngestionStorage(JsonElement element, ModelReaderWriterOptions options)
+        internal static PurviewIngestionStorage DeserializePurviewIngestionStorage(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,34 +89,67 @@ namespace Azure.ResourceManager.Purview.Models
             string id = default;
             string primaryEndpoint = default;
             PurviewPublicNetworkAccess? publicNetworkAccess = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("primaryEndpoint"u8))
+                if (property.NameEquals("primaryEndpoint"u8))
                 {
-                    primaryEndpoint = prop.Value.GetString();
+                    primaryEndpoint = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("publicNetworkAccess"u8))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PurviewPublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new PurviewPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new PurviewIngestionStorage(id, primaryEndpoint, publicNetworkAccess, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PurviewIngestionStorage(id, primaryEndpoint, publicNetworkAccess, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PurviewIngestionStorage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PurviewIngestionStorage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PurviewIngestionStorage IPersistableModel<PurviewIngestionStorage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePurviewIngestionStorage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PurviewIngestionStorage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PurviewIngestionStorage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

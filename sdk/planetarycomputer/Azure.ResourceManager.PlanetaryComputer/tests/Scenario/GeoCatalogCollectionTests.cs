@@ -8,9 +8,9 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.PlanetaryComputer;
 using Azure.ResourceManager.PlanetaryComputer.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PlanetaryComputer.Tests
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
                 count++;
             }
 
-            Assert.That(count, Is.GreaterThanOrEqualTo(0));
+            Assert.GreaterOrEqual(count, 0);
         }
 
         [Test]
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
             PlanetaryComputerGeoCatalogCollection collection = await GetGeoCatalogCollectionAsync();
             PlanetaryComputerGeoCatalogResource catalog = await collection.GetAsync(ExistingGeoCatalogName);
 
-            Assert.That(catalog.Data.Name, Is.EqualTo(ExistingGeoCatalogName));
-            Assert.That(catalog.Data.Location.ToString().ToLowerInvariant(), Is.EqualTo(Region.ToLowerInvariant()));
+            Assert.AreEqual(ExistingGeoCatalogName, catalog.Data.Name);
+            Assert.AreEqual(Region.ToLowerInvariant(), catalog.Data.Location.ToString().ToLowerInvariant());
             TestContext.WriteLine($"Catalog URI: {catalog.Data.Properties.CatalogUri}");
         }
 
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
             ArmOperation<PlanetaryComputerGeoCatalogResource> operation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
             PlanetaryComputerGeoCatalogResource result = operation.Value;
 
-            Assert.That(result.Data.Name, Is.EqualTo(catalogName));
-            Assert.That(result.Data.Properties.Tier, Is.EqualTo(PlanetaryComputerGeoCatalogTier.Basic));
+            Assert.AreEqual(catalogName, result.Data.Name);
+            Assert.AreEqual(PlanetaryComputerGeoCatalogTier.Basic, result.Data.Properties.Tier);
             TestContext.WriteLine($"Created GeoCatalog: {result.Id}");
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
             ArmOperation<PlanetaryComputerGeoCatalogResource> updateOp = await collection.CreateOrUpdateAsync(WaitUntil.Completed, catalogName, resource.Data);
             PlanetaryComputerGeoCatalogResource updated = updateOp.Value;
 
-            Assert.That(updated.Data.Tags["env"], Is.EqualTo("updated"));
+            Assert.AreEqual("updated", updated.Data.Tags["env"]);
             TestContext.WriteLine($"Updated GeoCatalog: {updated.Id}");
         }
 
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
             PlanetaryComputerGeoCatalogResource resource = createOp.Value;
 
             ArmOperation deleteOp = await resource.DeleteAsync(WaitUntil.Completed);
-            Assert.That(deleteOp.HasCompleted, Is.True);
+            Assert.IsTrue(deleteOp.HasCompleted);
 
             bool exists = await collection.ExistsAsync(catalogName);
-            Assert.That(exists, Is.False);
+            Assert.IsFalse(exists);
             TestContext.WriteLine($"Deleted GeoCatalog: {catalogName}");
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
                 TestContext.WriteLine($"[Subscription List] GeoCatalog: {item.Data.Name}");
                 count++;
             }
-            Assert.That(count, Is.GreaterThanOrEqualTo(0));
+            Assert.GreaterOrEqual(count, 0);
         }
         [Test]
         [RecordedTest]
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
             ArmOperation<PlanetaryComputerGeoCatalogResource> createOp = await collection.CreateOrUpdateAsync(WaitUntil.Completed, catalogName, data);
             PlanetaryComputerGeoCatalogResource resource = createOp.Value;
 
-            Assert.That(resource.Data.Tags["env"], Is.EqualTo("initial"));
+            Assert.AreEqual("initial", resource.Data.Tags["env"]);
             TestContext.WriteLine($"✅ Created GeoCatalog: {resource.Id}");
 
             // Step 2: Update
@@ -199,15 +199,15 @@ namespace Azure.ResourceManager.PlanetaryComputer.Tests
             ArmOperation<PlanetaryComputerGeoCatalogResource> updateOp = await collection.CreateOrUpdateAsync(WaitUntil.Completed, catalogName, resource.Data);
             PlanetaryComputerGeoCatalogResource updated = updateOp.Value;
 
-            Assert.That(updated.Data.Tags["env"], Is.EqualTo("updated"));
+            Assert.AreEqual("updated", updated.Data.Tags["env"]);
             TestContext.WriteLine($"🔄 Updated GeoCatalog: {updated.Id}");
 
             // Step 3: Delete
             ArmOperation deleteOp = await updated.DeleteAsync(WaitUntil.Completed);
-            Assert.That(deleteOp.HasCompleted, Is.True);
+            Assert.IsTrue(deleteOp.HasCompleted);
 
             bool exists = await collection.ExistsAsync(catalogName);
-            Assert.That(exists, Is.False);
+            Assert.IsFalse(exists);
             TestContext.WriteLine($"❌ Deleted GeoCatalog: {catalogName}");
         }
 

@@ -5,7 +5,5 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public abstract partial class SearchIndexerDataIdentity
     {
-        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>.</summary>
-        public SearchIndexerDataIdentity() { }
     }
 }

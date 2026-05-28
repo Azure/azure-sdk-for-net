@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary></summary>
-    internal partial class AttachedNetworkConnectionOperationSource : IOperationSource<AttachedNetworkConnectionResource>
+    internal class AttachedNetworkConnectionOperationSource : IOperationSource<AttachedNetworkConnectionResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal AttachedNetworkConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         AttachedNetworkConnectionResource IOperationSource<AttachedNetworkConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AttachedNetworkConnectionData data = AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<AttachedNetworkConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
             return new AttachedNetworkConnectionResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<AttachedNetworkConnectionResource> IOperationSource<AttachedNetworkConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AttachedNetworkConnectionData data = AttachedNetworkConnectionData.DeserializeAttachedNetworkConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AttachedNetworkConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<AttachedNetworkConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevCenterContext.Default);
+            return await Task.FromResult(new AttachedNetworkConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

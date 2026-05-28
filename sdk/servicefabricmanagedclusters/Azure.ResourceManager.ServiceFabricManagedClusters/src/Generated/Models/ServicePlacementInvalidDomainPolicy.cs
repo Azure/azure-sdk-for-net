@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -17,20 +16,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="ServicePlacementInvalidDomainPolicy"/>. </summary>
         /// <param name="domainName"> The name of the domain that should not be used for placement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public ServicePlacementInvalidDomainPolicy(string domainName) : base(ServicePlacementPolicyType.InvalidDomain)
+        public ServicePlacementInvalidDomainPolicy(string domainName)
         {
             Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
+            Type = ServicePlacementPolicyType.InvalidDomain;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementInvalidDomainPolicy"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domainName"> The name of the domain that should not be used for placement. </param>
-        internal ServicePlacementInvalidDomainPolicy(ServicePlacementPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string domainName) : base(@type, additionalBinaryDataProperties)
+        internal ServicePlacementInvalidDomainPolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(type, serializedAdditionalRawData)
         {
             DomainName = domainName;
+            Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePlacementInvalidDomainPolicy"/> for deserialization. </summary>
+        internal ServicePlacementInvalidDomainPolicy()
+        {
         }
 
         /// <summary> The name of the domain that should not be used for placement. </summary>

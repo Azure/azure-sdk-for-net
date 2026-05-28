@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Collection of static site custom users.
-    /// Serialized Name: StaticSiteUserCollection
-    /// </summary>
+    /// <summary> Collection of static site custom users. </summary>
     internal partial class StaticSiteUserListResult
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteUserListResult"/>. </summary>
-        /// <param name="value">
-        /// The StaticSiteUserARMResource items on this page
-        /// Serialized Name: StaticSiteUserCollection.value
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteUserListResult(IEnumerable<StaticSiteUser> value)
         {
@@ -63,16 +57,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteUserListResult"/>. </summary>
-        /// <param name="value">
-        /// The StaticSiteUserARMResource items on this page
-        /// Serialized Name: StaticSiteUserCollection.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of items
-        /// Serialized Name: StaticSiteUserCollection.nextLink
-        /// </param>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteUserListResult(IReadOnlyList<StaticSiteUser> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StaticSiteUserListResult(IReadOnlyList<StaticSiteUser> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary>
-        /// The StaticSiteUserARMResource items on this page
-        /// Serialized Name: StaticSiteUserCollection.value
-        /// </summary>
+        /// <summary> Collection of resources. </summary>
         public IReadOnlyList<StaticSiteUser> Value { get; }
-        /// <summary>
-        /// The link to the next page of items
-        /// Serialized Name: StaticSiteUserCollection.nextLink
-        /// </summary>
-        public Uri NextLink { get; }
+        /// <summary> Link to next page of resources. </summary>
+        public string NextLink { get; }
     }
 }

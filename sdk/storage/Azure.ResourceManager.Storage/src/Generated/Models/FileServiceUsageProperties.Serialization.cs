@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Storage;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> File service usage in storage account including account limits, file share limits and constants used in recommendations and bursting formula. </summary>
-    public partial class FileServiceUsageProperties : IJsonModel<FileServiceUsageProperties>
+    public partial class FileServiceUsageProperties : IUtf8JsonSerializable, IJsonModel<FileServiceUsageProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FileServiceUsageProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FileServiceUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFileServiceUsageProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FileServiceUsageProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileServiceUsageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FileServiceUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FileServiceUsageProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FileServiceUsageProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FileServiceUsageProperties IPersistableModel<FileServiceUsageProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FileServiceUsageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FileServiceUsageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileServiceUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FileServiceUsageProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(StorageAccountLimits))
             {
                 writer.WritePropertyName("storageAccountLimits"u8);
@@ -99,15 +60,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("storageAccountUsage"u8);
                 writer.WriteObjectValue(StorageAccountUsage, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,27 +77,22 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FileServiceUsageProperties IJsonModel<FileServiceUsageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FileServiceUsageProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FileServiceUsageProperties IJsonModel<FileServiceUsageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FileServiceUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FileServiceUsageProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFileServiceUsageProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FileServiceUsageProperties DeserializeFileServiceUsageProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static FileServiceUsageProperties DeserializeFileServiceUsageProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,66 +102,191 @@ namespace Azure.ResourceManager.Storage.Models
             FileShareRecommendations fileShareRecommendations = default;
             BurstingConstants burstingConstants = default;
             FileServiceAccountUsage storageAccountUsage = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("storageAccountLimits"u8))
+                if (property.NameEquals("storageAccountLimits"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountLimits = FileServiceAccountLimits.DeserializeFileServiceAccountLimits(prop.Value, options);
+                    storageAccountLimits = FileServiceAccountLimits.DeserializeFileServiceAccountLimits(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("fileShareLimits"u8))
+                if (property.NameEquals("fileShareLimits"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fileShareLimits = FileShareLimits.DeserializeFileShareLimits(prop.Value, options);
+                    fileShareLimits = FileShareLimits.DeserializeFileShareLimits(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("fileShareRecommendations"u8))
+                if (property.NameEquals("fileShareRecommendations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fileShareRecommendations = FileShareRecommendations.DeserializeFileShareRecommendations(prop.Value, options);
+                    fileShareRecommendations = FileShareRecommendations.DeserializeFileShareRecommendations(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("burstingConstants"u8))
+                if (property.NameEquals("burstingConstants"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    burstingConstants = BurstingConstants.DeserializeBurstingConstants(prop.Value, options);
+                    burstingConstants = BurstingConstants.DeserializeBurstingConstants(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("storageAccountUsage"u8))
+                if (property.NameEquals("storageAccountUsage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountUsage = FileServiceAccountUsage.DeserializeFileServiceAccountUsage(prop.Value, options);
+                    storageAccountUsage = FileServiceAccountUsage.DeserializeFileServiceAccountUsage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new FileServiceUsageProperties(
                 storageAccountLimits,
                 fileShareLimits,
                 fileShareRecommendations,
                 burstingConstants,
                 storageAccountUsage,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountLimits), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageAccountLimits: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccountLimits))
+                {
+                    builder.Append("  storageAccountLimits: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StorageAccountLimits, options, 2, false, "  storageAccountLimits: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileShareLimits), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileShareLimits: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileShareLimits))
+                {
+                    builder.Append("  fileShareLimits: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FileShareLimits, options, 2, false, "  fileShareLimits: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileShareRecommendations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileShareRecommendations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileShareRecommendations))
+                {
+                    builder.Append("  fileShareRecommendations: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FileShareRecommendations, options, 2, false, "  fileShareRecommendations: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BurstingConstants), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  burstingConstants: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BurstingConstants))
+                {
+                    builder.Append("  burstingConstants: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BurstingConstants, options, 2, false, "  burstingConstants: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountUsage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storageAccountUsage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccountUsage))
+                {
+                    builder.Append("  storageAccountUsage: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StorageAccountUsage, options, 2, false, "  storageAccountUsage: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<FileServiceUsageProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(FileServiceUsageProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FileServiceUsageProperties IPersistableModel<FileServiceUsageProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeFileServiceUsageProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FileServiceUsageProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FileServiceUsageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

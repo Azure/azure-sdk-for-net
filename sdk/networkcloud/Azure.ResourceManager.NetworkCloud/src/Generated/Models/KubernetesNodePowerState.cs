@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct KubernetesNodePowerState : IEquatable<KubernetesNodePowerState>
     {
         private readonly string _value;
-        /// <summary> The node is powered on. </summary>
-        private const string OnValue = "On";
-        /// <summary> The node is powered off. </summary>
-        private const string OffValue = "Off";
-        /// <summary> The node is in an unknown power state. </summary>
-        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="KubernetesNodePowerState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KubernetesNodePowerState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The node is powered on. </summary>
+        private const string OnValue = "On";
+        private const string OffValue = "Off";
+        private const string UnknownValue = "Unknown";
+
+        /// <summary> On. </summary>
         public static KubernetesNodePowerState On { get; } = new KubernetesNodePowerState(OnValue);
-
-        /// <summary> The node is powered off. </summary>
+        /// <summary> Off. </summary>
         public static KubernetesNodePowerState Off { get; } = new KubernetesNodePowerState(OffValue);
-
-        /// <summary> The node is in an unknown power state. </summary>
+        /// <summary> Unknown. </summary>
         public static KubernetesNodePowerState Unknown { get; } = new KubernetesNodePowerState(UnknownValue);
-
         /// <summary> Determines if two <see cref="KubernetesNodePowerState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KubernetesNodePowerState left, KubernetesNodePowerState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="KubernetesNodePowerState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KubernetesNodePowerState left, KubernetesNodePowerState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="KubernetesNodePowerState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesNodePowerState"/>. </summary>
         public static implicit operator KubernetesNodePowerState(string value) => new KubernetesNodePowerState(value);
 
-        /// <summary> Converts a string to a <see cref="KubernetesNodePowerState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesNodePowerState?(string value) => value == null ? null : new KubernetesNodePowerState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KubernetesNodePowerState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(KubernetesNodePowerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

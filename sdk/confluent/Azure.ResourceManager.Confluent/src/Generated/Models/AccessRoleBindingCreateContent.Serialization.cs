@@ -10,65 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    /// <summary> Create role binding request model. </summary>
-    public partial class AccessRoleBindingCreateContent : IJsonModel<AccessRoleBindingCreateContent>
+    public partial class AccessRoleBindingCreateContent : IUtf8JsonSerializable, IJsonModel<AccessRoleBindingCreateContent>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessRoleBindingCreateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRoleBindingCreateContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAccessRoleBindingCreateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AccessRoleBindingCreateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessRoleBindingCreateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRoleBindingCreateContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AccessRoleBindingCreateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AccessRoleBindingCreateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AccessRoleBindingCreateContent IPersistableModel<AccessRoleBindingCreateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AccessRoleBindingCreateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="accessRoleBindingCreateContent"> The <see cref="AccessRoleBindingCreateContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AccessRoleBindingCreateContent accessRoleBindingCreateContent)
-        {
-            if (accessRoleBindingCreateContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(accessRoleBindingCreateContent, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AccessRoleBindingCreateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -80,11 +28,12 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRoleBindingCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessRoleBindingCreateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AccessRoleBindingCreateContent)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Principal))
             {
                 writer.WritePropertyName("principal"u8);
@@ -100,15 +49,15 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("crn_pattern"u8);
                 writer.WriteStringValue(CrnPattern);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,27 +66,22 @@ namespace Azure.ResourceManager.Confluent.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AccessRoleBindingCreateContent IJsonModel<AccessRoleBindingCreateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessRoleBindingCreateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AccessRoleBindingCreateContent IJsonModel<AccessRoleBindingCreateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRoleBindingCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AccessRoleBindingCreateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AccessRoleBindingCreateContent)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAccessRoleBindingCreateContent(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AccessRoleBindingCreateContent DeserializeAccessRoleBindingCreateContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static AccessRoleBindingCreateContent DeserializeAccessRoleBindingCreateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -145,30 +89,63 @@ namespace Azure.ResourceManager.Confluent.Models
             string principal = default;
             string roleName = default;
             string crnPattern = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("principal"u8))
+                if (property.NameEquals("principal"u8))
                 {
-                    principal = prop.Value.GetString();
+                    principal = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("role_name"u8))
+                if (property.NameEquals("role_name"u8))
                 {
-                    roleName = prop.Value.GetString();
+                    roleName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("crn_pattern"u8))
+                if (property.NameEquals("crn_pattern"u8))
                 {
-                    crnPattern = prop.Value.GetString();
+                    crnPattern = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new AccessRoleBindingCreateContent(principal, roleName, crnPattern, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AccessRoleBindingCreateContent(principal, roleName, crnPattern, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AccessRoleBindingCreateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessRoleBindingCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AccessRoleBindingCreateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AccessRoleBindingCreateContent IPersistableModel<AccessRoleBindingCreateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessRoleBindingCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAccessRoleBindingCreateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AccessRoleBindingCreateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AccessRoleBindingCreateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

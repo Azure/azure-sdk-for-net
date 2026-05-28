@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -15,67 +14,47 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ScheduledActionWeeksOfMonth : IEquatable<ScheduledActionWeeksOfMonth>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionWeeksOfMonth"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ScheduledActionWeeksOfMonth(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string FirstValue = "First";
         private const string SecondValue = "Second";
         private const string ThirdValue = "Third";
         private const string FourthValue = "Fourth";
         private const string LastValue = "Last";
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionWeeksOfMonth"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ScheduledActionWeeksOfMonth(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the First. </summary>
+        /// <summary> First. </summary>
         public static ScheduledActionWeeksOfMonth First { get; } = new ScheduledActionWeeksOfMonth(FirstValue);
-
-        /// <summary> Gets the Second. </summary>
+        /// <summary> Second. </summary>
         public static ScheduledActionWeeksOfMonth Second { get; } = new ScheduledActionWeeksOfMonth(SecondValue);
-
-        /// <summary> Gets the Third. </summary>
+        /// <summary> Third. </summary>
         public static ScheduledActionWeeksOfMonth Third { get; } = new ScheduledActionWeeksOfMonth(ThirdValue);
-
-        /// <summary> Gets the Fourth. </summary>
+        /// <summary> Fourth. </summary>
         public static ScheduledActionWeeksOfMonth Fourth { get; } = new ScheduledActionWeeksOfMonth(FourthValue);
-
-        /// <summary> Gets the Last. </summary>
+        /// <summary> Last. </summary>
         public static ScheduledActionWeeksOfMonth Last { get; } = new ScheduledActionWeeksOfMonth(LastValue);
-
         /// <summary> Determines if two <see cref="ScheduledActionWeeksOfMonth"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionWeeksOfMonth left, ScheduledActionWeeksOfMonth right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ScheduledActionWeeksOfMonth"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionWeeksOfMonth left, ScheduledActionWeeksOfMonth right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ScheduledActionWeeksOfMonth"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionWeeksOfMonth"/>. </summary>
         public static implicit operator ScheduledActionWeeksOfMonth(string value) => new ScheduledActionWeeksOfMonth(value);
 
-        /// <summary> Converts a string to a <see cref="ScheduledActionWeeksOfMonth"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionWeeksOfMonth?(string value) => value == null ? null : new ScheduledActionWeeksOfMonth(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionWeeksOfMonth other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ScheduledActionWeeksOfMonth other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

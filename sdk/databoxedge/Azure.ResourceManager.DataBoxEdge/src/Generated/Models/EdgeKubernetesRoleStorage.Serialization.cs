@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.DataBoxEdge;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    /// <summary> Kubernetes role storage resource. </summary>
-    public partial class EdgeKubernetesRoleStorage : IJsonModel<EdgeKubernetesRoleStorage>
+    public partial class EdgeKubernetesRoleStorage : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesRoleStorage>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeKubernetesRoleStorage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorage>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeEdgeKubernetesRoleStorage(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleStorage)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRoleStorage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorage>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleStorage)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EdgeKubernetesRoleStorage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeKubernetesRoleStorage IPersistableModel<EdgeKubernetesRoleStorage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EdgeKubernetesRoleStorage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeKubernetesRoleStorage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,16 +28,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeKubernetesRoleStorage)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsCollectionDefined(StorageClasses))
             {
                 writer.WritePropertyName("storageClasses"u8);
                 writer.WriteStartArray();
-                foreach (EdgeKubernetesRoleStorageClassInfo item in StorageClasses)
+                foreach (var item in StorageClasses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,21 +48,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (DataBoxEdgeMountPointMap item in Endpoints)
+                foreach (var item in Endpoints)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,58 +71,54 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        EdgeKubernetesRoleStorage IJsonModel<EdgeKubernetesRoleStorage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EdgeKubernetesRoleStorage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EdgeKubernetesRoleStorage IJsonModel<EdgeKubernetesRoleStorage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeKubernetesRoleStorage)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEdgeKubernetesRoleStorage(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EdgeKubernetesRoleStorage DeserializeEdgeKubernetesRoleStorage(JsonElement element, ModelReaderWriterOptions options)
+        internal static EdgeKubernetesRoleStorage DeserializeEdgeKubernetesRoleStorage(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<EdgeKubernetesRoleStorageClassInfo> storageClasses = default;
             IList<DataBoxEdgeMountPointMap> endpoints = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("storageClasses"u8))
+                if (property.NameEquals("storageClasses"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<EdgeKubernetesRoleStorageClassInfo> array = new List<EdgeKubernetesRoleStorageClassInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(EdgeKubernetesRoleStorageClassInfo.DeserializeEdgeKubernetesRoleStorageClassInfo(item, options));
                     }
                     storageClasses = array;
                     continue;
                 }
-                if (prop.NameEquals("endpoints"u8))
+                if (property.NameEquals("endpoints"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item, options));
                     }
@@ -171,10 +127,42 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new EdgeKubernetesRoleStorage(storageClasses ?? new ChangeTrackingList<EdgeKubernetesRoleStorageClassInfo>(), endpoints ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeKubernetesRoleStorage(storageClasses ?? new ChangeTrackingList<EdgeKubernetesRoleStorageClassInfo>(), endpoints ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeKubernetesRoleStorage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleStorage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeKubernetesRoleStorage IPersistableModel<EdgeKubernetesRoleStorage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeEdgeKubernetesRoleStorage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleStorage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeKubernetesRoleStorage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

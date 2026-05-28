@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,59 +14,41 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct EdgeClusterWitnessType : IEquatable<EdgeClusterWitnessType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterWitnessType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EdgeClusterWitnessType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NoneValue = "None";
         private const string CloudValue = "Cloud";
         private const string FileShareValue = "FileShare";
 
-        /// <summary> Initializes a new instance of <see cref="EdgeClusterWitnessType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EdgeClusterWitnessType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the None. </summary>
+        /// <summary> None. </summary>
         public static EdgeClusterWitnessType None { get; } = new EdgeClusterWitnessType(NoneValue);
-
-        /// <summary> Gets the Cloud. </summary>
+        /// <summary> Cloud. </summary>
         public static EdgeClusterWitnessType Cloud { get; } = new EdgeClusterWitnessType(CloudValue);
-
-        /// <summary> Gets the FileShare. </summary>
+        /// <summary> FileShare. </summary>
         public static EdgeClusterWitnessType FileShare { get; } = new EdgeClusterWitnessType(FileShareValue);
-
         /// <summary> Determines if two <see cref="EdgeClusterWitnessType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeClusterWitnessType left, EdgeClusterWitnessType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="EdgeClusterWitnessType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeClusterWitnessType left, EdgeClusterWitnessType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="EdgeClusterWitnessType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeClusterWitnessType"/>. </summary>
         public static implicit operator EdgeClusterWitnessType(string value) => new EdgeClusterWitnessType(value);
 
-        /// <summary> Converts a string to a <see cref="EdgeClusterWitnessType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator EdgeClusterWitnessType?(string value) => value == null ? null : new EdgeClusterWitnessType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeClusterWitnessType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(EdgeClusterWitnessType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

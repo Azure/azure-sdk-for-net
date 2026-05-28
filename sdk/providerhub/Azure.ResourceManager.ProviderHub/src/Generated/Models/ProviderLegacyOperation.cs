@@ -7,14 +7,21 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary></summary>
+    /// <summary> The ProviderLegacyOperation. </summary>
     public readonly partial struct ProviderLegacyOperation : IEquatable<ProviderLegacyOperation>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderLegacyOperation"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProviderLegacyOperation(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string NotSpecifiedValue = "NotSpecified";
         private const string CreateValue = "Create";
         private const string DeleteValue = "Delete";
@@ -26,76 +33,43 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string EvaluateDeploymentOutputValue = "EvaluateDeploymentOutput";
         private const string DeploymentCleanupValue = "DeploymentCleanup";
 
-        /// <summary> Initializes a new instance of <see cref="ProviderLegacyOperation"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProviderLegacyOperation(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the NotSpecified. </summary>
+        /// <summary> NotSpecified. </summary>
         public static ProviderLegacyOperation NotSpecified { get; } = new ProviderLegacyOperation(NotSpecifiedValue);
-
-        /// <summary> Gets the Create. </summary>
+        /// <summary> Create. </summary>
         public static ProviderLegacyOperation Create { get; } = new ProviderLegacyOperation(CreateValue);
-
-        /// <summary> Gets the Delete. </summary>
+        /// <summary> Delete. </summary>
         public static ProviderLegacyOperation Delete { get; } = new ProviderLegacyOperation(DeleteValue);
-
-        /// <summary> Gets the Waiting. </summary>
+        /// <summary> Waiting. </summary>
         public static ProviderLegacyOperation Waiting { get; } = new ProviderLegacyOperation(WaitingValue);
-
-        /// <summary> Gets the AzureAsyncOperationWaiting. </summary>
+        /// <summary> AzureAsyncOperationWaiting. </summary>
         public static ProviderLegacyOperation AzureAsyncOperationWaiting { get; } = new ProviderLegacyOperation(AzureAsyncOperationWaitingValue);
-
-        /// <summary> Gets the ResourceCacheWaiting. </summary>
+        /// <summary> ResourceCacheWaiting. </summary>
         public static ProviderLegacyOperation ResourceCacheWaiting { get; } = new ProviderLegacyOperation(ResourceCacheWaitingValue);
-
-        /// <summary> Gets the Action. </summary>
+        /// <summary> Action. </summary>
         public static ProviderLegacyOperation Action { get; } = new ProviderLegacyOperation(ActionValue);
-
-        /// <summary> Gets the Read. </summary>
+        /// <summary> Read. </summary>
         public static ProviderLegacyOperation Read { get; } = new ProviderLegacyOperation(ReadValue);
-
-        /// <summary> Gets the EvaluateDeploymentOutput. </summary>
+        /// <summary> EvaluateDeploymentOutput. </summary>
         public static ProviderLegacyOperation EvaluateDeploymentOutput { get; } = new ProviderLegacyOperation(EvaluateDeploymentOutputValue);
-
-        /// <summary> Gets the DeploymentCleanup. </summary>
+        /// <summary> DeploymentCleanup. </summary>
         public static ProviderLegacyOperation DeploymentCleanup { get; } = new ProviderLegacyOperation(DeploymentCleanupValue);
-
         /// <summary> Determines if two <see cref="ProviderLegacyOperation"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderLegacyOperation left, ProviderLegacyOperation right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ProviderLegacyOperation"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderLegacyOperation left, ProviderLegacyOperation right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ProviderLegacyOperation"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderLegacyOperation"/>. </summary>
         public static implicit operator ProviderLegacyOperation(string value) => new ProviderLegacyOperation(value);
 
-        /// <summary> Converts a string to a <see cref="ProviderLegacyOperation"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ProviderLegacyOperation?(string value) => value == null ? null : new ProviderLegacyOperation(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderLegacyOperation other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ProviderLegacyOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

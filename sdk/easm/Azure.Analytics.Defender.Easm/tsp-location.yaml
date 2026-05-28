@@ -1,5 +1,4 @@
 directory: specification/riskiq/Easm
-commit: 0324779641f1fa2485122fc64a7987b2bfce2606
+commit: fe2bf8b0c86b6850113098d04dd1c149a5795699
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
 

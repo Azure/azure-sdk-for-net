@@ -12,8 +12,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
     /// <typeparam name="TClient">The type of client being tested.</typeparam>
     [ClientTestFixture(
         ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2023_04_01,
-        ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview,
-        ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview
+        ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview,
+        ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_05_15_Preview
     )]
     [IgnoreServiceError(429, "429")]
     public abstract class ConversationAuthoringTestBase : RecordedTestBase<AuthoringClientTestEnvironment>
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         /// <summary>
         /// Gets an instrumented client of type <typeparamref name="TClient"/>.
         /// </summary>
-        protected ConversationAnalysisAuthoring client { get; private set; }
+        protected ConversationAnalysisAuthoringClient client { get; private set; }
 
         /// <summary>
         /// Gets the service version used for this instance of the test fixture.
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             await base.StartTestRecordingAsync();
 
             ConversationAnalysisAuthoringClientOptions options = new(ServiceVersion);
-            client = CreateClient<ConversationAnalysisAuthoring>(
+            client = CreateClient<ConversationAnalysisAuthoringClient>(
                 TestEnvironment.Endpoint,
                 new AzureKeyCredential(TestEnvironment.ApiKey),
                 InstrumentClientOptions(options));

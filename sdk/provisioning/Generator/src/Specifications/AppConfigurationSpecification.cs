@@ -8,7 +8,7 @@ using Azure.ResourceManager.AppConfiguration.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class AppConfigurationSpecification() :
-    Specification("AppConfiguration", typeof(AppConfigurationExtensions), serviceDirectory: "appconfiguration")
+    Specification("AppConfiguration", typeof(AppConfigurationExtensions))
 {
     protected override void Customize()
     {

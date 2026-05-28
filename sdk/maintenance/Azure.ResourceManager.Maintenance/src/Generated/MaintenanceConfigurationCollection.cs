@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maintenance
@@ -26,85 +25,80 @@ namespace Azure.ResourceManager.Maintenance
     /// </summary>
     public partial class MaintenanceConfigurationCollection : ArmCollection, IEnumerable<MaintenanceConfigurationResource>, IAsyncEnumerable<MaintenanceConfigurationResource>
     {
-        private readonly ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
-        private readonly MaintenanceConfigurations _maintenanceConfigurationsRestClient;
-        private readonly ClientDiagnostics _maintenanceConfigurationsForResourceGroupClientDiagnostics;
-        private readonly MaintenanceConfigurationsForResourceGroup _maintenanceConfigurationsForResourceGroupRestClient;
+        private readonly ClientDiagnostics _maintenanceConfigurationClientDiagnostics;
+        private readonly MaintenanceConfigurationsRestOperations _maintenanceConfigurationRestClient;
+        private readonly ClientDiagnostics _maintenanceConfigurationMaintenanceConfigurationsForResourceGroupClientDiagnostics;
+        private readonly MaintenanceConfigurationsForResourceGroupRestOperations _maintenanceConfigurationMaintenanceConfigurationsForResourceGroupRestClient;
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MaintenanceConfigurationCollection"/> class for mocking. </summary>
         protected MaintenanceConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MaintenanceConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MaintenanceConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _maintenanceConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(MaintenanceConfigurationResource.ResourceType, out string maintenanceConfigurationApiVersion);
-            _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationApiVersion ?? "2023-10-01-preview");
-            _maintenanceConfigurationsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationsForResourceGroupRestClient = new MaintenanceConfigurationsForResourceGroup(_maintenanceConfigurationsForResourceGroupClientDiagnostics, Pipeline, Endpoint, maintenanceConfigurationApiVersion ?? "2023-10-01-preview");
-            ValidateResourceId(id);
+            _maintenanceConfigurationRestClient = new MaintenanceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceConfigurationApiVersion);
+            _maintenanceConfigurationMaintenanceConfigurationsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MaintenanceConfigurationResource.ResourceType, out string maintenanceConfigurationMaintenanceConfigurationsForResourceGroupApiVersion);
+            _maintenanceConfigurationMaintenanceConfigurationsForResourceGroupRestClient = new MaintenanceConfigurationsForResourceGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceConfigurationMaintenanceConfigurationsForResourceGroupApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or Update configuration record
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="data"> The configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MaintenanceConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.CreateOrUpdate");
+            using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, MaintenanceConfigurationData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceConfigurationResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _maintenanceConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _maintenanceConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -118,48 +112,44 @@ namespace Azure.ResourceManager.Maintenance
         /// Create or Update configuration record
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="data"> The configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MaintenanceConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.CreateOrUpdate");
+            using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, MaintenanceConfigurationData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceConfigurationResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _maintenanceConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
+                var uri = _maintenanceConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -173,42 +163,38 @@ namespace Azure.ResourceManager.Maintenance
         /// Get Configuration record
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<MaintenanceConfigurationResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Get");
+            using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
+                var response = await _maintenanceConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -222,42 +208,38 @@ namespace Azure.ResourceManager.Maintenance
         /// Get Configuration record
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<MaintenanceConfigurationResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Get");
+            using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
+                var response = _maintenanceConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,44 +253,49 @@ namespace Azure.ResourceManager.Maintenance
         /// Get Configuration records within a subscription and resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurationsForResourceGroup_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenanceConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsForResourceGroupGetAllAsyncCollectionResultOfT(_maintenanceConfigurationsForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceConfigurationCollection.GetAll"), data => new MaintenanceConfigurationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenanceConfigurationMaintenanceConfigurationsForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenanceConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenanceConfigurationMaintenanceConfigurationsForResourceGroupClientDiagnostics, Pipeline, "MaintenanceConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get Configuration records within a subscription and resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_List. </description>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurationsForResourceGroup_List</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,61 +303,44 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenanceConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsForResourceGroupGetAllCollectionResultOfT(_maintenanceConfigurationsForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceConfigurationCollection.GetAll"), data => new MaintenanceConfigurationResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenanceConfigurationMaintenanceConfigurationsForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenanceConfigurationMaintenanceConfigurationsForResourceGroupClientDiagnostics, Pipeline, "MaintenanceConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Exists");
+            using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MaintenanceConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MaintenanceConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _maintenanceConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -384,50 +354,36 @@ namespace Azure.ResourceManager.Maintenance
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Exists");
+            using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MaintenanceConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MaintenanceConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _maintenanceConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -441,54 +397,38 @@ namespace Azure.ResourceManager.Maintenance
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<MaintenanceConfigurationResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.GetIfExists");
+            using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MaintenanceConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MaintenanceConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _maintenanceConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MaintenanceConfigurationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -502,54 +442,38 @@ namespace Azure.ResourceManager.Maintenance
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenanceConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the MaintenanceConfiguration. </param>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual NullableResponse<MaintenanceConfigurationResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.GetIfExists");
+            using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MaintenanceConfigurationData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MaintenanceConfigurationData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _maintenanceConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MaintenanceConfigurationResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -569,7 +493,6 @@ namespace Azure.ResourceManager.Maintenance
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MaintenanceConfigurationResource> IAsyncEnumerable<MaintenanceConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

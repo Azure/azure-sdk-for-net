@@ -12,7 +12,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The configuration for a storage destination. </summary>
-    internal partial class StorageDestinationConfiguration
+    public partial class StorageDestinationConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

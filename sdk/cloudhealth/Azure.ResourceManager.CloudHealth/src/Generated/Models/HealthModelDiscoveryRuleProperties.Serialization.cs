@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.CloudHealth;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
-    /// <summary> Discovery rule properties. </summary>
-    public partial class HealthModelDiscoveryRuleProperties : IJsonModel<HealthModelDiscoveryRuleProperties>
+    public partial class HealthModelDiscoveryRuleProperties : IUtf8JsonSerializable, IJsonModel<HealthModelDiscoveryRuleProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="HealthModelDiscoveryRuleProperties"/> for deserialization. </summary>
-        internal HealthModelDiscoveryRuleProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthModelDiscoveryRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HealthModelDiscoveryRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthModelDiscoveryRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHealthModelDiscoveryRuleProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HealthModelDiscoveryRuleProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthModelDiscoveryRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HealthModelDiscoveryRuleProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HealthModelDiscoveryRuleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HealthModelDiscoveryRuleProperties IPersistableModel<HealthModelDiscoveryRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HealthModelDiscoveryRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthModelDiscoveryRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthModelDiscoveryRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthModelDiscoveryRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HealthModelDiscoveryRuleProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -117,15 +72,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("entityName"u8);
                 writer.WriteStringValue(EntityName);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -134,27 +89,22 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HealthModelDiscoveryRuleProperties IJsonModel<HealthModelDiscoveryRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HealthModelDiscoveryRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HealthModelDiscoveryRuleProperties IJsonModel<HealthModelDiscoveryRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthModelDiscoveryRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HealthModelDiscoveryRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HealthModelDiscoveryRuleProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHealthModelDiscoveryRuleProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HealthModelDiscoveryRuleProperties DeserializeHealthModelDiscoveryRuleProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HealthModelDiscoveryRuleProperties DeserializeHealthModelDiscoveryRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -165,80 +115,82 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string authenticationSetting = default;
             DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default;
             DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default;
-            DateTimeOffset? deletedOn = default;
+            DateTimeOffset? deletionDate = default;
             string errorMessage = default;
             int? numberOfDiscoveredEntities = default;
             string entityName = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new HealthModelProvisioningState(prop.Value.GetString());
+                    provisioningState = new HealthModelProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("displayName"u8))
+                if (property.NameEquals("displayName"u8))
                 {
-                    displayName = prop.Value.GetString();
+                    displayName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceGraphQuery"u8))
+                if (property.NameEquals("resourceGraphQuery"u8))
                 {
-                    resourceGraphQuery = prop.Value.GetString();
+                    resourceGraphQuery = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("authenticationSetting"u8))
+                if (property.NameEquals("authenticationSetting"u8))
                 {
-                    authenticationSetting = prop.Value.GetString();
+                    authenticationSetting = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("discoverRelationships"u8))
+                if (property.NameEquals("discoverRelationships"u8))
                 {
-                    discoverRelationships = new DiscoveryRuleRelationshipDiscoveryBehavior(prop.Value.GetString());
+                    discoverRelationships = new DiscoveryRuleRelationshipDiscoveryBehavior(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("addRecommendedSignals"u8))
+                if (property.NameEquals("addRecommendedSignals"u8))
                 {
-                    addRecommendedSignals = new DiscoveryRuleRecommendedSignalsBehavior(prop.Value.GetString());
+                    addRecommendedSignals = new DiscoveryRuleRecommendedSignalsBehavior(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("deletionDate"u8))
+                if (property.NameEquals("deletionDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
+                    deletionDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("errorMessage"u8))
+                if (property.NameEquals("errorMessage"u8))
                 {
-                    errorMessage = prop.Value.GetString();
+                    errorMessage = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("numberOfDiscoveredEntities"u8))
+                if (property.NameEquals("numberOfDiscoveredEntities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    numberOfDiscoveredEntities = prop.Value.GetInt32();
+                    numberOfDiscoveredEntities = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("entityName"u8))
+                if (property.NameEquals("entityName"u8))
                 {
-                    entityName = prop.Value.GetString();
+                    entityName = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new HealthModelDiscoveryRuleProperties(
                 provisioningState,
                 displayName,
@@ -246,11 +198,42 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 authenticationSetting,
                 discoverRelationships,
                 addRecommendedSignals,
-                deletedOn,
+                deletionDate,
                 errorMessage,
                 numberOfDiscoveredEntities,
                 entityName,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HealthModelDiscoveryRuleProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthModelDiscoveryRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCloudHealthContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HealthModelDiscoveryRuleProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HealthModelDiscoveryRuleProperties IPersistableModel<HealthModelDiscoveryRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HealthModelDiscoveryRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHealthModelDiscoveryRuleProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HealthModelDiscoveryRuleProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HealthModelDiscoveryRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

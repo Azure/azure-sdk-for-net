@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Purview;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> The account properties. </summary>
-    public partial class PurviewAccountProperties : IJsonModel<PurviewAccountProperties>
+    public partial class PurviewAccountProperties : IUtf8JsonSerializable, IJsonModel<PurviewAccountProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PurviewAccountProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePurviewAccountProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PurviewAccountProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewAccountProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PurviewAccountProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PurviewAccountProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PurviewAccountProperties IPersistableModel<PurviewAccountProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PurviewAccountProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PurviewAccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PurviewAccountProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(AccountStatus))
             {
                 writer.WritePropertyName("accountStatus"u8);
@@ -98,11 +58,6 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 writer.WritePropertyName("createdByObjectId"u8);
                 writer.WriteStringValue(CreatedByObjectId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
-            {
-                writer.WritePropertyName("defaultDomain"u8);
-                writer.WriteStringValue(DefaultDomain);
             }
             if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
@@ -139,16 +94,11 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("managedResourcesPublicNetworkAccess"u8);
                 writer.WriteStringValue(ManagedResourcesPublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(MergeInfo))
-            {
-                writer.WritePropertyName("mergeInfo"u8);
-                writer.WriteObjectValue(MergeInfo, options);
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (PurviewPrivateEndpointConnectionData item in PrivateEndpointConnections)
+                foreach (var item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -164,20 +114,15 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(TenantEndpointState))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("tenantEndpointState"u8);
-                writer.WriteStringValue(TenantEndpointState.Value.ToString());
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -186,37 +131,31 @@ namespace Azure.ResourceManager.Purview.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PurviewAccountProperties IJsonModel<PurviewAccountProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PurviewAccountProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PurviewAccountProperties IJsonModel<PurviewAccountProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PurviewAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PurviewAccountProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePurviewAccountProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PurviewAccountProperties DeserializePurviewAccountProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static PurviewAccountProperties DeserializePurviewAccountProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             PurviewAccountStatus accountStatus = default;
             CloudConnectors cloudConnectors = default;
-            DateTimeOffset? createdOn = default;
+            DateTimeOffset? createdAt = default;
             string createdBy = default;
             string createdByObjectId = default;
-            string defaultDomain = default;
             PurviewAccountEndpoint endpoints = default;
             string friendlyName = default;
             PurviewIngestionStorage ingestionStorage = default;
@@ -224,173 +163,149 @@ namespace Azure.ResourceManager.Purview.Models
             string managedResourceGroupName = default;
             PurviewManagedResource managedResources = default;
             ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess = default;
-            PurviewAccountMergeInfo mergeInfo = default;
             IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections = default;
             PurviewProvisioningState? provisioningState = default;
             PurviewPublicNetworkAccess? publicNetworkAccess = default;
-            PurviewTenantEndpointState? tenantEndpointState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("accountStatus"u8))
+                if (property.NameEquals("accountStatus"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accountStatus = PurviewAccountStatus.DeserializePurviewAccountStatus(prop.Value, options);
+                    accountStatus = PurviewAccountStatus.DeserializePurviewAccountStatus(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("cloudConnectors"u8))
+                if (property.NameEquals("cloudConnectors"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloudConnectors = CloudConnectors.DeserializeCloudConnectors(prop.Value, options);
+                    cloudConnectors = CloudConnectors.DeserializeCloudConnectors(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("createdAt"u8))
+                if (property.NameEquals("createdAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("createdBy"u8))
+                if (property.NameEquals("createdBy"u8))
                 {
-                    createdBy = prop.Value.GetString();
+                    createdBy = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("createdByObjectId"u8))
+                if (property.NameEquals("createdByObjectId"u8))
                 {
-                    createdByObjectId = prop.Value.GetString();
+                    createdByObjectId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("defaultDomain"u8))
+                if (property.NameEquals("endpoints"u8))
                 {
-                    defaultDomain = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("endpoints"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endpoints = PurviewAccountEndpoint.DeserializePurviewAccountEndpoint(prop.Value, options);
+                    endpoints = PurviewAccountEndpoint.DeserializePurviewAccountEndpoint(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("friendlyName"u8))
+                if (property.NameEquals("friendlyName"u8))
                 {
-                    friendlyName = prop.Value.GetString();
+                    friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("ingestionStorage"u8))
+                if (property.NameEquals("ingestionStorage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ingestionStorage = PurviewIngestionStorage.DeserializePurviewIngestionStorage(prop.Value, options);
+                    ingestionStorage = PurviewIngestionStorage.DeserializePurviewIngestionStorage(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("managedEventHubState"u8))
+                if (property.NameEquals("managedEventHubState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    managedEventHubState = new PurviewManagedEventHubState(prop.Value.GetString());
+                    managedEventHubState = new PurviewManagedEventHubState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("managedResourceGroupName"u8))
+                if (property.NameEquals("managedResourceGroupName"u8))
                 {
-                    managedResourceGroupName = prop.Value.GetString();
+                    managedResourceGroupName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("managedResources"u8))
+                if (property.NameEquals("managedResources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    managedResources = PurviewManagedResource.DeserializePurviewManagedResource(prop.Value, options);
+                    managedResources = PurviewManagedResource.DeserializePurviewManagedResource(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("managedResourcesPublicNetworkAccess"u8))
+                if (property.NameEquals("managedResourcesPublicNetworkAccess"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    managedResourcesPublicNetworkAccess = new ManagedResourcesPublicNetworkAccess(prop.Value.GetString());
+                    managedResourcesPublicNetworkAccess = new ManagedResourcesPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("mergeInfo"u8))
+                if (property.NameEquals("privateEndpointConnections"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    mergeInfo = PurviewAccountMergeInfo.DeserializePurviewAccountMergeInfo(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("privateEndpointConnections"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PurviewPrivateEndpointConnectionData> array = new List<PurviewPrivateEndpointConnectionData>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new PurviewProvisioningState(prop.Value.GetString());
+                    provisioningState = new PurviewProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("publicNetworkAccess"u8))
+                if (property.NameEquals("publicNetworkAccess"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PurviewPublicNetworkAccess(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("tenantEndpointState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantEndpointState = new PurviewTenantEndpointState(prop.Value.GetString());
+                    publicNetworkAccess = new PurviewPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new PurviewAccountProperties(
                 accountStatus,
                 cloudConnectors,
-                createdOn,
+                createdAt,
                 createdBy,
                 createdByObjectId,
-                defaultDomain,
                 endpoints,
                 friendlyName,
                 ingestionStorage,
@@ -398,12 +313,41 @@ namespace Azure.ResourceManager.Purview.Models
                 managedResourceGroupName,
                 managedResources,
                 managedResourcesPublicNetworkAccess,
-                mergeInfo,
                 privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>(),
                 provisioningState,
                 publicNetworkAccess,
-                tenantEndpointState,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PurviewAccountProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PurviewAccountProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PurviewAccountProperties IPersistableModel<PurviewAccountProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePurviewAccountProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PurviewAccountProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PurviewAccountProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

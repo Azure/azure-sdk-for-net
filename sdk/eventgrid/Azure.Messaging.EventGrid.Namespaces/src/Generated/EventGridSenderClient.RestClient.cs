@@ -15,7 +15,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         internal HttpMessage CreateSendRequest(string topicName, RequestContent content, RequestContext context)
         {
@@ -24,10 +24,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/topics/", false);
             uri.AppendPath(topicName, true);
             uri.AppendPath(":publish", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -45,10 +42,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/topics/", false);
             uri.AppendPath(topicName, true);
             uri.AppendPath(":publish", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

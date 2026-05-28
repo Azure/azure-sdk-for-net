@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.Storage;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Encryption identity for the storage account. </summary>
-    public partial class StorageAccountEncryptionIdentity : IJsonModel<StorageAccountEncryptionIdentity>
+    public partial class StorageAccountEncryptionIdentity : IUtf8JsonSerializable, IJsonModel<StorageAccountEncryptionIdentity>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageAccountEncryptionIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStorageAccountEncryptionIdentity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageAccountEncryptionIdentity)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEncryptionIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StorageAccountEncryptionIdentity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StorageAccountEncryptionIdentity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StorageAccountEncryptionIdentity IPersistableModel<StorageAccountEncryptionIdentity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StorageAccountEncryptionIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageAccountEncryptionIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageAccountEncryptionIdentity)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(EncryptionUserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
@@ -84,15 +45,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("federatedIdentityClientId"u8);
                 writer.WriteStringValue(EncryptionFederatedIdentityClientId);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,52 +62,143 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StorageAccountEncryptionIdentity IJsonModel<StorageAccountEncryptionIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StorageAccountEncryptionIdentity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageAccountEncryptionIdentity IJsonModel<StorageAccountEncryptionIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageAccountEncryptionIdentity)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageAccountEncryptionIdentity(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StorageAccountEncryptionIdentity DeserializeStorageAccountEncryptionIdentity(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageAccountEncryptionIdentity DeserializeStorageAccountEncryptionIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string encryptionUserAssignedIdentity = default;
-            string encryptionFederatedIdentityClientId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string userAssignedIdentity = default;
+            string federatedIdentityClientId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("userAssignedIdentity"u8))
+                if (property.NameEquals("userAssignedIdentity"u8))
                 {
-                    encryptionUserAssignedIdentity = prop.Value.GetString();
+                    userAssignedIdentity = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("federatedIdentityClientId"u8))
+                if (property.NameEquals("federatedIdentityClientId"u8))
                 {
-                    encryptionFederatedIdentityClientId = prop.Value.GetString();
+                    federatedIdentityClientId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new StorageAccountEncryptionIdentity(encryptionUserAssignedIdentity, encryptionFederatedIdentityClientId, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StorageAccountEncryptionIdentity(userAssignedIdentity, federatedIdentityClientId, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionUserAssignedIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userAssignedIdentity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionUserAssignedIdentity))
+                {
+                    builder.Append("  userAssignedIdentity: ");
+                    if (EncryptionUserAssignedIdentity.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EncryptionUserAssignedIdentity}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EncryptionUserAssignedIdentity}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionFederatedIdentityClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  federatedIdentityClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionFederatedIdentityClientId))
+                {
+                    builder.Append("  federatedIdentityClientId: ");
+                    if (EncryptionFederatedIdentityClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EncryptionFederatedIdentityClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EncryptionFederatedIdentityClientId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<StorageAccountEncryptionIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountEncryptionIdentity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageAccountEncryptionIdentity IPersistableModel<StorageAccountEncryptionIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeStorageAccountEncryptionIdentity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountEncryptionIdentity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageAccountEncryptionIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

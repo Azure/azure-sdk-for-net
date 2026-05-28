@@ -25,12 +25,6 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Expiry");
             writer.WriteValue(Expiry);
             writer.WriteEndElement();
-            if (Common.Optional.IsDefined(DelegatedUserTid))
-            {
-                writer.WriteStartElement("DelegatedUserTid");
-                writer.WriteValue(DelegatedUserTid);
-                writer.WriteEndElement();
-            }
             writer.WriteEndElement();
         }
     }

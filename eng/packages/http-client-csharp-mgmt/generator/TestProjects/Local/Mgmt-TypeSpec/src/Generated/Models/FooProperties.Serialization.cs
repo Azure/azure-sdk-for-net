@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -26,46 +24,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         internal FooProperties()
         {
         }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FooProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FooProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeFooProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FooProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<FooProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FooProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FooProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        FooProperties IPersistableModel<FooProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FooProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -91,7 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
             writer.WritePropertyName("something"u8);
-            ((IJsonModel<ManagedServiceIdentity>)Something).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            ((IJsonModel<ManagedServiceIdentity>)Something).Write(writer, options);
             if (Optional.IsDefined(BoolValue))
             {
                 writer.WritePropertyName("boolValue"u8);
@@ -131,31 +89,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             writer.WritePropertyName("nestedProperty"u8);
             writer.WriteObjectValue(NestedProperty, options);
-            if (Optional.IsDefined(OptionalProperty))
-            {
-                writer.WritePropertyName("optionalProperty"u8);
-                writer.WriteObjectValue(OptionalProperty, options);
-            }
-            if (Optional.IsDefined(VmProfile))
-            {
-                writer.WritePropertyName("vmProfile"u8);
-                writer.WriteObjectValue(VmProfile, options);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(WritableSubResourceProp))
-            {
-                writer.WritePropertyName("writableSubResourceProp"u8);
-                ((IJsonModel<WritableSubResource>)WritableSubResourceProp).Write(writer, options);
-            }
-            if (Optional.IsDefined(ComputeFleetVmProfile))
-            {
-                writer.WritePropertyName("computeFleetVmProfile"u8);
-                writer.WriteObjectValue(ComputeFleetVmProfile, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -206,11 +139,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             IList<string> prop1 = default;
             IList<int> prop2 = default;
             NestedFooModel nestedProperty = default;
-            SafeFlattenModel optionalProperty = default;
-            VmProfile vmProfile = default;
-            ETag? eTag = default;
-            WritableSubResource writableSubResourceProp = default;
-            ComputeFleetVmProfile computeFleetVmProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,12 +148,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    serviceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    serviceUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("something"u8))
                 {
-                    something = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    something = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("boolValue"u8))
@@ -291,51 +219,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     nestedProperty = NestedFooModel.DeserializeNestedFooModel(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("optionalProperty"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    optionalProperty = SafeFlattenModel.DeserializeSafeFlattenModel(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("vmProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    vmProfile = VmProfile.DeserializeVmProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("etag"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("writableSubResourceProp"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writableSubResourceProp = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("computeFleetVmProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    computeFleetVmProfile = ComputeFleetVmProfile.DeserializeComputeFleetVmProfile(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -350,13 +233,48 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 prop1,
                 prop2 ?? new ChangeTrackingList<int>(),
                 nestedProperty,
-                optionalProperty,
-                vmProfile,
-                eTag,
-                writableSubResourceProp,
-                computeFleetVmProfile,
                 additionalBinaryDataProperties);
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FooProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FooProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FooProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FooProperties IPersistableModel<FooProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FooProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FooProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializeFooProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FooProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FooProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class FooPropertiesConverter : JsonConverter<FooProperties>
         {

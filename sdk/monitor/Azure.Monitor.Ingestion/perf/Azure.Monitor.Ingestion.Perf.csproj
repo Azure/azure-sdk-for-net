@@ -10,5 +10,8 @@
     <ProjectReference Include="..\tests\Azure.Monitor.Ingestion.Tests.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
 
 </Project>

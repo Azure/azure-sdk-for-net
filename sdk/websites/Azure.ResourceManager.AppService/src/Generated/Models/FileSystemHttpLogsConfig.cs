@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Http logs to file system configuration.
-    /// Serialized Name: FileSystemHttpLogsConfig
-    /// </summary>
+    /// <summary> Http logs to file system configuration. </summary>
     public partial class FileSystemHttpLogsConfig
     {
         /// <summary>
@@ -58,18 +55,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// Maximum size in megabytes that http log files can use.
         /// When reached old log files will be removed to make space for new ones.
         /// Value can range between 25 and 100.
-        /// Serialized Name: FileSystemHttpLogsConfig.retentionInMb
         /// </param>
         /// <param name="retentionInDays">
         /// Retention in days.
         /// Remove files older than X days.
         /// 0 or lower means no retention.
-        /// Serialized Name: FileSystemHttpLogsConfig.retentionInDays
         /// </param>
-        /// <param name="isEnabled">
-        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
-        /// Serialized Name: FileSystemHttpLogsConfig.enabled
-        /// </param>
+        /// <param name="isEnabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FileSystemHttpLogsConfig(int? retentionInMb, int? retentionInDays, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -83,7 +75,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// Maximum size in megabytes that http log files can use.
         /// When reached old log files will be removed to make space for new ones.
         /// Value can range between 25 and 100.
-        /// Serialized Name: FileSystemHttpLogsConfig.retentionInMb
         /// </summary>
         [WirePath("retentionInMb")]
         public int? RetentionInMb { get; set; }
@@ -91,14 +82,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// Retention in days.
         /// Remove files older than X days.
         /// 0 or lower means no retention.
-        /// Serialized Name: FileSystemHttpLogsConfig.retentionInDays
         /// </summary>
         [WirePath("retentionInDays")]
         public int? RetentionInDays { get; set; }
-        /// <summary>
-        /// True if configuration is enabled, false if it is disabled and null if configuration is not set.
-        /// Serialized Name: FileSystemHttpLogsConfig.enabled
-        /// </summary>
+        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
         [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }

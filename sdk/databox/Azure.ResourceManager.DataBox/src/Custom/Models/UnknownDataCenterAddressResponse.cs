@@ -3,9 +3,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownDataCenterAddressResult")]
+    [CodeGenModel("UnknownDataCenterAddressResult")]
     internal partial class UnknownDataCenterAddressResponse : DataCenterAddressResult
     {
     }

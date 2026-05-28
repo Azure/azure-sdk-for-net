@@ -16,46 +16,6 @@ namespace Azure.ResourceManager.Playwright.Models
     /// <summary> Playwright workspace resource properties. </summary>
     public partial class PlaywrightWorkspaceProperties : IJsonModel<PlaywrightWorkspaceProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PlaywrightWorkspaceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePlaywrightWorkspaceProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PlaywrightWorkspaceProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPlaywrightContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PlaywrightWorkspaceProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PlaywrightWorkspaceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PlaywrightWorkspaceProperties IPersistableModel<PlaywrightWorkspaceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PlaywrightWorkspaceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlaywrightWorkspaceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -98,16 +58,6 @@ namespace Azure.ResourceManager.Playwright.Models
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
-            }
-            if (Optional.IsDefined(Reporting))
-            {
-                writer.WritePropertyName("reporting"u8);
-                writer.WriteStringValue(Reporting.Value.ToString());
-            }
-            if (Optional.IsDefined(StorageUri))
-            {
-                writer.WritePropertyName("storageUri"u8);
-                writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -156,8 +106,6 @@ namespace Azure.ResourceManager.Playwright.Models
             PlaywrightEnablementStatus? regionalAffinity = default;
             PlaywrightEnablementStatus? localAuth = default;
             string workspaceId = default;
-            PlaywrightEnablementStatus? reporting = default;
-            Uri storageUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +124,7 @@ namespace Azure.ResourceManager.Playwright.Models
                     {
                         continue;
                     }
-                    dataplaneUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    dataplaneUri = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("regionalAffinity"u8))
@@ -202,24 +150,6 @@ namespace Azure.ResourceManager.Playwright.Models
                     workspaceId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("reporting"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    reporting = new PlaywrightEnablementStatus(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("storageUri"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -231,9 +161,47 @@ namespace Azure.ResourceManager.Playwright.Models
                 regionalAffinity,
                 localAuth,
                 workspaceId,
-                reporting,
-                storageUri,
                 additionalBinaryDataProperties);
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PlaywrightWorkspaceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPlaywrightContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PlaywrightWorkspaceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PlaywrightWorkspaceProperties IPersistableModel<PlaywrightWorkspaceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PlaywrightWorkspaceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlaywrightWorkspaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
+                    {
+                        return DeserializePlaywrightWorkspaceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PlaywrightWorkspaceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PlaywrightWorkspaceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

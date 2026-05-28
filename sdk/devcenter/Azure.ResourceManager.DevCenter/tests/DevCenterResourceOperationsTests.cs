@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.DevCenter.Tests
             ArmOperation<DevCenterResource> createdDevCenterResponse = await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, devCenterName, devCenterData);
             DevCenterResource createdResource = createdDevCenterResponse.Value;
 
-            Assert.That(createdResource, Is.Not.Null);
-            Assert.That(createdResource.Data, Is.Not.Null);
+            Assert.NotNull(createdResource);
+            Assert.NotNull(createdResource.Data);
 
             // List DevCenters
             List<DevCenterResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
             Response<DevCenterResource> retrievedDevCenter = await resourceCollection.GetAsync(devCenterName);
-            Assert.That(retrievedDevCenter.Value, Is.Not.Null);
-            Assert.That(retrievedDevCenter.Value.Data, Is.Not.Null);
+            Assert.NotNull(retrievedDevCenter.Value);
+            Assert.NotNull(retrievedDevCenter.Value.Data);
 
             // Update
             DevCenterData updatedData = new DevCenterData(TestEnvironment.Location);

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.MongoCluster;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Customer managed key encryption settings. </summary>
-    public partial class MongoClusterCmkEncryptionProperties : IJsonModel<MongoClusterCmkEncryptionProperties>
+    public partial class MongoClusterCmkEncryptionProperties : IUtf8JsonSerializable, IJsonModel<MongoClusterCmkEncryptionProperties>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MongoClusterCmkEncryptionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMongoClusterCmkEncryptionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MongoClusterCmkEncryptionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterCmkEncryptionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoClusterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MongoClusterCmkEncryptionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MongoClusterCmkEncryptionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MongoClusterCmkEncryptionProperties IPersistableModel<MongoClusterCmkEncryptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MongoClusterCmkEncryptionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoClusterCmkEncryptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MongoClusterCmkEncryptionProperties)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
@@ -84,15 +44,15 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WritePropertyName("keyEncryptionKeyUrl"u8);
                 writer.WriteStringValue(KeyEncryptionKeyUri);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,56 +61,84 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MongoClusterCmkEncryptionProperties IJsonModel<MongoClusterCmkEncryptionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MongoClusterCmkEncryptionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterCmkEncryptionProperties IJsonModel<MongoClusterCmkEncryptionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoClusterCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MongoClusterCmkEncryptionProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMongoClusterCmkEncryptionProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MongoClusterCmkEncryptionProperties DeserializeMongoClusterCmkEncryptionProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static MongoClusterCmkEncryptionProperties DeserializeMongoClusterCmkEncryptionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MongoClusterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default;
-            string keyEncryptionKeyUri = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string keyEncryptionKeyUrl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("keyEncryptionKeyIdentity"u8))
+                if (property.NameEquals("keyEncryptionKeyIdentity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyEncryptionKeyIdentity = MongoClusterKeyEncryptionKeyIdentity.DeserializeMongoClusterKeyEncryptionKeyIdentity(prop.Value, options);
+                    keyEncryptionKeyIdentity = MongoClusterKeyEncryptionKeyIdentity.DeserializeMongoClusterKeyEncryptionKeyIdentity(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("keyEncryptionKeyUrl"u8))
+                if (property.NameEquals("keyEncryptionKeyUrl"u8))
                 {
-                    keyEncryptionKeyUri = prop.Value.GetString();
+                    keyEncryptionKeyUrl = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new MongoClusterCmkEncryptionProperties(keyEncryptionKeyIdentity, keyEncryptionKeyUri, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MongoClusterCmkEncryptionProperties(keyEncryptionKeyIdentity, keyEncryptionKeyUrl, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MongoClusterCmkEncryptionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoClusterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MongoClusterCmkEncryptionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MongoClusterCmkEncryptionProperties IPersistableModel<MongoClusterCmkEncryptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterCmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMongoClusterCmkEncryptionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoClusterCmkEncryptionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoClusterCmkEncryptionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

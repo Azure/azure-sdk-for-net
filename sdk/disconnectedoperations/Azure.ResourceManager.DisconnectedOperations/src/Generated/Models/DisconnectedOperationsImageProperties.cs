@@ -7,19 +7,57 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DisconnectedOperations;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Models
 {
     /// <summary> The image properties. </summary>
     public partial class DisconnectedOperationsImageProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsImageProperties"/>. </summary>
-        internal DisconnectedOperationsImageProperties()
+        /// <param name="releaseVersion"> The version of the package in the format 1.1.1. </param>
+        /// <param name="releaseDisplayName"> The release name. </param>
+        /// <param name="releaseNotes"> The release notes. </param>
+        /// <param name="releaseOn"> The release date. </param>
+        /// <param name="releaseType"> The release type. </param>
+        internal DisconnectedOperationsImageProperties(string releaseVersion, string releaseDisplayName, string releaseNotes, DateTimeOffset releaseOn, DisconnectedOperationsReleaseType releaseType)
         {
+            ReleaseVersion = releaseVersion;
+            ReleaseDisplayName = releaseDisplayName;
+            ReleaseNotes = releaseNotes;
+            ReleaseOn = releaseOn;
+            ReleaseType = releaseType;
             CompatibleVersions = new ChangeTrackingList<string>();
         }
 
@@ -31,9 +69,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <param name="releaseOn"> The release date. </param>
         /// <param name="releaseType"> The release type. </param>
         /// <param name="compatibleVersions"> The versions that are compatible for this update package. </param>
-        /// <param name="updateProperties"> Image update properties for update release type image. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DisconnectedOperationsImageProperties(DisconnectedOperationsResourceProvisioningState? provisioningState, string releaseVersion, string releaseDisplayName, string releaseNotes, DateTimeOffset releaseOn, DisconnectedOperationsReleaseType releaseType, IReadOnlyList<string> compatibleVersions, DisconnectedOperationsImageUpdateProperties updateProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DisconnectedOperationsImageProperties(DisconnectedOperationsResourceProvisioningState? provisioningState, string releaseVersion, string releaseDisplayName, string releaseNotes, DateTimeOffset releaseOn, DisconnectedOperationsReleaseType releaseType, IReadOnlyList<string> compatibleVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ReleaseVersion = releaseVersion;
@@ -42,32 +79,27 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             ReleaseOn = releaseOn;
             ReleaseType = releaseType;
             CompatibleVersions = compatibleVersions;
-            UpdateProperties = updateProperties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsImageProperties"/> for deserialization. </summary>
+        internal DisconnectedOperationsImageProperties()
+        {
         }
 
         /// <summary> The resource provisioning state. </summary>
         public DisconnectedOperationsResourceProvisioningState? ProvisioningState { get; }
-
         /// <summary> The version of the package in the format 1.1.1. </summary>
         public string ReleaseVersion { get; }
-
         /// <summary> The release name. </summary>
         public string ReleaseDisplayName { get; }
-
         /// <summary> The release notes. </summary>
         public string ReleaseNotes { get; }
-
         /// <summary> The release date. </summary>
         public DateTimeOffset ReleaseOn { get; }
-
         /// <summary> The release type. </summary>
         public DisconnectedOperationsReleaseType ReleaseType { get; }
-
         /// <summary> The versions that are compatible for this update package. </summary>
         public IReadOnlyList<string> CompatibleVersions { get; }
-
-        /// <summary> Image update properties for update release type image. </summary>
-        public DisconnectedOperationsImageUpdateProperties UpdateProperties { get; }
     }
 }

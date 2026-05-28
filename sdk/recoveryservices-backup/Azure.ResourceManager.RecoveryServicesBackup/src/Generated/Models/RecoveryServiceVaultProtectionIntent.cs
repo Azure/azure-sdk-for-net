@@ -11,12 +11,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Azure Recovery Services Vault specific protection intent item. </summary>
+    /// <summary>
+    /// Azure Recovery Services Vault specific protection intent item.
+    /// Please note <see cref="RecoveryServiceVaultProtectionIntent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="WorkloadAutoProtectionIntent"/> and <see cref="WorkloadSqlAutoProtectionIntent"/>.
+    /// </summary>
     public partial class RecoveryServiceVaultProtectionIntent : BackupGenericProtectionIntent
     {
         /// <summary> Initializes a new instance of <see cref="RecoveryServiceVaultProtectionIntent"/>. </summary>
-        public RecoveryServiceVaultProtectionIntent() : base("RecoveryServiceVaultItem")
+        public RecoveryServiceVaultProtectionIntent()
         {
+            ProtectionIntentItemType = ProtectionIntentItemType.RecoveryServiceVaultItem;
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServiceVaultProtectionIntent"/>. </summary>
@@ -26,15 +31,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServiceVaultProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServiceVaultProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState, serializedAdditionalRawData)
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryServiceVaultProtectionIntent"/>. </summary>
-        /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
-        private protected RecoveryServiceVaultProtectionIntent(ProtectionIntentItemType protectionIntentItemType) : base(protectionIntentItemType)
-        {
+            ProtectionIntentItemType = protectionIntentItemType;
         }
     }
 }

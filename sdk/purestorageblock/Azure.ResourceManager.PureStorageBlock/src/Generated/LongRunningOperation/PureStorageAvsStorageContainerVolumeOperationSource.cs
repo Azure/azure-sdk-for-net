@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PureStorageBlock
 {
-    /// <summary></summary>
-    internal partial class PureStorageAvsStorageContainerVolumeOperationSource : IOperationSource<PureStorageAvsStorageContainerVolumeResource>
+    internal class PureStorageAvsStorageContainerVolumeOperationSource : IOperationSource<PureStorageAvsStorageContainerVolumeResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal PureStorageAvsStorageContainerVolumeOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         PureStorageAvsStorageContainerVolumeResource IOperationSource<PureStorageAvsStorageContainerVolumeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            PureStorageAvsStorageContainerVolumeData data = PureStorageAvsStorageContainerVolumeData.DeserializePureStorageAvsStorageContainerVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<PureStorageAvsStorageContainerVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPureStorageBlockContext.Default);
             return new PureStorageAvsStorageContainerVolumeResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<PureStorageAvsStorageContainerVolumeResource> IOperationSource<PureStorageAvsStorageContainerVolumeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            PureStorageAvsStorageContainerVolumeData data = PureStorageAvsStorageContainerVolumeData.DeserializePureStorageAvsStorageContainerVolumeData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PureStorageAvsStorageContainerVolumeResource(_client, data);
+            var data = ModelReaderWriter.Read<PureStorageAvsStorageContainerVolumeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPureStorageBlockContext.Default);
+            return await Task.FromResult(new PureStorageAvsStorageContainerVolumeResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

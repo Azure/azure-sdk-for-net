@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
-    /// <summary></summary>
-    internal partial class OracleNetworkAnchorOperationSource : IOperationSource<OracleNetworkAnchorResource>
+    internal class OracleNetworkAnchorOperationSource : IOperationSource<OracleNetworkAnchorResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal OracleNetworkAnchorOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         OracleNetworkAnchorResource IOperationSource<OracleNetworkAnchorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            OracleNetworkAnchorData data = OracleNetworkAnchorData.DeserializeOracleNetworkAnchorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<OracleNetworkAnchorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new OracleNetworkAnchorResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<OracleNetworkAnchorResource> IOperationSource<OracleNetworkAnchorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            OracleNetworkAnchorData data = OracleNetworkAnchorData.DeserializeOracleNetworkAnchorData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new OracleNetworkAnchorResource(_client, data);
+            var data = ModelReaderWriter.Read<OracleNetworkAnchorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
+            return await Task.FromResult(new OracleNetworkAnchorResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

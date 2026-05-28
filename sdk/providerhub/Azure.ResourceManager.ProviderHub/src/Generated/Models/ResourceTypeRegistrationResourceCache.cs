@@ -13,8 +13,37 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> Resource cache options. </summary>
     public partial class ResourceTypeRegistrationResourceCache
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationResourceCache"/>. </summary>
         public ResourceTypeRegistrationResourceCache()
@@ -24,17 +53,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationResourceCache"/>. </summary>
         /// <param name="isResourceCacheEnabled"> Enable resource cache. </param>
         /// <param name="resourceCacheExpirationTimespan"> Resource cache expiration timespan. This is a TimeSpan property. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeRegistrationResourceCache(bool? isResourceCacheEnabled, string resourceCacheExpirationTimespan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeRegistrationResourceCache(bool? isResourceCacheEnabled, string resourceCacheExpirationTimespan, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsResourceCacheEnabled = isResourceCacheEnabled;
             ResourceCacheExpirationTimespan = resourceCacheExpirationTimespan;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable resource cache. </summary>
         public bool? IsResourceCacheEnabled { get; set; }
-
         /// <summary> Resource cache expiration timespan. This is a TimeSpan property. </summary>
         public string ResourceCacheExpirationTimespan { get; set; }
     }

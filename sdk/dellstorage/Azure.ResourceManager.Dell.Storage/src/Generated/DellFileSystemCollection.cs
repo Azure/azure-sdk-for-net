@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Dell.Storage
 {
     /// <summary>
     /// A class representing a collection of <see cref="DellFileSystemResource"/> and their operations.
-    /// Each <see cref="DellFileSystemResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="DellFileSystemCollection"/> instance call the GetDellFileSystems method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="DellFileSystemResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="DellFileSystemCollection"/> instance call the GetDellFileSystems method from an instance of the parent resource.
     /// </summary>
     public partial class DellFileSystemCollection : ArmCollection, IEnumerable<DellFileSystemResource>, IAsyncEnumerable<DellFileSystemResource>
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dell.Storage
         {
             TryGetApiVersion(DellFileSystemResource.ResourceType, out string dellFileSystemApiVersion);
             _fileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dell.Storage", DellFileSystemResource.ResourceType.Namespace, Diagnostics);
-            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Endpoint, dellFileSystemApiVersion ?? "2025-03-21");
+            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Endpoint, dellFileSystemApiVersion ?? "2025-03-21-preview");
             ValidateResourceId(id);
         }
 
@@ -51,27 +51,11 @@ namespace Azure.ResourceManager.Dell.Storage
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Create a FileSystemResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a FileSystemResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -113,23 +97,7 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Create a FileSystemResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a FileSystemResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -171,23 +139,7 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Get a FileSystemResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a FileSystemResource. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
@@ -220,23 +172,7 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Get a FileSystemResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a FileSystemResource. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
@@ -269,23 +205,7 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// List FileSystemResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List FileSystemResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DellFileSystemResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -294,26 +214,10 @@ namespace Azure.ResourceManager.Dell.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupAsyncCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DellFileSystemCollection.GetAll"), data => new DellFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupAsyncCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DellFileSystemResource(Client, data));
         }
 
-        /// <summary>
-        /// List FileSystemResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List FileSystemResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DellFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DellFileSystemResource> GetAll(CancellationToken cancellationToken = default)
@@ -322,26 +226,10 @@ namespace Azure.ResourceManager.Dell.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DellFileSystemCollection.GetAll"), data => new DellFileSystemResource(Client, data));
+            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DellFileSystemResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
@@ -382,23 +270,7 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
@@ -439,23 +311,7 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>
@@ -500,23 +356,7 @@ namespace Azure.ResourceManager.Dell.Storage
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dell.Storage/filesystems/{filesystemName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> FileSystems_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-21. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="filesystemName"> Name of the filesystem resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filesystemName"/> is null. </exception>

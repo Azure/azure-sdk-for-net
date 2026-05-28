@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Terraform.Models;
 using NUnit.Framework;
@@ -11,9 +10,6 @@ namespace Azure.ResourceManager.Terraform.Tests
 {
     public class ExportTerraformTests : TerraformManagementTestBase
     {
-        private const string DefaultResourceGroup = "rg-tangerryterraform";
-        private const string DefaultVNetName = "dotnet-sdk-test-vnet";
-
         public ExportTerraformTests(bool isAsync) : base(isAsync)
         {
         }
@@ -22,8 +18,8 @@ namespace Azure.ResourceManager.Terraform.Tests
         [RecordedTest]
         public async Task ExportResourceGroupTest()
         {
-            string resourceGroupName = DefaultResourceGroup;
-            string vnetName = DefaultVNetName;
+            string resourceGroupName = TestEnvironment.ResourceGroup;
+            string vnetName = TestEnvironment.VNetName;
             ExportResourceGroupTerraform exportResourceGroup = new(resourceGroupName);
 
             ArmOperation<TerraformOperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAsync(WaitUntil.Completed, exportResourceGroup);
@@ -40,8 +36,8 @@ namespace Azure.ResourceManager.Terraform.Tests
         [RecordedTest]
         public async Task ExportQueryTest()
         {
-            string resourceGroupName = DefaultResourceGroup;
-            string vnetName = DefaultVNetName;
+            string resourceGroupName = TestEnvironment.ResourceGroup;
+            string vnetName = TestEnvironment.VNetName;
             ExportQueryTerraform exportQuery = new($"resourceGroup =~ \"{resourceGroupName}\"");
 
             ArmOperation<TerraformOperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAsync(WaitUntil.Completed, exportQuery);
@@ -55,8 +51,8 @@ namespace Azure.ResourceManager.Terraform.Tests
         [RecordedTest]
         public async Task ExportResourceTest()
         {
-            string vnetName = DefaultVNetName;
-            ExportResourceTerraform exportResource = new(new[] { new ResourceIdentifier("/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/rg-tangerryterraform/providers/Microsoft.Network/virtualNetworks/dotnet-sdk-test-vnet") });
+            string vnetName = TestEnvironment.VNetName;
+            ExportResourceTerraform exportResource = new(new[] { TestEnvironment.VNetId });
 
             ArmOperation<TerraformOperationStatus> operationStatus = await DefaultSubscription.ExportTerraformAsync(WaitUntil.Completed, exportResource);
 

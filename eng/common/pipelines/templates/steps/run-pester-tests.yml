@@ -14,8 +14,7 @@ parameters:
 steps:
 
   - pwsh: |
-       . (Join-Path "$(Build.SourcesDirectory)" eng common scripts Helpers PSModule-Helpers.ps1)
-       Install-ModuleIfNotInstalled "Pester" "5.7.1" | Import-Module
+       Install-Module -Name Pester -Force
     displayName: Install Pester
 
    # default test steps

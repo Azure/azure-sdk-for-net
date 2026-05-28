@@ -23,7 +23,7 @@ foreach ($filter in $benchmarkFilters) {
     }
 }
 
-# Second run: Azure.Core NuGet package version from Directory.Packages.props
+# Second run: Azure.Core NuGet package version from Packages.Data.props
 Write-Host "Running benchmarks with Azure.Core NuGet package..."
 foreach ($filter in $benchmarkFilters) {
     Write-Host "Running filter: $filter"

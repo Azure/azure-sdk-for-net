@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct ScheduleRunType : IEquatable<ScheduleRunType>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleRunType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ScheduleRunType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string InvalidValue = "Invalid";
         private const string DailyValue = "Daily";
         private const string WeeklyValue = "Weekly";
         private const string HourlyValue = "Hourly";
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleRunType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ScheduleRunType(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Invalid. </summary>
+        /// <summary> Invalid. </summary>
         public static ScheduleRunType Invalid { get; } = new ScheduleRunType(InvalidValue);
-
-        /// <summary> Gets the Daily. </summary>
+        /// <summary> Daily. </summary>
         public static ScheduleRunType Daily { get; } = new ScheduleRunType(DailyValue);
-
-        /// <summary> Gets the Weekly. </summary>
+        /// <summary> Weekly. </summary>
         public static ScheduleRunType Weekly { get; } = new ScheduleRunType(WeeklyValue);
-
-        /// <summary> Gets the Hourly. </summary>
+        /// <summary> Hourly. </summary>
         public static ScheduleRunType Hourly { get; } = new ScheduleRunType(HourlyValue);
-
         /// <summary> Determines if two <see cref="ScheduleRunType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduleRunType left, ScheduleRunType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ScheduleRunType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduleRunType left, ScheduleRunType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ScheduleRunType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduleRunType"/>. </summary>
         public static implicit operator ScheduleRunType(string value) => new ScheduleRunType(value);
 
-        /// <summary> Converts a string to a <see cref="ScheduleRunType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ScheduleRunType?(string value) => value == null ? null : new ScheduleRunType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduleRunType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ScheduleRunType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

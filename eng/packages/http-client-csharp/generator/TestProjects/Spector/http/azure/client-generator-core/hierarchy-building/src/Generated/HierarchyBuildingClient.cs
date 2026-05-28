@@ -6,21 +6,15 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 
-namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
+namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     public partial class HierarchyBuildingClient
     {
         public HierarchyBuildingClient() : this(new Uri("http://localhost:3000"), new HierarchyBuildingClientOptions()) => throw null;
 
-        internal HierarchyBuildingClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, HierarchyBuildingClientOptions options) => throw null;
-
-        public HierarchyBuildingClient(Uri endpoint, HierarchyBuildingClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public HierarchyBuildingClient(HierarchyBuildingClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public HierarchyBuildingClient(Uri endpoint, HierarchyBuildingClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

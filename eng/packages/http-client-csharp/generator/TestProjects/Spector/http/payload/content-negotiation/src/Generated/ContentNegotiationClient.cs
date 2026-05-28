@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Payload.ContentNegotiation._DifferentBody;
 using Payload.ContentNegotiation._SameBody;
@@ -17,12 +16,7 @@ namespace Payload.ContentNegotiation
     {
         public ContentNegotiationClient() : this(new Uri("http://localhost:3000"), new ContentNegotiationClientOptions()) => throw null;
 
-        internal ContentNegotiationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ContentNegotiationClientOptions options) => throw null;
-
-        public ContentNegotiationClient(Uri endpoint, ContentNegotiationClientOptions options) : this(null, endpoint, options) => throw null;
-
-        [Experimental("SCME0002")]
-        public ContentNegotiationClient(ContentNegotiationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        public ContentNegotiationClient(Uri endpoint, ContentNegotiationClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

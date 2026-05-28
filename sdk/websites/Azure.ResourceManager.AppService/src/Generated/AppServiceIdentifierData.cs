@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the AppServiceIdentifier data model.
     /// A domain specific resource identifier.
-    /// Serialized Name: Identifier
     /// </summary>
     public partial class AppServiceIdentifierData : ResourceData
     {
@@ -61,33 +60,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: Identifier.kind
-        /// </param>
-        /// <param name="value">
-        /// String representation of the identity.
-        /// Serialized Name: Identifier.properties.id
-        /// </param>
+        /// <param name="value"> String representation of the identity. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceIdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppServiceIdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Kind = kind;
             Value = value;
+            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: Identifier.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
-        /// <summary>
-        /// String representation of the identity.
-        /// Serialized Name: Identifier.properties.id
-        /// </summary>
+        /// <summary> String representation of the identity. </summary>
         [WirePath("properties.id")]
         public string Value { get; set; }
+        /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
+        public string Kind { get; set; }
     }
 }

@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class StorageSyncRegisteredServerCollection : ArmCollection, IEnumerable<StorageSyncRegisteredServerResource>, IAsyncEnumerable<StorageSyncRegisteredServerResource>
     {
-        private readonly ClientDiagnostics _registeredServersClientDiagnostics;
-        private readonly RegisteredServers _registeredServersRestClient;
+        private readonly ClientDiagnostics _storageSyncRegisteredServerRegisteredServersClientDiagnostics;
+        private readonly RegisteredServersRestOperations _storageSyncRegisteredServerRegisteredServersRestClient;
 
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncRegisteredServerCollection"/> class for mocking. </summary>
         protected StorageSyncRegisteredServerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncRegisteredServerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal StorageSyncRegisteredServerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(StorageSyncRegisteredServerResource.ResourceType, out string storageSyncRegisteredServerApiVersion);
-            _registeredServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncRegisteredServerResource.ResourceType.Namespace, Diagnostics);
-            _registeredServersRestClient = new RegisteredServers(_registeredServersClientDiagnostics, Pipeline, Endpoint, storageSyncRegisteredServerApiVersion ?? "2022-09-01");
-            ValidateResourceId(id);
+            _storageSyncRegisteredServerRegisteredServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageSync", StorageSyncRegisteredServerResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(StorageSyncRegisteredServerResource.ResourceType, out string storageSyncRegisteredServerRegisteredServersApiVersion);
+            _storageSyncRegisteredServerRegisteredServersRestClient = new RegisteredServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageSyncRegisteredServerRegisteredServersApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != StorageSyncServiceResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncServiceResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncServiceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Add a new registered server.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RegisteredServers_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,27 +82,14 @@ namespace Azure.ResourceManager.StorageSync
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _registeredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.CreateOrUpdate");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredServersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, StorageSyncRegisteredServerCreateOrUpdateContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                StorageSyncArmOperation<StorageSyncRegisteredServerResource> operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(
-                    new StorageSyncRegisteredServerOperationSource(Client),
-                    _registeredServersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -115,16 +103,20 @@ namespace Azure.ResourceManager.StorageSync
         /// Add a new registered server.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RegisteredServers_Create. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Create</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,27 +129,14 @@ namespace Azure.ResourceManager.StorageSync
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _registeredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.CreateOrUpdate");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredServersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, StorageSyncRegisteredServerCreateOrUpdateContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                StorageSyncArmOperation<StorageSyncRegisteredServerResource> operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(
-                    new StorageSyncRegisteredServerOperationSource(Client),
-                    _registeredServersClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content, cancellationToken);
+                var operation = new StorageSyncArmOperation<StorageSyncRegisteredServerResource>(new StorageSyncRegisteredServerOperationSource(Client), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, _storageSyncRegisteredServerRegisteredServersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -171,16 +150,20 @@ namespace Azure.ResourceManager.StorageSync
         /// Get a given registered server.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RegisteredServers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,21 +171,13 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<StorageSyncRegisteredServerResource>> GetAsync(Guid serverId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registeredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Get");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StorageSyncRegisteredServerData> response = Response.FromValue(StorageSyncRegisteredServerData.FromResponse(result), result);
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -216,16 +191,20 @@ namespace Azure.ResourceManager.StorageSync
         /// Get a given registered server.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RegisteredServers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,21 +212,13 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<StorageSyncRegisteredServerResource> Get(Guid serverId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registeredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Get");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StorageSyncRegisteredServerData> response = Response.FromValue(StorageSyncRegisteredServerData.FromResponse(result), result);
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,50 +232,49 @@ namespace Azure.ResourceManager.StorageSync
         /// Get a given registered server list.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RegisteredServers_ListByStorageSyncService. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_ListByStorageSyncService</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageSyncRegisteredServerResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StorageSyncRegisteredServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageSyncRegisteredServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<StorageSyncRegisteredServerData, StorageSyncRegisteredServerResource>(new RegisteredServersGetByStorageSyncServiceAsyncCollectionResultOfT(
-                _registeredServersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "StorageSyncRegisteredServerCollection.GetAll"), data => new StorageSyncRegisteredServerResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncRegisteredServerRegisteredServersRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncRegisteredServerResource(Client, StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(e)), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, "StorageSyncRegisteredServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get a given registered server list.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RegisteredServers_ListByStorageSyncService. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_ListByStorageSyncService</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,33 +282,28 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> A collection of <see cref="StorageSyncRegisteredServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageSyncRegisteredServerResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<StorageSyncRegisteredServerData, StorageSyncRegisteredServerResource>(new RegisteredServersGetByStorageSyncServiceCollectionResultOfT(
-                _registeredServersRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "StorageSyncRegisteredServerCollection.GetAll"), data => new StorageSyncRegisteredServerResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncRegisteredServerRegisteredServersRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncRegisteredServerResource(Client, StorageSyncRegisteredServerData.DeserializeStorageSyncRegisteredServerData(e)), _storageSyncRegisteredServerRegisteredServersClientDiagnostics, Pipeline, "StorageSyncRegisteredServerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RegisteredServers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,29 +311,11 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(Guid serverId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registeredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Exists");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<StorageSyncRegisteredServerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StorageSyncRegisteredServerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StorageSyncRegisteredServerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -382,16 +329,20 @@ namespace Azure.ResourceManager.StorageSync
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RegisteredServers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -399,29 +350,11 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(Guid serverId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registeredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Exists");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<StorageSyncRegisteredServerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StorageSyncRegisteredServerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StorageSyncRegisteredServerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,16 +368,20 @@ namespace Azure.ResourceManager.StorageSync
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RegisteredServers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,33 +389,13 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<StorageSyncRegisteredServerResource>> GetIfExistsAsync(Guid serverId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registeredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.GetIfExists");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<StorageSyncRegisteredServerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StorageSyncRegisteredServerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StorageSyncRegisteredServerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _storageSyncRegisteredServerRegisteredServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<StorageSyncRegisteredServerResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -492,16 +409,20 @@ namespace Azure.ResourceManager.StorageSync
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/registeredServers/{serverId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RegisteredServers_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>RegisteredServers_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncRegisteredServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -509,33 +430,13 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<StorageSyncRegisteredServerResource> GetIfExists(Guid serverId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _registeredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.GetIfExists");
+            using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _registeredServersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serverId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<StorageSyncRegisteredServerData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(StorageSyncRegisteredServerData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((StorageSyncRegisteredServerData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _storageSyncRegisteredServerRegisteredServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<StorageSyncRegisteredServerResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new StorageSyncRegisteredServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -555,7 +456,6 @@ namespace Azure.ResourceManager.StorageSync
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StorageSyncRegisteredServerResource> IAsyncEnumerable<StorageSyncRegisteredServerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

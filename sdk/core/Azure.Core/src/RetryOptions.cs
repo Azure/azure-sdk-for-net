@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Microsoft.Extensions.Configuration;
 
 namespace Azure.Core
 {
@@ -21,35 +20,6 @@ namespace Azure.Core
         /// </summary>
         internal RetryOptions() : this(ClientOptions.Default.Retry)
         {
-        }
-
-        internal RetryOptions(IConfigurationSection section)
-        {
-            if (section is null || !section.Exists())
-            {
-                return;
-            }
-
-            if (int.TryParse(section["MaxRetries"], out int maxRetries))
-            {
-                MaxRetries = maxRetries;
-            }
-            if (TimeSpan.TryParse(section["Delay"], out TimeSpan delay))
-            {
-                Delay = delay;
-            }
-            if (TimeSpan.TryParse(section["MaxDelay"], out TimeSpan maxDelay))
-            {
-                MaxDelay = maxDelay;
-            }
-            if (Enum.TryParse(section["Mode"], out RetryMode mode))
-            {
-                Mode = mode;
-            }
-            if (TimeSpan.TryParse(section["NetworkTimeout"], out TimeSpan networkTimeout))
-            {
-                NetworkTimeout = networkTimeout;
-            }
         }
 
         /// <summary>
@@ -92,7 +62,7 @@ namespace Azure.Core
         public RetryMode Mode { get; set; } = RetryMode.Exponential;
 
         /// <summary>
-        /// The timeout applied to individual network operations.
+        /// The timeout applied to an individual network operations.
         /// </summary>
         public TimeSpan NetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
     }

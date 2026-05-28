@@ -7,18 +7,52 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Input of CheckHostNameAvailability API. </summary>
+    /// <summary>
+    /// Input of CheckHostNameAvailability API.
+    /// Serialized Name: CheckHostNameAvailabilityInput
+    /// </summary>
     public partial class HostNameAvailabilityContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HostNameAvailabilityContent"/>. </summary>
-        /// <param name="hostName"> The host name to validate. </param>
+        /// <param name="hostName">
+        /// The host name to validate.
+        /// Serialized Name: CheckHostNameAvailabilityInput.hostName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public HostNameAvailabilityContent(string hostName)
         {
@@ -28,16 +62,26 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HostNameAvailabilityContent"/>. </summary>
-        /// <param name="hostName"> The host name to validate. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostNameAvailabilityContent(string hostName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="hostName">
+        /// The host name to validate.
+        /// Serialized Name: CheckHostNameAvailabilityInput.hostName
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostNameAvailabilityContent(string hostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HostName = hostName;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The host name to validate. </summary>
-        [WirePath("hostName")]
+        /// <summary> Initializes a new instance of <see cref="HostNameAvailabilityContent"/> for deserialization. </summary>
+        internal HostNameAvailabilityContent()
+        {
+        }
+
+        /// <summary>
+        /// The host name to validate.
+        /// Serialized Name: CheckHostNameAvailabilityInput.hostName
+        /// </summary>
         public string HostName { get; }
     }
 }

@@ -7,32 +7,60 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> L2ServiceLoadBalancerConfiguration represents the configuration of a layer 2 service load balancer. </summary>
     internal partial class L2ServiceLoadBalancerConfiguration
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="L2ServiceLoadBalancerConfiguration"/>. </summary>
         public L2ServiceLoadBalancerConfiguration()
         {
-            L2ServiceLoadBalancerIPAddressPools = new ChangeTrackingList<IPAddressPool>();
+            IPAddressPools = new ChangeTrackingList<IPAddressPool>();
         }
 
         /// <summary> Initializes a new instance of <see cref="L2ServiceLoadBalancerConfiguration"/>. </summary>
-        /// <param name="l2ServiceLoadBalancerIPAddressPools"> The list of pools of IP addresses that can be allocated to load balancer services. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal L2ServiceLoadBalancerConfiguration(IList<IPAddressPool> l2ServiceLoadBalancerIPAddressPools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="ipAddressPools"> The list of pools of IP addresses that can be allocated to load balancer services. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal L2ServiceLoadBalancerConfiguration(IList<IPAddressPool> ipAddressPools, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            L2ServiceLoadBalancerIPAddressPools = l2ServiceLoadBalancerIPAddressPools;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            IPAddressPools = ipAddressPools;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of pools of IP addresses that can be allocated to load balancer services. </summary>
-        public IList<IPAddressPool> L2ServiceLoadBalancerIPAddressPools { get; }
+        public IList<IPAddressPool> IPAddressPools { get; }
     }
 }

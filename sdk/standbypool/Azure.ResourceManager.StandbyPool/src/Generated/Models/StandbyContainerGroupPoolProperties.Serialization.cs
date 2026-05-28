@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.StandbyPool;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    /// <summary> Details of the StandbyContainerGroupPool. </summary>
-    public partial class StandbyContainerGroupPoolProperties : IJsonModel<StandbyContainerGroupPoolProperties>
+    public partial class StandbyContainerGroupPoolProperties : IUtf8JsonSerializable, IJsonModel<StandbyContainerGroupPoolProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolProperties"/> for deserialization. </summary>
-        internal StandbyContainerGroupPoolProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPoolProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StandbyContainerGroupPoolProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeStandbyContainerGroupPoolProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StandbyContainerGroupPoolProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StandbyContainerGroupPoolProperties IPersistableModel<StandbyContainerGroupPoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StandbyContainerGroupPoolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StandbyContainerGroupPoolProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StandbyContainerGroupPoolProperties)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("elasticityProfile"u8);
             writer.WriteObjectValue(ElasticityProfile, options);
             writer.WritePropertyName("containerGroupProperties"u8);
@@ -87,13 +42,8 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
-                foreach (string item in Zones)
+                foreach (var item in Zones)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -103,15 +53,15 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -120,27 +70,22 @@ namespace Azure.ResourceManager.StandbyPool.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        StandbyContainerGroupPoolProperties IJsonModel<StandbyContainerGroupPoolProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StandbyContainerGroupPoolProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StandbyContainerGroupPoolProperties IJsonModel<StandbyContainerGroupPoolProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StandbyContainerGroupPoolProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStandbyContainerGroupPoolProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StandbyContainerGroupPoolProperties DeserializeStandbyContainerGroupPoolProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static StandbyContainerGroupPoolProperties DeserializeStandbyContainerGroupPoolProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -149,55 +94,81 @@ namespace Azure.ResourceManager.StandbyPool.Models
             StandbyContainerGroupProperties containerGroupProperties = default;
             IList<string> zones = default;
             StandbyProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("elasticityProfile"u8))
+                if (property.NameEquals("elasticityProfile"u8))
                 {
-                    elasticityProfile = StandbyContainerGroupPoolElasticityProfile.DeserializeStandbyContainerGroupPoolElasticityProfile(prop.Value, options);
+                    elasticityProfile = StandbyContainerGroupPoolElasticityProfile.DeserializeStandbyContainerGroupPoolElasticityProfile(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("containerGroupProperties"u8))
+                if (property.NameEquals("containerGroupProperties"u8))
                 {
-                    containerGroupProperties = StandbyContainerGroupProperties.DeserializeStandbyContainerGroupProperties(prop.Value, options);
+                    containerGroupProperties = StandbyContainerGroupProperties.DeserializeStandbyContainerGroupProperties(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("zones"u8))
+                if (property.NameEquals("zones"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     zones = array;
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new StandbyProvisioningState(prop.Value.GetString());
+                    provisioningState = new StandbyProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, zones ?? new ChangeTrackingList<string>(), provisioningState, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, zones ?? new ChangeTrackingList<string>(), provisioningState, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StandbyContainerGroupPoolProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StandbyContainerGroupPoolProperties IPersistableModel<StandbyContainerGroupPoolProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StandbyContainerGroupPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeStandbyContainerGroupPoolProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StandbyContainerGroupPoolProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StandbyContainerGroupPoolProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

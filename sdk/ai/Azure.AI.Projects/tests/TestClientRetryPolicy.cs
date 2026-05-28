@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects.Tests

@@ -46,58 +46,58 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             var employee = new Employee { Age = 42, Name = "Caketown" };
             EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
 
-            Assert.That(eventData.IsReadOnly, Is.False);
+            Assert.IsFalse(eventData.IsReadOnly);
             string[] contentType = eventData.ContentType.Split('+');
-            Assert.That(contentType.Length, Is.EqualTo(2));
-            Assert.That(contentType[0], Is.EqualTo("avro/binary"));
-            Assert.That(contentType[1], Is.Not.Empty);
+            Assert.AreEqual(2, contentType.Length);
+            Assert.AreEqual("avro/binary", contentType[0]);
+            Assert.IsNotEmpty(contentType[1]);
 
             Employee deserialized = await serializer.DeserializeAsync<Employee>(eventData);
 
             // decoding should not alter the message
             contentType = eventData.ContentType.Split('+');
-            Assert.That(contentType.Length, Is.EqualTo(2));
-            Assert.That(contentType[0], Is.EqualTo("avro/binary"));
-            Assert.That(contentType[1], Is.Not.Empty);
+            Assert.AreEqual(2, contentType.Length);
+            Assert.AreEqual("avro/binary", contentType[0]);
+            Assert.IsNotEmpty(contentType[1]);
 
             // verify the payload was decoded correctly
-            Assert.That(deserialized, Is.Not.Null);
-            Assert.That(deserialized.Name, Is.EqualTo("Caketown"));
-            Assert.That(deserialized.Age, Is.EqualTo(42));
+            Assert.IsNotNull(deserialized);
+            Assert.AreEqual("Caketown", deserialized.Name);
+            Assert.AreEqual(42, deserialized.Age);
 
             // Use different schema so we can see the cache updated
             eventData = await serializer.SerializeAsync<EventData, Employee_V2>(new Employee_V2{ Age = 42, Name = "Caketown", City = "Redmond"});
 
-            Assert.That(eventData.IsReadOnly, Is.False);
+            Assert.IsFalse(eventData.IsReadOnly);
             eventData.ContentType.Split('+');
-            Assert.That(contentType.Length, Is.EqualTo(2));
-            Assert.That(contentType[0], Is.EqualTo("avro/binary"));
-            Assert.That(contentType[1], Is.Not.Empty);
+            Assert.AreEqual(2, contentType.Length);
+            Assert.AreEqual("avro/binary", contentType[0]);
+            Assert.IsNotEmpty(contentType[1]);
 
             await serializer.DeserializeAsync<Employee>(eventData);
 
             // decoding should not alter the message
             contentType = eventData.ContentType.Split('+');
-            Assert.That(contentType.Length, Is.EqualTo(2));
-            Assert.That(contentType[0], Is.EqualTo("avro/binary"));
-            Assert.That(contentType[1], Is.Not.Empty);
+            Assert.AreEqual(2, contentType.Length);
+            Assert.AreEqual("avro/binary", contentType[0]);
+            Assert.IsNotEmpty(contentType[1]);
 
             // verify the payload was decoded correctly
-            Assert.That(deserialized, Is.Not.Null);
-            Assert.That(deserialized.Name, Is.EqualTo("Caketown"));
-            Assert.That(deserialized.Age, Is.EqualTo(42));
+            Assert.IsNotNull(deserialized);
+            Assert.AreEqual("Caketown", deserialized.Name);
+            Assert.AreEqual(42, deserialized.Age);
 
             var events = _listener.EventsById(SchemaRegistryAvroEventSource.CacheUpdatedEvent).ToArray();
-            Assert.That(events.Length, Is.EqualTo(2));
+            Assert.AreEqual(2, events.Length);
 
             // first log entry should have 2 as the total number of entries as we maintain two caches for each schema
-            Assert.That(events[0].Payload[0], Is.EqualTo(2));
+            Assert.AreEqual(2, events[0].Payload[0]);
             // the second payload element is the total schema length
-            Assert.That(events[0].Payload[1], Is.EqualTo(334));
+            Assert.AreEqual(334, events[0].Payload[1]);
 
             // second entry will include both V1 and V2 schemas - so 4 total entries
-            Assert.That(events[1].Payload[0], Is.EqualTo(4));
-            Assert.That(events[1].Payload[1], Is.EqualTo(732));
+            Assert.AreEqual(4, events[1].Payload[0]);
+            Assert.AreEqual(732, events[1].Payload[1]);
         }
     }
 }

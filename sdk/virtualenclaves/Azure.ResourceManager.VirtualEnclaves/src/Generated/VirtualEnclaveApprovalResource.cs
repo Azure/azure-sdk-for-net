@@ -6,36 +6,45 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.VirtualEnclaves.Models;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
     /// <summary>
-    /// A class representing a VirtualEnclaveApproval along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualEnclaveApprovalResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetVirtualEnclaveApprovals method.
+    /// A Class representing a VirtualEnclaveApproval along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualEnclaveApprovalResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualEnclaveApprovalResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetVirtualEnclaveApproval method.
     /// </summary>
     public partial class VirtualEnclaveApprovalResource : ArmResource
     {
-        private readonly ClientDiagnostics _approvalClientDiagnostics;
-        private readonly Approval _approvalRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="VirtualEnclaveApprovalResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="approvalName"> The approvalName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string approvalName)
+        {
+            var resourceId = $"{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _virtualEnclaveApprovalApprovalClientDiagnostics;
+        private readonly ApprovalRestOperations _virtualEnclaveApprovalApprovalRestClient;
         private readonly VirtualEnclaveApprovalData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Mission/approvals";
 
-        /// <summary> Initializes a new instance of VirtualEnclaveApprovalResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveApprovalResource"/> class for mocking. </summary>
         protected VirtualEnclaveApprovalResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveApprovalResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualEnclaveApprovalResource(ArmClient client, VirtualEnclaveApprovalData data) : this(client, data.Id)
@@ -44,91 +53,71 @@ namespace Azure.ResourceManager.VirtualEnclaves
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualEnclaveApprovalResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualEnclaveApprovalResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string virtualEnclaveApprovalApiVersion);
-            _approvalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", ResourceType.Namespace, Diagnostics);
-            _approvalRestClient = new Approval(_approvalClientDiagnostics, Pipeline, Endpoint, virtualEnclaveApprovalApiVersion ?? "2025-05-01-preview");
-            ValidateResourceId(id);
+            _virtualEnclaveApprovalApprovalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.VirtualEnclaves", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string virtualEnclaveApprovalApprovalApiVersion);
+            _virtualEnclaveApprovalApprovalRestClient = new ApprovalRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveApprovalApprovalApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual VirtualEnclaveApprovalData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="approvalName"> The approvalName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string approvalName)
-        {
-            string resourceId = $"{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a ApprovalResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Approval_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ApprovalResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualEnclaveApprovalResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VirtualEnclaveApprovalResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Get");
+            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _approvalRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VirtualEnclaveApprovalData> response = Response.FromValue(VirtualEnclaveApprovalData.FromResponse(result), result);
+                var response = await _virtualEnclaveApprovalApprovalRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveApprovalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,42 +131,118 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Get a ApprovalResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Approval_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ApprovalResource_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualEnclaveApprovalResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualEnclaveApprovalResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Get");
+            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _approvalRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<VirtualEnclaveApprovalData> response = Response.FromValue(VirtualEnclaveApprovalData.FromResponse(result), result);
+                var response = _virtualEnclaveApprovalApprovalRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualEnclaveApprovalResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a ApprovalResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApprovalResource_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _virtualEnclaveApprovalApprovalRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualEnclavesArmOperation(_virtualEnclaveApprovalApprovalClientDiagnostics, Pipeline, _virtualEnclaveApprovalApprovalRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a ApprovalResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApprovalResource_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _virtualEnclaveApprovalApprovalRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
+                var operation = new VirtualEnclavesArmOperation(_virtualEnclaveApprovalApprovalClientDiagnostics, Pipeline, _virtualEnclaveApprovalApprovalRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -190,20 +255,20 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Update a ApprovalResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Approval_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>ApprovalResource_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualEnclaveApprovalResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,27 +280,14 @@ namespace Azure.ResourceManager.VirtualEnclaves
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Update");
+            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _approvalRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, VirtualEnclaveApprovalPatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource>(
-                    new VirtualEnclaveApprovalOperationSource(Client),
-                    _approvalClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _virtualEnclaveApprovalApprovalRestClient.UpdateAsync(Id.Parent, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource>(new VirtualEnclaveApprovalOperationSource(Client), _virtualEnclaveApprovalApprovalClientDiagnostics, Pipeline, _virtualEnclaveApprovalApprovalRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -249,20 +301,20 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Update a ApprovalResource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Approval_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>ApprovalResource_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualEnclaveApprovalResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,125 +326,14 @@ namespace Azure.ResourceManager.VirtualEnclaves
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Update");
+            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _approvalRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, VirtualEnclaveApprovalPatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource>(
-                    new VirtualEnclaveApprovalOperationSource(Client),
-                    _approvalClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _virtualEnclaveApprovalApprovalRestClient.Update(Id.Parent, Id.Name, patch, cancellationToken);
+                var operation = new VirtualEnclavesArmOperation<VirtualEnclaveApprovalResource>(new VirtualEnclaveApprovalOperationSource(Client), _virtualEnclaveApprovalApprovalClientDiagnostics, Pipeline, _virtualEnclaveApprovalApprovalRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a ApprovalResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Approval_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualEnclaveApprovalResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _approvalRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                VirtualEnclavesArmOperation operation = new VirtualEnclavesArmOperation(_approvalClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a ApprovalResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Approval_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualEnclaveApprovalResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _approvalRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                VirtualEnclavesArmOperation operation = new VirtualEnclavesArmOperation(_approvalClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -406,20 +347,20 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Upon receiving approval or rejection from approver, this facilitates actions on approval resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}/notifyInitiator. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}/notifyInitiator</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Approval_NotifyInitiator. </description>
+        /// <term>Operation Id</term>
+        /// <description>Approval_NotifyInitiator</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualEnclaveApprovalResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -431,27 +372,14 @@ namespace Azure.ResourceManager.VirtualEnclaves
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.NotifyInitiator");
+            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.NotifyInitiator");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _approvalRestClient.CreateNotifyInitiatorRequest(Id.Parent.ToString(), Id.Name, ApprovalActionContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
-                    new ApprovalActionResultOperationSource(),
-                    _approvalClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = await _virtualEnclaveApprovalApprovalRestClient.NotifyInitiatorAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(new ApprovalActionResultOperationSource(), _virtualEnclaveApprovalApprovalClientDiagnostics, Pipeline, _virtualEnclaveApprovalApprovalRestClient.CreateNotifyInitiatorRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -465,20 +393,20 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// Upon receiving approval or rejection from approver, this facilitates actions on approval resource
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}/notifyInitiator. </description>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Mission/approvals/{approvalName}/notifyInitiator</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Approval_NotifyInitiator. </description>
+        /// <term>Operation Id</term>
+        /// <description>Approval_NotifyInitiator</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualEnclaveApprovalResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualEnclaveApprovalResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -490,27 +418,14 @@ namespace Azure.ResourceManager.VirtualEnclaves
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _approvalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.NotifyInitiator");
+            using var scope = _virtualEnclaveApprovalApprovalClientDiagnostics.CreateScope("VirtualEnclaveApprovalResource.NotifyInitiator");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _approvalRestClient.CreateNotifyInitiatorRequest(Id.Parent.ToString(), Id.Name, ApprovalActionContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                VirtualEnclavesArmOperation<ApprovalActionResult> operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(
-                    new ApprovalActionResultOperationSource(),
-                    _approvalClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
+                var response = _virtualEnclaveApprovalApprovalRestClient.NotifyInitiator(Id.Parent, Id.Name, content, cancellationToken);
+                var operation = new VirtualEnclavesArmOperation<ApprovalActionResult>(new ApprovalActionResultOperationSource(), _virtualEnclaveApprovalApprovalClientDiagnostics, Pipeline, _virtualEnclaveApprovalApprovalRestClient.CreateNotifyInitiatorRequest(Id.Parent, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)

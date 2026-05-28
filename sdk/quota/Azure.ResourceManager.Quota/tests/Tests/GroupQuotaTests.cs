@@ -279,12 +279,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             ResourceIdentifier subscriptionQuotaAllocationsListResourceId = SubscriptionQuotaAllocationsListResource.CreateResourceIdentifier(managementGroupId, defaultSubscriptionId, groupQuotaName, resourceProviderName, location);
 
             // get the collection of this SubscriptionQuotaAllocationsListResource
-            // Collection scope is "Microsoft.Management/managementGroups/subscriptions"; groupQuotaName and
-            // resourceProviderName are passed as method parameters.
-            var scope = new ResourceIdentifier($"{managementGroupResource.Id}/subscriptions/{defaultSubscriptionId}");
-            SubscriptionQuotaAllocationsListCollection collection = Client.GetSubscriptionQuotaAllocationsLists(scope);
+            SubscriptionQuotaAllocationsListCollection collection = managementGroupResource.GetSubscriptionQuotaAllocationsLists();
 
-            SubscriptionQuotaAllocationsListResource result = await collection.GetAsync(groupQuotaName, resourceProviderName, location);
+            SubscriptionQuotaAllocationsListResource result = await collection.GetAsync(defaultSubscriptionId, groupQuotaName, resourceProviderName, location);
 
             Assert.IsNotNull(result.Data);
             var data = result.Data;
@@ -334,7 +331,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             ArmOperation<GroupQuotasEnforcementStatusResource> lro = await groupQuotaEnforcementStatusCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceProviderName, location, data);
             GroupQuotasEnforcementStatusResource result = lro.Value;
 
-            Assert.IsTrue(result.Data.Properties.ProvisioningState.Equals(Models.QuotaRequestStatus.Succeeded));
+            Assert.IsTrue(result.Data.Properties.ProvisioningState.Equals(QuotaRequestStatus.Succeeded));
             Assert.IsTrue(result.Data.Properties.EnforcementEnabled.Equals(EnforcementState.Enabled));
             Assert.IsTrue(result.Data.Name.Equals(location));
 
@@ -377,7 +374,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             GroupQuotasEnforcementStatusResource result = await collection.GetAsync(resourceProviderName, location);
 
             Assert.IsNotNull(result.Data);
-            Assert.IsTrue(result.Data.Properties.ProvisioningState.Equals(Models.QuotaRequestStatus.Succeeded));
+            Assert.IsTrue(result.Data.Properties.ProvisioningState.Equals(QuotaRequestStatus.Succeeded));
             Assert.IsTrue(result.Data.Properties.EnforcementEnabled.Equals(EnforcementState.Enabled));
             Assert.IsTrue(result.Data.Name.Equals(location.Name));
         }

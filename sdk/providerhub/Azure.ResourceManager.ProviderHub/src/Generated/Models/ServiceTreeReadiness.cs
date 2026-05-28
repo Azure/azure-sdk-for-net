@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ServiceTreeReadiness : IEquatable<ServiceTreeReadiness>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceTreeReadiness"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceTreeReadiness(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string ClosingDownValue = "ClosingDown";
         private const string DeprecatedValue = "Deprecated";
         private const string GAValue = "GA";
@@ -25,73 +32,41 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string RemovedFromARMValue = "RemovedFromARM";
         private const string RetiredValue = "Retired";
 
-        /// <summary> Initializes a new instance of <see cref="ServiceTreeReadiness"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceTreeReadiness(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the ClosingDown. </summary>
+        /// <summary> ClosingDown. </summary>
         public static ServiceTreeReadiness ClosingDown { get; } = new ServiceTreeReadiness(ClosingDownValue);
-
-        /// <summary> Gets the Deprecated. </summary>
+        /// <summary> Deprecated. </summary>
         public static ServiceTreeReadiness Deprecated { get; } = new ServiceTreeReadiness(DeprecatedValue);
-
-        /// <summary> Gets the GA. </summary>
+        /// <summary> GA. </summary>
         public static ServiceTreeReadiness GA { get; } = new ServiceTreeReadiness(GAValue);
-
-        /// <summary> Gets the InDevelopment. </summary>
+        /// <summary> InDevelopment. </summary>
         public static ServiceTreeReadiness InDevelopment { get; } = new ServiceTreeReadiness(InDevelopmentValue);
-
-        /// <summary> Gets the InternalOnly. </summary>
+        /// <summary> InternalOnly. </summary>
         public static ServiceTreeReadiness InternalOnly { get; } = new ServiceTreeReadiness(InternalOnlyValue);
-
-        /// <summary> Gets the PrivatePreview. </summary>
+        /// <summary> PrivatePreview. </summary>
         public static ServiceTreeReadiness PrivatePreview { get; } = new ServiceTreeReadiness(PrivatePreviewValue);
-
-        /// <summary> Gets the PublicPreview. </summary>
+        /// <summary> PublicPreview. </summary>
         public static ServiceTreeReadiness PublicPreview { get; } = new ServiceTreeReadiness(PublicPreviewValue);
-
-        /// <summary> Gets the RemovedFromARM. </summary>
+        /// <summary> RemovedFromARM. </summary>
         public static ServiceTreeReadiness RemovedFromARM { get; } = new ServiceTreeReadiness(RemovedFromARMValue);
-
-        /// <summary> Gets the Retired. </summary>
+        /// <summary> Retired. </summary>
         public static ServiceTreeReadiness Retired { get; } = new ServiceTreeReadiness(RetiredValue);
-
         /// <summary> Determines if two <see cref="ServiceTreeReadiness"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceTreeReadiness left, ServiceTreeReadiness right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ServiceTreeReadiness"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceTreeReadiness left, ServiceTreeReadiness right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ServiceTreeReadiness"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceTreeReadiness"/>. </summary>
         public static implicit operator ServiceTreeReadiness(string value) => new ServiceTreeReadiness(value);
 
-        /// <summary> Converts a string to a <see cref="ServiceTreeReadiness"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ServiceTreeReadiness?(string value) => value == null ? null : new ServiceTreeReadiness(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceTreeReadiness other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ServiceTreeReadiness other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

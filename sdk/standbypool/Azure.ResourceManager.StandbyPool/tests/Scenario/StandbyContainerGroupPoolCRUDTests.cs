@@ -50,8 +50,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
                 standbyContainerGroupPoolTestProperties.MaxReadyCapacity,
                 location,
                 standbyContainerGroupPoolTestProperties.ContainerGroupProfile,
-                standbyContainerGroupPoolTestProperties.SubnetId,
-                dynamicSizingEnabled: standbyContainerGroupPoolTestProperties.DynamicSizingEnabled);
+                standbyContainerGroupPoolTestProperties.SubnetId);
 
             VerifyStandbyContainerGroupPool(standbyContainerGroupPoolTestProperties, standbyContainerGroupPoolResource);
             return standbyContainerGroupPoolResource;
@@ -102,7 +101,6 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         {
             Assert.AreEqual(expected.StandbyPoolName, actual.Data.Name);
             Assert.AreEqual(expected.MaxReadyCapacity, actual.Data.Properties.ElasticityProfile.MaxReadyCapacity);
-            Assert.AreEqual(expected.DynamicSizingEnabled, actual.Data.Properties.ElasticityProfile.DynamicSizingEnabled);
 
             if (expected.Id != null)
             {
@@ -118,7 +116,6 @@ namespace Azure.ResourceManager.StandbyPool.Tests
             StandbyContainerGroupPoolTestProperties standbyContainerGroupPoolTestProperties = new StandbyContainerGroupPoolTestProperties();
             standbyContainerGroupPoolTestProperties.StandbyPoolName = standbyPoolName;
             standbyContainerGroupPoolTestProperties.MaxReadyCapacity = 1;
-            standbyContainerGroupPoolTestProperties.DynamicSizingEnabled = true;
             standbyContainerGroupPoolTestProperties.ResourceGroup = await CreateResourceGroup(subscription, resourceGroupName, location);
 
             // Resources
@@ -135,7 +132,6 @@ namespace Azure.ResourceManager.StandbyPool.Tests
         public class StandbyContainerGroupPoolTestProperties
         {
             public long MaxReadyCapacity { get; set; }
-            public bool? DynamicSizingEnabled { get; set; }
             public ResourceIdentifier Id { get; set; }
             public ResourceIdentifier StandbyContainerGroupPoolRuntimeViewResourceId { get; set; }
             public ResourceIdentifier SubnetId { get; set; }

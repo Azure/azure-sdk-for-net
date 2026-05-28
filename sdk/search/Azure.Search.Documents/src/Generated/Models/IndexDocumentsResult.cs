@@ -7,29 +7,64 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
+using System.Linq;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Response containing the status of operations for all documents in the indexing request. </summary>
     public partial class IndexDocumentsResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IndexDocumentsResult"/>. </summary>
-        internal IndexDocumentsResult()
+        /// <param name="results"> The list of status information for each document in the indexing request. </param>
+        internal IndexDocumentsResult(IEnumerable<IndexingResult> results)
         {
-            Results = new ChangeTrackingList<IndexingResult>();
+            Results = results.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="IndexDocumentsResult"/>. </summary>
         /// <param name="results"> The list of status information for each document in the indexing request. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexDocumentsResult(IReadOnlyList<IndexingResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IndexDocumentsResult(IReadOnlyList<IndexingResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Results = results;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IndexDocumentsResult"/> for deserialization. </summary>
+        internal IndexDocumentsResult()
+        {
         }
 
         /// <summary> The list of status information for each document in the indexing request. </summary>

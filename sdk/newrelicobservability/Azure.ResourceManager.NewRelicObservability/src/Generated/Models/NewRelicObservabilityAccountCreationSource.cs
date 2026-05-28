@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public readonly partial struct NewRelicObservabilityAccountCreationSource : IEquatable<NewRelicObservabilityAccountCreationSource>
     {
         private readonly string _value;
-        /// <summary> Account is created from LIFTR. </summary>
-        private const string LiftrValue = "LIFTR";
-        /// <summary> Account is created from NEWRELIC. </summary>
-        private const string NewrelicValue = "NEWRELIC";
 
         /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityAccountCreationSource"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NewRelicObservabilityAccountCreationSource(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string LiftrValue = "LIFTR";
+        private const string NewrelicValue = "NEWRELIC";
 
         /// <summary> Account is created from LIFTR. </summary>
         public static NewRelicObservabilityAccountCreationSource Liftr { get; } = new NewRelicObservabilityAccountCreationSource(LiftrValue);
-
         /// <summary> Account is created from NEWRELIC. </summary>
         public static NewRelicObservabilityAccountCreationSource Newrelic { get; } = new NewRelicObservabilityAccountCreationSource(NewrelicValue);
-
         /// <summary> Determines if two <see cref="NewRelicObservabilityAccountCreationSource"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NewRelicObservabilityAccountCreationSource left, NewRelicObservabilityAccountCreationSource right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NewRelicObservabilityAccountCreationSource"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NewRelicObservabilityAccountCreationSource left, NewRelicObservabilityAccountCreationSource right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NewRelicObservabilityAccountCreationSource"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NewRelicObservabilityAccountCreationSource"/>. </summary>
         public static implicit operator NewRelicObservabilityAccountCreationSource(string value) => new NewRelicObservabilityAccountCreationSource(value);
 
-        /// <summary> Converts a string to a <see cref="NewRelicObservabilityAccountCreationSource"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NewRelicObservabilityAccountCreationSource?(string value) => value == null ? null : new NewRelicObservabilityAccountCreationSource(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NewRelicObservabilityAccountCreationSource other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NewRelicObservabilityAccountCreationSource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.VirtualEnclaves;
+using Azure.Core;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary> ApprovalSettings Properties. </summary>
-    public partial class VirtualEnclaveApprovalSettings : IJsonModel<VirtualEnclaveApprovalSettings>
+    public partial class VirtualEnclaveApprovalSettings : IUtf8JsonSerializable, IJsonModel<VirtualEnclaveApprovalSettings>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualEnclaveApprovalSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeVirtualEnclaveApprovalSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualEnclaveApprovalSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualEnclaveApprovalSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerVirtualEnclavesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualEnclaveApprovalSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualEnclaveApprovalSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualEnclaveApprovalSettings IPersistableModel<VirtualEnclaveApprovalSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualEnclaveApprovalSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualEnclaveApprovalSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualEnclaveApprovalSettings)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(EndpointCreation))
             {
                 writer.WritePropertyName("endpointCreation"u8);
@@ -143,7 +103,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             {
                 writer.WritePropertyName("mandatoryApprovers"u8);
                 writer.WriteStartArray();
-                foreach (VirtualEnclaveMandatoryApprover item in MandatoryApprovers)
+                foreach (var item in MandatoryApprovers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -154,15 +114,15 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 writer.WritePropertyName("minimumApproversRequired"u8);
                 writer.WriteNumberValue(MinimumApproversRequired.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -171,27 +131,22 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualEnclaveApprovalSettings IJsonModel<VirtualEnclaveApprovalSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VirtualEnclaveApprovalSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VirtualEnclaveApprovalSettings IJsonModel<VirtualEnclaveApprovalSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualEnclaveApprovalSettings)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualEnclaveApprovalSettings(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualEnclaveApprovalSettings DeserializeVirtualEnclaveApprovalSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static VirtualEnclaveApprovalSettings DeserializeVirtualEnclaveApprovalSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -211,154 +166,156 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             VirtualEnclaveApprovalPolicy? notificationOnApprovalDeletion = default;
             IList<VirtualEnclaveMandatoryApprover> mandatoryApprovers = default;
             long? minimumApproversRequired = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("endpointCreation"u8))
+                if (property.NameEquals("endpointCreation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endpointCreation = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    endpointCreation = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("endpointUpdate"u8))
+                if (property.NameEquals("endpointUpdate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endpointUpdate = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    endpointUpdate = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("endpointDeletion"u8))
+                if (property.NameEquals("endpointDeletion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endpointDeletion = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    endpointDeletion = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("connectionCreation"u8))
+                if (property.NameEquals("connectionCreation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectionCreation = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    connectionCreation = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("connectionUpdate"u8))
+                if (property.NameEquals("connectionUpdate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectionUpdate = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    connectionUpdate = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("connectionDeletion"u8))
+                if (property.NameEquals("connectionDeletion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectionDeletion = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    connectionDeletion = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("enclaveCreation"u8))
+                if (property.NameEquals("enclaveCreation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enclaveCreation = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    enclaveCreation = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("enclaveDeletion"u8))
+                if (property.NameEquals("enclaveDeletion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enclaveDeletion = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    enclaveDeletion = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("maintenanceMode"u8))
+                if (property.NameEquals("maintenanceMode"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maintenanceMode = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    maintenanceMode = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("serviceCatalogDeployment"u8))
+                if (property.NameEquals("serviceCatalogDeployment"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    serviceCatalogDeployment = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    serviceCatalogDeployment = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("notificationOnApprovalCreation"u8))
+                if (property.NameEquals("notificationOnApprovalCreation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    notificationOnApprovalCreation = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    notificationOnApprovalCreation = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("notificationOnApprovalAction"u8))
+                if (property.NameEquals("notificationOnApprovalAction"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    notificationOnApprovalAction = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    notificationOnApprovalAction = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("notificationOnApprovalDeletion"u8))
+                if (property.NameEquals("notificationOnApprovalDeletion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    notificationOnApprovalDeletion = new VirtualEnclaveApprovalPolicy(prop.Value.GetString());
+                    notificationOnApprovalDeletion = new VirtualEnclaveApprovalPolicy(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("mandatoryApprovers"u8))
+                if (property.NameEquals("mandatoryApprovers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VirtualEnclaveMandatoryApprover> array = new List<VirtualEnclaveMandatoryApprover>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(VirtualEnclaveMandatoryApprover.DeserializeVirtualEnclaveMandatoryApprover(item, options));
                     }
                     mandatoryApprovers = array;
                     continue;
                 }
-                if (prop.NameEquals("minimumApproversRequired"u8))
+                if (property.NameEquals("minimumApproversRequired"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minimumApproversRequired = prop.Value.GetInt64();
+                    minimumApproversRequired = property.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualEnclaveApprovalSettings(
                 endpointCreation,
                 endpointUpdate,
@@ -375,7 +332,38 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
                 notificationOnApprovalDeletion,
                 mandatoryApprovers ?? new ChangeTrackingList<VirtualEnclaveMandatoryApprover>(),
                 minimumApproversRequired,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualEnclaveApprovalSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerVirtualEnclavesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualEnclaveApprovalSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualEnclaveApprovalSettings IPersistableModel<VirtualEnclaveApprovalSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualEnclaveApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeVirtualEnclaveApprovalSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualEnclaveApprovalSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualEnclaveApprovalSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    /// <summary></summary>
     public partial class DynatraceTagRuleResource : IJsonModel<DynatraceTagRuleData>
     {
-        private static IJsonModel<DynatraceTagRuleData> s_dataDeserializationInstance;
+        private static DynatraceTagRuleData s_dataDeserializationInstance;
+        private static DynatraceTagRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<DynatraceTagRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DynatraceTagRuleData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DynatraceTagRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceTagRuleData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        DynatraceTagRuleData IJsonModel<DynatraceTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DynatraceTagRuleData IJsonModel<DynatraceTagRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceTagRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DynatraceTagRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DynatraceTagRuleData>(Data, options, AzureResourceManagerDynatraceContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         DynatraceTagRuleData IPersistableModel<DynatraceTagRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceTagRuleData>(data, options, AzureResourceManagerDynatraceContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DynatraceTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DynatraceTagRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceTagRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

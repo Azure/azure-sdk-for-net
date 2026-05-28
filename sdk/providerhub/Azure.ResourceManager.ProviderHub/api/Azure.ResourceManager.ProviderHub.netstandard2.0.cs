@@ -27,10 +27,7 @@ namespace Azure.ResourceManager.ProviderHub
     {
         public CustomRolloutData(Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties properties) { }
         public Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.CustomRolloutData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.CustomRolloutData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.CustomRolloutData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -79,10 +76,7 @@ namespace Azure.ResourceManager.ProviderHub
     {
         public DefaultRolloutData() { }
         public Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.DefaultRolloutData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.DefaultRolloutData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.DefaultRolloutData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -239,10 +233,7 @@ namespace Azure.ResourceManager.ProviderHub
     {
         public NotificationRegistrationData() { }
         public Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.NotificationRegistrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.NotificationRegistrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.NotificationRegistrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -289,10 +280,7 @@ namespace Azure.ResourceManager.ProviderHub
     {
         public ProviderAuthorizedApplicationData() { }
         public Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.ProviderAuthorizedApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ProviderAuthorizedApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ProviderAuthorizedApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.ProviderAuthorizedApplicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ProviderAuthorizedApplicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -362,10 +350,7 @@ namespace Azure.ResourceManager.ProviderHub
     {
         public ProviderMonitorSettingData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? ProviderMonitorSettingProvisioningState { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.ProviderMonitorSettingData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ProviderMonitorSettingData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ProviderMonitorSettingData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.ProviderMonitorSettingData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ProviderMonitorSettingData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -413,10 +398,7 @@ namespace Azure.ResourceManager.ProviderHub
         public ProviderRegistrationData() { }
         public Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.ProviderRegistrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.ProviderRegistrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ProviderRegistrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -431,25 +413,17 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo> CheckinManifest(Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo>> CheckinManifestAsync(Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ProviderHub.Models.OperationsPutContent> CreateOrUpdate(Azure.ResourceManager.ProviderHub.Models.OperationsPutContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.Models.OperationsPutContent>> CreateOrUpdateAsync(Azure.ResourceManager.ProviderHub.Models.OperationsPutContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation DeleteResourcesResourceAction(Azure.WaitUntil waitUntil, string resourceActionName, Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteResourcesResourceActionAsync(Azure.WaitUntil waitUntil, string resourceActionName, Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest> GenerateManifest(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest>> GenerateManifestAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest> GenerateManifestNewRegionFrontloadRelease(Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayload properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest>> GenerateManifestNewRegionFrontloadReleaseAsync(Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayload properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition> GenerateOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition> GenerateOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition> GetByProviderRegistration(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition> GetByProviderRegistrationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.CustomRolloutResource> GetCustomRollout(string rolloutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.CustomRolloutResource>> GetCustomRolloutAsync(string rolloutName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ProviderHub.CustomRolloutCollection GetCustomRollouts() { throw null; }
@@ -529,10 +503,7 @@ namespace Azure.ResourceManager.ProviderHub
         public ResourceTypeRegistrationData() { }
         public Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -591,10 +562,7 @@ namespace Azure.ResourceManager.ProviderHub
     {
         public ResourceTypeSkuData() { }
         public Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.ResourceTypeSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.ResourceTypeSkuData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.ResourceTypeSkuData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -667,11 +635,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation ProtectedAsyncOperationPolling { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation ProtectedAsyncOperationPollingAuditOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation left, Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation left, Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -684,11 +653,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType ProtectedAsyncOperationPolling { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType ProtectedAsyncOperationPollingAuditOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType left, Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType left, Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -701,11 +671,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration ProtectedAsyncOperationPolling { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration ProtectedAsyncOperationPollingAuditOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration left, Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration left, Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -714,10 +685,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public AllowedResourceName() { }
         public string GetActionVerb { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.AllowedResourceName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.AllowedResourceName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.AllowedResourceName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AllowedResourceName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AllowedResourceName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.AllowedResourceName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AllowedResourceName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -735,11 +703,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent RPContract { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent left, Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent left, Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -748,10 +717,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public AllowedUnauthorizedActionsExtension() { }
         public string Action { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionIntent? Intent { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -763,10 +729,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ApplicationDataAuthorization(Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole role) { }
         public System.Collections.Generic.IList<string> ResourceTypes { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole Role { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -782,11 +745,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole LimitedOwner { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole ServiceOwner { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole left, Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole left, Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -795,10 +759,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ApplicationProviderAuthorization() { }
         public string ManagedByRoleDefinitionId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ApplicationProviderAuthorization JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ApplicationProviderAuthorization PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ApplicationProviderAuthorization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ApplicationProviderAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ApplicationProviderAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ApplicationProviderAuthorization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ApplicationProviderAuthorization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -807,84 +768,42 @@ namespace Azure.ResourceManager.ProviderHub.Models
     }
     public static partial class ArmProviderHubModelFactory
     {
-        public static Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization ApplicationDataAuthorization(Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole role = default(Azure.ResourceManager.ProviderHub.Models.ApplicationOwnershipRole), System.Collections.Generic.IEnumerable<string> resourceTypes = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules AsyncOperationPollingRules(System.Collections.Generic.IEnumerable<string> authorizationActions = null, Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation? additionalOptions = default(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration CanaryTrafficRegionRolloutConfiguration(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> skipRegions = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> regions = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent CheckinManifestContent(string environment = null, Azure.Core.AzureLocation baselineArmManifestLocation = default(Azure.Core.AzureLocation)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo CheckinManifestInfo(bool isCheckedIn, string statusMessage, string pullRequest, string commitId) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications CheckNameAvailabilitySpecifications(bool? isDefaultValidationEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> resourceTypesWithCustomValidation = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo CheckinManifestInfo(bool isCheckedIn = false, string statusMessage = null, string pullRequest = null, string commitId = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.CustomRolloutData CustomRolloutData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties CustomRolloutProperties(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState, Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification specification, Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus status) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification CustomRolloutSpecification(Azure.ResourceManager.ProviderHub.Models.CustomRolloutAutoProvisionConfig autoProvisionConfig = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> canaryRegions = null, System.Collections.Generic.IEnumerable<string> releaseScopes = null, bool? refreshSubscriptionRegistration = default(bool?), bool? skipReleaseScopeValidation = default(bool?), Azure.ResourceManager.ProviderHub.ProviderRegistrationData providerRegistration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData> resourceTypeRegistrations = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus CustomRolloutStatus(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> completedRegions = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo> failedOrSkippedRegions = null, Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo manifestCheckinStatus = null) { throw null; }
+        public static Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties CustomRolloutProperties(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?), Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification specification = null, Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus status = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.DefaultRolloutData DefaultRolloutData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties DefaultRolloutProperties(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState, Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification specification, Azure.ResourceManager.ProviderHub.Models.DefaultRolloutStatus status) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification DefaultRolloutSpecification(bool? isExpeditedRolloutEnabled = default(bool?), Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration canary = null, Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration lowTraffic = null, Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration mediumTraffic = null, Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration highTraffic = null, Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration restOfTheWorldGroupOne = null, Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo = null, Azure.ResourceManager.ProviderHub.ProviderRegistrationData providerRegistration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData> resourceTypeRegistrations = null, Azure.ResourceManager.ProviderHub.Models.DefaultRolloutAutoProvisionConfig autoProvisionConfig = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.DefaultRolloutStatus DefaultRolloutStatus(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> completedRegions = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo> failedOrSkippedRegions = null, Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory? nextTrafficRegion = default(Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory?), System.DateTimeOffset? nextTrafficRegionScheduledOn = default(System.DateTimeOffset?), Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult? subscriptionReregistrationResult = default(Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult?), Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo manifestCheckinStatus = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo ExtendedErrorInfo(string code = null, string target = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo> details = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.TypedErrorInfo> additionalInfo = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ExtensionOptions ExtensionOptions(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType> request = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType> response = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule FanoutLinkedNotificationRule(Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration tokenAuthConfiguration = null, System.Collections.Generic.IEnumerable<string> actions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> endpoints = null, Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration dstsConfiguration = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties IdentityManagementProperties(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType? managementType = default(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType?), string applicationId = null, System.Collections.Generic.IEnumerable<string> applicationIds = null, System.Collections.Generic.IEnumerable<string> delegationAppIds = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.LegacyDisallowedCondition LegacyDisallowedCondition(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation> disallowedLegacyOperations = null, string feature = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule LinkedNotificationRule(System.Collections.Generic.IEnumerable<string> actions = null, System.Collections.Generic.IEnumerable<string> actionsOnFailedOperation = null, System.Collections.Generic.IEnumerable<string> fastPathActions = null, System.Collections.Generic.IEnumerable<string> fastPathActionsOnFailedOperation = null, System.TimeSpan? linkedNotificationTimeout = default(System.TimeSpan?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule LinkedOperationRule(Azure.ResourceManager.ProviderHub.Models.LinkedOperation linkedOperation, Azure.ResourceManager.ProviderHub.Models.LinkedAction linkedAction) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule LinkedOperationRule(Azure.ResourceManager.ProviderHub.Models.LinkedOperation linkedOperation = default(Azure.ResourceManager.ProviderHub.Models.LinkedOperation), Azure.ResourceManager.ProviderHub.Models.LinkedAction linkedAction = default(Azure.ResourceManager.ProviderHub.Models.LinkedAction), System.Collections.Generic.IEnumerable<string> dependsOnTypes = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.LoggingHiddenPropertyPaths LoggingHiddenPropertyPaths(System.Collections.Generic.IEnumerable<string> hiddenPathsOnRequest = null, System.Collections.Generic.IEnumerable<string> hiddenPathsOnResponse = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ManifestLevelPropertyBag ManifestLevelPropertyBag(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount> resourceHydrationAccounts = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint NotificationEndpoint(Azure.Core.ResourceIdentifier notificationDestination = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null) { throw null; }
+        public static Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties DefaultRolloutProperties(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?), Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification specification = null, Azure.ResourceManager.ProviderHub.Models.DefaultRolloutStatus status = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule LinkedOperationRule(Azure.ResourceManager.ProviderHub.Models.LinkedOperation linkedOperation = default(Azure.ResourceManager.ProviderHub.Models.LinkedOperation), Azure.ResourceManager.ProviderHub.Models.LinkedAction linkedAction = default(Azure.ResourceManager.ProviderHub.Models.LinkedAction)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.NotificationRegistrationData NotificationRegistrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties NotificationRegistrationProperties(Azure.ResourceManager.ProviderHub.Models.NotificationMode? notificationMode = default(Azure.ResourceManager.ProviderHub.Models.NotificationMode?), Azure.ResourceManager.ProviderHub.Models.MessageScope? messageScope = default(Azure.ResourceManager.ProviderHub.Models.MessageScope?), System.Collections.Generic.IEnumerable<string> includedEvents = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint> notificationEndpoints = null, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.OperationsDefinition OperationsDefinition(string name = null, bool? isDataAction = default(bool?), Azure.ResourceManager.ProviderHub.Models.OperationOrigins? origin = default(Azure.ResourceManager.ProviderHub.Models.OperationOrigins?), Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition display = null, Azure.ResourceManager.ProviderHub.Models.OperationActionType? actionType = default(Azure.ResourceManager.ProviderHub.Models.OperationActionType?), System.BinaryData properties = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.OperationsPutContent OperationsPutContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition> operationsContentContents = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.ProviderAuthorizedApplicationData ProviderAuthorizedApplicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties ProviderAuthorizedApplicationProperties(Azure.ResourceManager.ProviderHub.Models.ApplicationProviderAuthorization providerAuthorization = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization> dataAuthorizations = null, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ProviderFilterRule ProviderFilterRule(string filterQuery = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderEndpointInformation> endpointInformation = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayload ProviderFrontloadPayload(Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties ProviderFrontloadPayloadProperties(string operationType = null, string providerNamespace = null, string frontloadLocation = null, string copyFromLocation = null, Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment environmentType = default(Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment), Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction serviceFeatureFlag = default(Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction), System.Collections.Generic.IEnumerable<string> includeResourceTypes = null, System.Collections.Generic.IEnumerable<string> excludeResourceTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount> overrideManifestLevelFieldsResourceHydrationAccounts = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase overrideEndpointLevelFields = null, System.Collections.Generic.IEnumerable<string> ignoreFields = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.ProviderMonitorSettingData ProviderMonitorSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? providerMonitorSettingProvisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule ProviderQuotaRule(Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy? quotaPolicy = default(Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderLocationQuotaRule> locationRules = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.ProviderRegistrationData ProviderRegistrationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties properties) { throw null; }
         public static Azure.ResourceManager.ProviderHub.ProviderRegistrationData ProviderRegistrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties properties = null, Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind? kind = default(Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties ProviderRegistrationProperties(System.Collections.Generic.IEnumerable<string> providerAuthenticationAllowedAudiences = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderService> services = null, string serviceName = null, string providerVersion = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderType? providerType = default(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType?), System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions requestHeaderOptions = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement management = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities> capabilities = null, Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation? crossTenantTokenValidation = default(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation?), System.BinaryData metadata = null, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions templateDeploymentOptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> globalNotificationEndpoints = null, bool? enableTenantLinkedNotification = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderNotification> notifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule> linkedNotificationRules = null, Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules asyncOperationPollingRules = null, Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration dstsConfiguration = null, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption? notificationOptions = default(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount> resourceHydrationAccounts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.SubscriberSetting> notificationSubscriberSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints = null, System.Collections.Generic.IEnumerable<string> optionalFeatures = null, Azure.ResourceManager.ProviderHub.Models.BlockActionVerb? resourceGroupLockOptionDuringMoveBlockActionVerb = default(Azure.ResourceManager.ProviderHub.Models.BlockActionVerb?), Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType? serviceClientOptionsType = default(Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType?), string legacyNamespace = null, System.Collections.Generic.IEnumerable<string> legacyRegistrations = null, string customManifestVersion = null, Azure.ResourceManager.ProviderHub.Models.ProviderHubMetadata providerHubMetadata = null, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?), Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = null, System.Collections.Generic.IEnumerable<string> privateResourceProviderAllowedSubscriptions = null, Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration tokenAuthConfiguration = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceType ProviderResourceType(string name = null, Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType? routingType = default(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType?), Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType? additionalOptions = default(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceType?), Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation? crossTenantTokenValidation = default(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation?), Azure.ResourceManager.ProviderHub.Models.ResourceValidation? resourceValidation = default(Azure.ResourceManager.ProviderHub.Models.ResourceValidation?), System.Collections.Generic.IEnumerable<string> allowedUnauthorizedActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping> authorizationActionMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LoggingRule> loggingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule> throttlingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> endpoints = null, Azure.ResourceManager.ProviderHub.Models.MarketplaceType? marketplaceType = default(Azure.ResourceManager.ProviderHub.Models.MarketplaceType?), Azure.ResourceManager.ProviderHub.Models.IdentityManagementType? managementType = default(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType?), System.BinaryData metadata = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule> subscriptionStateRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo> serviceTreeInfos = null, Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions requestHeaderOptions = null, string skuLink = null, System.Collections.Generic.IEnumerable<string> disallowedActionVerbs = null, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy templateDeploymentPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions> extendedLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule> linkedOperationRules = null, Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy? resourceDeletionPolicy = default(Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy?), Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule quotaRule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderNotification> notifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule> linkedNotificationRules = null, Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules asyncOperationPollingRules = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceType ProviderResourceType(string name, Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType? routingType, Azure.ResourceManager.ProviderHub.Models.ResourceValidation? resourceValidation, System.Collections.Generic.IEnumerable<string> allowedUnauthorizedActions, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping> authorizationActionMappings, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LoggingRule> loggingRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule> throttlingRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> endpoints, Azure.ResourceManager.ProviderHub.Models.MarketplaceType? marketplaceType, Azure.ResourceManager.ProviderHub.Models.IdentityManagementType? managementType, System.BinaryData metadata, System.Collections.Generic.IEnumerable<string> requiredFeatures, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule> subscriptionStateRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo> serviceTreeInfos, Azure.ResourceManager.ProviderHub.Models.OptInHeaderType? optInHeaders, string skuLink, System.Collections.Generic.IEnumerable<string> disallowedActionVerbs, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy templateDeploymentPolicy, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions> extendedLocations, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule> linkedOperationRules, Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy? resourceDeletionPolicy) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule ProviderSubscriptionStateRule(Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState? state = default(Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState?), System.Collections.Generic.IEnumerable<string> allowedActions = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceType ProviderResourceType(string name = null, Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType? routingType = default(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType?), Azure.ResourceManager.ProviderHub.Models.ResourceValidation? resourceValidation = default(Azure.ResourceManager.ProviderHub.Models.ResourceValidation?), System.Collections.Generic.IEnumerable<string> allowedUnauthorizedActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping> authorizationActionMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LoggingRule> loggingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule> throttlingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> endpoints = null, Azure.ResourceManager.ProviderHub.Models.MarketplaceType? marketplaceType = default(Azure.ResourceManager.ProviderHub.Models.MarketplaceType?), Azure.ResourceManager.ProviderHub.Models.IdentityManagementType? managementType = default(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType?), System.BinaryData metadata = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule> subscriptionStateRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo> serviceTreeInfos = null, Azure.ResourceManager.ProviderHub.Models.OptInHeaderType? optInHeaders = default(Azure.ResourceManager.ProviderHub.Models.OptInHeaderType?), string skuLink = null, System.Collections.Generic.IEnumerable<string> disallowedActionVerbs = null, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy templateDeploymentPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions> extendedLocations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule> linkedOperationRules = null, Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy? resourceDeletionPolicy = default(Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata(bool isEnabled = false, int? concurrencyLimit = default(int?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole ResourceAccessRole(System.Collections.Generic.IEnumerable<string> allowedGroupClaims = null, System.Collections.Generic.IEnumerable<string> actions = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction ResourceManagementAction(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity> resources = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity ResourceManagementEntity(Azure.Core.ResourceIdentifier resourceId = null, string homeTenantId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string status = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization ResourceProviderAuthorization(string applicationId = null, string roleDefinitionId = null, string managedByRoleDefinitionId = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagedByAuthorization managedByAuthorization = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ThirdPartyExtension> allowedThirdPartyExtensions = null, string groupingTag = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities ResourceProviderCapabilities(string quotaId = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect effect = default(Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect), System.Collections.Generic.IEnumerable<string> requiredFeatures = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled, System.Collections.Generic.IEnumerable<string> apiVersions, System.Uri endpointUri, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations, System.Collections.Generic.IEnumerable<string> requiredFeatures, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy, System.TimeSpan? timeout) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Uri endpointUri = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), System.TimeSpan? timeout = default(System.TimeSpan?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Uri endpointUri = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), System.TimeSpan? timeout = default(System.TimeSpan?), Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType? endpointType = default(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType?), string skuLink = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagedByAuthorization ResourceProviderManagedByAuthorization(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderAdditionalAuthorization> additionalAuthorizations = null, string managedByResourceRoleDefinitionId = null, bool? doesAllowManagedByInheritance = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement ResourceProviderManagement(System.Collections.Generic.IEnumerable<string> schemaOwners = null, System.Collections.Generic.IEnumerable<string> manifestOwners = null, System.Collections.Generic.IEnumerable<string> authorizationOwners = null, string incidentRoutingService = null, string incidentRoutingTeam = null, string incidentContactEmail = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo> serviceTreeInfos = null, Azure.ResourceManager.ProviderHub.Models.ResourceAccessPolicy? resourceAccessPolicy = default(Azure.ResourceManager.ProviderHub.Models.ResourceAccessPolicy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole> resourceAccessRoleList = null, System.Collections.Generic.IEnumerable<string> expeditedRolloutSubmitters = null, Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType? serverFailureResponseMessageType = default(Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType?), Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutMetadata expeditedRolloutMetadata = null, System.Collections.Generic.IEnumerable<string> canaryManifestOwners = null, string profitCenterCode = null, string profitCenterProgramId = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest ResourceProviderManifest(System.Collections.Generic.IEnumerable<string> providerAuthenticationAllowedAudiences = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderService> services = null, string serviceName = null, string providerVersion = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderType? providerType = default(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType?), System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions requestHeaderOptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderResourceType> resourceTypes = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement management = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities> capabilities = null, Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation? crossTenantTokenValidation = default(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation?), System.BinaryData metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> globalNotificationEndpoints = null, Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null, bool? isTenantLinkedNotificationEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderNotification> notifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule> linkedNotificationRules = null, Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules asyncOperationPollingRules = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest ResourceProviderManifest(System.Collections.Generic.IEnumerable<string> providerAuthenticationAllowedAudiences = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, string providerVersion = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderType? providerType = default(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType?), System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), Azure.ResourceManager.ProviderHub.Models.OptInHeaderType? optInHeaders = default(Azure.ResourceManager.ProviderHub.Models.OptInHeaderType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderResourceType> resourceTypes = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement management = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities> capabilities = null, System.BinaryData metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> globalNotificationEndpoints = null, Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint ResourceTypeEndpoint(Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind? kind = default(Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtension> extensions = null, System.TimeSpan? timeout = default(System.TimeSpan?), Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType? endpointType = default(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType?), Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration tokenAuthConfiguration = null, string skuLink = null, System.Uri endpointUri = null, string apiVersion = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration dstsConfiguration = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary? dataBoundary = default(Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase ResourceTypeEndpointBase(bool enabled = false, System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Uri endpointUri = null, System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy), System.TimeSpan timeout = default(System.TimeSpan), Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType endpointType = default(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType), Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration dstsConfiguration = null, string skuLink = null, string apiVersion = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtension ResourceTypeExtension(System.Uri endpointUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory> extensionCategories = null, System.TimeSpan? timeout = default(System.TimeSpan?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData ResourceTypeRegistrationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties properties) { throw null; }
         public static Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData ResourceTypeRegistrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties properties = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind? kind = default(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency ResourceTypeRegistrationDeleteDependency(System.Collections.Generic.IEnumerable<string> requiredFeatures = null, string linkedProperty = null, string linkedType = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationLegacyPolicy ResourceTypeRegistrationLegacyPolicy(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation> disallowedLegacyOperations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LegacyDisallowedCondition> disallowedConditions = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties ResourceTypeRegistrationProperties(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType? routingType = default(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType?), Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration? additionalOptions = default(Azure.ResourceManager.ProviderHub.Models.AdditionalOptionResourceTypeRegistration?), Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation? crossTenantTokenValidation = default(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation?), Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality? regionality = default(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint> endpoints = null, Azure.ResourceManager.ProviderHub.Models.ExtensionOptions extensionOptionsResourceCreationBegin = null, Azure.ResourceManager.ProviderHub.Models.MarketplaceType? marketplaceType = default(Azure.ResourceManager.ProviderHub.Models.MarketplaceType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.SwaggerSpecification> swaggerSpecifications = null, System.Collections.Generic.IEnumerable<string> allowedUnauthorizedActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping> authorizationActionMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LoggingRule> loggingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule> throttlingRules = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy = default(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy?), bool? isAsyncOperationEnabled = default(bool?), Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?), bool? isThirdPartyS2SEnabled = default(bool?), Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = null, bool? isPureProxy = default(bool?), Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties identityManagement = null, Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications = null, System.Collections.Generic.IEnumerable<string> disallowedActionVerbs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo> serviceTreeInfos = null, Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions requestHeaderOptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule> subscriptionStateRules = null, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions templateDeploymentOptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions> extendedLocations = null, Azure.ResourceManager.ProviderHub.Models.ResourceMovePolicy resourceMovePolicy = null, Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy? resourceDeletionPolicy = default(Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = null, Azure.ResourceManager.ProviderHub.Models.ResourceGraphConfiguration resourceGraphConfiguration = null, Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement management = null, bool? isNoncompliantCollectionResponseAllowed = default(bool?), Azure.ResourceManager.ProviderHub.Models.ResourceTypeOnBehalfOfToken onBehalfOfTokens = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory? category = default(Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory?), Azure.ResourceManager.ProviderHub.Models.ResourceValidation? resourceValidation = default(Azure.ResourceManager.ProviderHub.Models.ResourceValidation?), System.Collections.Generic.IEnumerable<string> disallowedEndUserOperations = null, System.Collections.Generic.IDictionary<string, System.BinaryData> metadata = null, string skuLink = null, Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule quotaRule = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderNotification> notifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule> linkedNotificationRules = null, Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules asyncOperationPollingRules = null, Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration tokenAuthConfiguration = null, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy templateDeploymentPolicy = null, bool? isEmptyRoleAssignmentsAllowed = default(bool?), Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType? policyExecutionType = default(Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType?), Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy? availabilityZonePolicy = default(Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy?), Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration dstsConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRule> asyncTimeoutRules = null, System.Collections.Generic.IEnumerable<string> commonApiVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationApiProfile> apiProfiles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule> linkedOperationRules = null, string legacyName = null, System.Collections.Generic.IEnumerable<string> legacyNames = null, System.Collections.Generic.IEnumerable<string> allowedTemplateDeploymentReferenceActions = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationLegacyPolicy legacyPolicy = null, string manifestLink = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityRule capacityRule = null, bool? isAddOnPlanConversionAllowed = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.AllowedResourceName> allowedResourceNames = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceCache resourceCache = null, Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption? resourceQueryManagementFilterOption = default(Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption?), bool? areTagsSupported = default(bool?), Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions resourceManagementOptions = null, string groupingTag = null, bool? isAddResourceListTargetLocationsAllowed = default(bool?), Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode? commonApiVersionsMergeMode = default(Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode?), string routingRuleHostResourceType = null, Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode? frontdoorRequestMode = default(Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode?), Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType? resourceSubType = default(Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType?), string asyncOperationResourceTypeName = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions ResourceTypeRegistrationResourceManagementOptions(Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation? batchProvisioningSupportSupportedOperations = default(Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency> deleteDependencies = null, string nestedProvisioningSupportMinimumApiVersion = null) { throw null; }
         public static Azure.ResourceManager.ProviderHub.ResourceTypeSkuData ResourceTypeSkuData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuLocationInfo ResourceTypeSkuLocationInfo(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuZoneDetail> zoneDetails = null, System.Collections.Generic.IEnumerable<string> extendedLocations = null, Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType? locationType = default(Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType?)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties ResourceTypeSkuProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting> skuSettings = null, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? provisioningState = default(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting ResourceTypeSkuSetting(string name = null, string tier = null, string size = null, string family = null, string kind = null, System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuLocationInfo> locationInfo = null, System.Collections.Generic.IEnumerable<string> requiredQuotaIds = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCapacity capacity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCost> costs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceSkuCapability> capabilities = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuZoneDetail ResourceTypeSkuZoneDetail(System.Collections.Generic.IEnumerable<string> name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceSkuCapability> capabilities = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.RolloutStatusBase RolloutStatusBase(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> completedRegions = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo> failedOrSkippedRegions = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.SubscriberSetting SubscriberSetting(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ProviderFilterRule> filterRules = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.SubscriptionStateOverrideAction> subscriptionStateOverrideActions = null, System.TimeSpan? softDeleteTtl = default(System.TimeSpan?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.SwaggerSpecification SwaggerSpecification(System.Collections.Generic.IEnumerable<string> apiVersions = null, System.Uri swaggerSpecFolderUri = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions TemplateDeploymentOptions(bool? isPreflightSupported = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.PreflightOption> preflightOptions = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy TemplateDeploymentPolicy(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability capabilities, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption preflightOptions) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ThirdPartyProviderAuthorization ThirdPartyProviderAuthorization(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.LightHouseAuthorization> authorizations = null, string managedByTenantId = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.ThrottlingRule ThrottlingRule(string action = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ThrottlingMetric> metrics = null, System.Collections.Generic.IEnumerable<string> requiredFeatures = null, System.Collections.Generic.IEnumerable<string> applicationId = null) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration TrafficRegionRolloutConfiguration(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> regions = null, System.TimeSpan? waitDuration = default(System.TimeSpan?)) { throw null; }
-        public static Azure.ResourceManager.ProviderHub.Models.TrafficRegions TrafficRegions(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> regions = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy TemplateDeploymentPolicy(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability capabilities = default(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability), Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption preflightOptions = default(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption)) { throw null; }
         public static Azure.ResourceManager.ProviderHub.Models.TypedErrorInfo TypedErrorInfo(string typedErrorInfoType = null, System.BinaryData info = null) { throw null; }
     }
     public partial class AsyncOperationPollingRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules>
@@ -892,10 +811,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public AsyncOperationPollingRules() { }
         public Azure.ResourceManager.ProviderHub.Models.AdditionalOptionAsyncOperation? AdditionalOptions { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AuthorizationActions { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AsyncOperationPollingRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -907,10 +823,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public AsyncTimeoutRule() { }
         public string ActionName { get { throw null; } set { } }
         public string Timeout { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -922,10 +835,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public AuthorizationActionMapping() { }
         public string Desired { get { throw null; } set { } }
         public string Original { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -942,11 +852,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy SingleZoned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy left, Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy left, Azure.ResourceManager.ProviderHub.Models.AvailabilityZonePolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -963,11 +874,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment Prod { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment left, Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment left, Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -984,11 +896,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.BlockActionVerb Unrecognized { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.BlockActionVerb Write { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.BlockActionVerb other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.BlockActionVerb left, Azure.ResourceManager.ProviderHub.Models.BlockActionVerb right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.BlockActionVerb (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.BlockActionVerb? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.BlockActionVerb left, Azure.ResourceManager.ProviderHub.Models.BlockActionVerb right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -997,10 +910,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public CanaryTrafficRegionRolloutConfiguration() { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> Regions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> SkipRegions { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1012,10 +922,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public CheckinManifestContent(string environment, Azure.Core.AzureLocation baselineArmManifestLocation) { }
         public Azure.Core.AzureLocation BaselineArmManifestLocation { get { throw null; } }
         public string Environment { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1029,10 +936,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public bool IsCheckedIn { get { throw null; } set { } }
         public string PullRequest { get { throw null; } set { } }
         public string StatusMessage { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1044,10 +948,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public CheckNameAvailabilitySpecifications() { }
         public bool? IsDefaultValidationEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ResourceTypesWithCustomValidation { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1063,11 +964,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode Merge { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode Overwrite { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode left, Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode left, Azure.ResourceManager.ProviderHub.Models.CommonApiVersionsMergeMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1080,11 +982,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation EnsureSecureValidation { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation PassthroughInsecureToken { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation left, Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation left, Azure.ResourceManager.ProviderHub.Models.CrossTenantTokenValidation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1093,10 +996,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public CustomRolloutAutoProvisionConfig() { }
         public bool? IsResourceGraphEnabled { get { throw null; } set { } }
         public bool? IsStorageEnabled { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CustomRolloutAutoProvisionConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CustomRolloutAutoProvisionConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.CustomRolloutAutoProvisionConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutAutoProvisionConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutAutoProvisionConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.CustomRolloutAutoProvisionConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutAutoProvisionConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1109,10 +1009,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification Specification { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus Status { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1130,10 +1027,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<string> ReleaseScopes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData> ResourceTypeRegistrations { get { throw null; } }
         public bool? SkipReleaseScopeValidation { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1146,10 +1040,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> CompletedRegions { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo> FailedOrSkippedRegions { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo ManifestCheckinStatus { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.CustomRolloutStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1161,10 +1052,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public DefaultRolloutAutoProvisionConfig() { }
         public bool? IsResourceGraphEnabled { get { throw null; } set { } }
         public bool? IsStorageEnabled { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.DefaultRolloutAutoProvisionConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.DefaultRolloutAutoProvisionConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.DefaultRolloutAutoProvisionConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutAutoProvisionConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutAutoProvisionConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.DefaultRolloutAutoProvisionConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutAutoProvisionConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1177,10 +1065,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification Specification { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.DefaultRolloutStatus Status { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1200,10 +1085,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationData> ResourceTypeRegistrations { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration RestOfTheWorldGroupOne { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration RestOfTheWorldGroupTwo { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1217,10 +1099,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory? NextTrafficRegion { get { throw null; } set { } }
         public System.DateTimeOffset? NextTrafficRegionScheduledOn { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult? SubscriptionReregistrationResult { get { throw null; } set { } }
-        protected override Azure.ResourceManager.ProviderHub.Models.RolloutStatusBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.ProviderHub.Models.RolloutStatusBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.DefaultRolloutStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.DefaultRolloutStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.DefaultRolloutStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1236,11 +1115,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent Hotfix { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent left, Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent left, Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1249,10 +1129,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ExpeditedRolloutMetadata() { }
         public Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutIntent? ExpeditedRolloutIntent { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ExpeditedRolloutMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1267,10 +1144,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo> Details { get { throw null; } }
         public string Message { get { throw null; } set { } }
         public string Target { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1282,10 +1156,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ExtensionOptions() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType> Request { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType> Response { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ExtensionOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ExtensionOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ExtensionOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ExtensionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ExtensionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ExtensionOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ExtensionOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1302,11 +1173,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType IncludeInternalMetadata { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType left, Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType left, Azure.ResourceManager.ProviderHub.Models.ExtensionOptionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1317,10 +1189,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration DstsConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint> Endpoints { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration TokenAuthConfiguration { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.FanoutLinkedNotificationRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1336,11 +1205,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy All { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy Any { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy left, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy left, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1353,11 +1223,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode UseManifest { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode left, Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode left, Azure.ResourceManager.ProviderHub.Models.FrontdoorRequestMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1368,10 +1239,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<string> ApplicationIds { get { throw null; } }
         public System.Collections.Generic.IList<string> DelegationAppIds { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.IdentityManagementType? ManagementType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.IdentityManagementProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1390,11 +1258,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.IdentityManagementType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.IdentityManagementType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType left, Azure.ResourceManager.ProviderHub.Models.IdentityManagementType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.IdentityManagementType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.IdentityManagementType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.IdentityManagementType left, Azure.ResourceManager.ProviderHub.Models.IdentityManagementType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1403,10 +1272,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public LegacyDisallowedCondition() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation> DisallowedLegacyOperations { get { throw null; } }
         public string Feature { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LegacyDisallowedCondition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LegacyDisallowedCondition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.LegacyDisallowedCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LegacyDisallowedCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LegacyDisallowedCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.LegacyDisallowedCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LegacyDisallowedCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1418,10 +1284,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public LightHouseAuthorization(string principalId, string roleDefinitionId) { }
         public string PrincipalId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LightHouseAuthorization JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LightHouseAuthorization PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.LightHouseAuthorization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LightHouseAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LightHouseAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.LightHouseAuthorization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LightHouseAuthorization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1436,10 +1299,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string LinkedActionVerb { get { throw null; } set { } }
         public string LinkedProperty { get { throw null; } set { } }
         public string LinkedType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LinkedAccessCheck>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1457,11 +1317,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.LinkedAction NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.LinkedAction Validate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.LinkedAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.LinkedAction left, Azure.ResourceManager.ProviderHub.Models.LinkedAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.LinkedAction (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.LinkedAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.LinkedAction left, Azure.ResourceManager.ProviderHub.Models.LinkedAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1473,10 +1334,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<string> FastPathActions { get { throw null; } }
         public System.Collections.Generic.IList<string> FastPathActionsOnFailedOperation { get { throw null; } }
         public System.TimeSpan? LinkedNotificationTimeout { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LinkedNotificationRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1493,11 +1351,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.LinkedOperation CrossSubscriptionResourceMove { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.LinkedOperation None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.LinkedOperation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.LinkedOperation left, Azure.ResourceManager.ProviderHub.Models.LinkedOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.LinkedOperation (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.LinkedOperation? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.LinkedOperation left, Azure.ResourceManager.ProviderHub.Models.LinkedOperation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1507,64 +1366,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<string> DependsOnTypes { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.LinkedAction LinkedAction { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.LinkedOperation LinkedOperation { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LinkedOperationRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LocalizedOperationDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition>
-    {
-        public LocalizedOperationDefinition(string name, Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition display) { }
-        public Azure.ResourceManager.ProviderHub.Models.OperationActionType? ActionType { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition Display { get { throw null; } set { } }
-        public bool? IsDataAction { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationOrigins? Origin { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LocalizedOperationDisplayDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition>
-    {
-        public LocalizedOperationDisplayDefinition(Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition @default) { }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Cs { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition De { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Default { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition En { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Es { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Fr { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Hu { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition It { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Ja { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Ko { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Nl { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Pl { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition PtBR { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition PtPT { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Ru { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Sv { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition ZhHans { get { throw null; } set { } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition ZhHant { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDisplayDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LoggingDetail : System.IEquatable<Azure.ResourceManager.ProviderHub.Models.LoggingDetail>
@@ -1575,11 +1382,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.LoggingDetail Body { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.LoggingDetail None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.LoggingDetail other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.LoggingDetail left, Azure.ResourceManager.ProviderHub.Models.LoggingDetail right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.LoggingDetail (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.LoggingDetail? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.LoggingDetail left, Azure.ResourceManager.ProviderHub.Models.LoggingDetail right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1593,11 +1401,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.LoggingDirection Request { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.LoggingDirection Response { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.LoggingDirection other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.LoggingDirection left, Azure.ResourceManager.ProviderHub.Models.LoggingDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.LoggingDirection (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.LoggingDirection? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.LoggingDirection left, Azure.ResourceManager.ProviderHub.Models.LoggingDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1606,10 +1415,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public LoggingHiddenPropertyPaths() { }
         public System.Collections.Generic.IList<string> HiddenPathsOnRequest { get { throw null; } }
         public System.Collections.Generic.IList<string> HiddenPathsOnResponse { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LoggingHiddenPropertyPaths JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LoggingHiddenPropertyPaths PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.LoggingHiddenPropertyPaths System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LoggingHiddenPropertyPaths>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LoggingHiddenPropertyPaths>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.LoggingHiddenPropertyPaths System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LoggingHiddenPropertyPaths>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1623,10 +1429,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.LoggingDetail DetailLevel { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.LoggingDirection Direction { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.LoggingHiddenPropertyPaths HiddenPropertyPaths { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LoggingRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.LoggingRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.LoggingRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LoggingRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.LoggingRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.LoggingRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.LoggingRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1637,10 +1440,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public ManifestLevelPropertyBag() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount> ResourceHydrationAccounts { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ManifestLevelPropertyBag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ManifestLevelPropertyBag PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ManifestLevelPropertyBag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ManifestLevelPropertyBag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ManifestLevelPropertyBag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ManifestLevelPropertyBag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ManifestLevelPropertyBag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1657,11 +1457,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy Force { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy left, Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy left, Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1681,11 +1482,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.MessageScope NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.MessageScope RegisteredSubscriptions { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.MessageScope other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.MessageScope left, Azure.ResourceManager.ProviderHub.Models.MessageScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.MessageScope (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.MessageScope? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.MessageScope left, Azure.ResourceManager.ProviderHub.Models.MessageScope right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1694,10 +1496,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public NotificationEndpoint() { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public Azure.Core.ResourceIdentifier NotificationDestination { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1714,11 +1513,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.NotificationMode NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.NotificationMode WebHook { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.NotificationMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.NotificationMode left, Azure.ResourceManager.ProviderHub.Models.NotificationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.NotificationMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.NotificationMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.NotificationMode left, Azure.ResourceManager.ProviderHub.Models.NotificationMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1730,76 +1530,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.NotificationEndpoint> NotificationEndpoints { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.NotificationMode? NotificationMode { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? ProvisioningState { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.NotificationRegistrationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public enum OperationActionType
-    {
-        NotSpecified = 0,
-        Internal = 1,
-    }
-    public enum OperationOrigins
-    {
-        NotSpecified = 0,
-        User = 1,
-        System = 2,
-    }
-    public partial class OperationsDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition>
-    {
-        internal OperationsDefinition() { }
-        public Azure.ResourceManager.ProviderHub.Models.OperationActionType? ActionType { get { throw null; } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition Display { get { throw null; } }
-        public bool? IsDataAction { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.ProviderHub.Models.OperationOrigins? Origin { get { throw null; } }
-        public System.BinaryData Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.OperationsDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.OperationsDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ProviderHub.Models.OperationsDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ProviderHub.Models.OperationsDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OperationsDisplayDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition>
-    {
-        public OperationsDisplayDefinition(string provider, string resource, string operation, string description) { }
-        public string Description { get { throw null; } set { } }
-        public string Operation { get { throw null; } set { } }
-        public string Provider { get { throw null; } set { } }
-        public string Resource { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsDisplayDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OperationsPutContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.OperationsPutContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsPutContent>
-    {
-        public OperationsPutContent() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition> OperationsContentContents { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ProviderHub.Models.OperationsPutContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.OperationsPutContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.OperationsPutContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ProviderHub.Models.OperationsPutContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsPutContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsPutContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.OperationsPutContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OptInHeaderType : System.IEquatable<Azure.ResourceManager.ProviderHub.Models.OptInHeaderType>
@@ -1820,11 +1556,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.OptInHeaderType SignedUserToken { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.OptInHeaderType UnboundedClientGroupMembership { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.OptInHeaderType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.OptInHeaderType left, Azure.ResourceManager.ProviderHub.Models.OptInHeaderType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.OptInHeaderType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.OptInHeaderType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.OptInHeaderType left, Azure.ResourceManager.ProviderHub.Models.OptInHeaderType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1837,11 +1574,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType SystemDataCreatedByLastModifiedBy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType left, Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType left, Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1856,11 +1594,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType ExpectPartialPutRequests { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType left, Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType left, Azure.ResourceManager.ProviderHub.Models.PolicyExecutionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1874,11 +1613,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.PreflightOption DefaultValidationOnly { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.PreflightOption None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.PreflightOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.PreflightOption left, Azure.ResourceManager.ProviderHub.Models.PreflightOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.PreflightOption (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.PreflightOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.PreflightOption left, Azure.ResourceManager.ProviderHub.Models.PreflightOption right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1887,10 +1627,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ProviderAdditionalAuthorization() { }
         public string ApplicationId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderAdditionalAuthorization JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderAdditionalAuthorization PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderAdditionalAuthorization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderAdditionalAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderAdditionalAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderAdditionalAuthorization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderAdditionalAuthorization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1906,11 +1643,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme Bearer { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme PoP { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme left, Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme left, Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1920,10 +1658,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ApplicationDataAuthorization> DataAuthorizations { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.ApplicationProviderAuthorization ProviderAuthorization { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? ProvisioningState { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderAuthorizedApplicationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1935,10 +1670,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ProviderDstsConfiguration(string serviceName) { }
         public string ServiceDnsName { get { throw null; } set { } }
         public string ServiceName { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1951,10 +1683,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string Endpoint { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType? EndpointType { get { throw null; } set { } }
         public string SchemaVersion { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderEndpointInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderEndpointInformation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderEndpointInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderEndpointInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderEndpointInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderEndpointInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderEndpointInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1972,11 +1701,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType Production { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType TestInProduction { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType left, Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType left, Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1991,11 +1721,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType Production { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType TestInProduction { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType left, Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType left, Azure.ResourceManager.ProviderHub.Models.ProviderEndpointTypeResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2010,11 +1741,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType EdgeZone { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType left, Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType left, Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2022,10 +1754,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public ProviderFeaturesRule(Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy requiredFeaturesPolicy) { }
         public Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy RequiredFeaturesPolicy { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderFeaturesRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderFeaturesRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderFeaturesRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderFeaturesRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderFeaturesRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderFeaturesRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderFeaturesRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2037,10 +1766,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ProviderFilterRule() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ProviderEndpointInformation> EndpointInformation { get { throw null; } }
         public string FilterQuery { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderFilterRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderFilterRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderFilterRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderFilterRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderFilterRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderFilterRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderFilterRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2051,10 +1777,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public ProviderFrontloadPayload(Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties properties) { }
         public Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayload JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayload PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayload System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayload System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2064,7 +1787,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public partial class ProviderFrontloadPayloadProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties>
     {
         public ProviderFrontloadPayloadProperties(string operationType, string providerNamespace, string frontloadLocation, string copyFromLocation, Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment environmentType, Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction serviceFeatureFlag, System.Collections.Generic.IEnumerable<string> includeResourceTypes, System.Collections.Generic.IEnumerable<string> excludeResourceTypes, Azure.ResourceManager.ProviderHub.Models.ManifestLevelPropertyBag overrideManifestLevelFields, Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase overrideEndpointLevelFields, System.Collections.Generic.IEnumerable<string> ignoreFields) { }
-        public ProviderFrontloadPayloadProperties(string operationType, string providerNamespace, string frontloadLocation, string copyFromLocation, Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment environmentType, Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction serviceFeatureFlag, System.Collections.Generic.IEnumerable<string> includeResourceTypes, System.Collections.Generic.IEnumerable<string> excludeResourceTypes, Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase overrideEndpointLevelFields, System.Collections.Generic.IEnumerable<string> ignoreFields) { }
         public string CopyFromLocation { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.AvailableCheckInManifestEnvironment EnvironmentType { get { throw null; } }
         public System.Collections.Generic.IList<string> ExcludeResourceTypes { get { throw null; } }
@@ -2076,10 +1798,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount> OverrideManifestLevelFieldsResourceHydrationAccounts { get { throw null; } }
         public string ProviderNamespace { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction ServiceFeatureFlag { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderFrontloadPayloadProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2089,20 +1808,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public partial class ProviderHubExtendedLocationOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>
     {
         public ProviderHubExtendedLocationOptions() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ExtendedLocationOptionsType { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType? LocationType { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy? SupportedLocationPolicy { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SupportedPolicy { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum ProviderHubExtendedLocationType
     {
         NotSpecified = 0,
@@ -2119,10 +1838,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization> ProviderAuthorizations { get { throw null; } }
         public string RegionalAsyncOperationResourceTypeName { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ThirdPartyProviderAuthorization ThirdPartyProviderAuthorization { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderHubMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderHubMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderHubMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderHubMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderHubMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2149,11 +1865,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState TransientFailure { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState left, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState left, Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2174,11 +1891,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation ResourceCacheWaiting { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation Waiting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation left, Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation left, Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2188,10 +1906,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy? Policy { get { throw null; } set { } }
         public string QuotaId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderLocationQuotaRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderLocationQuotaRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderLocationQuotaRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderLocationQuotaRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderLocationQuotaRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderLocationQuotaRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderLocationQuotaRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2203,10 +1918,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ProviderNotification() { }
         public Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType? NotificationType { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.SkipNotification? SkipNotifications { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderNotification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderNotification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderNotification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderNotification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderNotification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderNotification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderNotification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2222,11 +1934,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType Eventhub { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType Webhook { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType left, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType left, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationEndpointType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2240,11 +1953,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption None { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption left, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption left, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationOption right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2257,11 +1971,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType SubscriptionNotification { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType Unspecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType left, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType left, Azure.ResourceManager.ProviderHub.Models.ProviderNotificationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2275,11 +1990,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy None { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy Restricted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy left, Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy left, Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2289,10 +2005,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ProviderLocationQuotaRule> LocationRules { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderQuotaPolicy? QuotaPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RequiredFeatures { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderQuotaRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2309,11 +2022,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind Hybrid { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind Managed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind left, Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind left, Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2325,10 +2039,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration TokenAuthConfiguration { get { throw null; } set { } }
-        protected override Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifestProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifestProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderRegistrationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2340,10 +2051,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ProviderRequestHeaderOptions() { }
         public Azure.ResourceManager.ProviderHub.Models.OptInHeaderType? OptInHeaders { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.OptOutHeaderType? OptOutHeaders { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderRequestHeaderOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2359,11 +2067,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption EnableSubscriptionFilterOnTenant { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption left, Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption left, Azure.ResourceManager.ProviderHub.Models.ProviderResourceQueryFilterOption right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2376,11 +2085,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType AsyncOperation { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType left, Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType left, Azure.ResourceManager.ProviderHub.Models.ProviderResourceSubType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2419,10 +2129,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule> SubscriptionStateRules { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy TemplateDeploymentPolicy { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule> ThrottlingRules { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderResourceType JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderResourceType PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderResourceType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderResourceType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderResourceType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderResourceType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderResourceType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2442,11 +2149,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState PastDue { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState Warned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState left, Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState left, Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2455,10 +2163,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ProviderSubscriptionStateRule() { }
         public System.Collections.Generic.IList<string> AllowedActions { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionState? State { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ProviderSubscriptionStateRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2470,10 +2175,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         internal ReRegisterSubscriptionMetadata() { }
         public int? ConcurrencyLimit { get { throw null; } }
         public bool IsEnabled { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ReRegisterSubscriptionMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2491,10 +2193,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceAccessRole() { }
         public System.Collections.Generic.IList<string> Actions { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedGroupClaims { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2505,10 +2204,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public ResourceConcurrencyControlOption() { }
         public Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy? Policy { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyControlOption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyControlOption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyControlOption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyControlOption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyControlOption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyControlOption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyControlOption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2524,11 +2220,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy SynchronizeBeginExtension { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceConcurrencyPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2542,11 +2239,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy CascadeDeleteProxyOnlyChildren { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceDeletionPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2555,10 +2253,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceGraphConfiguration() { }
         public string ApiVersion { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceGraphConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceGraphConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceGraphConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceGraphConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceGraphConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceGraphConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceGraphConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2572,10 +2267,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string EncryptedKey { get { throw null; } set { } }
         public long? MaxChildResourceConsistencyJobLimit { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceHydrationAccount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2586,10 +2278,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public ResourceManagementAction() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity> Resources { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2603,10 +2292,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public string Status { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceManagementEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2623,11 +2309,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation Get { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation left, Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation left, Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2637,10 +2324,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public bool? IsCrossResourceGroupMoveEnabled { get { throw null; } set { } }
         public bool? IsCrossSubscriptionMoveEnabled { get { throw null; } set { } }
         public bool? IsValidationRequired { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceMovePolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceMovePolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceMovePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceMovePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceMovePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceMovePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceMovePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2656,10 +2340,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagedByAuthorization ManagedByAuthorization { get { throw null; } set { } }
         public string ManagedByRoleDefinitionId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderAuthorization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2672,10 +2353,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect Effect { get { throw null; } set { } }
         public string QuotaId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RequiredFeatures { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2692,11 +2370,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect Disallow { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect left, Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect left, Azure.ResourceManager.ProviderHub.Models.ResourceProviderCapabilitiesEffect right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2712,10 +2391,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? RequiredFeaturesPolicy { get { throw null; } set { } }
         public string SkuLink { get { throw null; } set { } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2728,10 +2404,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ProviderAdditionalAuthorization> AdditionalAuthorizations { get { throw null; } }
         public bool? DoesAllowManagedByInheritance { get { throw null; } set { } }
         public string ManagedByResourceRoleDefinitionId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagedByAuthorization JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagedByAuthorization PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagedByAuthorization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagedByAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagedByAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagedByAuthorization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagedByAuthorization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2753,15 +2426,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string ProfitCenterProgramId { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ResourceAccessPolicy? ResourceAccessPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceAccessRole> ResourceAccessRoleList { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property has been deprecated, please use `ResourceAccessRoleList` instead.", false)]
         public System.Collections.Generic.IList<System.BinaryData> ResourceAccessRoles { get { throw null; } }
         public System.Collections.Generic.IList<string> SchemaOwners { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType? ServerFailureResponseMessageType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo> ServiceTreeInfos { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2793,10 +2464,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ProviderHub.Models.ProviderResourceType> ResourceTypes { get { throw null; } }
         public string ServiceName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ProviderHub.Models.ResourceProviderService> Services { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2838,10 +2506,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string ServiceName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceProviderService> Services { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions TemplateDeploymentOptions { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifestProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifestProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifestProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifestProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifestProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifestProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifestProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2853,10 +2518,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceProviderService() { }
         public string ServiceName { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus? Status { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderService JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceProviderService PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceProviderService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceProviderService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2872,11 +2534,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus Active { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus left, Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus left, Azure.ResourceManager.ProviderHub.Models.ResourceProviderServiceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2895,11 +2558,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderType RegistrationFree { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceProviderType TenantOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType left, Azure.ResourceManager.ProviderHub.Models.ResourceProviderType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceProviderType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceProviderType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceProviderType left, Azure.ResourceManager.ProviderHub.Models.ResourceProviderType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2924,11 +2588,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType ServiceFanout { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType Tenant { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType left, Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType left, Azure.ResourceManager.ProviderHub.Models.ResourceRoutingType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2937,10 +2602,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceSkuCapability(string name, string value) { }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceSkuCapability JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceSkuCapability PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceSkuCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceSkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceSkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceSkuCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceSkuCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2958,11 +2620,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory None { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory PureProxy { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2977,11 +2640,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary NotDefined { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary US { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeDataBoundary right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3004,10 +2668,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.TimeSpan? Timeout { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration TokenAuthConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3017,7 +2678,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public partial class ResourceTypeEndpointBase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase>
     {
         public ResourceTypeEndpointBase(bool enabled, System.Collections.Generic.IEnumerable<string> apiVersions, System.Uri endpointUri, System.Collections.Generic.IEnumerable<string> locations, System.Collections.Generic.IEnumerable<string> requiredFeatures, Azure.ResourceManager.ProviderHub.Models.ProviderFeaturesRule featuresRule, System.TimeSpan timeout, Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType endpointType, Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration dstsConfiguration, string skuLink, string apiVersion, System.Collections.Generic.IEnumerable<string> zones) { }
-        public ResourceTypeEndpointBase(bool enabled, System.Collections.Generic.IEnumerable<string> apiVersions, System.Uri endpointUri, System.Collections.Generic.IEnumerable<string> locations, System.Collections.Generic.IEnumerable<string> requiredFeatures, Azure.ResourceManager.ProviderHub.Models.FeaturesPolicy? requiredFeaturesPolicy, System.TimeSpan timeout, Azure.ResourceManager.ProviderHub.Models.ProviderEndpointType endpointType, Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration dstsConfiguration, string skuLink, string apiVersion, System.Collections.Generic.IEnumerable<string> zones) { }
         public string ApiVersion { get { throw null; } }
         public System.Collections.Generic.IList<string> ApiVersions { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderDstsConfiguration DstsConfiguration { get { throw null; } }
@@ -3030,10 +2690,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string SkuLink { get { throw null; } }
         public System.TimeSpan Timeout { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3049,11 +2706,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind Direct { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind Managed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeEndpointKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3066,11 +2724,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy All { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtendedLocationPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3080,10 +2739,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Uri EndpointUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory> ExtensionCategories { get { throw null; } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtension JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtension PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3115,11 +2771,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory SubscriptionLifecycleNotification { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory SubscriptionLifecycleNotificationDeletion { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeExtensionCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3128,10 +2785,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceTypeOnBehalfOfToken() { }
         public string ActionName { get { throw null; } set { } }
         public string LifeTime { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeOnBehalfOfToken JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeOnBehalfOfToken PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeOnBehalfOfToken System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeOnBehalfOfToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeOnBehalfOfToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeOnBehalfOfToken System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeOnBehalfOfToken>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3143,10 +2797,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceTypeRegistrationApiProfile() { }
         public string ApiVersion { get { throw null; } set { } }
         public string ProfileVersion { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationApiProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationApiProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationApiProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationApiProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationApiProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationApiProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationApiProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3162,11 +2813,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy Default { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy Restricted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3175,10 +2827,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceTypeRegistrationCapacityRule() { }
         public Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityPolicy? CapacityPolicy { get { throw null; } set { } }
         public string SkuAlias { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationCapacityRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3191,10 +2840,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string LinkedProperty { get { throw null; } set { } }
         public string LinkedType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RequiredFeatures { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3211,11 +2857,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind Hybrid { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind Managed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3224,10 +2871,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceTypeRegistrationLegacyPolicy() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.LegacyDisallowedCondition> DisallowedConditions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ProviderLegacyOperation> DisallowedLegacyOperations { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationLegacyPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationLegacyPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationLegacyPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationLegacyPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationLegacyPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationLegacyPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationLegacyPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3313,10 +2957,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy TemplateDeploymentPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule> ThrottlingRules { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration TokenAuthConfiguration { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3333,11 +2974,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality Regional { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationRegionality right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3346,10 +2988,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceTypeRegistrationResourceCache() { }
         public bool? IsResourceCacheEnabled { get { throw null; } set { } }
         public string ResourceCacheExpirationTimespan { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceCache JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceCache PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceCache System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceCache>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceCache>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceCache System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceCache>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3362,10 +3001,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation? BatchProvisioningSupportSupportedOperations { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency> DeleteDependencies { get { throw null; } }
         public string NestedProvisioningSupportMinimumApiVersion { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3379,10 +3015,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public int? Maximum { get { throw null; } set { } }
         public int Minimum { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType? ScaleType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCapacity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCapacity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3395,10 +3028,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string ExtendedUnit { get { throw null; } set { } }
         public string MeterId { get { throw null; } set { } }
         public int? Quantity { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCost JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCost PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCost System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCost System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3409,15 +3039,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public ResourceTypeSkuLocationInfo(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> ExtendedLocations { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.ProviderHub.Models.ProviderHubExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ProviderExtendedLocationType? LocationType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuZoneDetail> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuLocationInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuLocationInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuLocationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuLocationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuLocationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuLocationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuLocationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3429,10 +3057,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceTypeSkuProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting> skuSettings) { }
         public Azure.ResourceManager.ProviderHub.Models.ProviderHubProvisioningState? ProvisioningState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting> SkuSettings { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3449,11 +3074,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType Manual { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType left, Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuScaleType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3472,10 +3098,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<string> RequiredQuotaIds { get { throw null; } }
         public string Size { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3487,10 +3110,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ResourceTypeSkuZoneDetail() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceSkuCapability> Capabilities { get { throw null; } }
         public System.Collections.Generic.IList<string> Name { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuZoneDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuZoneDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuZoneDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuZoneDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuZoneDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuZoneDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ResourceTypeSkuZoneDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3507,11 +3127,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ResourceValidation ProfaneWords { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ResourceValidation ReservedWords { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ResourceValidation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ResourceValidation left, Azure.ResourceManager.ProviderHub.Models.ResourceValidation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceValidation (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ResourceValidation? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ResourceValidation left, Azure.ResourceManager.ProviderHub.Models.ResourceValidation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3520,10 +3141,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public RolloutStatusBase() { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> CompletedRegions { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ProviderHub.Models.ExtendedErrorInfo> FailedOrSkippedRegions { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.RolloutStatusBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.RolloutStatusBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.RolloutStatusBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.RolloutStatusBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.RolloutStatusBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.RolloutStatusBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.RolloutStatusBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3539,11 +3157,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType OutageReporting { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType left, Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType left, Azure.ResourceManager.ProviderHub.Models.ServerFailureResponseMessageType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3556,11 +3175,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType DisableAutomaticDecompression { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType NotSpecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType left, Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType left, Azure.ResourceManager.ProviderHub.Models.ServiceClientOptionsType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3573,11 +3193,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction Create { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction DoNotCreate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction left, Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction left, Azure.ResourceManager.ProviderHub.Models.ServiceFeatureFlagAction right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3587,10 +3208,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string ComponentId { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness? Readiness { get { throw null; } set { } }
         public string ServiceId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ServiceTreeInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3613,11 +3231,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness RemovedFromARM { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness Retired { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness left, Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness left, Azure.ResourceManager.ProviderHub.Models.ServiceTreeReadiness right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3630,11 +3249,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.SignedRequestScope Endpoint { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.SignedRequestScope ResourceUri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.SignedRequestScope other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.SignedRequestScope left, Azure.ResourceManager.ProviderHub.Models.SignedRequestScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.SignedRequestScope (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.SignedRequestScope? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.SignedRequestScope left, Azure.ResourceManager.ProviderHub.Models.SignedRequestScope right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3648,11 +3268,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.SkipNotification Enabled { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.SkipNotification Unspecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.SkipNotification other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.SkipNotification left, Azure.ResourceManager.ProviderHub.Models.SkipNotification right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.SkipNotification (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.SkipNotification? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.SkipNotification left, Azure.ResourceManager.ProviderHub.Models.SkipNotification right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3660,10 +3281,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public SubscriberSetting() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ProviderFilterRule> FilterRules { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.SubscriberSetting JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.SubscriberSetting PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.SubscriberSetting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.SubscriberSetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.SubscriberSetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.SubscriberSetting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.SubscriberSetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3675,10 +3293,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public SubscriptionLifecycleNotificationSpecifications() { }
         public System.TimeSpan? SoftDeleteTtl { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.SubscriptionStateOverrideAction> SubscriptionStateOverrideActions { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.SubscriptionLifecycleNotificationSpecifications>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3698,11 +3313,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation SoftDeleteAllResources { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation UndoSoftDelete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation left, Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation left, Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3717,11 +3333,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult ForcedUpdate { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult NotApplicable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult left, Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult left, Azure.ResourceManager.ProviderHub.Models.SubscriptionReregistrationResult right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3730,10 +3347,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public SubscriptionStateOverrideAction(Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState state, Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation action) { }
         public Azure.ResourceManager.ProviderHub.Models.SubscriptionNotificationOperation Action { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState State { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.SubscriptionStateOverrideAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.SubscriptionStateOverrideAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.SubscriptionStateOverrideAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.SubscriptionStateOverrideAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.SubscriptionStateOverrideAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.SubscriptionStateOverrideAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.SubscriptionStateOverrideAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3760,11 +3374,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState WarnedToSuspended { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState WarnedToUnregistered { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState left, Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState left, Azure.ResourceManager.ProviderHub.Models.SubscriptionTransitioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3773,10 +3388,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public SwaggerSpecification() { }
         public System.Collections.Generic.IList<string> ApiVersions { get { throw null; } }
         public System.Uri SwaggerSpecFolderUri { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.SwaggerSpecification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.SwaggerSpecification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.SwaggerSpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.SwaggerSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.SwaggerSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.SwaggerSpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.SwaggerSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3792,11 +3404,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability Default { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability Preflight { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability left, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability left, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3805,10 +3418,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public TemplateDeploymentOptions() { }
         public bool? IsPreflightSupported { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.PreflightOption> PreflightOptions { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3821,10 +3431,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentCapability Capabilities { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification? PreflightNotifications { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption PreflightOptions { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3840,11 +3447,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification None { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification UnregisteredSubscriptions { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification left, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification left, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightNotification right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3860,11 +3468,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption TestOnly { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption ValidationRequests { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption left, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption left, Azure.ResourceManager.ProviderHub.Models.TemplateDeploymentPreflightOption right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3872,10 +3481,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public ThirdPartyExtension() { }
         public string Name { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ThirdPartyExtension JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ThirdPartyExtension PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ThirdPartyExtension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ThirdPartyExtension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ThirdPartyExtension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ThirdPartyExtension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ThirdPartyExtension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3887,10 +3493,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public ThirdPartyProviderAuthorization() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.LightHouseAuthorization> Authorizations { get { throw null; } }
         public string ManagedByTenantId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ThirdPartyProviderAuthorization JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ThirdPartyProviderAuthorization PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ThirdPartyProviderAuthorization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ThirdPartyProviderAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ThirdPartyProviderAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ThirdPartyProviderAuthorization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ThirdPartyProviderAuthorization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3903,10 +3506,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.TimeSpan? Interval { get { throw null; } set { } }
         public long Limit { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType MetricType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ThrottlingMetric JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ThrottlingMetric PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ThrottlingMetric System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ThrottlingMetric>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ThrottlingMetric>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ThrottlingMetric System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ThrottlingMetric>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3923,11 +3523,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType NumberOfRequests { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType NumberOfResources { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType left, Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType left, Azure.ResourceManager.ProviderHub.Models.ThrottlingMetricType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3938,10 +3539,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public System.Collections.Generic.IList<string> ApplicationId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ThrottlingMetric> Metrics { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredFeatures { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ThrottlingRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.ThrottlingRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.ThrottlingRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.ThrottlingRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.ThrottlingRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3954,10 +3552,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public Azure.ResourceManager.ProviderHub.Models.ProviderAuthenticationScheme? AuthenticationScheme { get { throw null; } set { } }
         public bool? DisableCertificateAuthenticationFallback { get { throw null; } set { } }
         public Azure.ResourceManager.ProviderHub.Models.SignedRequestScope? SignedRequestScope { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.TokenAuthConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3979,11 +3574,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory RestOfTheWorldGroupOne { get { throw null; } }
         public static Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory RestOfTheWorldGroupTwo { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory left, Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory left, Azure.ResourceManager.ProviderHub.Models.TrafficRegionCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3991,10 +3587,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public TrafficRegionRolloutConfiguration() { }
         public System.TimeSpan? WaitDuration { get { throw null; } set { } }
-        protected override Azure.ResourceManager.ProviderHub.Models.TrafficRegions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.ProviderHub.Models.TrafficRegions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.TrafficRegionRolloutConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4005,10 +3598,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public TrafficRegions() { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> Regions { get { throw null; } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.TrafficRegions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.TrafficRegions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.TrafficRegions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TrafficRegions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TrafficRegions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.TrafficRegions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.TrafficRegions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4020,10 +3610,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public TypedErrorInfo(string typedErrorInfoType) { }
         public System.BinaryData Info { get { throw null; } }
         public string TypedErrorInfoType { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.TypedErrorInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProviderHub.Models.TypedErrorInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ProviderHub.Models.TypedErrorInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TypedErrorInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.TypedErrorInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ProviderHub.Models.TypedErrorInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.TypedErrorInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

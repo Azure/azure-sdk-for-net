@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -19,29 +18,35 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="schedule"> Schedule for this backup. </param>
         /// <param name="taggingCriteriaList"> List of tags that can be applicable for given schedule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="taggingCriteriaList"/> is null. </exception>
-        public ScheduleBasedBackupTriggerContext(DataProtectionBackupSchedule schedule, IEnumerable<DataProtectionBackupTaggingCriteria> taggingCriteriaList) : base("ScheduleBasedTriggerContext")
+        public ScheduleBasedBackupTriggerContext(DataProtectionBackupSchedule schedule, IEnumerable<DataProtectionBackupTaggingCriteria> taggingCriteriaList)
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
             Argument.AssertNotNull(taggingCriteriaList, nameof(taggingCriteriaList));
 
             Schedule = schedule;
             TaggingCriteriaList = taggingCriteriaList.ToList();
+            ObjectType = "ScheduleBasedTriggerContext";
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupTriggerContext"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="schedule"> Schedule for this backup. </param>
         /// <param name="taggingCriteriaList"> List of tags that can be applicable for given schedule. </param>
-        internal ScheduleBasedBackupTriggerContext(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataProtectionBackupSchedule schedule, IList<DataProtectionBackupTaggingCriteria> taggingCriteriaList) : base(objectType, additionalBinaryDataProperties)
+        internal ScheduleBasedBackupTriggerContext(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataProtectionBackupSchedule schedule, IList<DataProtectionBackupTaggingCriteria> taggingCriteriaList) : base(objectType, serializedAdditionalRawData)
         {
             Schedule = schedule;
             TaggingCriteriaList = taggingCriteriaList;
+            ObjectType = objectType ?? "ScheduleBasedTriggerContext";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleBasedBackupTriggerContext"/> for deserialization. </summary>
+        internal ScheduleBasedBackupTriggerContext()
+        {
         }
 
         /// <summary> Schedule for this backup. </summary>
         public DataProtectionBackupSchedule Schedule { get; set; }
-
         /// <summary> List of tags that can be applicable for given schedule. </summary>
         public IList<DataProtectionBackupTaggingCriteria> TaggingCriteriaList { get; }
     }

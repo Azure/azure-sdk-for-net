@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SelfHelp
 {
-    /// <summary></summary>
     public partial class SelfHelpTroubleshooterResource : IJsonModel<SelfHelpTroubleshooterData>
     {
-        private static IJsonModel<SelfHelpTroubleshooterData> s_dataDeserializationInstance;
+        private static SelfHelpTroubleshooterData s_dataDeserializationInstance;
+        private static SelfHelpTroubleshooterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<SelfHelpTroubleshooterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SelfHelpTroubleshooterData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SelfHelpTroubleshooterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpTroubleshooterData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        SelfHelpTroubleshooterData IJsonModel<SelfHelpTroubleshooterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        SelfHelpTroubleshooterData IJsonModel<SelfHelpTroubleshooterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SelfHelpTroubleshooterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SelfHelpTroubleshooterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SelfHelpTroubleshooterData>(Data, options, AzureResourceManagerSelfHelpContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         SelfHelpTroubleshooterData IPersistableModel<SelfHelpTroubleshooterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SelfHelpTroubleshooterData>(data, options, AzureResourceManagerSelfHelpContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SelfHelpTroubleshooterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<SelfHelpTroubleshooterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SelfHelpTroubleshooterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

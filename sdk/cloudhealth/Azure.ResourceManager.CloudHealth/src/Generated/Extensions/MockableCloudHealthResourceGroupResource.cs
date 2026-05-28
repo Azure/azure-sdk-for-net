@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CloudHealth;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CloudHealth.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableCloudHealthResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableCloudHealthResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableCloudHealthResourceGroupResource"/> class for mocking. </summary>
         protected MockableCloudHealthResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableCloudHealthResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableCloudHealthResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCloudHealthResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of HealthModels in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of HealthModels and their operations over a HealthModelResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of HealthModelResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HealthModelResources and their operations over a HealthModelResource. </returns>
         public virtual HealthModelCollection GetHealthModels()
         {
             return GetCachedClient(client => new HealthModelCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// Get a HealthModel
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>HealthModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthModelResource>> GetHealthModelAsync(string healthModelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(healthModelName, nameof(healthModelName));
-
             return await GetHealthModels().GetAsync(healthModelName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         /// Get a HealthModel
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CloudHealth/healthmodels/{healthModelName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> HealthModels_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>HealthModel_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthModelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
         [ForwardsClientCalls]
         public virtual Response<HealthModelResource> GetHealthModel(string healthModelName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(healthModelName, nameof(healthModelName));
-
             return GetHealthModels().Get(healthModelName, cancellationToken);
         }
     }

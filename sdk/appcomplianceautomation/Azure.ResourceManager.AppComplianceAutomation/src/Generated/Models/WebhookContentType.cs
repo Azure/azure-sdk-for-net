@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -15,52 +14,35 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct WebhookContentType : IEquatable<WebhookContentType>
     {
         private readonly string _value;
-        /// <summary> The content type is application/json. </summary>
-        private const string ApplicationJsonValue = "application/json";
 
         /// <summary> Initializes a new instance of <see cref="WebhookContentType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebhookContentType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string ApplicationJsonValue = "application/json";
 
         /// <summary> The content type is application/json. </summary>
         public static WebhookContentType ApplicationJson { get; } = new WebhookContentType(ApplicationJsonValue);
-
         /// <summary> Determines if two <see cref="WebhookContentType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebhookContentType left, WebhookContentType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="WebhookContentType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebhookContentType left, WebhookContentType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="WebhookContentType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebhookContentType"/>. </summary>
         public static implicit operator WebhookContentType(string value) => new WebhookContentType(value);
 
-        /// <summary> Converts a string to a <see cref="WebhookContentType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator WebhookContentType?(string value) => value == null ? null : new WebhookContentType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebhookContentType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(WebhookContentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

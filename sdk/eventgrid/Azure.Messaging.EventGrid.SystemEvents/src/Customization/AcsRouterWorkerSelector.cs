@@ -4,7 +4,6 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {

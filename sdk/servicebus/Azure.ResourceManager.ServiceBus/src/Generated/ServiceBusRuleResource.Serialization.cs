@@ -11,29 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary></summary>
     public partial class ServiceBusRuleResource : IJsonModel<ServiceBusRuleData>
     {
-        private static IJsonModel<ServiceBusRuleData> s_dataDeserializationInstance;
+        private static ServiceBusRuleData s_dataDeserializationInstance;
+        private static ServiceBusRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        private static IJsonModel<ServiceBusRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ServiceBusRuleData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceBusRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusRuleData>)Data).Write(writer, options);
 
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceBusRuleData IJsonModel<ServiceBusRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ServiceBusRuleData IJsonModel<ServiceBusRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ServiceBusRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusRuleData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ServiceBusRuleData IPersistableModel<ServiceBusRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusRuleData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServiceBusRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ServiceBusRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

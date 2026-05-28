@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -50,12 +50,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             PipelineClient pipelineClient = CreatePipelineClient();
             PipelineRunClient runClient = CreatePipelineRunClient();
 
-            await using DisposablePipeline pipeline = await DisposablePipeline.Create(pipelineClient, this.Recording);
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
 
-            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync(pipeline.Name);
-            Assert.That(runResponse.RunId, Is.Not.Null);
+            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
+            Assert.NotNull(runResponse.RunId);
 
-            Response response = await runClient.CancelPipelineRunAsync(runResponse.RunId);
+            Response response = await runClient.CancelPipelineRunAsync (runResponse.RunId);
             response.AssertSuccess();
         }
 
@@ -65,14 +65,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             PipelineClient pipelineClient = CreatePipelineClient();
             PipelineRunClient runClient = CreatePipelineRunClient();
 
-            await using DisposablePipeline pipeline = await DisposablePipeline.Create(pipelineClient, this.Recording);
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
 
-            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync(pipeline.Name);
-            Assert.That(runResponse.RunId, Is.Not.Null);
+            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
+            Assert.NotNull(runResponse.RunId);
 
-            PipelineRun run = await runClient.GetPipelineRunAsync(runResponse.RunId);
-            Assert.That(runResponse.RunId, Is.EqualTo(run.RunId));
-            Assert.That(run.Status, Is.Not.Null);
+            PipelineRun run = await runClient.GetPipelineRunAsync (runResponse.RunId);
+            Assert.AreEqual (run.RunId, runResponse.RunId);
+            Assert.NotNull (run.Status);
         }
 
         [RecordedTest]
@@ -81,13 +81,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             PipelineClient pipelineClient = CreatePipelineClient();
             PipelineRunClient runClient = CreatePipelineRunClient();
 
-            await using DisposablePipeline pipeline = await DisposablePipeline.Create(pipelineClient, this.Recording);
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
 
-            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync(pipeline.Name);
-            Assert.That(runResponse.RunId, Is.Not.Null);
+            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
+            Assert.NotNull(runResponse.RunId);
 
-            PipelineRunsQueryResponse queryResponse = await runClient.QueryPipelineRunsByWorkspaceAsync(new RunFilterParameters(DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
-            Assert.That(queryResponse.Value.Count, Is.GreaterThanOrEqualTo(1));
+            PipelineRunsQueryResponse queryResponse = await runClient.QueryPipelineRunsByWorkspaceAsync (new RunFilterParameters (DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
+            Assert.GreaterOrEqual (queryResponse.Value.Count, 1);
         }
 
         [RecordedTest]
@@ -96,13 +96,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             PipelineClient pipelineClient = CreatePipelineClient();
             PipelineRunClient runClient = CreatePipelineRunClient();
 
-            await using DisposablePipeline pipeline = await DisposablePipeline.Create(pipelineClient, this.Recording);
+            await using DisposablePipeline pipeline = await DisposablePipeline.Create (pipelineClient, this.Recording);
 
-            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync(pipeline.Name);
-            Assert.That(runResponse.RunId, Is.Not.Null);
+            CreateRunResponse runResponse = await pipelineClient.CreatePipelineRunAsync (pipeline.Name);
+            Assert.NotNull(runResponse.RunId);
 
-            PipelineRunsQueryResponse queryResponse = await runClient.QueryPipelineRunsByWorkspaceAsync(new RunFilterParameters(DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
-            Assert.That(queryResponse.Value.Count, Is.GreaterThanOrEqualTo(1));
+            PipelineRunsQueryResponse queryResponse = await runClient.QueryPipelineRunsByWorkspaceAsync (new RunFilterParameters (DateTimeOffset.MinValue, DateTimeOffset.MaxValue));
+            Assert.GreaterOrEqual (queryResponse.Value.Count, 1);
         }
     }
 }

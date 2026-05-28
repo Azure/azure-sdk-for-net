@@ -1,9 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-
-using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Agents.Persistent;
 
 /// <summary>
@@ -17,12 +14,4 @@ namespace Azure.AI.Agents.Persistent;
 /// <item> <see cref="RequiredFunctionToolCall"/> </item>
 /// </list>
 /// </remarks>
-[CodeGenSuppress("RequiredToolCall", typeof(string))]
-public abstract partial class RequiredToolCall : RequiredAction
-{
-    // Backward-compat: old contract had protected RequiredToolCall(string id)
-    protected RequiredToolCall(string id) : base((string)null)
-    {
-        Id = id;
-    }
-}
+public abstract partial class RequiredToolCall : RequiredAction { }

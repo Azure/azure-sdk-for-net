@@ -7,16 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary> The parameters that can be provided when updating workbook properties properties. </summary>
     public partial class ResourceGraphQueryPatch
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceGraphQueryPatch"/>. </summary>
         public ResourceGraphQueryPatch()
@@ -26,58 +53,26 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceGraphQueryPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="eTag"> This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict. </param>
-        /// <param name="properties"> Metadata describing a graph query for an Azure resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceGraphQueryPatch(IDictionary<string, string> tags, ETag? eTag, GraphQueryPropertiesUpdateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="etag"> This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict. </param>
+        /// <param name="description"> The description of a graph query. </param>
+        /// <param name="query"> KQL query that will be graph. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGraphQueryPatch(IDictionary<string, string> tags, ETag? etag, string description, string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
-            ETag = eTag;
-            Properties = properties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            ETag = etag;
+            Description = description;
+            Query = query;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-
         /// <summary> This will be used to handle Optimistic Concurrency. If not present, it will always overwrite the existing resource without checking conflict. </summary>
         public ETag? ETag { get; set; }
-
-        /// <summary> Metadata describing a graph query for an Azure resource. </summary>
-        internal GraphQueryPropertiesUpdateParameters Properties { get; set; }
-
         /// <summary> The description of a graph query. </summary>
-        public string Description
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GraphQueryPropertiesUpdateParameters();
-                }
-                Properties.Description = value;
-            }
-        }
-
+        public string Description { get; set; }
         /// <summary> KQL query that will be graph. </summary>
-        public string Query
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Query;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GraphQueryPropertiesUpdateParameters();
-                }
-                Properties.Query = value;
-            }
-        }
+        public string Query { get; set; }
     }
 }

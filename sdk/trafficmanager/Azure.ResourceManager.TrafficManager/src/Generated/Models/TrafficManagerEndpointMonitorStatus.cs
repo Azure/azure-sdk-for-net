@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.TrafficManager;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
@@ -15,6 +14,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
     public readonly partial struct TrafficManagerEndpointMonitorStatus : IEquatable<TrafficManagerEndpointMonitorStatus>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerEndpointMonitorStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TrafficManagerEndpointMonitorStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string CheckingEndpointValue = "CheckingEndpoint";
         private const string OnlineValue = "Online";
         private const string DegradedValue = "Degraded";
@@ -23,67 +30,37 @@ namespace Azure.ResourceManager.TrafficManager.Models
         private const string StoppedValue = "Stopped";
         private const string UnmonitoredValue = "Unmonitored";
 
-        /// <summary> Initializes a new instance of <see cref="TrafficManagerEndpointMonitorStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TrafficManagerEndpointMonitorStatus(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the CheckingEndpoint. </summary>
+        /// <summary> CheckingEndpoint. </summary>
         public static TrafficManagerEndpointMonitorStatus CheckingEndpoint { get; } = new TrafficManagerEndpointMonitorStatus(CheckingEndpointValue);
-
-        /// <summary> Gets the Online. </summary>
+        /// <summary> Online. </summary>
         public static TrafficManagerEndpointMonitorStatus Online { get; } = new TrafficManagerEndpointMonitorStatus(OnlineValue);
-
-        /// <summary> Gets the Degraded. </summary>
+        /// <summary> Degraded. </summary>
         public static TrafficManagerEndpointMonitorStatus Degraded { get; } = new TrafficManagerEndpointMonitorStatus(DegradedValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static TrafficManagerEndpointMonitorStatus Disabled { get; } = new TrafficManagerEndpointMonitorStatus(DisabledValue);
-
-        /// <summary> Gets the Inactive. </summary>
+        /// <summary> Inactive. </summary>
         public static TrafficManagerEndpointMonitorStatus Inactive { get; } = new TrafficManagerEndpointMonitorStatus(InactiveValue);
-
-        /// <summary> Gets the Stopped. </summary>
+        /// <summary> Stopped. </summary>
         public static TrafficManagerEndpointMonitorStatus Stopped { get; } = new TrafficManagerEndpointMonitorStatus(StoppedValue);
-
-        /// <summary> Gets the Unmonitored. </summary>
+        /// <summary> Unmonitored. </summary>
         public static TrafficManagerEndpointMonitorStatus Unmonitored { get; } = new TrafficManagerEndpointMonitorStatus(UnmonitoredValue);
-
         /// <summary> Determines if two <see cref="TrafficManagerEndpointMonitorStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrafficManagerEndpointMonitorStatus left, TrafficManagerEndpointMonitorStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="TrafficManagerEndpointMonitorStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrafficManagerEndpointMonitorStatus left, TrafficManagerEndpointMonitorStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="TrafficManagerEndpointMonitorStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficManagerEndpointMonitorStatus"/>. </summary>
         public static implicit operator TrafficManagerEndpointMonitorStatus(string value) => new TrafficManagerEndpointMonitorStatus(value);
 
-        /// <summary> Converts a string to a <see cref="TrafficManagerEndpointMonitorStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator TrafficManagerEndpointMonitorStatus?(string value) => value == null ? null : new TrafficManagerEndpointMonitorStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrafficManagerEndpointMonitorStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(TrafficManagerEndpointMonitorStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

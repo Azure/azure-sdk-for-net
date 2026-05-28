@@ -9,60 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> HyperV To AzStackHCI Policy model custom properties. </summary>
-    public partial class HyperVToAzStackHciPolicyCustomProperties : DataReplicationPolicyCustomProperties, IJsonModel<HyperVToAzStackHciPolicyCustomProperties>
+    public partial class HyperVToAzStackHciPolicyCustomProperties : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciPolicyCustomProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciPolicyCustomProperties"/> for deserialization. </summary>
-        internal HyperVToAzStackHciPolicyCustomProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciPolicyCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationPolicyCustomProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHyperVToAzStackHciPolicyCustomProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciPolicyCustomProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciPolicyCustomProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVToAzStackHciPolicyCustomProperties IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVToAzStackHciPolicyCustomProperties)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVToAzStackHciPolicyCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVToAzStackHciPolicyCustomProperties)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("recoveryPointHistoryInMinutes"u8);
             writer.WriteNumberValue(RecoveryPointHistoryInMinutes);
@@ -88,64 +43,92 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteNumberValue(AppConsistentFrequencyInMinutes);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HyperVToAzStackHciPolicyCustomProperties IJsonModel<HyperVToAzStackHciPolicyCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HyperVToAzStackHciPolicyCustomProperties)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataReplicationPolicyCustomProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HyperVToAzStackHciPolicyCustomProperties IJsonModel<HyperVToAzStackHciPolicyCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVToAzStackHciPolicyCustomProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVToAzStackHciPolicyCustomProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HyperVToAzStackHciPolicyCustomProperties DeserializeHyperVToAzStackHciPolicyCustomProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HyperVToAzStackHciPolicyCustomProperties DeserializeHyperVToAzStackHciPolicyCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string instanceType = "HyperVToAzStackHCI";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int recoveryPointHistoryInMinutes = default;
             int crashConsistentFrequencyInMinutes = default;
             int appConsistentFrequencyInMinutes = default;
-            foreach (var prop in element.EnumerateObject())
+            string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("instanceType"u8))
+                if (property.NameEquals("recoveryPointHistoryInMinutes"u8))
                 {
-                    instanceType = prop.Value.GetString();
+                    recoveryPointHistoryInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("recoveryPointHistoryInMinutes"u8))
+                if (property.NameEquals("crashConsistentFrequencyInMinutes"u8))
                 {
-                    recoveryPointHistoryInMinutes = prop.Value.GetInt32();
+                    crashConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("crashConsistentFrequencyInMinutes"u8))
+                if (property.NameEquals("appConsistentFrequencyInMinutes"u8))
                 {
-                    crashConsistentFrequencyInMinutes = prop.Value.GetInt32();
+                    appConsistentFrequencyInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("appConsistentFrequencyInMinutes"u8))
+                if (property.NameEquals("instanceType"u8))
                 {
-                    appConsistentFrequencyInMinutes = prop.Value.GetInt32();
+                    instanceType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new HyperVToAzStackHciPolicyCustomProperties(instanceType, additionalBinaryDataProperties, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HyperVToAzStackHciPolicyCustomProperties(instanceType, serializedAdditionalRawData, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
         }
+
+        BinaryData IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciPolicyCustomProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HyperVToAzStackHciPolicyCustomProperties IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHyperVToAzStackHciPolicyCustomProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciPolicyCustomProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVToAzStackHciPolicyCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

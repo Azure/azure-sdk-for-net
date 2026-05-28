@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    /// <summary> Response for Top Items For ResourceGroup. </summary>
-    public partial class ResourceGroupCarbonEmissionTopItemsSummary : CarbonEmission, IJsonModel<ResourceGroupCarbonEmissionTopItemsSummary>
+    public partial class ResourceGroupCarbonEmissionTopItemsSummary : IUtf8JsonSerializable, IJsonModel<ResourceGroupCarbonEmissionTopItemsSummary>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceGroupCarbonEmissionTopItemsSummary"/> for deserialization. </summary>
-        internal ResourceGroupCarbonEmissionTopItemsSummary()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceGroupCarbonEmissionTopItemsSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CarbonEmission PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeResourceGroupCarbonEmissionTopItemsSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceGroupCarbonEmissionTopItemsSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCarbonOptimizationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceGroupCarbonEmissionTopItemsSummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceGroupCarbonEmissionTopItemsSummary IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResourceGroupCarbonEmissionTopItemsSummary)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceGroupCarbonEmissionTopItemsSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceGroupCarbonEmissionTopItemsSummary)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("itemName"u8);
             writer.WriteStringValue(ItemName);
@@ -91,112 +45,140 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             writer.WriteStringValue(ResourceGroupId);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceGroupCarbonEmissionTopItemsSummary IJsonModel<ResourceGroupCarbonEmissionTopItemsSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResourceGroupCarbonEmissionTopItemsSummary)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override CarbonEmission JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceGroupCarbonEmissionTopItemsSummary IJsonModel<ResourceGroupCarbonEmissionTopItemsSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceGroupCarbonEmissionTopItemsSummary)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceGroupCarbonEmissionTopItemsSummary(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceGroupCarbonEmissionTopItemsSummary DeserializeResourceGroupCarbonEmissionTopItemsSummary(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceGroupCarbonEmissionTopItemsSummary DeserializeResourceGroupCarbonEmissionTopItemsSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string itemName = default;
+            CarbonEmissionCategoryType categoryType = default;
+            string subscriptionId = default;
+            ResourceIdentifier resourceGroupUrl = default;
             CarbonEmissionDataType dataType = default;
             double latestMonthEmissions = default;
             double previousMonthEmissions = default;
             double? monthOverMonthEmissionsChangeRatio = default;
             double? monthlyEmissionsChangeValue = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string itemName = default;
-            CarbonEmissionCategoryType categoryType = default;
-            string subscriptionId = default;
-            ResourceIdentifier resourceGroupId = default;
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("dataType"u8))
+                if (property.NameEquals("itemName"u8))
                 {
-                    dataType = new CarbonEmissionDataType(prop.Value.GetString());
+                    itemName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("latestMonthEmissions"u8))
+                if (property.NameEquals("categoryType"u8))
                 {
-                    latestMonthEmissions = prop.Value.GetDouble();
+                    categoryType = new CarbonEmissionCategoryType(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("previousMonthEmissions"u8))
+                if (property.NameEquals("subscriptionId"u8))
                 {
-                    previousMonthEmissions = prop.Value.GetDouble();
+                    subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("monthOverMonthEmissionsChangeRatio"u8))
+                if (property.NameEquals("resourceGroupUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    resourceGroupUrl = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataType"u8))
+                {
+                    dataType = new CarbonEmissionDataType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("latestMonthEmissions"u8))
+                {
+                    latestMonthEmissions = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("previousMonthEmissions"u8))
+                {
+                    previousMonthEmissions = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("monthOverMonthEmissionsChangeRatio"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monthOverMonthEmissionsChangeRatio = prop.Value.GetDouble();
+                    monthOverMonthEmissionsChangeRatio = property.Value.GetDouble();
                     continue;
                 }
-                if (prop.NameEquals("monthlyEmissionsChangeValue"u8))
+                if (property.NameEquals("monthlyEmissionsChangeValue"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monthlyEmissionsChangeValue = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("itemName"u8))
-                {
-                    itemName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("categoryType"u8))
-                {
-                    categoryType = new CarbonEmissionCategoryType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("subscriptionId"u8))
-                {
-                    subscriptionId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("resourceGroupUrl"u8))
-                {
-                    resourceGroupId = new ResourceIdentifier(prop.Value.GetString());
+                    monthlyEmissionsChangeValue = property.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceGroupCarbonEmissionTopItemsSummary(
                 dataType,
                 latestMonthEmissions,
                 previousMonthEmissions,
                 monthOverMonthEmissionsChangeRatio,
                 monthlyEmissionsChangeValue,
-                additionalBinaryDataProperties,
+                serializedAdditionalRawData,
                 itemName,
                 categoryType,
                 subscriptionId,
-                resourceGroupId);
+                resourceGroupUrl);
         }
+
+        BinaryData IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCarbonOptimizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupCarbonEmissionTopItemsSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceGroupCarbonEmissionTopItemsSummary IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeResourceGroupCarbonEmissionTopItemsSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupCarbonEmissionTopItemsSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceGroupCarbonEmissionTopItemsSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

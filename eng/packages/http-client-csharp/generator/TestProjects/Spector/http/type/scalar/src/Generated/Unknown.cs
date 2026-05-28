@@ -18,8 +18,6 @@ namespace _Type.Scalar
     {
         protected Unknown() => throw null;
 
-        internal Unknown(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
-
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;

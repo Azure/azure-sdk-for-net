@@ -36,13 +36,27 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
             if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                if (DisplayName != null)
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+                else
+                {
+                    writer.WriteNull("displayName");
+                }
             }
             if (Optional.IsDefined(ParentGroupId))
             {
-                writer.WritePropertyName("parentGroupId"u8);
-                writer.WriteStringValue(ParentGroupId);
+                if (ParentGroupId != null)
+                {
+                    writer.WritePropertyName("parentGroupId"u8);
+                    writer.WriteStringValue(ParentGroupId);
+                }
+                else
+                {
+                    writer.WriteNull("parentGroupId");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,11 +103,21 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 if (property.NameEquals("displayName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        displayName = null;
+                        continue;
+                    }
                     displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("parentGroupId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        parentGroupId = null;
+                        continue;
+                    }
                     parentGroupId = property.Value.GetString();
                     continue;
                 }

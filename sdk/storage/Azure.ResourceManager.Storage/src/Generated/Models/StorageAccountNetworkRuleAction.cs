@@ -6,28 +6,43 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary></summary>
+    /// <summary> The action of virtual network rule. </summary>
     public readonly partial struct StorageAccountNetworkRuleAction : IEquatable<StorageAccountNetworkRuleAction>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountNetworkRuleAction"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageAccountNetworkRuleAction(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string AllowValue = "Allow";
+
+        /// <summary> Allow. </summary>
+        public static StorageAccountNetworkRuleAction Allow { get; } = new StorageAccountNetworkRuleAction(AllowValue);
         /// <summary> Determines if two <see cref="StorageAccountNetworkRuleAction"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAccountNetworkRuleAction left, StorageAccountNetworkRuleAction right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageAccountNetworkRuleAction"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAccountNetworkRuleAction left, StorageAccountNetworkRuleAction right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageAccountNetworkRuleAction"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountNetworkRuleAction"/>. </summary>
         public static implicit operator StorageAccountNetworkRuleAction(string value) => new StorageAccountNetworkRuleAction(value);
 
-        /// <summary> Converts a string to a <see cref="StorageAccountNetworkRuleAction"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageAccountNetworkRuleAction?(string value) => value == null ? null : new StorageAccountNetworkRuleAction(value);
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is StorageAccountNetworkRuleAction other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(StorageAccountNetworkRuleAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

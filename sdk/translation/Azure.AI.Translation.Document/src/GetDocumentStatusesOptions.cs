@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
@@ -23,12 +23,12 @@ namespace Azure.AI.Translation.Document
         /// Filter results by <see cref="DocumentStatusResult.CreatedOn"/>.
         /// Get documents created after a certain date in UTC format.
         /// </summary>
-        public DateTimeOffset? CreatedAfter { get; set; }
+        public DateTimeOffset ? CreatedAfter { get; set; }
         /// <summary>
         /// Filter results by <see cref="DocumentStatusResult.CreatedOn"/>.
         /// Get documents created before a certain date in UTC format.
         /// </summary>
-        public DateTimeOffset? CreatedBefore { get; set; }
+        public DateTimeOffset ? CreatedBefore { get; set; }
         /// <summary>
         /// Filter results by <see cref="DocumentStatusResult.Id"/>.
         /// </summary>

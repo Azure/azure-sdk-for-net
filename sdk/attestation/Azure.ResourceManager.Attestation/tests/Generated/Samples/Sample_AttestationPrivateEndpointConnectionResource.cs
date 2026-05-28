@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Attestation.Samples
             // invoke the operation
             AttestationPrivateEndpointConnectionData data = new AttestationPrivateEndpointConnectionData
             {
-                PrivateLinkServiceConnectionState = new AttestationPrivateLinkServiceConnectionState
+                ConnectionState = new AttestationPrivateLinkServiceConnectionState
                 {
                     Status = AttestationPrivateEndpointServiceConnectionStatus.Approved,
                     Description = "Auto-Approved",

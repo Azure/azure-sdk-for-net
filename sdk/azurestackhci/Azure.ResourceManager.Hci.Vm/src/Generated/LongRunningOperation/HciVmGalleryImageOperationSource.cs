@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
-    /// <summary></summary>
-    internal partial class HciVmGalleryImageOperationSource : IOperationSource<HciVmGalleryImageResource>
+    internal class HciVmGalleryImageOperationSource : IOperationSource<HciVmGalleryImageResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal HciVmGalleryImageOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         HciVmGalleryImageResource IOperationSource<HciVmGalleryImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HciVmGalleryImageData data = HciVmGalleryImageData.DeserializeHciVmGalleryImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<HciVmGalleryImageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
             return new HciVmGalleryImageResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<HciVmGalleryImageResource> IOperationSource<HciVmGalleryImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HciVmGalleryImageData data = HciVmGalleryImageData.DeserializeHciVmGalleryImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HciVmGalleryImageResource(_client, data);
+            var data = ModelReaderWriter.Read<HciVmGalleryImageData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHciVmContext.Default);
+            return await Task.FromResult(new HciVmGalleryImageResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

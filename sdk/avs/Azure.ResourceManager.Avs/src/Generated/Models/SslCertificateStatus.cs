@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct SslCertificateStatus : IEquatable<SslCertificateStatus>
     {
         private readonly string _value;
-        /// <summary> is enabled. </summary>
-        private const string EnabledValue = "Enabled";
-        /// <summary> is disabled. </summary>
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="SslCertificateStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SslCertificateStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string EnabledValue = "Enabled";
+        private const string DisabledValue = "Disabled";
 
         /// <summary> is enabled. </summary>
         public static SslCertificateStatus Enabled { get; } = new SslCertificateStatus(EnabledValue);
-
         /// <summary> is disabled. </summary>
         public static SslCertificateStatus Disabled { get; } = new SslCertificateStatus(DisabledValue);
-
         /// <summary> Determines if two <see cref="SslCertificateStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SslCertificateStatus left, SslCertificateStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="SslCertificateStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SslCertificateStatus left, SslCertificateStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SslCertificateStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SslCertificateStatus"/>. </summary>
         public static implicit operator SslCertificateStatus(string value) => new SslCertificateStatus(value);
 
-        /// <summary> Converts a string to a <see cref="SslCertificateStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SslCertificateStatus?(string value) => value == null ? null : new SslCertificateStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SslCertificateStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(SslCertificateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -9,63 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.Marketplace;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> A map of collections subscriptions details. </summary>
-    public partial class CollectionsToSubscriptionsMappingResult : IJsonModel<CollectionsToSubscriptionsMappingResult>
+    public partial class CollectionsToSubscriptionsMappingResult : IUtf8JsonSerializable, IJsonModel<CollectionsToSubscriptionsMappingResult>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CollectionsToSubscriptionsMappingResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectionsToSubscriptionsMappingResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeCollectionsToSubscriptionsMappingResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CollectionsToSubscriptionsMappingResult)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CollectionsToSubscriptionsMappingResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectionsToSubscriptionsMappingResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CollectionsToSubscriptionsMappingResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CollectionsToSubscriptionsMappingResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CollectionsToSubscriptionsMappingResult IPersistableModel<CollectionsToSubscriptionsMappingResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CollectionsToSubscriptionsMappingResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CollectionsToSubscriptionsMappingResult"/> from. </param>
-        internal static CollectionsToSubscriptionsMappingResult FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCollectionsToSubscriptionsMappingResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CollectionsToSubscriptionsMappingResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -77,11 +28,12 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectionsToSubscriptionsMappingResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CollectionsToSubscriptionsMappingResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CollectionsToSubscriptionsMappingResult)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
@@ -93,15 +45,15 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -110,55 +62,83 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CollectionsToSubscriptionsMappingResult IJsonModel<CollectionsToSubscriptionsMappingResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CollectionsToSubscriptionsMappingResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CollectionsToSubscriptionsMappingResult IJsonModel<CollectionsToSubscriptionsMappingResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CollectionsToSubscriptionsMappingResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CollectionsToSubscriptionsMappingResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CollectionsToSubscriptionsMappingResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCollectionsToSubscriptionsMappingResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CollectionsToSubscriptionsMappingResult DeserializeCollectionsToSubscriptionsMappingResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static CollectionsToSubscriptionsMappingResult DeserializeCollectionsToSubscriptionsMappingResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> details = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("details"u8))
+                if (property.NameEquals("details"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, CollectionsSubscriptionsMappingDetails> dictionary = new Dictionary<string, CollectionsSubscriptionsMappingDetails>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, CollectionsSubscriptionsMappingDetails.DeserializeCollectionsSubscriptionsMappingDetails(prop0.Value, options));
+                        dictionary.Add(property0.Name, CollectionsSubscriptionsMappingDetails.DeserializeCollectionsSubscriptionsMappingDetails(property0.Value, options));
                     }
                     details = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new CollectionsToSubscriptionsMappingResult(details ?? new ChangeTrackingDictionary<string, CollectionsSubscriptionsMappingDetails>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CollectionsToSubscriptionsMappingResult(details ?? new ChangeTrackingDictionary<string, CollectionsSubscriptionsMappingDetails>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CollectionsToSubscriptionsMappingResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CollectionsToSubscriptionsMappingResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CollectionsToSubscriptionsMappingResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CollectionsToSubscriptionsMappingResult IPersistableModel<CollectionsToSubscriptionsMappingResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CollectionsToSubscriptionsMappingResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeCollectionsToSubscriptionsMappingResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CollectionsToSubscriptionsMappingResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CollectionsToSubscriptionsMappingResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

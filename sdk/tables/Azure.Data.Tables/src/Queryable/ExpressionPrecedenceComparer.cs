@@ -75,8 +75,7 @@ namespace Azure.Data.Tables.Queryable
                     return ConditionalOrPrecedenceCategory;
                 default:
                     return UnknownPrecedenceCategory;
-            }
-            ;
+            };
         }
     }
 }

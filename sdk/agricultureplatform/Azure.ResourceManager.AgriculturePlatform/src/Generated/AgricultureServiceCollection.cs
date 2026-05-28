@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AgriculturePlatform
 {
     /// <summary>
     /// A class representing a collection of <see cref="AgricultureServiceResource"/> and their operations.
-    /// Each <see cref="AgricultureServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="AgricultureServiceCollection"/> instance call the GetAgricultureServices method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="AgricultureServiceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="AgricultureServiceCollection"/> instance call the GetAgricultureServices method from an instance of the parent resource.
     /// </summary>
     public partial class AgricultureServiceCollection : ArmCollection, IEnumerable<AgricultureServiceResource>, IAsyncEnumerable<AgricultureServiceResource>
     {
@@ -51,27 +51,11 @@ namespace Azure.ResourceManager.AgriculturePlatform
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
             }
         }
 
-        /// <summary>
-        /// Create a AgriServiceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a AgriServiceResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -113,23 +97,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             }
         }
 
-        /// <summary>
-        /// Create a AgriServiceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Create a AgriServiceResource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -171,23 +139,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             }
         }
 
-        /// <summary>
-        /// Get a AgriServiceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a AgriServiceResource. </summary>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
@@ -220,23 +172,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             }
         }
 
-        /// <summary>
-        /// Get a AgriServiceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a AgriServiceResource. </summary>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
@@ -269,23 +205,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             }
         }
 
-        /// <summary>
-        /// List AgriServiceResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List AgriServiceResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AgricultureServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -294,26 +214,10 @@ namespace Azure.ResourceManager.AgriculturePlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupAsyncCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgricultureServiceCollection.GetAll"), data => new AgricultureServiceResource(Client, data));
+            return new AsyncPageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupAsyncCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AgricultureServiceResource(Client, data));
         }
 
-        /// <summary>
-        /// List AgriServiceResource resources by resource group
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_ListByResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List AgriServiceResource resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AgricultureServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AgricultureServiceResource> GetAll(CancellationToken cancellationToken = default)
@@ -322,26 +226,10 @@ namespace Azure.ResourceManager.AgriculturePlatform
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AgricultureServiceCollection.GetAll"), data => new AgricultureServiceResource(Client, data));
+            return new PageableWrapper<AgricultureServiceData, AgricultureServiceResource>(new AgriServiceGetByResourceGroupCollectionResultOfT(_agriServiceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new AgricultureServiceResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
@@ -382,23 +270,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             }
         }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
@@ -439,23 +311,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
@@ -500,23 +356,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
             }
         }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AgriService_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Tries to get details for this resource from the service. </summary>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>

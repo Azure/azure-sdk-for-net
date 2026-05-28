@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
 ["tier"] = "production"
 },
             };
-            ArmOperation<ContainerServiceFleetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fleetName, data, matchConditions: null);
+            ArmOperation<ContainerServiceFleetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fleetName, data);
             ContainerServiceFleetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -118,12 +118,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Samples
                 },
                 Tags = { },
             };
-            MatchConditions matchConditions = new MatchConditions
-            {
-                IfMatch = new ETag("jzlrwaylijhsnzp"),
-                IfNoneMatch = new ETag("cqpzdjshmggwolagomzxfy")
-            };
-            ArmOperation<ContainerServiceFleetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fleetName, data, matchConditions: matchConditions);
+            string ifMatch = "jzlrwaylijhsnzp";
+            string ifNoneMatch = "cqpzdjshmggwolagomzxfy";
+            ArmOperation<ContainerServiceFleetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fleetName, data, ifMatch: ifMatch, ifNoneMatch: ifNoneMatch);
             ContainerServiceFleetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

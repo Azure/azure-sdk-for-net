@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             Assert.IsTrue(nginxResourceIdentifier.ResourceType.Equals(NginxDeploymentResource.ResourceType));
             Assert.IsTrue(nginxResourceIdentifier.Equals($"{ResGroup.Id}/providers/{NginxDeploymentResource.ResourceType}/{nginxDeploymentName}"));
+            Assert.Throws<ArgumentException>(() => NginxDeploymentResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.IsNull(nginxDeployment.Data.Properties.Logging);
             Assert.IsNull(nginxDeployment.Data.Properties.LoggingStorageAccount);
             Assert.IsNotNull(nginxDeployment.Data.Properties.ScalingProperties.Capacity);
+            Assert.IsNotNull(nginxDeployment.Data.Properties.ScalingProperties.Profiles);
             Assert.IsNotNull(nginxDeployment.Data.Properties.AutoUpgradeProfile.UpgradeChannel);
             Assert.IsNotNull(nginxDeployment.Data.Properties.UserProfile.PreferredEmail);
             Assert.IsNotNull(nginxDeployment.Data.Properties.UserPreferredEmail);
@@ -204,6 +206,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment2 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
             Assert.AreEqual("1", nginxDeployment2.Data.Tags["Counter"]);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, null)).Value);
         }
 
         [TestCase]
@@ -218,17 +221,16 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxScaleProfileCapacity nginxScaleProfileCapacity = new NginxScaleProfileCapacity(20, 30);
             NginxScaleProfile nginxScaleProfile = new NginxScaleProfile("default", nginxScaleProfileCapacity);
             nginxScaleProfiles.Add(nginxScaleProfile);
-            NginxDeploymentAutoScaleSettings autoScaleSettings = new NginxDeploymentAutoScaleSettings(nginxScaleProfiles);
-            NginxDeploymentScalingProperties testScalingProp = new NginxDeploymentScalingProperties(null, autoScaleSettings, null);
+            NginxDeploymentScalingProperties testScalingProp = new NginxDeploymentScalingProperties(null, nginxScaleProfiles, null);
             deploymentPatch.Properties = new NginxDeploymentUpdateProperties
             {
-                NginxAppProtect = null,
                 ScalingProperties = testScalingProp
             };
 
             NginxDeploymentResource nginxDeployment2 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
             Assert.AreEqual(1, nginxDeployment2.Data.Properties.ScalingProperties.Profiles.Count);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, null)).Value);
         }
 
         [TestCase]
@@ -241,14 +243,13 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentPatch deploymentPatch = new NginxDeploymentPatch
             {
                 Properties = new NginxDeploymentUpdateProperties()
-                {
-                    NginxAppProtect = null,
-                    AutoUpgradeProfile = new AutoUpgradeProfile
-                    {
-                        UpgradeChannel = "stable"
-                    }
-                }
             };
+            AutoUpgradeProfile autoUpgradeProfile = new AutoUpgradeProfile
+            {
+                UpgradeChannel = "stable"
+            };
+
+            deploymentPatch.Properties.AutoUpgradeProfile = autoUpgradeProfile;
 
             NginxDeploymentResource nginxDeployment2 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
@@ -297,7 +298,11 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             {
                 Properties = new NginxDeploymentUpdateProperties()
             };
-            deploymentPatch.Properties.WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Enabled;
+            NginxDeploymentUpdatePropertiesNginxAppProtect nginxAppProtect = new NginxDeploymentUpdatePropertiesNginxAppProtect
+            {
+                WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Enabled
+            };
+            deploymentPatch.Properties.NginxAppProtect = nginxAppProtect;
             NginxDeploymentResource updatedNginxDeployment = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
             Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState);
@@ -309,7 +314,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.ThreatCampaignsPackage);
             Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.ComponentVersions);
 
-            deploymentPatch.Properties.WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Disabled;
+            nginxAppProtect.WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Disabled;
+            deploymentPatch.Properties.NginxAppProtect = nginxAppProtect;
             NginxDeploymentResource nginxDeployment2 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
             Assert.AreEqual(nginxDeployment2.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState, WebApplicationFirewallActivationState.Disabled);

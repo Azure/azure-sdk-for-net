@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LargeInstance
@@ -26,145 +25,31 @@ namespace Azure.ResourceManager.LargeInstance
     /// </summary>
     public partial class LargeStorageInstanceCollection : ArmCollection, IEnumerable<LargeStorageInstanceResource>, IAsyncEnumerable<LargeStorageInstanceResource>
     {
-        private readonly ClientDiagnostics _azureLargeStorageInstanceClientDiagnostics;
-        private readonly AzureLargeStorageInstance _azureLargeStorageInstanceRestClient;
+        private readonly ClientDiagnostics _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics;
+        private readonly AzureLargeStorageInstanceRestOperations _largeStorageInstanceAzureLargeStorageInstanceRestClient;
 
-        /// <summary> Initializes a new instance of LargeStorageInstanceCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LargeStorageInstanceCollection"/> class for mocking. </summary>
         protected LargeStorageInstanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LargeStorageInstanceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LargeStorageInstanceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal LargeStorageInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(LargeStorageInstanceResource.ResourceType, out string largeStorageInstanceApiVersion);
-            _azureLargeStorageInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LargeInstance", LargeStorageInstanceResource.ResourceType.Namespace, Diagnostics);
-            _azureLargeStorageInstanceRestClient = new AzureLargeStorageInstance(_azureLargeStorageInstanceClientDiagnostics, Pipeline, Endpoint, largeStorageInstanceApiVersion ?? "2024-08-01-preview");
-            ValidateResourceId(id);
+            _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LargeInstance", LargeStorageInstanceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(LargeStorageInstanceResource.ResourceType, out string largeStorageInstanceAzureLargeStorageInstanceApiVersion);
+            _largeStorageInstanceAzureLargeStorageInstanceRestClient = new AzureLargeStorageInstanceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, largeStorageInstanceAzureLargeStorageInstanceApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
-        }
-
-        /// <summary>
-        /// Creates an Azure Large Storage Instance for the specified subscription,
-        /// resource group, and instance name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureLargeStorageInstances_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<LargeStorageInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureLargeStorageInstanceName, LargeStorageInstanceData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _azureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, LargeStorageInstanceData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LargeStorageInstanceData> response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                LargeInstanceArmOperation<LargeStorageInstanceResource> operation = new LargeInstanceArmOperation<LargeStorageInstanceResource>(Response.FromValue(new LargeStorageInstanceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Creates an Azure Large Storage Instance for the specified subscription,
-        /// resource group, and instance name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureLargeStorageInstances_Create. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<LargeStorageInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string azureLargeStorageInstanceName, LargeStorageInstanceData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _azureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.CreateOrUpdate");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, LargeStorageInstanceData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LargeStorageInstanceData> response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                LargeInstanceArmOperation<LargeStorageInstanceResource> operation = new LargeInstanceArmOperation<LargeStorageInstanceResource>(Response.FromValue(new LargeStorageInstanceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -172,42 +57,38 @@ namespace Azure.ResourceManager.LargeInstance
         /// group, and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureLargeStorageInstances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureLargeStorageInstance_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual async Task<Response<LargeStorageInstanceResource>> GetAsync(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
-            using DiagnosticScope scope = _azureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Get");
+            using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LargeStorageInstanceData> response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
+                var response = await _largeStorageInstanceAzureLargeStorageInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureLargeStorageInstanceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LargeStorageInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -222,42 +103,38 @@ namespace Azure.ResourceManager.LargeInstance
         /// group, and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureLargeStorageInstances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureLargeStorageInstance_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual Response<LargeStorageInstanceResource> Get(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
-            using DiagnosticScope scope = _azureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Get");
+            using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<LargeStorageInstanceData> response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
+                var response = _largeStorageInstanceAzureLargeStorageInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureLargeStorageInstanceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new LargeStorageInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,28 +150,30 @@ namespace Azure.ResourceManager.LargeInstance
         /// LargeStorage instance.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureLargeStorageInstances_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureLargeStorageInstance_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LargeStorageInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<LargeStorageInstanceData, LargeStorageInstanceResource>(new AzureLargeStorageInstanceGetByResourceGroupAsyncCollectionResultOfT(_azureLargeStorageInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LargeStorageInstanceCollection.GetAll"), data => new LargeStorageInstanceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _largeStorageInstanceAzureLargeStorageInstanceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _largeStorageInstanceAzureLargeStorageInstanceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LargeStorageInstanceResource(Client, LargeStorageInstanceData.DeserializeLargeStorageInstanceData(e)), _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics, Pipeline, "LargeStorageInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -303,16 +182,20 @@ namespace Azure.ResourceManager.LargeInstance
         /// LargeStorage instance.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureLargeStorageInstances_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureLargeStorageInstance_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,61 +203,45 @@ namespace Azure.ResourceManager.LargeInstance
         /// <returns> A collection of <see cref="LargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LargeStorageInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<LargeStorageInstanceData, LargeStorageInstanceResource>(new AzureLargeStorageInstanceGetByResourceGroupCollectionResultOfT(_azureLargeStorageInstanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LargeStorageInstanceCollection.GetAll"), data => new LargeStorageInstanceResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _largeStorageInstanceAzureLargeStorageInstanceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _largeStorageInstanceAzureLargeStorageInstanceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LargeStorageInstanceResource(Client, LargeStorageInstanceData.DeserializeLargeStorageInstanceData(e)), _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics, Pipeline, "LargeStorageInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureLargeStorageInstances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureLargeStorageInstance_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
-            using DiagnosticScope scope = _azureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Exists");
+            using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<LargeStorageInstanceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LargeStorageInstanceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _largeStorageInstanceAzureLargeStorageInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureLargeStorageInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -388,50 +255,36 @@ namespace Azure.ResourceManager.LargeInstance
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureLargeStorageInstances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureLargeStorageInstance_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
-            using DiagnosticScope scope = _azureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Exists");
+            using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<LargeStorageInstanceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LargeStorageInstanceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _largeStorageInstanceAzureLargeStorageInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureLargeStorageInstanceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -445,54 +298,38 @@ namespace Azure.ResourceManager.LargeInstance
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureLargeStorageInstances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureLargeStorageInstance_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<LargeStorageInstanceResource>> GetIfExistsAsync(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
-            using DiagnosticScope scope = _azureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.GetIfExists");
+            using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<LargeStorageInstanceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LargeStorageInstanceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _largeStorageInstanceAzureLargeStorageInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, azureLargeStorageInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<LargeStorageInstanceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new LargeStorageInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -506,54 +343,38 @@ namespace Azure.ResourceManager.LargeInstance
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> AzureLargeStorageInstances_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>AzureLargeStorageInstance_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-20-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LargeStorageInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureLargeStorageInstanceName"> Name of the AzureLargeStorageInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureLargeStorageInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual NullableResponse<LargeStorageInstanceResource> GetIfExists(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
-            using DiagnosticScope scope = _azureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.GetIfExists");
+            using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _azureLargeStorageInstanceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureLargeStorageInstanceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<LargeStorageInstanceData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(LargeStorageInstanceData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((LargeStorageInstanceData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _largeStorageInstanceAzureLargeStorageInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, azureLargeStorageInstanceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<LargeStorageInstanceResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new LargeStorageInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -573,7 +394,6 @@ namespace Azure.ResourceManager.LargeInstance
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<LargeStorageInstanceResource> IAsyncEnumerable<LargeStorageInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

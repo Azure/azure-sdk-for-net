@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.NetworkCloud;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> AttachedNetworkConfiguration represents the set of workload networks to attach to a resource. </summary>
-    public partial class AttachedNetworkConfiguration : IJsonModel<AttachedNetworkConfiguration>
+    public partial class AttachedNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<AttachedNetworkConfiguration>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttachedNetworkConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAttachedNetworkConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttachedNetworkConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AttachedNetworkConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AttachedNetworkConfiguration IPersistableModel<AttachedNetworkConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AttachedNetworkConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AttachedNetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,16 +28,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(L2Networks))
             {
                 writer.WritePropertyName("l2Networks"u8);
                 writer.WriteStartArray();
-                foreach (L2NetworkAttachmentConfiguration item in L2Networks)
+                foreach (var item in L2Networks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,7 +48,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("l3Networks"u8);
                 writer.WriteStartArray();
-                foreach (L3NetworkAttachmentConfiguration item in L3Networks)
+                foreach (var item in L3Networks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,21 +58,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 writer.WritePropertyName("trunkedNetworks"u8);
                 writer.WriteStartArray();
-                foreach (TrunkedNetworkAttachmentConfiguration item in TrunkedNetworks)
+                foreach (var item in TrunkedNetworks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,27 +81,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AttachedNetworkConfiguration IJsonModel<AttachedNetworkConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttachedNetworkConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AttachedNetworkConfiguration IJsonModel<AttachedNetworkConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAttachedNetworkConfiguration(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AttachedNetworkConfiguration DeserializeAttachedNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static AttachedNetworkConfiguration DeserializeAttachedNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -149,45 +104,46 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             IList<L2NetworkAttachmentConfiguration> l2Networks = default;
             IList<L3NetworkAttachmentConfiguration> l3Networks = default;
             IList<TrunkedNetworkAttachmentConfiguration> trunkedNetworks = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("l2Networks"u8))
+                if (property.NameEquals("l2Networks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<L2NetworkAttachmentConfiguration> array = new List<L2NetworkAttachmentConfiguration>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(L2NetworkAttachmentConfiguration.DeserializeL2NetworkAttachmentConfiguration(item, options));
                     }
                     l2Networks = array;
                     continue;
                 }
-                if (prop.NameEquals("l3Networks"u8))
+                if (property.NameEquals("l3Networks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<L3NetworkAttachmentConfiguration> array = new List<L3NetworkAttachmentConfiguration>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(L3NetworkAttachmentConfiguration.DeserializeL3NetworkAttachmentConfiguration(item, options));
                     }
                     l3Networks = array;
                     continue;
                 }
-                if (prop.NameEquals("trunkedNetworks"u8))
+                if (property.NameEquals("trunkedNetworks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<TrunkedNetworkAttachmentConfiguration> array = new List<TrunkedNetworkAttachmentConfiguration>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(TrunkedNetworkAttachmentConfiguration.DeserializeTrunkedNetworkAttachmentConfiguration(item, options));
                     }
@@ -196,10 +152,42 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new AttachedNetworkConfiguration(l2Networks ?? new ChangeTrackingList<L2NetworkAttachmentConfiguration>(), l3Networks ?? new ChangeTrackingList<L3NetworkAttachmentConfiguration>(), trunkedNetworks ?? new ChangeTrackingList<TrunkedNetworkAttachmentConfiguration>(), additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AttachedNetworkConfiguration(l2Networks ?? new ChangeTrackingList<L2NetworkAttachmentConfiguration>(), l3Networks ?? new ChangeTrackingList<L3NetworkAttachmentConfiguration>(), trunkedNetworks ?? new ChangeTrackingList<TrunkedNetworkAttachmentConfiguration>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AttachedNetworkConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AttachedNetworkConfiguration IPersistableModel<AttachedNetworkConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeAttachedNetworkConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AttachedNetworkConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

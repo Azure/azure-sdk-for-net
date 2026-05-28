@@ -5,47 +5,23 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
+using System;
 using Azure.Core;
-using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Translation.Text
 {
-    /// <summary> Client options for <see cref="TextTranslationClient"/>. </summary>
+    /// <summary> Client options for TextTranslationClient. </summary>
     public partial class TextTranslationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2026_06_06;
-
-        /// <summary> Initializes a new instance of TextTranslationClientOptions from configuration. </summary>
-        /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
-        internal TextTranslationClientOptions(IConfigurationSection section) : base(section, null)
-        {
-            Version = "2026-06-06";
-            if (section is null || !section.Exists())
-            {
-                return;
-            }
-            if (section["Version"] is string version)
-            {
-                Version = version;
-            }
-            ConfigureLogging();
-        }
-
-        /// <summary> Gets the Version. </summary>
-        internal string Version { get; }
-
-        /// <summary> Configures logging for the client options. </summary>
-        partial void ConfigureLogging();
+        private const ServiceVersion LatestVersion = ServiceVersion.V3_0;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Version 3.0. </summary>
+            /// <summary> Service version "3.0". </summary>
             V3_0 = 1,
-            /// <summary> Version 2026-06-06. </summary>
-            V2026_06_06 = 2
         }
+
+        internal string Version { get; }
     }
 }

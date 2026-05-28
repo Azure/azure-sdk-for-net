@@ -8,32 +8,34 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Search;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableSearchResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableSearchResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableSearchResourceGroupResource"/> class for mocking. </summary>
         protected MockableSearchResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableSearchResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableSearchResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSearchResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of SearchServices in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of SearchServices and their operations over a SearchServiceResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of SearchServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SearchServiceResources and their operations over a SearchServiceResource. </returns>
         public virtual SearchServiceCollection GetSearchServices()
         {
             return GetCachedClient(client => new SearchServiceCollection(client, Id));
@@ -43,29 +45,31 @@ namespace Azure.ResourceManager.Search.Mocking
         /// Gets the search service with the given name in the given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SearchServices_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SearchServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SearchServiceResource>> GetSearchServiceAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceResource>> GetSearchServiceAsync(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
-
             return await GetSearchServices().GetAsync(searchServiceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
@@ -73,29 +77,31 @@ namespace Azure.ResourceManager.Search.Mocking
         /// Gets the search service with the given name in the given resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SearchServices_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Services_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SearchServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchServiceName"> The name of the Azure AI Search service associated with the specified resource group. </param>
-        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="searchServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SearchServiceResource> GetSearchService(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SearchServiceResource> GetSearchService(string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchServiceName, nameof(searchServiceName));
-
             return GetSearchServices().Get(searchServiceName, searchManagementRequestOptions, cancellationToken);
         }
     }

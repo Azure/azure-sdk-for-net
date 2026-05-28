@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using Azure.Identity;
+using OpenAI.Chat;
 using System;
 using System.Buffers;
 using System.ClientModel;
@@ -10,8 +12,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
-using Azure.Identity;
-using OpenAI.Chat;
 
 namespace Azure.AI.OpenAI.Samples;
 
@@ -287,8 +287,7 @@ public partial class AzureOpenAISamples
             public Segment Append(ReadOnlyMemory<T> items)
             {
                 long runningIndex;
-                checked
-                { runningIndex = RunningIndex + Memory.Length; }
+                checked { runningIndex = RunningIndex + Memory.Length; }
                 Segment segment = new(items, runningIndex);
                 Next = segment;
                 return segment;

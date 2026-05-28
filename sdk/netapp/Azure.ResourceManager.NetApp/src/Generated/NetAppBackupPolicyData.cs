@@ -7,155 +7,110 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> Backup policy information. </summary>
+    /// <summary>
+    /// A class representing the NetAppBackupPolicy data model.
+    /// Backup policy information
+    /// </summary>
     public partial class NetAppBackupPolicyData : TrackedResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="location"> The location. </param>
         public NetAppBackupPolicyData(AzureLocation location) : base(location)
         {
-
+            VolumeBackups = new ChangeTrackingList<NetAppVolumeBackupDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Backup policy Properties. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        internal NetAppBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, BackupPolicyProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="backupPolicyId"> Backup Policy GUID ID. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="dailyBackupsToKeep"> Daily backups count to keep. </param>
+        /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
+        /// <param name="monthlyBackupsToKeep"> Monthly backups count to keep. </param>
+        /// <param name="volumesAssigned"> Volumes using current backup policy. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? isEnabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
-            ETag = eTag;
+            ETag = etag;
+            BackupPolicyId = backupPolicyId;
+            ProvisioningState = provisioningState;
+            DailyBackupsToKeep = dailyBackupsToKeep;
+            WeeklyBackupsToKeep = weeklyBackupsToKeep;
+            MonthlyBackupsToKeep = monthlyBackupsToKeep;
+            VolumesAssigned = volumesAssigned;
+            IsEnabled = isEnabled;
+            VolumeBackups = volumeBackups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Backup policy Properties. </summary>
-        internal BackupPolicyProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyData"/> for deserialization. </summary>
+        internal NetAppBackupPolicyData()
+        {
+        }
 
-        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-
         /// <summary> Backup Policy GUID ID. </summary>
-        public ResourceIdentifier BackupPolicyId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BackupPolicyId;
-            }
-        }
-
+        public ResourceIdentifier BackupPolicyId { get; }
         /// <summary> Azure lifecycle management. </summary>
-        public string ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
+        public string ProvisioningState { get; }
         /// <summary> Daily backups count to keep. </summary>
-        public int? DailyBackupsToKeep
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DailyBackupsToKeep;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BackupPolicyProperties();
-                }
-                Properties.DailyBackupsToKeep = value;
-            }
-        }
-
+        public int? DailyBackupsToKeep { get; set; }
         /// <summary> Weekly backups count to keep. </summary>
-        public int? WeeklyBackupsToKeep
-        {
-            get
-            {
-                return Properties is null ? default : Properties.WeeklyBackupsToKeep;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BackupPolicyProperties();
-                }
-                Properties.WeeklyBackupsToKeep = value;
-            }
-        }
-
+        public int? WeeklyBackupsToKeep { get; set; }
         /// <summary> Monthly backups count to keep. </summary>
-        public int? MonthlyBackupsToKeep
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MonthlyBackupsToKeep;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BackupPolicyProperties();
-                }
-                Properties.MonthlyBackupsToKeep = value;
-            }
-        }
-
+        public int? MonthlyBackupsToKeep { get; set; }
         /// <summary> Volumes using current backup policy. </summary>
-        public int? VolumesAssigned
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VolumesAssigned;
-            }
-        }
-
+        public int? VolumesAssigned { get; }
         /// <summary> The property to decide policy is enabled or not. </summary>
-        public bool? IsEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BackupPolicyProperties();
-                }
-                Properties.IsEnabled = value;
-            }
-        }
-
+        public bool? IsEnabled { get; set; }
         /// <summary> A list of volumes assigned to this policy. </summary>
-        public IReadOnlyList<NetAppVolumeBackupDetail> VolumeBackups
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new BackupPolicyProperties();
-                }
-                return Properties.VolumeBackups;
-            }
-        }
+        public IReadOnlyList<NetAppVolumeBackupDetail> VolumeBackups { get; }
     }
 }

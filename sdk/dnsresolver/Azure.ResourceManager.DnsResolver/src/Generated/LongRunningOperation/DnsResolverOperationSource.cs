@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
-    /// <summary></summary>
-    internal partial class DnsResolverOperationSource : IOperationSource<DnsResolverResource>
+    internal class DnsResolverOperationSource : IOperationSource<DnsResolverResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal DnsResolverOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         DnsResolverResource IOperationSource<DnsResolverResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DnsResolverData data = DnsResolverData.DeserializeDnsResolverData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<DnsResolverData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return new DnsResolverResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<DnsResolverResource> IOperationSource<DnsResolverResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DnsResolverData data = DnsResolverData.DeserializeDnsResolverData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DnsResolverResource(_client, data);
+            var data = ModelReaderWriter.Read<DnsResolverData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
+            return await Task.FromResult(new DnsResolverResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

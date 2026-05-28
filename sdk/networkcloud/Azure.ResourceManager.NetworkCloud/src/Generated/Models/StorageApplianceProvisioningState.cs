@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,72 +14,47 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct StorageApplianceProvisioningState : IEquatable<StorageApplianceProvisioningState>
     {
         private readonly string _value;
-        /// <summary> The Succeeded status. </summary>
-        private const string SucceededValue = "Succeeded";
-        /// <summary> The Failed status. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> The Canceled status. </summary>
-        private const string CanceledValue = "Canceled";
-        /// <summary> The Provisioning status. </summary>
-        private const string ProvisioningValue = "Provisioning";
-        /// <summary> The Accepted status. </summary>
-        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="StorageApplianceProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageApplianceProvisioningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The Succeeded status. </summary>
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string ProvisioningValue = "Provisioning";
+        private const string AcceptedValue = "Accepted";
+
+        /// <summary> Succeeded. </summary>
         public static StorageApplianceProvisioningState Succeeded { get; } = new StorageApplianceProvisioningState(SucceededValue);
-
-        /// <summary> The Failed status. </summary>
+        /// <summary> Failed. </summary>
         public static StorageApplianceProvisioningState Failed { get; } = new StorageApplianceProvisioningState(FailedValue);
-
-        /// <summary> The Canceled status. </summary>
+        /// <summary> Canceled. </summary>
         public static StorageApplianceProvisioningState Canceled { get; } = new StorageApplianceProvisioningState(CanceledValue);
-
-        /// <summary> The Provisioning status. </summary>
+        /// <summary> Provisioning. </summary>
         public static StorageApplianceProvisioningState Provisioning { get; } = new StorageApplianceProvisioningState(ProvisioningValue);
-
-        /// <summary> The Accepted status. </summary>
+        /// <summary> Accepted. </summary>
         public static StorageApplianceProvisioningState Accepted { get; } = new StorageApplianceProvisioningState(AcceptedValue);
-
         /// <summary> Determines if two <see cref="StorageApplianceProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageApplianceProvisioningState left, StorageApplianceProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="StorageApplianceProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageApplianceProvisioningState left, StorageApplianceProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="StorageApplianceProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageApplianceProvisioningState"/>. </summary>
         public static implicit operator StorageApplianceProvisioningState(string value) => new StorageApplianceProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="StorageApplianceProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StorageApplianceProvisioningState?(string value) => value == null ? null : new StorageApplianceProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageApplianceProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(StorageApplianceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

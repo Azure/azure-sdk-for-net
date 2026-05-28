@@ -10,8 +10,6 @@
 
 ### Other Changes
 
-- Migrated from AutoRest/Swagger to TypeSpec-based code generation using `@azure-typespec/http-client-csharp-mgmt` emitter.
-
 ## 1.3.0 (2025-09-29)
 
 ### Features Added

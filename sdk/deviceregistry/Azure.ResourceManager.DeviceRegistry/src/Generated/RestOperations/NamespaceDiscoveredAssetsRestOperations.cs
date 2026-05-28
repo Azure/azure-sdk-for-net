@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/discoveredAssets/", false);
             uri.AppendPath(discoveredAssetName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/discoveredAssets/", false);
             uri.AppendPath(discoveredAssetName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,10 +97,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/discoveredAssets/", false);
             uri.AppendPath(discoveredAssetName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -129,10 +120,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/discoveredAssets/", false);
             uri.AppendPath(discoveredAssetName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,10 +139,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             uri.AppendPath("/providers/Microsoft.DeviceRegistry/namespaces/", false);
             uri.AppendPath(namespaceName, true);
             uri.AppendPath("/discoveredAssets", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -166,18 +151,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

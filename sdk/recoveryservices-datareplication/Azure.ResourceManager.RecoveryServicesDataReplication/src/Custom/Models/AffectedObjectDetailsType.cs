@@ -3,11 +3,11 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    [CodeGenType("JobModelCustomPropertiesAffectedObjectDetailsType")]
+    [CodeGenModel("JobModelCustomPropertiesAffectedObjectDetailsType")]
     public readonly partial struct AffectedObjectDetailsType
     {
     }

@@ -7,59 +7,42 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary></summary>
+    /// <summary> The AffectedObjectDetailsType. </summary>
     public readonly partial struct AffectedObjectDetailsType : IEquatable<AffectedObjectDetailsType>
     {
         private readonly string _value;
-        private const string ObjectValue = "object";
 
         /// <summary> Initializes a new instance of <see cref="AffectedObjectDetailsType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AffectedObjectDetailsType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Object. </summary>
+        private const string ObjectValue = "object";
+
+        /// <summary> object. </summary>
         public static AffectedObjectDetailsType Object { get; } = new AffectedObjectDetailsType(ObjectValue);
-
         /// <summary> Determines if two <see cref="AffectedObjectDetailsType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AffectedObjectDetailsType left, AffectedObjectDetailsType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AffectedObjectDetailsType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AffectedObjectDetailsType left, AffectedObjectDetailsType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AffectedObjectDetailsType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AffectedObjectDetailsType"/>. </summary>
         public static implicit operator AffectedObjectDetailsType(string value) => new AffectedObjectDetailsType(value);
 
-        /// <summary> Converts a string to a <see cref="AffectedObjectDetailsType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AffectedObjectDetailsType?(string value) => value == null ? null : new AffectedObjectDetailsType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AffectedObjectDetailsType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AffectedObjectDetailsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

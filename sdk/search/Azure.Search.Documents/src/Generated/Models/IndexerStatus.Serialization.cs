@@ -11,7 +11,6 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     internal static partial class IndexerStatusExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IndexerStatus value) => value switch
         {
             IndexerStatus.Unknown => "unknown",
@@ -20,21 +19,11 @@ namespace Azure.Search.Documents.Indexes.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexerStatus value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static IndexerStatus ToIndexerStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unknown"))
-            {
-                return IndexerStatus.Unknown;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "error"))
-            {
-                return IndexerStatus.Error;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running"))
-            {
-                return IndexerStatus.Running;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unknown")) return IndexerStatus.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "error")) return IndexerStatus.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return IndexerStatus.Running;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexerStatus value.");
         }
     }

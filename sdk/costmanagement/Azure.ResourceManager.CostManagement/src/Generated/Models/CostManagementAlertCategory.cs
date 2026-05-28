@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -15,63 +14,44 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct CostManagementAlertCategory : IEquatable<CostManagementAlertCategory>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertCategory"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CostManagementAlertCategory(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string CostValue = "Cost";
         private const string UsageValue = "Usage";
         private const string BillingValue = "Billing";
         private const string SystemValue = "System";
 
-        /// <summary> Initializes a new instance of <see cref="CostManagementAlertCategory"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CostManagementAlertCategory(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Cost. </summary>
+        /// <summary> Cost. </summary>
         public static CostManagementAlertCategory Cost { get; } = new CostManagementAlertCategory(CostValue);
-
-        /// <summary> Gets the Usage. </summary>
+        /// <summary> Usage. </summary>
         public static CostManagementAlertCategory Usage { get; } = new CostManagementAlertCategory(UsageValue);
-
-        /// <summary> Gets the Billing. </summary>
+        /// <summary> Billing. </summary>
         public static CostManagementAlertCategory Billing { get; } = new CostManagementAlertCategory(BillingValue);
-
-        /// <summary> Gets the System. </summary>
+        /// <summary> System. </summary>
         public static CostManagementAlertCategory System { get; } = new CostManagementAlertCategory(SystemValue);
-
         /// <summary> Determines if two <see cref="CostManagementAlertCategory"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CostManagementAlertCategory left, CostManagementAlertCategory right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CostManagementAlertCategory"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CostManagementAlertCategory left, CostManagementAlertCategory right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CostManagementAlertCategory"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CostManagementAlertCategory"/>. </summary>
         public static implicit operator CostManagementAlertCategory(string value) => new CostManagementAlertCategory(value);
 
-        /// <summary> Converts a string to a <see cref="CostManagementAlertCategory"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CostManagementAlertCategory?(string value) => value == null ? null : new CostManagementAlertCategory(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CostManagementAlertCategory other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CostManagementAlertCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

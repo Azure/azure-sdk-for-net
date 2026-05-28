@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/serverlessRuntimes/", false);
             uri.AppendPath(serverlessRuntimeName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/serverlessRuntimes/", false);
             uri.AppendPath(serverlessRuntimeName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -103,10 +97,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/serverlessRuntimes/", false);
             uri.AppendPath(serverlessRuntimeName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -125,10 +116,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/providers/Informatica.DataManagement/organizations/", false);
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/serverlessRuntimes", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -140,18 +128,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         internal HttpMessage CreateNextGetByInformaticaOrganizationResourceRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string organizationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.Reset(nextPage);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -172,10 +149,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(organizationName, true);
             uri.AppendPath("/serverlessRuntimes/", false);
             uri.AppendPath(serverlessRuntimeName, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -199,10 +173,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/serverlessRuntimes/", false);
             uri.AppendPath(serverlessRuntimeName, true);
             uri.AppendPath("/checkDependencies", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -224,10 +195,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/serverlessRuntimes/", false);
             uri.AppendPath(serverlessRuntimeName, true);
             uri.AppendPath("/startFailedServerlessRuntime", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -248,10 +216,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/serverlessRuntimes/", false);
             uri.AppendPath(serverlessRuntimeName, true);
             uri.AppendPath("/serverlessResourceById", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

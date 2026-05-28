@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sphere
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereCatalogCollection : ArmCollection, IEnumerable<SphereCatalogResource>, IAsyncEnumerable<SphereCatalogResource>
     {
-        private readonly ClientDiagnostics _catalogsClientDiagnostics;
-        private readonly Catalogs _catalogsRestClient;
+        private readonly ClientDiagnostics _sphereCatalogCatalogsClientDiagnostics;
+        private readonly CatalogsRestOperations _sphereCatalogCatalogsRestClient;
 
-        /// <summary> Initializes a new instance of SphereCatalogCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SphereCatalogCollection"/> class for mocking. </summary>
         protected SphereCatalogCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SphereCatalogCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SphereCatalogCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SphereCatalogCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SphereCatalogResource.ResourceType, out string sphereCatalogApiVersion);
-            _catalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereCatalogResource.ResourceType.Namespace, Diagnostics);
-            _catalogsRestClient = new Catalogs(_catalogsClientDiagnostics, Pipeline, Endpoint, sphereCatalogApiVersion ?? "2024-04-01");
-            ValidateResourceId(id);
+            _sphereCatalogCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereCatalogResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SphereCatalogResource.ResourceType, out string sphereCatalogCatalogsApiVersion);
+            _sphereCatalogCatalogsRestClient = new CatalogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sphereCatalogCatalogsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create a Catalog
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Catalogs_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,34 +77,21 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="catalogName"> Name of catalog. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SphereCatalogResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string catalogName, SphereCatalogData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("SphereCatalogCollection.CreateOrUpdate");
+            using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, SphereCatalogData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                SphereArmOperation<SphereCatalogResource> operation = new SphereArmOperation<SphereCatalogResource>(
-                    new SphereCatalogOperationSource(Client),
-                    _catalogsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _sphereCatalogCatalogsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SphereArmOperation<SphereCatalogResource>(new SphereCatalogOperationSource(Client), _sphereCatalogCatalogsClientDiagnostics, Pipeline, _sphereCatalogCatalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -117,16 +105,20 @@ namespace Azure.ResourceManager.Sphere
         /// Create a Catalog
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Catalogs_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,34 +126,21 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="catalogName"> Name of catalog. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SphereCatalogResource> CreateOrUpdate(WaitUntil waitUntil, string catalogName, SphereCatalogData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("SphereCatalogCollection.CreateOrUpdate");
+            using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, SphereCatalogData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                SphereArmOperation<SphereCatalogResource> operation = new SphereArmOperation<SphereCatalogResource>(
-                    new SphereCatalogOperationSource(Client),
-                    _catalogsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _sphereCatalogCatalogsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data, cancellationToken);
+                var operation = new SphereArmOperation<SphereCatalogResource>(new SphereCatalogOperationSource(Client), _sphereCatalogCatalogsClientDiagnostics, Pipeline, _sphereCatalogCatalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -175,42 +154,38 @@ namespace Azure.ResourceManager.Sphere
         /// Get a Catalog
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Catalogs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> Name of catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual async Task<Response<SphereCatalogResource>> GetAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Get");
+            using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SphereCatalogData> response = Response.FromValue(SphereCatalogData.FromResponse(result), result);
+                var response = await _sphereCatalogCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new SphereCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,42 +199,38 @@ namespace Azure.ResourceManager.Sphere
         /// Get a Catalog
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Catalogs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> Name of catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual Response<SphereCatalogResource> Get(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Get");
+            using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SphereCatalogData> response = Response.FromValue(SphereCatalogData.FromResponse(result), result);
+                var response = _sphereCatalogCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new SphereCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -273,44 +244,50 @@ namespace Azure.ResourceManager.Sphere
         /// List Catalog resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Catalogs_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SphereCatalogResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SphereCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereCatalogResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupAsyncCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SphereCatalogCollection.GetAll"), data => new SphereCatalogResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// List Catalog resources by resource group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Catalogs_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,61 +295,45 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> A collection of <see cref="SphereCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereCatalogResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SphereCatalogCollection.GetAll"), data => new SphereCatalogResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Catalogs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> Name of catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Exists");
+            using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<SphereCatalogData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SphereCatalogData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SphereCatalogData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _sphereCatalogCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,50 +347,36 @@ namespace Azure.ResourceManager.Sphere
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Catalogs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> Name of catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual Response<bool> Exists(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Exists");
+            using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<SphereCatalogData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SphereCatalogData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SphereCatalogData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _sphereCatalogCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,54 +390,38 @@ namespace Azure.ResourceManager.Sphere
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Catalogs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> Name of catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual async Task<NullableResponse<SphereCatalogResource>> GetIfExistsAsync(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("SphereCatalogCollection.GetIfExists");
+            using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<SphereCatalogData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SphereCatalogData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SphereCatalogData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _sphereCatalogCatalogsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<SphereCatalogResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new SphereCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -504,54 +435,38 @@ namespace Azure.ResourceManager.Sphere
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Catalogs_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-04-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="catalogName"> Name of catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
         public virtual NullableResponse<SphereCatalogResource> GetIfExists(string catalogName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(catalogName, nameof(catalogName));
 
-            using DiagnosticScope scope = _catalogsClientDiagnostics.CreateScope("SphereCatalogCollection.GetIfExists");
+            using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _catalogsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<SphereCatalogData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SphereCatalogData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SphereCatalogData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _sphereCatalogCatalogsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, catalogName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<SphereCatalogResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new SphereCatalogResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -571,7 +486,6 @@ namespace Azure.ResourceManager.Sphere
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SphereCatalogResource> IAsyncEnumerable<SphereCatalogResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

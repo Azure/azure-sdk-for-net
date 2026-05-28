@@ -14,7 +14,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> The extension instance view. </summary>
         [Obsolete("This property is now deprecated. Please use the new property `StartOn` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public HciExtensionInstanceView InstanceView
-            => throw new NotSupportedException("This property is now deprecated. Please use ExtensionInstanceView with type ArcExtensionInstanceView instead.");
+        public HciExtensionInstanceView InstanceView { get => new HciExtensionInstanceView(ExtensionInstanceView.Name,
+                                                                                           ExtensionInstanceView.ExtensionInstanceViewType,
+                                                                                           ExtensionInstanceView.TypeHandlerVersion,
+                                                                                           new ExtensionInstanceViewStatus(ExtensionInstanceView.Status.Code,
+                                                                                                                           ExtensionInstanceView.Status.Level,
+                                                                                                                           ExtensionInstanceView.Status.DisplayStatus,
+                                                                                                                           ExtensionInstanceView.Status.Message,
+                                                                                                                           ExtensionInstanceView.Status.Time,
+                                                                                                                           null),
+                                                                                           null); }
     }
 }

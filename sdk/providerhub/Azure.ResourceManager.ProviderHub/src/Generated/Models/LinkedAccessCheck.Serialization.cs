@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ProviderHub;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The LinkedAccessCheck. </summary>
-    public partial class LinkedAccessCheck : IJsonModel<LinkedAccessCheck>
+    public partial class LinkedAccessCheck : IUtf8JsonSerializable, IJsonModel<LinkedAccessCheck>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkedAccessCheck PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeLinkedAccessCheck(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedAccessCheck>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LinkedAccessCheck>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LinkedAccessCheck IPersistableModel<LinkedAccessCheck>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LinkedAccessCheck>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LinkedAccessCheck>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ActionName))
             {
                 writer.WritePropertyName("actionName"u8);
@@ -99,15 +59,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("linkedType"u8);
                 writer.WriteStringValue(LinkedType);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,27 +76,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LinkedAccessCheck IJsonModel<LinkedAccessCheck>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkedAccessCheck JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LinkedAccessCheck IJsonModel<LinkedAccessCheck>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLinkedAccessCheck(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LinkedAccessCheck DeserializeLinkedAccessCheck(JsonElement element, ModelReaderWriterOptions options)
+        internal static LinkedAccessCheck DeserializeLinkedAccessCheck(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,46 +101,79 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string linkedAction = default;
             string linkedActionVerb = default;
             string linkedType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("actionName"u8))
+                if (property.NameEquals("actionName"u8))
                 {
-                    actionName = prop.Value.GetString();
+                    actionName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("linkedProperty"u8))
+                if (property.NameEquals("linkedProperty"u8))
                 {
-                    linkedProperty = prop.Value.GetString();
+                    linkedProperty = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("linkedAction"u8))
+                if (property.NameEquals("linkedAction"u8))
                 {
-                    linkedAction = prop.Value.GetString();
+                    linkedAction = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("linkedActionVerb"u8))
+                if (property.NameEquals("linkedActionVerb"u8))
                 {
-                    linkedActionVerb = prop.Value.GetString();
+                    linkedActionVerb = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("linkedType"u8))
+                if (property.NameEquals("linkedType"u8))
                 {
-                    linkedType = prop.Value.GetString();
+                    linkedType = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new LinkedAccessCheck(
                 actionName,
                 linkedProperty,
                 linkedAction,
                 linkedActionVerb,
                 linkedType,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinkedAccessCheck>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerProviderHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LinkedAccessCheck IPersistableModel<LinkedAccessCheck>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeLinkedAccessCheck(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LinkedAccessCheck>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

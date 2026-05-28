@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -15,67 +14,44 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public readonly partial struct ClusterAddOnFeature : IEquatable<ClusterAddOnFeature>
     {
         private readonly string _value;
-        /// <summary> Add on RepairManager. </summary>
-        private const string RepairManagerValue = "RepairManager";
-        /// <summary> Add on DnsService. </summary>
-        private const string DnsServiceValue = "DnsService";
-        /// <summary> Add on BackupRestoreService. </summary>
-        private const string BackupRestoreServiceValue = "BackupRestoreService";
-        /// <summary> Add on ResourceMonitorService. </summary>
-        private const string ResourceMonitorServiceValue = "ResourceMonitorService";
 
         /// <summary> Initializes a new instance of <see cref="ClusterAddOnFeature"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClusterAddOnFeature(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Add on RepairManager. </summary>
+        private const string RepairManagerValue = "RepairManager";
+        private const string DnsServiceValue = "DnsService";
+        private const string BackupRestoreServiceValue = "BackupRestoreService";
+        private const string ResourceMonitorServiceValue = "ResourceMonitorService";
+
+        /// <summary> RepairManager. </summary>
         public static ClusterAddOnFeature RepairManager { get; } = new ClusterAddOnFeature(RepairManagerValue);
-
-        /// <summary> Add on DnsService. </summary>
+        /// <summary> DnsService. </summary>
         public static ClusterAddOnFeature DnsService { get; } = new ClusterAddOnFeature(DnsServiceValue);
-
-        /// <summary> Add on BackupRestoreService. </summary>
+        /// <summary> BackupRestoreService. </summary>
         public static ClusterAddOnFeature BackupRestoreService { get; } = new ClusterAddOnFeature(BackupRestoreServiceValue);
-
-        /// <summary> Add on ResourceMonitorService. </summary>
+        /// <summary> ResourceMonitorService. </summary>
         public static ClusterAddOnFeature ResourceMonitorService { get; } = new ClusterAddOnFeature(ResourceMonitorServiceValue);
-
         /// <summary> Determines if two <see cref="ClusterAddOnFeature"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClusterAddOnFeature left, ClusterAddOnFeature right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ClusterAddOnFeature"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClusterAddOnFeature left, ClusterAddOnFeature right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ClusterAddOnFeature"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterAddOnFeature"/>. </summary>
         public static implicit operator ClusterAddOnFeature(string value) => new ClusterAddOnFeature(value);
 
-        /// <summary> Converts a string to a <see cref="ClusterAddOnFeature"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ClusterAddOnFeature?(string value) => value == null ? null : new ClusterAddOnFeature(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClusterAddOnFeature other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ClusterAddOnFeature other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

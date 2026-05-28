@@ -1685,7 +1685,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessedDatabaseCompatibilityLevel CompatLevel90 { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessedDatabaseCompatibilityLevel Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessedDatabaseCompatibilityLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessedDatabaseCompatibilityLevel left, Azure.ResourceManager.Migration.Assessment.Models.AssessedDatabaseCompatibilityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessedDatabaseCompatibilityLevel (string value) { throw null; }
@@ -1703,7 +1705,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessedMachineBootType NotSpecified { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessedMachineBootType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessedMachineBootType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessedMachineBootType left, Azure.ResourceManager.Migration.Assessment.Models.AssessedMachineBootType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessedMachineBootType (string value) { throw null; }
@@ -1827,7 +1831,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessedSqlRecommendedSuitability SuitableForVm { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessedSqlRecommendedSuitability Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessedSqlRecommendedSuitability other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessedSqlRecommendedSuitability left, Azure.ResourceManager.Migration.Assessment.Models.AssessedSqlRecommendedSuitability right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessedSqlRecommendedSuitability (string value) { throw null; }
@@ -1843,7 +1849,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentAvsNodeType Av36 { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentAvsNodeType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentAvsNodeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentAvsNodeType left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentAvsNodeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentAvsNodeType (string value) { throw null; }
@@ -1900,7 +1908,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentCostComponentName MonthlySecurityCost { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentCostComponentName Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentCostComponentName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentCostComponentName left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentCostComponentName right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentCostComponentName (string value) { throw null; }
@@ -1940,7 +1950,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentCurrency USD { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentCurrency ZAR { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentCurrency other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentCurrency left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentCurrency right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentCurrency (string value) { throw null; }
@@ -1996,7 +2008,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSize Ultra { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSize Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSize other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSize left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSize (string value) { throw null; }
@@ -2023,7 +2037,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSuitabilityDetail NumberOfWriteOperationsPerSecondMissing { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSuitabilityDetail NumberOfWriteOperationsPerSecondOutOfRange { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSuitabilityDetail other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSuitabilityDetail left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSuitabilityDetail right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskSuitabilityDetail (string value) { throw null; }
@@ -2044,7 +2060,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskType Ultra { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskType left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentDiskType (string value) { throw null; }
@@ -2072,7 +2090,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentEnvironmentType Production { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentEnvironmentType Test { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentEnvironmentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentEnvironmentType left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentEnvironmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentEnvironmentType (string value) { throw null; }
@@ -2101,7 +2121,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentHybridUseBenefit Unknown { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentHybridUseBenefit Yes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentHybridUseBenefit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentHybridUseBenefit left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentHybridUseBenefit right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentHybridUseBenefit (string value) { throw null; }
@@ -2175,7 +2197,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentOfferCode SavingsPlan3Year { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentOfferCode Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentOfferCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentOfferCode left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentOfferCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentOfferCode (string value) { throw null; }
@@ -2191,7 +2215,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentPricingTier Basic { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentPricingTier Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentPricingTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentPricingTier left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentPricingTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentPricingTier (string value) { throw null; }
@@ -2228,7 +2254,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentProjectStatus Active { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentProjectStatus Inactive { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentProjectStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentProjectStatus left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentProjectStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentProjectStatus (string value) { throw null; }
@@ -2257,7 +2285,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentReservedInstance RI1Year { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentReservedInstance RI3Year { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentReservedInstance other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentReservedInstance left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentReservedInstance right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentReservedInstance (string value) { throw null; }
@@ -2273,7 +2303,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSecurityOfferingType Mdc { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSecurityOfferingType No { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSecurityOfferingType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSecurityOfferingType left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentSecurityOfferingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentSecurityOfferingType (string value) { throw null; }
@@ -2289,7 +2321,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSizingCriterion AsOnPremises { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSizingCriterion PerformanceBased { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSizingCriterion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSizingCriterion left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentSizingCriterion right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentSizingCriterion (string value) { throw null; }
@@ -2307,7 +2341,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlDataBaseType SingleDatabase { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlDataBaseType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlDataBaseType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlDataBaseType left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlDataBaseType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlDataBaseType (string value) { throw null; }
@@ -2357,7 +2393,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciMetadataState Pending { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciMetadataState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciMetadataState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciMetadataState left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciMetadataState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciMetadataState (string value) { throw null; }
@@ -2375,7 +2413,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciState Passive { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciState left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlFciState (string value) { throw null; }
@@ -2393,7 +2433,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlInstanceType SingleInstance { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlInstanceType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlInstanceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlInstanceType left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlInstanceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlInstanceType (string value) { throw null; }
@@ -2440,7 +2482,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlPurchaseModel Unknown { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlPurchaseModel VCore { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlPurchaseModel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlPurchaseModel left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlPurchaseModel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlPurchaseModel (string value) { throw null; }
@@ -2457,7 +2501,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServerLicense Unknown { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServerLicense Yes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServerLicense other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServerLicense left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServerLicense right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServerLicense (string value) { throw null; }
@@ -2476,7 +2522,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServiceTier HyperScale { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServiceTier Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServiceTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServiceTier left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServiceTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentSqlServiceTier (string value) { throw null; }
@@ -2495,7 +2543,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentStorageRedundancy Unknown { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentStorageRedundancy ZoneRedundant { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentStorageRedundancy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentStorageRedundancy left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentStorageRedundancy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentStorageRedundancy (string value) { throw null; }
@@ -2518,7 +2568,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSuitabilityExplanation NotApplicable { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentSuitabilityExplanation Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSuitabilityExplanation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentSuitabilityExplanation left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentSuitabilityExplanation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentSuitabilityExplanation (string value) { throw null; }
@@ -2536,7 +2588,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentTimeRange Month { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentTimeRange Week { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentTimeRange other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentTimeRange left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentTimeRange right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentTimeRange (string value) { throw null; }
@@ -2602,7 +2656,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmFamily StandardA8A11 { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmFamily Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmFamily other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmFamily left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmFamily right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmFamily (string value) { throw null; }
@@ -3119,7 +3175,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSize StandardM8Ms { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSize Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSize other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSize left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSize (string value) { throw null; }
@@ -3157,7 +3215,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityDetail PercentageOfMemoryUtilizedOutOfRange { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityDetail RecommendedSizeHasLessNetworkAdapters { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityDetail other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityDetail left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityDetail right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityDetail (string value) { throw null; }
@@ -3210,7 +3270,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityExplanation WindowsServerVersionConditionallySupported { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityExplanation WindowsServerVersionsSupportedWithCaveat { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityExplanation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityExplanation left, Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityExplanation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AssessmentVmSuitabilityExplanation (string value) { throw null; }
@@ -3251,7 +3313,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AsyncCommitModeIntent HighAvailability { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AsyncCommitModeIntent None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AsyncCommitModeIntent other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AsyncCommitModeIntent left, Azure.ResourceManager.Migration.Assessment.Models.AsyncCommitModeIntent right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AsyncCommitModeIntent (string value) { throw null; }
@@ -3300,7 +3364,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AvsSuitabilityExplanation Unknown { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AvsSuitabilityExplanation UnsupportedLocationForSelectedNode { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AvsSuitabilityExplanation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AvsSuitabilityExplanation left, Azure.ResourceManager.Migration.Assessment.Models.AvsSuitabilityExplanation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AvsSuitabilityExplanation (string value) { throw null; }
@@ -3320,7 +3386,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityDetail PercentageOfMemoryUtilizedOutOfRange { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityDetail PercentageOfStorageUtilizedOutOfRange { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityDetail other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityDetail left, Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityDetail right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityDetail (string value) { throw null; }
@@ -3338,7 +3406,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityExplanation Unknown { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityExplanation UnsupportedOperatingSystem { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityExplanation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityExplanation left, Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityExplanation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.AvsVmSuitabilityExplanation (string value) { throw null; }
@@ -3387,7 +3457,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.FttAndRaidLevel Ftt3Raid1 { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.FttAndRaidLevel Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.FttAndRaidLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.FttAndRaidLevel left, Azure.ResourceManager.Migration.Assessment.Models.FttAndRaidLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.FttAndRaidLevel (string value) { throw null; }
@@ -3404,7 +3476,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.GuestOperatingSystemArchitecture X64 { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.GuestOperatingSystemArchitecture X86 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.GuestOperatingSystemArchitecture other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.GuestOperatingSystemArchitecture left, Azure.ResourceManager.Migration.Assessment.Models.GuestOperatingSystemArchitecture right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.GuestOperatingSystemArchitecture (string value) { throw null; }
@@ -3433,7 +3507,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskRedundancy Unknown { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskRedundancy Zrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskRedundancy other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskRedundancy left, Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskRedundancy right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskRedundancy (string value) { throw null; }
@@ -3454,7 +3530,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskType Ultra { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskType left, Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.ManagedDiskSkuDtoDiskType (string value) { throw null; }
@@ -3482,7 +3560,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrateGroupUpdateOperationType Add { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrateGroupUpdateOperationType Remove { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrateGroupUpdateOperationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrateGroupUpdateOperationType left, Azure.ResourceManager.Migration.Assessment.Models.MigrateGroupUpdateOperationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrateGroupUpdateOperationType (string value) { throw null; }
@@ -3564,7 +3644,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessedMachineType SqlAssessedMachine { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessedMachineType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessedMachineType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessedMachineType left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessedMachineType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessedMachineType (string value) { throw null; }
@@ -3583,7 +3665,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentCloudSuitability Suitable { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentCloudSuitability Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentCloudSuitability other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentCloudSuitability left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentCloudSuitability right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentCloudSuitability (string value) { throw null; }
@@ -3601,7 +3685,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentComputeTier Serverless { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentComputeTier Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentComputeTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentComputeTier left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentComputeTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentComputeTier (string value) { throw null; }
@@ -3655,7 +3741,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupStatus Running { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupStatus Updated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupStatus left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupStatus (string value) { throw null; }
@@ -3671,7 +3759,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupType Default { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupType Import { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupType left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentGroupType (string value) { throw null; }
@@ -3691,7 +3781,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentHardwareGeneration MSeries { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentHardwareGeneration Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentHardwareGeneration other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentHardwareGeneration left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentHardwareGeneration right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentHardwareGeneration (string value) { throw null; }
@@ -3721,7 +3813,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentOSLicense Unknown { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentOSLicense Yes { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentOSLicense other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentOSLicense left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentOSLicense right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentOSLicense (string value) { throw null; }
@@ -3739,7 +3833,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointConnectionProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -3756,7 +3852,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointServiceConnectionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -3808,7 +3906,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentProvisioningState left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentProvisioningState (string value) { throw null; }
@@ -3825,7 +3925,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStage InProgress { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStage UnderReview { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStage left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStage right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStage (string value) { throw null; }
@@ -3847,7 +3949,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStatus Running { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStatus Updated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStatus left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentStatus (string value) { throw null; }
@@ -3867,7 +3971,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentTargetType Recommended { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentTargetType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentTargetType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentTargetType left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentTargetType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentTargetType (string value) { throw null; }
@@ -3886,7 +3992,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentType Unknown { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentType WebAppAssessment { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentType left, Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MigrationAssessmentType (string value) { throw null; }
@@ -3915,7 +4023,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.MultiSubnetIntent HighAvailability { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.MultiSubnetIntent None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.MultiSubnetIntent other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.MultiSubnetIntent left, Azure.ResourceManager.Migration.Assessment.Models.MultiSubnetIntent right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.MultiSubnetIntent (string value) { throw null; }
@@ -3934,7 +4044,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityDetail MegabytesOfDataTransmittedOutOfRange { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityDetail None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityDetail other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityDetail left, Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityDetail right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityDetail (string value) { throw null; }
@@ -3951,7 +4063,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityExplanation NotApplicable { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityExplanation Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityExplanation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityExplanation left, Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityExplanation right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.NetworkAdapterSuitabilityExplanation (string value) { throw null; }
@@ -3969,7 +4083,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.PercentileOfUtilization Percentile95 { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.PercentileOfUtilization Percentile99 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.PercentileOfUtilization other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.PercentileOfUtilization left, Azure.ResourceManager.Migration.Assessment.Models.PercentileOfUtilization right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.PercentileOfUtilization (string value) { throw null; }
@@ -3986,7 +4102,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.QuorumWitnessDtoQuorumWitnessType Disk { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.QuorumWitnessDtoQuorumWitnessType Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.QuorumWitnessDtoQuorumWitnessType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.QuorumWitnessDtoQuorumWitnessType left, Azure.ResourceManager.Migration.Assessment.Models.QuorumWitnessDtoQuorumWitnessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.QuorumWitnessDtoQuorumWitnessType (string value) { throw null; }
@@ -4018,7 +4136,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.SkuReplicationMode FailoverGroupInstance { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.SkuReplicationMode NotApplicable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.SkuReplicationMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.SkuReplicationMode left, Azure.ResourceManager.Migration.Assessment.Models.SkuReplicationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.SkuReplicationMode (string value) { throw null; }
@@ -4069,7 +4189,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.SqlAssessmentMigrationIssueCategory Issue { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.SqlAssessmentMigrationIssueCategory Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.SqlAssessmentMigrationIssueCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.SqlAssessmentMigrationIssueCategory left, Azure.ResourceManager.Migration.Assessment.Models.SqlAssessmentMigrationIssueCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.SqlAssessmentMigrationIssueCategory (string value) { throw null; }
@@ -4194,7 +4316,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.SqlMigrationGuidelineCategory General { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.SqlMigrationGuidelineCategory Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.SqlMigrationGuidelineCategory other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.SqlMigrationGuidelineCategory left, Azure.ResourceManager.Migration.Assessment.Models.SqlMigrationGuidelineCategory right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.SqlMigrationGuidelineCategory (string value) { throw null; }
@@ -4212,7 +4336,9 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         public static Azure.ResourceManager.Migration.Assessment.Models.SqlOptimizationLogic ModernizeToAzureSqlMI { get { throw null; } }
         public static Azure.ResourceManager.Migration.Assessment.Models.SqlOptimizationLogic ModernizeToPaaS { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migration.Assessment.Models.SqlOptimizationLogic other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Migration.Assessment.Models.SqlOptimizationLogic left, Azure.ResourceManager.Migration.Assessment.Models.SqlOptimizationLogic right) { throw null; }
         public static implicit operator Azure.ResourceManager.Migration.Assessment.Models.SqlOptimizationLogic (string value) { throw null; }

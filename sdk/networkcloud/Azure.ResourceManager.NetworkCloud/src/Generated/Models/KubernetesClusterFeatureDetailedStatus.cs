@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct KubernetesClusterFeatureDetailedStatus : IEquatable<KubernetesClusterFeatureDetailedStatus>
     {
         private readonly string _value;
-        /// <summary> The Error status. </summary>
-        private const string ErrorValue = "Error";
-        /// <summary> The Provisioning status. </summary>
-        private const string ProvisioningValue = "Provisioning";
-        /// <summary> The Installed status. </summary>
-        private const string InstalledValue = "Installed";
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterFeatureDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KubernetesClusterFeatureDetailedStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The Error status. </summary>
+        private const string ErrorValue = "Error";
+        private const string ProvisioningValue = "Provisioning";
+        private const string InstalledValue = "Installed";
+
+        /// <summary> Error. </summary>
         public static KubernetesClusterFeatureDetailedStatus Error { get; } = new KubernetesClusterFeatureDetailedStatus(ErrorValue);
-
-        /// <summary> The Provisioning status. </summary>
+        /// <summary> Provisioning. </summary>
         public static KubernetesClusterFeatureDetailedStatus Provisioning { get; } = new KubernetesClusterFeatureDetailedStatus(ProvisioningValue);
-
-        /// <summary> The Installed status. </summary>
+        /// <summary> Installed. </summary>
         public static KubernetesClusterFeatureDetailedStatus Installed { get; } = new KubernetesClusterFeatureDetailedStatus(InstalledValue);
-
         /// <summary> Determines if two <see cref="KubernetesClusterFeatureDetailedStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KubernetesClusterFeatureDetailedStatus left, KubernetesClusterFeatureDetailedStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="KubernetesClusterFeatureDetailedStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KubernetesClusterFeatureDetailedStatus left, KubernetesClusterFeatureDetailedStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="KubernetesClusterFeatureDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="KubernetesClusterFeatureDetailedStatus"/>. </summary>
         public static implicit operator KubernetesClusterFeatureDetailedStatus(string value) => new KubernetesClusterFeatureDetailedStatus(value);
 
-        /// <summary> Converts a string to a <see cref="KubernetesClusterFeatureDetailedStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator KubernetesClusterFeatureDetailedStatus?(string value) => value == null ? null : new KubernetesClusterFeatureDetailedStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KubernetesClusterFeatureDetailedStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(KubernetesClusterFeatureDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

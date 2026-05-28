@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ComputeFleet;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> Describes a virtual machine scale set OS profile. </summary>
-    public partial class ComputeFleetVmssOSProfile : IJsonModel<ComputeFleetVmssOSProfile>
+    public partial class ComputeFleetVmssOSProfile : IUtf8JsonSerializable, IJsonModel<ComputeFleetVmssOSProfile>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVmssOSProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssOSProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeComputeFleetVmssOSProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmssOSProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeFleetVmssOSProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssOSProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ComputeFleetVmssOSProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComputeFleetVmssOSProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVmssOSProfile IPersistableModel<ComputeFleetVmssOSProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComputeFleetVmssOSProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ComputeFleetVmssOSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssOSProfile)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(ComputerNamePrefix))
             {
                 writer.WritePropertyName("computerNamePrefix"u8);
@@ -108,7 +68,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
-                foreach (ComputeFleetVaultSecretGroup item in Secrets)
+                foreach (var item in Secrets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -124,15 +84,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("requireGuestProvisionSignal"u8);
                 writer.WriteBooleanValue(IsGuestProvisionSignalRequired.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -141,27 +101,22 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVmssOSProfile IJsonModel<ComputeFleetVmssOSProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComputeFleetVmssOSProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeFleetVmssOSProfile IJsonModel<ComputeFleetVmssOSProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVmssOSProfile)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComputeFleetVmssOSProfile(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComputeFleetVmssOSProfile DeserializeComputeFleetVmssOSProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeFleetVmssOSProfile DeserializeComputeFleetVmssOSProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -173,86 +128,88 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             ComputeFleetWindowsConfiguration windowsConfiguration = default;
             ComputeFleetLinuxConfiguration linuxConfiguration = default;
             IList<ComputeFleetVaultSecretGroup> secrets = default;
-            bool? areExtensionOperationsAllowed = default;
-            bool? isGuestProvisionSignalRequired = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            bool? allowExtensionOperations = default;
+            bool? requireGuestProvisionSignal = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("computerNamePrefix"u8))
+                if (property.NameEquals("computerNamePrefix"u8))
                 {
-                    computerNamePrefix = prop.Value.GetString();
+                    computerNamePrefix = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("adminUsername"u8))
+                if (property.NameEquals("adminUsername"u8))
                 {
-                    adminUsername = prop.Value.GetString();
+                    adminUsername = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("adminPassword"u8))
+                if (property.NameEquals("adminPassword"u8))
                 {
-                    adminPassword = prop.Value.GetString();
+                    adminPassword = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customData"u8))
+                if (property.NameEquals("customData"u8))
                 {
-                    customData = prop.Value.GetString();
+                    customData = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("windowsConfiguration"u8))
+                if (property.NameEquals("windowsConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    windowsConfiguration = ComputeFleetWindowsConfiguration.DeserializeComputeFleetWindowsConfiguration(prop.Value, options);
+                    windowsConfiguration = ComputeFleetWindowsConfiguration.DeserializeComputeFleetWindowsConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("linuxConfiguration"u8))
+                if (property.NameEquals("linuxConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    linuxConfiguration = ComputeFleetLinuxConfiguration.DeserializeComputeFleetLinuxConfiguration(prop.Value, options);
+                    linuxConfiguration = ComputeFleetLinuxConfiguration.DeserializeComputeFleetLinuxConfiguration(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("secrets"u8))
+                if (property.NameEquals("secrets"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ComputeFleetVaultSecretGroup> array = new List<ComputeFleetVaultSecretGroup>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ComputeFleetVaultSecretGroup.DeserializeComputeFleetVaultSecretGroup(item, options));
                     }
                     secrets = array;
                     continue;
                 }
-                if (prop.NameEquals("allowExtensionOperations"u8))
+                if (property.NameEquals("allowExtensionOperations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    areExtensionOperationsAllowed = prop.Value.GetBoolean();
+                    allowExtensionOperations = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("requireGuestProvisionSignal"u8))
+                if (property.NameEquals("requireGuestProvisionSignal"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isGuestProvisionSignalRequired = prop.Value.GetBoolean();
+                    requireGuestProvisionSignal = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ComputeFleetVmssOSProfile(
                 computerNamePrefix,
                 adminUsername,
@@ -261,9 +218,40 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 windowsConfiguration,
                 linuxConfiguration,
                 secrets ?? new ChangeTrackingList<ComputeFleetVaultSecretGroup>(),
-                areExtensionOperationsAllowed,
-                isGuestProvisionSignalRequired,
-                additionalBinaryDataProperties);
+                allowExtensionOperations,
+                requireGuestProvisionSignal,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ComputeFleetVmssOSProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeFleetContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetVmssOSProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ComputeFleetVmssOSProfile IPersistableModel<ComputeFleetVmssOSProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVmssOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeComputeFleetVmssOSProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeFleetVmssOSProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComputeFleetVmssOSProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

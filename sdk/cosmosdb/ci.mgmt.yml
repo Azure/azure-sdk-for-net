@@ -2,6 +2,18 @@
 # This file is generated automatically and any changes will be lost.
 
 trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/cosmosdb/ci.mgmt.yml
+    - sdk/cosmosdb/Azure.ResourceManager.CosmosDB/
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -10,5 +22,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.CosmosDB
       safeName: AzureResourceManagerCosmosDB
-    - name: Azure.Provisioning.CosmosDB
-      safeName: AzureProvisioningCosmosDB

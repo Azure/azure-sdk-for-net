@@ -4,10 +4,8 @@
 using System.Text.Json.Serialization;
 
 namespace Azure.Developer.Playwright.Model;
-
 internal class RunFramework
-{
-    [JsonInclude]
+{  [JsonInclude]
     internal string? Name { get; set; }
     [JsonInclude]
     internal string? Version { get; set; }
@@ -15,8 +13,7 @@ internal class RunFramework
     internal string? RunnerName { get; set; }
 }
 internal class RunConfig
-{
-    [JsonInclude]
+{   [JsonInclude]
     internal RunFramework? Framework { get; set; }
     [JsonInclude]
     internal string? SdkLanguage { get; set; }

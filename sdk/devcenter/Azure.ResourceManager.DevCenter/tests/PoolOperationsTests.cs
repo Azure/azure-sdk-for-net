@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.DevCenter.Tests
             ArmOperation<DevCenterPoolResource> createdResourceResponse = await resourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, poolData);
             DevCenterPoolResource createdResource = createdResourceResponse.Value;
 
-            Assert.That(createdResource, Is.Not.Null);
-            Assert.That(createdResource.Data, Is.Not.Null);
+            Assert.NotNull(createdResource);
+            Assert.NotNull(createdResource.Data);
 
             // List
             List<DevCenterPoolResource> resources = await resourceCollection.GetAllAsync().ToEnumerableAsync();
-            Assert.That(resources.Any(r => r.Id == createdResource.Id), Is.True);
+            Assert.IsTrue(resources.Any(r => r.Id == createdResource.Id));
 
             // Get
             Response<DevCenterPoolResource> retrievedResource = await resourceCollection.GetAsync(resourceName);
-            Assert.That(retrievedResource.Value, Is.Not.Null);
-            Assert.That(retrievedResource.Value.Data, Is.Not.Null);
+            Assert.NotNull(retrievedResource.Value);
+            Assert.NotNull(retrievedResource.Value.Data);
 
             // Update
             DevCenterPoolPatch updateRequest = new DevCenterPoolPatch()

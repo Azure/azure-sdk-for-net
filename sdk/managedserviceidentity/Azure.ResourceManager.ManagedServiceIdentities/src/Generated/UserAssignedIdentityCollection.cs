@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
@@ -22,53 +21,55 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// <summary>
     /// A class representing a collection of <see cref="UserAssignedIdentityResource"/> and their operations.
     /// Each <see cref="UserAssignedIdentityResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="UserAssignedIdentityCollection"/> instance call the GetUserAssignedIdentities method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="UserAssignedIdentityCollection"/> instance call the GetUserAssignedIdentities method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class UserAssignedIdentityCollection : ArmCollection, IEnumerable<UserAssignedIdentityResource>, IAsyncEnumerable<UserAssignedIdentityResource>
     {
-        private readonly ClientDiagnostics _userAssignedIdentitiesClientDiagnostics;
-        private readonly UserAssignedIdentities _userAssignedIdentitiesRestClient;
+        private readonly ClientDiagnostics _userAssignedIdentityClientDiagnostics;
+        private readonly UserAssignedIdentitiesRestOperations _userAssignedIdentityRestClient;
 
-        /// <summary> Initializes a new instance of UserAssignedIdentityCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="UserAssignedIdentityCollection"/> class for mocking. </summary>
         protected UserAssignedIdentityCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentityCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="UserAssignedIdentityCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal UserAssignedIdentityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _userAssignedIdentityClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities", UserAssignedIdentityResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(UserAssignedIdentityResource.ResourceType, out string userAssignedIdentityApiVersion);
-            _userAssignedIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedServiceIdentities", UserAssignedIdentityResource.ResourceType.Namespace, Diagnostics);
-            _userAssignedIdentitiesRestClient = new UserAssignedIdentities(_userAssignedIdentitiesClientDiagnostics, Pipeline, Endpoint, userAssignedIdentityApiVersion ?? "2025-05-31-preview");
-            ValidateResourceId(id);
+            _userAssignedIdentityRestClient = new UserAssignedIdentitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, userAssignedIdentityApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update an identity in the specified subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,31 +77,23 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="data"> Parameters to create or update the identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<UserAssignedIdentityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, UserAssignedIdentityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _userAssignedIdentitiesClientDiagnostics.CreateScope("UserAssignedIdentityCollection.CreateOrUpdate");
+            using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, UserAssignedIdentityData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ManagedServiceIdentitiesArmOperation<UserAssignedIdentityResource> operation = new ManagedServiceIdentitiesArmOperation<UserAssignedIdentityResource>(Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _userAssignedIdentityRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _userAssignedIdentityRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagedServiceIdentitiesArmOperation<UserAssignedIdentityResource>(Response.FromValue(new UserAssignedIdentityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -114,16 +107,20 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Create or update an identity in the specified subscription and resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,31 +128,23 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="data"> Parameters to create or update the identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<UserAssignedIdentityResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, UserAssignedIdentityData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _userAssignedIdentitiesClientDiagnostics.CreateScope("UserAssignedIdentityCollection.CreateOrUpdate");
+            using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, UserAssignedIdentityData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ManagedServiceIdentitiesArmOperation<UserAssignedIdentityResource> operation = new ManagedServiceIdentitiesArmOperation<UserAssignedIdentityResource>(Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _userAssignedIdentityRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
+                var uri = _userAssignedIdentityRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagedServiceIdentitiesArmOperation<UserAssignedIdentityResource>(Response.FromValue(new UserAssignedIdentityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -169,42 +158,38 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Gets the identity.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<UserAssignedIdentityResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _userAssignedIdentitiesClientDiagnostics.CreateScope("UserAssignedIdentityCollection.Get");
+            using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
+                var response = await _userAssignedIdentityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,42 +203,38 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Gets the identity.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<UserAssignedIdentityResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _userAssignedIdentitiesClientDiagnostics.CreateScope("UserAssignedIdentityCollection.Get");
+            using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<UserAssignedIdentityData> response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
+                var response = _userAssignedIdentityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,44 +248,50 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Lists all the userAssignedIdentities available under the specified ResourceGroup.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<UserAssignedIdentityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentitiesGetByResourceGroupAsyncCollectionResultOfT(_userAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UserAssignedIdentityCollection.GetAll"), data => new UserAssignedIdentityResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _userAssignedIdentityRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userAssignedIdentityRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Lists all the userAssignedIdentities available under the specified ResourceGroup.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,61 +299,45 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> A collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UserAssignedIdentityResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<UserAssignedIdentityData, UserAssignedIdentityResource>(new UserAssignedIdentitiesGetByResourceGroupCollectionResultOfT(_userAssignedIdentitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "UserAssignedIdentityCollection.GetAll"), data => new UserAssignedIdentityResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _userAssignedIdentityRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userAssignedIdentityRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _userAssignedIdentitiesClientDiagnostics.CreateScope("UserAssignedIdentityCollection.Exists");
+            using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<UserAssignedIdentityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((UserAssignedIdentityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _userAssignedIdentityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -380,50 +351,36 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _userAssignedIdentitiesClientDiagnostics.CreateScope("UserAssignedIdentityCollection.Exists");
+            using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<UserAssignedIdentityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((UserAssignedIdentityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _userAssignedIdentityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,54 +394,38 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<UserAssignedIdentityResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _userAssignedIdentitiesClientDiagnostics.CreateScope("UserAssignedIdentityCollection.GetIfExists");
+            using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<UserAssignedIdentityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((UserAssignedIdentityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _userAssignedIdentityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<UserAssignedIdentityResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -498,54 +439,38 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Identities_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>UserAssignedIdentities_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual NullableResponse<UserAssignedIdentityResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _userAssignedIdentitiesClientDiagnostics.CreateScope("UserAssignedIdentityCollection.GetIfExists");
+            using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _userAssignedIdentitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<UserAssignedIdentityData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(UserAssignedIdentityData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((UserAssignedIdentityData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _userAssignedIdentityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<UserAssignedIdentityResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new UserAssignedIdentityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -565,7 +490,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<UserAssignedIdentityResource> IAsyncEnumerable<UserAssignedIdentityResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

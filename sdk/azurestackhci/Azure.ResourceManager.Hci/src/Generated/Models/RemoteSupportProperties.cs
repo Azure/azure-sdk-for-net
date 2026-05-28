@@ -7,15 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Remote Support properties of the cluster. </summary>
     public partial class RemoteSupportProperties
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RemoteSupportProperties"/>. </summary>
         public RemoteSupportProperties()
@@ -30,41 +58,31 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="remoteSupportType"> Remote Support Type for cluster. </param>
         /// <param name="remoteSupportNodeSettings"></param>
         /// <param name="remoteSupportSessionDetails"></param>
-        /// <param name="remoteSupportProvisioningState"> Remote Support Provisioning State. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemoteSupportProperties(HciClusterAccessLevel? accessLevel, DateTimeOffset? expireOn, RemoteSupportType? remoteSupportType, IReadOnlyList<RemoteSupportNodeSettings> remoteSupportNodeSettings, IReadOnlyList<PerNodeRemoteSupportSession> remoteSupportSessionDetails, RemoteSupportProvisioningState? remoteSupportProvisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoteSupportProperties(HciClusterAccessLevel? accessLevel, DateTimeOffset? expireOn, RemoteSupportType? remoteSupportType, IReadOnlyList<RemoteSupportNodeSettings> remoteSupportNodeSettings, IReadOnlyList<PerNodeRemoteSupportSession> remoteSupportSessionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessLevel = accessLevel;
             ExpireOn = expireOn;
             RemoteSupportType = remoteSupportType;
             RemoteSupportNodeSettings = remoteSupportNodeSettings;
             RemoteSupportSessionDetails = remoteSupportSessionDetails;
-            RemoteSupportProvisioningState = remoteSupportProvisioningState;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Remote Support Access Level. </summary>
         [WirePath("accessLevel")]
         public HciClusterAccessLevel? AccessLevel { get; }
-
         /// <summary> Expiration DateTimeStamp when Remote Support Access will be expired. </summary>
         [WirePath("expirationTimeStamp")]
         public DateTimeOffset? ExpireOn { get; }
-
         /// <summary> Remote Support Type for cluster. </summary>
         [WirePath("remoteSupportType")]
         public RemoteSupportType? RemoteSupportType { get; }
-
-        /// <summary> Gets the RemoteSupportNodeSettings. </summary>
+        /// <summary> Gets the remote support node settings. </summary>
         [WirePath("remoteSupportNodeSettings")]
         public IReadOnlyList<RemoteSupportNodeSettings> RemoteSupportNodeSettings { get; }
-
-        /// <summary> Gets the RemoteSupportSessionDetails. </summary>
+        /// <summary> Gets the remote support session details. </summary>
         [WirePath("remoteSupportSessionDetails")]
         public IReadOnlyList<PerNodeRemoteSupportSession> RemoteSupportSessionDetails { get; }
-
-        /// <summary> Remote Support Provisioning State. </summary>
-        [WirePath("remoteSupportProvisioningState")]
-        public RemoteSupportProvisioningState? RemoteSupportProvisioningState { get; }
     }
 }

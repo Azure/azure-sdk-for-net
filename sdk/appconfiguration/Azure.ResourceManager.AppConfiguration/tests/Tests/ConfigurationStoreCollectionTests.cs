@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             };
             AppConfigurationStoreResource configurationStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
 
-            Assert.That(configurationStoreName.Equals(configurationStore.Data.Name), Is.True);
-            Assert.That(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled, Is.True);
+            Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
+            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
 
             configurationStore.Data.PublicNetworkAccess = AppConfigurationPublicNetworkAccess.Enabled;
             configurationStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStore.Data)).Value;
 
-            Assert.That(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Enabled, Is.True);
+            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Enabled);
         }
 
         [Test]
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             };
             AppConfigurationStoreResource configurationStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData)).Value;
 
-            Assert.That(configurationStoreName.Equals(configurationStore.Data.Name), Is.True);
-            Assert.That(configurationStore.Data.DataPlaneProxy.AuthenticationMode == DataPlaneProxyAuthenticationMode.PassThrough, Is.True);
-            Assert.That(configurationStore.Data.DataPlaneProxy.PrivateLinkDelegation == DataPlaneProxyPrivateLinkDelegation.Enabled, Is.True);
+            Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
+            Assert.IsTrue(configurationStore.Data.DataPlaneProxy.AuthenticationMode == DataPlaneProxyAuthenticationMode.PassThrough);
+            Assert.IsTrue(configurationStore.Data.DataPlaneProxy.PrivateLinkDelegation == DataPlaneProxyPrivateLinkDelegation.Enabled);
 
             configurationStore.Data.DataPlaneProxy.AuthenticationMode = DataPlaneProxyAuthenticationMode.Local;
             configurationStore.Data.DataPlaneProxy.PrivateLinkDelegation = DataPlaneProxyPrivateLinkDelegation.Disabled;
             configurationStore = (await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStore.Data)).Value;
 
-            Assert.That(configurationStoreName.Equals(configurationStore.Data.Name), Is.True);
-            Assert.That(configurationStore.Data.DataPlaneProxy.AuthenticationMode == DataPlaneProxyAuthenticationMode.Local, Is.True);
-            Assert.That(configurationStore.Data.DataPlaneProxy.PrivateLinkDelegation == DataPlaneProxyPrivateLinkDelegation.Disabled, Is.True);
+            Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
+            Assert.IsTrue(configurationStore.Data.DataPlaneProxy.AuthenticationMode == DataPlaneProxyAuthenticationMode.Local);
+            Assert.IsTrue(configurationStore.Data.DataPlaneProxy.PrivateLinkDelegation == DataPlaneProxyPrivateLinkDelegation.Disabled);
         }
 
         [Test]
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName, configurationStoreData);
             AppConfigurationStoreResource configurationStore = await ResGroup.GetAppConfigurationStores().GetAsync(configurationStoreName);
 
-            Assert.That(configurationStoreName.Equals(configurationStore.Data.Name), Is.True);
-            Assert.That(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled, Is.True);
+            Assert.IsTrue(configurationStoreName.Equals(configurationStore.Data.Name));
+            Assert.IsTrue(configurationStore.Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
         }
 
         [Test]
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await ResGroup.GetAppConfigurationStores().CreateOrUpdateAsync(WaitUntil.Completed, configurationStoreName2, configurationStoreData);
             List<AppConfigurationStoreResource> configurationStores = await ResGroup.GetAppConfigurationStores().GetAllAsync().ToEnumerableAsync();
 
-            Assert.That(configurationStores.Count == 2, Is.True);
-            Assert.That(configurationStores.First(x => x.Data.Name == configurationStoreName1).Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled, Is.True);
+            Assert.IsTrue(configurationStores.Count == 2);
+            Assert.IsTrue(configurationStores.First(x => x.Data.Name == configurationStoreName1).Data.PublicNetworkAccess == AppConfigurationPublicNetworkAccess.Disabled);
         }
     }
 }

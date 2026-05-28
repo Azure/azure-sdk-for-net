@@ -6,35 +6,45 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a CustomRollout along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CustomRolloutResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource"/> using the GetCustomRollouts method.
+    /// A Class representing a CustomRollout along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CustomRolloutResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCustomRolloutResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProviderRegistrationResource"/> using the GetCustomRollout method.
     /// </summary>
     public partial class CustomRolloutResource : ArmResource
     {
-        private readonly ClientDiagnostics _customRolloutsClientDiagnostics;
-        private readonly CustomRollouts _customRolloutsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="CustomRolloutResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
+        /// <param name="rolloutName"> The rolloutName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string rolloutName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _customRolloutClientDiagnostics;
+        private readonly CustomRolloutsRestOperations _customRolloutRestClient;
         private readonly CustomRolloutData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/customRollouts";
 
-        /// <summary> Initializes a new instance of CustomRolloutResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CustomRolloutResource"/> class for mocking. </summary>
         protected CustomRolloutResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomRolloutResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CustomRolloutResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CustomRolloutResource(ArmClient client, CustomRolloutData data) : this(client, data.Id)
@@ -43,92 +53,71 @@ namespace Azure.ResourceManager.ProviderHub
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomRolloutResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CustomRolloutResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CustomRolloutResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _customRolloutClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string customRolloutApiVersion);
-            _customRolloutsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ResourceType.Namespace, Diagnostics);
-            _customRolloutsRestClient = new CustomRollouts(_customRolloutsClientDiagnostics, Pipeline, Endpoint, customRolloutApiVersion ?? "2024-09-01");
-            ValidateResourceId(id);
+            _customRolloutRestClient = new CustomRolloutsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, customRolloutApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CustomRolloutData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="providerNamespace"> The providerNamespace. </param>
-        /// <param name="rolloutName"> The rolloutName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string rolloutName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Gets the custom rollout details.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomRollouts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomRollouts_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CustomRolloutResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomRolloutResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CustomRolloutResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customRolloutsClientDiagnostics.CreateScope("CustomRolloutResource.Get");
+            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CustomRolloutData> response = Response.FromValue(CustomRolloutData.FromResponse(result), result);
+                var response = await _customRolloutRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CustomRolloutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,41 +131,33 @@ namespace Azure.ResourceManager.ProviderHub
         /// Gets the custom rollout details.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomRollouts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomRollouts_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CustomRolloutResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomRolloutResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CustomRolloutResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customRolloutsClientDiagnostics.CreateScope("CustomRolloutResource.Get");
+            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customRolloutsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CustomRolloutData> response = Response.FromValue(CustomRolloutData.FromResponse(result), result);
+                var response = _customRolloutRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new CustomRolloutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -190,20 +171,20 @@ namespace Azure.ResourceManager.ProviderHub
         /// Deletes the custom rollout resource. Custom rollout must be in terminal state.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomRollouts_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomRollouts_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CustomRolloutResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomRolloutResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,23 +192,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customRolloutsClientDiagnostics.CreateScope("CustomRolloutResource.Delete");
+            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customRolloutsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ProviderHubArmOperation operation = new ProviderHubArmOperation(response, rehydrationToken);
+                var response = await _customRolloutRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _customRolloutRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -241,20 +215,20 @@ namespace Azure.ResourceManager.ProviderHub
         /// Deletes the custom rollout resource. Custom rollout must be in terminal state.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomRollouts_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomRollouts_Delete</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CustomRolloutResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomRolloutResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,23 +236,16 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _customRolloutsClientDiagnostics.CreateScope("CustomRolloutResource.Delete");
+            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Delete");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customRolloutsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ProviderHubArmOperation operation = new ProviderHubArmOperation(response, rehydrationToken);
+                var response = _customRolloutRestClient.Delete(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _customRolloutRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -289,109 +256,23 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Stops or cancels the custom rollout, if in progress.
+        /// Creates or updates the rollout details.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}/stop. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomRollouts_Stop. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomRollouts_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CustomRolloutResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> StopAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _customRolloutsClientDiagnostics.CreateScope("CustomRolloutResource.Stop");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customRolloutsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Stops or cancels the custom rollout, if in progress.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}/stop. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomRollouts_Stop. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CustomRolloutResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Stop(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _customRolloutsClientDiagnostics.CreateScope("CustomRolloutResource.Stop");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customRolloutsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a CustomRollout.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomRollouts_CreateOrUpdate. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CustomRolloutResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomRolloutResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,27 +284,14 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _customRolloutsClientDiagnostics.CreateScope("CustomRolloutResource.Update");
+            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, CustomRolloutData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ProviderHubArmOperation<CustomRolloutResource> operation = new ProviderHubArmOperation<CustomRolloutResource>(
-                    new CustomRolloutOperationSource(Client),
-                    _customRolloutsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _customRolloutRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ProviderHubArmOperation<CustomRolloutResource>(new CustomRolloutOperationSource(Client), _customRolloutClientDiagnostics, Pipeline, _customRolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -434,23 +302,23 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
-        /// Update a CustomRollout.
+        /// Creates or updates the rollout details.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> CustomRollouts_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>CustomRollouts_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="CustomRolloutResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomRolloutResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -462,28 +330,91 @@ namespace Azure.ResourceManager.ProviderHub
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _customRolloutsClientDiagnostics.CreateScope("CustomRolloutResource.Update");
+            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _customRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, CustomRolloutData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ProviderHubArmOperation<CustomRolloutResource> operation = new ProviderHubArmOperation<CustomRolloutResource>(
-                    new CustomRolloutOperationSource(Client),
-                    _customRolloutsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                var response = _customRolloutRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new ProviderHubArmOperation<CustomRolloutResource>(new CustomRolloutOperationSource(Client), _customRolloutClientDiagnostics, Pipeline, _customRolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops or cancels the custom rollout, if in progress.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomRollouts_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomRolloutResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> StopAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Stop");
+            scope.Start();
+            try
+            {
+                var response = await _customRolloutRestClient.StopAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops or cancels the custom rollout, if in progress.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}/stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomRollouts_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CustomRolloutResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response Stop(CancellationToken cancellationToken = default)
+        {
+            using var scope = _customRolloutClientDiagnostics.CreateScope("CustomRolloutResource.Stop");
+            scope.Start();
+            try
+            {
+                var response = _customRolloutRestClient.Stop(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

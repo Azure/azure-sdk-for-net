@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    /// <summary></summary>
-    internal partial class MySqlFlexibleServerOperationSource : IOperationSource<MySqlFlexibleServerResource>
+    internal class MySqlFlexibleServerOperationSource : IOperationSource<MySqlFlexibleServerResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal MySqlFlexibleServerOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         MySqlFlexibleServerResource IOperationSource<MySqlFlexibleServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MySqlFlexibleServerData data = MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlFlexibleServerResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<MySqlFlexibleServerResource> IOperationSource<MySqlFlexibleServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MySqlFlexibleServerData data = MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MySqlFlexibleServerResource(_client, data);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
+            return await Task.FromResult(new MySqlFlexibleServerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

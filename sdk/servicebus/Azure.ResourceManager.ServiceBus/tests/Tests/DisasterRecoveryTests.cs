@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
-        [Ignore("Invalide Resource ID.")]
         public async Task CreateGetUpdateDeleteDisasterRecovery()
         {
             IgnoreTestInLiveMode();

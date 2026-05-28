@@ -7,65 +7,45 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> Response for checking service provider availability. </summary>
+    /// <summary> The PeeringServiceProviderAvailability. </summary>
     public readonly partial struct PeeringServiceProviderAvailability : IEquatable<PeeringServiceProviderAvailability>
     {
         private readonly string _value;
-        /// <summary> available. </summary>
-        private const string AvailableValue = "Available";
-        /// <summary> unavailable. </summary>
-        private const string UnavailableValue = "Unavailable";
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceProviderAvailability"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PeeringServiceProviderAvailability(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> available. </summary>
+        private const string AvailableValue = "Available";
+        private const string UnavailableValue = "Unavailable";
+
+        /// <summary> Available. </summary>
         public static PeeringServiceProviderAvailability Available { get; } = new PeeringServiceProviderAvailability(AvailableValue);
-
-        /// <summary> unavailable. </summary>
+        /// <summary> Unavailable. </summary>
         public static PeeringServiceProviderAvailability Unavailable { get; } = new PeeringServiceProviderAvailability(UnavailableValue);
-
         /// <summary> Determines if two <see cref="PeeringServiceProviderAvailability"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PeeringServiceProviderAvailability left, PeeringServiceProviderAvailability right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PeeringServiceProviderAvailability"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PeeringServiceProviderAvailability left, PeeringServiceProviderAvailability right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PeeringServiceProviderAvailability"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PeeringServiceProviderAvailability"/>. </summary>
         public static implicit operator PeeringServiceProviderAvailability(string value) => new PeeringServiceProviderAvailability(value);
 
-        /// <summary> Converts a string to a <see cref="PeeringServiceProviderAvailability"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PeeringServiceProviderAvailability?(string value) => value == null ? null : new PeeringServiceProviderAvailability(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PeeringServiceProviderAvailability other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PeeringServiceProviderAvailability other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

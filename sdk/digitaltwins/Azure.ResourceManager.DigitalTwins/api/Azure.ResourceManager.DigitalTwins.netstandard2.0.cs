@@ -333,7 +333,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact False { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact left, Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact (string value) { throw null; }
@@ -370,7 +372,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType IdentityBased { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType KeyBased { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType (string value) { throw null; }
@@ -409,7 +413,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState Updating { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState (string value) { throw null; }
@@ -480,7 +486,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType (string value) { throw null; }
@@ -521,7 +529,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason AlreadyExists { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason (string value) { throw null; }
@@ -566,7 +576,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState Pending { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState (string value) { throw null; }
@@ -597,7 +609,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionStatus left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionStatus (string value) { throw null; }
@@ -622,7 +636,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState Updating { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState (string value) { throw null; }
@@ -638,7 +654,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess (string value) { throw null; }
@@ -653,7 +671,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public DigitalTwinsResourceType(string value) { throw null; }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsResourceType MicrosoftDigitalTwinsDigitalTwinsInstances { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsResourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsResourceType left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsResourceType (string value) { throw null; }
@@ -683,7 +703,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval False { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval left, Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval (string value) { throw null; }
@@ -721,7 +743,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState Updating { get { throw null; } }
         public static Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState left, Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState (string value) { throw null; }

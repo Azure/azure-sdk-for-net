@@ -1,0 +1,89 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+
+namespace Azure.ResourceManager.MySql.Models
+{
+    /// <summary> Billing information related properties of a server. </summary>
+    public partial class MySqlSku
+    {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlSku"/>. </summary>
+        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public MySqlSku(string name)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlSku"/>. </summary>
+        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
+        /// <param name="tier"> The tier of the particular SKU, e.g. Basic. </param>
+        /// <param name="capacity"> The scale up/out capacity, representing server's compute units. </param>
+        /// <param name="size"> The size code, to be interpreted by resource as appropriate. </param>
+        /// <param name="family"> The family of hardware. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlSku(string name, MySqlSkuTier? tier, int? capacity, string size, string family, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Tier = tier;
+            Capacity = capacity;
+            Size = size;
+            Family = family;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlSku"/> for deserialization. </summary>
+        internal MySqlSku()
+        {
+        }
+
+        /// <summary> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </summary>
+        public string Name { get; set; }
+        /// <summary> The tier of the particular SKU, e.g. Basic. </summary>
+        public MySqlSkuTier? Tier { get; set; }
+        /// <summary> The scale up/out capacity, representing server's compute units. </summary>
+        public int? Capacity { get; set; }
+        /// <summary> The size code, to be interpreted by resource as appropriate. </summary>
+        public string Size { get; set; }
+        /// <summary> The family of hardware. </summary>
+        public string Family { get; set; }
+    }
+}

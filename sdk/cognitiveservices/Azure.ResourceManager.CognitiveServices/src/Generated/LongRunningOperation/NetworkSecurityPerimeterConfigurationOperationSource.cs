@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    /// <summary></summary>
-    internal partial class NetworkSecurityPerimeterConfigurationOperationSource : IOperationSource<NetworkSecurityPerimeterConfigurationResource>
+    internal class NetworkSecurityPerimeterConfigurationOperationSource : IOperationSource<NetworkSecurityPerimeterConfigurationResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal NetworkSecurityPerimeterConfigurationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         NetworkSecurityPerimeterConfigurationResource IOperationSource<NetworkSecurityPerimeterConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkSecurityPerimeterConfigurationData data = NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
             return new NetworkSecurityPerimeterConfigurationResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<NetworkSecurityPerimeterConfigurationResource> IOperationSource<NetworkSecurityPerimeterConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkSecurityPerimeterConfigurationData data = NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkSecurityPerimeterConfigurationResource(_client, data);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCognitiveServicesContext.Default);
+            return await Task.FromResult(new NetworkSecurityPerimeterConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

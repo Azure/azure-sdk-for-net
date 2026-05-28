@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.NetworkCloud;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> ClusterCapacity represents various details regarding compute capacity. </summary>
-    public partial class ClusterCapacity : IJsonModel<ClusterCapacity>
+    public partial class ClusterCapacity : IUtf8JsonSerializable, IJsonModel<ClusterCapacity>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterCapacity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeClusterCapacity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterCapacity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterCapacity IPersistableModel<ClusterCapacity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClusterCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterCapacity)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(AvailableApplianceStorageGB))
             {
                 writer.WritePropertyName("availableApplianceStorageGB"u8);
@@ -114,15 +74,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("totalMemoryGB"u8);
                 writer.WriteNumberValue(TotalMemoryGB.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -131,27 +91,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterCapacity IJsonModel<ClusterCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterCapacity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterCapacity IJsonModel<ClusterCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterCapacity)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClusterCapacity(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterCapacity DeserializeClusterCapacity(JsonElement element, ModelReaderWriterOptions options)
+        internal static ClusterCapacity DeserializeClusterCapacity(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -164,86 +119,88 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             long? totalCoreCount = default;
             long? totalHostStorageGB = default;
             long? totalMemoryGB = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("availableApplianceStorageGB"u8))
+                if (property.NameEquals("availableApplianceStorageGB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availableApplianceStorageGB = prop.Value.GetInt64();
+                    availableApplianceStorageGB = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("availableCoreCount"u8))
+                if (property.NameEquals("availableCoreCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availableCoreCount = prop.Value.GetInt64();
+                    availableCoreCount = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("availableHostStorageGB"u8))
+                if (property.NameEquals("availableHostStorageGB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availableHostStorageGB = prop.Value.GetInt64();
+                    availableHostStorageGB = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("availableMemoryGB"u8))
+                if (property.NameEquals("availableMemoryGB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availableMemoryGB = prop.Value.GetInt64();
+                    availableMemoryGB = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("totalApplianceStorageGB"u8))
+                if (property.NameEquals("totalApplianceStorageGB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalApplianceStorageGB = prop.Value.GetInt64();
+                    totalApplianceStorageGB = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("totalCoreCount"u8))
+                if (property.NameEquals("totalCoreCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalCoreCount = prop.Value.GetInt64();
+                    totalCoreCount = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("totalHostStorageGB"u8))
+                if (property.NameEquals("totalHostStorageGB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalHostStorageGB = prop.Value.GetInt64();
+                    totalHostStorageGB = property.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("totalMemoryGB"u8))
+                if (property.NameEquals("totalMemoryGB"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalMemoryGB = prop.Value.GetInt64();
+                    totalMemoryGB = property.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterCapacity(
                 availableApplianceStorageGB,
                 availableCoreCount,
@@ -253,7 +210,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 totalCoreCount,
                 totalHostStorageGB,
                 totalMemoryGB,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterCapacity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ClusterCapacity IPersistableModel<ClusterCapacity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeClusterCapacity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClusterCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

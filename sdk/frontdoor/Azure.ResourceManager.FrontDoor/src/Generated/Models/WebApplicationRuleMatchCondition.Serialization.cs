@@ -8,61 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.FrontDoor;
+using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Define a match condition. </summary>
-    public partial class WebApplicationRuleMatchCondition : IJsonModel<WebApplicationRuleMatchCondition>
+    public partial class WebApplicationRuleMatchCondition : IUtf8JsonSerializable, IJsonModel<WebApplicationRuleMatchCondition>
     {
-        /// <summary> Initializes a new instance of <see cref="WebApplicationRuleMatchCondition"/> for deserialization. </summary>
-        internal WebApplicationRuleMatchCondition()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationRuleMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebApplicationRuleMatchCondition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWebApplicationRuleMatchCondition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebApplicationRuleMatchCondition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WebApplicationRuleMatchCondition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WebApplicationRuleMatchCondition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApplicationRuleMatchCondition IPersistableModel<WebApplicationRuleMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WebApplicationRuleMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebApplicationRuleMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -74,11 +30,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApplicationRuleMatchCondition)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
             if (Optional.IsDefined(Selector))
@@ -95,13 +52,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             writer.WritePropertyName("matchValue"u8);
             writer.WriteStartArray();
-            foreach (string item in MatchValue)
+            foreach (var item in MatchValue)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -109,21 +61,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
-                foreach (WebApplicationRuleMatchTransformType item in Transforms)
+                foreach (var item in Transforms)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -132,27 +84,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WebApplicationRuleMatchCondition IJsonModel<WebApplicationRuleMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WebApplicationRuleMatchCondition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebApplicationRuleMatchCondition IJsonModel<WebApplicationRuleMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebApplicationRuleMatchCondition)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebApplicationRuleMatchCondition(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WebApplicationRuleMatchCondition DeserializeWebApplicationRuleMatchCondition(JsonElement element, ModelReaderWriterOptions options)
+        internal static WebApplicationRuleMatchCondition DeserializeWebApplicationRuleMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -160,61 +107,55 @@ namespace Azure.ResourceManager.FrontDoor.Models
             WebApplicationRuleMatchVariable matchVariable = default;
             string selector = default;
             WebApplicationRuleMatchOperator @operator = default;
-            bool? isNegateCondition = default;
+            bool? negateCondition = default;
             IList<string> matchValue = default;
             IList<WebApplicationRuleMatchTransformType> transforms = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("matchVariable"u8))
+                if (property.NameEquals("matchVariable"u8))
                 {
-                    matchVariable = new WebApplicationRuleMatchVariable(prop.Value.GetString());
+                    matchVariable = new WebApplicationRuleMatchVariable(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("selector"u8))
+                if (property.NameEquals("selector"u8))
                 {
-                    selector = prop.Value.GetString();
+                    selector = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("operator"u8))
+                if (property.NameEquals("operator"u8))
                 {
-                    @operator = new WebApplicationRuleMatchOperator(prop.Value.GetString());
+                    @operator = new WebApplicationRuleMatchOperator(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("negateCondition"u8))
+                if (property.NameEquals("negateCondition"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isNegateCondition = prop.Value.GetBoolean();
+                    negateCondition = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("matchValue"u8))
+                if (property.NameEquals("matchValue"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     matchValue = array;
                     continue;
                 }
-                if (prop.NameEquals("transforms"u8))
+                if (property.NameEquals("transforms"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<WebApplicationRuleMatchTransformType> array = new List<WebApplicationRuleMatchTransformType>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(new WebApplicationRuleMatchTransformType(item.GetString()));
                     }
@@ -223,17 +164,188 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebApplicationRuleMatchCondition(
                 matchVariable,
                 selector,
                 @operator,
-                isNegateCondition,
+                negateCondition,
                 matchValue,
                 transforms ?? new ChangeTrackingList<WebApplicationRuleMatchTransformType>(),
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MatchVariable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  matchVariable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  matchVariable: ");
+                builder.AppendLine($"'{MatchVariable.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Selector), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  selector: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Selector))
+                {
+                    builder.Append("  selector: ");
+                    if (Selector.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Selector}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Selector}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Operator), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operator: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  operator: ");
+                builder.AppendLine($"'{Operator.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNegateCondition), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  negateCondition: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsNegateCondition))
+                {
+                    builder.Append("  negateCondition: ");
+                    var boolValue = IsNegateCondition.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MatchValue), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  matchValue: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MatchValue))
+                {
+                    if (MatchValue.Any())
+                    {
+                        builder.Append("  matchValue: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MatchValue)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Transforms), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  transforms: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Transforms))
+                {
+                    if (Transforms.Any())
+                    {
+                        builder.Append("  transforms: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Transforms)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<WebApplicationRuleMatchCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationRuleMatchCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebApplicationRuleMatchCondition IPersistableModel<WebApplicationRuleMatchCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebApplicationRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWebApplicationRuleMatchCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebApplicationRuleMatchCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebApplicationRuleMatchCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

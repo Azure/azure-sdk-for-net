@@ -7,63 +7,54 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary></summary>
+    /// <summary>
+    /// The RequestSchemeMatchConditionMatchValue.
+    /// Serialized Name: RequestSchemeMatchValue
+    /// </summary>
     public readonly partial struct RequestSchemeMatchConditionMatchValue : IEquatable<RequestSchemeMatchConditionMatchValue>
     {
         private readonly string _value;
-        private const string HttpValue = "HTTP";
-        private const string HttpsValue = "HTTPS";
 
         /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchConditionMatchValue"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RequestSchemeMatchConditionMatchValue(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Http. </summary>
+        private const string HttpValue = "HTTP";
+        private const string HttpsValue = "HTTPS";
+
+        /// <summary>
+        /// HTTP
+        /// Serialized Name: RequestSchemeMatchValue.HTTP
+        /// </summary>
         public static RequestSchemeMatchConditionMatchValue Http { get; } = new RequestSchemeMatchConditionMatchValue(HttpValue);
-
-        /// <summary> Gets the Https. </summary>
+        /// <summary>
+        /// HTTPS
+        /// Serialized Name: RequestSchemeMatchValue.HTTPS
+        /// </summary>
         public static RequestSchemeMatchConditionMatchValue Https { get; } = new RequestSchemeMatchConditionMatchValue(HttpsValue);
-
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionMatchValue"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RequestSchemeMatchConditionMatchValue left, RequestSchemeMatchConditionMatchValue right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionMatchValue"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RequestSchemeMatchConditionMatchValue left, RequestSchemeMatchConditionMatchValue right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="RequestSchemeMatchConditionMatchValue"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestSchemeMatchConditionMatchValue"/>. </summary>
         public static implicit operator RequestSchemeMatchConditionMatchValue(string value) => new RequestSchemeMatchConditionMatchValue(value);
 
-        /// <summary> Converts a string to a <see cref="RequestSchemeMatchConditionMatchValue"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator RequestSchemeMatchConditionMatchValue?(string value) => value == null ? null : new RequestSchemeMatchConditionMatchValue(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RequestSchemeMatchConditionMatchValue other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(RequestSchemeMatchConditionMatchValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

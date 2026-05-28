@@ -11,7 +11,6 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class HardwareEncryptionExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HardwareEncryption value) => value switch
         {
             HardwareEncryption.Enabled => "Enabled",
@@ -19,17 +18,10 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HardwareEncryption value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static HardwareEncryption ToHardwareEncryption(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
-            {
-                return HardwareEncryption.Enabled;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
-            {
-                return HardwareEncryption.Disabled;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return HardwareEncryption.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return HardwareEncryption.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HardwareEncryption value.");
         }
     }

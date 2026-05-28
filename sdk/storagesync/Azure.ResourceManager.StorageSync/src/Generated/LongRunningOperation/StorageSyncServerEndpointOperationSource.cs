@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    /// <summary></summary>
-    internal partial class StorageSyncServerEndpointOperationSource : IOperationSource<StorageSyncServerEndpointResource>
+    internal class StorageSyncServerEndpointOperationSource : IOperationSource<StorageSyncServerEndpointResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal StorageSyncServerEndpointOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         StorageSyncServerEndpointResource IOperationSource<StorageSyncServerEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            StorageSyncServerEndpointData data = StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<StorageSyncServerEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageSyncContext.Default);
             return new StorageSyncServerEndpointResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<StorageSyncServerEndpointResource> IOperationSource<StorageSyncServerEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            StorageSyncServerEndpointData data = StorageSyncServerEndpointData.DeserializeStorageSyncServerEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new StorageSyncServerEndpointResource(_client, data);
+            var data = ModelReaderWriter.Read<StorageSyncServerEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageSyncContext.Default);
+            return await Task.FromResult(new StorageSyncServerEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

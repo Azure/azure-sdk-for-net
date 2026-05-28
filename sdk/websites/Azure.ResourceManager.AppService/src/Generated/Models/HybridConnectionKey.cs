@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Hybrid Connection key contract. This has the send key name and value for a Hybrid Connection.
-    /// Serialized Name: HybridConnectionKey
-    /// </summary>
+    /// <summary> Hybrid Connection key contract. This has the send key name and value for a Hybrid Connection. </summary>
     public partial class HybridConnectionKey : ResourceData
     {
         /// <summary>
@@ -60,18 +57,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="sendKeyName">
-        /// The name of the send key.
-        /// Serialized Name: HybridConnectionKey.properties.sendKeyName
-        /// </param>
-        /// <param name="sendKeyValue">
-        /// The value of the send key.
-        /// Serialized Name: HybridConnectionKey.properties.sendKeyValue
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="sendKeyName"> The name of the send key. </param>
+        /// <param name="sendKeyValue"> The value of the send key. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HybridConnectionKey(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sendKeyName, string sendKeyValue, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,22 +69,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of the send key.
-        /// Serialized Name: HybridConnectionKey.properties.sendKeyName
-        /// </summary>
+        /// <summary> The name of the send key. </summary>
         [WirePath("properties.sendKeyName")]
         public string SendKeyName { get; }
-        /// <summary>
-        /// The value of the send key.
-        /// Serialized Name: HybridConnectionKey.properties.sendKeyValue
-        /// </summary>
+        /// <summary> The value of the send key. </summary>
         [WirePath("properties.sendKeyValue")]
         public string SendKeyValue { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

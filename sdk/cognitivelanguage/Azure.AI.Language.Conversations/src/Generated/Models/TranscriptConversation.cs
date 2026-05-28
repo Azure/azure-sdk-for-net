@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -20,12 +19,13 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="conversationItems"> Ordered list of transcript conversation items in the conversation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="language"/> or <paramref name="conversationItems"/> is null. </exception>
-        public TranscriptConversation(string id, string language, IEnumerable<TranscriptConversationItem> conversationItems) : base(id, language, InputModality.Transcript)
+        public TranscriptConversation(string id, string language, IEnumerable<TranscriptConversationItem> conversationItems) : base(id, language)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(conversationItems, nameof(conversationItems));
 
+            Modality = InputModality.Transcript;
             ConversationItems = conversationItems.ToList();
         }
 
@@ -34,11 +34,16 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="language"> Language of the conversation item in BCP-47 format. </param>
         /// <param name="modality"> modality. </param>
         /// <param name="domain"> domain. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="conversationItems"> Ordered list of transcript conversation items in the conversation. </param>
-        internal TranscriptConversation(string id, string language, InputModality modality, ConversationDomain? domain, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<TranscriptConversationItem> conversationItems) : base(id, language, modality, domain, additionalBinaryDataProperties)
+        internal TranscriptConversation(string id, string language, InputModality modality, ConversationDomain? domain, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<TranscriptConversationItem> conversationItems) : base(id, language, modality, domain, serializedAdditionalRawData)
         {
             ConversationItems = conversationItems;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranscriptConversation"/> for deserialization. </summary>
+        internal TranscriptConversation()
+        {
         }
 
         /// <summary> Ordered list of transcript conversation items in the conversation. </summary>

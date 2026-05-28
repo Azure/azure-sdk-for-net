@@ -8,13 +8,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maps
@@ -26,49 +25,51 @@ namespace Azure.ResourceManager.Maps
     /// </summary>
     public partial class MapsAccountCollection : ArmCollection, IEnumerable<MapsAccountResource>, IAsyncEnumerable<MapsAccountResource>
     {
-        private readonly ClientDiagnostics _accountsClientDiagnostics;
-        private readonly Accounts _accountsRestClient;
+        private readonly ClientDiagnostics _mapsAccountAccountsClientDiagnostics;
+        private readonly AccountsRestOperations _mapsAccountAccountsRestClient;
 
-        /// <summary> Initializes a new instance of MapsAccountCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MapsAccountCollection"/> class for mocking. </summary>
         protected MapsAccountCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MapsAccountCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MapsAccountCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal MapsAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MapsAccountResource.ResourceType, out string mapsAccountApiVersion);
-            _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maps", MapsAccountResource.ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, mapsAccountApiVersion ?? "2025-10-01-preview");
-            ValidateResourceId(id);
+            _mapsAccountAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maps", MapsAccountResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(MapsAccountResource.ResourceType, out string mapsAccountAccountsApiVersion);
+            _mapsAccountAccountsRestClient = new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mapsAccountAccountsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Create or update a Maps Account. A Maps Account holds the keys which allow access to the Maps REST APIs.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,31 +77,23 @@ namespace Azure.ResourceManager.Maps
         /// <param name="accountName"> The name of the Maps Account. </param>
         /// <param name="data"> The new or updated parameters for the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MapsAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, MapsAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("MapsAccountCollection.CreateOrUpdate");
+            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _accountsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, MapsAccountData.ToRequestContent(data), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MapsArmOperation<MapsAccountResource> operation = new MapsArmOperation<MapsAccountResource>(Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = await _mapsAccountAccountsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _mapsAccountAccountsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, accountName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MapsArmOperation<MapsAccountResource>(Response.FromValue(new MapsAccountResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -114,16 +107,20 @@ namespace Azure.ResourceManager.Maps
         /// Create or update a Maps Account. A Maps Account holds the keys which allow access to the Maps REST APIs.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_CreateOrUpdate. </description>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,31 +128,23 @@ namespace Azure.ResourceManager.Maps
         /// <param name="accountName"> The name of the Maps Account. </param>
         /// <param name="data"> The new or updated parameters for the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MapsAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, MapsAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("MapsAccountCollection.CreateOrUpdate");
+            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _accountsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, MapsAccountData.ToRequestContent(data), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MapsArmOperation<MapsAccountResource> operation = new MapsArmOperation<MapsAccountResource>(Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                var response = _mapsAccountAccountsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, accountName, data, cancellationToken);
+                var uri = _mapsAccountAccountsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, accountName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MapsArmOperation<MapsAccountResource>(Response.FromValue(new MapsAccountResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
-                {
                     operation.WaitForCompletion(cancellationToken);
-                }
                 return operation;
             }
             catch (Exception e)
@@ -169,42 +158,38 @@ namespace Azure.ResourceManager.Maps
         /// Get a Maps Account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<Response<MapsAccountResource>> GetAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("MapsAccountCollection.Get");
+            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
+                var response = await _mapsAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,42 +203,38 @@ namespace Azure.ResourceManager.Maps
         /// Get a Maps Account.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<MapsAccountResource> Get(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("MapsAccountCollection.Get");
+            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MapsAccountData> response = Response.FromValue(MapsAccountData.FromResponse(result), result);
+                var response = _mapsAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,44 +248,50 @@ namespace Azure.ResourceManager.Maps
         /// Get all Maps Accounts in a Resource Group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MapsAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MapsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MapsAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetByResourceGroupAsyncCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MapsAccountCollection.GetAll"), data => new MapsAccountResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mapsAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mapsAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), _mapsAccountAccountsClientDiagnostics, Pipeline, "MapsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all Maps Accounts in a Resource Group
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_ListByResourceGroup. </description>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListByResourceGroup</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -312,61 +299,45 @@ namespace Azure.ResourceManager.Maps
         /// <returns> A collection of <see cref="MapsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MapsAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetByResourceGroupCollectionResultOfT(_accountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MapsAccountCollection.GetAll"), data => new MapsAccountResource(Client, data));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mapsAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mapsAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), _mapsAccountAccountsClientDiagnostics, Pipeline, "MapsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("MapsAccountCollection.Exists");
+            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MapsAccountData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MapsAccountData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MapsAccountData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _mapsAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -380,50 +351,36 @@ namespace Azure.ResourceManager.Maps
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<bool> Exists(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("MapsAccountCollection.Exists");
+            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MapsAccountData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MapsAccountData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MapsAccountData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _mapsAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -437,54 +394,38 @@ namespace Azure.ResourceManager.Maps
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<NullableResponse<MapsAccountResource>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("MapsAccountCollection.GetIfExists");
+            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<MapsAccountData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MapsAccountData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MapsAccountData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _mapsAccountAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MapsAccountResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -498,54 +439,38 @@ namespace Azure.ResourceManager.Maps
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Accounts_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The name of the Maps Account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual NullableResponse<MapsAccountResource> GetIfExists(string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using DiagnosticScope scope = _accountsClientDiagnostics.CreateScope("MapsAccountCollection.GetIfExists");
+            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _accountsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<MapsAccountData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(MapsAccountData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((MapsAccountData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _mapsAccountAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, accountName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<MapsAccountResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new MapsAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -565,7 +490,6 @@ namespace Azure.ResourceManager.Maps
             return GetAll().GetEnumerator();
         }
 
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MapsAccountResource> IAsyncEnumerable<MapsAccountResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

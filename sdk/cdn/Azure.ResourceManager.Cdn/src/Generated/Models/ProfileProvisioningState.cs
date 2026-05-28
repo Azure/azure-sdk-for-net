@@ -7,75 +7,72 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Provisioning status of the profile. </summary>
+    /// <summary>
+    /// Provisioning status of the profile.
+    /// Serialized Name: ProfileProvisioningState
+    /// </summary>
     public readonly partial struct ProfileProvisioningState : IEquatable<ProfileProvisioningState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ProfileProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProfileProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string CreatingValue = "Creating";
 
-        /// <summary> Initializes a new instance of <see cref="ProfileProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProfileProvisioningState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ProfileProvisioningState.Succeeded
+        /// </summary>
         public static ProfileProvisioningState Succeeded { get; } = new ProfileProvisioningState(SucceededValue);
-
-        /// <summary> Gets the Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProfileProvisioningState.Failed
+        /// </summary>
         public static ProfileProvisioningState Failed { get; } = new ProfileProvisioningState(FailedValue);
-
-        /// <summary> Gets the Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: ProfileProvisioningState.Updating
+        /// </summary>
         public static ProfileProvisioningState Updating { get; } = new ProfileProvisioningState(UpdatingValue);
-
-        /// <summary> Gets the Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProfileProvisioningState.Deleting
+        /// </summary>
         public static ProfileProvisioningState Deleting { get; } = new ProfileProvisioningState(DeletingValue);
-
-        /// <summary> Gets the Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: ProfileProvisioningState.Creating
+        /// </summary>
         public static ProfileProvisioningState Creating { get; } = new ProfileProvisioningState(CreatingValue);
-
         /// <summary> Determines if two <see cref="ProfileProvisioningState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProfileProvisioningState left, ProfileProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ProfileProvisioningState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProfileProvisioningState left, ProfileProvisioningState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ProfileProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProfileProvisioningState"/>. </summary>
         public static implicit operator ProfileProvisioningState(string value) => new ProfileProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ProfileProvisioningState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ProfileProvisioningState?(string value) => value == null ? null : new ProfileProvisioningState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProfileProvisioningState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ProfileProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

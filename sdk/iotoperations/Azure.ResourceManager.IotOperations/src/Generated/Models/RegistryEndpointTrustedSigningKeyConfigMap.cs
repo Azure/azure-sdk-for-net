@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -17,20 +16,27 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointTrustedSigningKeyConfigMap"/>. </summary>
         /// <param name="configMapRef"> The name of the configmap. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configMapRef"/> is null. </exception>
-        public RegistryEndpointTrustedSigningKeyConfigMap(string configMapRef) : base(RegistryEndpointTrustedSigningKeyType.ConfigMap)
+        public RegistryEndpointTrustedSigningKeyConfigMap(string configMapRef)
         {
             Argument.AssertNotNull(configMapRef, nameof(configMapRef));
 
             ConfigMapRef = configMapRef;
+            Type = RegistryEndpointTrustedSigningKeyType.ConfigMap;
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointTrustedSigningKeyConfigMap"/>. </summary>
         /// <param name="type"> The trust type for the registry endpoint. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="configMapRef"> The name of the configmap. </param>
-        internal RegistryEndpointTrustedSigningKeyConfigMap(RegistryEndpointTrustedSigningKeyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string configMapRef) : base(@type, additionalBinaryDataProperties)
+        internal RegistryEndpointTrustedSigningKeyConfigMap(RegistryEndpointTrustedSigningKeyType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string configMapRef) : base(type, serializedAdditionalRawData)
         {
             ConfigMapRef = configMapRef;
+            Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegistryEndpointTrustedSigningKeyConfigMap"/> for deserialization. </summary>
+        internal RegistryEndpointTrustedSigningKeyConfigMap()
+        {
         }
 
         /// <summary> The name of the configmap. </summary>

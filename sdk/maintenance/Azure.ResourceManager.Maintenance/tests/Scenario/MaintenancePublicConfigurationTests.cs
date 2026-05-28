@@ -25,17 +25,15 @@ namespace Azure.ResourceManager.Maintenance.Tests
             //string assetName = "maintenance-config-";
             string subscriptionId = "eee2cef4-bc47-4278-b4f8-cfc65f25dfd8";
             string resourceName = "aks-mrp-cfg-weekday_utc-7-eastus2euap";
-            ResourceIdentifier maintenancePublicConfigurationResourceId = MaintenancePublicConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceName);
-            MaintenancePublicConfigurationResource maintenanceConfiguration = Client.GetMaintenancePublicConfigurationResource(maintenancePublicConfigurationResourceId);
+            ResourceIdentifier maintenanceConfigurationResourceId = MaintenancePublicConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceName);
+            MaintenancePublicConfigurationResource maintenancePublicConfiguration = Client.GetMaintenancePublicConfigurationResource(maintenanceConfigurationResourceId);
 
-            MaintenancePublicConfigurationResource result = await maintenanceConfiguration.GetAsync();
+            MaintenancePublicConfigurationResource result = await maintenancePublicConfiguration.GetAsync();
 
             MaintenanceConfigurationData resourceData = result.Data;
 
             Assert.IsNotNull(resourceData);
-
-            // TODO: This test is commented out for patch release.
-            //Assert.IsTrue(resourceData.MaintenanceScope.Equals(MaintenanceScope.Resource));
+            Assert.IsTrue(resourceData.MaintenanceScope.Equals(MaintenanceScope.Resource));
         }
     }
 }

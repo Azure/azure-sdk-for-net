@@ -8,56 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.ServiceBus;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> Represents the correlation filter expression. </summary>
-    public partial class ServiceBusCorrelationFilter : IJsonModel<ServiceBusCorrelationFilter>
+    public partial class ServiceBusCorrelationFilter : IUtf8JsonSerializable, IJsonModel<ServiceBusCorrelationFilter>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceBusCorrelationFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeServiceBusCorrelationFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusCorrelationFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServiceBusCorrelationFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceBusCorrelationFilter IPersistableModel<ServiceBusCorrelationFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServiceBusCorrelationFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceBusCorrelationFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +30,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsCollectionDefined(ApplicationProperties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -135,15 +97,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -152,131 +114,405 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceBusCorrelationFilter IJsonModel<ServiceBusCorrelationFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceBusCorrelationFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceBusCorrelationFilter IJsonModel<ServiceBusCorrelationFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceBusCorrelationFilter(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ServiceBusCorrelationFilter DeserializeServiceBusCorrelationFilter(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceBusCorrelationFilter DeserializeServiceBusCorrelationFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, object> applicationProperties = default;
+            IDictionary<string, object> properties = default;
             string correlationId = default;
             string messageId = default;
-            string sendTo = default;
+            string to = default;
             string replyTo = default;
-            string subject = default;
+            string label = default;
             string sessionId = default;
             string replyToSessionId = default;
             string contentType = default;
             bool? requiresPreprocessing = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(prop0.Name, null);
+                            dictionary.Add(property0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.GetObject());
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
                         }
                     }
-                    applicationProperties = dictionary;
+                    properties = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("correlationId"u8))
+                if (property.NameEquals("correlationId"u8))
                 {
-                    correlationId = prop.Value.GetString();
+                    correlationId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("messageId"u8))
+                if (property.NameEquals("messageId"u8))
                 {
-                    messageId = prop.Value.GetString();
+                    messageId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("to"u8))
+                if (property.NameEquals("to"u8))
                 {
-                    sendTo = prop.Value.GetString();
+                    to = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("replyTo"u8))
+                if (property.NameEquals("replyTo"u8))
                 {
-                    replyTo = prop.Value.GetString();
+                    replyTo = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("label"u8))
+                if (property.NameEquals("label"u8))
                 {
-                    subject = prop.Value.GetString();
+                    label = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("sessionId"u8))
+                if (property.NameEquals("sessionId"u8))
                 {
-                    sessionId = prop.Value.GetString();
+                    sessionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("replyToSessionId"u8))
+                if (property.NameEquals("replyToSessionId"u8))
                 {
-                    replyToSessionId = prop.Value.GetString();
+                    replyToSessionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("contentType"u8))
+                if (property.NameEquals("contentType"u8))
                 {
-                    contentType = prop.Value.GetString();
+                    contentType = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("requiresPreprocessing"u8))
+                if (property.NameEquals("requiresPreprocessing"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requiresPreprocessing = prop.Value.GetBoolean();
+                    requiresPreprocessing = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceBusCorrelationFilter(
-                applicationProperties ?? new ChangeTrackingDictionary<string, object>(),
+                properties ?? new ChangeTrackingDictionary<string, object>(),
                 correlationId,
                 messageId,
-                sendTo,
+                to,
                 replyTo,
-                subject,
+                label,
                 sessionId,
                 replyToSessionId,
                 contentType,
                 requiresPreprocessing,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ApplicationProperties))
+                {
+                    if (ApplicationProperties.Any())
+                    {
+                        builder.Append("  properties: ");
+                        builder.AppendLine("{");
+                        foreach (var item in ApplicationProperties)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($"'{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorrelationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  correlationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CorrelationId))
+                {
+                    builder.Append("  correlationId: ");
+                    if (CorrelationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CorrelationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CorrelationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MessageId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  messageId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MessageId))
+                {
+                    builder.Append("  messageId: ");
+                    if (MessageId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MessageId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MessageId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendTo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  to: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendTo))
+                {
+                    builder.Append("  to: ");
+                    if (SendTo.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SendTo}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SendTo}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplyTo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  replyTo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplyTo))
+                {
+                    builder.Append("  replyTo: ");
+                    if (ReplyTo.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ReplyTo}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ReplyTo}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subject), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  label: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Subject))
+                {
+                    builder.Append("  label: ");
+                    if (Subject.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Subject}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Subject}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SessionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sessionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SessionId))
+                {
+                    builder.Append("  sessionId: ");
+                    if (SessionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SessionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SessionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplyToSessionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  replyToSessionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplyToSessionId))
+                {
+                    builder.Append("  replyToSessionId: ");
+                    if (ReplyToSessionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ReplyToSessionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ReplyToSessionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contentType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentType))
+                {
+                    builder.Append("  contentType: ");
+                    if (ContentType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContentType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContentType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiresPreprocessing), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requiresPreprocessing: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequiresPreprocessing))
+                {
+                    builder.Append("  requiresPreprocessing: ");
+                    var boolValue = RequiresPreprocessing.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ServiceBusCorrelationFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceBusCorrelationFilter IPersistableModel<ServiceBusCorrelationFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusCorrelationFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeServiceBusCorrelationFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceBusCorrelationFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceBusCorrelationFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -17,7 +17,6 @@ public abstract class TypeModel : ModelBase
     public string? DiscriminatorName { get; set; } = null;
     public string? DiscriminatorValue { get; set; } = null;
     public bool FromExpression { get; set; } = false;
-    public bool GeneratePartialPropertyDefinition { get; set; } = false;
 
     protected TypeModel(Specification spec, Type armType, string name, string? ns = default, string? description = default)
         : base(name, ns, armType, description)

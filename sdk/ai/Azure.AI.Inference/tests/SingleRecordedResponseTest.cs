@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Nodes;
+using System;
 using Azure.AI.Inference.Telemetry;
 using NUnit.Framework;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Azure.AI.Inference.Tests
 {
@@ -59,7 +59,7 @@ namespace Azure.AI.Inference.Tests
             var response = new RecordedResponse(completions, traceContent);
             Assert.AreEqual("4567", response.Id);
             CollectionAssert.AreEqual(
-                new[] { "content_filter", null, "stop" },
+                new[] {"content_filter", null, "stop"},
                 response.FinishReasons);
             Assert.AreEqual("Phi2000", response.Model);
             Assert.AreEqual(15, response.CompletionTokens);

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -15,67 +14,44 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct ResponsibilityStatus : IEquatable<ResponsibilityStatus>
     {
         private readonly string _value;
-        /// <summary> The responsibility is passed. </summary>
-        private const string PassedValue = "Passed";
-        /// <summary> The responsibility is failed. </summary>
-        private const string FailedValue = "Failed";
-        /// <summary> The responsibility is not applicable. </summary>
-        private const string NotApplicableValue = "NotApplicable";
-        /// <summary> The responsibility is pending for approval. </summary>
-        private const string PendingApprovalValue = "PendingApproval";
 
         /// <summary> Initializes a new instance of <see cref="ResponsibilityStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResponsibilityStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string PassedValue = "Passed";
+        private const string FailedValue = "Failed";
+        private const string NotApplicableValue = "NotApplicable";
+        private const string PendingApprovalValue = "PendingApproval";
 
         /// <summary> The responsibility is passed. </summary>
         public static ResponsibilityStatus Passed { get; } = new ResponsibilityStatus(PassedValue);
-
         /// <summary> The responsibility is failed. </summary>
         public static ResponsibilityStatus Failed { get; } = new ResponsibilityStatus(FailedValue);
-
         /// <summary> The responsibility is not applicable. </summary>
         public static ResponsibilityStatus NotApplicable { get; } = new ResponsibilityStatus(NotApplicableValue);
-
         /// <summary> The responsibility is pending for approval. </summary>
         public static ResponsibilityStatus PendingApproval { get; } = new ResponsibilityStatus(PendingApprovalValue);
-
         /// <summary> Determines if two <see cref="ResponsibilityStatus"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResponsibilityStatus left, ResponsibilityStatus right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ResponsibilityStatus"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResponsibilityStatus left, ResponsibilityStatus right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ResponsibilityStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResponsibilityStatus"/>. </summary>
         public static implicit operator ResponsibilityStatus(string value) => new ResponsibilityStatus(value);
 
-        /// <summary> Converts a string to a <see cref="ResponsibilityStatus"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ResponsibilityStatus?(string value) => value == null ? null : new ResponsibilityStatus(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResponsibilityStatus other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ResponsibilityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

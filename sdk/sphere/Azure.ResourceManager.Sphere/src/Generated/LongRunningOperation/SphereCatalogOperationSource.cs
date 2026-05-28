@@ -5,45 +5,32 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sphere
 {
-    /// <summary></summary>
-    internal partial class SphereCatalogOperationSource : IOperationSource<SphereCatalogResource>
+    internal class SphereCatalogOperationSource : IOperationSource<SphereCatalogResource>
     {
         private readonly ArmClient _client;
 
-        /// <summary></summary>
-        /// <param name="client"></param>
         internal SphereCatalogOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         SphereCatalogResource IOperationSource<SphereCatalogResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SphereCatalogData data = SphereCatalogData.DeserializeSphereCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var data = ModelReaderWriter.Read<SphereCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
             return new SphereCatalogResource(_client, data);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<SphereCatalogResource> IOperationSource<SphereCatalogResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SphereCatalogData data = SphereCatalogData.DeserializeSphereCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SphereCatalogResource(_client, data);
+            var data = ModelReaderWriter.Read<SphereCatalogData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
+            return await Task.FromResult(new SphereCatalogResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -91,7 +91,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("webUrl");
             }
 
-            Assert.That(Uri.UriSchemeHttps, Is.EqualTo(webUrl.Scheme));
+            Assert.AreEqual(webUrl.Scheme, Uri.UriSchemeHttps);
 
             // Check RDP connection
             Uri remoteConnectionUrl = remoteConnection.RdpConnectionUri;
@@ -100,7 +100,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("rdpConnectionUrl");
             }
 
-            Assert.That(remoteConnectionUrl.Scheme, Is.EqualTo("ms-avd"));
+            Assert.AreEqual(remoteConnectionUrl.Scheme, "ms-avd");
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(devBoxName, Is.EqualTo(DevBoxName));
+            Assert.AreEqual(devBoxName, DevBoxName);
         }
 
         [Test]
@@ -131,7 +131,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId).ToEnumerableAsync();
 
-            Assert.That(devBoxes.Count, Is.EqualTo(1));
+            Assert.AreEqual(1, devBoxes.Count);
 
             string devBoxName = devBoxes[0].Name;
             if (string.IsNullOrWhiteSpace(devBoxName))
@@ -139,7 +139,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(devBoxName, Is.EqualTo(DevBoxName));
+            Assert.AreEqual(devBoxName, DevBoxName);
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             List<DevBox> devBoxes = await _devBoxesClient.GetAllDevBoxesAsync().ToEnumerableAsync();
 
-            Assert.That(devBoxes.Count, Is.EqualTo(1));
+            Assert.AreEqual(1, devBoxes.Count);
 
             string devBoxName = devBoxes[0].Name;
             if (string.IsNullOrWhiteSpace(devBoxName))
@@ -157,7 +157,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(devBoxName, Is.EqualTo(DevBoxName));
+            Assert.AreEqual(devBoxName, DevBoxName);
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace Azure.Developer.DevCenter.Tests
 
             List<DevBox> devBoxes = await _devBoxesClient.GetAllDevBoxesByUserAsync(TestEnvironment.MeUserId).ToEnumerableAsync();
 
-            Assert.That(devBoxes.Count, Is.EqualTo(1));
+            Assert.AreEqual(1, devBoxes.Count);
 
             string devBoxName = devBoxes[0].Name;
             if (string.IsNullOrWhiteSpace(devBoxName))
@@ -175,7 +175,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(devBoxName, Is.EqualTo(DevBoxName));
+            Assert.AreEqual(devBoxName, DevBoxName);
         }
 
         [Test]
@@ -191,7 +191,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(TestEnvironment.PoolName, Is.EqualTo(poolName));
+            Assert.AreEqual(poolName, TestEnvironment.PoolName);
         }
 
         [Test]
@@ -199,7 +199,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             List<DevBoxPool> pools = await _devBoxesClient.GetPoolsAsync(TestEnvironment.ProjectName).ToEnumerableAsync();
 
-            Assert.That(pools.Count, Is.EqualTo(1));
+            Assert.AreEqual(1, pools.Count);
 
             string poolName = pools[0].Name;
             if (string.IsNullOrWhiteSpace(poolName))
@@ -207,7 +207,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(TestEnvironment.PoolName, Is.EqualTo(poolName));
+            Assert.AreEqual(poolName, TestEnvironment.PoolName);
         }
 
         [Test]
@@ -224,7 +224,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(scheduleName, Is.EqualTo("default"));
+            Assert.AreEqual("default", scheduleName);
         }
 
         [Test]
@@ -234,7 +234,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.ProjectName,
                 TestEnvironment.PoolName).ToEnumerableAsync();
 
-            Assert.That(schedules.Count, Is.EqualTo(1));
+            Assert.AreEqual(1, schedules.Count);
 
             string scheduleName = schedules[0].Name;
             if (string.IsNullOrWhiteSpace(scheduleName))
@@ -242,7 +242,7 @@ namespace Azure.Developer.DevCenter.Tests
                 FailDueToMissingProperty("name");
             }
 
-            Assert.That(scheduleName, Is.EqualTo("default"));
+            Assert.AreEqual("default", scheduleName);
         }
 
         [Test]
@@ -262,12 +262,12 @@ namespace Azure.Developer.DevCenter.Tests
                 DevBoxName,
                 "schedule-default");
 
-            Assert.That(action, Is.Not.Null);
-            Assert.That(action.Name, Is.EqualTo("schedule-default"));
-            Assert.That(action.ActionType, Is.EqualTo(DevBoxActionType.Stop));
+            Assert.NotNull(action);
+            Assert.AreEqual("schedule-default", action.Name);
+            Assert.AreEqual(DevBoxActionType.Stop, action.ActionType);
 
             DateTimeOffset currentScheduledTime = action.NextAction.ScheduledTime;
-            Assert.That(currentScheduledTime, Is.Not.Null);
+            Assert.NotNull(currentScheduledTime);
 
             DateTimeOffset delayUntil = currentScheduledTime.AddMinutes(10);
 
@@ -286,8 +286,8 @@ namespace Azure.Developer.DevCenter.Tests
 
             DateTimeOffset delayedTime = delayedAction.NextAction.ScheduledTime;
 
-            Assert.That(delayedTime, Is.Not.Null);
-            Assert.That(delayedTime, Is.EqualTo(delayUntil));
+            Assert.NotNull(delayedTime);
+            Assert.AreEqual(delayUntil, delayedTime);
         }
 
         [Test]
@@ -320,11 +320,11 @@ namespace Azure.Developer.DevCenter.Tests
                 DevBoxName,
                 delayUntil).ToEnumerableAsync();
 
-            Assert.That(actionsDelayResult.Count, Is.EqualTo(devBoxActions.Count));
+            Assert.AreEqual(devBoxActions.Count, actionsDelayResult.Count);
             foreach (var actionDelayResult in actionsDelayResult)
             {
-                Assert.That(actionDelayResult.DelayStatus, Is.EqualTo(DevBoxActionDelayStatus.Succeeded));
-                Assert.That(devBoxActions.Any(action => action.Name == actionDelayResult.ActionName), Is.True);
+                Assert.AreEqual(DevBoxActionDelayStatus.Succeeded, actionDelayResult.DelayStatus);
+                Assert.True(devBoxActions.Any(action => action.Name == actionDelayResult.ActionName));
             }
         }
 
@@ -344,7 +344,7 @@ namespace Azure.Developer.DevCenter.Tests
                 DevBoxName,
                 "schedule-default");
 
-            Assert.That(skipActionResponse.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
+            Assert.AreEqual((int)HttpStatusCode.NoContent, skipActionResponse.Status);
 
             Operation devBoxDeleteOperation = await _devBoxesClient.DeleteDevBoxAsync(
                WaitUntil.Completed,
@@ -383,8 +383,8 @@ namespace Azure.Developer.DevCenter.Tests
 
             devBox = devBoxCreateOperation.Value;
 
-            Assert.That(devBox, Is.Not.Null);
-            Assert.That(devBox.Name, Is.EqualTo(DevBoxName));
+            Assert.NotNull(devBox);
+            Assert.AreEqual(DevBoxName, devBox.Name);
 
             DevBoxProvisioningState? devBoxProvisioningState = devBox.ProvisioningState;
 
@@ -393,7 +393,7 @@ namespace Azure.Developer.DevCenter.Tests
                 devBoxProvisioningState.Equals(DevBoxProvisioningState.Succeeded) ||
                 devBoxProvisioningState.Equals(DevBoxProvisioningState.ProvisionedWithWarning);
 
-            Assert.That(devBoxProvisionSucceeded, Is.True);
+            Assert.IsTrue(devBoxProvisionSucceeded);
         }
 
         private async Task<bool> HasDefaultActionIn24hrsAsync()
@@ -425,7 +425,7 @@ namespace Azure.Developer.DevCenter.Tests
             }
 
             var status = responseStatusJson.ToString();
-            Assert.That(status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase), Is.True);
+            Assert.True(status.Equals("Succeeded", StringComparison.OrdinalIgnoreCase));
         }
 
         private void FailDueToMissingProperty(string propertyName)

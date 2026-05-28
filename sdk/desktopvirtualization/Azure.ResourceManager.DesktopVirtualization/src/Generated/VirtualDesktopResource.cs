@@ -6,36 +6,47 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing a VirtualDesktop along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualDesktopResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualApplicationGroupResource"/> using the GetVirtualDesktops method.
+    /// A Class representing a VirtualDesktop along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualDesktopResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualDesktopResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualApplicationGroupResource"/> using the GetVirtualDesktop method.
     /// </summary>
     public partial class VirtualDesktopResource : ArmResource
     {
-        private readonly ClientDiagnostics _desktopsClientDiagnostics;
-        private readonly Desktops _desktopsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="VirtualDesktopResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="applicationGroupName"> The applicationGroupName. </param>
+        /// <param name="desktopName"> The desktopName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _virtualDesktopDesktopsClientDiagnostics;
+        private readonly DesktopsRestOperations _virtualDesktopDesktopsRestClient;
         private readonly VirtualDesktopData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/applicationGroups/desktops";
 
-        /// <summary> Initializes a new instance of VirtualDesktopResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualDesktopResource"/> class for mocking. </summary>
         protected VirtualDesktopResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualDesktopResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualDesktopResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualDesktopResource(ArmClient client, VirtualDesktopData data) : this(client, data.Id)
@@ -44,93 +55,71 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualDesktopResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualDesktopResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualDesktopResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string virtualDesktopApiVersion);
-            _desktopsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _desktopsRestClient = new Desktops(_desktopsClientDiagnostics, Pipeline, Endpoint, virtualDesktopApiVersion ?? "2026-01-01-preview");
-            ValidateResourceId(id);
+            _virtualDesktopDesktopsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string virtualDesktopDesktopsApiVersion);
+            _virtualDesktopDesktopsRestClient = new DesktopsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualDesktopDesktopsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual VirtualDesktopData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="applicationGroupName"> The applicationGroupName. </param>
-        /// <param name="desktopName"> The desktopName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get a desktop.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Desktops_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Desktops_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualDesktopResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualDesktopResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VirtualDesktopResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _desktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Get");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _desktopsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VirtualDesktopData> response = Response.FromValue(VirtualDesktopData.FromResponse(result), result);
+                var response = await _virtualDesktopDesktopsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualDesktopResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,41 +133,33 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Get a desktop.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Desktops_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>Desktops_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualDesktopResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualDesktopResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualDesktopResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _desktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Get");
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _desktopsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<VirtualDesktopData> response = Response.FromValue(VirtualDesktopData.FromResponse(result), result);
+                var response = _virtualDesktopDesktopsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new VirtualDesktopResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -192,42 +173,35 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Update a desktop.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Desktops_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>Desktops_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualDesktopResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualDesktopResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="patch"> Object containing Desktop definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<VirtualDesktopResource>> UpdateAsync(VirtualDesktopPatch patch, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _desktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Update");
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _desktopsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualDesktopPatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VirtualDesktopData> response = Response.FromValue(VirtualDesktopData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _virtualDesktopDesktopsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new VirtualDesktopResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -241,42 +215,35 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Update a desktop.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Desktops_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>Desktops_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-03</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="VirtualDesktopResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualDesktopResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="patch"> Object containing Desktop definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<VirtualDesktopResource> Update(VirtualDesktopPatch patch, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _desktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Update");
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _desktopsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualDesktopPatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<VirtualDesktopData> response = Response.FromValue(VirtualDesktopData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _virtualDesktopDesktopsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new VirtualDesktopResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

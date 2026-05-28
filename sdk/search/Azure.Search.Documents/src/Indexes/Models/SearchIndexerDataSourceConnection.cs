@@ -3,10 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [CodeGenModel("SearchIndexerDataSource")]
     [CodeGenSuppress(nameof(SearchIndexerDataSourceConnection), typeof(string), typeof(SearchIndexerDataSourceType), typeof(DataSourceCredentials), typeof(SearchIndexerDataContainer))]
     public partial class SearchIndexerDataSourceConnection
     {
@@ -27,6 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
             ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             Container = container ?? throw new ArgumentNullException(nameof(container));
             Type = type;
+            IndexerPermissionOptions = new ChangeTrackingList<IndexerPermissionOption>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
@@ -59,11 +61,11 @@ namespace Azure.Search.Documents.Indexes.Models
             DataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
             _etag = etag;
             EncryptionKey = encryptionKey;
-            _additionalBinaryDataProperties = serializedAdditionalRawData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
-        /// The <see cref="global::Azure.ETag"/> of the <see cref="SearchIndexerDataSourceConnection"/>.
+        /// The <see cref="Azure.ETag"/> of the <see cref="SearchIndexerDataSourceConnection"/>.
         /// </summary>
         public ETag? ETag
         {
@@ -84,7 +86,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             get
             {
-                return new DataSourceCredentials(ConnectionString ?? DataSourceCredentials.UnchangedValue, additionalBinaryDataProperties: null);
+                return new DataSourceCredentials(ConnectionString ?? DataSourceCredentials.UnchangedValue, serializedAdditionalRawData: null);
             }
 
             set

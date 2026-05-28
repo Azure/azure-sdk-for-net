@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ComputeFleet.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -15,11 +14,10 @@ namespace Azure.ResourceManager.ComputeFleet
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
+    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AdditionalCapabilities))]
     [ModelReaderWriterBuildable(typeof(AdditionalLocationsProfile))]
-    [ModelReaderWriterBuildable(typeof(ApiEntityReference))]
     [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(CapacityReservationProfile))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetApiError))]
@@ -87,15 +85,12 @@ namespace Azure.ResourceManager.ComputeFleet
     [ModelReaderWriterBuildable(typeof(ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetWinRMListener))]
     [ModelReaderWriterBuildable(typeof(ComputeFleetZoneAllocationPolicy))]
-    [ModelReaderWriterBuildable(typeof(DiskEncryptionSetParameters))]
     [ModelReaderWriterBuildable(typeof(FleetListResult))]
     [ModelReaderWriterBuildable(typeof(LocationProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegularPriorityProfile))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(ServiceArtifactReference))]
     [ModelReaderWriterBuildable(typeof(SpotPriorityProfile))]
-    [ModelReaderWriterBuildable(typeof(Models.SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineListResult))]

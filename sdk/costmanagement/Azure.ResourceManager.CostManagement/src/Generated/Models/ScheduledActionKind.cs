@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ScheduledActionKind : IEquatable<ScheduledActionKind>
     {
         private readonly string _value;
-        /// <summary> Cost analysis data will be emailed. </summary>
-        private const string EmailValue = "Email";
-        /// <summary> Cost anomaly information will be emailed. Available only on subscription scope at daily frequency. If no anomaly is detected on the resource, an email won't be sent. </summary>
-        private const string InsightAlertValue = "InsightAlert";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionKind"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScheduledActionKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string EmailValue = "Email";
+        private const string InsightAlertValue = "InsightAlert";
 
         /// <summary> Cost analysis data will be emailed. </summary>
         public static ScheduledActionKind Email { get; } = new ScheduledActionKind(EmailValue);
-
         /// <summary> Cost anomaly information will be emailed. Available only on subscription scope at daily frequency. If no anomaly is detected on the resource, an email won't be sent. </summary>
         public static ScheduledActionKind InsightAlert { get; } = new ScheduledActionKind(InsightAlertValue);
-
         /// <summary> Determines if two <see cref="ScheduledActionKind"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScheduledActionKind left, ScheduledActionKind right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ScheduledActionKind"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScheduledActionKind left, ScheduledActionKind right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ScheduledActionKind"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduledActionKind"/>. </summary>
         public static implicit operator ScheduledActionKind(string value) => new ScheduledActionKind(value);
 
-        /// <summary> Converts a string to a <see cref="ScheduledActionKind"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionKind?(string value) => value == null ? null : new ScheduledActionKind(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScheduledActionKind other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ScheduledActionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

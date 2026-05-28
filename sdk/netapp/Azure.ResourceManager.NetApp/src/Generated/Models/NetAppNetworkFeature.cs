@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -15,67 +14,44 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppNetworkFeature : IEquatable<NetAppNetworkFeature>
     {
         private readonly string _value;
-        /// <summary> Basic network features. </summary>
-        private const string BasicValue = "Basic";
-        /// <summary> Standard network features. </summary>
-        private const string StandardValue = "Standard";
-        /// <summary> Updating from Basic to Standard network features. </summary>
-        private const string BasicStandardValue = "Basic_Standard";
-        /// <summary> Updating from Standard to Basic network features. </summary>
-        private const string StandardBasicValue = "Standard_Basic";
 
         /// <summary> Initializes a new instance of <see cref="NetAppNetworkFeature"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppNetworkFeature(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string BasicValue = "Basic";
+        private const string StandardValue = "Standard";
+        private const string BasicStandardValue = "Basic_Standard";
+        private const string StandardBasicValue = "Standard_Basic";
 
         /// <summary> Basic network features. </summary>
         public static NetAppNetworkFeature Basic { get; } = new NetAppNetworkFeature(BasicValue);
-
         /// <summary> Standard network features. </summary>
         public static NetAppNetworkFeature Standard { get; } = new NetAppNetworkFeature(StandardValue);
-
         /// <summary> Updating from Basic to Standard network features. </summary>
         public static NetAppNetworkFeature BasicStandard { get; } = new NetAppNetworkFeature(BasicStandardValue);
-
         /// <summary> Updating from Standard to Basic network features. </summary>
         public static NetAppNetworkFeature StandardBasic { get; } = new NetAppNetworkFeature(StandardBasicValue);
-
         /// <summary> Determines if two <see cref="NetAppNetworkFeature"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppNetworkFeature left, NetAppNetworkFeature right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="NetAppNetworkFeature"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppNetworkFeature left, NetAppNetworkFeature right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="NetAppNetworkFeature"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppNetworkFeature"/>. </summary>
         public static implicit operator NetAppNetworkFeature(string value) => new NetAppNetworkFeature(value);
 
-        /// <summary> Converts a string to a <see cref="NetAppNetworkFeature"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator NetAppNetworkFeature?(string value) => value == null ? null : new NetAppNetworkFeature(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppNetworkFeature other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(NetAppNetworkFeature other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -38,15 +38,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// <summary>
         /// Checks if customer SDK stats are enabled.
         /// </summary>
-        /// <returns>True if enabled (when APPLICATIONINSIGHTS_SDKSTATS_DISABLED=false), false otherwise</returns>
+        /// <returns>True if enabled, false otherwise</returns>
         public static bool IsEnabled()
         {
             if (s_isEnabled == null)
             {
-                var disabledValue = DefaultPlatform.Instance.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_SDKSTATS_DISABLED);
-                s_isEnabled = string.Equals(disabledValue, "false", StringComparison.OrdinalIgnoreCase);
+                var enabledValue = DefaultPlatform.Instance.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_SDKSTATS_ENABLED_PREVIEW);
+                s_isEnabled = string.Equals(enabledValue, "true", StringComparison.OrdinalIgnoreCase);
             }
-
             return s_isEnabled.Value;
         }
 

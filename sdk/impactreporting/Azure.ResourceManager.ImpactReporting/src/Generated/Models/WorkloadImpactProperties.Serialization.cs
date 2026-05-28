@@ -10,60 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
-    /// <summary> Workload impact properties. </summary>
-    public partial class WorkloadImpactProperties : IJsonModel<WorkloadImpactProperties>
+    public partial class WorkloadImpactProperties : IUtf8JsonSerializable, IJsonModel<WorkloadImpactProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="WorkloadImpactProperties"/> for deserialization. </summary>
-        internal WorkloadImpactProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadImpactProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkloadImpactProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadImpactProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeWorkloadImpactProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadImpactProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadImpactProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerImpactReportingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadImpactProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkloadImpactProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadImpactProperties IPersistableModel<WorkloadImpactProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkloadImpactProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadImpactProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -75,11 +28,12 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadImpactProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadImpactProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadImpactProperties)} does not support writing '{format}' format.");
             }
+
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -115,13 +69,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 writer.WritePropertyName("armCorrelationIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in ArmCorrelationIds)
+                foreach (var item in ArmCorrelationIds)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -130,7 +79,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             {
                 writer.WritePropertyName("performance"u8);
                 writer.WriteStartArray();
-                foreach (ImpactPerformance item in Performance)
+                foreach (var item in Performance)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -154,9 +103,9 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -189,15 +138,15 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 writer.WritePropertyName("clientIncidentDetails"u8);
                 writer.WriteObjectValue(ClientIncidentDetails, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -206,34 +155,29 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadImpactProperties IJsonModel<WorkloadImpactProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkloadImpactProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WorkloadImpactProperties IJsonModel<WorkloadImpactProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkloadImpactProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadImpactProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadImpactProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWorkloadImpactProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WorkloadImpactProperties DeserializeWorkloadImpactProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static WorkloadImpactProperties DeserializeWorkloadImpactProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ImpactReportingProvisioningState? provisioningState = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset startDateTime = default;
+            DateTimeOffset? endDateTime = default;
             ResourceIdentifier impactedResourceId = default;
             string impactUniqueId = default;
             DateTimeOffset? reportedTimeUtc = default;
@@ -248,176 +192,171 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             string impactGroupId = default;
             ImpactConfidenceLevel? confidenceLevel = default;
             ImpactClientIncidentDetails clientIncidentDetails = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("provisioningState"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new ImpactReportingProvisioningState(prop.Value.GetString());
+                    provisioningState = new ImpactReportingProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("startDateTime"u8))
+                if (property.NameEquals("startDateTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("endDateTime"u8))
+                if (property.NameEquals("endDateTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("impactedResourceId"u8))
+                if (property.NameEquals("impactedResourceId"u8))
                 {
-                    impactedResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    impactedResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("impactUniqueId"u8))
+                if (property.NameEquals("impactUniqueId"u8))
                 {
-                    impactUniqueId = prop.Value.GetString();
+                    impactUniqueId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("reportedTimeUtc"u8))
+                if (property.NameEquals("reportedTimeUtc"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reportedTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    reportedTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("impactCategory"u8))
+                if (property.NameEquals("impactCategory"u8))
                 {
-                    impactCategory = prop.Value.GetString();
+                    impactCategory = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("impactDescription"u8))
+                if (property.NameEquals("impactDescription"u8))
                 {
-                    impactDescription = prop.Value.GetString();
+                    impactDescription = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("armCorrelationIds"u8))
+                if (property.NameEquals("armCorrelationIds"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     armCorrelationIds = array;
                     continue;
                 }
-                if (prop.NameEquals("performance"u8))
+                if (property.NameEquals("performance"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ImpactPerformance> array = new List<ImpactPerformance>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ImpactPerformance.DeserializeImpactPerformance(item, options));
                     }
                     performance = array;
                     continue;
                 }
-                if (prop.NameEquals("connectivity"u8))
+                if (property.NameEquals("connectivity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectivity = ImpactConnectivityDetails.DeserializeImpactConnectivityDetails(prop.Value, options);
+                    connectivity = ImpactConnectivityDetails.DeserializeImpactConnectivityDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("additionalProperties"u8))
+                if (property.NameEquals("additionalProperties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(prop0.Name, null);
+                            dictionary.Add(property0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                         }
                     }
                     additionalProperties = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("errorDetails"u8))
+                if (property.NameEquals("errorDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    errorDetails = ImpactErrorDetails.DeserializeImpactErrorDetails(prop.Value, options);
+                    errorDetails = ImpactErrorDetails.DeserializeImpactErrorDetails(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("workload"u8))
+                if (property.NameEquals("workload"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    workload = ImpactedWorkload.DeserializeImpactedWorkload(prop.Value, options);
+                    workload = ImpactedWorkload.DeserializeImpactedWorkload(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("impactGroupId"u8))
+                if (property.NameEquals("impactGroupId"u8))
                 {
-                    impactGroupId = prop.Value.GetString();
+                    impactGroupId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("confidenceLevel"u8))
+                if (property.NameEquals("confidenceLevel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    confidenceLevel = new ImpactConfidenceLevel(prop.Value.GetString());
+                    confidenceLevel = new ImpactConfidenceLevel(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("clientIncidentDetails"u8))
+                if (property.NameEquals("clientIncidentDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clientIncidentDetails = ImpactClientIncidentDetails.DeserializeImpactClientIncidentDetails(prop.Value, options);
+                    clientIncidentDetails = ImpactClientIncidentDetails.DeserializeImpactClientIncidentDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new WorkloadImpactProperties(
                 provisioningState,
-                startOn,
-                endOn,
+                startDateTime,
+                endDateTime,
                 impactedResourceId,
                 impactUniqueId,
                 reportedTimeUtc,
@@ -432,7 +371,38 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 impactGroupId,
                 confidenceLevel,
                 clientIncidentDetails,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WorkloadImpactProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadImpactProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerImpactReportingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadImpactProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WorkloadImpactProperties IPersistableModel<WorkloadImpactProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkloadImpactProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeWorkloadImpactProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadImpactProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkloadImpactProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

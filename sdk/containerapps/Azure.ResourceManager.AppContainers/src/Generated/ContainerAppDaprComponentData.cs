@@ -13,198 +13,112 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> Dapr Component. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppDaprComponent data model.
+    /// Dapr Component.
+    /// </summary>
     public partial class ContainerAppDaprComponentData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDaprComponentData"/>. </summary>
         public ContainerAppDaprComponentData()
         {
+            Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
+            Metadata = new ChangeTrackingList<ContainerAppDaprMetadata>();
+            Scopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppDaprComponentData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"> Dapr Component resource specific properties. </param>
-        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DaprComponentProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="componentType"> Component type. </param>
+        /// <param name="version"> Component version. </param>
+        /// <param name="ignoreErrors"> Boolean describing if the component errors are ignores. </param>
+        /// <param name="initTimeout"> Initialization timeout. </param>
+        /// <param name="secrets"> Collection of secrets used by a Dapr component. </param>
+        /// <param name="secretStoreComponent"> Name of a Dapr component to retrieve component secrets from. </param>
+        /// <param name="metadata"> Component metadata. </param>
+        /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
+        /// <param name="provisioningState"> Provisioning state of the Dapr Component. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes, DaprComponentProvisioningState? provisioningState, string deploymentErrors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-            Properties = properties;
+            ComponentType = componentType;
+            Version = version;
+            IgnoreErrors = ignoreErrors;
+            InitTimeout = initTimeout;
+            Secrets = secrets;
+            SecretStoreComponent = secretStoreComponent;
+            Metadata = metadata;
+            Scopes = scopes;
+            ProvisioningState = provisioningState;
+            DeploymentErrors = deploymentErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Dapr Component resource specific properties. </summary>
-        [WirePath("properties")]
-        internal DaprComponentProperties Properties { get; set; }
 
         /// <summary> Component type. </summary>
         [WirePath("properties.componentType")]
-        public string ComponentType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ComponentType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DaprComponentProperties();
-                }
-                Properties.ComponentType = value;
-            }
-        }
-
+        public string ComponentType { get; set; }
         /// <summary> Component version. </summary>
         [WirePath("properties.version")]
-        public string Version
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Version;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DaprComponentProperties();
-                }
-                Properties.Version = value;
-            }
-        }
-
+        public string Version { get; set; }
         /// <summary> Boolean describing if the component errors are ignores. </summary>
         [WirePath("properties.ignoreErrors")]
-        public bool? IgnoreErrors
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IgnoreErrors;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DaprComponentProperties();
-                }
-                Properties.IgnoreErrors = value;
-            }
-        }
-
+        public bool? IgnoreErrors { get; set; }
         /// <summary> Initialization timeout. </summary>
         [WirePath("properties.initTimeout")]
-        public string InitTimeout
-        {
-            get
-            {
-                return Properties is null ? default : Properties.InitTimeout;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DaprComponentProperties();
-                }
-                Properties.InitTimeout = value;
-            }
-        }
-
+        public string InitTimeout { get; set; }
         /// <summary> Collection of secrets used by a Dapr component. </summary>
         [WirePath("properties.secrets")]
-        public IList<ContainerAppWritableSecret> Secrets
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DaprComponentProperties();
-                }
-                return Properties.Secrets;
-            }
-        }
-
+        public IList<ContainerAppWritableSecret> Secrets { get; }
         /// <summary> Name of a Dapr component to retrieve component secrets from. </summary>
         [WirePath("properties.secretStoreComponent")]
-        public string SecretStoreComponent
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecretStoreComponent;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DaprComponentProperties();
-                }
-                Properties.SecretStoreComponent = value;
-            }
-        }
-
+        public string SecretStoreComponent { get; set; }
         /// <summary> Component metadata. </summary>
         [WirePath("properties.metadata")]
-        public IList<ContainerAppDaprMetadata> Metadata
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DaprComponentProperties();
-                }
-                return Properties.Metadata;
-            }
-        }
-
+        public IList<ContainerAppDaprMetadata> Metadata { get; }
         /// <summary> Names of container apps that can use this Dapr component. </summary>
         [WirePath("properties.scopes")]
-        public IList<string> Scopes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DaprComponentProperties();
-                }
-                return Properties.Scopes;
-            }
-        }
-
-        /// <summary> List of container app services that are bound to the Dapr component. </summary>
-        [WirePath("properties.serviceComponentBind")]
-        public IList<DaprComponentServiceBinding> ServiceComponentBind
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DaprComponentProperties();
-                }
-                return Properties.ServiceComponentBind;
-            }
-        }
-
-        /// <summary> Provisioning state of the Connected Environment Dapr Component. </summary>
+        public IList<string> Scopes { get; }
+        /// <summary> Provisioning state of the Dapr Component. </summary>
         [WirePath("properties.provisioningState")]
-        public DaprComponentProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
+        public DaprComponentProvisioningState? ProvisioningState { get; }
         /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
         [WirePath("properties.deploymentErrors")]
-        public string DeploymentErrors
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeploymentErrors;
-            }
-        }
+        public string DeploymentErrors { get; }
     }
 }

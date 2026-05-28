@@ -8,36 +8,23 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    /// <summary></summary>
-    internal partial class HciEdgeDeviceValidateResultOperationSource : IOperationSource<HciEdgeDeviceValidateResult>
+    internal class HciEdgeDeviceValidateResultOperationSource : IOperationSource<HciEdgeDeviceValidateResult>
     {
-        /// <summary></summary>
-        internal HciEdgeDeviceValidateResultOperationSource()
-        {
-        }
-
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         HciEdgeDeviceValidateResult IOperationSource<HciEdgeDeviceValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return HciEdgeDeviceValidateResult.DeserializeHciEdgeDeviceValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+            return HciEdgeDeviceValidateResult.DeserializeHciEdgeDeviceValidateResult(document.RootElement);
         }
 
-        /// <param name="response"> The response from the service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns></returns>
         async ValueTask<HciEdgeDeviceValidateResult> IOperationSource<HciEdgeDeviceValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return HciEdgeDeviceValidateResult.DeserializeHciEdgeDeviceValidateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+            return HciEdgeDeviceValidateResult.DeserializeHciEdgeDeviceValidateResult(document.RootElement);
         }
     }
 }

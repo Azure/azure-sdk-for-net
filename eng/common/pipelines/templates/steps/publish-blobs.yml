@@ -26,4 +26,3 @@ steps:
     pwsh: true
   env:
     AZCOPY_AUTO_LOGIN_TYPE: 'PSCRED'
-    SYSTEM_ACCESSTOKEN: $(System.AccessToken)

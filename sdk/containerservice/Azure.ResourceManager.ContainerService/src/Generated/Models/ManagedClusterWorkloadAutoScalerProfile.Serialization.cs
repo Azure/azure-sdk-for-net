@@ -8,56 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerService;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Workload Auto-scaler profile for the managed cluster. </summary>
-    public partial class ManagedClusterWorkloadAutoScalerProfile : IJsonModel<ManagedClusterWorkloadAutoScalerProfile>
+    public partial class ManagedClusterWorkloadAutoScalerProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterWorkloadAutoScalerProfile>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterWorkloadAutoScalerProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeManagedClusterWorkloadAutoScalerProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ManagedClusterWorkloadAutoScalerProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterWorkloadAutoScalerProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ManagedClusterWorkloadAutoScalerProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterWorkloadAutoScalerProfile IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedClusterWorkloadAutoScalerProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +29,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterWorkloadAutoScalerProfile)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Keda))
             {
                 writer.WritePropertyName("keda"u8);
@@ -84,15 +45,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("verticalPodAutoscaler"u8);
                 writer.WriteObjectValue(VerticalPodAutoscaler, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,60 +62,141 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterWorkloadAutoScalerProfile IJsonModel<ManagedClusterWorkloadAutoScalerProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterWorkloadAutoScalerProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedClusterWorkloadAutoScalerProfile IJsonModel<ManagedClusterWorkloadAutoScalerProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterWorkloadAutoScalerProfile)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeManagedClusterWorkloadAutoScalerProfile(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedClusterWorkloadAutoScalerProfile DeserializeManagedClusterWorkloadAutoScalerProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedClusterWorkloadAutoScalerProfile DeserializeManagedClusterWorkloadAutoScalerProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ManagedClusterWorkloadAutoScalerProfileKeda keda = default;
             ManagedClusterVerticalPodAutoscaler verticalPodAutoscaler = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("keda"u8))
+                if (property.NameEquals("keda"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keda = ManagedClusterWorkloadAutoScalerProfileKeda.DeserializeManagedClusterWorkloadAutoScalerProfileKeda(prop.Value, options);
+                    keda = ManagedClusterWorkloadAutoScalerProfileKeda.DeserializeManagedClusterWorkloadAutoScalerProfileKeda(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("verticalPodAutoscaler"u8))
+                if (property.NameEquals("verticalPodAutoscaler"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    verticalPodAutoscaler = ManagedClusterVerticalPodAutoscaler.DeserializeManagedClusterVerticalPodAutoscaler(prop.Value, options);
+                    verticalPodAutoscaler = ManagedClusterVerticalPodAutoscaler.DeserializeManagedClusterVerticalPodAutoscaler(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterWorkloadAutoScalerProfile(keda, verticalPodAutoscaler, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedClusterWorkloadAutoScalerProfile(keda, verticalPodAutoscaler, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsKedaEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  keda: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Keda))
+                {
+                    builder.Append("  keda: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Keda, options, 2, false, "  keda: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsVpaEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  verticalPodAutoscaler: ");
+                builder.AppendLine("{");
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(VerticalPodAutoscaler))
+                {
+                    builder.Append("  verticalPodAutoscaler: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, VerticalPodAutoscaler, options, 2, false, "  verticalPodAutoscaler: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterWorkloadAutoScalerProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedClusterWorkloadAutoScalerProfile IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeManagedClusterWorkloadAutoScalerProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterWorkloadAutoScalerProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedClusterWorkloadAutoScalerProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

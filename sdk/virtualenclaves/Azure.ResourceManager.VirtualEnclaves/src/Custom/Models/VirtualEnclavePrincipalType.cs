@@ -3,12 +3,14 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary>
-    /// VirtualEnclavePrincipalType.
+    /// Renamed to VirtualEnclavePrincipalType.
     /// </summary>
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("PrincipalType")]
+    [CodeGenModel("PrincipalType")]
     public readonly partial struct VirtualEnclavePrincipalType
     {
     }

@@ -7,67 +7,48 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary></summary>
+    /// <summary> The CrossSubscriptionRestoreState. </summary>
     public readonly partial struct CrossSubscriptionRestoreState : IEquatable<CrossSubscriptionRestoreState>
     {
         private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="CrossSubscriptionRestoreState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CrossSubscriptionRestoreState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
         private const string PermanentlyDisabledValue = "PermanentlyDisabled";
 
-        /// <summary> Initializes a new instance of <see cref="CrossSubscriptionRestoreState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CrossSubscriptionRestoreState(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
-
-        /// <summary> Gets the Enabled. </summary>
+        /// <summary> Enabled. </summary>
         public static CrossSubscriptionRestoreState Enabled { get; } = new CrossSubscriptionRestoreState(EnabledValue);
-
-        /// <summary> Gets the Disabled. </summary>
+        /// <summary> Disabled. </summary>
         public static CrossSubscriptionRestoreState Disabled { get; } = new CrossSubscriptionRestoreState(DisabledValue);
-
-        /// <summary> Gets the PermanentlyDisabled. </summary>
+        /// <summary> PermanentlyDisabled. </summary>
         public static CrossSubscriptionRestoreState PermanentlyDisabled { get; } = new CrossSubscriptionRestoreState(PermanentlyDisabledValue);
-
         /// <summary> Determines if two <see cref="CrossSubscriptionRestoreState"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CrossSubscriptionRestoreState left, CrossSubscriptionRestoreState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="CrossSubscriptionRestoreState"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CrossSubscriptionRestoreState left, CrossSubscriptionRestoreState right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="CrossSubscriptionRestoreState"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CrossSubscriptionRestoreState"/>. </summary>
         public static implicit operator CrossSubscriptionRestoreState(string value) => new CrossSubscriptionRestoreState(value);
 
-        /// <summary> Converts a string to a <see cref="CrossSubscriptionRestoreState"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CrossSubscriptionRestoreState?(string value) => value == null ? null : new CrossSubscriptionRestoreState(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CrossSubscriptionRestoreState other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(CrossSubscriptionRestoreState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

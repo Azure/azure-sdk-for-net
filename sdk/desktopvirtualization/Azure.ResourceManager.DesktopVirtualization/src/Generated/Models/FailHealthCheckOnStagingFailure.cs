@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -15,62 +14,41 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct FailHealthCheckOnStagingFailure : IEquatable<FailHealthCheckOnStagingFailure>
     {
         private readonly string _value;
-        /// <summary> Health Check will report unhealthy. </summary>
-        private const string UnhealthyValue = "Unhealthy";
-        /// <summary> Health Check will report NeedsAssistance. </summary>
-        private const string NeedsAssistanceValue = "NeedsAssistance";
-        /// <summary> Health Check will not report failure. </summary>
-        private const string DoNotFailValue = "DoNotFail";
 
         /// <summary> Initializes a new instance of <see cref="FailHealthCheckOnStagingFailure"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FailHealthCheckOnStagingFailure(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Health Check will report unhealthy. </summary>
+        private const string UnhealthyValue = "Unhealthy";
+        private const string NeedsAssistanceValue = "NeedsAssistance";
+        private const string DoNotFailValue = "DoNotFail";
+
+        /// <summary> Unhealthy. </summary>
         public static FailHealthCheckOnStagingFailure Unhealthy { get; } = new FailHealthCheckOnStagingFailure(UnhealthyValue);
-
-        /// <summary> Health Check will report NeedsAssistance. </summary>
+        /// <summary> NeedsAssistance. </summary>
         public static FailHealthCheckOnStagingFailure NeedsAssistance { get; } = new FailHealthCheckOnStagingFailure(NeedsAssistanceValue);
-
-        /// <summary> Health Check will not report failure. </summary>
+        /// <summary> DoNotFail. </summary>
         public static FailHealthCheckOnStagingFailure DoNotFail { get; } = new FailHealthCheckOnStagingFailure(DoNotFailValue);
-
         /// <summary> Determines if two <see cref="FailHealthCheckOnStagingFailure"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FailHealthCheckOnStagingFailure left, FailHealthCheckOnStagingFailure right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="FailHealthCheckOnStagingFailure"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FailHealthCheckOnStagingFailure left, FailHealthCheckOnStagingFailure right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="FailHealthCheckOnStagingFailure"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FailHealthCheckOnStagingFailure"/>. </summary>
         public static implicit operator FailHealthCheckOnStagingFailure(string value) => new FailHealthCheckOnStagingFailure(value);
 
-        /// <summary> Converts a string to a <see cref="FailHealthCheckOnStagingFailure"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator FailHealthCheckOnStagingFailure?(string value) => value == null ? null : new FailHealthCheckOnStagingFailure(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FailHealthCheckOnStagingFailure other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(FailHealthCheckOnStagingFailure other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

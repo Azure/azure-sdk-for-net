@@ -10,12 +10,19 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
+    /// <summary> Unknown version of ThreeTierCustomResourceNames. </summary>
     internal partial class UnknownThreeTierCustomResourceNames : ThreeTierCustomResourceNames
     {
         /// <summary> Initializes a new instance of <see cref="UnknownThreeTierCustomResourceNames"/>. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownThreeTierCustomResourceNames(SapNamingPatternType namingPatternType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(namingPatternType != default ? namingPatternType : "unknown", additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownThreeTierCustomResourceNames(SapNamingPatternType namingPatternType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(namingPatternType, serializedAdditionalRawData)
+        {
+            NamingPatternType = namingPatternType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownThreeTierCustomResourceNames"/> for deserialization. </summary>
+        internal UnknownThreeTierCustomResourceNames()
         {
         }
     }

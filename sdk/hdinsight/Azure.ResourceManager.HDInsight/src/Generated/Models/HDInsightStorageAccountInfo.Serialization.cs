@@ -10,55 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The storage Account. </summary>
-    public partial class HDInsightStorageAccountInfo : IJsonModel<HDInsightStorageAccountInfo>
+    public partial class HDInsightStorageAccountInfo : IUtf8JsonSerializable, IJsonModel<HDInsightStorageAccountInfo>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HDInsightStorageAccountInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHDInsightStorageAccountInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightStorageAccountInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HDInsightStorageAccountInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HDInsightStorageAccountInfo IPersistableModel<HDInsightStorageAccountInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HDInsightStorageAccountInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HDInsightStorageAccountInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -70,11 +28,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -102,13 +61,27 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
+                if (ResourceId != null)
+                {
+                    writer.WritePropertyName("resourceId"u8);
+                    writer.WriteStringValue(ResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("resourceId");
+                }
             }
             if (Optional.IsDefined(MsiResourceId))
             {
-                writer.WritePropertyName("msiResourceId"u8);
-                writer.WriteStringValue(MsiResourceId);
+                if (MsiResourceId != null)
+                {
+                    writer.WritePropertyName("msiResourceId"u8);
+                    writer.WriteStringValue(MsiResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("msiResourceId");
+                }
             }
             if (Optional.IsDefined(SasKey))
             {
@@ -125,15 +98,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("enableSecureChannel"u8);
                 writer.WriteBooleanValue(EnableSecureChannel.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -142,27 +115,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HDInsightStorageAccountInfo IJsonModel<HDInsightStorageAccountInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HDInsightStorageAccountInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HDInsightStorageAccountInfo IJsonModel<HDInsightStorageAccountInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHDInsightStorageAccountInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HDInsightStorageAccountInfo DeserializeHDInsightStorageAccountInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static HDInsightStorageAccountInfo DeserializeHDInsightStorageAccountInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -174,83 +142,87 @@ namespace Azure.ResourceManager.HDInsight.Models
             string key = default;
             ResourceIdentifier resourceId = default;
             ResourceIdentifier msiResourceId = default;
-            string sasKey = default;
+            string saskey = default;
             string fileshare = default;
             bool? enableSecureChannel = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isDefault"u8))
+                if (property.NameEquals("isDefault"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDefault = prop.Value.GetBoolean();
+                    isDefault = property.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("container"u8))
+                if (property.NameEquals("container"u8))
                 {
-                    container = prop.Value.GetString();
+                    container = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("fileSystem"u8))
+                if (property.NameEquals("fileSystem"u8))
                 {
-                    fileSystem = prop.Value.GetString();
+                    fileSystem = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("key"u8))
+                if (property.NameEquals("key"u8))
                 {
-                    key = prop.Value.GetString();
+                    key = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceId"u8))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    {
+                        resourceId = null;
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("msiResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    {
+                        msiResourceId = null;
+                        continue;
+                    }
+                    msiResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("saskey"u8))
+                {
+                    saskey = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fileshare"u8))
+                {
+                    fileshare = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("enableSecureChannel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("msiResourceId"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    msiResourceId = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("saskey"u8))
-                {
-                    sasKey = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("fileshare"u8))
-                {
-                    fileshare = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("enableSecureChannel"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableSecureChannel = prop.Value.GetBoolean();
+                    enableSecureChannel = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightStorageAccountInfo(
                 name,
                 isDefault,
@@ -259,10 +231,41 @@ namespace Azure.ResourceManager.HDInsight.Models
                 key,
                 resourceId,
                 msiResourceId,
-                sasKey,
+                saskey,
                 fileshare,
                 enableSecureChannel,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightStorageAccountInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HDInsightStorageAccountInfo IPersistableModel<HDInsightStorageAccountInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightStorageAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeHDInsightStorageAccountInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightStorageAccountInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HDInsightStorageAccountInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

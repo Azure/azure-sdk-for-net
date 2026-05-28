@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -15,57 +14,38 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct ConnectionProtocolType : IEquatable<ConnectionProtocolType>
     {
         private readonly string _value;
-        /// <summary> TCP protocol. </summary>
-        private const string TcpValue = "TCP";
-        /// <summary> TCPS protocol. </summary>
-        private const string TcpsValue = "TCPS";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionProtocolType"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionProtocolType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private const string TcpValue = "TCP";
+        private const string TcpsValue = "TCPS";
 
         /// <summary> TCP protocol. </summary>
         public static ConnectionProtocolType Tcp { get; } = new ConnectionProtocolType(TcpValue);
-
         /// <summary> TCPS protocol. </summary>
         public static ConnectionProtocolType Tcps { get; } = new ConnectionProtocolType(TcpsValue);
-
         /// <summary> Determines if two <see cref="ConnectionProtocolType"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionProtocolType left, ConnectionProtocolType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ConnectionProtocolType"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionProtocolType left, ConnectionProtocolType right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ConnectionProtocolType"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionProtocolType"/>. </summary>
         public static implicit operator ConnectionProtocolType(string value) => new ConnectionProtocolType(value);
 
-        /// <summary> Converts a string to a <see cref="ConnectionProtocolType"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ConnectionProtocolType?(string value) => value == null ? null : new ConnectionProtocolType(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionProtocolType other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ConnectionProtocolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

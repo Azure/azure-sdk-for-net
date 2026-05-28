@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -18,22 +17,29 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="name"> Name of the node. </param>
         /// <param name="sourceSettings"> Source configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sourceSettings"/> is null. </exception>
-        public DataflowGraphSourceNode(string name, DataflowGraphSourceSettings sourceSettings) : base(name, DataflowGraphNodeType.Source)
+        public DataflowGraphSourceNode(string name, DataflowGraphSourceSettings sourceSettings) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(sourceSettings, nameof(sourceSettings));
 
             SourceSettings = sourceSettings;
+            NodeType = DataflowGraphNodeType.Source;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphSourceNode"/>. </summary>
         /// <param name="name"> Name of the node. </param>
         /// <param name="nodeType"> Type of the node. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceSettings"> Source configuration. </param>
-        internal DataflowGraphSourceNode(string name, DataflowGraphNodeType nodeType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataflowGraphSourceSettings sourceSettings) : base(name, nodeType, additionalBinaryDataProperties)
+        internal DataflowGraphSourceNode(string name, DataflowGraphNodeType nodeType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataflowGraphSourceSettings sourceSettings) : base(name, nodeType, serializedAdditionalRawData)
         {
             SourceSettings = sourceSettings;
+            NodeType = nodeType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataflowGraphSourceNode"/> for deserialization. </summary>
+        internal DataflowGraphSourceNode()
+        {
         }
 
         /// <summary> Source configuration. </summary>

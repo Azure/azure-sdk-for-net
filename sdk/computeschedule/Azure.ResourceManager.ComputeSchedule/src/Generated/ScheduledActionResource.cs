@@ -7,37 +7,48 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
     /// <summary>
-    /// A class representing a ScheduledAction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScheduledActionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScheduledActions method.
+    /// A Class representing a ScheduledAction along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScheduledActionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScheduledActionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScheduledAction method.
     /// </summary>
     public partial class ScheduledActionResource : ArmResource
     {
-        private readonly ClientDiagnostics _scheduledActionsClientDiagnostics;
-        private readonly ScheduledActions _scheduledActionsRestClient;
+        /// <summary> Generate the resource identifier of a <see cref="ScheduledActionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scheduledActionName"> The scheduledActionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scheduledActionName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        private readonly ClientDiagnostics _scheduledActionClientDiagnostics;
+        private readonly ScheduledActionsRestOperations _scheduledActionRestClient;
         private readonly ScheduledActionData _data;
+
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ComputeSchedule/scheduledActions";
 
-        /// <summary> Initializes a new instance of ScheduledActionResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScheduledActionResource"/> class for mocking. </summary>
         protected ScheduledActionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScheduledActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScheduledActionResource(ArmClient client, ScheduledActionData data) : this(client, data.Id)
@@ -46,92 +57,140 @@ namespace Azure.ResourceManager.ComputeSchedule
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScheduledActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScheduledActionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _scheduledActionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string scheduledActionApiVersion);
-            _scheduledActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ResourceType.Namespace, Diagnostics);
-            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Endpoint, scheduledActionApiVersion ?? "2026-04-15-preview");
-            ValidateResourceId(id);
+            _scheduledActionRestClient = new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
+        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ScheduledActionData Data
         {
             get
             {
                 if (!HasData)
-                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                }
                 return _data;
             }
         }
 
-        /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="scheduledActionName"> The scheduledActionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scheduledActionName)
-        {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of ScheduledActionOccurrenceResources in the ScheduledAction. </summary>
+        /// <returns> An object representing collection of ScheduledActionOccurrenceResources and their operations over a ScheduledActionOccurrenceResource. </returns>
+        public virtual ScheduledActionOccurrenceCollection GetScheduledActionOccurrences()
+        {
+            return GetCachedClient(client => new ScheduledActionOccurrenceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Occurrence
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Occurrence_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionOccurrenceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="occurrenceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScheduledActionOccurrenceResource>> GetScheduledActionOccurrenceAsync(string occurrenceId, CancellationToken cancellationToken = default)
+        {
+            return await GetScheduledActionOccurrences().GetAsync(occurrenceId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Occurrence
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Occurrence_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionOccurrenceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="occurrenceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScheduledActionOccurrenceResource> GetScheduledActionOccurrence(string occurrenceId, CancellationToken cancellationToken = default)
+        {
+            return GetScheduledActionOccurrences().Get(occurrenceId, cancellationToken);
         }
 
         /// <summary>
         /// Get a ScheduledAction
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ScheduledActionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.Get");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
+                var response = await _scheduledActionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,42 +204,118 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// Get a ScheduledAction
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScheduledActionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.Get");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
+                var response = _scheduledActionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a ScheduledAction
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = await _scheduledActionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeScheduleArmOperation(_scheduledActionClientDiagnostics, Pipeline, _scheduledActionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a ScheduledAction
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Delete");
+            scope.Start();
+            try
+            {
+                var response = _scheduledActionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ComputeScheduleArmOperation(_scheduledActionClientDiagnostics, Pipeline, _scheduledActionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -193,20 +328,20 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// Update a ScheduledAction
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,21 +352,11 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.Update");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionPatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _scheduledActionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,20 +370,20 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// Update a ScheduledAction
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Update. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Update</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,21 +394,11 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.Update");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Update");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionPatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _scheduledActionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,121 +409,83 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// Delete a ScheduledAction
+        /// List resources attached to Scheduled Actions
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/resources</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_GetAttachedResources</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduledActionResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledActionResourceData> GetAttachedResourcesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeScheduleArmOperation operation = new ComputeScheduleArmOperation(_scheduledActionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduledActionRestClient.CreateGetAttachedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scheduledActionRestClient.CreateGetAttachedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ScheduledActionResourceData.DeserializeScheduledActionResourceData(e), _scheduledActionClientDiagnostics, Pipeline, "ScheduledActionResource.GetAttachedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Delete a ScheduledAction
+        /// List resources attached to Scheduled Actions
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/resources</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Delete. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_GetAttachedResources</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledActionResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledActionResourceData> GetAttachedResources(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ComputeScheduleArmOperation operation = new ComputeScheduleArmOperation(_scheduledActionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scheduledActionRestClient.CreateGetAttachedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scheduledActionRestClient.CreateGetAttachedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ScheduledActionResourceData.DeserializeScheduledActionResourceData(e), _scheduledActionClientDiagnostics, Pipeline, "ScheduledActionResource.GetAttachedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/attachResources. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/attachResources</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_AttachResources. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_AttachResources</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -419,21 +496,11 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.AttachResources");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.AttachResources");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateAttachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionResourceAttachContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _scheduledActionRestClient.AttachResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -447,20 +514,20 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/attachResources. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/attachResources</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_AttachResources. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_AttachResources</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,21 +538,11 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.AttachResources");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.AttachResources");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateAttachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionResourceAttachContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _scheduledActionRestClient.AttachResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -499,124 +556,20 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/cancelNextOccurrence. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/detachResources</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_CancelNextOccurrence. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_DetachResources</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ScheduledActionResourceOperationResult>> CancelNextOccurrenceAsync(OccurrenceCancelContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.CancelNextOccurrence");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateCancelNextOccurrenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OccurrenceCancelContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// A synchronous resource action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/cancelNextOccurrence. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_CancelNextOccurrence. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ScheduledActionResourceOperationResult> CancelNextOccurrence(OccurrenceCancelContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.CancelNextOccurrence");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateCancelNextOccurrenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OccurrenceCancelContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// A synchronous resource action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/detachResources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_DetachResources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -627,21 +580,11 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.DetachResources");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.DetachResources");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateDetachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionResourceDetachContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _scheduledActionRestClient.DetachResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -655,20 +598,20 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/detachResources. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/detachResources</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_DetachResources. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_DetachResources</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -679,21 +622,11 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.DetachResources");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.DetachResources");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateDetachResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionResourceDetachContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _scheduledActionRestClient.DetachResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -707,36 +640,115 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/disable. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/patchResources</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Disable. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_PatchResources</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ScheduledActionResourceOperationResult>> PatchResourcesAsync(ScheduledActionResourcePatchContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.PatchResources");
+            scope.Start();
+            try
+            {
+                var response = await _scheduledActionRestClient.PatchResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/patchResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_PatchResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ScheduledActionResourceOperationResult> PatchResources(ScheduledActionResourcePatchContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.PatchResources");
+            scope.Start();
+            try
+            {
+                var response = _scheduledActionRestClient.PatchResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/disable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_Disable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DisableAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.Disable");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Disable");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await _scheduledActionRestClient.DisableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -750,36 +762,31 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/disable. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/disable</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Disable. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_Disable</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Disable(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.Disable");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Disable");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
+                var response = _scheduledActionRestClient.Disable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -793,36 +800,31 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/enable. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/enable</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Enable. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_Enable</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> EnableAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.Enable");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Enable");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var response = await _scheduledActionRestClient.EnableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -836,164 +838,31 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/enable. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/enable</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_Enable. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_Enable</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Enable(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.Enable");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.Enable");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List resources attached to Scheduled Actions
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/resources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_ListResources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduledActionResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScheduledActionResourceDetails> GetAttachedResourcesAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ScheduledActionsGetAttachedResourcesAsyncCollectionResultOfT(
-                _scheduledActionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ScheduledActionResource.GetAttachedResources");
-        }
-
-        /// <summary>
-        /// List resources attached to Scheduled Actions
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/resources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_ListResources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduledActionResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScheduledActionResourceDetails> GetAttachedResources(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ScheduledActionsGetAttachedResourcesCollectionResultOfT(
-                _scheduledActionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ScheduledActionResource.GetAttachedResources");
-        }
-
-        /// <summary>
-        /// A synchronous resource action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/patchResources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_PatchResources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ScheduledActionResourceOperationResult>> PatchResourcesAsync(ScheduledActionResourcePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.PatchResources");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreatePatchResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionResourcePatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _scheduledActionRestClient.Enable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1007,45 +876,35 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/patchResources. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/cancelNextOccurrence</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_PatchResources. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_CancelNextOccurrence</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ScheduledActionResourceOperationResult> PatchResources(ScheduledActionResourcePatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ScheduledActionResourceOperationResult>> CancelNextOccurrenceAsync(OccurrenceCancelContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.PatchResources");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.CancelNextOccurrence");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreatePatchResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledActionResourcePatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledActionResourceOperationResult> response = Response.FromValue(ScheduledActionResourceOperationResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _scheduledActionRestClient.CancelNextOccurrenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1059,41 +918,73 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/triggerManualOccurrence. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/cancelNextOccurrence</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_TriggerManualOccurrence. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_CancelNextOccurrence</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ScheduledActionResourceOperationResult> CancelNextOccurrence(OccurrenceCancelContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.CancelNextOccurrence");
+            scope.Start();
+            try
+            {
+                var response = _scheduledActionRestClient.CancelNextOccurrence(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A synchronous resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/triggerManualOccurrence</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_TriggerManualOccurrence</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ScheduledActionOccurrenceResource>> TriggerManualOccurrenceAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.TriggerManualOccurrence");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.TriggerManualOccurrence");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateTriggerManualOccurrenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledActionOccurrenceData> response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = await _scheduledActionRestClient.TriggerManualOccurrenceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ScheduledActionOccurrenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -1107,41 +998,31 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/triggerManualOccurrence. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/triggerManualOccurrence</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActions_TriggerManualOccurrence. </description>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledActions_TriggerManualOccurrence</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-04-15-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
         /// </item>
         /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScheduledActionOccurrenceResource> TriggerManualOccurrence(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.TriggerManualOccurrence");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.TriggerManualOccurrence");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionsRestClient.CreateTriggerManualOccurrenceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledActionOccurrenceData> response = Response.FromValue(ScheduledActionOccurrenceData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
+                var response = _scheduledActionRestClient.TriggerManualOccurrence(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return Response.FromValue(new ScheduledActionOccurrenceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -1151,7 +1032,27 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1161,35 +1062,29 @@ namespace Azure.ResourceManager.ComputeSchedule
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.AddTag");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
-                    return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _scheduledActionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ScheduledActionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledActionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ScheduledActionPatch patch = new ScheduledActionPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ScheduledActionPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ScheduledActionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -1199,7 +1094,27 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> Add a tag to the current resource. </summary>
+        /// <summary>
+        /// Add a tag to the current resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1209,35 +1124,29 @@ namespace Azure.ResourceManager.ComputeSchedule
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.AddTag");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
-                    return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _scheduledActionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ScheduledActionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledActionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ScheduledActionPatch patch = new ScheduledActionPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ScheduledActionPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ScheduledActionResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -1247,40 +1156,54 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ScheduledActionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.SetTags");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
-                    return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _scheduledActionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ScheduledActionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledActionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ScheduledActionPatch patch = new ScheduledActionPatch();
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ScheduledActionPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ScheduledActionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -1290,40 +1213,54 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> Replace the tags on the resource with the given set. </summary>
-        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <summary>
+        /// Replace the tags on the resource with the given set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ScheduledActionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.SetTags");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
-                    return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _scheduledActionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ScheduledActionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledActionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ScheduledActionPatch patch = new ScheduledActionPatch();
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ScheduledActionPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ScheduledActionResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -1333,7 +1270,27 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1341,35 +1298,29 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.RemoveTag");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
-                    return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _scheduledActionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ScheduledActionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledActionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ScheduledActionPatch patch = new ScheduledActionPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ScheduledActionPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ScheduledActionResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -1379,7 +1330,27 @@ namespace Azure.ResourceManager.ComputeSchedule
             }
         }
 
-        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <summary>
+        /// Removes a tag by key from the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScheduledAction_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1387,35 +1358,29 @@ namespace Azure.ResourceManager.ComputeSchedule
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _scheduledActionsClientDiagnostics.CreateScope("ScheduledActionResource.RemoveTag");
+            using var scope = _scheduledActionClientDiagnostics.CreateScope("ScheduledActionResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken))
+                if (CanUseTagResource(cancellationToken: cancellationToken))
                 {
-                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
-                    RequestContext context = new RequestContext
-                    {
-                        CancellationToken = cancellationToken
-                    };
-                    HttpMessage message = _scheduledActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
-                    return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _scheduledActionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new ScheduledActionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledActionData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ScheduledActionPatch patch = new ScheduledActionPatch();
-                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ScheduledActionPatch();
+                    foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ScheduledActionResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
                 }
             }
             catch (Exception e)
@@ -1423,39 +1388,6 @@ namespace Azure.ResourceManager.ComputeSchedule
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of ScheduledActionOccurrences in the <see cref="ScheduledActionResource"/>. </summary>
-        /// <returns> An object representing collection of ScheduledActionOccurrences and their operations over a ScheduledActionOccurrenceResource. </returns>
-        public virtual ScheduledActionOccurrenceCollection GetScheduledActionOccurrences()
-        {
-            return GetCachedClient(client => new ScheduledActionOccurrenceCollection(client, Id));
-        }
-
-        /// <summary> Get a Occurrence. </summary>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="occurrenceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ScheduledActionOccurrenceResource>> GetScheduledActionOccurrenceAsync(string occurrenceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-
-            return await GetScheduledActionOccurrences().GetAsync(occurrenceId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a Occurrence. </summary>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="occurrenceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ScheduledActionOccurrenceResource> GetScheduledActionOccurrence(string occurrenceId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
-
-            return GetScheduledActionOccurrences().Get(occurrenceId, cancellationToken);
         }
     }
 }

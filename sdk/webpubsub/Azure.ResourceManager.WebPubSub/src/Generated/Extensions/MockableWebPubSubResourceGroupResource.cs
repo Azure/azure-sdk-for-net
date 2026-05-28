@@ -8,31 +8,33 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Mocking
 {
-    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableWebPubSubResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableWebPubSubResourceGroupResource for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableWebPubSubResourceGroupResource"/> class for mocking. </summary>
         protected MockableWebPubSubResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableWebPubSubResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableWebPubSubResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableWebPubSubResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        /// <summary> Gets a collection of WebPubSubs in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of WebPubSubs and their operations over a WebPubSubResource. </returns>
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
+        /// <summary> Gets a collection of WebPubSubResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of WebPubSubResources and their operations over a WebPubSubResource. </returns>
         public virtual WebPubSubCollection GetWebPubSubs()
         {
             return GetCachedClient(client => new WebPubSubCollection(client, Id));
@@ -42,16 +44,20 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// Get the resource and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WebPubSubResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WebPubSub_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,8 +68,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<WebPubSubResource>> GetWebPubSubAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return await GetWebPubSubs().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -71,16 +75,20 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// Get the resource and its properties.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}. </description>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WebPubSubResources_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>WebPubSub_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,8 +99,6 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         [ForwardsClientCalls]
         public virtual Response<WebPubSubResource> GetWebPubSub(string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             return GetWebPubSubs().Get(resourceName, cancellationToken);
         }
     }

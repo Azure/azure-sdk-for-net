@@ -8,59 +8,15 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager.RecoveryServicesBackup;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Base class for container with backup items. Containers with specific workloads are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerContainer"/>, <see cref="DpmContainer"/>, <see cref="IaasClassicComputeVmContainer"/>, <see cref="IaasVmContainer"/>, <see cref="IaasComputeVmContainer"/>, <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="WorkloadContainer"/>, <see cref="SqlContainer"/>, <see cref="StorageContainer"/>, <see cref="VmAppContainerProtectionContainer"/>, <see cref="GenericContainer"/>, and <see cref="MabContainer"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownProtectionContainer))]
-    public abstract partial class BackupGenericProtectionContainer : IJsonModel<BackupGenericProtectionContainer>
+    public partial class BackupGenericProtectionContainer : IUtf8JsonSerializable, IJsonModel<BackupGenericProtectionContainer>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupGenericProtectionContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBackupGenericProtectionContainer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectionContainer)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupGenericProtectionContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectionContainer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BackupGenericProtectionContainer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupGenericProtectionContainer IPersistableModel<BackupGenericProtectionContainer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BackupGenericProtectionContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupGenericProtectionContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -72,11 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupGenericProtectionContainer)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
@@ -98,21 +55,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
-            writer.WriteStringValue(ContainerType.ToString());
+            writer.WriteStringValue(ContainerType.ToSerialString());
             if (Optional.IsDefined(ProtectableObjectType))
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -121,62 +78,76 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BackupGenericProtectionContainer IJsonModel<BackupGenericProtectionContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BackupGenericProtectionContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BackupGenericProtectionContainer IJsonModel<BackupGenericProtectionContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BackupGenericProtectionContainer)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBackupGenericProtectionContainer(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BackupGenericProtectionContainer DeserializeBackupGenericProtectionContainer(JsonElement element, ModelReaderWriterOptions options)
+        internal static BackupGenericProtectionContainer DeserializeBackupGenericProtectionContainer(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("containerType"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("containerType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupServerContainer":
-                        return BackupServerContainer.DeserializeBackupServerContainer(element, options);
-                    case "DPMContainer":
-                        return DpmContainer.DeserializeDpmContainer(element, options);
-                    case "Microsoft.ClassicCompute/virtualMachines":
-                        return IaasClassicComputeVmContainer.DeserializeIaasClassicComputeVmContainer(element, options);
-                    case "IaasVMContainer":
-                        return IaasVmContainer.DeserializeIaasVmContainer(element, options);
-                    case "Microsoft.Compute/virtualMachines":
-                        return IaasComputeVmContainer.DeserializeIaasComputeVmContainer(element, options);
-                    case "SQLAGWorkLoadContainer":
-                        return SqlAvailabilityGroupWorkloadProtectionContainer.DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(element, options);
-                    case "AzureWorkloadContainer":
-                        return WorkloadContainer.DeserializeWorkloadContainer(element, options);
-                    case "AzureSqlContainer":
-                        return SqlContainer.DeserializeSqlContainer(element, options);
-                    case "StorageContainer":
-                        return StorageContainer.DeserializeStorageContainer(element, options);
-                    case "VMAppContainer":
-                        return VmAppContainerProtectionContainer.DeserializeVmAppContainerProtectionContainer(element, options);
-                    case "GenericContainer":
-                        return GenericContainer.DeserializeGenericContainer(element, options);
-                    case "Windows":
-                        return MabContainer.DeserializeMabContainer(element, options);
+                    case "AzureBackupServerContainer": return BackupServerContainer.DeserializeBackupServerContainer(element, options);
+                    case "AzureSqlContainer": return SqlContainer.DeserializeSqlContainer(element, options);
+                    case "AzureWorkloadContainer": return WorkloadContainer.DeserializeWorkloadContainer(element, options);
+                    case "DPMContainer": return DpmContainer.DeserializeDpmContainer(element, options);
+                    case "GenericContainer": return GenericContainer.DeserializeGenericContainer(element, options);
+                    case "IaasVMContainer": return IaasVmContainer.DeserializeIaasVmContainer(element, options);
+                    case "Microsoft.ClassicCompute/virtualMachines": return IaasClassicComputeVmContainer.DeserializeIaasClassicComputeVmContainer(element, options);
+                    case "Microsoft.Compute/virtualMachines": return IaasComputeVmContainer.DeserializeIaasComputeVmContainer(element, options);
+                    case "SQLAGWorkLoadContainer": return SqlAvailabilityGroupWorkloadProtectionContainer.DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(element, options);
+                    case "StorageContainer": return StorageContainer.DeserializeStorageContainer(element, options);
+                    case "VMAppContainer": return VmAppContainerProtectionContainer.DeserializeVmAppContainerProtectionContainer(element, options);
+                    case "Windows": return MabContainer.DeserializeMabContainer(element, options);
                 }
             }
             return UnknownProtectionContainer.DeserializeUnknownProtectionContainer(element, options);
         }
+
+        BinaryData IPersistableModel<BackupGenericProtectionContainer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BackupGenericProtectionContainer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupGenericProtectionContainer IPersistableModel<BackupGenericProtectionContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBackupGenericProtectionContainer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupGenericProtectionContainer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupGenericProtectionContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

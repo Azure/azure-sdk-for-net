@@ -38,7 +38,7 @@
     {
       "$id": "5",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType",
+      "name": "updatePetAsAnimalContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -54,7 +54,7 @@
     {
       "$id": "7",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType1",
+      "name": "updatePetAsAnimalContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -70,7 +70,7 @@
     {
       "$id": "9",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType2",
+      "name": "updateDogAsAnimalContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -86,7 +86,7 @@
     {
       "$id": "11",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType3",
+      "name": "updateDogAsAnimalContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +102,7 @@
     {
       "$id": "13",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType4",
+      "name": "updatePetAsPetContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +118,7 @@
     {
       "$id": "15",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType5",
+      "name": "updatePetAsPetContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -134,7 +134,7 @@
     {
       "$id": "17",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType6",
+      "name": "updateDogAsPetContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -150,7 +150,7 @@
     {
       "$id": "19",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType7",
+      "name": "updateDogAsPetContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -166,7 +166,7 @@
     {
       "$id": "21",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType8",
+      "name": "updateDogAsDogContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -182,7 +182,7 @@
     {
       "$id": "23",
       "kind": "constant",
-      "name": "UpdatePetAsAnimalContentType9",
+      "name": "updateDogAsDogContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -205,11 +205,6 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.Animal",
       "usage": "Input,Output,Json",
       "decorators": [],
-      "serializationOptions": {
-        "json": {
-          "name": "Animal"
-        }
-      },
       "discriminatorProperty": {
         "$id": "26",
         "kind": "property",
@@ -277,11 +272,6 @@
           "usage": "Input,Output,Json",
           "discriminatorValue": "pet",
           "decorators": [],
-          "serializationOptions": {
-            "json": {
-              "name": "Pet"
-            }
-          },
           "discriminatorProperty": {
             "$id": "31",
             "kind": "property",
@@ -347,11 +337,6 @@
               "usage": "Input,Output,Json",
               "discriminatorValue": "dog",
               "decorators": [],
-              "serializationOptions": {
-                "json": {
-                  "name": "Dog"
-                }
-              },
               "baseModel": {
                 "$ref": "30"
               },
@@ -459,7 +444,6 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
         }
       ],
-      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
       "apiVersions": [],
@@ -499,30 +483,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.contentType",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "46",
-                        "kind": "method",
-                        "name": "contentType",
-                        "serializedName": "Content-Type",
-                        "doc": "Body parameter's content type. Known values are application/json",
-                        "type": {
-                          "$ref": "5"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.contentType",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.contentType"
                   },
                   {
-                    "$id": "47",
+                    "$id": "46",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -535,29 +499,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "48",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "7"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.accept"
                   },
                   {
-                    "$id": "49",
+                    "$id": "47",
                     "kind": "body",
                     "name": "animal",
                     "serializedName": "animal",
@@ -573,31 +518,7 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.animal",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "50",
-                        "kind": "method",
-                        "name": "animal",
-                        "serializedName": "animal",
-                        "type": {
-                          "$ref": "25"
-                        },
-                        "location": "Body",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.animal",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "animal"
-                      }
-                    }
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.animal"
                   }
                 ],
                 "responses": [
@@ -612,12 +533,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "PUT",
@@ -630,18 +546,60 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal",
-                "decorators": [],
-                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "50"
+                  "$id": "48",
+                  "kind": "method",
+                  "name": "animal",
+                  "serializedName": "animal",
+                  "type": {
+                    "$ref": "25"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.animal",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "46"
+                  "$id": "49",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "5"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "48"
+                  "$id": "50",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "7"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -683,30 +641,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.contentType",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "54",
-                        "kind": "method",
-                        "name": "contentType",
-                        "serializedName": "Content-Type",
-                        "doc": "Body parameter's content type. Known values are application/json",
-                        "type": {
-                          "$ref": "9"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.contentType",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.contentType"
                   },
                   {
-                    "$id": "55",
+                    "$id": "54",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -719,29 +657,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "56",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "11"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.accept"
                   },
                   {
-                    "$id": "57",
+                    "$id": "55",
                     "kind": "body",
                     "name": "animal",
                     "serializedName": "animal",
@@ -757,31 +676,7 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.animal",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "58",
-                        "kind": "method",
-                        "name": "animal",
-                        "serializedName": "animal",
-                        "type": {
-                          "$ref": "25"
-                        },
-                        "location": "Body",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.animal",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "animal"
-                      }
-                    }
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.animal"
                   }
                 ],
                 "responses": [
@@ -796,12 +691,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "PUT",
@@ -814,18 +704,60 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal",
-                "decorators": [],
-                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "58"
+                  "$id": "56",
+                  "kind": "method",
+                  "name": "animal",
+                  "serializedName": "animal",
+                  "type": {
+                    "$ref": "25"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.animal",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "54"
+                  "$id": "57",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "9"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "56"
+                  "$id": "58",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "11"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -868,17 +800,15 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
             }
           ],
-          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations",
           "apiVersions": [],
           "parent": {
             "$ref": "38"
-          },
-          "isMultiServiceClient": false
+          }
         },
         {
           "$id": "62",
@@ -915,30 +845,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.contentType",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "66",
-                        "kind": "method",
-                        "name": "contentType",
-                        "serializedName": "Content-Type",
-                        "doc": "Body parameter's content type. Known values are application/json",
-                        "type": {
-                          "$ref": "13"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.contentType",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.contentType"
                   },
                   {
-                    "$id": "67",
+                    "$id": "66",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -951,29 +861,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "68",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "15"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.accept"
                   },
                   {
-                    "$id": "69",
+                    "$id": "67",
                     "kind": "body",
                     "name": "pet",
                     "serializedName": "pet",
@@ -989,31 +880,7 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.pet",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "70",
-                        "kind": "method",
-                        "name": "pet",
-                        "serializedName": "pet",
-                        "type": {
-                          "$ref": "30"
-                        },
-                        "location": "Body",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.pet",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "pet"
-                      }
-                    }
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.pet"
                   }
                 ],
                 "responses": [
@@ -1028,12 +895,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "PUT",
@@ -1046,18 +908,60 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet",
-                "decorators": [],
-                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "70"
+                  "$id": "68",
+                  "kind": "method",
+                  "name": "pet",
+                  "serializedName": "pet",
+                  "type": {
+                    "$ref": "30"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.pet",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "66"
+                  "$id": "69",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "13"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "68"
+                  "$id": "70",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "15"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -1099,30 +1003,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.contentType",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "74",
-                        "kind": "method",
-                        "name": "contentType",
-                        "serializedName": "Content-Type",
-                        "doc": "Body parameter's content type. Known values are application/json",
-                        "type": {
-                          "$ref": "17"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.contentType",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.contentType"
                   },
                   {
-                    "$id": "75",
+                    "$id": "74",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1135,29 +1019,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "76",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "19"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.accept"
                   },
                   {
-                    "$id": "77",
+                    "$id": "75",
                     "kind": "body",
                     "name": "pet",
                     "serializedName": "pet",
@@ -1173,31 +1038,7 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.pet",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "78",
-                        "kind": "method",
-                        "name": "pet",
-                        "serializedName": "pet",
-                        "type": {
-                          "$ref": "30"
-                        },
-                        "location": "Body",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.pet",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "pet"
-                      }
-                    }
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.pet"
                   }
                 ],
                 "responses": [
@@ -1212,12 +1053,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "PUT",
@@ -1230,18 +1066,60 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet",
-                "decorators": [],
-                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "78"
+                  "$id": "76",
+                  "kind": "method",
+                  "name": "pet",
+                  "serializedName": "pet",
+                  "type": {
+                    "$ref": "30"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.pet",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "74"
+                  "$id": "77",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "17"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "76"
+                  "$id": "78",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "19"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -1284,17 +1162,15 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
             }
           ],
-          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations",
           "apiVersions": [],
           "parent": {
             "$ref": "38"
-          },
-          "isMultiServiceClient": false
+          }
         },
         {
           "$id": "82",
@@ -1331,30 +1207,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.contentType",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "86",
-                        "kind": "method",
-                        "name": "contentType",
-                        "serializedName": "Content-Type",
-                        "doc": "Body parameter's content type. Known values are application/json",
-                        "type": {
-                          "$ref": "21"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.contentType",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.contentType"
                   },
                   {
-                    "$id": "87",
+                    "$id": "86",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1367,29 +1223,10 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.accept",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "88",
-                        "kind": "method",
-                        "name": "accept",
-                        "serializedName": "Accept",
-                        "type": {
-                          "$ref": "23"
-                        },
-                        "location": "Header",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Constant",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.accept",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ]
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.accept"
                   },
                   {
-                    "$id": "89",
+                    "$id": "87",
                     "kind": "body",
                     "name": "dog",
                     "serializedName": "dog",
@@ -1405,31 +1242,7 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.dog",
-                    "methodParameterSegments": [
-                      {
-                        "$id": "90",
-                        "kind": "method",
-                        "name": "dog",
-                        "serializedName": "dog",
-                        "type": {
-                          "$ref": "34"
-                        },
-                        "location": "Body",
-                        "isApiVersion": false,
-                        "optional": false,
-                        "scope": "Method",
-                        "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.dog",
-                        "readOnly": false,
-                        "access": "public",
-                        "decorators": []
-                      }
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": "dog"
-                      }
-                    }
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.dog"
                   }
                 ],
                 "responses": [
@@ -1444,12 +1257,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "PUT",
@@ -1462,18 +1270,60 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog",
-                "decorators": [],
-                "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding"
+                "decorators": []
               },
               "parameters": [
                 {
-                  "$ref": "90"
+                  "$id": "88",
+                  "kind": "method",
+                  "name": "dog",
+                  "serializedName": "dog",
+                  "type": {
+                    "$ref": "34"
+                  },
+                  "location": "Body",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.dog",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "86"
+                  "$id": "89",
+                  "kind": "method",
+                  "name": "contentType",
+                  "serializedName": "Content-Type",
+                  "doc": "Body parameter's content type. Known values are application/json",
+                  "type": {
+                    "$ref": "21"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
-                  "$ref": "88"
+                  "$id": "90",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "23"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -1516,20 +1366,17 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
             }
           ],
-          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations",
           "apiVersions": [],
           "parent": {
             "$ref": "38"
-          },
-          "isMultiServiceClient": false
+          }
         }
-      ],
-      "isMultiServiceClient": false
+      ]
     }
   ]
 }

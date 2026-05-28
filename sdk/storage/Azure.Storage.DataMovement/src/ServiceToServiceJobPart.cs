@@ -236,6 +236,7 @@ namespace Azure.Storage.DataMovement
 
                 await ReportBytesWrittenAsync(completeLength).ConfigureAwait(false);
                 await CompleteTransferAsync(sourceProperties).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreationMode.SkipIfExists
@@ -447,8 +448,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
             StorageResourceCopyFromUriOptions options = new()
             {
-                SourceProperties = properties,
-                SourceUri = _sourceResource.GetSasWithUri(),
+                SourceProperties = properties
             };
             HttpAuthorization authorization = await _sourceResource.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
             if (authorization != null)

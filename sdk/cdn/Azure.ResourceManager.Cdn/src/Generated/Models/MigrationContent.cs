@@ -8,76 +8,140 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Request body for Migrate operation. </summary>
+    /// <summary>
+    /// Request body for Migrate operation.
+    /// Serialized Name: MigrationParameters
+    /// </summary>
     public partial class MigrationContent
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MigrationContent"/>. </summary>
-        /// <param name="profileName"> Name of the new profile that need to be created. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
-        public MigrationContent(string profileName)
+        /// <param name="sku">
+        /// Sku for the migration
+        /// Serialized Name: MigrationParameters.sku
+        /// </param>
+        /// <param name="classicResourceReference">
+        /// Resource reference of the classic cdn profile or classic frontdoor that need to be migrated.
+        /// Serialized Name: MigrationParameters.classicResourceReference
+        /// </param>
+        /// <param name="profileName">
+        /// Name of the new profile that need to be created.
+        /// Serialized Name: MigrationParameters.profileName
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/>, <paramref name="classicResourceReference"/> or <paramref name="profileName"/> is null. </exception>
+        public MigrationContent(CdnSku sku, WritableSubResource classicResourceReference, string profileName)
         {
+            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(classicResourceReference, nameof(classicResourceReference));
             Argument.AssertNotNull(profileName, nameof(profileName));
 
+            Sku = sku;
+            ClassicResourceReference = classicResourceReference;
             ProfileName = profileName;
             MigrationWebApplicationFirewallMappings = new ChangeTrackingList<MigrationWebApplicationFirewallMapping>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationContent"/>. </summary>
-        /// <param name="sku"> Sku for the migration. </param>
-        /// <param name="classicResourceReference"> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </param>
-        /// <param name="profileName"> Name of the new profile that need to be created. </param>
-        /// <param name="migrationWebApplicationFirewallMappings"> Waf mapping for the migrated profile. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationContent(CdnSku sku, CdnResourceReference classicResourceReference, string profileName, IList<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="sku">
+        /// Sku for the migration
+        /// Serialized Name: MigrationParameters.sku
+        /// </param>
+        /// <param name="classicResourceReference">
+        /// Resource reference of the classic cdn profile or classic frontdoor that need to be migrated.
+        /// Serialized Name: MigrationParameters.classicResourceReference
+        /// </param>
+        /// <param name="profileName">
+        /// Name of the new profile that need to be created.
+        /// Serialized Name: MigrationParameters.profileName
+        /// </param>
+        /// <param name="migrationWebApplicationFirewallMappings">
+        /// Waf mapping for the migrated profile
+        /// Serialized Name: MigrationParameters.migrationWebApplicationFirewallMappings
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationContent(CdnSku sku, WritableSubResource classicResourceReference, string profileName, IList<MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             ClassicResourceReference = classicResourceReference;
             ProfileName = profileName;
             MigrationWebApplicationFirewallMappings = migrationWebApplicationFirewallMappings;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Sku for the migration. </summary>
-        [WirePath("sku")]
+        /// <summary> Initializes a new instance of <see cref="MigrationContent"/> for deserialization. </summary>
+        internal MigrationContent()
+        {
+        }
+
+        /// <summary>
+        /// Sku for the migration
+        /// Serialized Name: MigrationParameters.sku
+        /// </summary>
         internal CdnSku Sku { get; }
-
-        /// <summary> Resource reference of the classic cdn profile or classic frontdoor that need to be migrated. </summary>
-        [WirePath("classicResourceReference")]
-        internal CdnResourceReference ClassicResourceReference { get; }
-
-        /// <summary> Name of the new profile that need to be created. </summary>
-        [WirePath("profileName")]
-        public string ProfileName { get; }
-
-        /// <summary> Waf mapping for the migrated profile. </summary>
-        [WirePath("migrationWebApplicationFirewallMappings")]
-        public IList<MigrationWebApplicationFirewallMapping> MigrationWebApplicationFirewallMappings { get; }
-
-        /// <summary> Name of the pricing tier. </summary>
-        [WirePath("sku.name")]
+        /// <summary>
+        /// Name of the pricing tier.
+        /// Serialized Name: Sku.name
+        /// </summary>
         public CdnSkuName? SkuName
         {
-            get
-            {
-                return Sku.Name;
-            }
+            get => Sku?.Name;
         }
 
-        /// <summary> Resource ID. </summary>
-        [WirePath("classicResourceReference.id")]
+        /// <summary>
+        /// Resource reference of the classic cdn profile or classic frontdoor that need to be migrated.
+        /// Serialized Name: MigrationParameters.classicResourceReference
+        /// </summary>
+        internal WritableSubResource ClassicResourceReference { get; }
+        /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier ClassicResourceReferenceId
         {
-            get
-            {
-                return ClassicResourceReference.Id;
-            }
+            get => ClassicResourceReference?.Id;
         }
+
+        /// <summary>
+        /// Name of the new profile that need to be created.
+        /// Serialized Name: MigrationParameters.profileName
+        /// </summary>
+        public string ProfileName { get; }
+        /// <summary>
+        /// Waf mapping for the migrated profile
+        /// Serialized Name: MigrationParameters.migrationWebApplicationFirewallMappings
+        /// </summary>
+        public IList<MigrationWebApplicationFirewallMapping> MigrationWebApplicationFirewallMappings { get; }
     }
 }

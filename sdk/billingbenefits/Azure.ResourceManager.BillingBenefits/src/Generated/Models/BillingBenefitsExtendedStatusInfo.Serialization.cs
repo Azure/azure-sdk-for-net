@@ -9,55 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.BillingBenefits;
+using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    /// <summary> The BillingBenefitsExtendedStatusInfo. </summary>
-    public partial class BillingBenefitsExtendedStatusInfo : IJsonModel<BillingBenefitsExtendedStatusInfo>
+    public partial class BillingBenefitsExtendedStatusInfo : IUtf8JsonSerializable, IJsonModel<BillingBenefitsExtendedStatusInfo>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BillingBenefitsExtendedStatusInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsExtendedStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeBillingBenefitsExtendedStatusInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsExtendedStatusInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsExtendedStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BillingBenefitsExtendedStatusInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BillingBenefitsExtendedStatusInfo IPersistableModel<BillingBenefitsExtendedStatusInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BillingBenefitsExtendedStatusInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BillingBenefitsExtendedStatusInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -69,11 +28,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsExtendedStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsExtendedStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
@@ -84,15 +44,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,52 +61,80 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BillingBenefitsExtendedStatusInfo IJsonModel<BillingBenefitsExtendedStatusInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BillingBenefitsExtendedStatusInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BillingBenefitsExtendedStatusInfo IJsonModel<BillingBenefitsExtendedStatusInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsExtendedStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsExtendedStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBillingBenefitsExtendedStatusInfo(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BillingBenefitsExtendedStatusInfo DeserializeBillingBenefitsExtendedStatusInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static BillingBenefitsExtendedStatusInfo DeserializeBillingBenefitsExtendedStatusInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string statusCode = default;
             string message = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("statusCode"u8))
+                if (property.NameEquals("statusCode"u8))
                 {
-                    statusCode = prop.Value.GetString();
+                    statusCode = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("message"u8))
+                if (property.NameEquals("message"u8))
                 {
-                    message = prop.Value.GetString();
+                    message = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new BillingBenefitsExtendedStatusInfo(statusCode, message, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BillingBenefitsExtendedStatusInfo(statusCode, message, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BillingBenefitsExtendedStatusInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsExtendedStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingBenefitsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BillingBenefitsExtendedStatusInfo IPersistableModel<BillingBenefitsExtendedStatusInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsExtendedStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeBillingBenefitsExtendedStatusInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BillingBenefitsExtendedStatusInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BillingBenefitsExtendedStatusInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -15,55 +14,38 @@ namespace Azure.ResourceManager.KeyVault.Models
     public readonly partial struct ManagedHsmSkuFamily : IEquatable<ManagedHsmSkuFamily>
     {
         private readonly string _value;
-        private const string BValue = "B";
-        private const string CValue = "C";
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmSkuFamily"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedHsmSkuFamily(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the B. </summary>
+        private const string BValue = "B";
+        private const string CValue = "C";
+
+        /// <summary> B. </summary>
         public static ManagedHsmSkuFamily B { get; } = new ManagedHsmSkuFamily(BValue);
-
-        /// <summary> Gets the C. </summary>
+        /// <summary> C. </summary>
         public static ManagedHsmSkuFamily C { get; } = new ManagedHsmSkuFamily(CValue);
-
         /// <summary> Determines if two <see cref="ManagedHsmSkuFamily"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedHsmSkuFamily left, ManagedHsmSkuFamily right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ManagedHsmSkuFamily"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedHsmSkuFamily left, ManagedHsmSkuFamily right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="ManagedHsmSkuFamily"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmSkuFamily"/>. </summary>
         public static implicit operator ManagedHsmSkuFamily(string value) => new ManagedHsmSkuFamily(value);
 
-        /// <summary> Converts a string to a <see cref="ManagedHsmSkuFamily"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator ManagedHsmSkuFamily?(string value) => value == null ? null : new ManagedHsmSkuFamily(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedHsmSkuFamily other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(ManagedHsmSkuFamily other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

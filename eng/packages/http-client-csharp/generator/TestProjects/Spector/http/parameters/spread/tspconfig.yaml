@@ -1,0 +1,7 @@
+emit:
+  - "@azure-typespec/http-client-csharp"
+options:
+  # This config can be removed once https://github.com/microsoft/typespec/issues/6039 is fixed.
+  "@azure-typespec/http-client-csharp":
+    model-namespace: true
+    namespace: "Parameters.Spread"

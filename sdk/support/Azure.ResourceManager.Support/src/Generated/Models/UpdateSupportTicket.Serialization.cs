@@ -10,65 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    /// <summary> Updates severity, ticket status, contact details, advanced diagnostic consent and secondary consent in the support ticket. </summary>
-    public partial class UpdateSupportTicket : IJsonModel<UpdateSupportTicket>
+    public partial class UpdateSupportTicket : IUtf8JsonSerializable, IJsonModel<UpdateSupportTicket>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateSupportTicket PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeUpdateSupportTicket(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support reading '{options.Format}' format.");
-            }
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateSupportTicket>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSupportContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpdateSupportTicket>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateSupportTicket IPersistableModel<UpdateSupportTicket>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpdateSupportTicket>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="updateSupportTicket"> The <see cref="UpdateSupportTicket"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(UpdateSupportTicket updateSupportTicket)
-        {
-            if (updateSupportTicket == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(updateSupportTicket, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UpdateSupportTicket>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -80,11 +28,12 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
@@ -109,26 +58,21 @@ namespace Azure.ResourceManager.Support.Models
             {
                 writer.WritePropertyName("secondaryConsent"u8);
                 writer.WriteStartArray();
-                foreach (SecondaryConsent item in SecondaryConsent)
+                foreach (var item in SecondaryConsent)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DirectConnectEscalation))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("directConnectEscalation"u8);
-                writer.WriteObjectValue(DirectConnectEscalation, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -137,27 +81,22 @@ namespace Azure.ResourceManager.Support.Models
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        UpdateSupportTicket IJsonModel<UpdateSupportTicket>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpdateSupportTicket JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UpdateSupportTicket IJsonModel<UpdateSupportTicket>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUpdateSupportTicket(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpdateSupportTicket DeserializeUpdateSupportTicket(JsonElement element, ModelReaderWriterOptions options)
+        internal static UpdateSupportTicket DeserializeUpdateSupportTicket(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -167,82 +106,104 @@ namespace Azure.ResourceManager.Support.Models
             SupportContactProfileContent contactDetails = default;
             AdvancedDiagnosticConsent? advancedDiagnosticConsent = default;
             IList<SecondaryConsent> secondaryConsent = default;
-            SupportDirectConnectEscalation directConnectEscalation = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("severity"u8))
+                if (property.NameEquals("severity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    severity = new SupportSeverityLevel(prop.Value.GetString());
+                    severity = new SupportSeverityLevel(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new SupportTicketStatus(prop.Value.GetString());
+                    status = new SupportTicketStatus(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("contactDetails"u8))
+                if (property.NameEquals("contactDetails"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    contactDetails = SupportContactProfileContent.DeserializeSupportContactProfileContent(prop.Value, options);
+                    contactDetails = SupportContactProfileContent.DeserializeSupportContactProfileContent(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("advancedDiagnosticConsent"u8))
+                if (property.NameEquals("advancedDiagnosticConsent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    advancedDiagnosticConsent = new AdvancedDiagnosticConsent(prop.Value.GetString());
+                    advancedDiagnosticConsent = new AdvancedDiagnosticConsent(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("secondaryConsent"u8))
+                if (property.NameEquals("secondaryConsent"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SecondaryConsent> array = new List<SecondaryConsent>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item, options));
                     }
                     secondaryConsent = array;
                     continue;
                 }
-                if (prop.NameEquals("directConnectEscalation"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    directConnectEscalation = SupportDirectConnectEscalation.DeserializeSupportDirectConnectEscalation(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new UpdateSupportTicket(
                 severity,
                 status,
                 contactDetails,
                 advancedDiagnosticConsent,
                 secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(),
-                directConnectEscalation,
-                additionalBinaryDataProperties);
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UpdateSupportTicket>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSupportContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UpdateSupportTicket IPersistableModel<UpdateSupportTicket>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeUpdateSupportTicket(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UpdateSupportTicket>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

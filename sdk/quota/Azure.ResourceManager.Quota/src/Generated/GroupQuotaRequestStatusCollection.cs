@@ -6,13 +6,11 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -23,75 +21,69 @@ namespace Azure.ResourceManager.Quota
     /// </summary>
     public partial class GroupQuotaRequestStatusCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _submittedResourceRequestStatusesClientDiagnostics;
-        private readonly SubmittedResourceRequestStatuses _submittedResourceRequestStatusesRestClient;
+        private readonly ClientDiagnostics _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics;
+        private readonly SubmittedResourceRequestStatusesRestOperations _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient;
 
-        /// <summary> Initializes a new instance of GroupQuotaRequestStatusCollection for mocking. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GroupQuotaRequestStatusCollection"/> class for mocking. </summary>
         protected GroupQuotaRequestStatusCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaRequestStatusCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GroupQuotaRequestStatusCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal GroupQuotaRequestStatusCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(GroupQuotaRequestStatusResource.ResourceType, out string groupQuotaRequestStatusApiVersion);
-            _submittedResourceRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaRequestStatusResource.ResourceType.Namespace, Diagnostics);
-            _submittedResourceRequestStatusesRestClient = new SubmittedResourceRequestStatuses(_submittedResourceRequestStatusesClientDiagnostics, Pipeline, Endpoint, groupQuotaRequestStatusApiVersion ?? "2025-09-01");
-            ValidateResourceId(id);
+            _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", GroupQuotaRequestStatusResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(GroupQuotaRequestStatusResource.ResourceType, out string groupQuotaRequestStatusSubmittedResourceRequestStatusesApiVersion);
+            _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient = new SubmittedResourceRequestStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, groupQuotaRequestStatusSubmittedResourceRequestStatusesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != GroupQuotaEntityResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), nameof(id));
-            }
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GroupQuotaEntityResource.ResourceType), nameof(id));
         }
 
         /// <summary>
         /// Get API to check the status of a GroupQuota request by requestId.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SubmittedResourceRequestStatus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         public virtual async Task<Response<GroupQuotaRequestStatusResource>> GetAsync(string requestId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Get");
+            using var scope = _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GroupQuotaRequestStatusData> response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
+                var response = await _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient.GetAsync(Id.Parent.Name, Id.Name, requestId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new GroupQuotaRequestStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -105,42 +97,38 @@ namespace Azure.ResourceManager.Quota
         /// Get API to check the status of a GroupQuota request by requestId.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SubmittedResourceRequestStatus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         public virtual Response<GroupQuotaRequestStatusResource> Get(string requestId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Get");
+            using var scope = _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Get");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<GroupQuotaRequestStatusData> response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
+                var response = _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient.Get(Id.Parent.Name, Id.Name, requestId, cancellationToken);
                 if (response.Value == null)
-                {
                     throw new RequestFailedException(response.GetRawResponse());
-                }
                 return Response.FromValue(new GroupQuotaRequestStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -154,50 +142,36 @@ namespace Azure.ResourceManager.Quota
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SubmittedResourceRequestStatus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string requestId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Exists");
+            using var scope = _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<GroupQuotaRequestStatusData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GroupQuotaRequestStatusData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient.GetAsync(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -211,50 +185,36 @@ namespace Azure.ResourceManager.Quota
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SubmittedResourceRequestStatus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         public virtual Response<bool> Exists(string requestId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Exists");
+            using var scope = _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.Exists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<GroupQuotaRequestStatusData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GroupQuotaRequestStatusData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient.Get(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -268,54 +228,38 @@ namespace Azure.ResourceManager.Quota
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SubmittedResourceRequestStatus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         public virtual async Task<NullableResponse<GroupQuotaRequestStatusResource>> GetIfExistsAsync(string requestId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.GetIfExists");
+            using var scope = _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<GroupQuotaRequestStatusData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GroupQuotaRequestStatusData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = await _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient.GetAsync(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<GroupQuotaRequestStatusResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new GroupQuotaRequestStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -329,54 +273,38 @@ namespace Azure.ResourceManager.Quota
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}. </description>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}</description>
         /// </item>
         /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SubmittedResourceRequestStatuses_Get. </description>
+        /// <term>Operation Id</term>
+        /// <description>SubmittedResourceRequestStatus_Get</description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GroupQuotaRequestStatusResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestId"/> is null. </exception>
         public virtual NullableResponse<GroupQuotaRequestStatusResource> GetIfExists(string requestId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestId, nameof(requestId));
 
-            using DiagnosticScope scope = _submittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.GetIfExists");
+            using var scope = _groupQuotaRequestStatusSubmittedResourceRequestStatusesClientDiagnostics.CreateScope("GroupQuotaRequestStatusCollection.GetIfExists");
             scope.Start();
             try
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _submittedResourceRequestStatusesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, requestId, context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<GroupQuotaRequestStatusData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(GroupQuotaRequestStatusData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((GroupQuotaRequestStatusData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
+                var response = _groupQuotaRequestStatusSubmittedResourceRequestStatusesRestClient.Get(Id.Parent.Name, Id.Name, requestId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                {
                     return new NoValueResponse<GroupQuotaRequestStatusResource>(response.GetRawResponse());
-                }
                 return Response.FromValue(new GroupQuotaRequestStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
